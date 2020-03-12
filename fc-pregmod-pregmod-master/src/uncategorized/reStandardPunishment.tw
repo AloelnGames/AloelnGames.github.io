@@ -1,0 +1,354 @@
+:: RE standard punishment [nobr]
+
+<<set $activeSlave = $eventSlave>>
+
+<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "Next Week">>
+
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<div class="imageColumn">
+		<<if $imageChoice == 1>>
+			<div class="imageRef medImg"><<= SlaveArt($activeSlave, 2, 0)>></div>
+			<<if $HeadGirl != 0>>
+				<div class="imageRef medImg"><<= SlaveArt($HeadGirl, 2, 0)>></div>
+			<<else>>
+				<<= assistantArt(3)>>
+			<</if>>
+		<</if>>
+	</div>
+<</if>>
+/* 000-250-006 */
+
+<<set $desc = SlaveTitle($activeSlave)>>
+<<setLocalPronouns $activeSlave>>
+
+<<set _sins = []>>
+
+<<set _sins.push("dawdling")>>
+<<if canDoAnal($activeSlave)>>
+	<<if $activeSlave.fetish != "buttslut">>
+		<<if $activeSlave.anus != 0>>
+			<<set _sins.push("anal reluctance")>>
+		<</if>>
+	<</if>>
+<</if>>
+<<if canDoVaginal($activeSlave)>>
+	<<if $activeSlave.vagina != 0>>
+		<<if $activeSlave.fetish != "pregnancy">>
+			<<set _sins.push("vaginal reluctance")>>
+		<</if>>
+	<</if>>
+<</if>>
+<<if canTalk($activeSlave)>>
+	<<set _sins.push("chatting")>>
+<</if>>
+<<if $universalRulesConsent == 0>>
+	<<if $activeSlave.energy <= 60>>
+		<<set _sins.push("slave refusal")>>
+	<</if>>
+<<else>>
+	<<if $activeSlave.energy > 40>>
+		<<if $activeSlave.rules.release.slaves == 1 || App.Utils.hasFamilySex($activeSlave)>>
+			<<set _sins.push("slave molestation")>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<= App.UI.slaveDescriptionDialog($activeSlave)>>
+
+<<set _sins = _sins.random()>>
+<<switch _sins>>
+<<case "anal reluctance">>
+	is sometimes punished for reluctance to take it up the ass. You run across the aftermath of one such incident as
+<<case "vaginal reluctance">>
+	is sometimes punished for reluctance to give up $his pussy. You run across the aftermath of one such incident as
+<<case "chatting">>
+	can be overly chatty with other slaves, and often makes $himself late for $his next task by losing $himself in gossip. You happen to appear after $he's been late as
+<<case "dawdling">>
+	is sometimes late to $his next task. This is probably the most common minor infraction among slaves, especially when they're assigned to do things they don't like. You happen to appear after $he's been late as
+<<case "slave refusal">>
+	lacks the sexual energy to be at home among your slaves, since $his peers can demand sex from $him whenever they want it. $He sometimes tries to evade them or even outright refuse. You come upon the aftermath of such a scene as
+<<case "slave molestation">>
+	struggles with the consent you require before sex between slaves. $His need for release pushes $him to overstep $his bounds. You come upon the aftermath of an example of $his sexual aggressiveness as
+<<default>>
+	ERROR: bad sin
+<</switch>>
+
+<<if $HeadGirl != 0>>
+	<<setLocalPronouns $HeadGirl 2>>
+	$HeadGirl.slaveName is <<if $activeSlave.rules.punishment == "situational">>assessing an appropriate punishment<<else>>sentencing $him to $his standard punishment, <<switch $activeSlave.rules.punishment>><<case "confinement">>several hours in confinement<<case "whipping">>a whipping<<case "chastity">>several hours in chastity<</switch>><</if>>. _He2 immediately defers to you, should you wish to take over.
+<<else>>
+	<<setAssistantPronouns>>
+	$assistant.name is <<if $activeSlave.rules.punishment == "situational">>assessing an appropriate punishment<<else>>sentencing $him to $his standard punishment, <<switch $activeSlave.rules.punishment>><<case "confinement">>several hours in confinement<<case "whipping">>a whipping<<case "chastity">>several hours in chastity<</switch>><</if>>. _HeA immediately defers to you, should you wish to take over.
+<</if>>
+
+<br><br>
+<span id="result">
+/* STANDARD PUNISHMENTS */
+<<switch $activeSlave.rules.punishment>>
+
+<<case "confinement">>
+
+<<link "Confine $him firmly but fairly">>
+	<<replace "#result">>
+	Since you use confinement as a standard slave punishment, <<if $cellblock != 0>>in addition to $cellblockName, <</if>>you have little cubicles designed for the purpose scattered around the penthouse. You order $activeSlave.slaveName into one of these. $He obeys,
+	<<if $activeSlave.devotion > 20>>
+		knowing $he deserves punishment and eager to get it over with.
+	<<elseif $activeSlave.trust < -20>>
+		if only out of terror, knowing $he'll make $his situation far worse if $he doesn't.
+	<<else>>
+		warily, willing to go along until something worth real resistance happens.
+	<</if>>
+	The cell is padded and has leather restraints; you use these to secure $him to the wall, preventing $him from doing anything to relieve boredom in the tiny space. You restate the rule $he broke, state the length of $his punishment, and remonstrate firmly with $him before closing the door. As it shuts on $him, plunging $him into darkness, you hear <<if canTalk($activeSlave)>>$him try at an apology in a tiny voice<<elseif $activeSlave.voice != 0>>a tiny apologetic moan<<else>>a sad little intake of breath<</if>>. You're there to let $him out after a reasonable time, and $he exits the soft little cell @@.mediumaquamarine;with relief.@@
+	<<set $activeSlave.trust += 4>>
+	<</replace>>
+<</link>>
+<br><<link "Confine $him cruelly">>
+	<<replace "#result">>
+	Since you use confinement as a standard slave punishment, <<if $cellblock != 0>>in addition to $cellblockName, <</if>>you have several boxes designed for the purpose in convenient areas. You order $activeSlave.slaveName to your office, and direct a box to be brought there. $He begins to cry when $he sees it,
+	<<if $activeSlave.devotion > 20>>
+		but obediently gets inside, not wanting $his punishment to be extended. $His obedience notwithstanding,
+	<<elseif $activeSlave.trust < -20>>
+		but desperately hurries to get inside, terrified that you might extend $his sentence. $His obedience notwithstanding,
+	<<else>>
+		making no move towards it. $He knows that active resistance will merely extend $his sentence, and lets you stuff $his sobbing body inside. Once $he's in,
+	<</if>>
+	<<if canTalk($activeSlave)>>$he begs tearfully<<elseif $activeSlave.voice != 0>>$he tries frantically to beg<<else>>$he uses $his hand<<if hasBothArms($activeSlave)>>s<</if>> to supplicate you<</if>> as you close the lid with exquisite slowness. The harshest thing you do is keep silent, not giving $him any indication of when $he's getting out. When you finally let $him out, $he's @@.gold;almost crazy with fear@@ of ever going back in the box and, for now, @@.hotpink;willing to do almost anything@@ to avoid it.
+	<<set $activeSlave.devotion += 4>>
+	<<set $activeSlave.trust -= 4>>
+	<</replace>>
+<</link>>
+
+<<case "whipping">>
+
+<<link "Give $him a solid whipping">>
+	<<replace "#result">>
+	Since you use whipping as a standard slave punishment, there are many sets of restraints set high up on the walls for the purpose. You order $him to place $his hand<<if hasBothArms($activeSlave)>>s<</if>> in one of them, and $he
+	<<if $activeSlave.devotion > 20>>
+		sobs with fear but obeys, obviously hoping you'll be reasonable.
+	<<elseif $activeSlave.trust < -20>>
+		starts to cry but doesn't let that stop $him from hurriedly obeying. $He knows that resistance will earn $him more strokes.
+	<<else>>
+		breaks down and makes no move to obey, but does not resist as you take $his wrist<<if hasBothArms($activeSlave)>>s<</if>> in your hands and lift them into the restraints.
+	<</if>>
+	The shackles can be moved up or down, and you move them up, raising the shivering, frightened $desc <<if hasAnyLegs($activeSlave)>>to the tips of $his toes<<else>>far off the ground<</if>>. $He struggles a little to find $his balance, and is distracted when the first stroke lands on $his $activeSlave.skin buttocks. Your leather instrument is exquisitely designed and balanced to produce pain without breaking the skin or leaving a permanent mark. You tell $him to count, and $he <<if canTalk($activeSlave)>>gasps "one" through $his agony<<elseif $activeSlave.voice != 0>>grunts once, doing $his best<<else>>sticks up one finger despite $his restrained hand<<if hasBothArms($activeSlave)>>s<</if>><</if>>. You flog $his bottom until it's pleasantly warm to the touch, and then let $him down. $He's @@.mediumaquamarine;relieved@@ at your moderation.
+	<<set $activeSlave.trust += 4>>
+	<</replace>>
+<</link>>
+<br><<link "Whip $him cruelly">>
+	<<replace "#result">>
+	Since you use whipping as a standard slave punishment, there are many sets of restraints set high up on the walls for the purpose. You order $him to place $his hand<<if hasBothArms($activeSlave)>>s<</if>> in one of them, and $he
+	<<if $activeSlave.devotion > 20>>
+		sobs with fear but obeys, despite something in your tone that makes $his knees go weak with terror.
+	<<elseif $activeSlave.trust < -20>>
+		starts to cry but doesn't let that stop $him from hurriedly obeying. $He stumbles once, something in your tone that making $his knees go weak with terror.
+	<<else>>
+		breaks down and makes no move to obey, but does not resist as you <<if hasAnyArms($activeSlave)>>take $his wrist<<if hasBothArms($activeSlave)>>s<</if>> in your hands<<else>>grab $him around the waist<</if>> and hoist $him into the restraints.
+	<</if>>
+	The shackles can be moved up or down, and you move them down, forcing the weeping slave to spread $his legs. You let $him anticipate the pain for a long time before you start whipping $his buttocks. Your leather instrument is exquisitely designed and balanced to produce pain without breaking the skin or leaving a permanent mark, and you make cruel use of it. After a short preliminary asswhipping, you vary your strokes, letting $him feel the whip on $his thigh<<if hasBothLegs($activeSlave)>>s<</if>>, cal<<if hasBothLegs($activeSlave)>>ves<<else>>f<</if>> and flank<<if hasBothLegs($activeSlave)>>s<</if>> before placing strokes against $his <<if $activeSlave.scrotum > 0>>poor ballsack<<elseif $activeSlave.dick > 0>>poor penis<<else>>poor pussy<</if>>. $He loses all control, <<if canTalk($activeSlave)>>shamelessly begging for mercy<<elseif $activeSlave.voice != 0>>sobbing and moaning incoherently<<else>>rasping pathetic little sobs past $his mute throat<</if>>. When you're done, $he's @@.gold;almost crazy with fear@@ of future whippings.
+	<<set $activeSlave.trust -= 6>>
+	<</replace>>
+<</link>>
+
+<<case "chastity">>
+
+<<link "Restrain $him in your office">>
+	<<replace "#result">>
+	Since you use chastity as a punishment, you're accustomed to using your office for supervising sexual denial. You bring $him up and restrain $him standing, hand<<if hasBothArms($activeSlave)>>s<</if>> over $his head in one of the sets of shackles set high on the walls, facing out so $he can <<if canSee($activeSlave)>>see<<else>>face<</if>> everything that goes on in your office. You gag $him securely, <<if $activeSlave.voice == 0>>despite $his muteness, a sad mockery<<else>>not wanting your work disturbed by unseemly noises<</if>>. Then you ignore $him. Business as usual in your office is profoundly sexual.
+	<<if $activeSlave.energy > 60>>
+		$His healthy sex drive makes this torture for $him; $he watches everything that happens in the office with desperate longing. Before long,
+	<<elseif $activeSlave.devotion > 20>>
+		$He's used to the idea of sexual slavery, and inevitably <<if canSee($activeSlave)>>sees<<elseif canHear($activeSlave)>>hears<<else>>is surrounded by<</if>> people $he finds attractive doing things $he considers sexy in the office. Before long,
+	<<elseif $activeSlave.devotion >= -50>>
+		$He's not comfortable with sexual slavery, but the heavily sexual atmosphere of the office affects even $him. After a few hours,
+	<<else>>
+		The office being what it is, $he <<if canSee($activeSlave)>>sees<<elseif canHear($activeSlave)>>hears<<else>>is surrounded by<</if>> many naked, attractive people doing sexy things over the course of the day. Despite $his resistance, after a few hours,
+	<</if>>
+	$he's quite horny. Restrained as $he is, $he <<if $activeSlave.devotion > 20>>couldn't<<else>>can't<</if>> hide
+	<<if $activeSlave.dick > 0>>
+		<<if canAchieveErection($activeSlave)>>
+			$his <<if $activeSlave.dick > 2>>prominent<<else>>pathetic<</if>> erection,
+		<<else>>
+			the string of precum hanging off $his limp dick,
+		<</if>>
+	<<else>>
+		<<if $activeSlave.vaginaLube > 0>>
+			the lovely pussyjuice slicking $his thighs,
+		<<else>>
+			how flushed and eager $his cunt is,
+		<</if>>
+	<</if>>
+	<<if $activeSlave.devotion > 20>>even if $he wanted to<<else>>though $he seems to want to<</if>>. Satisfied that $he's been tormented enough for today, you let $him down and send $him on $his way. $He's obviously @@.hotpink;more willing@@ than usual to apply $himself to $his next sexual task, whatever it is.
+	<<set $activeSlave.devotion += 4>>
+	<</replace>>
+<</link>>
+<br><<link "Torment $him with vibration">>
+	<<replace "#result">>
+	Since you use chastity as a punishment, you're accustomed to using your office for supervising sexual denial. You order $him to place $his hand<<if hasBothArms($activeSlave)>>s<</if>> in one of the many sets of restraints set high up on the office walls for the purpose.
+	<<if $activeSlave.clitPiercing != 3>>
+		You equip $him with a set of smart vibrators. The first is attached <<if $activeSlave.dick > 0>>to $his dickhead<<else>>against $his clit<</if>>,
+	<<else>>
+		$His smart piercing makes the next step easy. $He gets three vibrators in total:
+	<</if>>
+	the second <<if $activeSlave.vagina > 0>>comfortably fills $his pussy<<elseif $activeSlave.vagina > 0>>rests against $his virgin pussy without breaking $his virtue<<else>>is a nice little bullet vibe for $his soft perineum<</if>>, and the third <<if $activeSlave.anus > 0>>is, of course, a vibrating plug for $his asspussy<<else>>rests against $his unfucked rosebud without penetrating it<</if>>.
+	Then you walk away, setting the vibrators to bring $him to the edge of orgasm and keep $him there. The effect is almost instant, and as you go $he begins to writhe, <<if canTalk($activeSlave)>>desperately calling after you to beg for mercy<<elseif $activeSlave.voice != 0>>moaning desperately<<else>>panting mutely<</if>>. When you finally come back and let $him down, $he's unsteady on $his feet and @@.hotpink;very submissive,@@ though a bit @@.red;burned out@@ on stimulation.
+	<<set $activeSlave.devotion += 6>>
+	<<set $activeSlave.energy -= 1>>
+	<</replace>>
+<</link>>
+
+<</switch>>
+
+<<if $activeSlave.rules.punishment != "situational">><br><</if>>
+
+/* SITUATIONAL PUNISHMENTS */
+<<switch _sins>>
+
+<<case "anal reluctance">>
+
+<<link "Punish $his ass">>
+	<<replace "#result">>
+	Deciding that the most appropriate punishment is some corrective assrape, you shove the slave to <<if hasBothLegs($activeSlave)>>$his knees<<else>>the floor<</if>> and stuff <<if $PC.dick != 0>>your cock<<else>>a formidable dildo<</if>> up $his
+	<<if $activeSlave.anus > 2>>
+		big butthole. It slides right in, the slave's relaxed sphincter offering no resistance. Announcing that you'll find $his limits, wherever they are, you insert fingers until $he's cruelly stretched and you're almost jerking <<if $PC.dick != 0>>yourself<<else>>the phallus<</if>> off inside $him.
+	<<elseif $activeSlave.anus > 1>>
+		defenseless asshole. You meet some delicious resistance and push past it, enjoying the feeling of the slave's sphincter spasming as you do. You pound $him hard, much harder than $he can comfortably take it up the ass.
+	<<else>>
+		tight hole. $His poor little anus doesn't want to let you in, but you force yourself in anyway, making the slave wriggle desperately beneath you as $he feels the invading phallus force $his anal ring to accommodate its girth.
+	<</if>>
+	You tell $him that many slaves enjoy anal, and that if $he's a good $desc, $he can too, but that it's against the rules for $him to show reluctance to be assfucked. The slave below you is too discomfited by anal pain to respond coherently, but $he gets the message. $He'll be @@.hotpink;better about submitting@@ in the future, but due to the connection between sex and punishment $he'll be @@.red;a little less eager for sex,@@ especially anal.
+	<<set $activeSlave.counter.anal += 1>>
+	<<set $analTotal += 1>>
+	<<set $activeSlave.devotion += 4>>
+	<<set $activeSlave.energy -= 2>>
+	<</replace>>
+<</link>>
+
+<<case "vaginal reluctance">>
+
+<<link "Punish $his pussy">>
+	<<replace "#result">>
+	Deciding that the most appropriate punishment is some corrective rape, you push the slave down on $his back and shove <<if $PC.dick != 0>>your cock<<else>>a formidable dildo<</if>> inside $his
+	<<if $activeSlave.anus > 2>>
+		roomy cunt, which can take it easily. Announcing that you'll find $his limits, wherever they are, you insert fingers until $he's cruelly stretched and you're almost jerking <<if $PC.dick != 0>>yourself<<else>>the phallus<</if>> off inside $him.
+	<<elseif $activeSlave.anus > 1>>
+		poor womanhood. You fuck $him mercilessly, intentionally pulling out far enough that you have to spear $him again. You use $his poor boobs as leverage, pulling against them to batter $him harder.
+	<<else>>
+		poor tight pussy. $He's tight, and the initial penetration was uncomfortable for $him, but you make it worse by treating $his cunt like a veteran whore's. $He begins to struggle a little as you hammer $him.
+	<</if>>
+	You tell $him that many slaves enjoy getting fucked, and that if $he's a good $desc, $he can too, but that it's against the rules for $him to show reluctance to be penetrated. The slave below you is too discomfited to respond coherently, but $he gets the message. $He'll be @@.hotpink;better about submitting@@ in the future, but due to the connection between sex and punishment $he'll be @@.red;a little less eager for sex,@@ especially vaginal.
+	<<set $activeSlave.counter.vaginal += 1>>
+	<<set $vaginalTotal += 1>>
+	<<set $activeSlave.devotion += 4>>
+	<<set $activeSlave.energy -= 2>>
+	<</replace>>
+<</link>>
+
+<<case "chatting">>
+
+<<link "Put $his mouth to better use">>
+	<<replace "#result">>
+	You announce that $he'll have less trouble gossiping instead of being prompt if $his mouth is nice and tired. Comprehension and apprehension dawn on $his face in the moment before you <<if $activeSlave.collar != "none">>grab $him by the collar and pull<<else>>put a hand on $his shoulder and shove<</if>> $him to the ground. $He goes down without resistance, <<if $PC.dick != 0>>already opening wide for your stiff prick.<<else>>$his look of unconcern vanishing when $he sees you pulling out a strap-on. $He doesn't get to eat pussy today; today $he gets fucked in the face.<</if>> You shove it down $his
+	<<if $activeSlave.sexualQuirk == "gagfuck queen">>
+		spectacularly unresisting throat. The gagfuck queen has no gag reflex to speak of, but even $he has $his limit. You rape $his face without mercy, deliberately ruining $his practiced ability to breathe while giving a cock deep oral.
+	<<elseif ($activeSlave.fetish == "cumslut") && ($activeSlave.fetishKnown == 1)>>
+		eager throat. The cumslut loves giving oral, but soon realizes that you have no intention of letting $him love this. You rape $his face without mercy, hilting $his lips against <<if $PC.dick != 0>>your base<<else>>the harness<</if>>.
+	<<else>>
+		gagging throat, enjoying the sensations of $his lips and tongue writhing against you as $he desperately tries to accommodate the intruder.
+	<</if>>
+	$He begins to struggle a little, so you snake a hand down behind $his head to hold $him in place. When you're done, $he's an inelegant mess, coughing and gasping for air. <<if canTalk($activeSlave)>>Once $he's got $his breath back, $he tearfully<<else>>Even as $he pants, $he uses shaky gestures to beg forgiveness, and $he even<</if>> promises to be less chatty. $He'll be @@.hotpink;more punctual@@ in the future, but due to the connection between sex and punishment $he'll be @@.red;a little less eager for sex,@@ especially oral.
+	<<set $activeSlave.counter.oral += 1>>
+	<<set $oralTotal += 1>>
+	<<set $activeSlave.devotion += 4>>
+	<<set $activeSlave.energy -= 2>>
+	<</replace>>
+<</link>>
+
+<<case "dawdling">>
+
+<<link "Make $him run">>
+	<<replace "#result">>
+	You tell $him that $he clearly needs practice being prompt. Your tone is conversational, but $he doesn't mistake it for kindness. It's the tone you use with slaves when imparting guidance which is to be accepted and followed on pain of terrible punishment. You make $him explain where $he was and what $he was doing previously, and require $him to walk you there. $He does, <<if $activeSlave.trust > 20>>trustingly<<elseif $activeSlave.trust >= -20>>rather fearfully<<else>>shaking with fear<</if>>, and when you get there you tell $him to run to $his next task. $He hesitates for an instant, until you <<if $PC.title == 1>>bellow<<else>>shriek<</if>> at $him to run! $He takes off,
+	<<if $activeSlave.shoes == "extreme heels">>
+		tottering agonizingly along in $his extreme heels. $He isn't running, not really, but $his slutty shoes are so ridiculous that $he can't. $He's going as fast as $he possibly can.
+	<<elseif ($activeSlave.shoes == "heels") || ($activeSlave.shoes == "boots")>>
+		running awkwardly in $his <<if $activeSlave.shoes == "heels">>heels<<else>>heeled boots<</if>>.
+	<<else>>
+		running as fast as $his legs can carry $him.
+	<</if>>
+	As $he goes,
+	<<if $activeSlave.dick > 3>>
+		$his <<if $activeSlave.dick > 5>>ridiculous penis<<else>>big dick<</if>> flops around painfully, hitting $his thighs, but $he tries to ignore it.
+	<<elseif $activeSlave.scrotum > 3>>
+		$his <<if $activeSlave.scrotum > 5>>huge ballsack<<else>>generous scrotum<</if>> gets painfully pinched between $his thighs, but $he tries to ignore it.
+	<<elseif $activeSlave.belly >= 10000>>
+		$his huge <<if $activeSlave.pregKnown == 1>>pregnancy<<else>>belly<</if>> impedes $him terribly, but $he tries to waddle along as best $he can.
+	<<elseif $activeSlave.boobsImplant > 600>>
+		$his implants bounce around painfully, so $he cradles $his fake tits in $his arms, trying to support them as much as possible.
+	<<elseif $activeSlave.boobs > 2000>>
+		$his huge tits bounce around painfully, so $he cradles $his udders in $his arms, trying to support them as much as possible.
+	<<elseif $activeSlave.butt > 2>>
+		$his big buttocks impede $him a bit, but $he does $his best, making them work around delightfully.
+	<<else>>
+		$his cute rear makes a pretty picture.
+	<</if>>
+	You make $him repeat the exercise until $he's quite tired, hounding $him mercilessly, and then send $him off to rinse away the sweat $he worked up before getting back to work. $He'll be @@.hotpink;more punctual@@ in the future.
+	<<set $activeSlave.devotion += 4>>
+	<</replace>>
+<</link>>
+
+<<case "slave refusal">>
+
+<<link "Make sure $he knows $he's for use">>
+	<<replace "#result">>
+	Deciding to ensure the $desc really understands that $he's a sex slave and can be used by anyone, even other slaves, you order $him to put $his mouth to work on the slave who demanded sex from $him.
+	<<set $activeSlave.counter.oral += 1>>
+	<<set $oralTotal += 2>>
+	<<if $activeSlave.devotion > 20>>$He hurries to comply, knowing $he's in trouble and not wanting to make it any worse.<<elseif $activeSlave.trust < -20>>$He hurries to obey, terrified that resistance will make it worse.<<else>>$He looks momentarily mutinous, but decides not to resist and gets down to it.<</if>> Once $he's working away, you pull $his hips up and
+	<<if canDoVaginal($activeSlave) && ($activeSlave.vagina != 0)>>
+		push $his <<if hasBothLegs($activeSlave)>>legs<<else>>cheeks<</if>> apart, leaving $his <<if $activeSlave.vagina > 2>>loose<<elseif $activeSlave.vagina > 1>>poor<<else>>tight little<</if>> pussy vulnerable. You fuck $him hard, making it a punishment.
+		<<set $activeSlave.counter.vaginal += 1>>
+		<<set $vaginalTotal += 1>>
+	<<elseif canDoAnal($activeSlave) && ($activeSlave.anus != 0)>>
+		paw $his butt, using a couple of fingers to tease $his <<if $activeSlave.anus > 2>>relaxed<<elseif $activeSlave.anus > 1>>slutty<<else>>tight little<</if>> asshole before penetration. You fuck $him hard, making it a punishment.
+		<<set $activeSlave.counter.anal += 1>>
+		<<set $analTotal += 1>>
+	<<else>>
+		push $his <<if hasBothLegs($activeSlave)>>legs<<else>>cheeks<</if>> together, settling for some <<if $PC.dick != 0>>frottage<<else>>tribbing<</if>> to preserve $his virginit<<if $activeSlave.vagina == -1>>y<<else>>ies<</if>>. Since you're not fucking $him, you spank $his ass mercilessly to make it an effective punishment.
+		<<set $activeSlave.counter.oral += 1>>
+		<<set $oralTotal += 1>>
+	<</if>>
+	The horny slave getting oral enjoys the oral attention, especially once $activeSlave.slaveName starts to groan with discomfort. You discard $him once everyone except $him has gotten off. $He'll be @@.hotpink;more submissive@@ to sexual demands from now on, though $he'll be @@.red;slightly less interested in sex@@ for $his own pleasure.
+	<<set $activeSlave.devotion += 4>>
+	<<set $activeSlave.energy -= 2>>
+	<</replace>>
+<</link>>
+
+<<case "slave molestation">>
+
+<<link "Make $him apologize and then dominate $him">>
+	<<replace "#result">>
+	You order the horny $desc to apologize to the slave $he grabbed, which $he does, <<if canTalk($activeSlave)>>managing to sound authentically sorry<<else>>gesturing $his regret with apparent sincerity<</if>>. It seems $he might feel some actual guilt at molesting a fellow slave, but $he's about to feel much sorrier. Once the other slave has been dismissed, you grab $him by the neck and
+	<<if canDoVaginal($activeSlave) && ($activeSlave.vagina != 0)>>
+		shove $him up against the nearest wall, using a bit of warning pressure of your fingers against $his throat to warn $him to take $his punishment. Then you <<if $PC.dick != 0>>jam your cock inside $him, making $him wriggle from the uncomfortable angle<<else>>grind your pussy against $him, fucking $him hard despite the lack of penetration<</if>>.
+		<<set $activeSlave.counter.vaginal += 1>>
+		<<set $vaginalTotal += 1>>
+	<<elseif canDoAnal($activeSlave) && ($activeSlave.anus != 0)>>
+		shove $his face against the nearest wall, using a bit of warning pressure of your fingers against $his throat to warn $him to take $his punishment. Then you <<if $PC.dick != 0>>jam your cock up $his butt, making $his sphincter spasm from the rough penetration<<else>>use one hand to fuck $his ass and the other to look after yourself<</if>>.
+		<<set $activeSlave.counter.anal += 1>>
+		<<set $analTotal += 1>>
+	<<else>>
+		pull $him to $his knee<<if hasBothLegs($activeSlave)>>s<</if>>, <<if $PC.dick != 0>>shoving your dick down $his throat<<else>>straddling $his face and grinding yourself against $his mouth<</if>>.
+		<<set $activeSlave.counter.oral += 1>>
+		<<set $oralTotal += 1>>
+	<</if>>
+	The slut needs it so badly that $he almost climaxes, but you ruin $his building orgasms whenever you detect them. When you've gotten yours, you drop $him and walk off, leaving $him feeling comprehensively fucked, but no less horny. $He'll be @@.hotpink;very willing@@ to do anything that will earn $his release.
+	<<set $activeSlave.devotion += 4>>
+	<</replace>>
+<</link>>
+
+<<default>>
+	ERROR: bad sin
+<</switch>>
+
+</span>

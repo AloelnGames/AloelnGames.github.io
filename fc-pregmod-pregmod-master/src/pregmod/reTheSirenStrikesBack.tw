@@ -1,0 +1,162 @@
+:: RE The Siren Strikes Back [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event", $returnTo = "Random Nonindividual Event", $showEncyclopedia = 1, $encyclopedia = "Enslaving People">>
+<<set $swanSong = 3>>
+
+<<set _ssb = $slaves.find(function(s) { return s.origin == "$He came to you to escape being sold to a cruel master after $his producer informed $him of $his debt." && s.newGamePlus == 0 && s.fetish != "mindbroken" && s.fuckdoll == 0; })>>
+
+<<if $pedo_mode == 1>>
+	<<set $activeSlaveOneTimeMinAge = 16>>
+<<else>>
+	<<set $activeSlaveOneTimeMinAge = 30>>
+<</if>>
+<<set $activeSlaveOneTimeMaxAge = 40>>
+<<set $one_time_age_overrides_pedo_mode = 1>>
+<<set $oneTimeDisableDisability = 1>>
+<<set $activeSlave = GenerateNewSlave()>>
+<<set $activeSlave.origin = "$He was brought to you to pay for what $he did to one of your slaves.">>
+<<set $activeSlave.career = "a producer">>
+<<set $activeSlave.devotion = random(-70,30)>>
+<<set $activeSlave.trust = random(-100,-70)>>
+<<run setHealth($activeSlave, jsRandom(-20, 20), Math.max(normalRandInt(0, 2), 0), Math.max(normalRandInt(0, 2), 0), 0, jsRandom(0, 20))>>
+<<set $activeSlave.anus = 0>>
+<<if $activeSlave.vagina > -1>>
+	<<set $activeSlave.vagina = 1>>
+	<<set $activeSlave.preg = -1>>
+<</if>>
+<<set $activeSlave.skill.vaginal = 0>>
+<<set $activeSlave.skill.oral = 0>>
+<<set $activeSlave.skill.anal = 0>>
+<<set $activeSlave.behavioralFlaw = "none">>
+<<set $activeSlave.hStyle = "neat">>
+<<set $activeSlave.pubicHStyle = "waxed">>
+<<set $activeSlave.underArmHStyle = "waxed">>
+<<set $activeSlave.intelligenceImplant = 30>>
+<<set $activeSlave.intelligence = 100>>
+<<set $activeSlave.prestige = 3>>
+<<set $activeSlave.prestigeDesc = "$He was a well known music producer infamous for constantly having musicians disappear on $his watch.">>
+<<set $activeSlave.accent = 1>>
+<<set $activeSlave.clothes = "nice business attire">>
+
+<<setLocalPronouns $activeSlave 2>>
+<<run Enunciate($activeSlave)>>
+<<setSpokenLocalPronouns $activeSlave _ssb>>
+
+<span id="artFrame">
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<<if $imageChoice == 1>>
+			<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+		<<else>>
+			<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+		<</if>>
+	<</if>>
+	/* 000-250-006 */
+</span>
+
+Several weeks have passed since you gained the musical prodigy and you couldn't help but notice $his constant scowl and muttering about "getting revenge one day" or "wishing $his producer would pay for what happened" whenever $he was not working. You decide to look into the incident and direct $assistant.name to look into the financial situation of $his record label. It turns out that not only should this slave not be eligible for enslavement due to $his performance profits, but a certain someone has been taking that money for themselves. You issue a bounty for $his producer and await a response. With surprising speed, an answer comes from a bounty hunter. The underhanded producer never left the arcology, instead opting to make use of the guest living arrangements you had set up for the concert. Only when an announcement of the bounty went out did _he2 realize _his2 peril and attempt to flee. The bounty hunter literally drags the escapee by the collar into your penthouse and throws _him2 at your feet. The coward shivers as your eyes meet _hers2.
+<br><br>
+"Plea<<s>>e, don't hurt me! I'll pay for that <<s>>lave I <<s>>ent you to be relea<<s>>ed, even <<s>>et $him up with the life <<he 2>> would have had if I hadn't embe<<zz>>led the profit<<s>>!"
+<br><br>
+
+<<if def _ssb>>
+	<<setLocalPronouns _ssb>>
+	<<run Enunciate(_ssb)>>
+	Just as the little weasel at your feet finishes, _ssb.slaveName
+	<<if canWalk(_ssb)>>
+		walks in,
+	<<else>>
+		is carried in,
+	<</if>>
+	$his face quickly donning a scowl of pure anger and hatred.
+	<<if canTalk(_ssb)>>
+		"<<Master>>, plea<<s>>e let me have my revenge on thi<<s>> de<<s>>picable lowlife," $he hisses. "I promi<<s>>e not to kill _him2, ju<<s>>t hurt _him2 enough to let _him2 know the <<s>>uffering they cau<<s>>ed me."
+	<<else>>
+		$He may not be able to talk anymore, but $his request of you is very clear across $his face.
+	<</if>>
+
+	<br><br>
+
+	<span id="result">
+	<<link "Enslave _him2">>
+		<<replace "#result">>
+		You decide to spare the coward from _his2 former subordinate's wrath and simply enslave _him2.
+		<br>
+		<<include "New Slave Intro">>
+		<<set $activeSlave.recruiter = 0>>
+		<</replace>>
+	<</link>>
+	<<if !isAmputee(_ssb)>>
+		<br><<link "Enslave _him2 and throw _him2 to _ssb.slaveName">>
+			<<set $activeSlave.clothes = "no clothing">>
+			<<set $activeSlave.recruiter = 0>>
+			<<run healthDamage($activeSlave, 20)>>
+			<<replace "#artFrame">>
+				/* 000-250-006 */
+				<<if $seeImages == 1>>
+					<div class="imageColumn">
+						<div class="imageRef medImg">
+							<<= SlaveArt($activeSlave, 2, 0)>>
+						</div>
+						<div class="imageRef medImg">
+							<<= SlaveArt(_ssb, 2, 0)>>
+						</div>
+					</div>
+				<</if>>
+				/* 000-250-006 */
+			<</replace>>
+			<<replace "#result">>
+			You decide to give the victimized prodigy a chance for payback. $He moves over to $his former boss and begins to caress the despicable thief as _he2 shakes with dread of what is to come. As $he moves lower, $he applies more pressure, peaking right on the genitals. The cowardly former executive yelps in pain, instinctively trying to get away from the <<if hasAnyArms(_ssb)>>hand<<else>>foot<</if>> crushing the most sensitive spot on _his2 body. After several minutes of the coward screaming in pain, _his2 former victim gets up and delivers a hard <<if hasBothLegs(_ssb)>>kick<<elseif hasAnyLegs(_ssb)>>stomp<<else>>punch<</if>> to the groin, eliciting another scream and causing $his former boss to assume the fetal position. You send for another slave to drag the whimpering slave<<= _girl2>> to _his2 feet for inspection.
+			<br>
+			<<include "New Slave Intro">>
+			<</replace>>
+		<</link>>
+	<</if>>
+	</span>
+<<else>>
+	You inform the coward at your feet that the slave in question is long gone, making _him2 panic even more at _his2 grim situation.
+	<br><br>
+	<span id="result">
+	<<link "Enslave _him2">>
+		<<set $activeSlave.clothes = "no clothing">>
+		<<set $activeSlave.recruiter = 0>>
+		<<replace "#artFrame">>
+			/* 000-250-006 */
+			<<if $seeImages == 1>>
+				<<if $imageChoice == 1>>
+					<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+				<<else>>
+					<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+				<</if>>
+			<</if>>
+			/* 000-250-006 */
+		<</replace>>
+		<<replace "#result">>
+		You spare the coward the pain and humiliation _he2 deserves and simply enslave _him2.
+		<br>
+		<<include "New Slave Intro">>
+		<</replace>>
+	<</link>>
+	<br><<link "Enslave _him2 and punish _him2 for their actions">>
+		<<set $activeSlave.clothes = "no clothing">>
+		<<set $activeSlave.recruiter = 0>>
+		<<run healthDamage($activeSlave, 20)>>
+		<<replace "#artFrame">>
+			/* 000-250-006 */
+			<<if $seeImages == 1>>
+				<<if $imageChoice == 1>>
+					<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+				<<else>>
+					<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+				<</if>>
+			<</if>>
+			/* 000-250-006 */
+		<</replace>>
+		<<replace "#result">>
+		You decide the coward needs more punishment. You order a whip brought to you and give _him2 several lashes directly across _his2 exposed genitalia. _He2 cries out with each lash as _his2 nethers accumulate angry red welts, some even bleeding slightly. After the yelps stop, you feel enough punishment has been given for now and have the producer turned slave hauled to _his2 feet for a proper inspection.
+		<br>
+		<<include "New Slave Intro">>
+		<</replace>>
+	<</link>>
+	</span>
+<</if>>

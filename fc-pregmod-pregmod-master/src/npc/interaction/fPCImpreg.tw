@@ -1,0 +1,184 @@
+:: FPCImpreg [nobr]
+
+/* TODO: add reactions for incest */
+
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+<<set _bonus = random(6,20)>>
+<<set _belly = bellyAdjective(getSlave($AS))>>
+<<set _superfetation = (getSlave($AS).geneticQuirks.superfetation == 2 && getSlave($AS).pregKnown == 1) ? 1 : 0>>
+
+<<if getSlave($AS).mpreg == 1>>
+	<<set getSlave($AS).counter.anal += _bonus+1, $analTotal += _bonus+1>>
+<<else>>
+	<<set getSlave($AS).counter.vaginal += _bonus+1, $vaginalTotal += _bonus+1>>
+<</if>>
+
+You call $him over so you can
+<<if getSlave($AS).mpreg == 1>>
+	<<if (getSlave($AS).anus > 2)>>
+		fuck $his gaping, fertile
+	<<elseif (getSlave($AS).anus == 2)>>
+		use $his whorish, fertile
+	<<elseif (getSlave($AS).anus == 1)>>
+		use $his tight, fertile
+	<<elseif (getSlave($AS).anus == 0)>>
+		take $his fertile, virgin
+	<</if>>
+	<<if _superfetation == 1>>
+		asshole and put another baby in $him.
+	<<else>>
+		asshole.
+	<</if>>
+<<else>>
+	<<if (getSlave($AS).vagina > 2)>>
+		fuck $his gaping, fertile cunt.
+	<<elseif (getSlave($AS).vagina == 2)>>
+		use $his whorish, fertile cunt.
+	<<elseif (getSlave($AS).vagina == 1)>>
+		use $his tight, fertile cunt.
+	<<elseif (getSlave($AS).vagina == 0)>>
+		take $his fertile, virgin pussy.
+	<</if>>
+	<<if _superfetation == 1>>
+		You plan on putting another baby in $him.
+	<</if>>
+
+	<<if (getSlave($AS).vaginaTat == "tribal patterns")>>
+		The tattoos on $his abdomen certainly draw attention there.
+	<<elseif (getSlave($AS).vaginaTat == "scenes")>>
+		The tattoos on $his abdomen nicely illustrate what you mean to do to $him.
+	<<elseif (getSlave($AS).vaginaTat == "degradation")>>
+		The tattoos on $his abdomen ask you to, after all.
+	<</if>>
+
+	<<if getSlave($AS).clit == 1>>
+		$His big clit <<if getSlave($AS).foreskin > 0>>peeks out from under its hood<<else>>can't be missed<</if>>.
+	<<elseif getSlave($AS).clit > 2>>
+		$His huge clit is impossible to miss.
+	<</if>>
+
+	<<if (getSlave($AS).vaginaPiercing > 1) && (getSlave($AS).vagina != -1)>>
+		$His pierced lips and clit have $him nice and wet.
+	<<elseif (getSlave($AS).vaginaPiercing == 1) && (getSlave($AS).vagina != -1)>>
+		$His pierced clit has $him nice and moist.
+	<</if>>
+<</if>>
+
+<<if (getSlave($AS).fetish == "pregnancy") && (getSlave($AS).fetishStrength > 60) && (getSlave($AS).fetishKnown == 1) && (getSlave($AS).vagina == 0 || (getSlave($AS).anus == 0 && getSlave($AS).mpreg == 1))>>
+	$He cries with joy and presents $his virgin <<if getSlave($AS).mpreg == 1>>asshole<<else>>pussy<</if>> for fertilization. $He sobs with happiness when $he feels your hot seed<<if $PC.prostate >= 2>> filling $him until $his belly is distended and wobbling with your cum<<elseif $PC.prostate >= 1>> pouring into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pouring into $him<</if>>, knowing that $his first time will always be special to $him. $He spends the rest of the day cherishing $his _belly stomach. This new connection with $his <<= WrittenMaster(getSlave($AS))>> @@.hotpink;increases $his devotion to you.@@ @@.lime;$His <<if getSlave($AS).mpreg == 1>>asshole<<else>>pussy<</if>> has been broken in, and there's a good chance $he's <<if _superfetation == 1>>got another bun in the oven<<else>>pregnant<</if>>.@@
+	<<if getSlave($AS).mpreg == 1>>
+		<<set getSlave($AS).anus = 1>>
+	<<else>>
+		<<set getSlave($AS).vagina = 1>>
+	<</if>>
+	<<set getSlave($AS).devotion += 15>>
+<<elseif (getSlave($AS).fetish == "pregnancy") && (getSlave($AS).fetishStrength > 60) && (getSlave($AS).fetishKnown == 1)>>
+	$He cries with joy and presents $his fertile <<if getSlave($AS).mpreg == 1>>asshole<<else>>pussy<</if>> for breeding. $He sobs with happiness when $he feels your hot seed<<if $PC.prostate >= 2>> filling $him until $his belly is distended and wobbling with your cum<<elseif $PC.prostate >= 1>> pouring into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pouring into $him<</if>>. $He spends the rest of the day considering $his own _belly stomach with pride. This new connection with $his <<= WrittenMaster(getSlave($AS))>> @@.hotpink;increases $his devotion to you.@@
+	<<set getSlave($AS).devotion += 10>>
+<<elseif (getSlave($AS).devotion > 20) && (getSlave($AS).vagina == 0 || (getSlave($AS).anus == 0 && getSlave($AS).mpreg == 1))>>
+	$He accepts your orders without comment and presents $his virgin <<if getSlave($AS).mpreg == 1>>asshole<<else>>pussy<</if>> for fertilization. $He gasps in shock when $he feels your hot seed<<if $PC.prostate >= 2>> filling $him until $his belly is distended and wobbling with your cum<<elseif $PC.prostate >= 1>> pouring into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pouring into $him<</if>>. $He spends the rest of the day struggling with roiling emotions. Since $he is already well broken<<if _superfetation == 1>> and pregnant<</if>>, this new connection with $his <<= WrittenMaster(getSlave($AS))>> @@.hotpink;increases $his devotion to you.@@ @@.lime;$His <<if getSlave($AS).mpreg == 1>>asshole<<else>>pussy<</if>> has been broken in, and there's a good chance $he's <<if _superfetation == 1>>got another bun in the oven<<else>>pregnant<</if>>.@@
+	<<if getSlave($AS).mpreg == 1>>
+		<<set getSlave($AS).anus = 1>>
+	<<else>>
+		<<set getSlave($AS).vagina = 1>>
+	<</if>>
+	<<set getSlave($AS).devotion += 10>>
+<<elseif (getSlave($AS).devotion >= -20) && (getSlave($AS).vagina == 0 || (getSlave($AS).anus == 0 && getSlave($AS).mpreg == 1))>>
+	$He is clearly unhappy at losing $his pearl of great price to you; this probably isn't what $he imagined $his first real sex would be like. Worse, $he knows $he's fertile and realizes
+	<<if _superfetation == 1>>
+		$his existing pregnancy is not going to stop you from adding another baby to $his womb.
+	<<else>>
+		$he'll likely get pregnant.
+	<</if>>
+	Nevertheless, this new connection with $his <<= WrittenMaster(getSlave($AS))>> @@.hotpink;increases $his devotion to you.@@ @@.lime;$His <<if getSlave($AS).mpreg == 1>>asshole<<else>>pussy<</if>> has been broken in.@@
+	<<if getSlave($AS).mpreg == 1>>
+		<<set getSlave($AS).anus = 1>>
+	<<else>>
+		<<set getSlave($AS).vagina = 1>>
+	<</if>>
+	<<set getSlave($AS).devotion += 4>>
+<<elseif (getSlave($AS).vagina == 0 || (getSlave($AS).anus == 0 && getSlave($AS).mpreg == 1))>>
+	As you anticipated, $he refuses to give you $his virginity. And as you expected, $he is unable to resist you. $He cries as your cock opens $his fresh, tight hole. Afterwards, $he <<if hasAnyArms(getSlave($AS))>>clutches $his _belly stomach<<else>>lies there<</if>> and sobs, horrified by the knowledge that
+	<<if _superfetation == 1>>
+		$his unborn <<if getSlave($AS).pregType == 1>>child is<<else>>children are<</if>> now sharing quarters with $his rapist's child.
+	<<else>>
+		$he's probably carrying $his rapist's child.
+	<</if>>
+	The rape @@.mediumorchid;decreases $his devotion to you@@ and @@.gold;fills $him with fear.@@ @@.lime;$His <<if getSlave($AS).mpreg == 1>>asshole<<else>>pussy<</if>> has been broken in.@@
+	<<set getSlave($AS).devotion -= 5, getSlave($AS).trust -= 5>>
+	<<if getSlave($AS).mpreg == 1>>
+		<<set getSlave($AS).anus = 1>>
+	<<else>>
+		<<set getSlave($AS).vagina = 1>>
+	<</if>>
+<<elseif isAmputee(getSlave($AS))>>
+	You have $his limbless torso set on the end of the couch, face-<<if _superfetation == 1>>up<<else>>down<</if>>, with $his hips up in the air. This way, you get the greatest degree of penetration into $his fertile <<if getSlave($AS).mpreg == 1>>ass<<else>>pussy<</if>> you can manage. $He moans <<if _superfetation == 1>>openly<<else>>into the cushions<</if>>, knowing that when $he feels the hot flow of semen<<if $PC.prostate >= 2>> filling $him until $his belly is distended and wobbling with your cum<<elseif $PC.prostate >= 1>> pouring into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pouring into $him<</if>>, $he has probably <<if _superfetation == 1>>got another bun in the oven<<else>>gotten pregnant<</if>>.
+<<elseif tooBigBelly(getSlave($AS))>>
+	Since $he already has trouble moving with $his _belly belly, you just tip $him onto it; this leaves $his fertile <<if getSlave($AS).mpreg == 1>>ass<<else>>pussy<</if>> exposed and vulnerable. $He moans<<if hasAnyArms(getSlave($AS))>> as $he clutches the sides of $his stomach<</if>>, knowing that when $he feels the hot flow of semen<<if $PC.prostate >= 2>> filling $him until $his the pressure forces it to spray around your shaft<<elseif $PC.prostate >= 1>> pouring into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pouring into $him<</if>>, $he has probably gotten <<if _superfetation == 1>> another bun added to the oven<<else>>pregnant<</if>>.
+<<elseif tooFatSlave(getSlave($AS))>>
+	You set $him down on the couch, face-down, with $his hips up in the air. This way, $he's pinned in place by the weight of $his own body, and you get the greatest degree of penetration into $his fertile <<if getSlave($AS).mpreg == 1>>ass<<else>>pussy<</if>>; after you push into $his soft folds enough to reach it, of course. $He moans into the cushions, knowing that when $he feels the hot flow of semen<<if $PC.prostate >= 2>> filling $him until $his belly is distended and wobbling with your cum<<elseif $PC.prostate >= 1>> pouring into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pouring into $him<</if>>, $he has probably <<if _superfetation == 1>>got another bun in the oven<<else>>gotten pregnant<</if>>.
+<<elseif tooBigBreasts(getSlave($AS))>>
+	You set $him down on the couch, face-down, with $his hips up in the air. This way, $he's pinned in place by the weight of $his ridiculous tits, and you get the greatest degree of penetration into $his fertile <<if getSlave($AS).mpreg == 1>>ass<<else>>pussy<</if>>. $He moans into the cushions, knowing that when $he feels the hot flow of semen<<if $PC.prostate >= 2>> filling $him until $his belly is distended and wobbling with your cum<<elseif $PC.prostate >= 1>> pouring into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pouring into $him<</if>>, $he has probably <<if _superfetation == 1>>got another bun in the oven<<else>>gotten pregnant<</if>>.
+<<elseif tooBigButt(getSlave($AS))>>
+	You set $him down on the couch, face-down, with $his hips up in the air. This way, $he's stuck under $his ridiculous ass, you get an amazingly soft rear to pound, and you get the greatest degree of penetration into $his fertile <<if getSlave($AS).mpreg == 1>>ass<<else>>pussy<</if>>. $He moans into the cushions, knowing that when $he feels the hot flow of semen<<if $PC.prostate >= 2>> filling $him until $his belly is distended and wobbling with your cum<<elseif $PC.prostate >= 1>> pouring into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pouring into $him<</if>>, $he has probably <<if _superfetation == 1>>got another bun in the oven<<else>>gotten pregnant<</if>>.
+<<elseif tooBigDick(getSlave($AS))>>
+	You set $him down on the couch, face-down, with $his hips up in the air. This way, $he's anchored in place by the weight of $his ridiculous cock, and you get the greatest degree of penetration into $his fertile <<if getSlave($AS).mpreg == 1>>ass<<else>>pussy<</if>>. $He moans into the cushions, knowing that when $he feels the hot flow of semen<<if $PC.prostate >= 2>> filling $him until $his belly is distended and wobbling with your cum<<elseif $PC.prostate >= 1>> pouring into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pouring into $him<</if>>, $he has probably <<if _superfetation == 1>>got another bun in the oven<<else>>gotten pregnant<</if>>.
+<<elseif tooBigBalls(getSlave($AS))>>
+	You set $him down on the couch, face-down, with $his hips up in the air. This way, $he's anchored in place by the weight of $his ridiculous balls, and you get the greatest degree of penetration into $his fertile <<if getSlave($AS).mpreg == 1>>ass<<else>>pussy<</if>>. $He moans into the cushions, knowing that when $he feels the hot flow of semen<<if $PC.prostate >= 2>> filling $him until $his belly is distended and wobbling with your cum<<elseif $PC.prostate >= 1>> pouring into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pouring into $him<</if>>, $he has probably <<if _superfetation == 1>>got another bun in the oven<<else>>gotten pregnant<</if>>.
+<<elseif (getSlave($AS).fetish == "submissive") && (getSlave($AS).fetishStrength > 60) && (getSlave($AS).fetishKnown == 1)>>
+	$He <<if getSlave($AS).belly >= 10000>>waddles<<else>>comes<</if>> submissively over, smiling a little submissive smile, and spreads $himself for you.
+	<<if getSlave($AS).belly < 5000>>
+		You take $him on the couch next to your desk in the missionary position. $He hugs $his torso to you and $his breasts press against your chest; you can feel $his heart beating hard.
+	<<else>>
+		You take $him from behind against your desk. $He steadies $himself as $he feels your hands roaming across $his _belly belly. As the sex reaches its climax, $his breaths grow short and $his moans passionate. $He pushed against you,
+	<</if>>
+	As the sex reaches its climax your semen<<if $PC.prostate >= 2>> fills $him until $his stomach is distended and wobbling with your cum<<elseif $PC.prostate >= 1>> pours into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pours into $him<<else>> jets into $his welcoming depths<</if>> as $he begs you to use $his unworthy body to make a new slave.
+<<elseif getSlave($AS).devotion < -20>>
+	$He tries to refuse, so you bend the disobedient slave over your desk and take $him hard from behind. $His breasts slide back and forth across the desk. You give $his buttocks some nice hard swats as you pound $him. $He grunts and moans but knows better than to try to get away. $He begs you not to cum inside $him, knowing $he's fertile, and sobs when $he feels you<<if $PC.prostate >= 2>> filling $him until $his belly is distended and wobbling with your cum<<elseif $PC.prostate >= 1>> pouring into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pouring into $him<<else>> blow your load<</if>> despite $his pleas.
+<<elseif getSlave($AS).devotion <= 20>>
+	$He obeys, lying on the couch next to your desk<<if hasAnyLegs(getSlave($AS))>> with $his leg<<if hasBothLegs(getSlave($AS))>>s spread<<else>> moved aside<</if>><</if>>. You kneel on the ground and enter $him<<if hasAnyLegs(getSlave($AS))>>, a hand on <<if hasBothLegs(getSlave($AS))>>each of $his legs<<else>>$his leg<</if>> to give you purchase<</if>>. The pounding is hard and fast, and $he gasps and whines.
+	<<if getSlave($AS).belly >= 100000>>
+		You reach a hand up to tease $his already taut dome of a pregnancy.
+	<<else>>
+		You reach a hand down to maul $his breasts.
+	<</if>>
+	$He begs you not to cum inside $him, knowing $he's fertile, but soon loses track of $his fears as $he enjoys $himself. $He bites $his lip and moans as $he climaxes. You fill $his squeezing fuckhole<<if $PC.prostate >= 2>> far beyond capacity<<elseif $PC.prostate >= 1>> beyond capacity<<elseif $PC.balls >= 9>> to capacity<</if>> with your cum; $he realizes what you've done with a gasp and a worried look.
+<<else>>
+	<<if getSlave($AS).belly < 5000>>
+		$He skips over smiling and gives you a quick kiss. You take $him on the couch next to your desk in the missionary position. $He hugs $his torso to you and $his breasts press against your chest; you can feel $his heart beating hard. As the sex reaches its climax, $his kisses grow urgent and passionate. $He clings to you,
+	<<else>>
+		$He waddles over smiling and leans in to give you a quick kiss. You take $him from behind against your desk. $He steadies $himself as $he feels your hands roaming across $his _belly belly. As the sex reaches its climax, $his breaths grow short and $his moans passionate. $He pushed against you,
+	<</if>>
+	your semen<<if $PC.prostate >= 2>> flowing into $him until $his stomach is distended and wobbling with your cum<<elseif $PC.prostate >= 1>> pouring into $him until $he is stuffed with your cum<<elseif $PC.balls >= 9>> pouring into $him<<else>> jetting into $him<</if>> as $he rides the downslope of $his orgasm. $He kisses you and promises to do $his best to use $his womb to make <<if _superfetation == 1>>another<<else>>a<</if>> good slave for you.
+<</if>>
+
+You repeat this ritual throughout the week, ensuring that <<= getSlave($AS).slaveName>>
+<<if _superfetation == 1>>
+	has @@.lime;added your child@@ to $his pregnancy.
+<<else>>
+	is @@.lime;carrying your child.@@
+<</if>>
+
+
+<<= knockMeUp(getSlave($AS), 100, 2, -1, 1)>>
+
+<<if $arcologies[0].FSRestart != "unset">>
+	<<if (getSlave($AS).breedingMark != 1 || $propOutcome == 0) && $eugenicsFullControl != 1>>
+		Rumors spread about you fucking your slaves pregnant; the Societal Elite are @@.red; very displeased@@ by these rumors.
+		<<set $failedElite += 5>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSGenderRadicalist != "unset" && getSlave($AS).mpreg == 1>>
+	Society @@.green;approves@@ of your fucking your slaves' asses pregnant; this advances the ideal all a slave needs is $his rear.
+	<<run repX($FSSingleSlaveRep*($arcologies[0].FSGenderRadicalist/$FSLockinLevel), "futureSocieties", getSlave($AS))>>
+	<<set $arcologies[0].FSGenderRadicalist += 0.05*$FSSingleSlaveRep>>
+<<elseif $arcologies[0].FSGenderFundamentalist != "unset" && getSlave($AS).mpreg == 1>>
+	Society @@.red;is disgusted@@ by this degenerate form of reproduction.
+	<<run repX(forceNeg($FSSingleSlaveRep*($arcologies[0].FSGenderFundamentalist/$FSLockinLevel)), "futureSocieties", getSlave($AS))>>
+	<<set $arcologies[0].FSGenderFundamentalist -= 0.05*$FSSingleSlaveRep>>
+<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+	Society @@.green;approves@@ of your putting a new slave in $him; this advances the idea that all slaves should bear their masters' babies.
+	<<run repX($FSSingleSlaveRep*($arcologies[0].FSGenderFundamentalist/$FSLockinLevel), "futureSocieties", getSlave($AS))>>
+	<<set $arcologies[0].FSGenderFundamentalist += 0.05*$FSSingleSlaveRep>>
+<</if>>

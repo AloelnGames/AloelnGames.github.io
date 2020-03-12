@@ -1,0 +1,87 @@
+:: corporate widgets [widget nobr]
+
+/*
+Usage:
+<<CorporateLedger _ledger $week>>
+
+	_ledger: One of the members of App.Corporate.ledger, such as .current or .old
+	$week: The current week or the previous week, depending on whether you used current or old.
+*/
+<<widget "CorporateLedger">>
+<<scope>>
+<<set _ledger = $args[0]>>
+<<set _week = $args[1]>>
+<table class="corporate">
+<thead>
+<tr><th colspan="2">Ledger for <<= asDateString(_week) >> - <<= asDateString(_week + 1, -1) >></th></tr>
+</thead>
+<tbody>
+/*Returns last week's revenue, gets calculated in corporationDevelopments, but slaves sold here also added to it for next week*/
+<tr><td>Revenue</td><td><<= cashFormatColor(_ledger.revenue)>></td></tr>
+<<if ($cheatMode) && ($cheatModeM) && App.Corporate.foreignRevenue > 0>>
+	<tr><td>Including Neighbor Bonus</td><td><<= cashFormatColor(_ledger.foreignRevenue)>></td></tr>
+<</if>>
+/*Just like revenue, except for operating expenses (all calculated in corporationDevelopments)*/
+<tr><td>Operating Expenses</td><td><<= cashFormatColor(_ledger.operations, true)>></td></tr>
+/*buying slaves to work on adds to this expense, works just like revenue*/
+<tr><td>Slave Expenses</td><td><<= cashFormatColor(_ledger.slaves, true)>></td></tr>
+/*costs associated with expanding divisions end up here, reports costs from last week, not current*/
+<tr><td>Asset Expenses</td><td><<= cashFormatColor(_ledger.development, true)>></td></tr>
+<<if ($cheatMode) && ($cheatModeM)>>
+	<tr>
+		<td>Economic <<if _ledger.economicBoost < 0>>Expenses<<else>>Windfall<</if>></td>
+		<td><<= cashFormatColor(_ledger.economicBoost)>></td>
+	</tr>
+<</if>>
+<tr><td>Overhead</td><td><<= cashFormatColor(_ledger.overhead, true)>></td></tr>
+<tr><td>Profit</td><td>
+<div><<= cashFormatColor(_ledger.profit)>></div>
+<<if _ledger.economicBoost > 0>>
+<div class="minor-note">
+	<<if _ledger.economy > 100>>
+		* Profits benefited from a strong economy.
+	<<elseif _ledger.economy > 60>>
+		* Profits were lowered by the weak economy.
+	<<else>>
+		* Profits were severely depressed by the failing economy.
+	<</if>>
+</div>
+<</if>>
+</td></tr>
+</tbody>
+<thead>
+<tr><th colspan="2">Totals</th></tr>
+</thead>
+<tbody>
+<tr>
+	<td>Liquidity</td>
+	<td>
+	<<if ($cheatMode) && ($cheatModeM)>>
+		<span id="corpCash"><<= cashFormatColor(App.Corporate.cash)>></span>
+		<<set _TcorpCash = App.Corporate.cash>>
+		<<textbox "_TcorpCash" _TcorpCash>>
+		<<link "Apply">>
+		<<set App.Corporate.cheatCash(_TcorpCash)>>
+		<<replace "#corpCash">><<= cashFormatColor(App.Corporate.cash)>><</replace>>
+		<</link>>
+	<<else>>
+		<<= cashFormatColor(App.Corporate.cash)>>
+	<</if>>
+	</td>
+</tr>
+<tr><td>Corporate Value</td><td><<= cashFormatColor(App.Corporate.value)>></td></tr>
+<tr>
+<td>Dividend for Payout</td>
+<td>
+<div><<= cashFormatColor(App.Corporate.dividend)>></div>
+<div class="minor-note">Pays out on <<=asDateString($args[1] + App.Corporate.dividendTimer, -1)>>, <<if App.Corporate.dividendTimer == 1>>
+	the end of this week
+<<else>>
+	in <<= App.Corporate.dividendTimer >> weeks
+<</if>>
+</div>
+</td></tr>
+</tbody>
+</table>
+<</scope>>
+<</widget>>

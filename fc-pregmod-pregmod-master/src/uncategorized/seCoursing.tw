@@ -1,0 +1,443 @@
+:: SE coursing [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Scheduled Event", $returnTo = "Scheduled Event", $coursed = 1, _seed = 0>>
+
+<<set $lurcherIndex = $slaveIndices[$Lurcher.ID]>>
+<<set $activeLurcher = getSlave($Lurcher.ID)>>
+
+<<setLocalPronouns $slaves[$lurcherIndex]>>
+
+<<set _clothesTemp = $activeLurcher.clothes, $activeLurcher.clothes = "no clothing">>
+<span id="artFrame">
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<<if $imageChoice == 1>>
+		<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeLurcher, 2, 0)>></div>
+	<<else>>
+		<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeLurcher, 2, 0)>></div>
+	<</if>>
+<</if>>
+/* 000-250-006 */
+</span>
+<<set $activeLurcher.clothes = _clothesTemp>>
+
+<span id="result">
+
+It's time to go coursing. You meet with fellow members of the Coursing Association while the automated maintenance drones clear the plaza and lay down the green, sharing a refined discussion of recent events over <<if $PC.refreshmentType == 0>>a $PC.refreshment<<elseif $PC.refreshmentType == 1>>glasses of $PC.refreshment<<elseif $PC.refreshmentType == 2>>plates of $PC.refreshment<<elseif $PC.refreshmentType == 3>>hits of $PC.refreshment<<elseif $PC.refreshmentType == 4>>shots of $PC.refreshment<<elseif $PC.refreshmentType == 5>>handfuls of $PC.refreshment<<elseif $PC.refreshmentType == 6>>tabs of $PC.refreshment<</if>>. Once the field is ready, the day's hares are led out and chained in a row along one side of the plaza, naked. You and the other members watch this process intently, since you won't get any more information on them than what you can learn by looking.
+<br><br>
+The rules have been explained to the hares: they're to be freed if they can reach the other side of the plaza without being caught and raped by the lurchers who will be released to chase them.
+
+<br><br>
+You lead your lurcher $activeLurcher.slaveName out on a leash, naked just like the hares.
+
+<<if ($activeLurcher.dick > 0)>>
+	<<if canPenetrate($activeLurcher) && ($activeLurcher.energy > 60) && ($activeLurcher.devotion > 20)>>
+		<<if ($activeLurcher.dick > 4)>>
+			$He's sporting an enormous half-erection, which has already been heavily lubricated to prevent permanent damage to the hares' holes. As you bring $him up to the mark, $he grabs its base and begins to slap it against $his thigh, hard. The hares look around to see what the wet smacking noise is, and are understandably frightened; one of them begins to beg openly. Your fellow competitors @@.green;think this is hilarious.@@
+			<<run repX(250, "event", $slaves[$lurcherIndex])>>
+			<<set $phallus = "huge dick">>
+		<<else>>
+			$He's ready to do $his best. Since $he's concentrating on the immediate challenge of catching rather than the secondary challenge of raping, $he isn't hard yet, but $he's not indifferent to the prospect of getting $his dick wet. There's a bead of precum forming at $his tip.
+			<<set $phallus = "dick">>
+		<</if>>
+	<<elseif !canAchieveErection($activeLurcher)>>
+		There's no way $he's going to be able to achieve an erection, so $he's holding a lubricated dildo in one hand. This is technically permitted under the rules, but your fellow competitors and the crowd gathering to spectate @@.red;consider it poor form.@@
+		<<run repX(-50, "event", $slaves[$lurcherIndex])>>
+		<<set $phallus = "dildo">>
+	<<elseif ($activeLurcher.energy <= 60) || ($activeLurcher.devotion <= 20)>>
+		$He looks nervous, and obviously doesn't find the situation arousing. $He knows $he's to catch and then rape a slave, but may not be able to get hard enough to do the deed properly. Your fellow competitors and the crowd gathering to spectate @@.red;are unimpressed@@ by $his lack of spirit.
+		<<run repX(-50, "event", $slaves[$lurcherIndex])>>
+		<<set $phallus = "fingers">>
+	<<else>>
+		$His dick is not a fit instrument for sexual assault, so $he's holding a lubricated dildo in one hand. This is technically permitted under the rules, but your fellow competitors and the crowd gathering to spectate @@.red;consider it poor form.@@
+		<<run repX(-50, "event", $slaves[$lurcherIndex])>>
+		<<set $phallus = "dildo">>
+	<</if>>
+<<elseif ($activeLurcher.clit > 1) && ($activeLurcher.energy > 60) && ($activeLurcher.devotion > 20)>>
+	$He's gently masturbating as you bring $him up to the mark, $his enormous clit becoming engorged and stiff. Your fellow competitors and the gathering crowd of spectators @@.green;are fascinated,@@ realizing that $he intends to attempt rape with it.
+	<<run repX(250, "event", $slaves[$lurcherIndex])>>
+	<<set $phallus = "clit">>
+<<elseif $seeDicks != 0>>
+	$He's holding a lubricated dildo in one hand, since $he's missing a natural phallus of $his own. This is technically permitted under the rules, but your fellow competitors and the crowd gathering to spectate @@.red;consider it poor form.@@
+	<<run repX(-50, "event", $slaves[$lurcherIndex])>>
+	<<set $phallus = "dildo">>
+<<else>>
+	$He's holding a lubricated dildo in one hand. As you bring $him up to the mark, $he begins to slap it against $his thigh out of nervousness and eagerness to begin. The hares look around to see what the wet smacking noise is, and are understandably frightened; one of them begins to cry openly.
+	<<set $phallus = "dildo">>
+<</if>>
+
+<<if canSee($activeLurcher)>>$activeLurcher.slaveName looks at you questioningly, wondering which of the hares $he should try to chase down and molest<<else>>$activeLurcher.slaveName looks at you questioningly, wondering which of the dinging bells $he should try to chase down and molest<</if>>.
+
+
+<<set $hare1 = 0, $hare2 = 0, $hare3 = 0>>
+
+<<set _possibleOrigins = []>>
+<<if $seeDicks != 100>>
+	<<set _possibleOrigins.push("housewife")>>
+	<<if $seePreg != 0>>
+		<<set _possibleOrigins.push("heavily pregnant")>>
+	<</if>>
+	<<set _possibleOrigins.push("virgin")>>
+	<<set _possibleOrigins.push("disobedient young")>>
+<</if>>
+<<if $seeDicks != 0>>
+	<<set _possibleOrigins.push("huge balled")>>
+	<<set _possibleOrigins.push("feminized")>>
+	<<set _possibleOrigins.push("disobedient young dickgirl")>>
+<</if>>
+
+<style>  /* a table is used here because very short hare descriptions cause images to indent oddly if they are shown. This ensures they are always directly below each other. */
+	table.coursing {
+		border-style: hidden;
+		empty-cells: hide;
+		border-collapse: separate;
+		border-spacing: 0px 15px;
+	}
+</style>
+
+<table class="coursing" border="1">
+<<for _sec = 0; _sec < 3; _sec++>>
+<tr>
+<<set $hareSpeed = 10>>
+<<set $origin = _possibleOrigins.pluck()>> /* select random origin and remove from list to avoid using same origin multiple times */
+<<if $origin == "virgin">>
+	<<set $activeSlaveOneTimeMaxAge = 20>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.vagina = 0>>
+	<<set $activeSlave.counter.anal += 1, $analTotal += 1>>
+	<<set $activeSlave.preg = -1>>
+	<<set $activeSlave.ovaries = 1>>
+	<<set $activeSlave.skill.vaginal = 0>>
+	<<set $activeSlave.skill.oral = 0>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.weight = random(-50,50)>>
+<<elseif $origin == "heavily pregnant">>
+	<<set $activeSlaveOneTimeMinAge = $fertilityAge>>
+	<<set $activeSlaveOneTimeMaxAge = 20>>
+	<<set $one_time_age_overrides_pedo_mode = 1>> /% Old enough to be pregnant. %/
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.vagina = 1>>
+	<<set $activeSlave.counter.vaginal += 1, $vaginalTotal += 1>>
+	<<set $activeSlave.preg = random(30,40)>>
+	<<set $activeSlave.pregKnown = 1, $activeSlave.pregType = 1, $activeSlave.pregWeek = $activeSlave.preg>>
+	<<run SetBellySize($activeSlave)>>
+	<<set $activeSlave.ovaries = 1>>
+	<<set $activeSlave.skill.vaginal = 0>>
+	<<set $activeSlave.skill.oral = 0>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.weight = random(-20,100)>>
+	<<set $activeSlave.career = setup.youngCareers.random()>>
+<<elseif $origin == "housewife">>
+	<<set $activeSlaveOneTimeMinAge = 35>>
+	<<set $activeSlaveOneTimeMaxAge = 39>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.boobs += 800>>
+	<<set $activeSlave.boobsImplant += 800>>
+	<<set $activeSlave.boobsImplantType = "normal">>
+	<<set $activeSlave.butt += 1>>
+	<<set $activeSlave.buttImplant += 1>>
+	<<set $activeSlave.buttImplantType = "normal">>
+	<<set $activeSlave.face = 55>>
+	<<set $activeSlave.faceImplant += 20>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.vagina = 1>>
+	<<set $activeSlave.counter.anal += 1, $analTotal += 1>>
+	<<set $activeSlave.preg = -1>>
+	<<set $activeSlave.ovaries = 1>>
+	<<set $activeSlave.skill.vaginal = 35>>
+	<<set $activeSlave.skill.oral = 100>>
+	<<set $activeSlave.skill.anal = 15>>
+	<<set $activeSlave.skill.whoring = 35>>
+	<<set $activeSlave.career = either("a housewife", "a trophy wife")>>
+	<<set $activeSlave.weight = random(-50,100)>>
+<<elseif $origin == "disobedient young">>
+	<<set $activeSlaveOneTimeMaxAge = 25>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.vagina = 1>>
+	<<set $activeSlave.counter.anal += 1, $analTotal += 1>>
+	<<set $activeSlave.preg = -1>>
+	<<set $activeSlave.ovaries = 1>>
+	<<set $activeSlave.skill.vaginal = 15>>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.anal = 15>>
+	<<set $activeSlave.skill.whoring = 15>>
+	<<set $activeSlave.sexualFlaw = either("hates anal", "hates oral", "hates penetration", "idealistic")>>
+	<<set $activeSlave.behavioralFlaw = either("arrogant", "bitchy", "hates men")>>
+	<<set $activeSlave.energy = 10>>
+	<<set $activeSlave.fetish = "none">>
+	<<set $activeSlave.muscles = random(20,50)>>
+	<<set $activeSlave.weight = random(-20,20)>>
+<<elseif $origin == "disobedient young dickgirl">>
+	<<set $activeSlaveOneTimeMaxAge = 25>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.anus = 2>>
+	<<set $activeSlave.counter.anal += 1, $analTotal += 1>>
+	<<set $activeSlave.dick = random(2,4)>>
+	<<set $activeSlave.balls = random(2,4)>>
+	<<set $activeSlave.skill.oral = 0>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.sexualFlaw = either("hates oral", "hates anal", "hates penetration")>>
+	<<set $activeSlave.behavioralFlaw = either("arrogant", "bitchy", "hates men")>>
+	<<set $activeSlave.attrXY = 0>>
+	<<set $activeSlave.attrXX = 70>>
+	<<set $activeSlave.fetish = "none">>
+	<<set $activeSlave.muscles = random(20,50)>>
+	<<set $activeSlave.weight = random(-20,50)>>
+<<elseif $origin == "huge balled">>
+	<<set $activeSlaveOneTimeMaxAge = 25>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.counter.anal += 1, $analTotal += 1>>
+	<<set $activeSlave.balls = 5>>
+	<<set $activeSlave.scrotum = 5>>
+	<<set $activeSlave.dick = random(3,5)>>
+	<<set $activeSlave.skill.oral = 0>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.weight = random(-50,100)>>
+<<elseif $origin == "feminized">>
+	<<set $activeSlaveOneTimeMaxAge = 25>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.boobs += 800>>
+	<<set $activeSlave.boobsImplant += 800>>
+	<<set $activeSlave.boobsImplantType = "fillable">>
+	<<set $activeSlave.butt += 1>>
+	<<set $activeSlave.buttImplant += 1>>
+	<<set $activeSlave.buttImplantType = "normal">>
+	<<set $activeSlave.face = Math.clamp($activeSlave.face+20,-100,100)>>
+	<<set $activeSlave.faceImplant += 20>>
+	<<set $activeSlave.anus = 3>>
+	<<set $activeSlave.counter.anal += 1, $analTotal += 1>>
+	<<set $activeSlave.balls = random(0,1)>>
+	<<set $activeSlave.dick = random(1,2)>>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.anal = 35>>
+	<<set $activeSlave.skill.whoring = 15>>
+	<<set $activeSlave.attrXY = 100>>
+	<<set $activeSlave.attrXX = 0>>
+	<<set $activeSlave.weight = random(-100,200)>>
+<</if>>
+<<setLocalPronouns $activeSlave 2>>
+/* 000-250-006 */
+<<if $seeImages && $seeReportImages>>
+<div class="imageRef tinyImg">
+	<<= SlaveArt($activeSlave, 0, 0)>>
+</div>
+<</if>>
+/* 000-250-006 */
+<<if _sec == 0>>
+	<<link "The first hare">>
+		<<replace "#result">>
+			<<set $activeSlave = clone($hare1), $origin = $origin1, $hareSpeed = $hareSpeed1>>
+			<<include "SE coursing race">>
+		<</replace>>
+		<<replace "#artFrame">>
+			<<set _clothesTemp = $activeLurcher.clothes, $activeLurcher.clothes = "no clothing">>
+			<<if $activeSlave != 0>>
+				<<set _clothesTemp2 = $activeSlave.clothes, $activeSlave.clothes = "no clothing">>
+			<</if>>
+			/* 000-250-006 */
+			<<if $seeImages == 1>>
+				<div class="imageColumn">
+					<div class="imageRef medImg">
+						<<= SlaveArt($activeLurcher, 2, 0)>>
+					</div>
+					<<if $activeSlave != 0>>
+						<div class="imageRef medImg">
+							<<= SlaveArt($activeSlave, 2, 0)>>
+						</div>
+					<</if>>
+				</div>
+			<</if>>
+			/* 000-250-006 */
+			<<set $activeLurcher.clothes = _clothesTemp>>
+			<<if $activeSlave != 0>>
+				<<set $activeSlave.clothes = _clothesTemp2>>
+			<</if>>
+			<<unset $activeLurcher>>
+		<</replace>>
+	<</link>>
+<<elseif _sec == 1>>
+	<<link "The second hare">>
+		<<replace "#result">>
+			<<set $activeSlave = clone($hare2), $origin = $origin2, $hareSpeed = $hareSpeed2>>
+			<<set $hare2 = clone($hare1), $origin2 = $origin1, $hareSpeed2 = $hareSpeed1>>
+			<<include "SE coursing race">>
+		<</replace>>
+		<<replace "#artFrame">>
+			<<set _clothesTemp = $activeLurcher.clothes, $activeLurcher.clothes = "no clothing">>
+			<<if $activeSlave != 0>>
+				<<set _clothesTemp2 = $activeSlave.clothes, $activeSlave.clothes = "no clothing">>
+			<</if>>
+			/* 000-250-006 */
+			<<if $seeImages == 1>>
+				<div class="imageColumn">
+					<div class="imageRef medImg">
+						<<= SlaveArt($activeLurcher, 2, 0)>>
+					</div>
+					<<if $activeSlave != 0>>
+						<div class="imageRef medImg">
+							<<= SlaveArt($activeSlave, 2, 0)>>
+						</div>
+					<</if>>
+				</div>
+			<</if>>
+			/* 000-250-006 */
+			<<set $activeLurcher.clothes = _clothesTemp>>
+			<<if $activeSlave != 0>>
+				<<set $activeSlave.clothes = _clothesTemp2>>
+			<</if>>
+			<<unset $activeLurcher>>
+		<</replace>>
+	<</link>>
+<<else>>
+	<<link "The third and final hare">>
+		<<replace "#result">>
+			<<set $activeSlave = clone($hare3), $origin = $origin3, $hareSpeed = $hareSpeed3>>
+			<<set $hare3 = clone($hare1), $origin3 = $origin1, $hareSpeed3 = $hareSpeed1>>
+			<<include "SE coursing race">>
+		<</replace>>
+		<<replace "#artFrame">>
+			<<set _clothesTemp = $activeLurcher.clothes, $activeLurcher.clothes = "no clothing">>
+			<<if $activeSlave != 0>>
+				<<set _clothesTemp2 = $activeSlave.clothes, $activeSlave.clothes = "no clothing">>
+			<</if>>
+			/* 000-250-006 */
+			<<if $seeImages == 1>>
+				<div class="imageColumn">
+					<div class="imageRef medImg">
+						<<= SlaveArt($activeLurcher, 2, 0)>>
+					</div>
+					<<if $activeSlave != 0>>
+						<div class="imageRef medImg">
+							<<= SlaveArt($activeSlave, 2, 0)>>
+						</div>
+					<</if>>
+				</div>
+			<</if>>
+			/* 000-250-006 */
+			<<set $activeLurcher.clothes = _clothesTemp>>
+			<<if $activeSlave != 0>>
+				<<set $activeSlave.clothes = _clothesTemp2>>
+			<</if>>
+			<<unset $activeLurcher>>
+		<</replace>>
+	<</link>>
+<</if>>
+<<if $origin == "virgin">>
+	is an appealingly young $activeSlave.race _girl2, and has V symbols drawn over _his2 cunt and on _his2 lower back, in the interests of fairness. _He2's a @@.pink;double virgin.@@<<if !canSee($activeLurcher)>> To accommodate your blind lurcher, a bell is fastened around _his2 neck.<</if>>
+<<elseif $origin == "heavily pregnant">>
+	is <<= addA($activeSlave.race)>> _girl2, young and healthy but @@.pink;heavily pregnant.@@ _He2's probably been selected to be a hare as a joke, or because someone hates _him2. <<if !canSee($activeLurcher)>> To accommodate your blind lurcher, a bell is attached to _his2 popped navel.<</if>>
+<<elseif $origin == "housewife">>
+	is <<= addA($activeSlave.race)>> _woman2, no longer young, but attractive enough in a fake sort of way. _He2 has obviously been crying, and has probably been recently enslaved from a comfortable life, like that of a @@.pink;house<<= $wife>> or a trophy $wife.@@<<if !canSee($activeLurcher)>> To accommodate your blind lurcher, a bell is fastened around _his2 neck.<</if>>
+<<elseif $origin == "disobedient young">>
+	is a fit young $activeSlave.race _girl2, and is far more watchful and alert than _his2 fellow hares. _He2 may be a @@.pink;disobedient slave@@ here because _he2 was difficult to train.<<if !canSee($activeLurcher)>> To accommodate your blind lurcher, a bell is fastened around _his2 neck.<</if>>
+<<elseif $origin == "disobedient young dickgirl">>
+	is a strong young $activeSlave.race slave who retains _his2 cock and balls, and looks determined. Perhaps _he2's a @@.pink;resistant dickgirl@@ who's been difficult to turn into a good girl.<<if !canSee($activeLurcher)>> To accommodate your blind lurcher, a bell is fastened around _his2 cock.<</if>>
+<<elseif $origin == "huge balled">>
+	is <<= addA($activeSlave.race)>> slave whose distinguishing characteristic is a dangling scrotum and a pair of @@.pink;huge balls.@@ This impediment bumps against _his2 thighs as _he2's made ready.<<if !canSee($activeLurcher)>> To accommodate your blind lurcher, a bell is fastened around _his2 hefty testicles.<</if>>
+<<elseif $origin == "feminized">>
+	is <<= addA($activeSlave.race)>> bitch with a tiny dick who has been @@.pink;heavily feminized,@@ yet seems terrified and very new to slavery. _His2 fake tits and girly behavior must be from _his2 life before _he2 was a slave.<<if !canSee($activeLurcher)>> To accommodate your blind lurcher, a bell is fastened around _his2 neck.<</if>>
+<</if>>
+
+<<set $activeSlave.origin = "Your lurcher " + $activeLurcher.slaveName + " caught $him coursing; $he was a " + $origin + " hare.">>
+<<run setHealth($activeSlave, jsRandom(30,50))>>
+<<set $activeSlave.devotion = random(-45,-25)>>
+<<set $activeSlave.trust = random(-60,-75)>>
+<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+
+<<if $activeSlave.weight > 190>>
+	_He2's practically all fat and no slave; _he2's half-expected to roll _his2 way to the finish like an overfed slutty bowling ball.
+	<<set $hareSpeed -= 5>>
+<<elseif $activeSlave.weight > 160>>
+	_He2's a catastrophically fat slut of a slave, and may stand a better chance of getting away rolling than running.
+	<<set $hareSpeed -= 3>>
+<<elseif $activeSlave.weight > 95>>
+	_He2's a ridiculously fat slut of a slave with plenty of flesh to grab on to; _his2 constant jiggling will be a sight to behold, however.
+	<<set $hareSpeed -= 2>>
+<<elseif $activeSlave.weight > 30>>
+	_He2's chubby enough that _his2 weight will reduce _his2 speed.
+	<<set $hareSpeed -= 1>>
+<<elseif $activeSlave.weight < -95>>
+	_He2's so skinny that it's not likely _he2's physically fit enough to be quick.
+	<<set $hareSpeed -= 1>>
+<</if>>
+<<if $activeSlave.muscles > 30>>
+	_He2's so heavily muscled that _he2's probably slower than _he2 would be if _he2 were merely fit.
+	<<set $hareSpeed -= 1>>
+<<elseif $activeSlave.muscles <= 5>>
+	_He2's soft, and _his2 legs show no sign of tone at all.
+	<<set $hareSpeed -= 1>>
+<</if>>
+<<if $activeSlave.height >= 185>>
+	_He2's tall enough that _his2 height will probably slow _him2 down.
+	<<set $hareSpeed -= 1>>
+<<elseif $activeSlave.height < 150>>
+	_He2's short enough that _his2 short legs will probably slow _him2 down.
+	<<set $hareSpeed -= 2>>
+<</if>>
+<<if $activeSlave.boobs >= 2000>>
+	_He2 has absurd tits that will destroy any chance _he2 has of getting away.
+	<<set $hareSpeed -= 1>>
+<<elseif $activeSlave.boobs >= 800>>
+	_He2 has huge boobs that will make it painful for _him2 to run hard.
+	<<set $hareSpeed -= 1>>
+<</if>>
+<<if $activeSlave.butt >= 6>>
+	_He2 has a monstrous bottom that won't help _his2 gait.
+	<<set $hareSpeed -= 1>>
+<</if>>
+<<if $activeSlave.dick >= 5>>
+	_His2 big cock is going to bounce around cruelly.
+	<<set $hareSpeed -= 1>>
+<</if>>
+<<if ($activeSlave.balls >= 5) && ($activeSlave.scrotum > 0)>>
+	_His2 balls are likely to hurt badly enough, running naked, to slow _him2 down.
+	<<set $hareSpeed -= 1>>
+<</if>>
+<<if $activeSlave.belly >= 60000>>
+	_He2's so massively pregnant it'll be lucky if _he2 even makes it anywhere.
+	<<set $hareSpeed -= 10>>
+<<elseif $activeSlave.belly >= 10000>>
+	_He2 pregnant belly will probably stop _him2 from running at all.
+	<<set $hareSpeed -= 5>>
+<<elseif $activeSlave.belly >= 5000>>
+	_He2's visibly pregnant and likely to be cautious and unsure about running.
+	<<set $hareSpeed -= 3>>
+<<elseif $activeSlave.belly >= 1500>>
+	There is a slight roundness to _his2 middle, likely an early pregnancy that will distract _him2.
+	<<set $hareSpeed -= 1>>
+<</if>>
+
+<<if _sec == 0>>
+	<<set $hare1 = $activeSlave>>
+	<<set $origin1 = $origin>>
+	<<set $hareSpeed1 = $hareSpeed>>
+<<elseif _sec == 1>>
+	<<set $hare2 = $activeSlave>>
+	<<set $origin2 = $origin>>
+	<<set $hareSpeed2 = $hareSpeed>>
+<<else>>
+	<<set $hare3 = $activeSlave>>
+	<<set $origin3 = $origin>>
+	<<set $hareSpeed3 = $hareSpeed>>
+<</if>>
+</tr>
+
+<</for>>
+</table>
+<br><br>
+</span>

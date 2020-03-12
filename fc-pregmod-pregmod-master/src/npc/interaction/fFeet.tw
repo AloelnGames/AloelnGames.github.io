@@ -1,0 +1,617 @@
+:: FFeet [nobr]
+
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+
+<<set _footSeed = random(1,100)>>
+
+<<if getSlave($AS).weight > 190>>
+	<<set _thighs = "massive flabby">>
+<<elseif getSlave($AS).weight > 160>>
+	<<set _thighs = "thick flabby">>
+<<elseif getSlave($AS).weight > 130>>
+	<<set _thighs = "flabby">>
+<<elseif getSlave($AS).weight > 95>>
+	<<set _thighs = "fat">>
+<<elseif getSlave($AS).weight > 30>>
+	<<if getSlave($AS).muscles > 75>>
+		<<set _thighs = "toned fat">>
+	<<elseif getSlave($AS).muscles < 15>>
+		<<set _thighs = "fat">>
+	<<else>>
+		<<set _thighs = "plush">>
+	<</if>>
+<<elseif getSlave($AS).weight > 10>>
+	<<if getSlave($AS).muscles > 70>>
+		<<set _thighs = "thick muscular">>
+	<<elseif getSlave($AS).muscles > 20>>
+		<<set _thighs = "soft toned">>
+	<<else>>
+		<<set _thighs = "soft">>
+	<</if>>
+<<elseif getSlave($AS).weight >= -10>>
+	<<if getSlave($AS).muscles > 70>>
+		<<set _thighs = "muscular">>
+	<<elseif getSlave($AS).muscles > 20>>
+		<<set _thighs = "toned">>
+	<<else>>
+		<<set _thighs = "average">>
+	<</if>>
+<<elseif getSlave($AS).weight >= -30>>
+	<<if getSlave($AS).muscles > 40>>
+		<<set _thighs = "thin muscular">>
+	<<elseif getSlave($AS).muscles > 20>>
+		<<set _thighs = "toned model's">>
+	<<else>>
+		<<set _thighs = "model's">>
+	<</if>>
+<<else>>
+	<<if getSlave($AS).muscles > 5>>
+		<<set _thighs = "emaciated toned">>
+	<<else>>
+		<<set _thighs = "emaciated">>
+	<</if>>
+<</if>>
+
+<<if getSlave($AS).belly < 1500>>
+	<<set _belly = _thighs>>
+<<else>>
+	<<set _belly = bellyAdjective(getSlave($AS))>>
+<</if>>
+
+<<if getSlave($AS).height >= 185>>
+	<<set _legs = "wonderfully long">>
+<<elseif getSlave($AS).height >= 170>>
+	<<set _legs = "long">>
+<<elseif getSlave($AS).height >= 160>>
+	<<set _legs = "nice">>
+<<elseif getSlave($AS).height >= 150>>
+	<<set _legs = "short">>
+<<else>>
+	<<set _legs = "short little">>
+<</if>>
+
+<<if getSlave($AS).boobs >= 30000>>
+	<<set _boobsa = "skip">>
+	<<set _boobs = "room filling">>
+<<elseif getSlave($AS).boobs >= 20000>>
+	<<set _boobsa = "beanbag sized">>
+<<elseif getSlave($AS).boobs >= 8500>>
+	<<set _boobsa = "obscenely massive">>
+<<elseif getSlave($AS).boobs >= 8000>>
+	<<set _boobsa = "Z-cup">>
+<<elseif getSlave($AS).boobs >= 7500>>
+	<<set _boobsa = "Y-cup">>
+<<elseif getSlave($AS).boobs >= 7000>>
+	<<set _boobsa = "X-cup">>
+<<elseif getSlave($AS).boobs >= 6500>>
+	<<set _boobsa = "V-cup">>
+<<elseif getSlave($AS).boobs >= 5500>>
+	<<set _boobsa = "U-cup">>
+<<elseif getSlave($AS).boobs >= 5100>>
+	<<set _boobsa = "T-cup">>
+<<elseif getSlave($AS).boobs >= 4700>>
+	<<set _boobsa = "S-cup">>
+<<elseif getSlave($AS).boobs >= 4300>>
+	<<set _boobsa = "R-cup">>
+<<elseif getSlave($AS).boobs >= 3950>>
+	<<set _boobsa = "Q-cup">>
+<<elseif getSlave($AS).boobs >= 3600>>
+	<<set _boobsa = "P-cup">>
+<<elseif getSlave($AS).boobs >= 3250>>
+	<<set _boobsa = "O-cup">>
+<<elseif getSlave($AS).boobs >= 2900>>
+	<<set _boobsa = "N-cup">>
+<<elseif getSlave($AS).boobs >= 2600>>
+	<<set _boobsa = "M-cup">>
+<<elseif getSlave($AS).boobs >= 2300>>
+	<<set _boobsa = "L-cup">>
+<<elseif getSlave($AS).boobs >= 2050>>
+	<<set _boobsa = "K-cup">>
+<<elseif getSlave($AS).boobs >= 1800>>
+	<<set _boobsa = "J-cup">>
+<<elseif getSlave($AS).boobs >= 1600>>
+	<<set _boobsa = "I-cup">>
+<<elseif getSlave($AS).boobs >= 1400>>
+	<<set _boobsa = "H-cup">>
+<<elseif getSlave($AS).boobs >= 1200>>
+	<<set _boobsa = "G-cup">>
+<<elseif getSlave($AS).boobs >= 1000>>
+	<<set _boobsa = "F-cup">>
+<<elseif getSlave($AS).boobs >= 800>>
+	<<set _boobsa = "DD-cup">>
+<<elseif getSlave($AS).boobs >= 650>>
+	<<set _boobsa = "D-cup">>
+<<elseif getSlave($AS).boobs >= 400>>
+	<<set _boobsa = "C-cup">>
+<<elseif getSlave($AS).boobs >= 300>>
+	<<set _boobsa = "B-cup">>
+<<else>>
+	<<set _boobsa = "skip">>
+	<<set _boobs = "flat">>
+<</if>>
+<<if _boobsa != "skip">>
+	<<set _boobs = "_boobsa getSlave($AS).boobShape">>
+<</if>>
+
+<<if getSlave($AS).balls == 1>>
+	<<set _balls = "vestigial">>
+<<elseif getSlave($AS).balls == 2>>
+	<<set _balls = "small">>
+<<elseif getSlave($AS).balls == 3>>
+	<<set _balls = "average">>
+<<elseif getSlave($AS).balls == 4>>
+	<<set _balls = "large">>
+<<elseif getSlave($AS).balls == 5>>
+	<<set _balls = "massive">>
+<<elseif getSlave($AS).balls == 6>>
+	<<set _balls = "huge">>
+<<elseif getSlave($AS).balls == 7>>
+	<<set _balls = "giant">>
+<<elseif getSlave($AS).balls == 8>>
+	<<set _balls = "enormous">>
+<<elseif getSlave($AS).balls == 9>>
+	<<set _balls = "monstrous">>
+<<else>>
+	<<set _balls = "overly massive">>
+<</if>>
+
+<<if getSlave($AS).dick == 1>>
+	<<set _dick = "tiny">>
+<<elseif getSlave($AS).dick == 2>>
+	<<set _dick = "little">>
+<<elseif getSlave($AS).dick == 3>>
+	<<set _dick = "average">>
+<<elseif getSlave($AS).dick == 4>>
+	<<set _dick = "big">>
+<<elseif getSlave($AS).dick == 5>>
+	<<set _dick = "huge">>
+<<elseif getSlave($AS).dick == 6>>
+	<<set _dick = "gigantic">>
+<<elseif getSlave($AS).dick == 7>>
+	<<set _dick = "massive">>
+<<elseif getSlave($AS).dick == 8>>
+	<<set _dick = "horse-sized">>
+<<elseif getSlave($AS).dick == 9>>
+	<<set _dick = "monstrous">>
+<<elseif getSlave($AS).dick == 10>>
+	<<set _dick = "inhuman">>
+<<else>>
+	<<set _dick = "hypertrophied">>
+<</if>>
+
+<<if getSlave($AS).butt < 1>>
+	<<set _butt = "flat">>
+<<elseif getSlave($AS).butt < 2>>
+	<<set _butt = "small">>
+<<elseif getSlave($AS).butt < 3>>
+	<<set _butt = "plump">>
+<<elseif getSlave($AS).butt < 4>>
+	<<set _butt = "big bubble">>
+<<elseif getSlave($AS).butt < 5>>
+	<<set _butt = "huge">>
+<<elseif getSlave($AS).butt < 6>>
+	<<set _butt = "enormous">>
+<<elseif getSlave($AS).butt < 7>>
+	<<set _butt = "gigantic">>
+<<elseif getSlave($AS).butt < 8>>
+	<<set _butt = "ridiculous">>
+<<elseif getSlave($AS).butt < 10>>
+	<<set _butt = "immense">>
+<<else>>
+	<<set _butt = "inhuman">>
+<</if>>
+
+<<if getSlave($AS).hips > 2>>
+	<<set _hips = "inhumanly wide">>
+<<elseif getSlave($AS).hips > 1>>
+	<<set _hips = "very wide">>
+<<elseif getSlave($AS).hips > 0>>
+	<<set _hips = "wide">>
+<<elseif getSlave($AS).hips > -1>>
+	<<set _hips = "ample">>
+<<elseif getSlave($AS).hips > -2>>
+	<<set _hips = "narrow">>
+<<else>>
+	<<set _hips = "very narrow">>
+<</if>>
+
+<<if (getSlave($AS).skin == getSlave($AS).race) || (getSlave($AS).race == "white") || (getSlave($AS).race == "black") || ($seeRace == 0)>>
+	<<set _skin = getSlave($AS).skin>>
+<<else>>
+	<<set _skin = getSlave($AS).skin + " " + getSlave($AS).race>>
+<</if>>
+
+<<if hasBothLegs(getSlave($AS))>>
+	<<set _nounL = "legs">>
+	<<set _nounF = "feet">>
+<<else>>
+	<<set _nounL = "leg">>
+	<<set _nounF = "foot">>
+<</if>>
+
+
+/*Part 1: Order and reaction*/
+You call <<= getSlave($AS).slaveName>> to your office, telling $him to use $his _nounF to please you.
+<<if (getSlave($AS).fetish == "mindbroken")>>
+	$He is brought to you and stands blankly by your desk.
+<<elseif (getSlave($AS).relationship == -3 && getSlave($AS).devotion >= 60 )>>
+	Your devoted slave $wife is delighted to get another chance to pleasure you.
+<<elseif (getSlave($AS).relationship == -2 && getSlave($AS).devotion >= 60 )>>
+	$He considers $himself your lover, and is delighted to spend time with you.
+<<elseif (getSlave($AS).devotion < -50)>>
+	$He strongly refuses, and you have to restrain $him to get $him to obey.
+<<elseif (getSlave($AS).devotion < -20)>>
+	$He tries to refuse, but decides it will just be easier to comply than risk punishment.
+<<elseif (getSlave($AS).devotion <= 20)>>
+	$He doesn't seem eager to comply, but fears being punished enough to obey.
+<<elseif (getSlave($AS).devotion < 60)>>
+	$He complies quietly.
+<<else>>
+	<<if (getSlave($AS).trust < -50)>>
+		Although $he just barely trusts that you will not harm $him, $he is still unsure about what you are going to do which makes $him pause.
+	<<else>>
+		$He rushes to comply.
+	<</if>>
+<</if>>
+
+/*Extra 1 if tease/perverted and not mindbroken*/
+<<if (getSlave($AS).sexualQuirk == "tease" || getSlave($AS).sexualQuirk == "perverted") && getSlave($AS).devotion > 60 && getSlave($AS).fetish != "mindbroken">>
+	Before you can begin, $he arches <<if hasBothLegs(getSlave($AS))>>a<<else>>$his<</if>> leg in a seductive tease.
+<</if>>
+/*Part 2: lube and reaction*/
+<<if !canWalk(getSlave($AS))>>
+	<<if tooBigBreasts(getSlave($AS))>>
+		Since $he is immobilized by $his _boobs boobs, you have $him lay on $his side on the floor,
+	<<elseif tooBigBelly(getSlave($AS))>>
+		Since $he is immobilized by $his <<if getSlave($AS).bellyPreg >= 3000>>hugely gravid<<elseif getSlave($AS).bellyImplant >= 3000>>_belly protruding<<else>>heavy <<print getSlave($AS).inflationType>>-filled<</if>> belly, you have $he lay on $his side on the floor,
+	<<elseif tooBigDick(getSlave($AS))>>
+		Since $he is immobilized by $his _dick dick, you have $him lay on $his side on the floor,
+	<<elseif tooBigButt(getSlave($AS))>>
+		Since $he is immobilized by $his _dick dick, you have $him sit on your desk to present $his _legs _nounL and _nounF,
+	<<elseif tooBigBalls(getSlave($AS))>>
+		Since $he is immobilized by $his _balls balls, you have $him lay on $his back on the floor with $his _nounL over $his nuts,
+	<<else>>
+		You have $him sit on the edge of your desk to present $his _legs _nounL and _nounF,
+	<</if>>
+<<else>>
+	You have $him sit on the edge of your desk to present $his _legs _nounL and _nounF,
+<</if>>
+<<if getLegCount(getSlave($AS), 4) + getLegCount(getSlave($AS), 6) === 2>>
+	then pour lubricant onto your hands, applying it to $his elegant artificial _nounF.
+<<elseif getLegCount(getSlave($AS), 5) === 2>>
+	then pour lubricant onto your hands, applying it to $his deadly artificial _nounF.
+<<elseif hasBothLegs(getSlave($AS)) && !hasAnyNaturalLegs(getSlave($AS))>>
+	then pour lubricant onto your hands, applying it to $his artificial _nounF.
+<<else>>
+	then pour lubricant onto your hands, massaging it into $his <<= getSlave($AS).skin>> _nounF: rubbing $his arch<<if hasBothLegs(getSlave($AS))>>es<</if>>, sole<<if hasBothLegs(getSlave($AS))>>s<</if>>, and toes.
+<</if>>
+<<if getSlave($AS).fetish == "mindbroken">>
+	$He shows little reaction to your efforts.
+<<else>>/*not mindbroken*/
+	<<if (getSlave($AS).devotion < -50)>>
+		$He tries to stay hateful despite the pleasurable stimulation.
+	<<elseif (getSlave($AS).devotion < -20)>>
+		$He is mostly quiet, but occasionally stifles a moan.
+	<<elseif (getSlave($AS).devotion > 20 && getSlave($AS).sexualFlaw == "shamefast")>>
+		$He <<if (hasAnyArms(getSlave($AS)))>>hides $his face in $his hand<<if (hasBothArms(getSlave($AS)))>>s<</if>><<else>>attempts to hide $his face<</if>> in shame at $his nudity, but occasionally a moan breaks out.
+	<<elseif (getSlave($AS).devotion <= 20)>>
+		$He seems a bit surprised by the attention, occasionally letting out a moan.
+	<<else>>
+		<<if (getSlave($AS).trust < -50)>>
+			$He seems uncomfortable at your touch and frequently jerks away, spoiling the moment.
+		<<else>>
+			$He enjoys the massage, moaning in pleasure at your touch.
+		<</if>>
+	<</if>>
+<</if>> /*close lube and reaction*/
+
+/*Part 3: Actions, attraction/devotion and fetishes*/
+<<if getSlave($AS).fetish == "mindbroken">>
+		You hold $his _nounF and thrust between them as $he <<if canSee(getSlave($AS))>>watches you blankly. <<else>>points $his blind gaze at you. <</if>>
+<<elseif !(canWalk(getSlave($AS)))>>
+	<<if (getSlave($AS).devotion < -50)>>
+		When $he refuses to serve, you take<<if hasBothLegs(getSlave($AS))>> both of<</if>> $his _nounF and start thrusting between them.
+	<<elseif (getSlave($AS).devotion < -20)>>
+		$He seems a bit reluctant when massaging you with $his _nounF so you have to do most of the work.
+	<<elseif (getSlave($AS).devotion <= 20)>>
+		$He tries to make it pleasurable for you, but the combination of the awkward angle and $his nervousness makes $him lose $his pacing often.
+	<<elseif (getSlave($AS).devotion < 60 || (getSlave($AS).sexualQuirk == "unflinching" && getSlave($AS).devotion <= 20))>>
+		$He does $his best to please you from $his position on $his side, massaging your cock nicely.
+	<<else>>
+		<<if (getSlave($AS).trust < -50)>>
+			$His lack of trust causes $him to ask "<<Master>>, is this pleasurable for you?", spoiling the moment.
+		<<else>>
+			$He moves $his _nounF hypnotically, trying $his hardest to make you cum. Being on $his side doesn't affect $his footjob, and you get a nice view of $his _legs _nounL as $he runs $his _nounF across your cock.
+		<</if>>
+	<</if>>
+	<<if !canWalk(getSlave($AS))>>
+		<<if getSlave($AS).boobs > getSlave($AS).belly >>
+			$His _boobs breasts wobble as $his _nounF service you.
+		<<else>>
+			$His _belly belly wobbles as $his _nounF service you.
+		<</if>>
+	<</if>>
+<<elseif (getSlave($AS).devotion < -50)>>
+	When $he refuses to comply, you take both $his _nounF and start thrusting between them.
+<<elseif (getSlave($AS).devotion < -20)>>
+	$He seems a bit reluctant when massaging you with $his _nounF so you have to do most of the work.
+<<elseif (getSlave($AS).devotion <= 20)>>
+	$He tries to make it pleasurable for you, trying to find the right angle and speed, but $he seems a bit tense and ruins $his pacing.
+<<elseif (getSlave($AS).devotion < 60 || (getSlave($AS).sexualQuirk == "unflinching" && getSlave($AS).devotion <= 20))>>
+	$He does $his best to please you, massaging you nicely with $his _nounF.
+<<elseif (getSlave($AS).attrXY < 16)>>
+	$He tries to make it pleasurable for you, but $his great distaste for men is obvious on $his expression.
+<<else>>
+	<<if getSlave($AS).sexualQuirk == "perverted">>
+		As a devoted pervert, <<= getSlave($AS).slaveName>> gives an enthusiastic footjob, with $his
+		<<if getSlave($AS).dick > 0>>
+			<<if canAchieveErection(getSlave($AS))>>
+				<<if (getSlave($AS).chastityPenis == 1)>>
+					erect caged _dick cock,
+				<<else>>
+					erect _dick cock,
+				<</if>>
+			<<else>>
+				soft and dripping _dick <<if (getSlave($AS).chastityPenis == 1)>>caged <</if>>dick,
+			<</if>>
+			<<if getSlave($AS).balls > 0 && getSlave($AS).scrotum > 0>>
+				<<if getSlave($AS).vagina >= 0>>
+					and pulsing _balls balls <<if getSlave($AS).vaginaLube > 0 && getSlave($AS).vagina >= 0>>that are wet from $his feminine arousal <</if>>
+				<</if>>
+			<<elseif getSlave($AS).vagina >= 0>>
+				and <<if getSlave($AS).vaginaLube == 1>>wet <<elseif getSlave($AS).vaginaLube == 2>>dripping wet <</if>>aroused vagina
+			<</if>>
+		<<elseif getSlave($AS).vagina >= 0>>
+			<<if getSlave($AS).vaginaLube == 1>>wet <<elseif getSlave($AS).vaginaLube == 2>>dripping wet <</if>>aroused vagina
+		<<else>>
+			perverted smile
+		<</if>>
+		showing $his sexual excitement to service your cock with $his _nounF.
+	<<elseif getSlave($AS).fetish == "cumslut" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		As a devoted cumslut, <<= getSlave($AS).slaveName>> eagerly strokes your cock with $his _nounF, delightedly smearing your precum on $his sole<<if hasBothLegs(getSlave($AS))>>s<</if>>. $He
+		<<if canSee(getSlave($AS))>>
+			<<if $PC.balls >= 10>>
+				stares at your massive balls with a ravenous gaze,
+			<<elseif $PC.balls >= 5>>
+				stares at your large balls with a hungry gaze,
+			<<elseif $PC.scrotum > 0>>
+				stares at your balls with a steady gaze,
+			<<else>>
+				practically stares through you to your internal balls,
+			<</if>>
+		<<else>>
+			gingerly feels the
+			<<if $PC.balls >= 10>>
+				weight of your massive balls
+			<<elseif $PC.balls >= 5>>
+				weight of your large balls
+			<<elseif $PC.scrotum > 0>>
+				weight of your balls
+			<<else>>
+				tender skin at your base
+			<</if>>
+			with $his _nounF,
+		<</if>>
+		shivering in anticipation.
+	<<elseif getSlave($AS).fetish == "humiliation" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		<<= getSlave($AS).slaveName>> slowly strokes your cock with $his _nounF, getting off on the degrading use of $his _nounF and avoiding your gaze. $He is showing an embarrassed smile<<if (skinToneLevel(getSlave($AS).skin) > 22)>>, and if $his skin was any lighter you would see $his<<else>> and<</if>> bright blushing cheeks.
+	<<elseif getSlave($AS).fetish == "boobs" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60 && hasAnyArms(getSlave($AS))>>
+		As <<= getSlave($AS).slaveName>> deftly strokes your cock with $his _nounF, $his hand<<if hasBothArms(getSlave($AS))>>s<</if>> play<<if !hasBothArms(getSlave($AS))>>s<</if>> with $his <<if getSlave($AS).boobs < 300>>erect nipples. <<elseif getSlave($AS).boobs < 500>>small chest. <<elseif getSlave($AS).boobs >= 18000>>_boobs breasts, though $he can't reach $his nipples. <<else>>_boobs breasts and erect nipples. <</if>> $He is certainly giving you plenty of sexy options for you to watch.
+	<<elseif getSlave($AS).fetish == "sadist" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		<<= getSlave($AS).slaveName>> is a sadist, and $his deft footjob toys with the boundaries of pain and pleasure. $His devoted yet belittling <<if canSee(getSlave($AS))>>gaze carefully watches your face<<else>>expressions are clear as $he feels<</if>> for every reaction.
+	<<elseif getSlave($AS).fetish == "dom" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		<<= getSlave($AS).slaveName>> is a dominant and $his skilled _nounF roughly stroke your erect cock, but $he pauses often to rub $his sole<<if hasBothLegs(getSlave($AS))>>s<</if>>
+		<<if $PC.balls >= 10>>
+			on your massive balls
+		<<elseif $PC.balls >= 5>>
+			on your large balls
+		<<elseif $PC.scrotum > 0>>
+			on your balls
+		<<else>>
+			around your hidden balls
+		<</if>>
+		so $he doesn't get too aggressive with $his <<= WrittenMaster()>>.
+	<<elseif getSlave($AS).fetish == "pregnancy" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		<<= getSlave($AS).slaveName>> skillfully strokes your cock with $his _nounF<<if hasAnyArms(getSlave($AS))>>,<<if hasBothArms(getSlave($AS))>> one of<</if>> $his hand<<if hasBothArms(getSlave($AS))>>s<</if>> roaming across $his _belly belly as $he happily services you<</if>>. $He occasionally pauses to <<if canSee(getSlave($AS))>>watch <<else>>feel <</if>>your
+		<<if $PC.balls >= 10>>
+			massive balls
+		<<elseif $PC.balls >= 5>>
+			large balls
+		<<elseif $PC.scrotum > 0>>
+			balls
+		<<else>>
+			pubic mound
+		<</if>>
+		churn with sperm, clearly lost in a pregnancy fantasy.
+	<<else>>
+		<<= getSlave($AS).slaveName>> skillfully strokes your cock with $his _nounF, trying $his best to bring you pleasure.
+	<</if>>
+<</if>>
+<<if getLegCount(getSlave($AS), 3) + getLegCount(getSlave($AS), 6) > 0>>
+	As you enjoy your footjob $his capable prosthetics begin to vibrate on your cock.
+<<elseif getLegCount(getSlave($AS), 4)>>
+	The hard angles of $his metal _nounF provide extra stimulation.
+<</if>>
+
+/*Extra 2: if not mindbroken/immobile, tease with a flash.*/
+<<if getSlave($AS).fetish != "mindbroken" && canWalk(getSlave($AS)) && getSlave($AS).sexualQuirk == "tease" && getSlave($AS).devotion >= 60>>
+	<<if canSee(getSlave($AS))>>Seeing <<else>>Feeling <</if>>you near your orgasm, $he
+	<<if _footSeed < 40 && hasAnyArms(getSlave($AS))>>
+		<<if getSlave($AS).boobs < 300>>
+			presses $his hand<<if hasBothArms(getSlave($AS))>>s<</if>> on $his flat chest,
+		<<elseif getSlave($AS).boobs < 500>>
+			puts $his hand<<if hasBothArms(getSlave($AS))>>s<</if>> under $his small chest,
+		<<else>>
+			cups $his _boobs breasts with $his hand<<if hasBothArms(getSlave($AS))>>s<</if>>,
+		<</if>>
+		then sticks out $his tongue, posing like a Free Cities whore who wants a cumshot.
+	<<elseif _footSeed < 70 && !(getSlave($AS).chastityPenis) && !(getSlave($AS).chastityVagina) && (getSlave($AS).dick > 0 || getSlave($AS).vagina >= 0 )>>
+		spreads $his _legs _nounL
+		<<if getSlave($AS).dick > 0>>
+			<<if getSlave($AS).vagina >= 0>>
+				and raises $his _dick <<if canAchieveErection(getSlave($AS))>>erect <<else>>soft <</if>>cock <<if getSlave($AS).balls > 0 && getSlave($AS).scrotum > 0>>and _balls balls <</if>> to reveal $his <<if getSlave($AS).vaginaLube == 1>>wet <<elseif getSlave($AS).vaginaLube == 2>>dripping wet <</if>>aroused vagina
+			<<else>>
+				and teases the tip of $his _dick <<if canAchieveErection(getSlave($AS))>>throbbing <<else>>soft <</if>>dick
+			<</if>>
+		<<else>>
+			to reveal $his <<if getSlave($AS).vaginaLube == 1>>wet <<elseif getSlave($AS).vaginaLube == 2>>dripping wet <</if>>aroused vagina, then $he spreads $his <<if getSlave($AS).labia == 3>>extremely large <<elseif getSlave($AS).labia == 2>>large <<elseif getSlave($AS).labia == 1>>pretty <<else>>minimal <</if>>pussylips
+		<</if>>
+		with a sultry smile.
+	<<else>>
+		rolls onto $his side while still stroking your dick, revealing $his _butt ass, _hips hips and _thighs thighs with a sultry smile.
+	<</if>>
+<</if>>
+
+/*PC orgasms*/
+<<if (getSlave($AS).fetish == "mindbroken")>>
+	You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>> _legs _nounL, and even _belly belly with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>>.
+<<elseif !canWalk(getSlave($AS))>>
+	<<if (getSlave($AS).devotion < -50)>>
+		You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>> _legs _nounL, and even $his side with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>> as $he struggles in your grasp. $He is furious that $he is now covered in cum $he can't easily reach to clean.
+	<<elseif (getSlave($AS).devotion < -20)>>
+		You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>> _legs _nounL, and even $his side with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>>. $He was startled by your orgasm and now wears a conflicted expression, but you are done using $him for now. $He is left covered in cum $he can't easily reach to clean.
+	<<elseif (getSlave($AS).devotion <= 20)>>
+		You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>> _legs _nounL, and even $his side with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>> as $he sighs in nervous relief.
+	<<elseif (getSlave($AS).devotion < 60 || (getSlave($AS).sexualQuirk == "unflinching" && getSlave($AS).devotion <= 20))>>
+		You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>> _legs _nounL, and even $his side with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>> as $he rises to an elbow to smile at you.
+	<<else>>
+		<<if (getSlave($AS).trust < -50)>>
+			$His lack of trust causes $his eyes to glaze over in fear.
+		<<else>>
+			You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>> _legs _nounL, and even $his side with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>> as $he moans in pleasure.
+		<</if>>
+	<</if>>
+<<elseif (getSlave($AS).devotion < -50)>>
+	You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>> _legs _nounL, and even $his _belly belly with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>> as $he struggles in your grasp with a look of disgust.
+<<elseif (getSlave($AS).devotion < -20)>>
+	You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>> _legs _nounL, and even $his _belly belly with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>>. $He was startled by your orgasm and now wears a conflicted expression, as well as your cum, but you are done using $him for now.
+<<elseif (getSlave($AS).devotion <= 20)>>
+	You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>> _legs _nounL, and even $his _belly belly with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>> as $he sighs in nervous relief.
+<<elseif (getSlave($AS).devotion < 60 || getSlave($AS).attrXY < 16 || (getSlave($AS).sexualQuirk == "unflinching" && getSlave($AS).devotion <= 20))>>
+		You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>> _legs _nounL, and even $his _belly belly with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>>, and $he does $his best to catch your semen on $his _nounL.
+<<else>>
+	<<if getSlave($AS).fetish == "cumslut" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		When you eventually cum, <<= getSlave($AS).slaveName>> giggles in lustful joy as your hot cum coats $his _skin
+		<<if $PC.balls >= 5>>
+			_nounF and quickly slides from your desk to kneel in front of your pulsating cock.
+			<<if $PC.balls >= 9>>
+				Your massive load quickly covers $his face as $he moans and twitches in pleasure, semen dripping down $his
+				<<if getSlave($AS).boobs < 300>>
+					flat chest
+				<<elseif getSlave($AS).boobs < 500>>
+					small chest
+				<<else>>
+					_boobs breasts
+				<</if>>
+				and _belly belly onto $his thighs.
+			<<else>>
+				Your large load coats $his face in sticky semen, some dripping onto $his
+				<<if getSlave($AS).boobs < 300>>
+					flat chest.
+				<<elseif getSlave($AS).boobs < 500>>
+					small chest.
+				<<else>>
+					_boobs breasts.
+				<</if>>
+			<</if>>
+		<<else>>
+			_nounF.
+		<</if>>
+	<<elseif getSlave($AS).fetish == "humiliation" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>> _legs _nounL, and even $his _belly belly with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>>, and $he whimpers as even $his _nounF used as a sex object.
+	<<elseif getSlave($AS).fetish == "submissive" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>> _legs _nounL, and even $his _belly belly with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>>, and $he gasps as $he submissively accepts your semen on $his skin.
+	<<elseif getSlave($AS).fetish == "buttslut" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		When you eventually cum, <<= getSlave($AS).slaveName>> moans as your semen lands on $his _skin _nounF,
+		<<if $PC.balls >= 5>>
+			but quickly turns to present $his _butt ass and _hips hips as a new target.
+			<<if $PC.balls >= 9>>
+				Your massive load quickly covers $his _thighs ass and thighs, sticky cum dripping all the way to $his calves.
+			<<else>>
+				Your large load soaks $his _thighs ass and thighs in sticky semen, which drips down $his _legs _nounL.
+			<</if>>
+		<<else>>
+			but you know $he wanted to involve $his _butt butt and your cum, if your orgasm had more volume.
+		<</if>>
+	<<elseif getSlave($AS).fetish == "boobs" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>>, _legs _nounL, and even $his _belly belly with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>>, and $he <<if getSlave($AS).boobs < 300>>pinches both $his erect nipples <<elseif getSlave($AS).boobs < 500>>rubs $his hand<<if hasBothArms(getSlave($AS))>>s<</if>> across $his small chest <<else>>squeezes $his _boobs breasts tightly <</if>>while moaning in pleasure.
+	<<elseif getSlave($AS).fetish == "sadist" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>>, _legs _nounL, and even $his _belly belly with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>>, and $he gasps slightly and condescendingly smiles as you soil $his _nounF with semen.
+	<<elseif getSlave($AS).fetish == "dom" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>>, _legs _nounL, and even $his _belly belly with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>>, and $he gasps slightly and holds your cock between $his _nounF tightly as you soil $him with semen.
+	<<elseif getSlave($AS).fetish == "pregnancy" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+		When you start to cum, <<= getSlave($AS).slaveName>> moves $his hand from $his belly to
+		<<if getSlave($AS).vagina >= 0>>
+			expose $his vagina and spreads $his <<if getSlave($AS).labia == 3>>extremely large <<elseif getSlave($AS).labia == 2>>large <<elseif getSlave($AS).labia == 1>>pretty <<else>>minimal <</if>>pussylips to show where $he wants cum.
+		<<elseif getSlave($AS).mpreg == 1>>
+			expose $his <<if getSlave($AS).anus > 3 >>gaping <<elseif getSlave($AS).anus > 2 >>very loose <<elseif getSlave($AS).anus > 1 >>loose <<elseif getSlave($AS).anus > 0 >>tight <<else>>virgin <</if>>asshole to show where $he wants cum.
+		<<else>>
+			hug $his stomach.
+		<</if>>
+		Your orgasm shoots across $his _skin _nounF<<if $PC.balls >= 9>>, _legs _nounL, and even $his _belly belly is marked with your massive load. $He runs $his hand<<if hasBothArms(getSlave($AS))>>s<</if>> through the cum on $his belly, massaging the semen into $his skin<<elseif $PC.balls >= 5>> and _legs _nounL<</if>>.
+	<<else>>
+		You eventually cum all over $his _skin _nounF<<if $PC.balls >= 9>>, _legs _nounL, and even $his _belly belly with your massive load<<elseif $PC.balls >= 5>> and _legs _nounL with your large load<</if>>, and $he moans softly in pleasure as $he feels your hot semen run down $his sole<<if hasBothLegs(getSlave($AS))>>s<</if>>.
+	<</if>>
+<</if>>
+
+/*Extra 3: devoted perverted slave giggles and orgasms*/
+<<if (getSlave($AS).fetish != "mindbroken" && canWalk(getSlave($AS)) && getSlave($AS).sexualQuirk == "perverted" && getSlave($AS).devotion >= 60 && !(getSlave($AS).fetish == "cumslut" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60))>>
+	$He was getting off on the footjob, but the feeling of your cum on
+	<<if getSlave($AS).fetish == "buttslut" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60 && $PC.balls >= 5>>
+		$his ass and thighs sets off a strong orgasm of $his own, $his _thighs _nounL quivering as
+		<<if getSlave($AS).dick > 0>>
+			<<if getSlave($AS).vagina >= 0>>
+				<<if cumAmount(getSlave($AS)) > 20>>
+					$his _dick dick unloads a massive amount of cum, swollen _balls testicles bulging between $his thighs, <<if getSlave($AS).vaginaLube == 1>>wet <<elseif getSlave($AS).vaginaLube == 2>>dripping wet <</if>> pussy and asshole clenching as $he makes a cum puddle on the floor which splashes with every spasm.
+				<<else>>
+					$his _dick dick spurts $his load, $his <<if getSlave($AS).vaginaLube == 1>>wet <<elseif getSlave($AS).vaginaLube == 2>>dripping wet <</if>>pussy and asshole clenching.
+				<</if>>
+			<<else>>
+				<<if cumAmount(getSlave($AS)) > 20>>
+					$he strokes $his _dick penis, swollen _balls testicles bulging between $his thighs, asshole clenching as $his massive cumshot splashes noisily onto the floor.
+				<<else>>
+					$he strokes $his _dick penis, asshole clenching as $his cum spurts onto the floor.
+				<</if>>
+			<</if>>
+		<<elseif getSlave($AS).vagina >= 0>>
+			$he moans in pleasure, $his <<if getSlave($AS).vaginaLube == 1>>wet <<elseif getSlave($AS).vaginaLube == 2>>dripping wet <</if>>pussy and asshole clenching as $he tries to remain standing.
+		<<else>>
+			$he moans in pleasure, asshole pulsating as $he tries to remain standing.
+		<</if>>
+	<<else>>
+		$his _nounL<<if $PC.balls >= 2>>and belly<</if>> sets off a strong orgasm of $his own, even without masturbating.
+		<<if getSlave($AS).dick > 0>> /*dick shoots*/
+			<<if cumAmount(getSlave($AS)) > 20>>/*huge load*/
+				$His _dick dick unloads a massive amount of cum, adding $his own semen to $his body, resulting in a slave covered nearly head to toe in spunk.
+			<<else>>
+				$His _dick dick unloads onto $his belly and $boobs chest, and $his giggles and gasps as it rains down.
+			<</if>>
+		<<elseif getSlave($AS).vagina >= 0>>
+			$He leans back and moans in pleasure, showing $his <<if getSlave($AS).vaginaLube == 1>>wet <<elseif getSlave($AS).vaginaLube == 2>>dripping wet <</if>>pussy and asshole clenching.
+		<<else>>
+			$He leans back and moans in pleasure, showing $his asshole pulsating.
+		<</if>>
+	<</if>>
+	<<if getSlave($AS).vaginaLube >= 1>>
+		After $he leaves, you find a <<if getSlave($AS).vaginaLube >= 2>>large <</if>>puddle of pussyjuice on your desk where $he was sitting.
+	<</if>>
+<</if>>
+
+<<if getSlave($AS).fetish == "cumslut" && getSlave($AS).fetishKnown == 1 && getSlave($AS).fetishStrength >= 60>>
+	<<if $PC.balls > 5>>
+		<<if getSlave($AS).dick > 0>>
+			<<if cumAmount(getSlave($AS)) > 20>>
+				$His _balls balls visibly throb as _dick dick unloads a massive amount of cum, adding $his own semen to $his body, resulting in a slave utterly plastered in spunk. $His eyes are held shut with a thick layer of cum, and judging by how <<if (getSlave($AS).chastityPenis == 1)>>$his dick is still shooting cum even in a cage with no stimulation,<<else>>furiously $he is masturbating,<</if>> $he couldn't be happier.
+			<<else>>
+				$His _dick dick unloads onto $his belly and $boobs chest, and $his giggles and gasps as it rains down with audible splats. $He is splattered in semen, face coated in your cum, and judging by <<if canSmell(getSlave($AS))>>$his nostrils desperately taking in the heady smell and <</if>>how <<if (getSlave($AS).chastityPenis == 1)>>$his dick is still throbbing in orgasm even in a cage with no stimulation,<<else>>$he can't stop masturbating,<</if>> $he couldn't be happier.
+			<</if>>
+		<<elseif getSlave($AS).vagina >= 0>>
+			$He leans back and moans in pleasure, $his <<if getSlave($AS).vaginaLube == 1>>wet <<elseif getSlave($AS).vaginaLube == 2>>dripping wet <</if>>pussy and asshole clenching. $He is splattered in semen, face coated in your cum, and judging by <<if canSmell(getSlave($AS))>>$his nostrils desperately taking in your scent and <</if>>how $he can't stop masturbating, $he couldn't be happier.
+		<<else>>
+			$He leans back and moans in pleasure, asshole pulsating. $He is splattered in semen, face coated in your cum, and judging by <<if canSmell(getSlave($AS))>>$his nostrils desperately taking in your scent and <</if>>how $he can't stop masturbating, $he couldn't be happier.
+		<</if>>
+	<<else>>
+		<<= getSlave($AS).slaveName>> leans down to wipe semen off $his _nounF, quickly bringing it into $his mouth with a blissful look as $he <<if canTaste(getSlave($AS))>>tastes<<else>>feels<</if>> your cum and sighs in pleasure.
+	<</if>>
+<</if>>

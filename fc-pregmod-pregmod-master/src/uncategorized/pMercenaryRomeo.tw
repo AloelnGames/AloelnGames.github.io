@@ -1,0 +1,138 @@
+:: P mercenary romeo [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event", _name = 0>>
+
+<<set _romeoSlaves = $slaves.filter(function(s) { return s.fetish != "mindbroken" && s.fuckdoll == 0 && ["serve in the club", "serve the public", "whore", "work in the brothel"].includes(s.assignment); })>>
+<<if _romeoSlaves.length == 0>>
+	<<set _romeoSlaves = $slaves.filter(function(s) { return (s.counter.publicUse > 0) && (s.newGamePlus == 0) && (s.relationship > -3) && !["be your Concubine", "serve in the master suite"].includes(s.assignment); })>>
+	<<if _romeoSlaves.length == 0>>
+		<<set _name = setup.whiteAmericanSlaveNames.random()>>
+	<<else>>
+		<<set $activeSlave = _romeoSlaves.random()>>
+	<</if>>
+<<else>>
+	<<set $activeSlave = _romeoSlaves.random()>>
+<</if>>
+<<if ndef $activeSlave>>
+	<<set _name = setup.whiteAmericanSlaveNames.random()>>
+<</if>>
+
+<<if _name == 0>>
+	<<set _slaveCost = slaveCost($activeSlave)>>
+	<<set _slaveCost = (random(60,70)*Math.trunc(_slaveCost/100))>>
+	<<set _slaveCost = 100*Math.trunc(_slaveCost/100)>>
+	<<setLocalPronouns $activeSlave>>
+<</if>>
+<<setNonlocalPronouns $seeDicks>>
+
+One of your mercenaries requests an interview. He's a worn, grey-haired tank of a man, made bulkier still by heavy ceramic plate armor and lots of ammunition and gear. The murderous submachine gun favored for city fighting looks like a toy in his hands. But as he sits at your invitation and accepts a
+<<if $PC.refreshmentType == 0>>
+	$PC.refreshment
+<<elseif $PC.refreshmentType == 1>>
+	glass of $PC.refreshment
+<<elseif $PC.refreshmentType == 2>>
+	a plate of $PC.refreshment
+<<elseif $PC.refreshmentType == 3>>
+	line of $PC.refreshment
+<<elseif $PC.refreshmentType == 4>>
+	syringe of $PC.refreshment
+<<elseif $PC.refreshmentType == 5>>
+	pill of $PC.refreshment
+<<elseif $PC.refreshmentType == 6>>
+	tab of $PC.refreshment
+<</if>>
+proffered by an attentive slave _girlU, he seems almost bashful.
+
+<br><br>
+
+"<<= properTitle()>>, I'll say this straight. I'd like to buy one of your slaves.
+<<if _name != 0>>
+	<<setNonlocalPronouns $seeDicks>>
+	I've been seeing _name a lot, and _heU makes the years sit a little lighter on me. I've scraped together what I can, and I can pay <<print cashFormat(50000)>>." It's a huge sum for a mercenary; it's probably his entire savings, but there is a slight problem; the slave he is looking for isn't one of yours. "Well then," he says in embarrassment, "Have to say this is a little awkward." He gives a fake cough, "You wouldn't happen to, you know, know who _hisU owner is?" You shake your head. A run in with a _girlU named _name isn't much to go by and it really isn't your problem. "Ah well, I'm sure I'll see _himU around again. Anyway, that was a fine victory the other day, <<= properTitle()>>; come down to the bar and join the boys and I. We'll buy you a drink. Devil knows, thanks to you we can afford to. Hell, maybe you'll even get to meet _name too, get to see just how much of a looker _heU is."
+<<else>>
+	<<if ["serve in the club", "serve the public", "whore", "work in the brothel"].includes($activeSlave.assignment)>>
+		I've been seeing <<= App.UI.slaveDescriptionDialog($activeSlave)>> a lot, and $he makes the years sit a little lighter on me.
+	<<else>>
+		I've seen <<= App.UI.slaveDescriptionDialog($activeSlave)>> here and there and I can't stop thinking about $him. I feel $he'd make the years sit a little lighter on me.
+	<</if>>
+	I've scraped together what I can, and I can pay <<print cashFormat(_slaveCost)>>." It's a decent price, probably a little less than you could get at auction. It's a huge sum for a mercenary; it's probably his entire savings. You ask what he would do with $him. "Well," he says, actually blushing, "I'd free $him. And marry $him, if $he'd have me."
+
+	<br><br>
+
+	<span id="result">
+	<<link "Decline, and tell $him not to see him">>
+		<<replace "#result">>
+			$activeSlave.slaveName obeys your orders not to see the old mercenary. Though neither he or $activeSlave.slaveName says a word about it, his squadmates are not so closemouthed. Soon the tragic story of The Mercenary and the Slave $Girl is being told in bars and brothels across the Free City, with you naturally playing @@.red;the role of the villain.@@
+			<<run repX(-1000, "event")>>
+		<</replace>>
+	<</link>>
+	<br><<link "Politely decline">>
+		<<replace "#result">>
+			"Ah well," he says, "didn't think you would, but I had to ask. If you'd be so kind as to keep $him assigned so's I can see $him, I would be grateful. That was a fine victory, <<= properTitle()>>; come down to the bar and join the boys and I. We'll buy you a drink. Devil knows, thanks to you we can afford to."
+			<<if $activeSlave.relationship == -3 && $activeSlave.fetish != "mindbroken" && $activeSlave.devotion+$activeSlave.trust > 190>>$activeSlave.slaveName politely thanks you for not letting him take $him away.<</if>>
+		<</replace>>
+	<</link>>
+	<br><<link "Accept">>
+		<<replace "#result">>
+			The mercenary leaves to collect his purchase. On the video feeds, you see that $activeSlave.slaveName can hardly believe what's
+			<<if $activeSlave.relationship == -3 && $activeSlave.fetish != "mindbroken" && $activeSlave.devotion+$activeSlave.trust > 190>>
+				happening. You can't hear what he says as he takes out a ring, but $his reaction speaks clearly. $He says "No."
+				<<if canWalk($activeSlave) && hasAnyArms($activeSlave)>>
+					$He points back into your penthouse and returns to $his home.
+				<<else>>
+					$He gestures towards the nearest camera and he helps $him back into your penthouse.
+				<</if>>
+				The only thing $he wants after being freed is to return to your side.
+				"I thought I was giving $him a better life... But $he already had everything $he wanted. I'm sorry for putting you in such a position." You can hear the sadness in his voice. "Thank you for your time. I'm sorry to have bothered you."
+				Since $he returned to slavery, it's only fair to return the credits he paid for $him. He thanks you hollowly before heading on his way.
+			<<else>>
+				happened.
+				<<if hasAnyArms($activeSlave) && hasBothLegs($activeSlave)>>
+					$He hugs him, sobbing into his shoulder. As they walk hand in hand down towards his quarters,
+				<<else>>
+					As he <<if !isAmputee($activeSlave)>>gives<<else>>picks up $his limbless form to give<</if>> $him a hug,
+				<</if>>
+				$he gives the nearest camera a little nod and silently mouths the words "Thank you, <<= WrittenMaster($activeSlave)>>." Soon the romantic story of The Mercenary and the Slave $Girl is being told in bars and brothels across the Free City, with you naturally playing @@.green;a supporting role.@@
+				<<run cashX(_slaveCost, "slaveTransfer")>>
+				<<= removeActiveSlave() >>
+			<</if>>
+		<</replace>>
+	<</link>>
+	<br><<link "Give $him to him as a gift">>
+		<<replace "#result">>
+			The mercenary cannot believe his ears. After you repeat yourself twice, he leaves to collect your gift, thanking you clumsily. On the video feeds, you see that $activeSlave.slaveName can hardly believe what's
+			<<if $activeSlave.relationship == -3 && $activeSlave.fetish != "mindbroken" && $activeSlave.devotion+$activeSlave.trust > 190>>
+				happening. You can't hear what he says as he takes out a ring, but $his reaction speaks clearly. $He says "No."
+				<<if canWalk($activeSlave) && hasAnyArms($activeSlave)>>
+					$He points back into your penthouse and returns to $his home.
+				<<else>>
+					$He gestures towards the nearest camera and he helps $him back into your penthouse.
+				<</if>>
+				The only thing $he wants after being freed is to return to your side.
+				"I thought I was giving $him a better life... But $he already had everything $he wanted. I'm sorry for putting you in such a position." You can hear the sadness in his voice. "Thank you for your time. I'm sorry to have bothered you."
+			<<else>>
+				happened.
+				<<if hasAnyArms($activeSlave) && hasAnyLegs($activeSlave)>>
+					$He hugs him, sobbing into his shoulder. As they walk hand in hand down towards his quarters,
+				<<else>>
+					As he <<if !isAmputee($activeSlave)>>gives<<else>>picks up $his limbless form to give<</if>> $him a hug,
+				<</if>>
+				$he gives the nearest camera a little nod and silently mouths the words "Thank you, <<= WrittenMaster($activeSlave)>>." You smile to yourself; when they get there they'll find flowers and a paid reservation at the arcology's best restaurant. Soon the story is being told in bars and brothels across the Free City, with you naturally playing @@.green;a starring role.@@ Some days later, you hear a dramatization is being filmed, with an aging action star playing the mercenary, a rising starlet playing $activeSlave.slaveName, and a noted character actor playing you.
+				<<run repX(15000, "event")>>
+				<<set _poster = "a poster for the movie that was made about the love between one of your mercenaries and " + $activeSlave.slaveName>>
+				<<set $trinkets.push(_poster)>>
+				<<= removeActiveSlave() >>
+			<</if>>
+		<</replace>>
+	<</link>>
+	</span>
+
+	<h3>$His records...</h3>
+	<div class="note">
+		<div class="indent">
+			$His current task is to <<print $activeSlave.assignment>><<if $assignmentRecords[$slaves[$i].ID]>>, and before that to <<print $assignmentRecords[$slaves[$i].ID]>><</if>>.
+		</div>
+		<<SlaveExpensesExtra $activeSlave>>
+	</div>
+
+<</if>>

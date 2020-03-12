@@ -1,0 +1,82 @@
+:: RE sibling revenge [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "RIE Eligibility Check">>
+
+<<set $i = $slaveIndices[$youngerSister]>>
+<<set $j = $slaveIndices[$olderSister]>>
+<<setLocalPronouns $slaves[$i]>>
+<<setLocalPronouns $slaves[$j] 2>>
+
+<<set _clothesTemp = $slaves[$i].clothes, $slaves[$i].clothes = "no clothing">>
+<<set _clothesTemp2 = $slaves[$j].clothes, $slaves[$j].clothes = "no clothing">>
+<span id="artFrame">
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<div class="imageColumn">
+		<div class="imageRef medImg">
+			<<= SlaveArt($slaves[$i], 2, 0)>>
+		</div>
+		<div class="imageRef medImg">
+			<<= SlaveArt($slaves[$j], 2, 0)>>
+		</div>
+	</div>
+<</if>>
+/* 000-250-006 */
+</span>
+<<set $slaves[$i].clothes = _clothesTemp>>
+<<set $slaves[$j].clothes = _clothesTemp2>>
+
+$slaves[$i].slaveName, whose older _sister2 tried to sell $him to you, is up for inspection. As usual, you pepper your inspection with questions about $his duties, $his feelings about $his physical condition, and experiences. More information about one's property is never a bad thing. When the inspection reaches $slaves[$i].slaveName's asshole, you ask whether $he enjoyed having $his older _sister2 sell $his butt.
+
+"No, <<Master $slaves[$i]>>," $he says.
+
+<br><br>
+
+<span id="result">
+<br><<link "Turnabout is fair play">>
+	<<replace "#result">>
+	$slaves[$j].slaveName is brought in. You gag _him2, throw the resisting bitch down on the couch, and hold _him2 there. Then, you peremptorily order the wide-eyed $slaves[$i].slaveName to <<if canDoAnal($slaves[$j])>>sodomize<<else>>facefuck<</if>> $his _sister2. $He stares open mouthed for a moment, but comes over obediently. $His face is a strange mix of vengeful eagerness, revulsion, and even a little lust. $He shoves $himself into the frantically struggling _girl2's <<if canDoAnal($slaves[$j])>>butt<<else>>jaw<</if>> without mercy. $His cock is <<if $slaves[$i].dick < 3>>pathetically small<<elseif $slaves[$i].dick < 5>>nothing out of the ordinary<<elseif $slaves[$i].dick < 7>>admittedly nothing to scoff at<<else>>a source of great envy amongst your slaves<</if>>, but by how $slaves[$j].slaveName reacts it might as well be a baseball bat. $slaves[$i].slaveName rarely gets to penetrate anything, mostly serving as an oral slut<<if canDoAnal($slaves[$i])>> and anal cocksleeve<</if>>, so $he comes in no time and takes a turn holding $slaves[$j].slaveName down <<if canDoAnal($slaves[$j])>>so you can claim sloppy seconds on _his2 spasming butthole<</if>>.
+	@@.hotpink;$slaves[$i].slaveName has become more devoted to you,@@ while $slaves[$j].slaveName @@.mediumorchid;hates you@@ and has become @@.gold;more afraid of you,@@<<if canDoAnal($slaves[$j])>> and @@.lime;$slaves[$j].slaveName has lost _his2 anal virginity.@@<<else>>.<</if>>
+	<<set $slaves[$i].devotion += 4>>
+	<<set $slaves[$i].counter.penetrative += 1>>
+	<<set $penetrativeTotal += 1>>
+
+	<<set $slaves[$j].trust -= 5>>
+	<<set $slaves[$j].devotion -= 4>>
+	<<if canDoAnal($slaves[$j])>>
+		<<set $slaves[$j].anus = 1>>
+		<<set $slaves[$j].counter.anal += 1>>
+		<<set $analTotal += 1>>
+	<<else>>
+		<<set $slaves[$j].counter.oral += 1>>
+		<<set $oralTotal += 1>>
+	<</if>>
+	<</replace>>
+<</link>>
+<br><<link "Let $him have $his revenge, but remind $him of $his place">>
+	<<replace "#result">>
+	$slaves[$j].slaveName is brought in. You gag _him2, throw the resisting bitch down on the couch, and hold _him2 there. Then, you peremptorily order the wide-eyed $slaves[$i].slaveName to put $his cock <<if canDoAnal($slaves[$j])>>up $his _sister2's ass<<else>>in $his _sister2's mouth<</if>>, and then hold it there. $He stares open mouthed for a moment, but comes over obediently. $His face is a strange mix of vengeful eagerness, revulsion, and even a little lust. $He shoves $himself into the frantically struggling _girl2's <<if canDoAnal($slaves[$j])>>butt<<else>>jaw<</if>> without mercy. $His cock is <<if $slaves[$i].dick < 3>>pathetically small<<elseif $slaves[$i].dick < 5>>nothing out of the ordinary<<elseif $slaves[$i].dick < 7>>admittedly nothing to scoff at<<else>>a source of great envy amongst your slaves<</if>>, but by how $slaves[$j].slaveName reacts it might as well be a baseball bat. $slaves[$i].slaveName obeys your orders and holds still after inserting $himself. You<<if $PC.dick == 0>> don a strap-on,<</if>> move around <<if canDoAnal($slaves[$i])>>behind $him and start ass<<else>>in front of $him and start face-<</if>>fucking $him in turn, slowly permitting $him to find a rhythm where $he can fuck and get fucked at the same time. $He's getting it much harder than $he's giving it but $he's experienced enough that $he comes quickly.
+	@@.hotpink;$slaves[$i].slaveName has become more devoted to you,@@ while @@.mediumorchid;$slaves[$j].slaveName has become more rebellious,@@<<if canDoAnal($slaves[$j])>> and @@.lime;$slaves[$j].slaveName has lost _his2 anal virginity.@@<<else>>.<</if>>
+	<<set $slaves[$i].devotion += 4>>
+	<<if canDoAnal($slaves[$i])>>
+		<<set $slaves[$i].counter.anal += 1>>
+		<<set $analTotal += 1>>
+	<<else>>
+		<<set $slaves[$i].counter.oral += 1>>
+		<<set $oralTotal += 1>>
+	<</if>>
+	<<set $slaves[$i].counter.penetrative += 1>>
+	<<set $penetrativeTotal += 1>>
+
+	<<set $slaves[$j].devotion -= 5>>
+	<<if canDoAnal($slaves[$j])>>
+		<<set $slaves[$j].anus = 1>>
+		<<set $slaves[$j].counter.anal += 2>>
+		<<set $analTotal += 2>>
+	<<else>>
+		<<set $slaves[$j].counter.oral += 2>>
+		<<set $oralTotal += 2>>
+	<</if>>
+	<</replace>>
+<</link>>
+</span>

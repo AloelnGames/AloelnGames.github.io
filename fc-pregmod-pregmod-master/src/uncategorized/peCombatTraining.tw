@@ -1,0 +1,48 @@
+:: PE combat training [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "RIE Eligibility Check">>
+
+<<set $activeSlave = $Bodyguard>>
+<<setLocalPronouns $activeSlave>>
+
+<span id="artFrame">
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<<if $imageChoice == 1>>
+		<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+	<<else>>
+		<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+	<</if>>
+<</if>>
+/* 000-250-006 */
+</span>
+
+<<= App.UI.slaveDescriptionDialog($activeSlave)>> has many duties as a bodyguard, and $his schedule is carefully built to allow $him to complete them. When you're at your desk in your penthouse and there are no guests to intimidate, $his services are least needed, so $he typically uses these lulls to catch up on sleep or train.
+<br><br>
+The feed from the small armory next door shows $him doing the latter. $He has finished working with a heavy practice sword, and has moved to the tiny, one-shooter range. $He seems frustrated, hurrying $his shots and missing unnecessarily.
+
+<br><br>
+
+<span id="result">
+<<link "Instruct $him">>
+	<<replace "#result">>
+	$activeSlave.slaveName starts as you enter the range and don ear protection. $He is distracted by your body against $hers as you come in close to correct $his stance, but $he concentrates hard for you. You take whatever time you can spare over the week for serious lessons. $He @@.green;is diligent and learns well,@@ and @@.mediumaquamarine;places greater trust@@ in your judgment.
+	<<set $activeSlave.trust += 4>>
+	<<set $activeSlave.skill.combat = 1>>
+	<</replace>>
+<</link>>
+<br><<link "Promise $him a sexual reward if $he improves">>
+	<<replace "#result">>
+	Over the feed, you tell $activeSlave.slaveName that $he can have $his choice of sexual release if $he scores well on the next set of targets. $He concentrates desperately, trying to ignore $his mounting arousal as $he imagines enjoying <<if $activeSlave.fetish == "none">>passionate sexual<<elseif $activeSlave.fetish == "boobs">>breast<<else>>$activeSlave.fetish<</if>> play. $He barely makes the stated score, and hurries smiling in for $his reward. $He feels @@.hotpink;closer to you,@@ but is distracted from any real learning and does not become a better fighter.
+	<<set $activeSlave.devotion += 4>>
+	<<if canDoVaginal($activeSlave)>>
+		<<= VCheck.Vaginal()>>
+	<<elseif canDoAnal($activeSlave)>>
+		<<= VCheck.Anal()>>
+	<<else>>
+		<<set $activeSlave.counter.oral += 1>>
+		<<set $oralTotal += 1>>
+	<</if>>
+	<</replace>>
+<</link>><<if canDoVaginal($activeSlave) && ($activeSlave.vagina == 0)>>//This option will take virginity//<<elseif !canDoVaginal($activeSlave) && ($activeSlave.anus == 0)>> //This option will take anal virginity//<</if>>
+</span>

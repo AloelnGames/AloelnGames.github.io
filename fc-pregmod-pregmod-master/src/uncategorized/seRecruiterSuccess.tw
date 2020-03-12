@@ -1,0 +1,273 @@
+:: SE recruiter success [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Scheduled Event", $returnTo = "Scheduled Event", $showEncyclopedia = 1, $encyclopedia = "Enslaving People", $recruiterProgress = 0>>
+
+<<if $recruiterTarget == "young migrants">>
+
+<<set $activeSlaveOneTimeMaxAge = 22>>
+<<set $oneTimeDisableDisability = 1>>
+<<set $activeSlave = GenerateNewSlave()>>
+<<set $activeSlave.origin = "$He submitted to enslavement for a better chance at survival than $he had as a migrant.">>
+<<set $activeSlave.devotion = random(-15,5)>>
+<<set $activeSlave.trust = random(-10,10)>>
+<<run setHealth($activeSlave, jsRandom(-80,20))>>
+<<set $activeSlave.anus = 0>>
+<<if $activeSlave.vagina > 0>>
+	<<set $activeSlave.vagina = random(1,3)>>
+	<<set $activeSlave.skill.vaginal = random(15,40)>>
+<</if>>
+<<set $activeSlave.skill.anal = 0>>
+<<if $recruiterEugenics == 1>>
+	<<if $IntelligenceEugenicsSMR == 1>>
+		<<set $activeSlave.intelligence = Intelligence.random({limitIntelligence: [40,100]})>>
+	<</if>>
+	<<if $HeightEugenicsSMR == 1>>
+		<<set $activeSlave.height = random(185,190)>>
+	<</if>>
+	<<if $FaceEugenicsSMR == 1>>
+		<<set $activeSlave.face = random(40,100)>>
+	<</if>>
+<</if>>
+
+<<set $activeSlave.earPiercing = random(0,1)>>
+
+<<elseif $recruiterTarget == "recent divorcees">>
+
+<<set $activeSlaveOneTimeMinAge = 30>>
+<<set $activeSlaveOneTimeMaxAge = 45>>
+<<set $oneTimeDisableDisability = 1>>
+<<set $activeSlave = GenerateNewSlave()>>
+<<set $activeSlave.origin = "$He submitted to enslavement for a better quality of life than $he had as a recent divorcee.">>
+<<set $activeSlave.devotion = random(-15,5)>>
+<<set $activeSlave.trust = random(-10,10)>>
+<<run setHealth($activeSlave, jsRandom(-40,20))>>
+<<set $activeSlave.anus = random(1,3)>>
+<<if $activeSlave.balls > 0>>
+	<<set $activeSlave.vagina = random(1,3)>>
+	<<set $activeSlave.skill.vaginal = random(15,40)>>
+<</if>>
+<<set $activeSlave.skill.anal = 0>>
+<<if $recruiterEugenics == 1>>
+	<<if $IntelligenceEugenicsSMR == 1>>
+		<<set $activeSlave.intelligence = Intelligence.random({limitIntelligence: [40,100]})>>
+	<</if>>
+	<<if $HeightEugenicsSMR == 1>>
+		<<set $activeSlave.height = random(185,190)>>
+	<</if>>
+	<<if $FaceEugenicsSMR == 1>>
+		<<set $activeSlave.face = random(40,100)>>
+	<</if>>
+<</if>>
+
+<<set $activeSlave.earPiercing = random(0,1)>>
+
+<<elseif $recruiterTarget == "reassignment candidates">>
+
+<<set $oneTimeDisableDisability = 1>>
+<<set $activeSlave = GenerateNewSlave("XY")>>
+<<set $activeSlave.origin = "$He submitted to enslavement as $his only way to obtain surgery to transform $him into a woman.">>
+<<set $activeSlave.devotion = random(-15,5)>>
+<<set $activeSlave.trust = random(-10,10)>>
+<<run setHealth($activeSlave, jsRandom(-40,20))>>
+<<if $activeSlave.balls == 0>>
+	<<set $activeSlave.balls = random(1,3)>>
+<</if>>
+<<if $recruiterEugenics == 1>>
+	<<if $IntelligenceEugenicsSMR == 1>>
+		<<set $activeSlave.intelligence = Intelligence.random({limitIntelligence: [40,100]})>>
+	<</if>>
+	<<if $HeightEugenicsSMR == 1>>
+		<<set $activeSlave.height = random(185,190)>>
+	<</if>>
+	<<if $FaceEugenicsSMR == 1>>
+		<<set $activeSlave.face = random(40,100)>>
+	<</if>>
+<</if>>
+
+<<set $activeSlave.tonguePiercing = random(0,1)>>
+<<set $activeSlave.earPiercing = random(0,1)>>
+<<set $activeSlave.nosePiercing = random(0,1)>>
+<<set $activeSlave.sexualFlaw = "hates women">>
+
+<<elseif $recruiterTarget == "dissolute sissies">>
+
+<<set $oneTimeDisableDisability = 1>>
+<<set $activeSlave = GenerateNewSlave("XY")>>
+<<set $activeSlave.origin = "$He submitted to enslavement out of a misguided desire to join a sexually libertine society.">>
+<<set $activeSlave.devotion = random(-15,5)>>
+<<set $activeSlave.trust = random(-10,10)>>
+<<run setHealth($activeSlave, jsRandom(-40,20))>>
+<<set $activeSlave.anus = random(1,3)>>
+<<if $activeSlave.balls == 0>>
+	<<set $activeSlave.balls = random(1,3)>>
+<</if>>
+<<set $activeSlave.skill.oral = random(15,40)>>
+<<set $activeSlave.skill.anal = random(15,40)>>
+<<set $activeSlave.faceImplant = 20*random(0,1)>>
+<<set $activeSlave.face = Math.clamp($activeSlave.face+($activeSlave.faceImplant),-100,100)>>
+<<set $activeSlave.lipsPiercing = random(0,1)>>
+<<set $activeSlave.tonguePiercing = random(0,1)>>
+<<set $activeSlave.earPiercing = random(0,1)>>
+<<set $activeSlave.nosePiercing = random(0,1)>>
+<<set $activeSlave.eyebrowPiercing = random(0,1)>>
+<<set $activeSlave.navelPiercing = random(0,1)>>
+<<set $activeSlave.nipplesPiercing = random(0,1)>>
+<<set $activeSlave.clitPiercing = random(0,1)>>
+<<set $activeSlave.sexualFlaw = "hates women">>
+<<if $recruiterEugenics == 1>>
+	<<if $IntelligenceEugenicsSMR == 1>>
+		<<set $activeSlave.intelligence = Intelligence.random({limitIntelligence: [40,100]})>>
+	<</if>>
+	<<if $HeightEugenicsSMR == 1>>
+		<<set $activeSlave.height = random(185,190)>>
+	<</if>>
+	<<if $FaceEugenicsSMR == 1>>
+		<<set $activeSlave.face = random(40,100)>>
+	<</if>>
+<</if>>
+
+<<elseif $recruiterTarget == "expectant mothers">>
+
+<<set $activeSlaveOneTimeMinAge = Math.max($fertilityAge, $minimumSlaveAge)>>
+<<set $one_time_age_overrides_pedo_mode = 1>> /% Old enough to be pregnant. %/
+<<set $oneTimeDisableDisability = 1>>
+<<set $activeSlave = GenerateNewSlave("XX")>>
+<<set $activeSlave.origin = "$He submitted to enslavement to get access to modern prenatal care.">>
+<<set $activeSlave.devotion = random(-15,5)>>
+<<set $activeSlave.trust = random(-10,10)>>
+<<run setHealth($activeSlave, jsRandom(-80,20))>>
+<<set $activeSlave.vagina = random(1,3)>>
+<<set $activeSlave.preg = random(15,39)>>
+<<set $activeSlave.pregType = setPregType($activeSlave)>>
+<<set WombImpregnate($activeSlave, $activeSlave.pregType, 0, $activeSlave.preg)>>
+<<set $activeSlave.pregKnown = 1>>
+<<set $activeSlave.pregWeek = $activeSlave.preg>>
+<<run SetBellySize($activeSlave)>>
+<<set $activeSlave.boobs += 50*random(0,6)>>
+<<set $activeSlave.lactation = random(0,1)>>
+<<if $activeSlave.lactation > 0>>
+	<<set $activeSlave.lactationDuration = 2>>
+<</if>>
+<<set $activeSlave.weight = random(0,50)>>
+<<if $recruiterEugenics == 1>>
+	<<if $IntelligenceEugenicsSMR == 1>>
+		<<set $activeSlave.intelligence = Intelligence.random({limitIntelligence: [40,100]})>>
+	<</if>>
+	<<if $HeightEugenicsSMR == 1>>
+		<<set $activeSlave.height = random(185,190)>>
+	<</if>>
+	<<if $FaceEugenicsSMR == 1>>
+		<<set $activeSlave.face = random(40,100)>>
+	<</if>>
+<</if>>
+
+<<else>>
+
+<<set $activeSlaveOneTimeMinAge = 11>>
+<<set $activeSlaveOneTimeMaxAge = 22>>
+<<set $oneTimeDisableDisability = 1>>
+<<set $activeSlave = GenerateNewSlave()>>
+<<set $activeSlave.origin = "$He submitted to enslavement to escape the hard life of an old world whore.">>
+<<set $activeSlave.career = "a prostitute">>
+<<set $activeSlave.devotion = random(-15,5)>>
+<<set $activeSlave.trust = random(-10,10)>>
+<<run setHealth($activeSlave, jsRandom(-80,20))>>
+<<set $activeSlave.anus = random(1,3)>>
+<<if $activeSlave.balls > 0>>
+	<<set $activeSlave.vagina = random(1,3)>>
+	<<set $activeSlave.skill.vaginal = random(15,40)>>
+<</if>>
+<<set $activeSlave.skill.oral = random(15,40)>>
+<<set $activeSlave.skill.anal = random(15,40)>>
+<<set $activeSlave.skill.whoring = random(15,40)>>
+<<set $activeSlave.boobsImplant = random(0,3)*200>>
+<<set $activeSlave.boobs += $activeSlave.boobsImplant>>
+<<if $activeSlave.boobsImplant > 0>>
+	<<set $activeSlave.boobsImplantType = "normal">>
+<</if>>
+<<set $activeSlave.buttImplant = random(0,2)>>
+<<set $activeSlave.butt = $activeSlave.buttImplant>>
+<<if $activeSlave.buttImplant > 0>>
+	<<set $activeSlave.buttImplantType = "normal">>
+<</if>>
+<<set $activeSlave.lipsImplant = either(0,10)>>
+<<set $activeSlave.lips += $activeSlave.lipsImplant>>
+<<set $activeSlave.lipsPiercing = random(0,1)>>
+<<set $activeSlave.tonguePiercing = random(0,1)>>
+<<set $activeSlave.earPiercing = random(0,1)>>
+<<set $activeSlave.nosePiercing = random(0,1)>>
+<<set $activeSlave.eyebrowPiercing = random(0,1)>>
+<<set $activeSlave.navelPiercing = random(0,1)>>
+<<set $activeSlave.nipplesPiercing = random(0,1)>>
+<<set $activeSlave.clitPiercing = random(0,1)>>
+<<if $recruiterEugenics == 1>>
+	<<if $IntelligenceEugenicsSMR == 1>>
+		<<set $activeSlave.intelligence = Intelligence.random({limitIntelligence: [40,100]})>>
+	<</if>>
+	<<if $HeightEugenicsSMR == 1>>
+		<<set $activeSlave.height = random(185,190)>>
+	<</if>>
+	<<if $FaceEugenicsSMR == 1>>
+		<<set $activeSlave.face = random(40,100)>>
+	<</if>>
+<</if>>
+
+<</if>>
+
+<<set _ContractCost = 1000>>
+<<set _slaveCost = slaveCost($activeSlave)>>
+<<set _slaveCost -= _ContractCost>>
+<<setLocalPronouns $activeSlave>>
+<<setLocalPronouns $Recruiter 2>>
+
+<<if $recruiterTarget == "young migrants">>
+
+Your recruiter $Recruiter.slaveName has succeeded; _he2's convinced a starving young migrant from the old world that $he'll have a better chance at survival as one of your slaves.
+
+<<elseif $recruiterTarget == "recent divorcees">>
+
+Your recruiter $Recruiter.slaveName has succeeded; _he2's convinced a recent divorcee from the old world that $he'll have a better quality of life as one of your slaves.
+
+<<elseif $recruiterTarget == "reassignment candidates">>
+
+Your recruiter $Recruiter.slaveName has succeeded; _he2's convinced an old world person desperate for modern reassignment surgery that you'll provide it if $he agrees to be a sex slave after $he's recreated as a female.
+
+<<elseif $recruiterTarget == "dissolute sissies">>
+
+Your recruiter $Recruiter.slaveName has succeeded; _he2's convinced an old world sissy that $he'd be better off as a slave in a society that is so totally sexually libertine as to accept as female and respectable anyone who takes cock.
+
+<<elseif $recruiterTarget == "expectant mothers">>
+
+Your recruiter $Recruiter.slaveName has succeeded; _he2's convinced an unhealthy expectant mother that you'll provide $him with modern medicine in return for $his enslavement.
+
+<<else>>
+
+Your recruiter $Recruiter.slaveName has succeeded; _he2's convinced a desperate old world whore that $he'd be better off as a slave in $arcologies[0].name than as a free prostitute on the rough streets of a traditional city.
+
+<</if>>
+
+<br><br>
+
+<<set $saleDescription = 1, $applyLaw = 0>><<include "Long Slave Description">>
+
+<br><br>
+
+<span id="result">
+<<if $cash >= _ContractCost>>
+<<link "Enslave $him">>
+	<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $slaves[$i])>>
+	<<replace "#result">>
+	<<include "New Slave Intro">>
+	<</replace>>
+<</link>> //This will cost <<print cashFormat(_ContractCost)>>//
+<br><<link "Sell $him immediately">>
+	<<run cashX(_slaveCost, "slaveTransfer", $Recruiter)>>
+	<<replace "#result">>
+	$activeSlave.slaveName accepts being resold without much fuss. $He's merely exchanged one unknown owner for another. For all $he knows $his new buyer will be less abusive than you would have been. $He would be less complacent if $he knew who $his buyers are; $he'll be immured in an arcade within the hour.
+	<</replace>>
+<</link>> //This will bring in <<print cashFormat(_slaveCost)>>//
+<<else>>
+	//You lack the necessary funds to enslave $him.//
+	<<set $recruiterProgress = 7>>
+<</if>>
+</span>

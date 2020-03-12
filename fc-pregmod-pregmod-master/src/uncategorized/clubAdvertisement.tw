@@ -1,0 +1,159 @@
+:: Club Advertisement [nobr]
+
+<p class="scene-intro">
+	<<switch $clubDecoration>>
+		<<case "Roman Revivalist">>
+			$clubNameCaps is decorated like a Roman villa's entertainment rooms. There is a lot of white stone, plaster, and terracotta.
+		<<case "Aztec Revivalist">>
+			$clubNameCaps is decorated with obsidian figures inserted in the lime walls and giant oak pillars that give a homey feeling to the otherwise cold building.
+		<<case "Egyptian Revivalist">>
+			$clubNameCaps is decorated like a room in an ancient Egyptian palace. There are columns of warm stone and pools of clear water full of aquatic plants.
+		<<case "Edo Revivalist">>
+			$clubNameCaps is furnished as an Edo period theater. Performances of the traditional Japanese arts can be seen here, though more modern dancing happens in the evenings. In either case, geisha girls are present and willing.
+		<<case "Arabian Revivalist">>
+			$clubNameCaps is designed like an open plaza in an Arabian palace, with a raised stage in the center for erotic dancing. Diaphanous, flowing curtains billow across the space, dispersing the narcotic smoke billowing from a score of hookahs.
+		<<case "Chinese Revivalist">>
+			$clubNameCaps is furnished as an old Chinese disorderly house. It's intentionally packed in so that closeness and good cheer is obligatory here; prominent citizens share tables while their hangers-on jostle for room.
+		<<case "Chattel Religionist">>
+			$clubNameCaps isn't a religious establishment, but it almost looks like one. It's clean and proper, with beams of natural light that come down to highlight holy sex slaves' bodies.
+		<<case "Degradationist">>
+			$clubNameCaps has a perverted, debauched appearance. The décor is utilitarian so it can be cleaned easily, and the reason is obvious. Many patrons have brought their own slaves to publicly rape here.
+		<<case "Repopulation Focus">>
+			$clubNameCaps has a gaudy appearance. There are lots of deep soft chairs for pregnant patrons and slaves to rest in and screens showing girls with large bellies lining the walls.
+		<<case "Eugenics">>
+			$clubNameCaps has a gaudy appearance. There are screens lining the walls discouraging unprotected slave sex. The real action happens in the several exclusive rooms reserved for society's best.
+		<<case "Asset Expansionist">>
+			$clubNameCaps has a gaudy appearance. There are a lot of neon lights and there are screens everywhere, showing off big tits and plush asses.
+		<<case "Transformation Fetishist">>
+			$clubNameCaps has a gaudy appearance. There are a lot of neon lights and there are screens everywhere, showing off huge fake tits and plastic dick sucking lips.
+		<<case "Gender Radicalist">>
+			$clubNameCaps has a gaudy appearance. There are a lot of neon lights and there are screens everywhere, showing closeups of cocks fucking every imaginable orifice.
+		<<case "Gender Fundamentalist">>
+			$clubNameCaps has an old world appearance, a decidedly throwback atmosphere harking back to the glory days of cultures past.
+		<<case "Physical Idealist">>
+			$clubNameCaps isn't a gym, but it smells like one. The dancing is rough and competitive, and the drinks are rich with protein.
+		<<case "Supremacist">>
+			$clubNameCaps is decorated like an upper-class gentleman's club in the old countries of $arcologies[0].FSSupremacistRace people.
+		<<case "Subjugationist">>
+			$clubNameCaps is decorated like an upper-class gentleman's club in the old countries which favored $arcologies[0].FSSubjugationistRace slaves.
+		<<case "Paternalist">>
+			$clubNameCaps is handsome and well-kept, even romantic. Though the slaves here are sex slaves, every provision is made to encourage them to enjoy themselves.
+		<<case "Body Purist">>
+			$clubNameCaps is gorgeous, decorated and kept in the height of fashionable night establishment style. The music is cutting edge and everything and everyone is elegant.
+		<<case "Slimness Enthusiast">>
+			$clubNameCaps is distinctly gaudy, with lots of sugary drinks on offer. The music and décor are of a decidedly bubblegum quality.
+		<<case "Pastoralist">>
+			$clubNameCaps is decorated to resemble a frontier disorderly house. The drinks are pounded straight, and there's a set of swinging doors for bad men to part dramatically as they enter.
+		<<case "Maturity Preferentialist">>
+			$clubNameCaps is surprisingly elegant. The music consists of refined remixes of traditional dance music, offering slaves and citizens the chance to dance beautifully together.
+		<<case "Youth Preferentialist">>
+			$clubNameCaps is deafeningly loud. There's a bright light show running, offering staccato glimpses of the scene out on the dance floor.
+		<<case "Hedonistic">>
+			$clubNameCaps has a gaudy appearance. The dance floor is extra large to accommodate its extra wide dancers, though bodies grinding against each other is an inevitability. Plenty of roomy, comfortable booths encircle the room for an exhausted citizen to relax with his plush dance partner, and a wide selection of greasy food accompanies the drinks. <<if $arcologies[0].FSHedonisticDecadenceResearch == 1>>Platters of food are complementary for feeding slaves<<else>>Feeders are available in the booths to feed tired slaves<</if>> while they get fondled.
+		<<case "Intellectual Dependency">>
+			$clubNameCaps is distinctly gaudy and easy for slaves to move around in. The dancing is as energetic and sexual, and the drinks sugary and sweet.
+		<<case "Slave Professionalism">>
+			$clubNameCaps is decorated like an upper-class gentleman's club. It is where a true courtesan works their craft.
+		<<case "Petite Admiration">>
+			$clubNameCaps has a gaudy appearance. The dance floor is surrounded by raised platforms so even the shortest slave can be seen by the crowd.
+		<<case "Statuesque Glorification">>
+			$clubNameCaps has a tiered appearance. The booths and bar are positioned overlooking the dance floor so patrons may loom over the dancing slaves even when seated.
+	<</switch>>
+
+	<<if $clubAdsSpending > 0>>
+		Screens outside the entrance are showing softcore music videos to advertise $clubName.
+		<<if $clubAdsOld == 1>>
+			The featured strippers are all MILFs.
+		<<elseif $clubAdsOld == -1>>
+			The featured strippers are all nice and young.
+		<<elseif $clubAdsOld == -2>>
+			The featured strippers are all teenagers.
+		<<elseif $clubAdsOld == -3>>
+			The featured strippers are all lolis.
+		<<else>>
+			The featured strippers vary in age.
+		<</if>>
+		<<if $clubAdsStacked == 1>>
+			Lots of bouncing breasts and butts
+		<<elseif $clubAdsStacked == -1>>
+			Lots of trim breasts and shapely butts
+		<<else>>
+			A variety of breast and butt sizes and shapes
+		<</if>>
+		are on display, and
+		<<if $clubAdsImplanted == 1>>
+			most of these are augmented by implants.
+		<<elseif $clubAdsImplanted == -1>>
+			they're all natural.
+		<<else>>
+			some are augmented by implants.
+		<</if>>
+		<<if $seePreg == 1>>
+			<<if $clubAdsPreg == 1>>
+				Most of strippers have firm, rounded bellies.
+			<<elseif $clubAdsPreg == -1>>
+				Most of the strippers have firm, flat bellies.
+			<<else>>
+				Some of the strippers are pregnant.
+			<</if>>
+		<</if>>
+		<<if $clubAdsModded == 1>>
+			Everything is heavily pierced and tattooed.
+		<<elseif $clubAdsModded == -1>>
+			Everything is free of tattoos and piercings.
+		<<else>>
+			Some of these assets are tattooed and pierced, and some aren't.
+		<</if>>
+		The strippers get naked quickly, and show off
+		<<if $clubAdsXX == 1>>
+			their pussies and assholes.
+		<<elseif $clubAdsXX == -1>>
+			their assholes.
+		<<else>>
+			their holes.
+		<</if>>
+	<</if>>
+
+	<<if $clubAdsSpending >= 5000>>
+		Advertisements based on these scenes run constantly in media across $arcologies[0].name, and there's an active merchandising campaign underway to promote your club and its girls.
+	<<elseif $clubAdsSpending >= 4000>>
+		Advertisements based on these scenes run constantly in media across $arcologies[0].name.
+	<<elseif $clubAdsSpending >= 3000>>
+		Advertisements based on these scenes are run in media across $arcologies[0].name.
+	<<elseif $clubAdsSpending >= 2000>>
+		Advertisements based on these scenes run regularly in arcology media.
+	<<elseif $clubAdsSpending >= 1000>>
+		Advertisements based on these scenes run occasionally in arcology media.
+	<<else>>
+		$arcologies[0].name has a robust internal media that could be used to bring patrons into the club.
+	<</if>>
+</p>
+
+<p>
+	<div>
+		You are spending <<print cashFormatColor(forceNeg($clubAdsSpending))>> each week to advertise $clubName.
+	</div>
+
+	<div>
+		<<if $clubAdsSpending > 900>>
+			<<link "Decrease">><<set $clubAdsSpending -= 1000>><<goto "Club Advertisement">><</link>> |
+		<<else>>
+			Decrease |
+		<</if>>
+		<<if $clubAdsSpending < 5000>>
+			<<link "Increase">><<set $clubAdsSpending += 1000>><<goto "Club Advertisement">><</link>>
+		<<else>>
+			Increase
+		<</if>>
+	</div>
+</p>
+
+<h2>Design $clubNameCaps Ad Campaign</h2> 
+
+<div class="note">
+	Will replace relevant variety bonuses
+</div>
+
+<p>
+	<<= App.Ads.report("club", true)>>
+</p>

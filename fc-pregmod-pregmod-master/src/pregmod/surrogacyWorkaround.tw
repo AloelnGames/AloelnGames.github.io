@@ -1,0 +1,87 @@
+:: Surrogacy Workaround [nobr]
+
+<<set $nextButton = "Cancel", _eligibility = 0, _eligibilityI = 0, _eligibility2 = 0>>
+<<if $donatrix.ID == $PC.ID>>
+	<<set _donatrixID = -1>>
+<<else>>
+	<<set _donatrixID = 0>>
+<</if>>
+<<if $impregnatrix != "Undecided" && $impregnatrix.ID == -1>><<set _impreg = PlayerName()>><<elseif $impregnatrix != "Undecided">><<set _impreg = SlaveFullName($impregnatrix)>><<else>><<set _impreg = $impregnatrix>><</if>>
+<<if $receptrix != "Undecided" && $receptrix.ID == -1>><<set _receive = PlayerName()>><<elseif $receptrix != "Undecided">><<set _receive = SlaveFullName($receptrix)>><<else>><<set _receive = $receptrix>><</if>>
+
+//<<if _donatrixID == -1>>You've prepared yourself to have an egg taken from your ovaries<<else>>$activeSlave.slaveName is prepped to have an egg harvested from $his ovaries<</if>>; now you must select a target to fertilize it and who will carry it to term.//
+
+<br><br>
+
+
+_impreg will provide the seed and _receive shall carry it.
+<<if _impreg != "Undecided" && _receive != "Undecided">>
+	[[Implant fertilized ovum|Surrogacy][cashX(forceNeg($surgeryCost*2), "slaveSurgery"), $surgeryType = "surrogacy"]]
+<</if>>
+
+<br><br>
+
+__Semen donatrix: _impreg __
+
+<br>
+<<for _sw = 0; _sw < $slaves.length; _sw++>>
+	<<capture _sw>>
+		<<if $slaves[_sw].balls > 0 && $slaves[_sw].pubertyXY == 1 && isSlaveAvailable($slaves[_sw]) && canBreed($donatrix, $slaves[_sw])>>
+			<<set _name = SlaveFullName($slaves[_sw])>>
+			<br>[[_name|Surrogacy Workaround][$impregnatrix = $slaves[_sw]]]
+			<<set _eligibility = 1>>
+		<</if>>
+	<</capture>>
+<</for>>
+<<if (_eligibility == 0)>>
+	<br>//You have no slaves with potent sperm.//
+<</if>>
+
+<<if $incubatorSlaves > 0 && $incubatorReproductionSetting == 2>>
+	<br><br>
+
+	__Incubator settings are resulting in large-scale fluid secretion. Select an eligible incubatee to milk for semen:__
+
+	<br>
+	<<for _sw3 = 0; _sw3 < $tanks.length; _sw3++>>
+		<<capture _sw3>>
+			<<if $tanks[_sw3].balls > 0 && $tanks[_sw3].dick > 0 && canBreed($donatrix, $tanks[_sw3])>>
+				<<set _name3 = $tanks[_sw3].slaveName>>
+				[[_name3|Surrogacy Workaround][$impregnatrix = $tanks[_sw3]]]
+				<<set _eligibilityI = 1>>
+			<</if>>
+		<</capture>>
+	<</for>>
+	<<if (_eligibilityI == 0)>>
+		<br>//You have no growing slaves producing sperm.//
+	<</if>>
+<</if>>
+
+<<if $PC.balls != 0>>
+	<br>
+	[[Use your own|Surrogacy Workaround][$impregnatrix = $PC]]
+<</if>>
+
+<br><br>
+
+__Chosen surrogate: _receive __
+
+<br>
+
+<<for _sw1 = 0; _sw1 < $slaves.length; _sw1++>>
+	<<capture _sw1>>
+		<<if ($slaves[_sw1].ovaries > 0 || $slaves[_sw1].mpreg > 0) && isSlaveAvailable($slaves[_sw1]) && $slaves[_sw1].preg >= 0 && $slaves[_sw1].preg < 4 && $slaves[_sw1].pregWeek >= 0 && $slaves[_sw1].pubertyXX == 1 && $slaves[_sw1].pregType < 12 && $slaves[_sw1].bellyImplant == -1 && $slaves[_sw1].broodmother == 0 && $slaves[_sw1].inflation <= 2 && $slaves[_sw1].physicalAge < 70>>
+			<<set _name2 = SlaveFullName($slaves[_sw1])>>
+			<br>[[_name2|Surrogacy Workaround][$receptrix = $slaves[_sw1]]] <<if $slaves[_sw1].pregType >= 4>>//Using a slave carrying multiples is inadvisable//<</if>>
+			<<set _eligibility2 = 1>>
+		<</if>>
+	<</capture>>
+<</for>>
+<<if (_eligibility2 == 0)>>
+	<br>//You have no slaves capable of acting as a surrogate.//
+<</if>>
+
+<<if $PC.vagina != -1 && $PC.preg >= 0 && $PC.preg < 4 && $PC.pregType < 8 && $PC.physicalAge < 70>>
+	<br>
+	[[Use your own womb|Surrogacy Workaround][$receptrix = $PC]]
+<</if>>

@@ -1,0 +1,79 @@
+:: PCCheatMenuCheatDatatypeCleanup [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Manage Personal Affairs">>
+/* Cancel Option Check */
+<<if $tempSlave == "unset">>
+	<<unset $tempSlave>>
+	<<goto "Manage Personal Affairs">>
+<</if>>
+
+<<if $customEvalCode>>
+	<<if $customEvalCode.charAt(0) != "(" || $nextLink == ")">> /* second condition is only there for sanityCheck */
+		<<set $customEvalCode = "(" + $customEvalCode + ")">>
+	<</if>>
+	<<if typeof eval($customEvalCode) === "function">>
+		<<run (eval($customEvalCode))($tempSlave)>>
+	<</if>>
+<</if>>
+<<unset $customEvalCode>>
+
+<<set $tempSlave.preg = Number($tempSlave.preg) || 0>>
+<<set $tempSlave.pregSource = Number($tempSlave.pregSource) || 0>>
+<<set $tempSlave.pregType = Number($tempSlave.pregType) || 0>>
+<<set WombInit($tempSlave)>> /* just to make sure */
+<<set $tempSlave.womb.length = 0>> /* simple way to delete all fetuses */
+<<set WombImpregnate($tempSlave, $tempSlave.pregType, $tempSlave.pregSource, $tempSlave.preg)>> /* recreates fetuses */
+<<if $tempSlave.preg > 0>>
+	<<set $tempSlave.belly = WombGetVolume($tempSlave)>>
+	<<set $tempSlave.pregWeek = $tempSlave.preg>>
+<<else>>
+	<<set $tempSlave.belly = 0>>
+	<<set $tempSlave.pregWeek = 0>>
+<</if>>
+
+<<if $tempSlave.boobs < 300>>
+	<<set $tempSlave.boobs = 100>>
+	<<set $tempSlave.boobsImplant = 0>>
+<</if>>
+<<if $tempSlave.boobsImplant > $tempSlave.boobs>>
+	<<set $tempSlave.boobsImplant = $tempSlave.boobs>>
+<</if>>
+<<if $tempSlave.butt < 2>>
+	<<set $tempSlave.butt = 2>>
+	<<set $tempSlave.buttImplant = 0>>
+<</if>>
+<<if $tempSlave.buttImplant > $tempSlave.butt>>
+	<<set $tempSlave.buttImplant = $tempSlave.butt>>
+<</if>>
+<<if $tempSlave.dick == 0>>
+	<<set $tempSlave.balls = 0>>
+	<<set $tempSlave.ballsImplant = 0>>
+	<<set $tempSlave.scrotum = 0>>
+	<<set $tempSlave.prostate = 0>>
+<</if>>
+<<if $tempSlave.ballsImplant > $tempSlave.balls>>
+	<<set $tempSlave.ballsImplant = $tempSlave.balls>>
+<</if>>
+<<if $tempSlave.vagina == -1>>
+	<<set $tempSlave.newVag = 0>>
+	<<set $tempSlave.ovaries = 0>>
+	<<set $tempSlave.vaginaLube = 0>>
+<</if>>
+<<if $tempSlave.lactation > 0 && $tempSlave.lactationDuration == 0>>
+	<<set $tempSlave.lactationDuration = 2>>
+<<elseif $tempSlave.lactation == 0 && $tempSlave.lactationDuration > 0>>
+	<<set $tempSlave.lactationDuration = 0>>
+<</if>>
+<<set $tempSlave.eye.left.iris = $tempSlave.eye.right.iris>>
+<<set $tempSlave.eye.left.pupil = $tempSlave.eye.right.pupil>>
+<<set $tempSlave.eye.left.sclera = $tempSlave.eye.right.sclera>>
+
+You perform the dark rituals, pray to the dark gods, and sell your soul for the power to reshape your body and life at will. What a cheater!
+
+<<set $PC = clone($tempSlave)>>
+<<run PCDatatypeCleanup()>>
+<<set $upgradeMultiplierArcology = upgradeMultiplier('engineering')>>
+<<set $upgradeMultiplierMedicine = upgradeMultiplier('medicine')>>
+<<set $upgradeMultiplierTrade = upgradeMultiplier('trading')>>
+<<set $HackingSkillMultiplier = upgradeMultiplier('hacking')>>
+<<unset $tempSlave>>

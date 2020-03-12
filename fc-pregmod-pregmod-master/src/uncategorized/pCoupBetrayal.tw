@@ -1,0 +1,122 @@
+:: P coup betrayal [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event", $daughtersVictory = 1>>
+
+<<set _weeks = $traitorWeeks, _pregWeeks = $traitorWeeks, $traitorWeeks = 0>>
+
+<<set WombProgress($traitor, _pregWeeks, _pregWeeks)>> /* In all cases should be done */
+<<set WombUpdatePregVars($traitor)>>
+<<if WombBirthReady($traitor, $traitor.pregData.normalBirth) > 0 >> /* normal birth case, partial birthers not supported*/
+	<<set $traitor.preg = -1, $traitor.counter.birthsTotal += WombBirthReady($traitor, $traitor.pregData.normalBirth)>>
+	<<set WombFlush($traitor)>>
+<<else>>/* still pregnant slave */
+	<<set $traitor.preg = WombMaxPreg($traitor)>> /*most ready fetus is a base*/
+	<<set $traitor.pregWeek = WombMaxPreg($traitor)>> /*most ready fetus is a base*/
+<</if>>
+<<run SetBellySize($traitor)>> /*In any case it's useful to do.*/
+
+<<if $traitor.bald != 1>>
+	<<if ($traitor.hLength < 150)>>
+		<<set $traitor.hLength += _weeks>>
+	<</if>>
+<</if>>
+<<if $seeAge != 0>>
+	<<for _weeks > 0>>
+		<<set $traitor.birthWeek++>>
+		<<if $traitor.birthWeek >= 52>>
+			<<set $traitor.birthWeek = 0>>
+			<<if $seeAge == 1>>
+				<<set $traitor.physicalAge += 1, $traitor.actualAge += 1, $traitor.visualAge += 1>>
+				<<set $traitor.ovaryAge += either(.8, .9, .9, 1, 1, 1, 1.1)>>
+				<<if $traitor.physicalAge <= 18 && $loliGrow > 0>>
+					<<run physicalDevelopment($traitor)>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<set _weeks-->>
+	<</for>>
+<</if>>
+
+You are awakened in the middle of the night by a jolt that shakes the entire arcology, accompanied by a distant boom. It is followed by the wail of the arcology's alarm systems, and then finally by a faint crackle that grows to a constant chatter of gunfire. You rush to the video feeds to see what is going on. The Daughters of Liberty have not only succeeded in locking down your arcology with them outside of it, but have effectively cornered themselves against it. A PMC group has their retreat cut off and is steadily bleeding their numbers. It is a rather short, if not spectacular, battle.
+
+<br><br>
+
+@@.yellow;The Daughters of Liberty are utterly crushed.@@ $arcologies[0].name has been slightly damaged in the crossfire, but even as the last pockets of resistance are cleaned up, your citizens begin repairs themselves. The effect on your reputation is @@.green;immensely positive,@@ since you won without lifting a finger and the arcology's prosperity, if anything, was benefited. However, the PMCs took the lion's share of the loot.
+
+<<run cashX(-10000, "war")>>
+<<run cashX(forceNeg(Math.trunc($cash*0.3)), "war")>>
+<<set $arcologies[0].prosperity = Math.trunc($arcologies[0].prosperity*0.5)>>
+<<run repX(500, "war")>>
+<<set $daughtersVictory = 3>>
+<<set $desc = "a leftover banner bearing Daughters of Liberty insignia">>
+<<set $trinkets.push($desc)>>
+
+<br><br>
+
+<<setLocalPronouns $traitor>>
+When $traitor.slaveName finally manages to return to you, $he explains what happened. $He caught wind of the military contractors working in the area and succeeded in goading the Daughters of Liberty into attacking the supposed slaver troop. Once it became clear that the untrained ex-slaves and their saviors stood no chance against a coordinated force, they beat a hasty retreat for your arcology under the assumption that the codes you gave them would allow them a fortifiable position. But alas, they found nothing more than their demise.
+
+<<set $traitor.assignment = "rest">>
+<<if $familyTesting == 1>>
+	<<if $traitorStats.PCpregSource > 0 && $PC.preg > 0 && $PC.pregSource == 0>>
+		<<set $PC.pregSource = $traitor.ID>>
+	<</if>>
+	<<if $traitorStats.PCmother > 0>>
+		<<set $PC.mother = $traitor.ID>>
+	<</if>>
+	<<if $traitorStats.PCfather > 0>>
+		<<set $PC.father = $traitor.ID>>
+	<</if>>
+	<<for _pca = 0; _pca < $slaves.length; _pca++>>
+		<<if $traitorStats.traitorMother.includes($slaves[_pca].ID)>>
+			<<set $slaves[_pca].mother = $traitor.ID>>
+		<</if>>
+		<<if $traitorStats.traitorFather.includes($slaves[_pca].ID)>>
+			<<set $slaves[_pca].father = $traitor.ID>>
+		<</if>>
+		<<if $traitorStats.traitorPregSources.includes($slaves[_pca].ID) && $slaves[_pca].preg > 0 && $slaves[_pca].pregSource == 0>>
+			<<set $slaves[_pca].pregSource = $traitor.ID>>
+		<</if>>
+	<</for>>
+	<<if $incubator > 0>>
+		<<for _pca = 0; _pca < $tanks.length; _pca++>>
+			<<if $traitorStats.traitorMotherTank.includes($tanks[_pca].ID)>>
+				<<set $tanks[_pca].mother = $traitor.ID>>
+			<</if>>
+			<<if $traitorStats.traitorFatherTank.includes($tanks[_pca].ID)>>
+				<<set $tanks[_pca].father = $traitor.ID>>
+			<</if>>
+		<</for>>
+	<</if>>
+	<<if $nursery > 0>>
+		<<for _pca = 0; _pca < $cribs.length; _pca++>>
+			<<if $traitorStats.traitorMotherTank.includes($cribs[_pca].ID)>>
+				<<set $cribs[_pca].mother = $traitor.ID>>
+			<</if>>
+			<<if $traitorStats.traitorFatherTank.includes($cribs[_pca].ID)>>
+				<<set $cribs[_pca].father = $traitor.ID>>
+			<</if>>
+		<</for>>
+	<</if>>
+<<else>>
+	<<if $traitorStats.traitorPregSources.length > 0>>
+		<<for _pca = 0; _pca < $slaves.length; _pca++>>
+			<<if $traitorStats.traitorPregSources.includes($slaves[_pca].ID) && $slaves[_pca].preg > 0 && $slaves[_pca].pregSource == 0>>
+				<<set $slaves[_pca].pregSource = $traitor.ID>>
+			<</if>>
+		<</for>>
+	<</if>>
+<</if>>
+<<if $traitorStats.boomerangBody > 0>>
+	<<set _pca = $slaveIndices[$traitorStats.traitorBody]>>
+	<<if def _pca>>
+		<<set $slaves[_pca].origBodyOwnerID = $traitor.ID>>
+	<</if>>
+<</if>>
+<<for _pca = 0; _pca < $slaves.length; _pca++>>
+	<<run WombChangeID($slaves[_pca], $traitor.missingParentTag, $traitor.ID)>>
+	<<run WombChangeGeneID($slaves[_pca], $traitor.missingParentTag, $traitor.ID)>>
+<</for>>
+<<run newSlave($traitor)>> /* skip New Slave Intro */
+<<set $traitor = 0, $traitorStats = 0, $traitorType = 0>>
+

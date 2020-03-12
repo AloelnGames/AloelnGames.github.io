@@ -1,0 +1,66 @@
+This brief how-to guides through patching and building sugarcube (https://github.com/tmedwards/sugarcube-2)
+for the Free Cities. Sugarcube sources can be obtained locally by cloning its Git repository.
+
+
+Prerequisites (listed NOT in the installation order, please read the list to the end first):
+1. Node.js with npm (https://nodejs.org).
+2. To build some packages, Node.js requires python and a C/C++ compiler. On Windows you may want to
+install Visual Studio (or just the build tools) and Python 2.7 first. As of now, SugarCube does not
+depend on any of such packages.
+
+Windows: please choose to make the tools accessible from anywhere by allowing installers to modify
+the PATH environment variable.
+
+Retrieving SugarCube sources and preparing build environment for it.
+1. Open a terminal window where you want to clone the repository, and run the following command:
+	git clone https://github.com/tmedwards/sugarcube-2.git
+Change working directory into the cloned repository.
+
+2. The last step we need is downloading required JavaScript libraries that are used during the build.
+Run the node package manager (npm) in the repository:
+	npm install
+
+CAUTION: dependencies list (located in the package.json file in the repository root) may change from
+commit to commit and it differs between branches! Make sure to install correct dependencies after switching working branch.
+
+Patching and building SugarCube.
+
+3. Apply the patch:
+	git apply <full path to sugarcube-fc-changes.patch>
+
+Building
+Run the build.js script. If you use Git bash, you can run the build.js file directly, otherwise run
+it as "node build.js". See "build.js -h" for options, but reasonable sets are the following.
+For release version:
+	node ./build.js -b 2
+and for the debug version:
+	node ./build.js -b 2 -u -d
+
+Find result files in the dist directory.
+
+Patching
+create a new patch with
+git diff HEAD > <full path to sugarcube-fc-changes.patch>
+Make sure to stage new files first as otherwise they are lost.
+
+APPENDIX Lists required steps very briefly.
+
+1. Clone Sugarcube repo: git clone https://github.com/tmedwards/sugarcube-2.git
+2. Change active directory into the directory of the sugarcube clone.
+3. Set active branch to "master": git checkout master
+4. Run npm install in the repo dir.
+
+CAUTION: Requited dependencies change during the project lifetime and vary from branch to branch;
+you may need to run npm install again after some time, or after branch/tag change. Try to run it in
+case of strange build errors.
+
+
+The next is done in the directory where SC repo was cloned. Loop over required SugarCube versions:
+
+1. git reset --hard to clean any local changes
+2. (Optionally) git checkout v2.30.1 (any tag or head here, of course)
+3. git apply ~/games/fc-pregmod/devNotes/sugarcube\ stuff/sugarcube-fc-changes.patch
+4. node build.js -b 2 to build release version
+5. cp dist/twine2/sugarcube-2/format.js <whenever you want>
+6. node build.js -b 2 -u -d to build debug version
+7. cp dist/twine2/sugarcube-2/format.js <whenever you want to place the debug header>

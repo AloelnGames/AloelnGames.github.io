@@ -1,0 +1,23 @@
+:: RE no event [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "Next Week">>
+
+<<set $activeSlave = $eventSlave>>
+<<setLocalPronouns $activeSlave>>
+
+<<set $activeSlave.devotion += 3>>
+<<set $activeSlave.trust += 3>>
+
+/* 000-250-006 */
+<<if $seeImages == 1>>
+<<if $imageChoice == 1>>
+	<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+<<else>>
+	<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+<</if>>
+<</if>>
+/* 000-250-006 */
+
+This is a placeholder event.
+<br><br>
+<<= App.UI.slaveDescriptionDialog($activeSlave)>> does not currently qualify for any events, so $he has been given a generic @@.hotpink;devotion@@ and @@.mediumaquamarine;trust@@ boost. /*If you see this event repeatedly for $him, please submit a report so the author can write $him some events.*/

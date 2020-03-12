@@ -1,0 +1,103 @@
+:: Incubator Retrieval Workaround [nobr]
+
+<<set $nextLink = "AS Dump", $returnTo = "Main">>
+
+<<if $readySlave != 0>>
+	<<setLocalPronouns $readySlave>>
+	$readySlave.slaveName has been discharged from $incubatorName and is ready for $his first ever inspection.
+
+	<br><br>
+
+	<<set $activeSlave = $readySlave>>
+	<<set $saleDescription = 0, $applyLaw = 0>>
+	<<set $incubatorSlaves-->>
+	<<include "Long Slave Description">>
+	<<run newSlave($activeSlave)>>
+	<<if $incubatorOrgans.length > 0>>
+		<<for _irw = 0; _irw < $incubatorOrgans.length; _irw++>>
+			<<if $incubatorOrgans[_irw].ID == $incubatorOldID>>
+				<<set _newOrgan = {type: $incubatorOrgans[_irw].type, weeksToCompletion: $incubatorOrgans[_irw].weeksToCompletion, ID: $activeSlave.ID}>>
+				<<if _newOrgan.weeksToCompletion <= 0>>
+					<<set $completedOrgans.push($incubatorOrgans[_irw])>>
+				<<else>>
+					<<set $organs.push(_newOrgan)>>
+				<</if>>
+				<<set $incubatorOrgans.deleteAt(_irw), _irw-->>
+			<</if>>
+		<</for>>
+	<</if>>
+	<<include "New Child Intro">>
+<<else>>
+	The following slaves were discharged from $incubatorName:
+
+	<<for _irw = 0; _irw < $newSlavePool.length; _irw++>>
+		<br><br>
+		<<set $incubatorSlaves-->>
+		<<set _newSlave = $newSlavePool[_irw].object>>
+
+		Name: <<= SlaveFullName(_newSlave)>>
+		<br>Mother:
+		<<if _newSlave.mother > 0>>
+			<<set _tempMom = getSlave(_newSlave.mother)>>
+			<<if ndef _tempMom>>
+				Unknown.
+			<<else>>
+				<<= SlaveFullName(_tempMom)>>
+			<</if>>
+		<<elseif _newSlave.mother == -1>>
+			<<= PlayerName()>>.
+		<<else>>
+			Your former slave, $missingTable[_newSlave.mother].slaveName.
+		<</if>>
+		<br>Father:
+		<<if _newSlave.father > 0>>
+			<<set _tempDad = getSlave(_newSlave.father)>>
+			<<if ndef _tempDad>>
+				Unknown.
+			<<else>>
+				<<= SlaveFullName(_tempDad)>>
+			<</if>>
+		<<elseif _newSlave.father == -1>>
+			<<= PlayerName()>>.
+		<<elseif _newSlave.father == -2>>
+			Unknown citizen.
+		<<elseif _newSlave.father == -3>>
+			Your former Master.
+		<<elseif _newSlave.father == -4>>
+			Another arcology's owner.
+		<<elseif _newSlave.father == -5>>
+			One of your clients.
+		<<elseif _newSlave.father == -6>>
+			Societal Elite.
+		<<elseif _newSlave.father == -7>>
+			Lab crafted.
+		<<elseif _newSlave.father == -8>>
+			//Error! Animal fathered children shouldn't be here!//
+		<<elseif _newSlave.father == -9>>
+			Futanari Sister.
+		<<else>>
+			<<if def $missingTable[_newSlave.father]>>
+				Your former slave, $missingTable[_newSlave.father].slaveName.
+			<<else>>
+				Unknown.
+			<</if>>
+		<</if>>
+
+		<<run newSlave(_newSlave)>>
+		<<if $incubatorOrgans.length > 0>>
+			<<for _irw2 = 0; _irw2 < $incubatorOrgans.length; _irw2++>>
+				<<if $incubatorOrgans[_irw2].ID == $newSlavePool[_irw].ID>>
+					<<set _newOrgan = {type: $incubatorOrgans[_irw2].type, weeksToCompletion: $incubatorOrgans[_irw2].weeksToCompletion, ID: _newSlave.ID}>>
+					<<if _newOrgan.weeksToCompletion <= 0>>
+						<<set $completedOrgans.push($incubatorOrgans[_irw2])>>
+					<<else>>
+						<<set $organs.push(_newOrgan)>>
+					<</if>>
+					<<set $incubatorOrgans.deleteAt(_irw2), _irw2-->>
+				<</if>>
+			<</for>>
+		<</if>>
+
+	<</for>>
+	<<set $newSlavePool = 0>>
+<</if>>

@@ -1,0 +1,92 @@
+:: RE former abolitionist [nobr]
+
+<<set $nextButton = "Continue">>
+<<set $nextLink = "AS Dump">>
+<<set $returnTo = "RIE Eligibility Check">>
+
+<<if $legendaryFacility == 1>>
+	<<set $activeSlave = getSlave($legendaryAbolitionistID)>>
+<<else>>
+	<<set $activeSlave = $eventSlave>>
+<</if>>
+<<setLocalPronouns $activeSlave>>
+
+Crime is extremely rare in $arcologies[0].name, and some would say justice rarer still, but if there's one thing that unites the citizens of $arcologies[0].name, it's a mutual outrage towards attempted abolitionists. Slaveownership is the cornerstone of the society that protects and enriches them, and they see those who would attempt to unlawfully free slaves not just as thieves of property but as anarchists trying to bring down everything they have worked to build.
+
+While a brutal flogging or surgical mutilation soothes their outrage, nothing warms the collective heart of $arcologies[0].name's mob like the sight of a former abolitionist well and truly broken. <<= App.UI.slaveDescriptionDialog($activeSlave)>> is one such shining example, and $his borderline worship of you is doing wonders for your reputation lately as $he becomes a local celebrity and a popular topic of discussion.
+
+This is a rare opportunity. While the mob is quick to pat itself on the back for withstanding attacks from abolitionists, before long they will tire of remembering those dangers and turn their attention elsewhere. It might be possible, with a serious investment of funds in publicity, to really fix $him in the public mind as a shining example of your slave-breaking prowess.
+
+<br><br>
+
+<span id="result">
+<<link "Just capitalize on $his popularity to increase your reputation">>
+	<<replace "#result">>
+		You spend the week parading $activeSlave.slaveName around in public, letting everyone get a good look at $his fawning adoration of you. A variety of public sex acts really nails the point home in the psyche of your citizens and @@.yellowgreen;increases your reputation,@@ and after a few days you start to receive a sincere golf clap from onlookers every time you cum in or on $activeSlave.slaveName.
+		<<run repX(1000, "event", $activeSlave)>>
+	<</replace>>
+<</link>>
+<span id="result">
+<br><<link "Just capitalize on $his popularity by renting out $his mouth">>
+	<<replace "#result">>
+		You fasten $activeSlave.slaveName in a kneeling position in the center of your club, secured by shackles around $his <<if hasAnyArms($activeSlave)>>wrist<<if hasBothArms($activeSlave)>>s<</if>><<if hasAnyLegs($activeSlave)>> and <</if>><</if>><<if hasAnyLegs($activeSlave)>>ankle<<if hasBothLegs($activeSlave)>>s<</if>><</if>> — purely decorative, since $he's so devoted $he'd perform $his role in this if you just hinted it would please you if $he did. In front of $him, you place a sign: "Fuck the mouth that preached abolitionism, <<print cashFormat(5)>>." In a few moments, the morning crowd will begin to arrive, and you have no doubt that $activeSlave.slaveName will be very, very popular. And $he is. Even with an extra dose of curatives and a check-up every night, the strain of a week of dicks and a diet of cum @@.red;has taken a toll on $his health.@@ But even after you pay to have the area that $activeSlave.slaveName worked thoroughly cleaned, you have made @@.yellowgreen;a tidy profit.@@
+		<<run healthDamage($activeSlave, 10)>>
+		<<set $activeSlave.counter.oral += random(410,440)>>
+		<<run cashX(2000, "event", $activeSlave)>>
+	<</replace>>
+<</link>>
+<br><<link "Invest <<print cashFormat(5000)>> in making $him locally famous">>
+	<<if random(1,100) > 50>>
+		<<replace "#result">>
+			You buy media coverage of $him, invest in an ad campaign, and even arrange for $him to give a speech denouncing the abolitionist movement and praising your efforts in fighting against them. Your efforts are a success. $His current extreme popularity will fade in time, but you have managed to arrange for $him a permanent place as an @@.green;example of your slave-breaking skills.@@
+			<<run cashX(-5000, "event", $activeSlave)>>
+			<<run repX(1000, "event", $activeSlave)>>
+			<<set $activeSlave.prestige = 1>>
+			<<set $activeSlave.prestigeDesc = "$He is notorious as a former abolitionist turned devoted slave.">>
+		<</replace>>
+	<<else>>
+		<<replace "#result">>
+			You buy media coverage of $him, invest in an ad campaign, and even arrange for $him to give a speech denouncing the abolitionist movement and praising your efforts in fighting against them. Unfortunately, popularity remains an art, not a science; though you do your best, the public mind's fancy eludes your grasp. As $his owner, your reputation has @@.green;increased,@@ but in a week $he'll be forgotten.
+			<<run cashX(-5000, "event", $activeSlave)>>
+			<<run repX(1000, "event", $activeSlave)>>
+		<</replace>>
+	<</if>>
+<</link>>
+<br><<link "Lavish <<print cashFormat(10000)>> on making $him locally famous">>
+	<<if random(1,100) > 10>>
+		<<replace "#result">>
+			You buy prime media coverage of $him, invest in a lavish ad campaign, and even arrange for $him to give a speech denouncing the abolitionist movement and praising your efforts in fighting against them that is broadcast around the world. Your efforts are a success. $His current extreme popularity will fade in time, but you have managed to arrange for $him a permanent place as an @@.green;example of your slave-breaking skills.@@
+			<<run cashX(-10000, "event", $activeSlave)>>
+			<<run repX(2000, "event", $activeSlave)>>
+			<<set $activeSlave.prestige = 1>>
+			<<set $activeSlave.prestigeDesc = "$He is notorious as a former abolitionist turned devoted slave.">>
+		<</replace>>
+	<<else>>
+		<<replace "#result">>
+			You buy prime media coverage of $him, invest in a lavish ad campaign, and even arrange for $him to give a speech denouncing the abolitionist movement and praising your efforts in fighting against them that is broadcast around the world. Unfortunately, popularity remains an art, not a science; though you do your best, the public mind's fancy eludes your grasp. As $his owner, your reputation has @@.green;increased,@@ but in a week $he'll be forgotten.
+			<<run cashX(-10000, "event", $activeSlave)>>
+			<<run repX(2000, "event", $activeSlave)>>
+		<</replace>>
+	<</if>>
+<</link>>
+</span>
+<br><<link "Spend <<print cashFormat(25000)>> on an attempt to make $him world famous">>
+	<<if random(1,100) > 50>>
+		<<replace "#result">>
+			The world is in love with $activeSlave.slaveName. $His face graces magazine covers the world over and $his passionate arguments (ghostwritten by the best spin doctors money can buy) spark debate everywhere they're heard. $He is mentioned by name in strident denunciations about the immorality of the present day from religious leaders. $He appears on the internet with all sorts of attempts at humor superimposed on $his image. $His loving and overblown descriptions of you spark a new trend in protagonists of badly-written romance novels. When a very popular talk show host attempts to call $his bluff and receives oral sex in front of a live studio audience, @@.yellowgreen;you know for sure that $his fame has stuck.@@
+			<<run cashX(-25000, "event", $activeSlave)>>
+			<<run repX(3000, "event", $activeSlave)>>
+			<<set $activeSlave.prestige = 2>>
+			<<set $activeSlave.prestigeDesc = "$He is world famous as an anti-abolitionist, and has told the world at length of the joys of slavery in general and slavery to you in particular.">>
+		<</replace>>
+	<<else>>
+		<<replace "#result">>
+			The world seems temporarily enamored with $activeSlave.slaveName as $he appears on talk shows and in political debates with millions of watchers, but before long $his fifteen minutes of fame peter out and the only offers coming in are from pornography magnates and local talk radio shows. Though $he achieved @@.yellowgreen;local fame@@ for appearing on the world stage, the rest of the world seems to have gotten bored with $activeSlave.slaveName.
+			<<run cashX(-25000, "event", $activeSlave)>>
+			<<set $activeSlave.prestige = 1>>
+			<<set $activeSlave.prestigeDesc = "$He is notorious as a former abolitionist turned devoted slave.">>
+			<<run repX(2000, "event", $activeSlave)>>
+		<</replace>>
+	<</if>>
+<</link>>
+</span>

@@ -1,0 +1,155 @@
+:: Implant Manufactory [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Manage Penthouse", $showEncyclopedia = 1, $encyclopedia = "The Pharmaceutical Fab.", _PCSkillCheck = Math.min($upgradeMultiplierMedicine, $HackingSkillMultiplier)>>
+
+<h1>The Implant Manufactory</h1>
+
+<p class="scene-intro">
+	The implant manufactory is running smoothly. It can cheaply produce advanced implants and has freed you from relying on outside sources for specialty implants. It can easily produce more complex implants should you obtain the schematics necessary to build them.
+</p>
+
+<h2>Implant Production</h2>
+
+<p>
+<div>The manufactory is capable of producing customized fillable implants.</div>
+
+<<if ($meshImplants != 1) && ($rep <= 10000*_PCSkillCheck)>>
+	<div class="note">
+		You lack the reputation to access plans for supportive breast implants.
+	</div>
+<<elseif ($meshImplants != 1) && ($rep > 10000*_PCSkillCheck)>>
+	<div>
+		[[Purchase plans for supportive mesh breast implants|Implant Manufactory][cashX(forceNeg(40000*_PCSkillCheck), "capEx"), $meshImplants = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(40000*_PCSkillCheck)>>
+			<div class="indent">
+				Will allow the construction of organic and supportive mesh breast implants.
+			</div>
+		</span>
+	</div>
+<<elseif ($meshImplants > 0)>>
+	<div>The manufactory is capable of producing supportive mesh breast implants.</div>
+<</if>>
+
+<<if $UterineRestraintMesh == 1>>
+	<div>The manufactory is capable of producing supportive mesh uterine implants.</div>
+<</if>>
+
+<<if ($bellyImplants == 0) && ($rep <= 2000*_PCSkillCheck)>>
+	<div class="note">You lack the reputation to access experimental fillable abdominal implants.</div>
+<<elseif ($bellyImplants == 0) && ($rep > 2000*_PCSkillCheck)>>
+	<div>
+		[[Purchase schematics for fillable abdominal implants|Implant Manufactory][cashX(forceNeg(30000*_PCSkillCheck), "capEx"), $bellyImplants = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(30000*_PCSkillCheck)>>
+			<div class="indent">
+				Will allow the construction of fillable abdominal implants for the autosurgery.
+			</div>
+		</span>
+	</div>
+<<elseif ($bellyImplants > 0)>>
+	<div>The manufactory is capable of crafting fillable abdominal implants.</div>
+	<<if ($bellyImplants == 1) && ($cervixImplants == 0) && ($rep <= 6000*_PCSkillCheck)>> /* show only after belly implants already researched */
+		<div class="note">You lack the reputation to access experimental cervix filter micropumps schematics for abdominal implants.</div>
+	<<elseif ($bellyImplants == 1) && ($cervixImplants == 0) && ($rep > 6000 * _PCSkillCheck)>> /* nanotech like technology much more impressive and costly than simple implant */
+		<div>
+			[[Purchase schematics for cervix filter micropumps|Implant Manufactory][cashX(forceNeg(70000*_PCSkillCheck), "capEx"), $cervixImplants = 1]]
+			<span class="detail">
+				Costs <<print cashFormat(70000*_PCSkillCheck)>>
+				<div class="indent">
+					Will allow the construction of cervix filter micropumps for fillable abdominal implants using the autosurgery.
+				</div>
+			</span>
+		</div>
+	<<elseif ($cervixImplants == 1) && ($rep <= 8000*_PCSkillCheck)>>
+		<div>The manufactory is capable of crafting cervix filter micropumps for fillable abdominal implants.</div>
+		<div class="note">
+			You lack the reputation to obtain conversion kits for rectal filter micropumps.
+		</div>
+	<<elseif ($cervixImplants == 1) && ($rep > 8000*_PCSkillCheck)>>
+		<div>The manufactory is capable of crafting cervix filter micropumps for fillable abdominal implants.</div>
+		<div>
+			[[Purchase conversion kits for rectal filter micropumps|Implant Manufactory][cashX(forceNeg(60000*_PCSkillCheck), "capEx"), $cervixImplants = 2]]
+			<span class="detail">
+				Costs <<print cashFormat(60000*_PCSkillCheck)>>
+				<div class="indent">
+					Will allow the construction of the anal equivalent of the cervix micropumps using the autosurgery.
+				</div>
+			</span>
+		</div>
+	<<elseif ($cervixImplants > 1)>>
+		<div>The manufactory is capable of crafting cervix and rectal filter micropumps for fillable abdominal implants.</div>
+	<</if>>
+<</if>>
+</p>
+
+<<if $seePreg != 0>>
+	<h2>Fertility Implants</h2>
+
+	<p>
+	<<if $fertilityImplant == 1>>
+		<div>The manufactory is capable of crafting fertility enhancing implants for ovaries.</div>
+	<<elseif $fertilityImplant == 0 && ($rep <= 3000*_PCSkillCheck)>>
+		<div class="note">
+			You lack the reputation to access fertility boosting ovarian implants.
+		</div>
+	<<else>>
+		<div>
+			[[Purchase schematics for fertility enhancing ovarian implants|Implant Manufactory][cashX(forceNeg(10000*_PCSkillCheck), "capEx"), $fertilityImplant = 1]]
+			<span class="detail">
+				Costs <<print cashFormat(10000*_PCSkillCheck)>>
+				<div class="indent">
+					Will allow the construction of implants that encourage multiple eggs being released during ovulation.
+				</div>
+			</span>
+		</div>
+	<</if>>
+
+	<<if $sympatheticOvaries == 1>>
+		<div>The manufactory is capable of crafting implants that synchronize ovum release.</div>
+	<</if>>
+
+	<<if $seeHyperPreg == 1 && $seeExtreme == 1>>
+		<<if ($permaPregImplant == 0) && ($rep <= 4000*_PCSkillCheck)>>
+			<div class="note">You lack the reputation to access experimental pregnancy generator schematics.</div>
+		<<elseif ($permaPregImplant == 0) && ($rep > 4000*_PCSkillCheck)>>
+			<div>
+				[[Purchase schematics for an experimental implantable pregnancy generator|Implant Manufactory][cashX(forceNeg(40000*_PCSkillCheck), "capEx"), $permaPregImplant = 1]]
+				<span class="detail">
+					Costs <<print cashFormat(40000*_PCSkillCheck)>>
+					<div class="indent">
+						Will allow the construction of implants that force perpetual pregnancy.
+					</div>
+				</span>
+			</div>
+		<<elseif ($permaPregImplant > 0)>>
+			<div>The manufactory is capable of crafting pregnancy generators.</div>
+		<</if>>
+		<<if $PGHack == 1>>
+			<div>
+			The tools required to hack the firmware of basic pregnancy generator implants have been produced by the manufactory for use in the remote surgery.
+			</div>
+		<</if>>
+	<</if>>
+	</p>
+<</if>>
+
+<h2>Fluid Production Implants</h2>
+
+<p>
+<<if ($prostateImplants != 1) && ($rep <= 3000*_PCSkillCheck)>>
+	<div class="note">You lack the reputation to access plans for prostate implants.</div>
+<<elseif ($prostateImplants != 1) && ($rep > 3000*_PCSkillCheck)>>
+	<div>
+		[[Purchase plans for ejaculation enhancing prostate implants|Implant Manufactory][cashX(forceNeg(30000*_PCSkillCheck), "capEx"), $prostateImplants = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(30000*_PCSkillCheck)>>
+			<div class="indent">
+				Will allow the construction of a prostate implant designed to stimulate fluid production for massive ejaculations. Beware of leaking and dehydration.
+			</div>
+		</span>
+	</div>
+<<elseif ($prostateImplants > 0)>>
+	<div>The manufactory is capable of producing ejaculation enhancing prostate implants.</div>
+<</if>>
+</p>

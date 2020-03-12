@@ -1,0 +1,542 @@
+:: Dispensary [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Manage Penthouse", $showEncyclopedia = 1, $encyclopedia = "The Pharmaceutical Fab.", _PCSkillCheck = Math.min($upgradeMultiplierMedicine, $HackingSkillMultiplier)>>
+
+<h1>The Dispensary</h1>
+
+<p>
+	<div class="scene-intro">
+	<<if $dispensaryUpgrade == 0>>
+		The pharmaceutical fabricator is running smoothly. It can cheaply replicate complex medications, and has already cut the cost of drugs for your slaves by a fourth. It can easily produce advanced drugs should you obtain the data necessary to create them.
+	<<else>>
+		The pharmaceutical fabricator is running smoothly. It can cheaply and quickly replicate complex medications, and has already cut the cost of drugs for your slaves in half. It can easily produce advanced drugs should you obtain the data necessary to create them.
+	<</if>>
+	</div>
+
+	<<if ($dispensaryUpgrade == 0)>>
+		<<if ($rep > 5000)>>
+			<div>
+				[[Upgrade the pharmaceutical fabricator|Dispensary][cashX(forceNeg(Math.trunc(30000*$upgradeMultiplierArcology)), "capEx"), $dispensaryUpgrade = 1, $drugsCost = (($drugsCost*2)/3)]]
+				<span class="detail">
+					Costs <<print cashFormat(Math.trunc(30000*$upgradeMultiplierArcology))>>.
+					<div class="indent">
+						Will improve production efficiency further decreasing costs.
+					</div>
+				</span>
+			</div>
+		<<else>>
+			<div class="note">You lack the reputation to obtain cutting-edge pharmaceutical fabricator upgrades.</div>
+		<</if>>
+	<</if>>
+</p>
+
+<h2>Hormones Upgrades</h2>
+
+<p>
+<div>
+The fabricator is producing
+<<if $injectionUpgrade == 0>>
+	standard growth hormones.
+	<<if $rep > 6000>>
+		[[Purchase data on prototype growth hormone tests|Dispensary][cashX(forceNeg(25000*_PCSkillCheck), "capEx"), $injectionUpgrade = 1]]
+		<span class="detail">Costs <<print cashFormat(25000*_PCSkillCheck)>>.
+			<div class="indent">
+				Should improve the reliability of growth injections of all kinds.
+			</div>
+		</span>
+	<<else>>
+		<span class="note">You lack the reputation to obtain prototype medicines.</span>
+	<</if>>
+<<elseif $injectionUpgrade == 1>>
+	prototype growth hormones.
+	<<if $rep > 10000>>
+		[[Upgrade the fabricator to customize each slave's growth hormones|Dispensary][cashX(forceNeg(50000*_PCSkillCheck), "capEx"), $injectionUpgrade = 2]]
+		<span class="detail">
+			Costs <<print cashFormat(50000*_PCSkillCheck)>>.
+			<div class="indent">
+				Should improve the reliability of growth injections of all kinds.
+			</div>
+		</span>
+	<<else>>
+		<span class="note">You lack the reputation to obtain prototype fabricator upgrades.</span>
+	<</if>>
+<<elseif $injectionUpgrade == 2>>
+	customized growth hormones.
+	<<if $rep > 14000>>
+		[[Upgrade the fabricator with prototype biomechanical microfactories|Dispensary][cashX(forceNeg(100000*_PCSkillCheck), "capEx"), $injectionUpgrade = 3]]
+		<span class="detail">
+			Costs <<print cashFormat(100000*_PCSkillCheck)>>.
+			<div class="indent">
+				Should improve the reliability of growth injections of all kinds.
+			</div>
+		</span>
+	<<else>>
+		<span class="note">You lack the reputation to obtain prototype biomechanical microfactories.</span>
+	<</if>>
+<<else>>
+	the world's most effective growth hormones.
+<</if>>
+</div>
+
+<div>
+The fabricator is producing
+<<if $hormoneUpgradeMood == 0>>
+	standardized hormone replacement therapies.
+	<<if $rep > 2000>>
+		[[Upgrade for individualized therapy|Dispensary][cashX(forceNeg(10000*_PCSkillCheck), "capEx"), $hormoneUpgradeMood = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(10000*_PCSkillCheck)>>.
+			<div class="indent">
+				Should eliminate the occasional moodiness and sexual disinterest caused by generalized therapy.
+			</div>
+		</span>
+	<<else>>
+		<span class="note">You lack the reputation to obtain advanced drug manufacturing components.</span>
+	<</if>>
+<<else>>
+	individualized hormone replacement therapies.
+<</if>>
+</div>
+
+<div>
+The hormone replacement therapies
+<<if $hormoneUpgradePower == 0>>
+	are traditional: they're formulated to mimic natural hormones.
+	<<if $rep > 4000>>
+		[[Purchase data on advanced HRT|Dispensary][cashX(forceNeg(25000*_PCSkillCheck), "capEx"), $hormoneUpgradePower = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(25000*_PCSkillCheck)>>.
+			<div class="indent">
+				Should increase the power of hormone therapies.
+			</div>
+		</span>
+	<<else>>
+		<span class="note">You lack the reputation to obtain prototype medicines.</span>
+	<</if>>
+<<else>>
+	are advanced: they're formulated to improve on natural hormones.
+<</if>>
+</div>
+
+<div>
+The hormone replacement therapies
+<<if $hormoneUpgradeShrinkage == 0>>
+	are broad-spectrum.
+	<<if $rep > 4000>>
+		[[Purchase data on targeted HRT|Dispensary][cashX(forceNeg(25000*_PCSkillCheck), "capEx"), $hormoneUpgradeShrinkage = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(25000*_PCSkillCheck)>>.
+			<div class="detail">
+				Should reduce atrophy of organs corresponding to original sex.
+			</div>
+		</span>
+	<<else>>
+		<span class="note">You lack the reputation to obtain prototype medicines.</span>
+	<</if>>
+<<else>>
+	are targeted, reducing atrophy of organs corresponding to original sex.
+<</if>>
+</div>
+
+<<if $precociousPuberty == 1>>
+	<<if ($pubertyHormones == 0) && ($rep <= 4500*_PCSkillCheck)>>
+		<div class="note">
+			You lack the reputation to fund forced puberty drugs
+		</div>
+	<<elseif ($pubertyHormones == 0) && ($rep > 4500*_PCSkillCheck)>>
+		<div>
+			[[Fund research into powerful hormonal injections to jumpstart puberty|Dispensary][cashX(forceNeg(30000*_PCSkillCheck), "capEx"), $pubertyHormones = 1]]
+			<span class="detail">
+				Costs <<print cashFormat(30000*_PCSkillCheck)>>.
+				<div class="indent">
+					Will allow the production of powerful hormonal drugs designed to force a slave through puberty without regard for side effects.
+				</div>
+			</span>
+		</div>
+	<<elseif ($pubertyHormones == 1)>>
+		<div>The fabricator is producing extra strong hormonal drugs designed to force a slave through puberty.</div>
+	<</if>>
+<</if>>
+</p>
+
+<h2>Dietary Upgrades</h2>
+
+<p>
+<div>
+<<if $feeder == 1>>
+	<<if ($dietXXY == 0) && ($rep <= 3500*_PCSkillCheck)>>
+		<span class="note">You lack the reputation to fund research into hermaphrodite hormones.</span>
+	<<elseif ($dietXXY == 0) && ($rep > 3500*_PCSkillCheck)>>
+		[[Fund research into developing hermaphrodite hormone therapies|Dispensary][cashX(forceNeg(10000*_PCSkillCheck), "capEx"), $dietXXY = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(10000*_PCSkillCheck)>>.
+			<div class="indent">Will allow for specially balanced meals to be served in the cafeteria designed to promote both halves of a herm's sexuality.</div>
+		</span>
+	<<elseif ($dietXXY == 1)>>
+		The fabricator is producing meals to be served in the cafeteria designed to promote both halves of a herm's sexuality.
+	<</if>>
+<<else>>
+	The feeders are incapable of modifying slave diets well enough to adjust hormones for hermaphrodite meals.
+<</if>>
+</div>
+
+<div>
+<<if $seePreg == 1>>
+	<<if $feeder == 1>>
+		<<if ($reproductionFormula == 0) && ($rep <= 10000*_PCSkillCheck)>>
+			<span class="note">You lack the reputation to access breeders' dietary blends.</span>
+		<<elseif ($reproductionFormula == 0) && ($rep > 10000*_PCSkillCheck)>>
+			[[Purchase reputable breeders' dietary blends|Dispensary][cashX(forceNeg(25000*_PCSkillCheck), "capEx"), $reproductionFormula = 1]]
+			<span class="detail">
+				Costs <<print cashFormat(25000*_PCSkillCheck)>>.
+				<div class="indent">
+					Will allow for specially refined meals to be served in the cafeteria designed to promote energetic sperm and robust pregnancies. Side effects may include an increased number of twins being conceived.
+				</div>
+			</span>
+		<<elseif ($reproductionFormula == 1)>>
+			The fabricator is producing meals to be served in the cafeteria that promote energetic sperm and robust pregnancies.
+		<</if>>
+	<<else>>
+		The feeders are incapable of modifying slave diets well enough to manage to enhance reproductive ability.
+	<</if>>
+<</if>>
+</div>
+
+<div>
+<<if $cumProDiet == 0>>
+	[[Purchase recipes to encourage cum production|Dispensary][cashX(forceNeg(5000*_PCSkillCheck), "capEx"), $cumProDiet = 1]]
+	<span class="detail">
+		Costs <<print cashFormat(5000*_PCSkillCheck)>>.
+		<div class="indent">
+			Will allow for specially designed meals to be served in the cafeteria to promote cum production.
+		</div>
+	</span>
+<<elseif $cumProDiet == 1>>
+	The fabricator is producing meals to be served in the cafeteria designed to promote cum production.
+<</if>>
+</div>
+
+<div>
+<<if $seePreg == 1>>
+	<<if $dietFertility != 1>>
+		[[Purchase recipes to encourage ovulation|Dispensary][cashX(forceNeg(5000*_PCSkillCheck), "capEx"), $dietFertility = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(5000*_PCSkillCheck)>>.
+			<div class="indent">
+				Will allow for specially designed meals to be served in the cafeteria to promote slave fertility.
+			</div>
+		</span>
+	<<elseif $dietFertility == 1>>
+		The fabricator is producing meals to be served in the cafeteria designed to promote slave fertility.
+	<</if>>
+<</if>>
+</div>
+
+<div>
+<<if $dietCleanse == 0>>
+	[[Purchase cleansing recipes to lessen carcinogen buildup|Dispensary][cashX(forceNeg(10000*_PCSkillCheck), "capEx"), $dietCleanse = 1]]
+	<span class="detail">
+		Costs <<print cashFormat(10000*_PCSkillCheck)>>.
+		<div class="indent">
+			Will allow for specially designed meals to be served in the cafeteria to counteract excessive drug use.
+		</div>
+	</span>
+<<elseif $dietCleanse == 1>>
+	The fabricator is producing meals to be served in the cafeteria designed to counteract excessive drug use and good health. They smell awful and taste worse than they look, but they're healthy.
+<</if>>
+</div>
+</p>
+
+<h2>Pharmacological Upgrades</h2>
+
+<p>
+<div>
+<<if ($curativeUpgrade == 0) && ($rep > 6000*_PCSkillCheck)>>
+	[[Purchase data on advanced curatives|Dispensary][cashX(forceNeg(25000*_PCSkillCheck), "capEx"), $curativeUpgrade = 1]]
+	<span class="detail">
+		Costs <<print cashFormat(25000*_PCSkillCheck)>>.
+		<div class="indent">Should improve the effectiveness of curative treatment.</div>
+	</span>
+<<elseif ($curativeUpgrade == 1)>>
+	The fabricator is producing highly effective curative cocktails.
+<</if>>
+</div>
+
+<div>
+<<if ($growthStim == 0) && ($rep > 6000*_PCSkillCheck)>>
+	[[Purchase data on growth stimulants|Dispensary][cashX(forceNeg(20000*_PCSkillCheck), "capEx"), $growthStim = 1]]
+	<span class="detail">
+		Costs <<print cashFormat(20000*_PCSkillCheck)>>.
+		<div class="indent">Will allow the manufacturing of drugs to encourage growth in slave height.</div>
+	</span>
+<<elseif ($growthStim == 1)>>
+	The fabricator is able to produce growth stimulants.
+<</if>>
+</div>
+
+<div>
+<<if ($aphrodisiacUpgradeRefine == 0) && ($rep > 6000*_PCSkillCheck)>>
+	[[Purchase data on refined aphrodisiacs|Dispensary][cashX(forceNeg(20000*_PCSkillCheck), "capEx"), $aphrodisiacUpgradeRefine = 1]]
+	<span class="detail">
+		Costs <<print cashFormat(20000*_PCSkillCheck)>>.
+		<div class="indent">
+			Will prevent most physical side effects of aphrodisiacs. Once the formulas are changed they cannot be changed back.
+		</div>
+	</span>
+<<elseif ($aphrodisiacUpgradeRefine == 1)>>
+	The fabricator is producing refined aphrodisiacs with limited hormonal effects.
+<</if>>
+</div>
+
+<div>
+<<if ($aphrodisiacUpgrade == 0) && ($rep > 6000*_PCSkillCheck)>>
+	[[Purchase data on aphrodisiac withdrawal treatment|Dispensary][cashX(forceNeg(10000*_PCSkillCheck), "capEx"), $aphrodisiacUpgrade = 1]]
+	<span class="detail">
+		Costs <<print cashFormat(10000*_PCSkillCheck)>>.
+		<div class="indent">Should prevent most negative effects of withdrawal.</div>
+	</span>
+<<elseif ($aphrodisiacUpgrade == 1)>>
+	The fabricator is producing a substitute that will protect slaves from aphrodisiac withdrawal.
+<</if>>
+</div>
+
+<div>
+<<if ($healthyDrugsUpgrade == 0)>>
+	<<if ($injectionUpgrade != 0) && ($curativeUpgrade == 1) && ($aphrodisiacUpgrade == 1)>>
+		<<if ($rep >= 15000*_PCSkillCheck)>>
+			[[Fund research into drug formulations without negative physical side effects|Dispensary][cashX(forceNeg(500000*_PCSkillCheck), "capEx"),$healthyDrugsUpgrade = 1]]
+			<span class="detail">
+				Costs <<print cashFormat(500000*_PCSkillCheck)>>.
+				<div class="indent">
+					Will prevent the negative side effects of excessive drug usage on your slaves.
+				</div>
+			</span>
+		<<else>>
+			<span class="note">
+				You lack the reputation to access the technology necessary to develop advanced drug formulations.
+			</span>
+		<</if>>
+	<<else>>
+		<span class="note">
+			You must purchase all other major upgrades before developing advanced drug formulations.
+		</span>
+	<</if>>
+<<else>>
+	The fabricator has been upgraded to optimize the structures of your other drugs, eliminating their negative side effects.
+<</if>>
+</div>
+
+<<if ($arcologies[0].FSBodyPuristLaw == 1)>>
+	<div class="note">
+		The pharmaceutical fabricator is working with your body purist arcology to reduce long term drug side effects.
+	</div>
+<</if>>
+</p>
+
+<<if $seePreg != 0>>
+	<h2>Fertility Focused Pharmacology</h2>
+
+	<p>
+	<div>
+	<<if $seeHyperPreg == 1>>
+		<<if $superFertilityDrugs == 1 && ($rep > 10000*_PCSkillCheck) && $pregSpeedControl != 1>>
+			[[Fund research pregnancy speed control methods|Dispensary][cashX(forceNeg(200000*_PCSkillCheck), "capEx"), $pregSpeedControl = 1, $clinicSpeedGestation = 0]]
+			<span class="detail">
+				Costs <<print cashFormat(200000*_PCSkillCheck)>>.
+				<div class="indent">
+					Fund underground research labs to develop methods for controlling pregnancy progress.
+				</div>
+			</span>
+		<<elseif ($rep <= 10000*_PCSkillCheck) && $pregSpeedControl != 1>>
+			<span class="note">
+				You lack the reputation required to contact underground research labs to develop methods for controlling pregnancy progress.
+			</span>
+		<<elseif ($pregSpeedControl == 1)>>
+			The fabricator is producing extremely complex gestation control agents. They can be used to control gestation speed, and even suppress labor for some time.
+		<</if>>
+	<<elseif $birthsTotal > 10>>
+		<<if ($rep > 10000*_PCSkillCheck) && $pregSpeedControl != 1>>
+			[[Fund research pregnancy speed control methods|Dispensary][cashX(forceNeg(200000*_PCSkillCheck), "capEx"), $pregSpeedControl = 1, $clinicSpeedGestation = 0]]
+			<span class="detail">
+				Costs <<print cashFormat(200000*_PCSkillCheck)>>.
+				<div class="indent">Fund underground research labs to develop methods for controlling pregnancy progress.</div>
+			</span>
+		<<elseif ($rep <= 10000*_PCSkillCheck) && $pregSpeedControl != 1>>
+			<span class="detail">You lack the reputation required to contact underground research labs to develop methods for controlling pregnancy progress.</span>
+		<<elseif ($pregSpeedControl == 1)>>
+			The fabricator is producing extremely complex gestation control agents. They can be used to control gestation speed, and even suppress labor for some time.
+		<</if>>
+	<<else>>
+		<span class="note">
+			You lack the experience handling pregnant slaves required to convince underground research labs to do business with you in the development of controlled fetal development.
+		</span>
+	<</if>>
+	</div>
+
+	<div>
+	<<if ($superFertilityDrugs == 0) && ($rep > 2500*_PCSkillCheck) && $seeHyperPreg == 1>>
+		[[Purchase data on powerful fertility drugs|Dispensary][cashX(forceNeg(20000*_PCSkillCheck), "capEx"), $superFertilityDrugs = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(20000*_PCSkillCheck)>>.
+			<div class="indent">Should improve the likelihood of conception and multiples.</div>
+		</span>
+	<<elseif ($superFertilityDrugs == 1)>>
+		The fabricator is producing highly effective fertility agents. There is a warning present involving overdosing and instances of ten or more children.
+	<</if>>
+	</div>
+	</p>
+<</if>>
+
+<h2>Future Societies Research</h2>
+
+<p>
+<div>
+<<if ($ImplantProductionUpgrade == 1) && ($arcologies[0].FSTransformationFetishistDecoration >= 100)>>
+	<<if ($arcologies[0].FSTransformationFetishistResearch == 0) && ($rep <= 5000*_PCSkillCheck)>>
+		<span class="note">You lack the reputation to access experimental gigantic implants and elasticizing filler.</span>
+	<<elseif ($arcologies[0].FSTransformationFetishistResearch == 0)>>
+		[[Purchase data on gigantic implants and elasticizing filler|Dispensary][cashX(forceNeg(20000*_PCSkillCheck), "capEx"), $arcologies[0].FSTransformationFetishistResearch = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(20000*_PCSkillCheck)>>.
+			<div class="indent">Will allow the fabrication of gigantic implants using the autosurgery and filler capable of overfilling existing fillable implants.</div>
+		</span>
+	<<elseif ($arcologies[0].FSTransformationFetishistResearch > 0)>>
+		The fabricator is capable of crafting gigantic implants and elasticizing filler designed to overfill existing implants.
+	<</if>>
+<<elseif $arcologies[0].FSTransformationFetishistResearch == 1>>
+	The fabricator is capable of crafting gigantic implants and elasticizing filler designed to overfill existing implants.
+<<else>>
+	<span class="note">Transformation Fetishist focused research unavailable.</span>
+<</if>>
+</div>
+
+<div>
+<<if $arcologies[0].FSAssetExpansionistResearch == 1>>
+	The fabricator has been upgraded to manufacture extremely powerful growth drugs.
+<<elseif $arcologies[0].FSAssetExpansionistDecoration == 100>>
+	<<if ($rep >= 5000*_PCSkillCheck)>>
+		[[Fund research into drug formulations for growth without limit|Dispensary][cashX(forceNeg(30000*_PCSkillCheck), "capEx"),$arcologies[0].FSAssetExpansionistResearch = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(30000*_PCSkillCheck)>>.
+			<div class="indent">
+				Will allow creation of drugs to push assets to unthinkable sizes.
+			</div>
+		</span>
+	<<else>>
+		<span class="note">You lack the reputation to access the research necessary to develop advanced growth drug formulations.</span>
+	<</if>>
+<<else>>
+	<span class="note">Asset Expansionist focused research unavailable.</span>
+<</if>>
+</div>
+
+<div>
+<<if $arcologies[0].FSSlaveProfessionalismResearch == 1>>
+	The fabricator has been upgraded to manufacture a compound that steadily improves intelligence.
+<<elseif $arcologies[0].FSSlaveProfessionalismDecoration == 100>>
+	<<if ($rep >= 5000*_PCSkillCheck)>>
+		[[Fund research into producing an intelligence boosting compound|Dispensary][cashX(forceNeg(60000*_PCSkillCheck), "capEx"),$arcologies[0].FSSlaveProfessionalismResearch = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(60000*_PCSkillCheck)>>.
+			<div class="indent">
+				Will allow the creation of a drug that improves mental faculties.
+			</div>
+		</span>
+	<<else>>
+		<span class="note">You lack the reputation to access the research necessary to produce an intelligence boosting compound.</span>
+	<</if>>
+<<else>>
+	<span class="note">Slave Professionalism focused research unavailable.</span>
+<</if>>
+</div>
+
+<div>
+<<if $arcologies[0].FSSlimnessEnthusiastResearch == 1>>
+	The fabricator has been upgraded to manufacture growth reversing drugs.
+<<elseif $arcologies[0].FSSlimnessEnthusiastDecoration == 100>>
+	<<if ($rep >= 5000*_PCSkillCheck)>>
+		[[Fund research into drug formulations for slimming slaves|Dispensary][cashX(forceNeg(30000*_PCSkillCheck), "capEx"),$arcologies[0].FSSlimnessEnthusiastResearch = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(30000*_PCSkillCheck)>>.
+			<div class="indent">Will allow creation of drugs to shrink assets.</div>
+		</span>
+	<<else>>
+		<span class="note">You lack the reputation to access the research necessary to develop asset reducing drug formulations.</span>
+	<</if>>
+<<else>>
+	<span class="note">Slimness Enthusiast focused research unavailable.</span>
+<</if>>
+</div>
+
+<div>
+<<if $arcologies[0].FSYouthPreferentialistResearch == 1>>
+	The fabricator has been upgraded to manufacture extremely effective beauty creams designed to combat aging.
+<<elseif $arcologies[0].FSYouthPreferentialistDecoration == 100>>
+	<<if ($rep >= 5000*_PCSkillCheck)>>
+		[[Fund research into skin care designed to reverse the effects of aging|Dispensary][cashX(forceNeg(30000*_PCSkillCheck), "capEx"),$arcologies[0].FSYouthPreferentialistResearch = 1]]
+		<span class="detail">
+			Costs <<print cashFormat(30000*_PCSkillCheck)>>.
+			<div class="indent">Will allow creation of beauty creams designed to make slaves look young again.</div>
+		</span>
+	<<else>>
+		<span class="note">You lack the reputation to access the research necessary to develop beauty creams designed to make slaves look young again.</span>
+	<</if>>
+<<else>>
+	<span class="note">Youth Preferentialist focused research unavailable.</span>
+<</if>>
+</div>
+
+<div>
+<<if $arcologies[0].FSHedonisticDecadenceDecoration == 100>>
+	<<if ($arcologies[0].FSHedonisticDecadenceResearch == 0)>>
+		<<if ($rep >= 5000*_PCSkillCheck)>>
+			[[Purchase recipes for concentrated, shaped slave food|Dispensary][cashX(forceNeg(50000*_PCSkillCheck), "capEx"),$arcologies[0].FSHedonisticDecadenceResearch = 1]]
+			<span class="detail">
+				Costs <<print cashFormat(50000*_PCSkillCheck)>>.
+				<div class="indent">
+					Will allow production of solid slave food in various familiar shapes and flavors. Addictive and a little fatty. <<if $arcologies[0].FSDegradationist != "unset">> Since your slaves don't deserve luxuries, a modified recipe formulated to cause severe stomach cramps minutes after ingestion will be developed.<</if>>
+				</div>
+			</span>
+		<<else>>
+			<span class="note">You lack the reputation to access the research necessary to purchase concentrated, shaped slave food recipes.</span>
+		<</if>>
+	<<else>>
+		The fabricator has been upgraded to manufacture tasty, extremely addictive, solid slave food in various familiar shapes and flavors. While they look and taste like real food, their consistency is all wrong. Slaves gorging on them are likely to experience steady weight gain.<<if $arcologies[0].FSDegradationist != "unset">> Since your slaves don't deserve luxuries, all food crafted will cause severe stomach cramps minutes after ingestion. Coupled with their addictive nature, it ought to be quite torturous.<</if>>
+		<<if $arcologies[0].FSSlimnessEnthusiast > 50 && $arcologies[0].FSHedonisticDecadenceDietResearch == 0>>
+			<div class="indent">
+				[[Purchase diet recipes|Dispensary][cashX(forceNeg(10000*_PCSkillCheck), "capEx"),$arcologies[0].FSHedonisticDecadenceDietResearch = 1]]
+				<span class="detail">
+					Costs <<print cashFormat(10000*_PCSkillCheck)>>.
+					<div class="double-indent">Will prevent rampant weight gain from ruining your slim slaves.</div>
+				</span>
+			</div>
+		<<elseif $arcologies[0].FSHedonisticDecadenceDietResearch == 1>>
+			A diet recipe is being utilized to prevent unwanted weight gain.
+		<</if>>
+	<</if>>
+<<elseif $arcologies[0].FSHedonisticDecadenceResearch == 1>>
+	The fabricator has been upgraded to manufacture tasty, extremely addictive, solid slave food in various familiar shapes and flavors. While they look and taste like real food, their consistency is all wrong. Slaves gorging on them are likely to experience steady weight gain.<<if $arcologies[0].FSDegradationist != "unset">> Since your slaves don't deserve luxuries, all food crafted will cause severe stomach cramps minutes after ingestion. Coupled with their addictive nature, it ought to be quite torturous.<</if>>
+	<<if $arcologies[0].FSHedonisticDecadenceDietResearch == 0>>
+		<div class="indent">
+			[[Purchase diet recipes|Dispensary][cashX(forceNeg(10000*_PCSkillCheck), "capEx"),$arcologies[0].FSHedonisticDecadenceDietResearch = 1]]
+			<span class="detail">
+				Costs <<print cashFormat(10000*_PCSkillCheck)>>.
+				<div class="double-indent">
+					Will prevent rampant unwanted weight gain from ruining your <<if $arcologies[0].FSSlimnessEnthusiast > 20>>slim <</if>>slaves.
+				</div>
+			</span>
+		</div>
+	<<elseif $arcologies[0].FSHedonisticDecadenceDietResearch == 1>>
+		A diet recipe is being utilized to prevent unwanted weight gain.
+	<</if>>
+	<div class="indent">
+		<<link "Cancel solid slave food production" "Dispensary">><<set $arcologies[0].FSHedonisticDecadenceResearch = 0>><<set $merchantFSWares.push("HedonisticDecadenceResearch")>><</link>>
+		<div class="double-indent">
+			Will <span class="noteworthy">completely</span> remove this research.
+		</div>
+	</div>
+<<else>>
+	<span class="note">Hedonistic Decadence focused research unavailable.</span>
+<</if>>
+</div>
+</p>

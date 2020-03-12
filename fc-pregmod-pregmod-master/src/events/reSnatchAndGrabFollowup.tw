@@ -1,0 +1,83 @@
+:: RE snatch and grab followup [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "RIE Eligibility Check", $PSnatch = 2>>
+
+<<set _slave = $activeSlave = $eventSlave>>
+<<setLocalPronouns _slave>>
+
+<<set _clothesTemp = _slave.clothes, _slave.clothes = "no clothing">>
+<span id="artFrame">
+	<<if $seeImages == 1>>
+		<div class="imageColumn">
+			<div class="imageRef medImg">
+				<<= SlaveArt(_slave, 2, 0)>>
+			</div>
+		</div>
+	<</if>>
+</span>
+<<set _slave.clothes = _clothesTemp>>
+
+<p><<= App.UI.slaveDescriptionDialog(_slave)>> is next on your inspection schedule this morning, and you've finished with the previous slave more quickly than expected, so you find yourself thinking about the circumstances of $his acquisition.</p>
+
+<p>The laboratory $he was recovered from was performing illegal genetic experiments...something with which you now also have some personal experience. It occurs to you that there might be something interesting left unexplored in $his genome, so when $he arrives, you inform $him that you're going to the surgery together.
+<<if _slave.trust < 50>>
+	Worried, $he <<if !canTalk(_slave)>>wordlessly<</if>> asks whether something is wrong, and you fill $him in on your thoughts.
+<<else>>
+	Although $he immediately and unquestioningly complies, you occupy a few free moments to fill $him in on your thoughts.
+<</if>>
+<<if _slave.behavioralFlaw === "odd">>
+	$He has always acted a bit odd, and today $he is pretending to play an air harmonica as you <<if canWalk(_slave)>>walk<<else>>travel<</if>> together.
+<<elseif _slave.behavioralQuirk === "funny">>
+	$He acted quite odd when you first acquired $him, but <<if canWalk(_slave)>>walking<<else>>traveling<</if>> with $him now, you find that $he's actually very funny.
+<<else>>
+	$He acted quite odd when you first acquired $him, but you note with some pride that $he has learned to behave more normally during $his time with you.
+<</if>>
+</p>
+
+<p>After spending some time prowling around $his genome in your genetic sequencer, you find one particularly interesting sequence. $He has a unique sequence of genes in a chromosomal region which significantly increases $his cognitive ability, but it's only partially activated.  You could, with a little bit of time, either completely activate it, or deactivate it entirely, with corresponding dramatic effects on $his intelligence. However, such therapy is not free, and the remote surgery software warns that rapid changes to cognition may cause significant changes in behavior.</p>
+
+<span id="result">
+	<<link "Finish activating the sequence">>
+		<<run cashX(forceNeg($surgeryCost*4), "slaveSurgery", _slave), surgeryDamage(_slave,40), _slave.chem += 100, _slave.intelligence += Math.min(25, 100-_slave.intelligence)>>
+		<<replace "#result">>
+			<p>The procedure spans the week, with $him spending every other day in the surgery room for a series of four sets of injections. A few hours after each session, $he feels terribly ill. The process involves <<if ($PC.skill.medicine >= 100)>>you<<else>>the remote surgeon<</if>> injecting the serum across $his entire body, every few <<if $showInches == 2>>inches<<else>>centimeters<</if>>, leaving small needle marks that fade out within minutes. Despite not leaving lasting evidence, the process is very invasive work, and leaves $him <span class="health dec">feeling weak and tired.</span> Gradually, though, you begin to notice a marked increase in $his cognitive function.</p>
+			<<if _slave.behavioralQuirk === "none">>
+				<<if _slave.behavioralFlaw === "odd">>
+					<<set _slave.behavioralFlaw = "none">>
+				<</if>>
+				<<set _slave.behavioralQuirk = "funny">>
+				<p>Over the next few weeks, you also begin to notice some significant changes in behavior. _slave.slaveName is now <span class="flaw break">funny.</span></p>
+			<<elseif _slave.sexualQuirk === "none">>
+				<<if _slave.sexualFlaw === "repressed">>
+					<<set _slave.sexualFlaw = "none">>
+				<</if>>
+				<<set _slave.sexualQuirk = "perverted">>
+				<p>Over the next few weeks, you also begin to notice some significant changes in behavior. Although _slave.slaveName has always been remarkably horny, $he has become much more <span class="flaw break">perverted.</span></p>
+			<</if>>
+		<</replace>>
+	<</link>> //This will cost <<= cashFormat($surgeryCost*4)>>//<br>
+	<<link "Completely deactivate the sequence">>
+		<<run cashX(forceNeg($surgeryCost*4), "slaveSurgery", _slave), surgeryDamage(_slave,40), _slave.chem += 100, _slave.intelligence -= Math.min(25, 100+_slave.intelligence)>>
+		<<replace "#result">>
+			<p>The procedure spans the week, with $him spending every other day in the surgery room for a series of four sets of injections. A few hours after each session, $he feels terribly ill. The process involves <<if ($PC.skill.medicine >= 100)>>you<<else>>the remote surgeon<</if>> injecting the serum across $his entire body, every few <<if $showInches == 2>>inches<<else>>centimeters<</if>>, leaving small needle marks that fade out within minutes. Despite not leaving lasting evidence, the process is very invasive work, and leaves $him <span class="health dec">feeling weak and tired.</span> Gradually, though, you begin to notice a marked decline in $his cognitive function.</p>
+			<<if _slave.behavioralQuirk === "none">>
+				<<if _slave.behavioralFlaw === "odd">>
+					<<set _slave.behavioralFlaw = "none">>
+				<</if>>
+				<<set _slave.behavioralQuirk = "funny">>
+				<p>Over the next few weeks, you also begin to notice some significant changes in behavior. _slave.slaveName is now <span class="flaw break">funny.</span></p>
+			<<elseif _slave.sexualQuirk === "none">>
+				<<if _slave.sexualFlaw === "repressed">>
+					<<set _slave.sexualFlaw = "none">>
+				<</if>>
+				<<set _slave.sexualQuirk = "perverted">>
+				<p>Over the next few weeks, you also begin to notice some significant changes in behavior. Although _slave.slaveName has always been remarkably horny, $he has become much more <span class="flaw break">perverted.</span></p>
+			<</if>>			
+		<</replace>>
+	<</link>> //This will cost <<= cashFormat($surgeryCost*4)>>//<br>
+	<<link "Let it be">>
+		<<replace "#result">>
+			<p>You file your findings, and within a few days, both you and _slave.slaveName have forgotten all about them.</p>
+		<</replace>>
+	<</link>>
+</span>

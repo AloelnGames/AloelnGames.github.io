@@ -1,0 +1,1476 @@
+:: Random Nonindividual Event [nobr]
+
+<<set $showEncyclopedia = 0>>
+<<if $eventSlave == 0>>
+	<<set $eventSlave = $slaves.random()>>
+	<<if $cheatMode == 1>>
+		<<set $nextButton = "Refresh", $nextLink = "Random Nonindividual Event", $returnTo = "Random Nonindividual Event">>
+
+		<<link "Skip week-end events" "Next Week">><</link>>
+		<br><br>
+
+		''Any one of your slaves would have been selected for a random non-individual event:''
+		<br>
+		<<for $i = 0; $i < $slaves.length; $i++>>
+			<<set _slaveName = SlaveFullName($slaves[$i])>>
+			<br><<print "[[_slaveName|Random Nonindividual Event][$eventSlave = $slaves[" + $i + "]]]">>
+		<</for>>
+		<br><br>[[Switch to RIE Eligibility Check|RIE Eligibility Check][$activeSlave = 0, $eventSlave = 0]]
+	<<else>>
+		<<goto "Random Nonindividual Event">>
+	<</if>>
+<<else>>
+	<<silently>>
+	/* initialize event lists as arrays [], not objects {} */
+	<<set $events = [], $RecETSevent = [], $REFIevent = [], $PESSevent = [], $PETSevent = [], $REFSevent = [], $activeSlave = 0, $recruiterSlave = 0, _recruitEvents = []>>
+
+	<<set $seed = 0>>
+
+	<<if $eventSlave.fuckdoll == 0>>
+
+		<<if $nicknamesAllowed == 1>>
+			<<if $eventSlave.assignment != "be confined in the arcade">>
+				<<if ($eventSlave.slaveName.indexOf("'") == -1)>>
+					<<if ($week-$eventSlave.weekAcquired >= 4)>>
+						<<if ($eventSlave.devotion >= -20)>>
+							<<set $events.push("RE nickname")>>
+							<<set $events.push("RE nickname")>>
+							<<set $events.push("RE nickname")>>
+							<<set $events.push("RE nickname")>>
+							<<set $seed = 1>> /* tells RE nickname to set nextLink to RIE Eligibility Check */
+						<<else>>
+							<<set $events.push("RE nickname")>>
+							<<set $events.push("RE nickname")>>
+							<<set $seed = 1>> /* tells RE nickname to set nextLink to RIE Eligibility Check */
+						<</if>>
+					<</if>>
+				<</if>> /* closes nickname check */
+			<</if>>
+		<</if>> /* closes no nicknames option */
+
+	<</if>> /* CLOSES FUCKDOLL CHECK */
+
+	<<if $week >= 10>>
+		<<set $events.push("P associates public slut")>>
+	<</if>>
+
+	<<set $legendaryFacility = 1>>
+	<<if $legendaryWhoreID != 0>>
+		<<set $events.push("RE legendary whore")>>
+	<</if>>
+	<<if $legendaryEntertainerID != 0>>
+		<<set $events.push("RE legendary entertainer")>>
+	<</if>>
+	<<if $legendaryCowID != 0>>
+		<<set $events.push("RE legendary cow")>>
+	<</if>>
+	<<if $legendaryBallsID != 0>>
+		<<set $events.push("RE legendary balls")>>
+	<</if>>
+	<<if $legendaryWombID != 0>>
+		<<set $events.push("RE legendary womb")>>
+	<</if>>
+	<<if $legendaryAbolitionistID != 0>>
+		<<set $events.push("RE former abolitionist")>>
+	<</if>>
+
+	<<if $shelterAbuse <= 5>>
+		<<if $shelterGirlsIDs.length > 0>>
+			<<set $events.push("RE shelter inspection")>>
+		<</if>>
+	<</if>>
+
+	/* Hyperpreg Inventor Events; 1 = event 1 funding chosen; 2 = event 2 funding chosen;*/
+	<<if $seePreg != 0 && $seeHyperPreg != 0>>
+		<<if $pregInventor == 0>>
+			<<if $eventSlave.bellyPreg >= 600000 && $eventSlave.counter.birthsTotal > 30 && $eventSlave.ovaries == 1 && canDoVaginal($eventSlave) && canSee($eventSlave)>>
+				<<if $eventSlave.fetish != "mindbroken" && $eventSlave.fuckdoll == 0>>
+					<<if ($eventSlave.devotion > 90 && $eventSlave.trust > 50) || $activeSlave.sexualFlaw == "breeder">>
+						<<if $eventSlave.intelligence+$eventSlave.intelligenceImplant > 50>>
+							<<set $events.push("RE preg inventor")>>
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<<elseif $pregInventor == 1 && $eventSlave.ID == $pregInventorID>>
+			<<if ($eventSlave.bellyPreg >= 600000)>>
+				<<if $eventSlave.fetish != "mindbroken" && $eventSlave.fuckdoll == 0>>
+					<<if ($eventSlave.devotion > 50)>>
+						<<set $events.push("RE preg inventor")>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<<elseif $pregInventor == 2 && $pregInventions == 1 && $eventSlave.ID == $pregInventorID>>
+			<<if $FCTVreceiver > 0>>
+				<<if ($eventSlave.bellyPreg >= 1000000)>>
+					<<if $eventSlave.fetish != "mindbroken" && $eventSlave.fuckdoll == 0>>
+						<<if ($eventSlave.devotion > 50)>>
+							<<if $eventSlave.porn.prestige >= 1 || $eventSlave.prestige >= 1>>
+								<<set $events.push("RE preg inventor")>>
+							<</if>>
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	/* Relationship Events */
+
+	<<if $seeIncest == 1>>
+		<<if $familyTesting == 0>>
+
+			<<set _relatedSlaves = $slaves.filter(function(s) { return s.relation != 0; })>>
+
+			<<set _devMothers = _relatedSlaves.filter(function(s) { return s.relation == "mother" && s.devotion > 50 && s.anus != 0 && s.relationshipTarget != s.relationTarget && canWalk(s); })>>
+			<<for _devMothers.length > 0>>
+				<<set $devMother = _devMothers.pluck()>>
+				<<set $devDaughter = getSlave($devMother.relationTarget)>>
+				<<if (def $devDaughter) && $devDaughter.devotion > 50 && $devDaughter.anus != 0 && canWalk($devDaughter)>>
+					<<set $events.push("RE devoted mother daughter")>>
+					<<set $devMother = $devMother.ID>>
+					<<set $devDaughter = $devDaughter.ID>>
+					<<break>>
+				<</if>>
+			<</for>>
+
+			<<set _resMothers = _relatedSlaves.filter(function(s) { return s.relation == "mother" && s.devotion < 10 && s.anus != 0 && s.relationshipTarget != s.relationTarget && canWalk(s); })>>
+			<<for _resMothers.length > 0>>
+				<<set $motherSlave = _resMothers.pluck()>>
+				<<set $daughterSlave = getSlave($motherSlave.relationTarget)>>
+				<<if (def $daughterSlave) && $daughterSlave.devotion < 10 && $daughterSlave.anus != 0 && canWalk($daughterSlave)>>
+					<<set $events.push("RE resistant mother daughter")>>
+					<<set $motherSlave = $motherSlave.ID>>
+					<<set $daughterSlave = $daughterSlave.ID>>
+					<<break>>
+				<</if>>
+			<</for>>
+
+			<<set _youngerSisters = _relatedSlaves.filter(function(s) { return s.relation == "sister" && s.origin == "$He was sold into slavery by $his older sister." && canPenetrate(s); })>>
+			<<for _youngerSisters.length > 0>>
+				<<set $youngerSister = _youngerSisters.pluck()>>
+				<<set $olderSister = getSlave($youngerSister.relationTarget)>>
+				<<if (def $olderSister) && $olderSister.anus == 0 && $youngerSister.devotion > ($olderSister.devotion+20)>>
+					<<set $events.push("RE sibling revenge")>>
+					<<set $youngerSister = $youngerSister.ID>>
+					<<set $olderSister = $olderSister.ID>>
+					<<break>>
+				<</if>>
+			<</for>>
+
+			<<set _twins = _relatedSlaves.filter(function(s) { return s.relation == "twin" && s.anus > 0 && s.devotion > 50 && canWalk(s); })>>
+			<<for _twins.length > 0>>
+				<<set $alphaTwin = _twins.pluck()>>
+				<<set $betaTwin = getSlave($alphaTwin.relationTarget)>>
+				<<if (def $betaTwin) && $betaTwin.anus > 0 && $betaTwin.devotion > 50 && canWalk($betaTwin)>>
+					<<set $events.push("RE devoted twins")>>
+					<<set $alphaTwin = $alphaTwin.ID>>
+					<<set $betaTwin = $betaTwin.ID>>
+					<<break>>
+				<</if>>
+			<</for>>
+
+		<<else>> /* $familyTesting == 1 */
+
+			<<set _relatedSlaves = $slaves.filter(function(s) { return s.daughters > 0 || s.sisters > 0; })>>
+
+			<<set _devMothers = _relatedSlaves.filter(function(s) { return s.daughters > 0 && s.devotion > 50 && s.anus != 0 && canWalk(s); })>>
+			<<for _devMothers.length > 0>>
+				<<set $devMother = _devMothers.pluck()>>
+				<<set $devDaughter = randomDaughter($devMother)>>
+				<<if (def $devDaughter) && ($devDaughter.devotion > 50) && ($devDaughter.anus != 0) && canWalk($devDaughter)>>
+					<<set $events.push("RE devoted mother daughter")>>
+					<<set $devMother = $devMother.ID>>
+					<<set $devDaughter = $devDaughter.ID>>
+					<<break>>
+				<</if>>
+			<</for>>
+
+			<<set _resMothers = _relatedSlaves.filter(function(s) { return s.daughters > 0 && s.devotion < 10 && s.anus != 0 && canWalk(s); })>>
+			<<for _resMothers.length > 0>>
+				<<set $motherSlave = _resMothers.pluck()>>
+				<<set $daughterSlave = randomDaughter($motherSlave)>>
+				<<if (def $daughterSlave) && ($daughterSlave.devotion < 10) && ($daughterSlave.anus != 0) && canWalk($daughterSlave)>>
+					<<set $events.push("RE resistant mother daughter")>>
+					<<set $motherSlave = $motherSlave.ID>>
+					<<set $daughterSlave = $daughterSlave.ID>>
+					<<break>>
+				<</if>>
+			<</for>>
+
+			<<set _youngerSisters = _relatedSlaves.filter(function(s) { return s.sisters > 0 && s.origin == "$He was sold into slavery by $his older sister." && canPenetrate(s); })>>
+			<<for _youngerSisters.length > 0>>
+				<<set $youngerSister = _youngerSisters.pluck()>>
+				<<set $olderSister = randomSister($youngerSister)>>
+				<<if (def $olderSister) && ($olderSister.anus == 0) && $youngerSister.devotion > ($olderSister.devotion+20)>>
+					<<set $events.push("RE sibling revenge")>>
+					<<set $youngerSister = $youngerSister.ID>>
+					<<set $olderSister = $olderSister.ID>>
+					<<break>>
+				<</if>>
+			<</for>>
+
+			<<set _twins = _relatedSlaves.filter(function(s) { return s.sisters > 0 && s.anus > 0 && s.devotion > 50 && canWalk(s); })>>
+			<<for _twins.length > 0>>
+				<<set $alphaTwin = _twins.pluck()>>
+				<<set $betaTwin = randomTwinSister($alphaTwin)>>
+				<<if (def $betaTwin) && ($betaTwin.anus > 0) && ($betaTwin.devotion > 50) && canWalk($betaTwin)>>
+					<<set $events.push("RE devoted twins")>>
+					<<set $alphaTwin = $alphaTwin.ID>>
+					<<set $betaTwin = $betaTwin.ID>>
+					<<break>>
+				<</if>>
+			<</for>>
+
+		<</if>> /* closes extended family mode */
+	<</if>>
+
+	/* Fetish Interest Events */
+
+	<<set $buttslutID = 0, $cumslutID = 0, $humiliationID = 0, $domID = 0, $subID = 0, $pregnancyID = 0, $masochistID = 0, $boobsID = 0>>
+
+	<<for $i = 0; $i < $slaves.length; $i++>>
+		<<if ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 95) && isSlaveAvailable($slaves[$i])>>
+			<<if ($slaves[$i].fetish == "buttslut")>>
+				<<if $buttslutID == 0>>
+					<<if $slaves[$i].anus > 0 && canDoAnal($slaves[$i])>>
+						<<set $buttslutID = $slaves[$i].ID>>
+					<</if>>
+				<</if>>
+			<<elseif ($slaves[$i].fetish == "cumslut")>>
+				<<if ($cumslutID == 0)>>
+					<<if !["dildo gag", "massive dildo gag", "ball gag", "bit gag"].includes($slaves[$i].collar)>>
+						<<set $cumslutID = $slaves[$i].ID>>
+					<</if>>
+				<</if>>
+			<<elseif ($slaves[$i].fetish == "dom")>>
+				<<if ($domID == 0)>>
+					/* TODO: these conditions will need to be written */
+						<<set $domID = $slaves[$i].ID>>
+				<</if>>
+			<<elseif ($slaves[$i].fetish == "submissive")>>
+				<<if ($subID == 0)>>
+					<<if (($slaves[$i].anus > 0 && canDoAnal($slaves[$i])) || ($slaves[$i].vagina > 0 && canDoVaginal($slaves[$i])) && $slaves[$i].belly < 30000)>>
+						<<set $subID = $slaves[$i].ID>>
+					<</if>>
+				<</if>>
+			<<elseif ($slaves[$i].fetish == "humiliation")>>
+				<<if (($slaves[$i].anus > 0 && canDoAnal($slaves[$i])) || ($slaves[$i].vagina > 0 && canDoVaginal($slaves[$i])) && $slaves[$i].belly < 30000)>>
+					<<if ($humiliationID == 0)>>
+						<<set $humiliationID = $slaves[$i].ID>>
+					<</if>>
+				<</if>>
+			<<elseif ($slaves[$i].fetish == "boobs")>>
+				<<if ($slaves[$i].lactation > 0)>>
+					<<if ($boobsID == 0)>>
+						<<set $boobsID = $slaves[$i].ID>>
+					<</if>>
+				<</if>>
+			<<elseif ($slaves[$i].fetish == "pregnancy")>>
+				<<if ($pregnancyID == 0)>>
+					<<if ($slaves[$i].bellyPreg >= 5000)>>
+						<<set $pregnancyID = $slaves[$i].ID>>
+					<</if>>
+				<</if>>
+			<<elseif ($slaves[$i].fetish == "masochist")>>
+				<<if ($masochistID == 0)>>
+					<<if ($slaves[$i].anus > 0 && canDoAnal($slaves[$i])) || ($slaves[$i].vagina > 0 && canDoVaginal($slaves[$i]))>>
+						<<set $masochistID = $slaves[$i].ID>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</for>>
+
+	<<set $buttslutInterestTargetID = 0, $cumslutInterestTargetID = 0, $dominantInterestTargetID = 0, $submissiveInterestTargetID = 0, $humiliationInterestTargetID = 0, $boobsInterestTargetID = 0, $pregnancyInterestTargetID = 0, $masochistInterestTargetID = 0>>
+
+	<<for $i = 0; $i < $slaves.length; $i++>>
+		<<if ($slaves[$i].rules.speech != "restrictive")>>
+			<<if isSlaveAvailable($slaves[$i])>>
+				<<if ($slaves[$i].fetish == "none") || ($slaves[$i].fetishStrength <= 60)>>
+					<<if ($buttslutID != 0) && ($buttslutInterestTargetID == 0)>>
+						<<set $REFIevent.push("buttslut")>>
+						<<set $buttslutInterestTargetID = $slaves[$i].ID>>
+					<</if>>
+					<<if ($cumslutID != 0) && ($cumslutInterestTargetID == 0)>>
+						<<if $PC.dick != 0>>
+							<<set $REFIevent.push("cumslut")>>
+						<</if>>
+						<<set $cumslutInterestTargetID = $slaves[$i].ID>>
+					<</if>>
+					<<if ($domID != 0) && ($dominantInterestTargetID == 0)>>
+						<<set $REFIevent.push("dom")>>
+						<<set $dominantInterestTargetID = $slaves[$i].ID>>
+					<</if>>
+					<<if ($subID != 0) && ($submissiveInterestTargetID == 0)>>
+						<<set $REFIevent.push("submissive")>>
+						<<set $submissiveInterestTargetID = $slaves[$i].ID>>
+					<</if>>
+					<<if ($humiliationID != 0) && ($humiliationInterestTargetID == 0)>>
+						<<set $REFIevent.push("humiliation")>>
+						<<set $humiliationInterestTargetID = $slaves[$i].ID>>
+					<</if>>
+					<<if ($boobsID != 0) && ($boobsInterestTargetID == 0)>>
+						<<set $REFIevent.push("boobs")>>
+						<<set $boobsInterestTargetID = $slaves[$i].ID>>
+					<</if>>
+					<<if ($pregnancyID != 0) && ($pregnancyInterestTargetID == 0)>>
+						<<set $REFIevent.push("pregnancy")>>
+						<<set $pregnancyInterestTargetID = $slaves[$i].ID>>
+					<</if>>
+					<<if ($sadistID != 0) && ($sadistInterestTargetID == 0)>>
+						<<set $REFIevent.push("sadist")>>
+						<<set $sadistInterestTargetID = $slaves[$i].ID>>
+					<</if>>
+					<<if ($masochistID != 0) && ($masochistInterestTargetID == 0)>>
+						<<set $REFIevent.push("masochist")>>
+						<<set $masochistInterestTargetID = $slaves[$i].ID>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</for>>
+
+	/* Multislave Events */
+
+	<<set $devotedSlaves = $slaves.filter(function(s) { return s.devotion > 50 && canWalk(s) && s.assignment != "be your agent" && s.assignment != "live with your agent"; })>>
+	<<if def $devotedSlaves[3]>>
+		<<set $devotedSlaves = $devotedSlaves.shuffle()>>
+		<<set $devotedSlaves.length = 4>>
+		<<set $devotedSlaves[0] = $devotedSlaves[0].ID>>
+		<<set $devotedSlaves[1] = $devotedSlaves[1].ID>>
+		<<set $devotedSlaves[2] = $devotedSlaves[2].ID>>
+		<<set $devotedSlaves[3] = $devotedSlaves[3].ID>>
+		<<set $events.push("RE devotees")>>
+	<</if>>
+
+	<<if $fuckSlaves > 1>>
+		<<set $bedSlaves = $slaves.filter(function(s) { return s.devotion > 50 && (s.assignment == "please you" || s.assignment == "serve in the master suite" || s.assignment == "be your Concubine") && !isAmputee(s) && canDoAnal(s); })>>
+		<<if def $bedSlaves[1]>>
+			<<set $bedSlaves = $bedSlaves.shuffle()>>
+			<<set $bedSlaves.length = 2>>
+			<<set $bedSlaves[0] = $bedSlaves[0].ID>>
+			<<set $bedSlaves[1] = $bedSlaves[1].ID>>
+			<<set $events.push("RE full bed")>>
+		<</if>>
+	<</if>>
+	<<if $fuckSlaves > 3>>
+		<<set $events.push("RE staffed morning")>>
+	<</if>>
+
+	<<if $dairyRestraintsSetting >= 2>>
+		<<set $rebelSlaves = $slaves.filter(function(s) { return s.devotion < -20 && s.assignment != "be confined in the arcade" && canWalk(s) && s.assignment != "work in the dairy"; })>>
+	<<else>>
+		<<set $rebelSlaves = $slaves.filter(function(s) { return s.devotion < -20 && s.assignment != "be confined in the arcade" && canWalk(s); })>>
+	<</if>>
+	<<if $rebelSlaves.length > 1>>
+		<<set $rebelSlaves = $rebelSlaves.shuffle()>>
+		<<set $rebelSlaves.length = 2>>
+		<<set $rebelSlaves[0] = $rebelSlaves[0].ID>>
+		<<set $rebelSlaves[1] = $rebelSlaves[1].ID>>
+		<<set $events.push("RE rebels")>>
+	<</if>>
+
+	<<if $BrothiIDs.length > 3>>
+		<<set $events.push("RE busy brothel")>>
+	<</if>>
+	<<if $BrothiIDs.length > 5>>
+		<<set $events.push("RE brothel function")>>
+	<</if>>
+	<<if $ClubiIDs.length > 3>>
+		<<set $events.push("RE busy club")>>
+	<</if>>
+	<<if $DairyiIDs.length > 3>>
+		<<if $dairyRestraintsSetting < 2>>
+			<<set $events.push("RE busy dairy")>>
+		<</if>>
+	<</if>>
+	<<if $ServQiIDs.length > 3>>
+		<<set $events.push("RE busy servants quarters")>>
+	<</if>>
+	<<if $ArcadeiIDs.length > 3>>
+		<<set $events.push("RE busy arcade")>>
+	<</if>>
+	<<if $MastSiIDs.length > 3>>
+		<<if $Concubine != 0>>
+			<<set $events.push("RE busy master suite")>>
+		<</if>>
+	<</if>>
+
+	/* Position Events */
+
+	<<if ($HeadGirl != 0)>>
+
+		<<if ($Concubine != 0)>>
+			<<if $fuckSlaves > 1>>
+				<<if canTalk($Concubine) && canSee($Concubine) && canHear($Concubine) && $Concubine.fetish != "mindbroken" && canHold($Concubine) && canWalk($Concubine)>>
+					<<set $events.push("PE headgirl concubine")>>
+				<</if>>
+			<</if>>
+		<</if>>
+
+		<<set $j = $slaves.findIndex(function(s) { return s.ID != $HeadGirl.ID && s.devotion <= 20; })>>
+
+		<<if canPenetrate($HeadGirl) && ($HeadGirl.balls > 0)>>
+			<<if $j != -1>>
+				<<set $PESSevent.push("headgirl dickgirl")>> /* requires valid $slaves[$j] */
+			<</if>>
+
+			<<if ($universalRulesImpregnation == "HG")>>
+				<<if ($HeadGirl.devotion > 95)>>
+					<<set $PESSevent.push("worshipful impregnatrix")>> /* does not use $j */
+				<</if>>
+			<</if>>
+		<</if>>
+
+		<<if ($HeadGirl.devotion > 95)>>
+			<<if ($slaves.length > 4)>>
+				<<set $PESSevent.push("loving headgirl")>> /* uses $j if valid, but not required */
+			<</if>>
+			<<if ($week > 20)>>
+				<<if ($HeadGirl.trust > 95)>>
+					<<if ($HeadGirl.intelligence+$HeadGirl.intelligenceImplant > 50)>>
+						<<set $PESSevent.push("worried headgirl")>> /* does not use $j */
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+
+	<</if>>
+
+	<<if ($Bodyguard != 0)>>
+
+		/*<<set $events.push("PE pit fight invite")>>*/
+
+		<<if ($Bodyguard.skill.combat != 0)>>
+			<<set $PESSevent.push("bodyguard bedtime")>>
+		<</if>>
+
+		<<if ($Bodyguard.devotion > 45)>>
+			<<set $PESSevent.push("bodyguard beatdown")>>
+		<</if>>
+
+		<<if ($Bodyguard.relationship == 0)>>
+			<<if ($Bodyguard.rules.relationship == "permissive")>>
+				<<if ($Bodyguard.fetish != "mindbroken")>>
+					<<set $j = $slaves.findIndex(function(s) { return s.ID != $Bodyguard.ID && s.relationship == 0 && s.devotion >= -20; })>>
+					<<if $j != -1>>
+						<<set $events.push("PE lonely bodyguard")>> /* requires valid $slaves[$j] */
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+
+		<<if ($Bodyguard.skill.combat == 0)>>
+			<<set $events.push("PE combat training")>>
+			<<set $events.push("PE combat training")>>
+			<<set $events.push("PE combat training")>>
+		<</if>>
+
+	<</if>>
+
+	<<if ($Milkmaid != 0) && ($DairyiIDs.length >= 5) && ($Milkmaid.health.condition >= 70)>>
+		<<if ($Milkmaid.muscles > 5)>>
+			<<set $PESSevent.push("tired milkmaid")>>
+		<</if>>
+		<<if canAchieveErection($Milkmaid)>>
+			<<set $PESSevent.push("tired collectrix")>>
+		<</if>>
+	<</if>>
+
+	<<if ($Stewardess != 0) && ($ServQiIDs.length > 0) && ($Stewardess.actualAge >= 35 || $AgePenalty == 0)>>
+		<<set $PETSevent.push("stewardess beating")>>
+	<</if>>
+
+	<<if ($Madam != 0) && ($BrothiIDs.length >= 5) && ($Madam.actualAge >= 35 || $AgePenalty == 0) && ($Madam.skill.whoring >= 100)>>
+		<<set $PESSevent.push("madam strategy")>>
+	<</if>>
+
+	<<if ($DJ != 0) && ($ClubiIDs.length >= 5) && ($DJ.face > 95) && ($DJ.skill.entertainment >= 100)>>
+		<<set $PESSevent.push("DJ publicity")>>
+	<</if>>
+
+	<<if ($Schoolteacher != 0) && ($SchlRiIDs.length > 0) && ($Schoolteacher.intelligence+$Schoolteacher.intelligenceImplant > 15) && ($Schoolteacher.actualAge >= 35)>>
+		<<set $PETSevent.push("aggressive schoolteacher")>>
+	<</if>>
+
+	<<if ($Wardeness != 0) && ($CellBiIDs.length > 0) && canTalk($Wardeness)>>
+		<<set $PETSevent.push("abusive wardeness")>>
+	<</if>>
+
+	<<if ($Attendant != 0) && ($SpaiIDs.length > 0) && canTalk($Attendant)>>
+		<<set $PETSevent.push("comforting attendant")>>
+	<</if>>
+
+	<<if ($Nurse != 0) && ($CliniciIDs.length > 0) && ($Nurse.energy > 95) || (($Nurse.fetishStrength > 60) && ($Nurse.fetish == "sadist" || $Nurse.fetish == "dom"))>>
+		<<set $subSlave = $slaves.find(function(s) { return s.anus != 0 && s.assignment == "get treatment in the clinic"; })>>
+		<<if (def $subSlave)>>
+			<<set $PETSevent.push("nurse molestation")>>
+		<</if>>
+	<</if>>
+
+	<<if ($Concubine != 0)>>
+		<<if canWalk($Concubine)>>
+			<<if canSee($Concubine)>>
+				<<set $PESSevent.push("loving concubine")>>
+			<</if>>
+			<<if canTalk($Concubine) && canHear($Concubine)>>
+				<<set $events.push("PE concubine interview")>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	/* Acquisition Events */
+
+	<<set $events.push("RE recruit")>> /* one generic recruit event guaranteed to always be possible */
+	<<if (random(1,100) < $rep/200) || $cheatMode>>
+		<<set _recruitEvents.push("RE recruit")>>
+	<</if>>
+	<<if $ProRecruitment == 1>>
+		<<if (random(1,100) < $rep/200) || $cheatMode>>
+			<<set _recruitEvents.push("RE recruit")>>
+		<</if>>
+	<</if>>
+	<<if $AntiEnslavementRep == 0>>
+		<<if (random(1,100) < $rep/300) || $cheatMode>>
+			<<set _recruitEvents.push("RE recruit")>>
+		<</if>>
+	<</if>>
+	<<if $AntiEnslavementCash == 0>>
+		<<if (random(1,100) < $rep/300) || $cheatMode>>
+			<<set _recruitEvents.push("RE recruit")>>
+		<</if>>
+	<</if>>
+	<<set $recruit = []>>
+
+	<<if $boomerangSlave>>
+		<<if $boomerangWeeks > 5>>
+		<<set $events.push("RE boomerang")>>
+			<<if $boomerangWeeks > 10>>
+				<<set $events.push("RE boomerang")>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<if $seeDicks != 100>> /*XX ACQUISITIONS*/
+
+		<<set $recruit.push("repo milf housekeeper")>>
+		<<set $recruit.push("spoiled daughter")>>
+		<<set $recruit.push("desperate university milf")>>
+		<<set $recruit.push("female debtor")>>
+		<<set $recruit.push("desperate milf")>>
+		<<if $seePreg != 0>>
+			<<if $arcologies[0].FSRestart == "unset">>
+				<<set $recruit.push("desperate preg")>>
+			<</if>>
+			<<if (random(1,1000) < 5) || $cheatMode>>
+				<<set $recruit.push("wandering homeless")>>
+			<</if>>
+			<<if $PC.skill.medicine >= 50>>
+				<<set $recruit.push("desperate birth")>>
+			<</if>>
+			<<set $recruit.push("blind homeless")>>
+			<<set $recruit.push("farm cow")>>
+			<<if ($mercenaries >= 5)>>
+				<<set $recruit.push("female runaway")>>
+			<</if>>
+			<<if $seeHyperPreg == 1>>
+				<<if $cheatMode == 1>>
+					<<set $recruit.push("overwhelmed farmgirl")>>
+				<</if>>
+				<<set $recruit.push("blessed vessel")>>
+				<<if $arcologies[0].FSRestart == "unset" && ((random(1,100) <= 5) || $cheatMode)>>
+					<<set $RecETSevent.push("desperate broodmother")>>
+				<</if>>
+			<</if>>
+			<<if $PC.skill.medicine > 50 && $PC.skill.hacking > 75 && (random(0,100) > 75 || $cheatMode)>>
+				<<set $recruit.push("embryo appropriation")>>
+			<</if>>
+			<<set $recruit.push("blessed virgin")>>
+			<<if $rep > 16000 && ((random(1,100) < $rep/1000) || $cheatMode) && $cash >= 50000>>
+				<<set $recruit.push("cleaning house")>>
+			<</if>>
+		<</if>>
+		<<set $recruit.push("female SD")>>
+		<<set $recruit.push("female SD 2")>>
+		<<set $recruit.push("female SE")>>
+		<<set $recruit.push("CCS angel")>>
+		<<set $recruit.push("CCS DA")>>
+		<<set $recruit.push("racer loser")>>
+		<<set $recruit.push("racer winner")>>
+		<<set $recruit.push("repo housekeeper")>>
+		<<set $recruit.push("repo nanny")>>
+		<<set $recruit.push("farm virgin cow")>>
+		<<set $recruit.push("orphan rebellious female")>>
+		<<set $recruit.push("captured teen")>>
+		<<if ($cash > 20000)>>
+			<<set $recruit.push("school sale")>>
+		<</if>>
+		<<if ($HeadGirl.devotion > 50) && ($HeadGirl.skill.entertainment >= 100)>>
+			<<set $recruit.push("female recruit")>>
+		<</if>>
+		<<if ($HeadGirl.devotion > 50) && ($HeadGirl.skill.whoring >= 100)>>
+			<<set $recruit.push("whore recruit")>>
+		<</if>>
+		<<if $PC.skill.hacking >= 50 && (random(0,100) < $PC.skill.hacking) || $cheatMode>>
+			<<set $recruit.push("held POW")>>
+		<</if>>
+		<<if $PC.skill.hacking >= 100 && (random(0,100) > 95 || $cheatMode) && $cash >= 100000>>
+			<<set $recruit.push("rogue cyborg")>>
+		<</if>>
+		<<if $rep > 16000 && ((random(1,100) < $rep/1000) || $cheatMode) && $cash >= 100000>>
+			<<set $recruit.push("forbidden love")>>
+		<</if>>
+		<<if (($rep/400) > random(1,100)) || $cheatMode>>
+			<<set $RecETSevent.push("identical pair")>>
+		<</if>>
+		<<if (($rep/400) > random(1,100)) || $cheatMode>>
+			<<set $RecETSevent.push("posh mother daughter")>>
+		<</if>>
+		<<if $seeIncest != 0>>
+			<<if (($rep/400) > random(1,100)) || $cheatMode>>
+				<<set $RecETSevent.push("incest sister sister")>>
+			<</if>>
+			<<if (($rep/400) > random(1,100)) || $cheatMode>>
+				<<set $RecETSevent.push("incest twin sister")>>
+			<</if>>
+			<<if (($rep/400) > random(1,100)) || $cheatMode>>
+				<<set $RecETSevent.push("incest mother daughter")>>
+			<</if>>
+		<</if>>
+
+	<</if>>
+
+	<<if $seeDicks != 0>> /*XY ACQUISITIONS*/
+
+		<<set $recruit.push("male debtor")>>
+		<<set $recruit.push("tg addict")>>
+		<<set $recruit.push("male SD")>>
+		<<set $recruit.push("MTF SE")>>
+		<<set $recruit.push("DG SE")>>
+		<<set $recruit.push("gang leader")>>
+		<<set $recruit.push("racer DG chaser")>>
+		<<set $recruit.push("farm bull")>>
+		<<set $recruit.push("orphan femboy")>>
+		<<if ($mercenaries >= 5)>>
+			<<set $recruit.push("DG runaway")>>
+			<<if $seePreg != 0>>
+				<<set $recruit.push("herm runaway")>>
+			<</if>>
+		<</if>>
+		<<if $rep > 16000 && ((random(1,100) < $rep/1000) || $cheatMode) && $cash >= 100000>>
+			<<set $recruit.push("princely betrayal")>>
+		<</if>>
+		<<if ($cash > 20000)>>
+			<<set $recruit.push("school trap")>>
+		<</if>>
+		<<if ($HeadGirl.devotion > 50) && ($HeadGirl.dick > 0)>>
+			<<set $recruit.push("male recruit")>>
+		<</if>>
+		<<if $seeDicks != 100>>
+			<<if ($HeadGirl.devotion > 50)>>
+				<<set $RecETSevent.push("mismatched pair")>>
+			<</if>>
+			<<if ($rep/400) > (random(1,100) || $cheatMode)>>
+				<<set $RecETSevent.push("matched pair")>>
+			<</if>>
+			<<if $seeIncest != 0>>
+				<<if $seePreg != 0>>
+					<<if ($rep/400) > (random(1,100) || $cheatMode) && $arcologies[0].FSRestart == "unset">>
+						<<set $RecETSevent.push("identical herm pair")>>
+					<</if>>
+					<<if ($rep/400) > (random(1,100) || $cheatMode) && $arcologies[0].FSRestart == "unset">>
+						<<set $RecETSevent.push("incest mother son")>>
+					<</if>>
+					<<if ($rep/400) > (random(1,100) || $cheatMode) && $arcologies[0].FSRestart == "unset">>
+						<<set $RecETSevent.push("incest father daughter")>>
+					<</if>>
+					<<if ($rep/400) > (random(1,100) || $cheatMode)>>
+						<<set $RecETSevent.push("incest brother sister")>>
+					<</if>>
+				<</if>>
+				<<if ($rep/400) > (random(1,100) || $cheatMode)>>
+					<<set $RecETSevent.push("incest twins mixed")>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $seeIncest != 0>>
+			<<if ($rep/400) > (random(1,100) || $cheatMode)>>
+				<<set $RecETSevent.push("incest brother brother")>>
+			<</if>>
+			<<if ($rep/400) > (random(1,100) || $cheatMode)>>
+				<<set $RecETSevent.push("incest twin brother")>>
+			<</if>>
+			<<if ($rep/400) > (random(1,100) || $cheatMode)>>
+				<<set $RecETSevent.push("incest father son")>>
+			<</if>>
+		<</if>>
+
+	<</if>>
+
+	<<if $arcologyUpgrade.drones == 1>>
+		<<set _recruitEvents.push("RE malefactor")>>
+		<<set $malefactor = ["addict", "whore"]>>
+		<<if $seeDicks != 100>>
+			<<set $malefactor.push("businesswoman")>>
+			<<set $malefactor.push("liberator")>>
+			<<if $seePreg != 0>>
+				<<set $malefactor.push("anchorBaby")>>
+				<<if $arcologies[0].FSRepopulationFocus < 50>>
+					<<set $malefactor.push("mule")>> /* blends right in */
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $seeDicks != 0>>
+			<<set $malefactor.push("rapist")>>
+		<</if>>
+		<<if $minimumSlaveAge <= 12>>
+			<<set $malefactor.push("orphanloli")>>
+		<</if>>
+		<<if $arcologies[0].FSPaternalist < 50>>
+			<<set $malefactor.push("escapee")>>
+		<</if>>
+		<<if $arcologies[0].FSSupremacistLawME + $arcologies[0].FSSubjugationistLawME > 0>>
+			<<set $malefactor.push("passfail")>>
+		<</if>>
+		<<set $malefactor = $malefactor.random()>>
+		<<if ($rep/150) > (random(1,100) || $cheatMode)>>
+			<<set _recruitEvents.push("RE malefactor")>>
+		<</if>>
+	<</if>>
+
+	<<set $recruit.push("starving artist")>>
+	<<if ($rep/400) > (random(1,100) || $cheatMode)>>
+		<<set $RecETSevent.push("addict mother daughter")>>
+	<</if>>
+	<<if ($rep/250) > (random(1,100) || $cheatMode)>>
+		<<set $recruit.push("immigrant")>>
+	<</if>>
+
+	<<if ($PC.dick != 0) && ($PC.vagina == -1) && ($PC.boobs < 300) && ($PC.title == 1)>>
+		<<if ($rep/250) > (random(1,100) || $cheatMode)>>
+			<<set $recruit.push("handsome PC")>>
+			<<set $recruit.push("handsome PC")>>
+		<</if>>
+	<<elseif ($PC.dick == 0) && ($PC.boobs >= 300) && ($PC.title == 0)>>
+		<<if ($rep/250) > (random(1,100) || $cheatMode)>>
+			<<set $recruit.push("womanly PC")>>
+			<<set $recruit.push("womanly PC")>>
+		<</if>>
+	<<elseif ($PC.dick != 0) && ($PC.boobs >= 300)>>
+		<<if ($rep/250) > (random(1,100) || $cheatMode)>>
+			<<set $recruit.push("shemale PC")>>
+			<<set $recruit.push("shemale PC")>>
+		<</if>>
+	<</if>>
+
+	<<if $familyTesting == 1>>
+		<<set _recruiterSlaves = $slaves.filter(function(s) { return s.fuckdoll == 0 && s.canRecruit == 1 && s.devotion > 50 && canWalk(s); })>>
+	<<else>>
+		<<set _recruiterSlaves = $slaves.filter(function(s) { return s.recruiter != 0 && s.fuckdoll == 0 && s.devotion > 50 && s.relation == 0 && canWalk(s); })>>
+	<</if>>
+
+	<<for _recruiterSlaves.length > 0>>
+		<<set $recruiterSlave = _recruiterSlaves.pluck()>>
+		<<set $j = $genePool.findIndex(function(o) { return o.ID == $recruiterSlave.ID; })>>
+		<<if $j != -1>>
+			<<set $events.push("RE relative recruiter")>>
+			<<set $recruiterSlave = $recruiterSlave.ID>>
+			<<break>>
+		<<else>> /* no matching slave object in the array -- bug? */
+			<<set $i = $slaveIndices[$recruiterSlave.ID]>>
+			<<set $slaves[$i].canRecruit = 0>>
+			<<set $recruiterSlave = -1>>
+		<</if>>
+	<</for>>
+
+	<<if $FSAnnounced == 1>>
+		<<set $FSAcquisitionEvents = []>>
+		<<if $arcologies[0].FSSupremacist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Supremacist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSSubjugationist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Subjugationist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSGenderRadicalist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Gender Radicalist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSRepopulationFocus > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Repopulation Efforts")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSRestart > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Eugenics")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $seePreg != 0>>
+			<<if $arcologies[0].FSGenderFundamentalist > (random(1,100) || $cheatMode)>>
+				<<set $FSAcquisitionEvents.push("Gender Fundamentalist")>>
+				<<set _recruitEvents.push("RE FS acquisition")>>
+			<</if>>
+		<</if>>
+		<<if $arcologies[0].FSPaternalist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Paternalist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSDegradationist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Degradationist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSIntellectualDependency > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Intellectual Dependency")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSSlaveProfessionalism > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Slave Professionalism")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSBodyPurist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Body Purist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSTransformationFetishist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Transformation Fetishist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSPetiteAdmiration > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Petite Admiration")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSStatuesqueGlorification > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Statuesque Glorification")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSYouthPreferentialist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Youth Preferentialist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSMaturityPreferentialist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Maturity Preferentialist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSSlimnessEnthusiast > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Slimness Enthusiast")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSAssetExpansionist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Asset Expansionist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $seePreg != 0>>
+			<<if $arcologies[0].FSPastoralist > (random(1,100) || $cheatMode)>>
+				<<set $FSAcquisitionEvents.push("Pastoralist")>>
+				<<set _recruitEvents.push("RE FS acquisition")>>
+			<</if>>
+		<</if>>
+		<<if $arcologies[0].FSPhysicalIdealist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Physical Idealist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSHedonisticDecadence > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Hedonistic Decadence")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSChattelReligionist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Chattel Religionist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSSupremacist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Supremacist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSSubjugationist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Subjugationist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSGenderRadicalist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Gender Radicalist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $seePreg != 0>>
+			<<if $arcologies[0].FSGenderFundamentalist > (random(1,100) || $cheatMode)>>
+				<<set $FSAcquisitionEvents.push("Gender Fundamentalist Two")>>
+				<<set _recruitEvents.push("RE FS acquisition")>>
+			<</if>>
+		<</if>>
+		<<if $arcologies[0].FSPaternalist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Paternalist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSDegradationist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Degradationist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSIntellectualDependency > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Intellectual Dependency Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSSlaveProfessionalism > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Slave Professionalism Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSBodyPurist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Body Purist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSTransformationFetishist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Transformation Fetishist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSPetiteAdmiration > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Petite Admiration Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSStatuesqueGlorification > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Statuesque Glorification Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSYouthPreferentialist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Youth Preferentialist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSMaturityPreferentialist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Maturity Preferentialist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSSlimnessEnthusiast > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Slimness Enthusiast Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSAssetExpansionist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Asset Expansionist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSPastoralist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Pastoralist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSPhysicalIdealist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Physical Idealist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSHedonisticDecadence > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Hedonistic Decadence Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSChattelReligionist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Chattel Religionist Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSRepopulationFocus > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Repopulation Efforts Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSRestart > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Eugenics Two")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSRomanRevivalist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Roman Revivalist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSAztecRevivalist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Aztec Revivalist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSEdoRevivalist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Edo Revivalist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSArabianRevivalist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Arabian Revivalist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSChineseRevivalist > (random(1,100) || $cheatMode)>>
+			<<set $FSAcquisitionEvents.push("Chinese Revivalist")>>
+			<<set _recruitEvents.push("RE FS acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSEgyptianRevivalist > (random(1,100) || $cheatMode)>>
+			<<set _recruitEvents.push("RE FSEgyptianRevivalist acquisition")>>
+		<</if>>
+		<<if $arcologies[0].FSPaternalistDecoration == 100 && $minimumSlaveAge <= 14 && $week >= 100 && (ndef $swanSong || $swanSong == 0)>>
+			<<set $recruit.push("paternalist swan song")>>
+		<</if>>
+		<<set $FSNonconformistEvents = []>>
+		<<if $arcologies[0].FSSupremacist < 95 && $arcologies[0].FSSupremacist > 50>>
+			<<set $FSNonconformistEvents.push("Supremacist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSSubjugationist < 95 && $arcologies[0].FSSubjugationist > 50>>
+			<<set $FSNonconformistEvents.push("Subjugationist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSRepopulationFocus < 95 && $arcologies[0].FSRepopulationFocus > 50>>
+			<<set $FSNonconformistEvents.push("Repopulation Efforts")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSRestart < 95 && $arcologies[0].FSRestart > 50>>
+			<<set $FSNonconformistEvents.push("Eugenics")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSIntellectualDependency < 95 && $arcologies[0].FSIntellectualDependency > 50>>
+			<<set $FSNonconformistEvents.push("Intellectual Dependency")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSSlaveProfessionalism < 95 && $arcologies[0].FSSlaveProfessionalism > 50>>
+			<<set $FSNonconformistEvents.push("Slave Professionalism")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSGenderRadicalist < 95 && $arcologies[0].FSGenderRadicalist > 50>>
+			<<set $FSNonconformistEvents.push("Gender Radicalist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSGenderFundamentalist < 95 && $arcologies[0].FSGenderFundamentalist > 50>>
+			<<set $FSNonconformistEvents.push("Gender Fundamentalist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSPaternalist < 95 && $arcologies[0].FSPaternalist > 50>>
+			<<set $FSNonconformistEvents.push("Paternalist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSDegradationist < 95 && $arcologies[0].FSDegradationist > 50>>
+			<<set $FSNonconformistEvents.push("Degradationist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSBodyPurist < 95 && $arcologies[0].FSBodyPurist > 50>>
+			<<set $FSNonconformistEvents.push("Body Purist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSTransformationFetishist < 95 && $arcologies[0].FSTransformationFetishist > 50>>
+			<<set $FSNonconformistEvents.push("Transformation Fetishist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSPetiteAdmiration < 95 && $arcologies[0].FSPetiteAdmiration > 50>>
+			<<set $FSNonconformistEvents.push("Petite Admiration")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSStatuesqueGlorification < 95 && $arcologies[0].FSStatuesqueGlorification > 50>>
+			<<set $FSNonconformistEvents.push("Statuesque Glorification")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSYouthPreferentialist < 95 && $arcologies[0].FSYouthPreferentialist > 50>>
+			<<set $FSNonconformistEvents.push("Youth Preferentialist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSMaturityPreferentialist < 95 && $arcologies[0].FSMaturityPreferentialist > 50>>
+			<<set $FSNonconformistEvents.push("Maturity Preferentialist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSSlimnessEnthusiast < 95 && $arcologies[0].FSSlimnessEnthusiast > 50>>
+			<<set $FSNonconformistEvents.push("Slimness Enthusiast")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSAssetExpansionist < 95 && $arcologies[0].FSAssetExpansionist > 50>>
+			<<set $FSNonconformistEvents.push("Asset Expansionist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSPastoralist < 95 && $arcologies[0].FSPastoralist > 50>>
+			<<set $FSNonconformistEvents.push("Pastoralist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSPhysicalIdealist < 95 && $arcologies[0].FSPhysicalIdealist > 50>>
+			<<set $FSNonconformistEvents.push("Physical Idealist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSHedonisticDecadence < 95 && $arcologies[0].FSHedonisticDecadence > 50>>
+			<<set $FSNonconformistEvents.push("Hedonistic Decadence")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSChattelReligionist < 95 && $arcologies[0].FSChattelReligionist > 50>>
+			<<set $FSNonconformistEvents.push("Chattel Religionist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSRomanRevivalist < 95 && $arcologies[0].FSRomanRevivalist > 50>>
+			<<set $FSNonconformistEvents.push("Roman Revivalist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSAztecRevivalist < 95 && $arcologies[0].FSAztecRevivalist > 50>>
+			<<set $FSNonconformistEvents.push("Aztec Revivalist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSEdoRevivalist < 95 && $arcologies[0].FSEdoRevivalist > 50>>
+			<<set $FSNonconformistEvents.push("Edo Revivalist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSArabianRevivalist < 95 && $arcologies[0].FSArabianRevivalist > 50>>
+			<<set $FSNonconformistEvents.push("Arabian Revivalist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSChineseRevivalist < 95 && $arcologies[0].FSChineseRevivalist > 50>>
+			<<set $FSNonconformistEvents.push("Chinese Revivalist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+		<<if $arcologies[0].FSEgyptianRevivalist < 95 && $arcologies[0].FSEgyptianRevivalist > 50>>
+			<<set $FSNonconformistEvents.push("Egyptian Revivalist")>>
+			<<set $events.push("RE FS nonconformist")>>
+		<</if>>
+	<</if>>
+
+	/* SCHOOL EVENTS */
+
+	<<if $cash > 50000>>
+		<<set $RESEndowment = []>>
+		<<if $TSS.schoolUpgrade == 0>>
+			<<if ($TSS.studentsBought > 1) || ($TSS.schoolPresent != 0)>>
+				<<set $events.push("RES Endowment")>>
+				<<if $TSS.studentsBought > 2>>
+					<<set $events.push("RES Endowment")>>
+				<</if>>
+				<<set $RESEndowment.push("TSS")>>
+			<</if>>
+		<</if>>
+		<<if $GRI.schoolUpgrade == 0>>
+			<<if ($GRI.studentsBought > 1) || ($GRI.schoolPresent != 0)>>
+				<<set $events.push("RES Endowment")>>
+				<<if $GRI.studentsBought > 2>>
+					<<set $events.push("RES Endowment")>>
+				<</if>>
+				<<set $RESEndowment.push("GRI")>>
+			<</if>>
+		<</if>>
+		<<if $SCP.schoolUpgrade == 0>>
+			<<if ($SCP.studentsBought > 1) || ($SCP.schoolPresent != 0)>>
+				<<set $events.push("RES Endowment")>>
+				<<if $SCP.studentsBought > 2>>
+					<<set $events.push("RES Endowment")>>
+				<</if>>
+				<<set $RESEndowment.push("SCP")>>
+			<</if>>
+		<</if>>
+		<<if $LDE.schoolUpgrade == 0>>
+			<<if ($LDE.studentsBought > 1) || ($LDE.schoolPresent != 0)>>
+				<<set $events.push("RES Endowment")>>
+				<<if $LDE.studentsBought > 2>>
+					<<set $events.push("RES Endowment")>>
+				<</if>>
+				<<set $RESEndowment.push("LDE")>>
+			<</if>>
+		<</if>>
+		<<if $TGA.schoolUpgrade == 0>>
+			<<if ($TGA.studentsBought > 1) || ($TGA.schoolPresent != 0)>>
+				<<set $events.push("RES Endowment")>>
+				<<if $TGA.studentsBought > 2>>
+					<<set $events.push("RES Endowment")>>
+				<</if>>
+				<<set $RESEndowment.push("TGA")>>
+			<</if>>
+		<</if>>
+		<<if $HA.schoolUpgrade == 0>>
+			<<if ($HA.studentsBought > 1) || ($HA.schoolPresent != 0)>>
+				<<set $events.push("RES Endowment")>>
+				<<if $HA.studentsBought > 2>>
+					<<set $events.push("RES Endowment")>>
+				<</if>>
+				<<set $RESEndowment.push("HA")>>
+			<</if>>
+		<</if>>
+		<<if $TCR.schoolUpgrade == 0>>
+			<<if ($TCR.studentsBought > 1) || ($TCR.schoolPresent != 0)>>
+				<<set $events.push("RES Endowment")>>
+				<<if $TCR.studentsBought > 2>>
+					<<set $events.push("RES Endowment")>>
+				<</if>>
+				<<set $RESEndowment.push("TCR")>>
+			<</if>>
+		<</if>>
+		<<if $NUL.schoolUpgrade == 0>>
+			<<if ($NUL.studentsBought > 1) || ($NUL.schoolPresent != 0)>>
+				<<set $events.push("RES Endowment")>>
+				<<if $NUL.studentsBought > 2>>
+					<<set $events.push("RES Endowment")>>
+				<</if>>
+				<<set $RESEndowment.push("NUL")>>
+			<</if>>
+		<</if>>
+		<<if $TFS.schoolUpgrade == 0>>
+			<<if ($TFS.studentsBought > 1) || ($TFS.schoolPresent != 0) || (($TFS.studentsBought > 0) && ($PC.dick != 0) && ($PC.vagina != -1) && ($PC.boobs >= 300))>>
+				<<set $events.push("RES Endowment")>>
+				<<set $RESEndowment.push("TFS")>>
+				<<if $TFS.studentsBought > 2>>
+					<<set $events.push("RES Endowment")>>
+					<<set $RESEndowment.push("TFS")>>
+				<</if>>
+				<<if ($PC.dick != 0) && ($PC.vagina != -1) && ($PC.boobs >= 300)>>
+					<<set $events.push("RES Endowment")>>
+					<<set $RESEndowment.push("TFS")>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<set $RESMove = []>>
+	<<if ($seeDicks != 100)>> /* is the player ok with seeing vaginas? */
+		<<if $TSS.schoolUpgrade != 0>>
+			<<if $TSS.schoolPresent == 0>>
+				<<if $TSS.schoolAnnexed == 0>>
+					<<set $events.push("RES Move")>>
+					<<set $events.push("RES Move")>>
+					<<set $RESMove.push("TSS")>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $GRI.schoolUpgrade != 0>>
+			<<if $GRI.schoolPresent == 0>>
+				<<if $GRI.schoolAnnexed == 0>>
+					<<set $events.push("RES Move")>>
+					<<set $events.push("RES Move")>>
+					<<set $RESMove.push("GRI")>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $SCP.schoolUpgrade != 0>>
+			<<if $SCP.schoolPresent == 0>>
+				<<if $SCP.schoolAnnexed == 0>>
+					<<set $events.push("RES Move")>>
+					<<set $events.push("RES Move")>>
+					<<set $RESMove.push("SCP")>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $HA.schoolUpgrade != 0>>
+			<<if $HA.schoolPresent == 0>>
+				<<if $HA.schoolAnnexed == 0>>
+					<<set $events.push("RES Move")>>
+					<<set $events.push("RES Move")>>
+					<<set $RESMove.push("HA")>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $TCR.schoolUpgrade != 0 && $TCR.schoolPresent == 0 && $TCR.schoolAnnexed == 0>>
+			<<set $events.push("RES Move")>>
+			<<set $events.push("RES Move")>>
+			<<set $RESMove.push("TCR")>>
+		<</if>>
+	<</if>> /* end "player is okay with vaginas" check */
+	<<if ($seeDicks != 0)>> /* begin "player is ok with dick" check */
+		<<if $LDE.schoolUpgrade != 0>>
+			<<if $LDE.schoolPresent == 0>>
+				<<if $LDE.schoolAnnexed == 0>>
+					<<set $events.push("RES Move")>>
+					<<set $events.push("RES Move")>>
+					<<set $RESMove.push("LDE")>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $TGA.schoolUpgrade != 0>>
+			<<if $TGA.schoolPresent == 0>>
+				<<if $TGA.schoolAnnexed == 0>>
+					<<set $events.push("RES Move")>>
+					<<set $events.push("RES Move")>>
+					<<set $RESMove.push("TGA")>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $TFS.schoolUpgrade != 0>>
+			<<if $TFS.schoolPresent == 0>>
+				<<if $TFS.schoolAnnexed == 0>>
+					<<set $events.push("RES Move")>>
+					<<set $events.push("RES Move")>>
+					<<set $RESMove.push("TFS")>>
+					<<if ($PC.dick != 0) && ($PC.vagina != -1) && ($PC.boobs >= 300)>>
+						<<set $events.push("RES Move")>>
+						<<set $events.push("RES Move")>>
+						<<set $RESMove.push("TFS")>>
+						<<set $RESMove.push("TFS")>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $NUL.schoolUpgrade != 0>>
+		<<if $NUL.schoolPresent == 0>>
+			<<if $NUL.schoolAnnexed == 0>>
+				<<set $events.push("RES Move")>>
+				<<set $events.push("RES Move")>>
+				<<set $RESMove.push("NUL")>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<set $RESSale = []>>
+	<<if $cash > 10000>>
+		<<if $rep > 6000>>
+			<<if $seeDicks != 100>>
+				<<if $TSS.studentsBought == 0>>
+					<<set $events.push("RES Sale")>>
+					<<set $RESSale.push("TSS")>>
+				<</if>>
+				<<if $GRI.studentsBought == 0>>
+					<<set $events.push("RES Sale")>>
+					<<set $RESSale.push("GRI")>>
+				<</if>>
+				<<if $SCP.studentsBought == 0>>
+					<<set $events.push("RES Sale")>>
+					<<set $RESSale.push("SCP")>>
+				<</if>>
+				<<if $seePreg != 0>>
+					<<if $TCR.studentsBought == 0>>
+						<<set $events.push("RES Sale")>>
+						<<set $RESSale.push("TCR")>>
+					<</if>>
+				<</if>>
+				<<if $HA.studentsBought == 0>>
+					<<set $events.push("RES Sale")>>
+					<<set $RESSale.push("HA")>>
+				<</if>>
+			<</if>>
+			<<if $seeDicks != 0>>
+				<<if $LDE.studentsBought == 0>>
+					<<set $events.push("RES Sale")>>
+					<<set $RESSale.push("LDE")>>
+				<</if>>
+				<<if $TGA.studentsBought == 0>>
+					<<set $events.push("RES Sale")>>
+					<<set $RESSale.push("TGA")>>
+				<</if>>
+				<<if ($TFS.studentsBought == 0)>>
+				<<set $events.push("RES Sale")>>
+					<<set $RESSale.push("TFS")>>
+					<<if ($PC.dick != 0) && ($PC.vagina != -1) && ($PC.boobs >= 300)>>
+						<<set $events.push("RES Sale")>>
+						<<set $events.push("RES Sale")>>
+						<<set $RESSale.push("TFS")>>
+						<<set $RESSale.push("TFS")>>
+					<</if>>
+				<</if>>
+			<</if>>
+			<<if $NUL.studentsBought == 0>>
+				<<set $events.push("RES Sale")>>
+				<<set $RESSale.push("NUL")>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<if $justiceEvents.length > 0>>
+		<<if ($seeExtreme == 0) || ($seeDicks == 0)>>
+			<<set $justiceEvents.delete("slave training")>>
+		<</if>>
+		<<if $justiceEvents.length > 2>>
+			<<set $events.push("JE slave dispute")>>
+			<<set $events.push("JE slave dispute")>>
+		<<else>>
+			<<set $events.push("JE slave dispute")>>
+		<</if>>
+	<</if>>
+
+	<<if $minimumSlaveCost > 3000 && (random(1,2) == 1 || $cheatMode)>>
+		<<set $events.push("RE shipping container")>>
+	<</if>>
+
+	<<if $corp.Cash > 50000>>
+		<<set $events.push("REM merger")>>
+	<</if>>
+
+	<<if ($rep-10000 > random(1,12500) || $cheatMode)>>
+		<<set $events.push("RE royal blood")>>
+	<</if>>
+
+	<<if $mercenaries > 0>>
+		<<if (random(1,2) == 1 || $cheatMode)>>
+			<<set $events.push("RE AWOL")>>
+		<<else>>
+			<<set $events.push("RE Poker Night")>>
+		<</if>>
+	<</if>>
+
+	<<if ($arcologies[0].prosperity >= 100 && ($rep > random(1,30000)) || $cheatMode)>>
+		<<set _milfSlaves = $slaves.filter(function(s) { return s.devotion > 20 && canTalk(s) && canWalk(s) && (s.assignment == "serve the public" || s.assignment == "serve in the club"); })>>
+		<<if _milfSlaves.length > 0>>
+			<<set $events.push("RE milf tourist")>>
+			<<set $milfSlaveID = _milfSlaves.random()>>
+			<<set $milfSlaveID = $milfSlaveID.ID>>
+		<</if>>
+	<</if>>
+
+	<<if $SF.Toggle && $SF.Active >= 1>>
+		<<set $events.push("Trick Shot Night")>>
+	<</if>>
+
+	<<if $RegularParties == 1>>
+		<<if ($PC.vagina > 0 && $PC.title == 0) && (random(0,99) < $seeDicks)>>
+			<<set $events.push("RE male citizen hookup")>>
+		<<else>>
+			<<set $events.push("RE citizen hookup")>>
+		<</if>>
+		<<if ($rep-10000 > random(1,10000) || $cheatMode)>>
+			<<if ($PC.vagina > 0 && $PC.boobs >= 300 && $PC.title == 0) && (random(0,99) < $seeDicks)>>
+				<<set $events.push("RE male arcology owner")>>
+			<<else>>
+				<<set $events.push("RE female arcology owner")>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<set $REM = 0>>
+	<<if (random(1,100) > $slaveCostFactor*50)>>
+		<<set $REM += 1>>
+	<</if>>
+	<<if (random(1,100) < $slaveCostFactor*50)>>
+		<<set $REM -= 1>>
+	<</if>>
+	<<if $REM != 0>>
+		<<set $events.push("REM fluctuations")>>
+		<<set $events.push("REM fluctuations")>>
+	<</if>>
+
+	/* FUTURE SOCIETY EVENTS */
+
+	<<if $arcologies[0].FSBodyPurist > (random(25,100) || $cheatMode+24)>>
+		<<set $REFSevent.push("body purism encounter")>>
+	<</if>>
+	<<if $arcologies[0].FSTransformationFetishist > (random(25,100) || $cheatMode+24)>>
+		<<set $REFSevent.push("transformation fetishism encounter")>>
+	<</if>>
+	<<if $arcologies[0].FSYouthPreferentialist > (random(25,100) || $cheatMode+24)>>
+		<<set $REFSevent.push("youth preferentialist encounter")>>
+	<</if>>
+	<<if $arcologies[0].FSMaturityPreferentialist > (random(25,100) || $cheatMode+24)>>
+		<<set $REFSevent.push("maturity preferentialist encounter")>>
+	<</if>>
+	<<if $arcologies[0].FSPastoralist > (random(25,100) || $cheatMode+24)>>
+		<<set $REFSevent.push("pastoralist encounter")>>
+	<</if>>
+	<<if $arcologies[0].FSPhysicalIdealist > (random(25,100) || $cheatMode+24)>>
+		<<set $REFSevent.push("physical idealist encounter")>>
+	<</if>>
+	<<if $arcologies[0].FSPaternalist > (random(25,100) || $cheatMode+24)>>
+		<<set $REFSevent.push("paternalist encounter")>>
+	<</if>>
+	<<if $arcologies[0].FSDegradationist > (random(25,100) || $cheatMode+24)>>
+		<<set $REFSevent.push("degradationist encounter")>>
+	<</if>>
+
+	/* EVENT RANDOMIZATION */
+
+	<<for $i = 0; $i < $RecETSevent.length; $i++>>
+		<<set _recruitEvents.push("RecETS")>>
+	<</for>>
+	<<for $i = 0; $i < $REFIevent.length; $i++>>
+		<<set $events.push("REFI")>>
+	<</for>>
+	<<for $i = 0; $i < $PESSevent.length; $i++>>
+		<<set $events.push("PESS")>>
+	<</for>>
+	<<for $i = 0; $i < $PETSevent.length; $i++>>
+		<<set $events.push("PETS")>>
+	<</for>>
+	<<for $i = 0; $i < $REFSevent.length; $i++>>
+		<<set $events.push("REFS")>>
+	<</for>>
+	<<set _maxRecruitNumber = Math.min(10, Math.ceil($events.length/4))>>
+	<<if _maxRecruitNumber < _recruitEvents.length>>
+		<<set _recruitEvents.shuffle()>>
+		<<set _recruitEvents.length = _maxRecruitNumber>>
+	<</if>>
+	<<set $events = $events.concat(_recruitEvents)>>
+	<<if $cheatMode == 1>>
+		<<goto "random event select">>
+	<<else>>
+		<<goto "random event roll">>
+	<</if>>
+
+	<</silently>>
+<</if>> /* CLOSES SLAVE SELECT */

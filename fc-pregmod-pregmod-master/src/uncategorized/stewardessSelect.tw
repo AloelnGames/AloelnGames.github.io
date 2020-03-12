@@ -1,0 +1,15 @@
+:: Stewardess Select [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Servants' Quarters", $showEncyclopedia = 1, $encyclopedia = "Stewardess">>
+<<if ($Stewardess != 0)>>
+	<<set $Stewardess = getSlave($Stewardess.ID)>>
+	<<setLocalPronouns $Stewardess>>
+	<span class='slave-name'><<= SlaveFullName($Stewardess)>></span> is serving as your Stewardess.<br><br>$He will manage the Servants' Quarters.
+<<else>>
+	You have not selected a Stewardess.
+<</if>>
+
+<br><br>''Appoint a Stewardess from your devoted slaves:''
+<br><br>[[None|Servants' Quarters][removeJob($Stewardess, "be the Stewardess")]]
+<br><br>
+<<print App.UI.SlaveList.facilityManagerSelection(App.Entity.facilities.servantsQuarters, "Servants' Quarters")>>

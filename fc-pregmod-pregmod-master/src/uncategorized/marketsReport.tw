@@ -1,0 +1,106 @@
+:: Markets Report [nobr]
+
+//FC Markets Report://
+
+<<set _assetAffected = either("capture", "drugs", "entrapment", "general", "slaves", "surgical", "training")>>
+<<set _assetDirection = either("down", "up")>>
+
+<<if _assetAffected == "general">>
+	<<if _assetDirection == "up">>
+	<<if random(1,100) > 50>>
+		...rising energy costs drove @@.yellowgreen;rising prices@@ of several market baskets...
+	<<else>>
+		...conflict-driven increases in transportation costs increase @@.yellowgreen;price indices@@...
+	<</if>>
+	<<else>>
+	<<if random(1,100) > 50>>
+		...increasing Free Cities slave labor effects @@.gold;general prices@@...
+	<<else>>
+		...Antarctic oil shale pushing down energy prices, driving down major @@.gold;price indices@@...
+	<</if>>
+	<</if>>
+<<elseif _assetAffected == "slaves">>
+	<<if _assetDirection == "up">>
+	<<if random(1,100) > 50>>
+		...heavy demand for fashionable varieties drove @@.yellowgreen;rising slave prices@@ last...
+	<<else>>
+		...study suggested the sexual revolution would continue to drive up @@.yellowgreen;slave prices@@...
+	<</if>>
+	<<else>>
+	<<if random(1,100) > 50>>
+		...increased supply due to bush wars drove down @@.gold;slave prices@@...
+	<<else>>
+		...@@.gold;slave prices@@ continue to fall due to major improvements in training...
+	<</if>>
+	<</if>>
+<<elseif _assetAffected == "entrapment">>
+	<<if _assetDirection == "up">>
+	<<if random(1,100) > 50>>
+		...prospect of deregulation drove a @@.yellowgreen;scramble@@ for means of enslavement...
+	<<else>>
+		...law would legalize enslavement, driving @@.yellowgreen;high prices@@ for associated...
+	<</if>>
+	<<else>>
+	<<if random(1,100) > 50>>
+		...reactionism produced lower demand and @@.gold;lower prices@@ for legal enslavement...
+	<<else>>
+		...report on low success rates @@.gold;drove down@@ value of legal enslavement methods...
+	<</if>>
+	<</if>>
+<<elseif _assetAffected == "capture">>
+	<<if _assetDirection == "up">>
+	<<if random(1,100) > 50>>
+		...declaration of war @@.yellowgreen;pushed up@@ average mercenary wage...
+	<<else>>
+		...advancing technology to blame for @@.yellowgreen;rising costs@@ of assets for wet work...
+	<</if>>
+	<<else>>
+	<<if random(1,100) > 50>>
+		...rumored peace treaty @@.gold;pushed down@@ mercenary contract clearing rate...
+	<<else>>
+		...demobilization of the cash-strapped army expected to produce mercenary @@.gold;glut@@...
+	<</if>>
+	<</if>>
+<<elseif _assetAffected == "training">>
+	<<if _assetDirection == "up">>
+	<<if random(1,100) > 50>>
+		...rising demand in turn @@.yellowgreen;pushing up@@ prices for most means of slave training...
+	<<else>>
+		...public demand for ever-better slave training inevitably @@.yellowgreen;increase@@ training costs...
+	<</if>>
+	<<else>>
+	<<if random(1,100) > 50>>
+		...competition from low-cost slave breaking firms @@.gold;reducing@@ asking price for...
+	<<else>>
+		...increased automation of slave training @@.gold;negatively impacting@@ training contracts...
+	<</if>>
+	<</if>>
+<<elseif _assetAffected == "surgical">>
+	<<if _assetDirection == "up">>
+	<<if random(1,100) > 50>>
+		...fashionable extravagant implant procedures @@.yellowgreen;driving prices@@ of remote surgical...
+	<<else>>
+		...near-universal breast implants producing corresponding @@.yellowgreen;price inflation@@ of surgery...
+	<</if>>
+	<<else>>
+	<<if random(1,100) > 50>>
+		...vastly reduced overhead with remote surgery @@.gold;hitting prices@@ of surgery hard...
+	<<else>>
+		...oversupply after major manufacturers converted lines to @@.gold;low-cost@@ implant production...
+	<</if>>
+	<</if>>
+<<elseif _assetAffected == "drugs">>
+	<<if _assetDirection == "up">>
+	<<if random(1,100) > 50>>
+		...intense demand for curatives in conflict zones @@.yellowgreen;increasing prices@@...
+	<<else>>
+		...setbacks in growth hormone human testing expected to @@.yellowgreen;increase prices@@ of traditional formula...
+	<</if>>
+	<<else>>
+	<<if random(1,100) > 50>>
+		...new formula @@.gold;cut costs@@ of common curatives by an unprecedented...
+	<<else>>
+		...glut caused by big pharma reorienting towards @@.gold;cheap,@@ mass-produced aphros...
+	<</if>>
+	<</if>>
+<</if>>

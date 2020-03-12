@@ -1,0 +1,785 @@
+:: FSlaveFeed [nobr]
+
+<<set _pregDiscovery = 0>>
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+<<setLocalPronouns $milkTap 2>>
+
+<span id="artFrame">
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<div class="imageColumn">
+		<div class="imageRef medImg">
+			<<= SlaveArt(getSlave($AS), 2, 0)>>
+		</div>
+		<div class="imageRef medImg">
+			<<= SlaveArt($milkTap, 2, 0)>>
+		</div>
+	</div>
+<</if>>
+/* 000-250-006 */
+</span>
+
+<<if getSlave($AS).inflationType == "milk">>
+<<set getSlave($AS).milkSource = $milkTap.ID>>
+
+The first necessary step is to prepare the milk cow and _his2 udders.
+
+<<if $milkTap.fuckdoll > 0>>
+	This is hilariously easy, as you have complete control over how $milkTap.slaveName is posed.
+
+<<elseif $milkTap.fetish == "mindbroken">>
+	This is very easy, as $milkTap.slaveName blankly follows your every will. Combined with _his2 instinct to relieve the pressure in _his2 breasts, _he2 is simple to position.
+
+<<elseif $milkTap.rivalryTarget == getSlave($AS).ID>>
+	This is rather easy, as $milkTap.slaveName wants to <<if canSee($milkTap)>>see<<else>>feel<</if>> <<= getSlave($AS).slaveName>>'s belly swell painfully as $he is force-fed _his2 milk. <<if $milkTap.lactation > 1>>$he is practically gushing milk with excitement<<else>>It takes minimal effort to get _his2 milk flowing<</if>>.
+
+<<elseif $milkTap.relationshipTarget == getSlave($AS).ID>>
+	This is rather easy, as $milkTap.slaveName
+	<<if $milkTap.relationship == 1>>
+		wants _his2 friend to try _his2 milk, fresh from the source.
+	<<elseif $milkTap.relationship == 2>>
+		wants _his2 best friend to try _his2 milk, fresh from the source.
+	<<elseif $milkTap.relationship == 3>>
+		can't wait to have some fun with _his2 friend with benefits.
+	<<elseif $milkTap.relationship == 4>>
+		enjoys spending intimate time with _his2 lover, and having _his2 breasts suckled is one of _his2 favorites.
+	<<elseif $milkTap.relationship == 5>>
+		enjoys spending intimate time with _his2 $wife, and having _his2 breasts suckled is one of _his2 favorites.
+	<</if>> <<if $milkTap.lactation > 1>>_He2 is practically gushing milk with excitement<<else>>It takes minimal effort to get _his2 milk flowing<</if>>.
+
+<<elseif ($milkTap.fetish == "boobs") && ($milkTap.fetishKnown == 1) && ($milkTap.fetishStrength > 60) && ($milkTap.devotion >= -20)>>
+	This is very easy, since $milkTap.slaveName loves _his2 tits played with and can't wait to get suckled. <<if $milkTap.lactation > 1>>_he2 is practically gushing milk with excitement<<else>>It takes next to no effort to get _his2 milk flowing<</if>>.
+
+<<elseif getSlave($AS).mother == $milkTap.ID>>
+	This is easy enough, as $milkTap.slaveName fondly remembers nursing _his2 <<print relativeTerm($milkTap, getSlave($AS))>>. <<if $milkTap.lactation > 1>>$he is practically gushing milk with nostalgia<<else>>It takes minimal effort to get _his2 milk flowing<</if>>.
+<<elseif getSlave($AS).father == $milkTap.ID>>
+	This is extremely tough, as $milkTap.slaveName is very uncomfortable breast feeding the $girl _he2 sired. <<if $milkTap.lactation > 1>>_His2 excessive milk production quickly leaves _him2 eager for release, however<<else>>It takes some coaxing and kneading to get _his2 milk flowing and _him2 eager for relief<</if>>.
+<<elseif $milkTap.mother == getSlave($AS).ID>>
+	This is moderately tough, as $milkTap.slaveName finds it awkward to nurse _his2 own mother. <<if $milkTap.lactation > 1>>_His2 excessive milk production quickly leaves _him2 eager for release<<else>>It takes some coaxing and kneading to get _his2 milk flowing and _him2 eager for relief<</if>>.
+<<elseif $milkTap.father == getSlave($AS).ID>>
+	This is very tough, as $milkTap.slaveName finds it weird to let _his2 father suckle from _him2. <<if $milkTap.lactation > 1>>_His2 excessive milk production quickly leaves _him2 eager for release, however<<else>>It takes some coaxing and kneading to get _his2 milk flowing and _him2 eager for relief<</if>>.
+<<elseif areSisters(getSlave($AS), $milkTap) == 1>>
+	This is easy enough, as $milkTap.slaveName wants _his2 <<print relativeTerm(getSlave($AS), $milkTap)>> to try _his2 milk, but only if $he can taste $hers too. <<if $milkTap.lactation > 1>>$he is practically gushing milk with excitement<<else>>It takes minimal effort to get _his2 milk flowing<</if>>.
+<<elseif areSisters(getSlave($AS), $milkTap) == 2>>
+	This is moderately tough, as $milkTap.slaveName is uncomfortable getting so intimate with _his2 <<print relativeTerm($milkTap, getSlave($AS))>>. <<if $milkTap.lactation > 1>>_His2 excessive milk production quickly leaves _him2 eager for release<<else>>It takes some coaxing and kneading to get _his2 milk flowing and _him2 eager for relief<</if>>.
+<<elseif areSisters(getSlave($AS), $milkTap) == 3>>
+	This is slightly difficult, as $milkTap.slaveName is uncomfortable getting so intimate with _his2 <<print relativeTerm($milkTap, getSlave($AS))>>. <<if $milkTap.lactation > 1>>_His2 excessive milk production quickly leaves _him2 eager for release<<else>>It takes some coaxing and kneading to get _his2 milk flowing and _him2 eager for relief<</if>>.
+
+<<elseif $milkTap.relationTarget == getSlave($AS).ID>>
+	<<if $milkTap.relation == "twin">>
+		This is easy enough, as $milkTap.slaveName wants _his2 <<print relativeTerm($milkTap, getSlave($AS))>> to try _his2 milk, but only if $he can taste _hers2 too. <<if $milkTap.lactation > 1>>_he2 is practically gushing milk with excitement<<else>>It takes minimal effort to get _his2 milk flowing<</if>>.
+	<<elseif $milkTap.relation == "sister">>
+		This is moderately tough, as $milkTap.slaveName is uncomfortable getting so intimate with _his2 <<print relativeTerm($milkTap, getSlave($AS))>>. <<if $milkTap.lactation > 1>>_His2 excessive milk production quickly leaves _his2 eager for release<<else>>It takes some coaxing and kneading to get _his2 milk flowing and _his2 eager for relief<</if>>.
+	<<elseif $milkTap.relation == "mother">>
+		This is easy enough, as $milkTap.slaveName fondly remembers nursing _his2 <<print relativeTerm($milkTap, getSlave($AS))>>. <<if $milkTap.lactation > 1>>$he is practically gushing milk with nostalgia<<else>>It takes minimal effort to get _his2 milk flowing<</if>>.
+	<<elseif $milkTap.relation == "daughter">>
+		This is moderately tough, as $milkTap.slaveName finds it awkward to nurse _his2 own <<print relativeTerm($milkTap, getSlave($AS))>>. <<if $milkTap.lactation > 1>>_His2 excessive milk production quickly leaves _him2 eager for release<<else>>It takes some coaxing and kneading to get _his2 milk flowing and _him2 eager for relief<</if>>.
+	<</if>>
+
+<<elseif ($milkTap.lactation > 1) && ($milkTap.devotion >= -20)>>
+	Since $milkTap.slaveName produces so much milk, _he2 eagerly accepts any source of relief _he2 can manage.
+
+<<elseif ($milkTap.devotion > 50)>>
+	Since $milkTap.slaveName is devoted to you, _he2'll allow anyone you want to drink deeply from _him2.
+
+<<elseif ($milkTap.devotion > 20)>>
+	Since $milkTap.slaveName is obedient, _he2 appreciates any relief from _his2 swollen breasts.
+
+<<elseif ($milkTap.devotion >= -20)>>
+	Since $milkTap.slaveName does not resist your will, _he2 should comply reasonably well. If anything, $he'll at least be thankful to be relieved of some pressure.
+
+<<else>>
+	Since $milkTap.slaveName is unlikely to comply willingly, you simply restrain _him2 with _his2 tits exposed and ready to be drank from. <<if $milkTap.lactation > 1>>You affix nipple clamps to _his2 $milkTap.nipples nipples and step back to watch _his2 breasts back up with milk. When _he2 is unclamped, the flow should certainly be strong enough for your desires<<else>>You make sure to roughly coax _his2 milk into flowing, all the while reminding _him2 that _he2 is nothing more than a cow now<</if>>.
+
+<</if>>
+
+<br><br>
+
+Next, you see to <<= getSlave($AS).slaveName>>.
+
+<<if (isAmputee(getSlave($AS)))>>
+	You move the limbless $girl to $milkTap.slaveName's nipple and strap $him to it to prevent it from falling out of $his mouth.
+
+<<elseif tooBigBreasts(getSlave($AS))>>
+	You set $him up so that $his massive breasts pin $him on $milkTap.slaveName's milky nipple.
+
+<<elseif $milkTap.fuckdoll > 0>>
+	$He hesitantly brings $his mouth to its milky nipple, uncertain about suckling from a living doll.
+
+<<elseif getSlave($AS).rivalryTarget == $milkTap.ID>>
+	Knowing $his relationship with $milkTap.slaveName, you feel it best to restrain $him and anchor $him to $milkTap.slaveName's milky nipple so $he has no choice but to drink until you release $him.
+
+<<elseif getSlave($AS).relationshipTarget == $milkTap.ID>>
+	This is rather easy, as <<= getSlave($AS).slaveName>>
+	<<if getSlave($AS).relationship == 1>>
+		licks $his lips as $he approaches $his friend's breasts.
+	<<elseif getSlave($AS).relationship == 2>>
+		eagerly licks $his lips as $he approaches $his best friend's breasts.
+	<<elseif getSlave($AS).relationship == 3>>
+		licks $his lips and smiles as $he approaches $his friend with benefits' breasts, knowing well how _his2 <<if canTaste(getSlave($AS))>>milk tastes<<else>>body feels<</if>>.
+	<<elseif getSlave($AS).relationship == 4>>
+		licks $his lips and smiles as $he approaches $his lover's breasts. This won't be the first time $he's suckled from _him2 like this.
+	<<elseif getSlave($AS).relationship == 5>>
+		licks $his lips and smiles as $he approaches $his _wife2's breasts. This won't be the first time $he's suckled from _him2 like this.
+	<</if>>
+
+<<elseif getSlave($AS).mother == $milkTap.ID>>
+	$He draws close to $his mother's nipples, trying to remember if $he once had a favorite.
+<<elseif getSlave($AS).father == $milkTap.ID>>
+	$He hesitatingly lowers $himself to $his father's nipple. <<if $milkTap.dick > 0 && canAchieveErection($milkTap)>> $he nearly backs away when $he feels the dick that sired $him poking at $his belly.<</if>>
+<<elseif $milkTap.mother == getSlave($AS).ID>>
+	$He awkwardly brings $his lips to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple.
+<<elseif $milkTap.father == getSlave($AS).ID>>
+	$He awkwardly brings $his lips to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple<<if getSlave($AS).dick > 0 && canAchieveErection(getSlave($AS))>>, $his cock steadily hardening at the perversion of suckling from $his child<</if>>.
+<<elseif areSisters(getSlave($AS), $milkTap) == 1>>
+	$He readily gets in position to <<if canTaste(getSlave($AS))>>taste<<else>>suckle from<</if>> $his <<print relativeTerm(getSlave($AS), $milkTap)>><<if getSlave($AS).lactation > 0>> while coaxing $his own milk to flow<</if>>.
+<<elseif areSisters(getSlave($AS), $milkTap) == 2>>
+	$He hesitatingly lowers $himself to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple.
+<<elseif areSisters(getSlave($AS), $milkTap) == 3>>
+	$He hesitatingly lowers $himself to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple.
+
+<<elseif getSlave($AS).relationTarget == $milkTap.ID>>
+	<<if getSlave($AS).relation == "twin">>
+		$He readily gets in position to <<if canTaste(getSlave($AS))>>taste<<else>>suckle from<</if>> $his <<print relativeTerm(getSlave($AS), $milkTap)>><<if getSlave($AS).lactation > 0>> while coaxing $his own milk to flow<</if>>.
+	<<elseif getSlave($AS).relation == "sister">>
+		$He hesitatingly lowers $himself to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple.
+	<<elseif getSlave($AS).relation == "mother">>
+		$He awkwardly brings $his lips to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple.
+	<<elseif getSlave($AS).relation == "daughter">>
+		$He draws close to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipples, trying to remember if $he once had a favorite.
+	<</if>>
+
+<<elseif (getSlave($AS).fetish == "boobs") && (getSlave($AS).fetishKnown == 1) && (getSlave($AS).fetishStrength > 60) && (getSlave($AS).devotion >= -20)>>
+	$He can't wait to <<if hasBothArms(getSlave($AS))>>wrap $his hands around<<else>>get between<</if>> $milkTap.slaveName's massive milky breasts and eagerly approaches $his nipples to suckle.
+
+<<elseif (getSlave($AS).fetish == "submissive") && (getSlave($AS).fetishStrength > 60) && (getSlave($AS).fetishKnown == 1)>>
+	$He is accustomed to submitting to you, but as a natural submissive $he doesn't have much trouble submitting to $milkTap.slaveName's mothering instead.
+
+<<elseif getSlave($AS).devotion < -20>>
+	$He tries to refuse, so you strap $him to $milkTap.slaveName's breast, milky $milkTap.nipples nipple wedged in $his mouth.
+
+<<elseif getSlave($AS).devotion <= 20>>
+	$He obeys your orders reluctantly, drawing near $milkTap.slaveName's breasts despite $his obvious hesitation to be filled with milk.
+
+<<elseif getSlave($AS).devotion <= 50>>
+	$He obeys your orders, drawing near $milkTap.slaveName's breasts despite $his slight hesitation at the idea of being filled with milk.
+
+<<else>>
+	$He happily obeys your orders, eagerly wrapping $his lips around $milkTap.slaveName's milky $milkTap.nipples nipple and suckling enthusiastically.
+<</if>>
+
+<br><br>
+
+<<if getSlave($AS).preg > getSlave($AS).pregData.normalBirth/13.33 && getSlave($AS).pregKnown == 0 && getSlave($AS).inflation > 1>>
+	It becomes abundantly clear that something is wrong with <<= getSlave($AS).slaveName>> as $he struggles to down $his milky meal. Before $his health can be affected further, you pull $him into a medical exam. While most of the tests come back normal, one in particular catches your eye; @@.lime;$he is pregnant<<if getSlave($AS).preg > getSlave($AS).pregData.normalBirth/4>> and surprisingly far along<</if>>.@@ $he should be able to still handle at least two liters of milk, however.
+	<<set getSlave($AS).inflation = 0, getSlave($AS).inflationType = "none", getSlave($AS).inflationMethod = 0, getSlave($AS).pregKnown = 1>>
+	<<set _pregDiscovery = 1>>
+
+<<elseif $milkTap.fuckdoll > 0>>
+	Slight moaning emanates from the Fuckdoll as <<= getSlave($AS).slaveName>> drinks from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off _his2 nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off _his2 nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off _his2 nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+
+<<elseif $milkTap.rivalryTarget == getSlave($AS).ID>>
+	$milkTap.slaveName grins as _his2 rival is forced to drink until $his belly is <<if getSlave($AS).inflation == 3>>nearly bursting with milk. <<= getSlave($AS).slaveName>> struggles against $his bindings until the pressure building in $him overwhelms $him, causing $him to pass out directly into $milkTap.slaveName's cushiony breasts. You quickly remove $him from the nipple before $he drowns<<elseif getSlave($AS).inflation == 2>>is rounded, jiggling and sloshing with milk. You release $his bindings, allowing $him to flop to the floor. <<if hasAnyArms(getSlave($AS))>>$He gingerly crawls away from $milkTap.slaveName, <<if hasBothArms(getSlave($AS))>>one<<else>>$his<</if>> hand cradling $his overfull stomach<<else>>$He rolls onto $his side, groaning with discomfort<</if>><<elseif getSlave($AS).inflation == 1>>bloated with milk. You release $his bindings, allowing $him to flop to the floor. <<if hasAnyArms(getSlave($AS))>>$He gingerly sits up and begins massaging $his full stomach<<else>>$He rolls onto $his back, hiccupping pathetically<</if>><</if>>.
+
+<<elseif $milkTap.relationshipTarget == getSlave($AS).ID>>
+	<<if $milkTap.relationship == 1>>
+		$milkTap.slaveName sighs contently as _his2 friend drinks deeply from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his friend's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his friend's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his friend's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relationship == 2>>
+		$milkTap.slaveName sighs contently as _his2 best friend drinks deeply from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his best friend's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his best friend's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his best friend's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relationship == 3>>
+		$milkTap.slaveName moans lewdly as _his2 friend with benefits drinks deeply from _his2 breasts, savoring it despite commonly nursing <<= getSlave($AS).slaveName>> during their lovemaking. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his friend with benefits' nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his friend with benefits' nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his friend with benefits' nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relationship == 4>>
+		$milkTap.slaveName moans lewdly as _his2 lover drinks deeply from _his2 breasts, savoring it despite commonly nursing <<= getSlave($AS).slaveName>> during their lovemaking. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his lover's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his lover's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his lover's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relationship == 5>>
+		$milkTap.slaveName moans lewdly as _his2 $wife drinks deeply from _his2 breasts, savoring it despite commonly nursing <<= getSlave($AS).slaveName>> during their lovemaking. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his _wife2's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his _wife2's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his _wife2's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<</if>>
+
+<<elseif getSlave($AS).mother == $milkTap.ID>>
+	$milkTap.slaveName sighs contently as _his2 little $girl once again suckles from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his mother's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his mother's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his mother's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+<<elseif getSlave($AS).father == $milkTap.ID>>
+	$milkTap.slaveName moans lewdly as _his2 <<print relativeTerm($milkTap, getSlave($AS))>> suckles from _his2 breasts<<if $milkTap.dick > 0 && canAchieveErection($milkTap)>>, _his2 dick throbbing with lust<</if>>. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his father's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his father's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his father's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>><<if $milkTap.dick > 0 && canAchieveErection($milkTap)>><<if getSlave($AS).sexualQuirk == "perverted">>. The way $he is wiggling $his hips suggests $he isn't finished with $his daddy just yet, and $his father's moaning confirms $he is teasing _him2 with $his rear. $He giggles as the horny cow unloads on $his backside<<else>>. $He doesn't stay put for long, as a strong moan and a blast of cum across $his rear from the horny cow startles $him from $his rest<</if>><</if>>.
+<<elseif $milkTap.mother == getSlave($AS).ID>>
+	$milkTap.slaveName moans lewdly as _he2 enjoys some role reversal as _his2 mother suckles from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+<<elseif $milkTap.father == getSlave($AS).ID>>
+	$milkTap.slaveName moans lewdly as _his2 father suckles from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+<<elseif areSisters(getSlave($AS), $milkTap) == 1>>
+	$milkTap.slaveName sighs contently as _his2 <<print relativeTerm($milkTap, getSlave($AS))>> suckles from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+<<elseif areSisters(getSlave($AS), $milkTap) == 2>>
+	$milkTap.slaveName moans lewdly as _his2 <<if $milkTap.actualAge >= getSlave($AS).actualAge>>little<<else>>big<</if>> <<print relativeTerm($milkTap, getSlave($AS))>> suckles from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+<<elseif areSisters(getSlave($AS), $milkTap) == 3>>
+	$milkTap.slaveName moans lewdly as _his2 <<print relativeTerm($milkTap, getSlave($AS))>> suckles from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+
+<<elseif $milkTap.relationTarget == getSlave($AS).ID>>
+	<<if $milkTap.relation == "twin">>
+		$milkTap.slaveName sighs contently as _his2 <<print relativeTerm($milkTap, getSlave($AS))>> suckles from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relation == "sister">>
+		$milkTap.slaveName moans lewdly as _his2 <<if $milkTap.actualAge >= getSlave($AS).actualAge>>little<<else>>big<</if>> <<print relativeTerm($milkTap, getSlave($AS))>> suckles from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relation == "mother">>
+		$milkTap.slaveName sighs contently as _his2 little $girl once again suckles from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his mother's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his mother's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his mother's nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relation == "daughter">>
+		$milkTap.slaveName moans lewdly as $he enjoys some role reversal as _his2 mother suckles from _his2 breasts. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with milk. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s nipple and settles into _his2 breasts for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<</if>>
+
+<<elseif (getSlave($AS).devotion < -20) && ($milkTap.devotion < -20)>>
+	Since you have two restrained and unwilling slaves, the work of milking $milkTap.slaveName's breasts falls to you. That doesn't mean you can't have fun doing it though.
+	<<if canDoVaginal($milkTap)>>
+		Moving behind the restrained cow while<<if $PC.dick == 0>> donning a strap-on<<else>>teasing your erect cock<</if>>, you push _him2 forward to allow you to insert yourself into _his2 <<if $milkTap.vagina == 0>>virgin <</if>>pussy. Getting comfortable, you reach around to _his2 immense mammaries and begin kneading them in time to your thrusts. After some time, and several orgasms in both yourself and the sobbing cow, is <<= getSlave($AS).slaveName>> bloated with enough milk.
+		<<set $milkTap.counter.vaginal++, $vaginalTotal++>>
+		<<if canImpreg($milkTap, $PC)>>
+			<<= knockMeUp($milkTap, 40, 0, -1)>>
+		<</if>>
+	<<elseif canDoAnal($milkTap)>>
+		Moving behind the restrained cow while<<if $PC.dick == 0>> donning a strap-on<<else>> teasing your erect cock<</if>>, you push _him2 forward to allow you to insert yourself into _his2 <<if $milkTap.anus == 0>>virgin <</if>>rear. Getting comfortable, you reach around to _his2 immense mammaries and begin kneading them in time to your thrusts. After some time, and several orgasms in both yourself and the sobbing cow, is <<= getSlave($AS).slaveName>> bloated with enough milk.
+		<<set $milkTap.counter.anal++, $analTotal++>>
+		<<if canImpreg($milkTap, $PC)>>
+			<<= knockMeUp($milkTap, 40, 1, -1)>>
+		<</if>>
+	<<elseif $PC.dick != 0 && $milkTap.butt > 4>>
+		Moving behind the restrained cow while teasing your erect cock, you push _him2 forward to allow you to press your dick between _his2 huge butt cheeks. Getting comfortable, you reach around to _his2 immense mammaries and begin kneading them in time to your thrusts. After some time, and several orgasms across the back of the sobbing cow, is <<= getSlave($AS).slaveName>> bloated with enough milk.
+	<<elseif $PC.dick != 0 && !hasAnyLegs($milkTap)>>
+		Moving behind the restrained cow while teasing your erect cock, you find a severe lack of places to stick your dick. Sighing, you hoist _his2 belted ass into the air so you may thrust between _his2 <<if $milkTap.weight > 95>>soft <</if>>thighs. Getting comfortable, you reach around to _his2 immense mammaries and begin kneading them in time to your thrusts. After some time, and several loads blown<<if $milkTap.belly >= 1500>> onto the rounded belly of the sobbing cow<</if>>, is <<= getSlave($AS).slaveName>> bloated with enough milk.
+	<<else>>
+		With a lack of holes to penetrate, you simply wrap your arms around $milkTap.slaveName and begin fondling and milking _his2 luscious breasts. After some time, <<= getSlave($AS).slaveName>> is finally bloated to your desired size.
+	<</if>>
+	Standing and releasing $him from $milkTap.slaveName, gives you the opportunity to finally see <<= getSlave($AS).slaveName>>'s <<if getSlave($AS).inflation == 3>>taut, round belly<<elseif getSlave($AS).inflation == 2>>rounded, jiggling belly<<else>>distended, sloshing belly<</if>>. You just wish you could have enjoyed it a bit more, though forcing milk into the squirming slave was quite enjoyable.
+	Both slaves @@.mediumorchid;resent@@ what you made them do and @@.gold;fear you@@ as a result.
+	<<set getSlave($AS).devotion -= 5, getSlave($AS).trust -= 5>>
+	<<set $milkTap.devotion -= 5, $milkTap.trust -= 5>>
+	<<if canDoVaginal($milkTap) && ($milkTap.vagina == 0)>>
+		$milkTap.slaveName @@.mediumorchid;especially,@@ having just @@.lime;lost $his virginity@@ to your inconvenience.
+		<<set $milkTap.devotion -= 5, $milkTap.vagina = 1>>
+	<<elseif canDoAnal($milkTap) && ($milkTap.anus == 0)>>
+		$milkTap.slaveName @@.mediumorchid;especially,@@ having just @@.lime;lost $his anal virginity@@ to your inconvenience.
+		<<set $milkTap.devotion -= 5, $milkTap.anus = 1>>
+	<</if>>
+
+<<elseif ($milkTap.devotion < -20)>>
+	Since your cow is restrained, you order the more obedient <<= getSlave($AS).slaveName>> to enjoy $himself with $milkTap.slaveName's breasts. As $he suckles, you can't help but notice the tantalizing way $he wiggles $his rear.
+	<<if canDoVaginal(getSlave($AS))>>
+		<<if $PC.dick == 0>>Donning a strap-on<<else>>Teasing your stiffening cock<</if>>, you push $him deeper into the protesting $milkTap.slaveName and mount $his <<if getSlave($AS).vagina == 0>>virgin <</if>> pussy, doggy style. You wrap your arms around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>>. Only once your weight is removed from the squirming milk balloon is $he allowed to pull $himself off of the @@.mediumorchid;resentful $milkTap.slaveName@@ and catch $his breath.<<if getSlave($AS).vagina == 0>> $His senses were so overwhelmed, $he didn't even notice you @@.lime;broke in $his vagina.@@<</if>>
+		<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>
+	<<elseif canDoAnal(getSlave($AS))>>
+		<<if $PC.dick == 0>>Donning a strap-on<<else>>Teasing your stiffening cock<</if>>, you push $him deeper into the protesting $milkTap.slaveName and mount $his <<if getSlave($AS).anus == 0>>virgin <</if>> asshole, doggy style. You wrap your arms around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>>. Only once your weight is removed from the squirming milk balloon is $he allowed to pull $himself off of the @@.mediumorchid;resentful $milkTap.slaveName@@ and catch $his breath.<<if getSlave($AS).anus == 0>> $His senses were so overwhelmed, $he didn't even notice you @@.lime;broke in $his anus.@@<</if>>
+		<<set getSlave($AS).counter.anal++, $analTotal++>>
+	<<elseif $PC.dick != 0 && getSlave($AS).butt > 4>>
+		Teasing your stiffening cock, you push $him deeper into the protesting $milkTap.slaveName and squeeze your dick between $his huge butt cheeks. You wrap your arms around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk as you fuck $his butt. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>>. Only once your weight is removed from the squirming milk balloon is $he allowed to pull $himself off of the @@.mediumorchid;resentful $milkTap.slaveName@@ and catch $his breath.
+	<<elseif $PC.dick != 0 && hasBothLegs(getSlave($AS))>>
+		Teasing your stiffening cock, you find a severe lack of places to stick your dick. Sighing, you hoist $his belted ass into the air, push $him deeper into the protesting $milkTap.slaveName and squeeze your dick between $his <<if getSlave($AS).weight > 95>>soft <</if>>thighs. You wrap your arms around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk as you fuck $his butt. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>>. Only once your weight is removed from the squirming milk balloon is $he allowed to pull $himself off of the @@.mediumorchid;resentful $milkTap.slaveName@@ and catch $his breath.
+	<<else>>
+		With a lack of holes to penetrate, you simply wrap your arms around $him and push $him deeper into the protesting $milkTap.slaveName. You bring a hand to <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk and lead the other to your <<if $PC.dick == 0>>soaked pussy<<else>>stiff prick<</if>>. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>>. Only once your weight is removed from the squirming milk balloon is $he allowed to pull $himself off of the @@.mediumorchid;resentful $milkTap.slaveName@@ and catch $his breath.
+	<</if>>
+	$He gives the shaking $milkTap.slaveName an apologetic look before taking a seat. The poor cow isn't used to this yet and @@.gold;is terrified of your willingness@@ to take what you want from your slaves.
+	<<set $milkTap.devotion -= 5, $milkTap.trust -= 5>>
+	<<if canDoVaginal(getSlave($AS)) && (getSlave($AS).vagina == 0)>>
+		<<set getSlave($AS).vagina = 1>>
+	<<elseif canDoAnal(getSlave($AS)) && (getSlave($AS).anus == 0)>>
+		<<set getSlave($AS).anus = 1>>
+	<</if>>
+
+<<elseif ($milkTap.fetish == "boobs") && ($milkTap.fetishStrength > 60) && ($milkTap.devotion > 20) && (getSlave($AS).devotion < -20)>>
+	<<if canDoVaginal(getSlave($AS))>>
+		You position the restrained <<= getSlave($AS).slaveName>> so that you can penetrate $his <<if getSlave($AS).vagina == 0>>virgin <</if>>pussy <<if $PC.dick == 0>>with a strap-on <</if>> while $he is forced to drink from $milkTap.slaveName's breasts. With every thrust into the squirming slave, you push $him into the moaning $milkTap.slaveName forcing even more milk down $his throat. You wrap an arm around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk and place your other hand to $milkTap.slaveName's free nipple, knowing just how much $he loves it groped. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>> and $milkTap.slaveName even more. _He2 is semi-conscious, drooling in @@.hotpink;pleasure and satisfaction,@@ by the time you release the bloated <<= getSlave($AS).slaveName>> from $his harness. Patting _his2 well milked breasts, you know _he2'll come out of it and be eagerly begging you for another milking soon. <<= getSlave($AS).slaveName>>, on the other hand, is regarding $his swollen stomach @@.mediumorchid;with disgust@@ and @@.gold;fear@@ of your power over $him.<<if getSlave($AS).anus == 0>> $he @@.mediumorchid;hates you so much more@@ that you @@.lime;broke in $his virgin vagina.@@<</if>>
+		<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>
+	<<elseif canDoAnal(getSlave($AS))>>
+		You position the restrained <<= getSlave($AS).slaveName>> so that you can penetrate $his <<if getSlave($AS).anus == 0>>virgin <</if>>ass <<if $PC.dick == 0>>with a strap-on <</if>> while $he is forced to drink from $milkTap.slaveName's breasts. With every thrust into the squirming slave, you push $him into the moaning $milkTap.slaveName forcing even more milk down $his throat. You wrap an arm around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk and place your other hand to $milkTap.slaveName's free nipple, knowing just how much $he loves it groped. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>> and $milkTap.slaveName even more. _He2 is semi-conscious, drooling in @@.hotpink;pleasure and satisfaction,@@ by the time you release the bloated <<= getSlave($AS).slaveName>> from $his harness. Patting _his2 well milked breasts, you know _he2'll come out of it and be eagerly begging you for another milking soon. <<= getSlave($AS).slaveName>>, on the other hand, is regarding $his swollen stomach @@.mediumorchid;with disgust@@ and @@.gold;fear@@ of your power over $him.<<if getSlave($AS).anus == 0>> $he @@.mediumorchid;hates you so much more@@ that you @@.lime;broke in $his virgin anus.@@<</if>>
+		<<set getSlave($AS).counter.anal++, $analTotal++>>
+	<<elseif $PC.dick != 0 && getSlave($AS).butt > 4>>
+		You position the restrained <<= getSlave($AS).slaveName>> so that you can rub your dick between $his huge butt cheeks while $he is forced to drink from $milkTap.slaveName's breasts. With every thrust against the squirming slave, you push $him into the moaning $milkTap.slaveName forcing even more milk down $his throat. You wrap an arm around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk and place your other hand to $milkTap.slaveName's free nipple, knowing just how much $he loves it groped. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>> and $milkTap.slaveName even more. _He2 is semi-conscious, drooling in @@.hotpink;pleasure and satisfaction,@@ by the time you release the bloated <<= getSlave($AS).slaveName>> from $his harness. Patting _his2 well milked breasts, you know $he'll come out of it and be eagerly begging you for another milking soon. <<= getSlave($AS).slaveName>>, on the other hand, is regarding $his swollen stomach, and cum soaked back, @@.mediumorchid;with disgust@@ and @@.gold;fear@@ of your power over $him.
+	<<elseif $PC.dick != 0 && hasBothLegs(getSlave($AS))>>
+		You position the restrained <<= getSlave($AS).slaveName>> so that you can fuck $his <<if getSlave($AS).weight > 95>>soft <</if>>thighs, for a lack of anything better, while $he is forced to drink from $milkTap.slaveName's breasts. With every thrust against the squirming slave, you push $him into the moaning $milkTap.slaveName forcing even more milk down $his throat. You wrap an arm around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk and place your other hand to $milkTap.slaveName's free nipple, knowing just how much $he loves it groped. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>> and $milkTap.slaveName even more. _He2 is semi-conscious, drooling in @@.hotpink;pleasure and satisfaction,@@ by the time you release the bloated <<= getSlave($AS).slaveName>> from $his harness. Patting _his2 well milked breasts, you know _he2'll come out of it and be eagerly begging you for another milking soon. <<= getSlave($AS).slaveName>>, on the other hand, is regarding $his swollen, cum-covered stomach @@.mediumorchid;with disgust@@ and @@.gold;fear@@ of your power over $him.
+	<<else>>
+		You position the restrained <<= getSlave($AS).slaveName>> so that you can rub your <<if $PC.dick == 0>>clit<<else>>dick<</if>> against $him while $he is forced to drink from $milkTap.slaveName's breasts, since $he lacks any better way to please you while you lavish attention on your eager cow. With every thrust against the squirming slave, you push $him into the moaning $milkTap.slaveName forcing even more milk down $his throat. You wrap an arm around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk and place your other hand to $milkTap.slaveName's free nipple, knowing just how much $he loves it groped. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>> and $milkTap.slaveName even more. _He2 is semi-conscious, drooling in @@.hotpink;pleasure and satisfaction,@@ by the time you release the bloated <<= getSlave($AS).slaveName>> from $his harness. Patting _his2 well milked breasts, you know _he2'll come out of it and be eagerly begging you for another milking soon. <<= getSlave($AS).slaveName>>, on the other hand, is regarding $his swollen stomach @@.mediumorchid;with disgust@@ and @@.gold;fear@@ of your power over $him.
+	<</if>>
+	<<if canDoVaginal(getSlave($AS)) && (getSlave($AS).vagina == 0)>>
+		<<set getSlave($AS).vagina = 1>>
+		<<set getSlave($AS).devotion -= 5>>
+	<<elseif canDoAnal(getSlave($AS)) && (getSlave($AS).anus == 0)>>
+		<<set getSlave($AS).anus = 1>>
+		<<set getSlave($AS).devotion -= 5>>
+	<</if>>
+	<<set getSlave($AS).devotion -= 5>>
+	<<set getSlave($AS).trust -= 5>>
+	<<set $milkTap.devotion += 4>>
+
+<<elseif (getSlave($AS).devotion <= 20) || ($milkTap.devotion <= 20)>>
+	<<if canDoVaginal(getSlave($AS))>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can penetrate $his <<if getSlave($AS).vagina == 0>>virgin <</if>>pussy <<if $PC.dick == 0>>with a strap-on <</if>> while $he drinks from $milkTap.slaveName's breasts. With every thrust into the squirming slave, you push $him into the docile $milkTap.slaveName forcing even more milk down $his throat.
+		<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>
+	<<elseif canDoAnal(getSlave($AS))>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can penetrate $his <<if getSlave($AS).anus == 0>>virgin <</if>>ass <<if $PC.dick == 0>>with a strap-on <</if>> while $he drinks from $milkTap.slaveName's breasts. With every thrust into the squirming slave, you push $him into the docile $milkTap.slaveName forcing even more milk down $his throat.
+		<<set getSlave($AS).counter.anal++, $analTotal++>>
+	<<elseif $PC.dick != 0 && getSlave($AS).butt > 4>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can rub your dick between $his huge butt cheeks while $he drinks from $milkTap.slaveName's breasts. With every thrust against the squirming slave, you push $him into the docile $milkTap.slaveName forcing even more milk down $his throat.
+	<<elseif $PC.dick != 0 && hasBothLegs(getSlave($AS))>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can fuck $his <<if getSlave($AS).weight > 95>>soft <</if>>thighs, for a lack of anything better, while $he drinks from $milkTap.slaveName's breasts. With every thrust against the squirming slave, you push $him into the docile $milkTap.slaveName forcing even more milk down $his throat.
+	<<else>>
+		You order <<= getSlave($AS).slaveName>> to position $himself so you can rub your <<if $PC.dick == 0>>clit<<else>>dick<</if>> against $him while $he drinks from $milkTap.slaveName's breasts, since $he lacks any better way to please you while you lavish praise on your obedient cow. With every thrust against the squirming slave, you push $him into the docile $milkTap.slaveName forcing even more milk down $his throat.
+	<</if>>
+	You wrap an arm around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk and place your other hand to $milkTap.slaveName's free nipple, knowing just how much _he2 loves it groped. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>>. When you release $him from under your weight, $he drops to the ground panting. Neither slave seems to have enjoyed it, instead opting to just get it over with, though $milkTap.slaveName makes sure to thank <<= getSlave($AS).slaveName>> for lightening _his2 milky breasts.
+	<<if canDoVaginal(getSlave($AS)) && (getSlave($AS).vagina == 0)>>
+		<<set getSlave($AS).vagina = 1>>
+	<<elseif canDoAnal(getSlave($AS)) && (getSlave($AS).anus == 0)>>
+		<<set getSlave($AS).anus = 1>>
+	<</if>>
+
+<<elseif (getSlave($AS).devotion <= 50) || ($milkTap.devotion <= 50)>>
+	<<if canDoVaginal(getSlave($AS))>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can penetrate $his <<if getSlave($AS).vagina == 0>>virgin <</if>>pussy <<if $PC.dick == 0>>with a strap-on <</if>> while $he drinks from $milkTap.slaveName's breasts. $He submissively obeys. With every thrust into the moaning slave, you push $him into the smiling $milkTap.slaveName forcing even more milk down $his throat.
+		<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>
+	<<elseif canDoAnal(getSlave($AS))>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can penetrate $his <<if getSlave($AS).anus == 0>>virgin <</if>>ass <<if $PC.dick == 0>>with a strap-on <</if>> while $he drinks from $milkTap.slaveName's breasts. $He submissively obeys. With every thrust into the moaning slave, you push $him into the smiling $milkTap.slaveName forcing even more milk down $his throat.
+		<<set getSlave($AS).counter.anal++, $analTotal++>>
+	<<elseif $PC.dick != 0 && getSlave($AS).butt > 4>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can rub your dick between $his huge butt cheeks while $he drinks from $milkTap.slaveName's breasts. $He submissively obeys. With every thrust against the chaste slave, you push $him into the smiling $milkTap.slaveName forcing even more milk down $his throat.
+	<<elseif $PC.dick != 0 && hasBothLegs(getSlave($AS))>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can fuck $his <<if getSlave($AS).weight > 95>>soft <</if>>thighs, for a lack of anything better, while $he drinks from $milkTap.slaveName's breasts. $He submissively obeys. With every thrust against the chaste slave, you push $him into the smiling $milkTap.slaveName forcing even more milk down $his throat.
+	<<else>>
+		You order <<= getSlave($AS).slaveName>> to position $himself so you can rub your <<if $PC.dick == 0>>clit<<else>>dick<</if>> against $him while $he drinks from $milkTap.slaveName's breasts, since $he lacks any better way to please you while you lavish attention on your happy cow. With every thrust against the squirming slave, you push $him into the smiling $milkTap.slaveName forcing even more milk down $his throat.
+	<</if>>
+	You wrap an arm around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk and place your other hand to $milkTap.slaveName's free nipple, knowing just how much _he2 gets backed up. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>>. When you release $him from under your weight, $he drops to the ground panting. Both slaves enjoyed their union, though $milkTap.slaveName even more so thanks to _his2 lighter breasts.
+	<<if canDoVaginal(getSlave($AS)) && (getSlave($AS).vagina == 0)>>
+		<<= getSlave($AS).slaveName>> feels @@.hotpink;closer to you@@ after losing $his virginity to you.
+		<<set getSlave($AS).vagina = 1, getSlave($AS).devotion += 2>>
+	<<elseif canDoAnal(getSlave($AS)) && (getSlave($AS).anus == 0)>>
+		<<= getSlave($AS).slaveName>> feels @@.hotpink;closer to you@@ after losing $his anal virginity to you.
+		<<set getSlave($AS).anus = 1, getSlave($AS).devotion += 2>>
+	<</if>>
+
+<<else>>
+	<<= getSlave($AS).slaveName>> eagerly lifts $his ass and jiggles it seductively as $he suckles from the moaning cow.
+	<<if canDoVaginal(getSlave($AS))>>
+		You know that signal, so you hilt yourself in <<if getSlave($AS).vagina == 0>>virgin <</if>>pussy <<if $PC.dick == 0>>with a strap-on <</if>> and begin fucking $him against $milkTap.slaveName's tits. With every thrust into the moaning slave, you push $him into the grinning $milkTap.slaveName forcing even more milk down $his throat.
+		<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>
+	<<elseif canDoAnal(getSlave($AS))>>
+		You know that signal, so you hilt yourself in <<if getSlave($AS).anus == 0>>virgin <</if>>ass <<if $PC.dick == 0>>with a strap-on <</if>> and begin fucking $him against $milkTap.slaveName's tits. With every thrust into the moaning slave, you push $him into the grinning $milkTap.slaveName forcing even more milk down $his throat.
+		<<set getSlave($AS).counter.anal++, $analTotal++>>
+	<<elseif $PC.dick != 0 && getSlave($AS).butt > 4>>
+		You know that signal, but $he isn't allowed to get penetrated, so you settle for sticking your dick between $his huge butt cheeks and fucking $him against $milkTap.slaveName's tits. With every thrust against the moaning slave, you push $him into the grinning $milkTap.slaveName forcing even more milk down $his throat.
+	<<elseif $PC.dick != 0 && hasBothLegs(getSlave($AS))>>
+		You know that signal, but $he isn't allowed to get penetrated, so you settle for sticking your dick between $his <<if getSlave($AS).weight > 95>>soft <</if>>thighs, for a lack of anything better, and fuck $him against $milkTap.slaveName's tits. With every thrust against the moaning slave, you push $him into the grinning $milkTap.slaveName forcing even more milk down $his throat.
+	<<else>>
+		You know that signal, but $he isn't allowed to get fucked, so you reposition $him so you can rub your <<if $PC.dick == 0>>clit<<else>>dick<</if>> against $him while $he drinks from $milkTap.slaveName's tits. With every thrust against the moaning slave, you push $him into the grinning $milkTap.slaveName forcing even more milk down $his throat.
+	<</if>>
+	You wrap an arm around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with milk and place your other hand to $milkTap.slaveName's free nipple to prevent _him2 from feeling left out. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with milk, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with milk, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with milk under your molesting fingers<</if>>. When you release $him from under your weight, $he drops to the ground panting from $his meal<<if canDoVaginal(getSlave($AS)) || canDoAnal(getSlave($AS))>> and from the pleasure you drove into $him<</if>>. Both slaves @@.hotpink;loved the attention,@@ though $milkTap.slaveName even more so thanks to _his2 lighter breasts.
+	<<set getSlave($AS).devotion += 4, $milkTap.devotion += 4>>
+	<<if canDoVaginal(getSlave($AS)) && (getSlave($AS).vagina == 0)>>
+		<<= getSlave($AS).slaveName>> got off quite strongly from the growing pressure within $him, @@.hotpink;cementing@@ $his @@.lime;first fucking@@ as something special.
+		<<set getSlave($AS).devotion += 4, getSlave($AS).vagina = 1>>
+	<<elseif canDoAnal(getSlave($AS)) && (getSlave($AS).anus == 0)>>
+		<<= getSlave($AS).slaveName>> got off quite strongly from the growing pressure within $him, @@.hotpink;cementing@@ $his @@.lime;first anal@@ as something special.
+		<<set getSlave($AS).devotion += 4, getSlave($AS).anus = 1>>
+	<</if>>
+
+<</if>>
+
+<<if $milkTap.lactation > 0>>
+	<<set $milkTap.lactationDuration = 2>>
+	<<set $milkTap.boobs -= $milkTap.boobsMilk, $milkTap.boobsMilk = 0>>
+<</if>>
+
+<<else>> /* cum variant */
+<<set getSlave($AS).cumSource = $milkTap.ID>>
+
+
+The first necessary step is to prepare the cum slave and $his cock and balls.
+
+<<if $milkTap.fuckdoll > 0>>
+	This is hilariously easy, as you have complete control over how $milkTap.slaveName is posed.
+
+<<elseif $milkTap.fetish == "mindbroken">>
+	This is very easy, as $milkTap.slaveName blankly follows your every will. Combined with _his2 instinct to relieve the building pressure in _his2 loins, _he2 is simple to position.
+
+<<elseif $milkTap.rivalryTarget == getSlave($AS).ID>>
+	This is rather easy, as $milkTap.slaveName wants to <<if canSee($milkTap)>>see<<else>>feel<</if>> <<= getSlave($AS).slaveName>>'s belly swell painfully as $he is forced to suck down _his2 huge loads.
+
+<<elseif $milkTap.relationshipTarget == getSlave($AS).ID>>
+	This is rather easy, as $milkTap.slaveName
+	<<if $milkTap.relationship == 1>>
+		always wanted to get _his2 dick sucked by _his2 friend.
+	<<elseif $milkTap.relationship == 2>>
+		always wanted to get _his2 dick sucked by _his2 best friend.
+	<<elseif $milkTap.relationship == 3>>
+		enjoys getting _his2 dick sucked by _his2 friend with benefits.
+	<<elseif $milkTap.relationship == 4>>
+		loves getting _his2 dick sucked by _his2 lover, something that commonly happens due to _his2 overproduction.
+	<<elseif $milkTap.relationship == 5>>
+		loves getting _his2 dick sucked by _his2 $wife, something that commonly happens due to _his2 overproduction.
+	<</if>>
+
+<<elseif getSlave($AS).mother == $milkTap.ID>>
+	This is tough, as $milkTap.slaveName is very uncomfortable having _his2 dick sucked by _his2 <<print relativeTerm($milkTap, getSlave($AS))>>, but _he2 can't really complain about getting _his2 overfilled nuts drained.
+<<elseif getSlave($AS).father == $milkTap.ID>>
+	This is tough, as $milkTap.slaveName is rather uncomfortable having _his2 dick sucked by _his2 <<print relativeTerm($milkTap, getSlave($AS))>>, but _he2 can't really complain about getting _his2 overfilled nuts drained.
+<<elseif $milkTap.mother == getSlave($AS).ID>>
+	This is moderately tough, as $milkTap.slaveName is very uncomfortable having _his2 dick sucked by _his2 own mother, but _he2 can't really complain about getting _his2 overfilled nuts drained.
+<<elseif $milkTap.father == getSlave($AS).ID>>
+	This is tough, as $milkTap.slaveName is very uncomfortable having _his2 dick sucked by _his2 own father, but _he2 can't really complain about getting _his2 overfilled nuts drained.
+<<elseif areSisters(getSlave($AS), $milkTap) == 1>>
+	This is moderately tough, as $milkTap.slaveName is uncomfortable getting so intimate with _his2 <<print relativeTerm(getSlave($AS), $milkTap)>><<if $milkTap.energy >= 95>>, though as a nymphomaniac, the thought of someone who looks so much like _his2 is a major turn on<<else>> but _he2 can't really complain about getting _his2 overfilled nuts drained<</if>>.
+<<elseif areSisters(getSlave($AS), $milkTap) == 2>>
+	This is moderately tough, as $milkTap.slaveName is uncomfortable getting so intimate with _his2 <<print relativeTerm($milkTap, getSlave($AS))>>, but _he2 can't really complain about getting _his2 overfilled nuts drained.
+<<elseif areSisters(getSlave($AS), $milkTap) == 3>>
+	This is moderately tough, as $milkTap.slaveName is uncomfortable getting so intimate with _his2 <<print relativeTerm($milkTap, getSlave($AS))>>, but _he2 can't really complain about getting _his2 overfilled nuts drained.
+
+<<elseif $milkTap.relationTarget == getSlave($AS).ID>>
+	<<if $milkTap.relation == "twin">>
+		This is moderately tough, as $milkTap.slaveName is uncomfortable getting so intimate with _his2 <<print relativeTerm($milkTap, getSlave($AS))>><<if $milkTap.energy >= 95>>, though as a nymphomaniac, the thought of someone who looks so much like _his2 is a major turn on<<else>> but _he2 can't really complain about getting _his2 overfilled nuts drained<</if>>.
+	<<elseif $milkTap.relation == "sister">>
+		This is moderately tough, as $milkTap.slaveName is uncomfortable getting so intimate with _his2 <<print relativeTerm($milkTap, getSlave($AS))>>, but _he2 can't really complain about getting _his2 overfilled nuts drained.
+	<<elseif $milkTap.relation == "mother">>
+		This is tough, as $milkTap.slaveName is very uncomfortable having _his2 dick sucked by _his2 <<print relativeTerm($milkTap, getSlave($AS))>>, but _he2 can't really complain about getting _his2 overfilled nuts drained.
+	<<elseif $milkTap.relation == "daughter">>
+		This is moderately tough, as $milkTap.slaveName is very uncomfortable having _his2 dick sucked by _his2 own <<print relativeTerm($milkTap, getSlave($AS))>>, but _he2 can't really complain about getting _his2 overfilled nuts drained.
+	<</if>>
+
+<<elseif ($milkTap.fetish == "cumslut") && ($milkTap.fetishKnown == 1) && ($milkTap.fetishStrength > 60) && ($milkTap.devotion >= -20)>>
+	This is very easy, since $milkTap.slaveName loves blasting loads whenever _he2 can, and it is just a bonus to _his2 that _he2 gets a blowjob in the process.
+
+<<elseif ($milkTap.energy > 95)>>
+	This is very easy, since $milkTap.slaveName is so sexually charged _he2 is practically overflowing at the thought of getting _his2 dick sucked.
+
+<<elseif ($milkTap.devotion > 50)>>
+	Since $milkTap.slaveName is devoted to you, _he2'd allow anyone you want to suck _his2 dick.
+
+<<elseif ($milkTap.devotion > 20)>>
+	Since $milkTap.slaveName is obedient, _he2 appreciates being allowed to have _his2 dick sucked.
+
+<<elseif ($milkTap.devotion >= -20)>>
+	Since $milkTap.slaveName does not resist your will, _he2 should comply reasonably well. If anything, _he2'll at least be thankful for the pleasure and relief.
+
+<<else>>
+	Since $milkTap.slaveName is unlikely to comply willingly, you simply restrain _him2 with _his2 dick exposed and ready to be sucked. To get _him2 going,
+	<<if canDoAnal($milkTap) && $milkTap.prostate > 0>>
+		you circle around behind _him2, <<if $PC.dick == 0>>while donning a strap-on<<else>>teasing your erect cock<</if>>, and force _him2 forward to allow you to insert yourself into $his <<if $milkTap.anus == 0>>virgin <</if>>rear. After a quick and brutal bit of prostrate stimulation, you finish and remove yourself from _him2. Before _he2 has a chance to reclench _his2 anus, you ram an electroshock stimulator in your stead.
+	<<else>>
+		you attach a number of vibrators to _his2 oversized balls and turn them to full power, stirring up _his2 overzealous cum factories.
+	<</if>>
+	_he2 cries in @@.mediumorchid;disgust@@ and @@.gold;fear@@ as _his2 penis twitches from the sensation, begging for unwelcome release.
+	<<set $milkTap.devotion -= 5, $milkTap.trust -= 5>>
+	<<if canDoAnal($milkTap)>>
+		<<if canImpreg($milkTap, $PC)>>
+			<<= knockMeUp($milkTap, 40, 1, -1)>>
+		<</if>>
+		<<if ($milkTap.anus == 0)>>
+			$milkTap.slaveName feels @@.mediumorchid;especially violated@@ having just @@.lime;lost $his anal virginity@@ in such a manner.
+			<<set $milkTap.devotion -= 5, $milkTap.anus = 1>>
+		<</if>>
+		<<set $milkTap.counter.anal++, $analTotal++>>
+	<</if>>
+
+<</if>>
+
+<br><br>
+
+Next, you see to <<= getSlave($AS).slaveName>>.
+
+<<if (isAmputee(getSlave($AS)))>>
+	You tip the limbless $girl face-first into $milkTap.slaveName's dick.
+
+<<elseif tooBigBreasts(getSlave($AS))>>
+	You set $him up so that $his massive breasts pin $him, face-first, to $milkTap.slaveName's dick.
+
+<<elseif $milkTap.fuckdoll > 0>>
+	$He hesitantly brings $his mouth to its precum tipped dick, uncertain about sucking off a doll.
+
+<<elseif getSlave($AS).rivalryTarget == $milkTap.ID>>
+	Knowing $his relationship with $milkTap.slaveName, you feel it best to restrain $him and anchor $him to $milkTap.slaveName's eager cock so $he has no choice but to suck $his way to release.
+
+<<elseif getSlave($AS).relationshipTarget == $milkTap.ID>>
+	This is rather easy, as <<= getSlave($AS).slaveName>>
+	<<if getSlave($AS).relationship == 1>>
+		licks $his lips as $he approaches $his friend's cock.
+	<<elseif getSlave($AS).relationship == 2>>
+		eagerly licks $his lips as $he approaches $his best friend's cock.
+	<<elseif getSlave($AS).relationship == 3>>
+		licks $his lips and smiles as $he approaches $his friend with benefits' cock, knowing well how _his2 <<if canTaste(getSlave($AS))>>cum tastes<<else>>body feels<</if>>.
+	<<elseif getSlave($AS).relationship == 4>>
+		licks $his lips and smiles as $he approaches $his lover's cock. This won't be the first time $he's sucked _his2 dick and swallowed _his2 huge loads.
+	<<elseif getSlave($AS).relationship == 5>>
+		licks $his lips and smiles as $he approaches $his _wife2's cock. This won't be the first time $he's sucked _his2 dick and swallowed _his2 huge loads.
+	<</if>>
+
+<<elseif getSlave($AS).mother == $milkTap.ID>>
+	$He awkwardly brings $his lips to $his mother's cock.
+<<elseif getSlave($AS).father == $milkTap.ID>>
+	$He <<if getSlave($AS).sexualQuirk == "perverted">>eagerly<<else>>awkwardly<</if>> brings $his lips to daddy's cock.
+<<elseif $milkTap.mother == getSlave($AS).ID>>
+	$He awkwardly brings $his lips to $his <<print relativeTerm(getSlave($AS), $milkTap)>><<print relativeTerm(getSlave($AS), $milkTap)>>'s cock.
+<<elseif $milkTap.father == getSlave($AS).ID>>
+	$He awkwardly brings $his lips to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock.
+<<elseif areSisters(getSlave($AS), $milkTap) == 1>>
+	$He gets in position to suck $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s dick.
+<<elseif areSisters(getSlave($AS), $milkTap) == 2>>
+	$He hesitatingly lowers $himself to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock.
+<<elseif areSisters(getSlave($AS), $milkTap) == 3>>
+	$He hesitatingly lowers $himself to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock.
+
+<<elseif getSlave($AS).relationTarget == $milkTap.ID>>
+	<<if getSlave($AS).relation == "twin">>
+		$He gets in position to suck $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s dick.
+	<<elseif getSlave($AS).relation == "sister">>
+		$He hesitatingly lowers $himself to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock.
+	<<elseif getSlave($AS).relation == "mother">>
+		$He awkwardly brings $his lips to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock.
+	<<elseif getSlave($AS).relation == "daughter">>
+		$He awkwardly brings $his lips to $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock.
+	<</if>>
+
+<<elseif (getSlave($AS).fetish == "cumslut") && (getSlave($AS).fetishKnown == 1) && (getSlave($AS).fetishStrength > 60) && (getSlave($AS).devotion >= -20)>>
+	$He can't wait to wrap $his lips around $milkTap.slaveName's cock and balloon with cum, so $he eagerly approaches the waiting shaft.
+
+<<elseif (getSlave($AS).fetish == "submissive") && (getSlave($AS).fetishStrength > 60) && (getSlave($AS).fetishKnown == 1)>>
+	$He is accustomed to submitting to you, but as a natural submissive $he doesn't have much trouble submitting to $milkTap.slaveName instead.
+
+<<elseif getSlave($AS).devotion < -20>>
+	$He tries to refuse, so you tie $him up, force a mouth spreader into $him, and position $him for $milkTap.slaveName to thrust into.
+
+<<elseif getSlave($AS).devotion <= 20>>
+	$He obeys your orders reluctantly, drawing near $milkTap.slaveName's cock despite $his obvious hesitation to amount of cum that will be gushing into $him.
+
+<<elseif getSlave($AS).devotion <= 50>>
+	$He obeys your orders, drawing near $milkTap.slaveName's cock despite $his slight hesitation at the idea of being filled with cum.
+
+<<else>>
+	$He happily obeys your orders, eagerly <<if canTaste(getSlave($AS))>>tasting<<else>>licking up<</if>> $milkTap.slaveName's beading precum before wrapping $his lips around $milkTap.slaveName's cock and sucking enthusiastically.
+<</if>>
+
+<br><br>
+
+<<if getSlave($AS).preg > 3 && getSlave($AS).pregKnown == 0 && getSlave($AS).inflation > 1>>
+	It becomes abundantly clear that something is wrong with <<= getSlave($AS).slaveName>> as $he struggles to down $his thick meal. Before $his health can be affected further, you pull $him into a medical exam. While most of the tests come back normal, one in particular catches your eye; @@.lime;$he is pregnant<<if getSlave($AS).preg > 10>> and surprisingly far along<</if>>.@@ $he should be able to still handle at least two liters of cum, however.
+	<<set getSlave($AS).inflation = 0, getSlave($AS).inflationType = "none", getSlave($AS).inflationMethod = 0, getSlave($AS).pregKnown = 1>>
+	<<set _pregDiscovery = 1>>
+
+<<elseif $milkTap.fuckdoll > 0>>
+	Slight moaning emanates from the Fuckdoll as <<= getSlave($AS).slaveName>> sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off _his2 cock and settles into _his2 balls for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off _his2 cock and settles into _his2 balls for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off _his2 cock and settles into _his2 balls for a short rest while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+
+<<elseif $milkTap.rivalryTarget == getSlave($AS).ID>>
+	$milkTap.slaveName grins as _his2 rival is forced to suck down loads until $his belly is <<if getSlave($AS).inflation == 3>>nearly bursting with cum. <<= getSlave($AS).slaveName>> struggles against $his bindings until the pressure building in $his overwhelms $him, causing $him to pass out with $milkTap.slaveName's ejaculating cock still stuck in $him. You quickly remove $him from it, making sure $he gets roused from $his stupor by one last blast of cum directly to the face<<elseif getSlave($AS).inflation == 2>>is rounded, jiggling and sloshing with cum. You release $his bindings, allowing $him to flop to the floor. <<if hasAnyArms(getSlave($AS))>>$He gingerly crawls away from $milkTap.slaveName, $his hand cradling $his overfull stomach<<else>>$He rolls onto $his side, groaning with discomfort<</if>><<elseif getSlave($AS).inflation == 1>>bloated with cum. You release $his bindings, allowing $him to flop to the floor. <<if hasAnyArms(getSlave($AS))>>$He gingerly sits up and begins massaging $his full stomach<<else>>$He rolls onto $his back, hiccupping pathetically<</if>><</if>>.
+
+<<elseif $milkTap.relationshipTarget == getSlave($AS).ID>>
+	<<if $milkTap.relationship == 1>>
+		$milkTap.slaveName moans as _his2 friend energetically sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his friend's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his friend's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his friend's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relationship == 2>>
+		$milkTap.slaveName moans as _his2 best friend energetically sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his best friend's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his best friend's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his best friend's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relationship == 3>>
+		$milkTap.slaveName moans lewdly as _his2 friend with benefits energetically sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his friend with benefits' cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his friend with benefits' cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his friend with benefits' cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relationship == 4>>
+		$milkTap.slaveName moans lustfully as _his2 lover teases $his dick perfectly with _his2 tongue, savoring it despite commonly being sucked off by <<= getSlave($AS).slaveName>> during their lovemaking. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his lover's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his lover's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his lover's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relationship == 5>>
+		$milkTap.slaveName moans lustfully as _his2 $wife teases _his2 dick perfectly with $his tongue, savoring it despite commonly being sucked off by <<= getSlave($AS).slaveName>> during their lovemaking. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his _wife2's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his _wife2's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his _wife2's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<</if>>
+
+<<elseif getSlave($AS).mother == $milkTap.ID>>
+	$milkTap.slaveName moans lewdly as _his2 <<print relativeTerm($milkTap, getSlave($AS))>> energetically sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his mother's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his mother's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his mother's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+<<elseif getSlave($AS).father == $milkTap.ID>>
+	$milkTap.slaveName moans lewdly as _his2 <<print relativeTerm($milkTap, getSlave($AS))>> energetically sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his father's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his father's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his father's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+<<elseif $milkTap.mother == getSlave($AS).ID>>
+	$milkTap.slaveName moans lewdly as _his2 mother energetically sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+<<elseif $milkTap.father == getSlave($AS).ID>>
+	$milkTap.slaveName moans lewdly as _his2 father energetically sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>><<if getSlave($AS).dick > 0 && canAchieveErection(getSlave($AS))>>, $his own stiff prick throbbing against the underside of $his new belly<</if>>.
+<<elseif areSisters(getSlave($AS), $milkTap) == 1>>
+	$milkTap.slaveName moans lewdly as _his2 <<print relativeTerm($milkTap, getSlave($AS))>> sucks _him2 off. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+<<elseif areSisters(getSlave($AS), $milkTap) == 2>>
+	$milkTap.slaveName moans lewdly as _his2 <<if $milkTap.actualAge >= getSlave($AS).actualAge>>little<<else>>big<</if>> <<print relativeTerm($milkTap, getSlave($AS))>> energetically sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+<<elseif areSisters(getSlave($AS), $milkTap) == 3>>
+	$milkTap.slaveName moans lewdly as _his2 <<print relativeTerm($milkTap, getSlave($AS))>> sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+
+<<elseif $milkTap.relationTarget == getSlave($AS).ID>>
+	<<if $milkTap.relation == "twin">>
+		$milkTap.slaveName moans lewdly as _his2 <<print relativeTerm($milkTap, getSlave($AS))>> <<print relativeTerm($milkTap, getSlave($AS))>> sucks _his2 off. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relation == "sister">>
+		$milkTap.slaveName moans lewdly as _his2 <<if $milkTap.actualAge >= getSlave($AS).actualAge>>little<<else>>big<</if>> <<print relativeTerm($milkTap, getSlave($AS))>> energetically sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relation == "mother">>
+		$milkTap.slaveName moans lewdly as _his2 <<print relativeTerm($milkTap, getSlave($AS))>> energetically sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his mother's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his mother's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his mother's cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<<elseif $milkTap.relation == "daughter">>
+		$milkTap.slaveName moans lewdly as _his2 mother energetically sucks _his2 dick. You enjoy the show, specifically the sight of <<= getSlave($AS).slaveName>>'s belly steadily growing larger with each orgasm until <<if getSlave($AS).inflation == 3>>$his belly is round and taut, making $him look pregnant. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and rubbing $his gurgling stomach<</if>><<elseif getSlave($AS).inflation == 2>>$his belly is round, jiggling and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his wobbling, gurgling stomach<</if>><<elseif getSlave($AS).inflation == 1>>$his belly is distended and sloshing with cum. $He pops off $his <<print relativeTerm(getSlave($AS), $milkTap)>>'s cock and takes a seat facing the smiling $milkTap.slaveName while hiccupping<<if hasAnyArms(getSlave($AS))>> and teasing $his gurgling stomach<</if>><</if>>.
+	<</if>>
+
+<<elseif (getSlave($AS).devotion < -20) && ($milkTap.devotion < -20)>>
+	Since you have two restrained and unwilling slaves, though $milkTap.slaveName's twitching penis betrays _him2, you are going to have to take an active role in forcing <<= getSlave($AS).slaveName>> to suck.
+	<<if canDoVaginal(getSlave($AS))>>
+		Moving behind the struggling cocksleeve while<<if $PC.dick == 0>> donning a strap-on<<else>> teasing your erect cock<</if>>, you pull $him into a comfortable position to penetrate $his <<if getSlave($AS).vagina == 0>>virgin <</if>>pussy. Once you are firmly mounted, you reach around, bringing one hand to $his empty stomach and the other to $his exposed throat. As you thrust into $him, you force $him to choke down $milkTap.slaveName's dick, applying pressure to $his throat any time $he attempts to pull away.
+		<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>
+	<<elseif canDoAnal(getSlave($AS))>>
+		Moving behind the struggling cocksleeve while<<if $PC.dick == 0>> donning a strap-on<<else>> teasing your erect cock<</if>>, you pull $him into a comfortable position to penetrate $his <<if getSlave($AS).anus == 0>>virgin <</if>>rear. Once you are firmly mounted, you reach around, bringing one hand to $his empty stomach and the other to $his exposed throat. As you thrust into $him, you force $him to choke down $milkTap.slaveName's dick, applying pressure to $his throat any time $he attempts to pull away.
+		<<set getSlave($AS).counter.anal++, $analTotal++>>
+	<<elseif $PC.dick != 0 && getSlave($AS).butt > 4>>
+		Moving behind the struggling cocksleeve while teasing your erect cock, you pull $him into a comfortable position to rub your dick between $his huge butt cheeks. Once you are firmly slotted, you reach around, bringing one hand to $his empty stomach and the other to $his exposed throat. As you thrust against $him, you force $him to choke down $milkTap.slaveName's dick, applying pressure to $his throat any time $he attempts to pull away.
+	<<elseif $PC.dick != 0 && hasBothLegs(getSlave($AS))>>
+		Moving behind the struggling cocksleeve while teasing your erect cock, you pull $him into a comfortable position to fuck $his <<if getSlave($AS).weight > 95>>soft <</if>>thighs, for a lack of anything better. Once you are firmly seated, you reach around, bringing one hand to $his empty stomach and the other to $his exposed throat. As you thrust against $him, you force $him to choke down $milkTap.slaveName's dick, applying pressure to $his throat any time $he attempts to pull away.
+	<<else>>
+		Moving behind the struggling cocksleeve while teasing your erect cock, you find a distinct lack of ways to use $him to get off. <<if $PC.dick != 0>>You settle for rubbing your erection against $his back<<else>>You settle for a vibrating dildo stuck deep into your pussy<</if>>, you'll need both hands to fondle your toy. Once you are positioned, you reach around, bringing one hand to $his empty stomach and the other to $his exposed throat. As you masturbate, you force $him to choke down $milkTap.slaveName's dick, applying pressure to $his throat any time $he attempts to pull away.
+	<</if>>
+	<<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with cum, transform into a jiggling mass, and finally grow taut under your molesting fingers and the seemingly endless supply of ejaculate from $milkTap.slaveName<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with cum, finally transforming into a jiggling mass, under your molesting fingers and the seemingly endless supply of ejaculate from $milkTap.slaveName<<else>>You cum as you feel $his belly slowly round with cum under your molesting fingers and the seemingly endless supply of ejaculate from $milkTap.slaveName<</if>>. Standing and releasing $him from $milkTap.slaveName, gives you a lovely sight of <<= getSlave($AS).slaveName>>'s <<if getSlave($AS).inflation == 3>>taut, round belly<<elseif getSlave($AS).inflation == 2>>rounded, jiggling belly<<else>>distended, sloshing belly<</if>> quivering as $he comes down from $his own forced climax<<if $PC.dick != 0 && (canDoAnal(getSlave($AS)) || canDoVaginal(getSlave($AS)))>>, cum leaking from both ends<</if>>.
+	Both slaves @@.mediumorchid;resent@@ what you made them do and @@.gold;fear you@@ as a result.
+	<<set getSlave($AS).devotion -= 5, getSlave($AS).trust -= 5>>
+	<<set $milkTap.devotion -= 5, $milkTap.trust -= 5>>
+	<<if canDoVaginal(getSlave($AS)) && (getSlave($AS).vagina == 0)>>
+		<<= getSlave($AS).slaveName>> @@.mediumorchid;especially,@@ having just @@.lime;lost $his virginity@@ in such a demeaning manner.
+		<<set getSlave($AS).devotion -= 5>>
+		<<set getSlave($AS).vagina = 1>>
+	<<elseif canDoAnal(getSlave($AS)) && (getSlave($AS).anus == 0)>>
+		<<= getSlave($AS).slaveName>> @@.mediumorchid;especially,@@ having just @@.lime;lost $his anal virginity@@ in such a demeaning manner.
+		<<set getSlave($AS).devotion -= 5>>
+		<<set getSlave($AS).anus = 1>>
+	<</if>>
+
+<<elseif ($milkTap.devotion < -20)>>
+	Since your sperm tank is restrained, you order the more obedient <<= getSlave($AS).slaveName>> to enjoy $himself with $milkTap.slaveName's dick. As $he teases and licks, you can't help but notice the tantalizing way $he wiggles $his rear.
+	<<if canDoVaginal(getSlave($AS))>>
+		<<if $PC.dick == 0>>Donning a strap-on<<else>>Stroking your stiffening cock<</if>>, you wait for the perfect moment and mount $his <<if getSlave($AS).vagina == 0>>virgin <</if>>pussy, doggy style.
+		<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>
+	<<elseif canDoAnal(getSlave($AS))>>
+		<<if $PC.dick == 0>>Donning a strap-on<<else>>Stroking your stiffening cock<</if>>, you wait for the perfect moment and mount $his <<if getSlave($AS).anus == 0>>virgin <</if>>asshole, doggy style.
+		<<set getSlave($AS).counter.anal++, $analTotal++>>
+	<<elseif $PC.dick != 0 && getSlave($AS).butt > 4>>
+		Stroking your stiffening cock, you wait for the perfect moment and slip your dick between $his huge butt cheeks.
+	<<elseif $PC.dick != 0 && hasBothLegs(getSlave($AS))>>
+		Stroking your stiffening cock, you wait for the perfect moment, hoist up $his rear and slip your dick between $his <<if getSlave($AS).weight > 95>>soft <</if>>thighs.
+	<<else>>
+		As you watch $his butt, it becomes clear just how few ways there are to use $him to get off. <<if $PC.dick != 0>>You settle for rubbing your erection against $his back<<else>>You settle for a vibrating dildo stuck deep into your pussy<</if>>, you'll need both hands to fondle your toy.
+	<</if>>
+	You wrap your arms around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with ejaculate. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with cum, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with cum, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with cum under your molesting fingers<</if>>. Only once your weight is removed from the squirming cum balloon is $he allowed to pull off of the @@.mediumorchid;exhausted $milkTap.slaveName's@@ cock and catch $his breath.
+	<<if canDoVaginal(getSlave($AS)) && (getSlave($AS).vagina == 0)>>
+		$His senses were so overwhelmed, $he didn't even notice you @@.lime;broke in $his pussy.@@
+		<<set getSlave($AS).vagina = 1>>
+	<<elseif canDoAnal(getSlave($AS)) && (getSlave($AS).anus == 0)>>
+		$His senses were so overwhelmed, $he didn't even notice you @@.lime;broke in $his anus.@@
+		<<set getSlave($AS).anus = 1>>
+	<</if>>
+	$He gives the shaking $milkTap.slaveName an apologetic look before taking a seat. The poor slave isn't used to this yet and @@.gold;is terrified of your willingness@@ to take what you want from your slaves.
+	<<set $milkTap.devotion -= 5, $milkTap.trust -= 5>>
+
+<<elseif ($milkTap.fetish == "cumslut") && ($milkTap.fetishStrength > 60) && ($milkTap.devotion > 20) && (getSlave($AS).devotion < -20)>>
+	<<if canDoVaginal(getSlave($AS))>>
+		You position the restrained <<= getSlave($AS).slaveName>> so that you can penetrate $his <<if getSlave($AS).vagina == 0>>virgin <</if>>pussy <<if $PC.dick == 0>>with a strap-on <</if>> while $he is forced to suck $milkTap.slaveName's dick. With every thrust into the squirming slave, you force the moaning $milkTap.slaveName's cock deep into $his throat.
+		<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>
+	<<elseif canDoAnal(getSlave($AS))>>
+		You position the restrained <<= getSlave($AS).slaveName>> so that you can penetrate $his <<if getSlave($AS).anus == 0>>virgin <</if>>ass <<if $PC.dick == 0>>with a strap-on <</if>> while $he is forced to suck $milkTap.slaveName's dick. With every thrust into the squirming slave, you force the moaning $milkTap.slaveName's cock deep into $his throat.
+		<<set getSlave($AS).counter.anal++, $analTotal++>>
+	<<elseif $PC.dick != 0 && getSlave($AS).butt > 4>>
+		You position the restrained <<= getSlave($AS).slaveName>> so that you can rub your dick between $his huge butt cheeks while $he is forced to suck $milkTap.slaveName's dick. With every thrust against the squirming slave, you force the moaning $milkTap.slaveName's cock deep into $his throat.
+	<<elseif $PC.dick != 0 && hasBothLegs(getSlave($AS))>>
+		You position the restrained <<= getSlave($AS).slaveName>> so that you can fuck $his <<if getSlave($AS).weight > 95>>soft <</if>>thighs while $he is forced to suck $milkTap.slaveName's dick. With every thrust against the squirming slave, you force the moaning $milkTap.slaveName's cock deep into $his throat.
+	<<else>>
+		You position <<= getSlave($AS).slaveName>> so you can rub your <<if $PC.dick == 0>>clit<<else>>dick<</if>> against $him while $he is forced to suck $milkTap.slaveName's dick, since $he lacks any better way to please you. With every thrust against the squirming slave, you force the moaning $milkTap.slaveName's cock deep into $his throat.
+	<</if>>
+	You wrap an arm around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with ejaculate and place your other hand to $milkTap.slaveName's swollen testicles, knowing just how much _he2 loves to jettison cum. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with cum, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with cum, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with cum under your molesting fingers<</if>> and $milkTap.slaveName even more. _He2 is semi-conscious, drooling in @@.hotpink;pleasure and satisfaction,@@ by the time you release the bloated <<= getSlave($AS).slaveName>> from $his harness. Patting _his2 spasming, dribbling cock, you know _he2'll come out of it and be eagerly begging you for another slave to fuck soon. <<= getSlave($AS).slaveName>>, on the other hand, is regarding $his swollen stomach @@.mediumorchid;with disgust@@ and @@.gold;fear@@ of your power over $him.
+	<<if canDoVaginal(getSlave($AS)) && (getSlave($AS).vagina == 0)>>
+		$He @@.mediumorchid;hates you so much more@@ that you @@.lime;broke in $his virgin pussy.@@
+		<<set getSlave($AS).vagina = 1, getSlave($AS).devotion -= 1>>
+	<<elseif canDoAnal(getSlave($AS)) && (getSlave($AS).anus == 0)>>
+		$He @@.mediumorchid;hates you so much more@@ that you @@.lime;broke in $his virgin anus.@@
+		<<set getSlave($AS).anus = 1, getSlave($AS).devotion -= 1>>
+	<</if>>
+	<<set getSlave($AS).devotion -= 5, getSlave($AS).trust -= 5>>
+	<<set $milkTap.devotion += 4>>
+
+<<elseif (getSlave($AS).devotion <= 20) || ($milkTap.devotion <= 20)>>
+	<<if canDoVaginal(getSlave($AS))>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can penetrate $his <<if getSlave($AS).vagina == 0>>virgin <</if>>pussy <<if $PC.dick == 0>>with a strap-on <</if>> while $he sucks $milkTap.slaveName's cock. With every thrust into the squirming slave, you push $milkTap.slaveName's cock deeper down $his throat, giving $milkTap.slaveName's orgasms a straight shot into the moaning slave's gullet.
+		<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>
+	<<elseif canDoAnal(getSlave($AS))>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can penetrate $his <<if getSlave($AS).anus == 0>>virgin <</if>>ass <<if $PC.dick == 0>>with a strap-on <</if>> while $he sucks $milkTap.slaveName's cock. With every thrust into the squirming slave, you push $milkTap.slaveName's cock deeper down $his throat, giving $milkTap.slaveName's orgasms a straight shot into the moaning slave's gullet.
+		<<set getSlave($AS).counter.anal++, $analTotal++>>
+	<<elseif $PC.dick != 0 && getSlave($AS).butt > 4>>
+		You order <<= getSlave($AS).slaveName>> to position $his ass so you can rub your dick between $his huge butt cheeks while $he sucks $milkTap.slaveName's cock. With every thrust against the squirming slave, you push $milkTap.slaveName's cock deeper down $his throat, giving $milkTap.slaveName's orgasms a straight shot into the moaning slave's gullet.
+	<<elseif $PC.dick != 0 && hasBothLegs(getSlave($AS))>>
+		You order <<= getSlave($AS).slaveName>> to position $his ass so you can fuck $his <<if getSlave($AS).weight > 95>>soft <</if>>thighs while $he sucks $milkTap.slaveName's cock. With every thrust against the squirming slave, you push $milkTap.slaveName's cock deeper down $his throat, giving $milkTap.slaveName's orgasms a straight shot into the moaning slave's gullet.
+	<<else>>
+		You order <<= getSlave($AS).slaveName>> to position $himself so you can rub your <<if $PC.dick == 0>>clit<<else>>dick<</if>> against $him while $he is forced to suck $milkTap.slaveName's dick, since $he lacks any better way to please you. With every thrust against the squirming slave, you force the moaning $milkTap.slaveName's cock deep into $his throat.
+	<</if>>
+	You wrap an arm around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with ejaculate and place your other hand to $milkTap.slaveName's balls, planning to coax even stronger orgasms out of _him2. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with cum, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with cum, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with cum under your molesting fingers<</if>>. When you release $him from under your weight, $he drops to the ground panting. Neither slave seems to have truly enjoyed it, instead opting to just get it over with, though $milkTap.slaveName makes sure to thank <<= getSlave($AS).slaveName>> for dealing with $his pent up loads.
+	<<if canDoVaginal(getSlave($AS)) && (getSlave($AS).vagina == 0)>>
+		<<set getSlave($AS).vagina = 1>>
+	<<elseif canDoAnal(getSlave($AS)) && (getSlave($AS).anus == 0)>>
+		<<set getSlave($AS).anus = 1>>
+	<</if>>
+
+<<elseif (getSlave($AS).devotion <= 50) || ($milkTap.devotion <= 50)>>
+	<<if canDoVaginal(getSlave($AS))>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can penetrate $his <<if getSlave($AS).vagina == 0>>virgin <</if>>pussy <<if $PC.dick == 0>>with a strap-on <</if>> while $he sucks $milkTap.slaveName's cock. $He submissively obeys. With every thrust into the moaning slave, you push milkTap.slaveName's dick deeper down $his throat.
+		<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>
+	<<elseif canDoAnal(getSlave($AS))>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can penetrate $his <<if getSlave($AS).anus == 0>>virgin <</if>>ass <<if $PC.dick == 0>>with a strap-on <</if>> while $he sucks $milkTap.slaveName's cock. $He submissively obeys. With every thrust into the moaning slave, you push milkTap.slaveName's dick deeper down $his throat.
+		<<set getSlave($AS).counter.anal++, $analTotal++>>
+	<<elseif $PC.dick != 0 && getSlave($AS).butt > 4>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can rub your dick between $his huge butt cheeks while $he sucks $milkTap.slaveName's cock. $He submissively obeys. With every thrust against the moaning slave, you push milkTap.slaveName's dick deeper down $his throat.
+	<<elseif $PC.dick != 0 && hasBothLegs(getSlave($AS))>>
+		You order <<= getSlave($AS).slaveName>> to lift $his ass so you can fuck $his <<if getSlave($AS).weight > 95>>soft <</if>>thighs while $he sucks $milkTap.slaveName's cock. $He submissively obeys. With every thrust against the moaning slave, you push milkTap.slaveName's dick deeper down $his throat.
+	<<else>>
+		You order <<= getSlave($AS).slaveName>> to position $himself so you can rub your <<if $PC.dick == 0>>clit<<else>>dick<</if>> against $him while $he sucks $milkTap.slaveName's cock, since $he lacks any better way to please you. $He submissively obeys. With every thrust against the moaning slave, you push milkTap.slaveName's dick deeper down $his throat.
+	<</if>>
+	You wrap an arm around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with ejaculate and place your other hand to $milkTap.slaveName's balls, knowing just how much _he2 gets backed up. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with cum, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with cum, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with cum under your molesting fingers<</if>>. When you release $him from under your weight, $he drops to the ground panting. Both slaves enjoyed their union, though $milkTap.slaveName even more so after that many orgasms.
+	<<if canDoVaginal(getSlave($AS)) && (getSlave($AS).vagina == 0)>>
+		<<= getSlave($AS).slaveName>> feels @@.hotpink;closer to you@@ after losing $his virginity to you.
+		<<set getSlave($AS).vagina = 1, getSlave($AS).devotion += 5>>
+	<<elseif canDoAnal(getSlave($AS)) && (getSlave($AS).anus == 0)>>
+		<<= getSlave($AS).slaveName>> feels @@.hotpink;closer to you@@ after losing $his anal virginity to you.
+		<<set getSlave($AS).anus = 1, getSlave($AS).devotion += 5>>
+	<</if>>
+
+<<else>>
+
+	<<= getSlave($AS).slaveName>> eagerly lifts $his ass and jiggles it seductively as $he sucks the moaning slut.
+	<<if canDoVaginal(getSlave($AS))>>
+		You know that signal, so you hilt yourself in <<if getSlave($AS).vagina == 0>>virgin <</if>>pussy <<if $PC.dick == 0>>with a strap-on <</if>> and begin spitroasting $him with $milkTap.slaveName. With every thrust into the moaning slave, every participant comes closer to their own climax.
+		<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>
+	<<elseif canDoAnal(getSlave($AS))>>
+		You know that signal, so you hilt yourself in <<if getSlave($AS).anus == 0>>virgin <</if>>ass <<if $PC.dick == 0>>with a strap-on <</if>> and begin spitroasting $him with $milkTap.slaveName. With every thrust into the moaning slave, every participant comes closer to their own climax.
+		<<set getSlave($AS).counter.anal++, $analTotal++>>
+	<<elseif $PC.dick != 0 && getSlave($AS).butt > 4>>
+		You know that signal, but $he isn't allowed to get penetrated, so you settle for sticking your dick between $his huge butt cheeks and fucking $him along with $milkTap.slaveName. With every thrust against the moaning slave, both you and $milkTap.slaveName come closer to climax.
+	<<elseif $PC.dick != 0 && hasBothLegs(getSlave($AS))>>
+		You know that signal, but $he isn't allowed to get penetrated, so you settle for sticking your dick between $his <<if getSlave($AS).weight > 95>>soft <</if>>thighs and fucking $him along with $milkTap.slaveName. With every thrust against the moaning slave, both you and $milkTap.slaveName come closer to climax.
+	<<else>>
+		You know that signal, but $he isn't allowed to get fucked, so you reposition $him so you can rub your <<if $PC.dick == 0>>clit<<else>>dick<</if>> against $him while $he deepthroats $milkTap.slaveName. With every thrust against the moaning slave, both you and $milkTap.slaveName come closer to climax.
+	<</if>>
+	You wrap an arm around <<= getSlave($AS).slaveName>>'s middle so you may feel $his stomach swell with ejaculate and place your other hand to $milkTap.slaveName's breasts to prevent _him2 from feeling left out from your attention. <<if getSlave($AS).inflation == 3>>You cum multiple times as you feel $his belly slowly round with cum, transform into a jiggling mass, and finally grow taut under your molesting fingers<<elseif getSlave($AS).inflation == 2>>You cum several times as you feel $his belly slowly round with cum, finally transforming into a jiggling mass, under your molesting fingers<<else>>You cum as you feel $his belly slowly round with cum under your molesting fingers<</if>>. When you release $him from under your weight, $he drops to the ground panting from $his meal and from the pleasure you drove into $him. Both slaves @@.hotpink;loved the attention,@@ though $milkTap.slaveName even more so after so much relief.
+	<<set getSlave($AS).devotion += 4>>
+	<<set $milkTap.devotion += 4>>
+	<<if canDoVaginal(getSlave($AS)) && (getSlave($AS).vagina == 0)>>
+		<<= getSlave($AS).slaveName>> got off quite strongly from the growing pressure within $him, @@.hotpink;cementing@@ $his @@.lime;first fucking@@ as something special.
+		<<set getSlave($AS).devotion += 4, getSlave($AS).anus = 1>>
+	<<elseif canDoAnal(getSlave($AS)) && (getSlave($AS).anus == 0)>>
+		<<= getSlave($AS).slaveName>> got off quite strongly from the growing pressure within $him, @@.hotpink;cementing@@ $his @@.lime;first anal@@ as something special.
+		<<set getSlave($AS).devotion += 4, getSlave($AS).anus = 1>>
+	<</if>>
+
+<</if>>
+
+<</if>>
+
+<br><br>
+
+<<if _pregDiscovery == 0>>
+	<<set getSlave($AS).counter.oral++, $milkTap.counter.oral++, $oralTotal += 2>>
+	You help the bloated <<= getSlave($AS).slaveName>> to the couch to recover and, more importantly, keep $his meal down. Only once $he has had several minutes to unwind<<if getSlave($AS).devotion > 10>> and plenty of time to tease you with $his swollen body, do you tell <<else>> do you order<</if>> $him to keep drinking from $milkTap.slaveName so that $he is always filled with <<if getSlave($AS).inflation == 3>>two gallons<<elseif getSlave($AS).inflation == 2>>four liters<<else>>two liters<</if>> of <<= getSlave($AS).inflationType>>. You give $his <<if getSlave($AS).inflation == 3>>taut, firm globe of a belly a pat<<elseif getSlave($AS).inflation == 2>>wobbly, sloshing belly a pat<<else>>distended, sloshing belly a pat<</if>> and send $him on $his way.
+
+	<<if getSlave($AS).inflation == 3>>
+		<<if canWalk(getSlave($AS))>>$He gingerly leaves your office, massaging $his over-stuffed belly as $he goes<<else>>$His belly is so taut it barely wobbles at all as $he is helped from your office<</if>>. Being filled so full @@.red;surely had negative effects@@ on $his health.
+		<<run healthDamage(getSlave($AS), 1)>>
+	<<elseif getSlave($AS).inflation == 2>>
+		<<if canWalk(getSlave($AS))>>$He gingerly leaves your office, massaging $his stuffed belly as $he goes<<else>>$His belly wobbles heavily as $he is helped from your office<</if>>.
+	<<elseif getSlave($AS).inflation == 1>>
+		<<if canWalk(getSlave($AS))>>$He gingerly leaves your office, massaging $his distended belly as $he goes<<else>>$His belly wobbles as $he is helped from your office<</if>>.
+	<</if>>
+	<br><br>
+	<<if $milkTap.fuckdoll == 0>>
+		Once $he is gone, you see to it that the contented $milkTap.slaveName is helped back to _his2 assignment, but only after _his2 dribbling <<if getSlave($AS).inflationType == "milk">>teats are dealt with<<else>>cock is dealt with<</if>>, causing the waiting servant to gulp nervously at what that may entail.
+	<<else>>
+		Once $he is gone, you see to it that the dribbling Fuckdoll is cleaned up and returned to _his2 proper place, but only after _his2 leaking <<if getSlave($AS).inflationType == "milk">>teats are dealt with<<else>>cock is dealt with<</if>>, causing the waiting servant to gulp nervously at what that may entail.
+	<</if>>
+<<else>>
+	<<if $milkTap.fuckdoll == 0>>
+		With <<= getSlave($AS).slaveName>> unable to continue, you are left with the backed up $milkTap.slaveName to deal with. _He2'll have to figure out some other way to relieve _himself2 as _he2 is helped back to _his2 assignment.
+	<<else>>
+		With <<= getSlave($AS).slaveName>> unable to continue, you are left with the backed up $milkTap.slaveName to deal with. Hopefully _he2 doesn't leak too much as _he2 waits for further use.
+	<</if>>
+<</if>>
+
+<<run SetBellySize(getSlave($AS))>>
+<<set $slaves[$slaveIndices[$milkTap.ID]] = $milkTap>>
+<<set $milkTap = 0>>

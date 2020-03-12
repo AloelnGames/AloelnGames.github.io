@@ -1,0 +1,30 @@
+:: Nursery Retrieval Workaround [nobr]
+
+$readySlave.slaveName has been discharged from $nurseryName and is ready to become your slave.
+
+<br><br>
+
+<<set $activeSlave = $readySlave>>
+<<set $saleDescription = 0, $applyLaw = 0>>
+<<set $nurseryBabies-->>
+<<include "Long Slave Description">>
+<<run newSlave($activeSlave)>>
+<<set $slaves.push($activeSlave)>>
+<<set $nextLink = "AS Dump">>
+<<set $returnTo = "Main">>
+/*
+<<if $nurseryOrgans.length > 0>>
+	<<for _i = 0; _i < $nurseryOrgans.length; _i++>>
+		<<if $nurseryOrgans[_i].ID == $nurseryOldID>>
+			<<set _newOrgan = {type: $nurseryOrgans[_i].type, weeksToCompletion: $nurseryOrgans[_i].weeksToCompletion, ID: $activeSlave.ID}>>
+			<<if _newOrgan.weeksToCompletion <= 0>>
+				<<set $completedOrgans.push($nurseryOrgans[_i])>>
+			<<else>>
+				<<set $organs.push(_newOrgan)>>
+			<</if>>
+			<<set $nurseryOrgans.deleteAt(_i), _i-->>
+		<</if>>
+	<</for>>
+<</if>>
+*/
+/*<<include "New Child Nursery">>*/

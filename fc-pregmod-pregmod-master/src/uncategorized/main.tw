@@ -1,0 +1,76 @@
+:: Main [nobr]
+
+/* make sure the first thing that happens is the error check */
+<<set _errors = App.MainView.errors()>>
+<span id="errors"></span>
+<<script>>
+	$(document).one(':passagerender', event => {
+		event.content.prepend(State.temporary.errors);
+	});
+<</script>>
+
+<<if $tabChoice.SlaveInteract != 'Description'>>
+ <<set $tabChoice.SlaveInteract = 'Description'>>
+<</if>>
+
+<<set _visibleSlaves = $slaves.filter(s => assignmentVisible(s) && (s.assignment != "be your Head Girl" || $HGSuite != 1) && (s.assignment != "guard you" || $dojo <= 1)),
+	$slavesVisible = _visibleSlaves.length,
+	$dormitoryPopulation = _visibleSlaves.filter(s => s.rules.living != "luxurious").length,
+	$roomsPopulation = $slavesVisible - $dormitoryPopulation - _visibleSlaves.filter(s => s.rules.living == "luxurious" && s.relationship >= 4).length * 0.5,
+	_PA = (Array.isArray($personalAttention) ? $personalAttention.map(function(x) { return getSlave(x.ID); }) : []),
+	_HG = $slaveIndices[$HeadGirl.ID],
+	_RC = $slaveIndices[$Recruiter.ID],
+	_BG = $slaveIndices[$Bodyguard.ID]>>
+
+<<if (def _HG && $HGSuite > 0)>><<set $slavesVisible++>><</if>>
+<<if ($HGSuiteiIDs.length > 0)>><<set $slavesVisible++>><</if>>
+<<if (def _BG && $dojo > 1)>><<set $slavesVisible++>><</if>>
+
+<<set $nextButton = "END WEEK", $nextLink = "End Week", $showEncyclopedia = 1, $encyclopedia = "How to Play">>
+<<set $costs = Math.trunc(calculateCosts.predict())>>
+
+<<set $currentRule = $defaultRules[0]>>
+
+<<run SlaveSort.slaves($slaves)>>
+
+<<set _SL = $slaves.length>>
+
+<<if $newModelUI == 1>>
+	<span id="building"></span>
+	<<script>>
+		$(document).one(':passageend', () => {
+			$('#building').append(
+				V.building.render(),
+			);
+		});
+	<</script>>
+<</if>>
+
+<<if $seeArcology == 1>>
+	<div id="arcDesc"></div>
+	<<script>>
+		$(document).one(':passageend', () => {
+			$('#arcDesc').append(
+				App.Desc.playerArcology(App.UI.DOM.combineNodes("| ",
+					App.UI.DOM.passageLink("Hide", "Main", () => {V.seeArcology = 0})))
+			);
+		});
+	<</script>>
+<</if>>
+
+<<if $seeDesk == 1>>
+	<<include "Office Description">>
+	[[Hide|Main][$seeDesk = 0]]
+<</if>>
+
+<<print App.MainView.full()>>
+
+<<set $activeSlave = $slaves.random()>>
+<<if $activeSlave && ($activeSlave.assignment != "please you") && ($activeSlave.assignment != "guard you")>>
+	<br>//<span id="walk"><<= walkPast($activeSlave)>></span>//
+<</if>>
+<<if ($debugMode == 1)>>
+	//| [[Show all walk past scenes|Walk Past List]]//
+<</if>>
+
+<<run App.UI.SlaveList.ScrollPosition.restore()>>

@@ -1,0 +1,519 @@
+:: secBarracks [nobr]
+
+<<set $nextButton = "Back">>
+<<if $sideBarOptions.compact > 0>>
+	<<set $nextLink = "Manage Arcology">>
+<<else>>
+	<<set $nextLink = "Main">>
+<</if>>
+
+The Barracks
+<hr>
+__Upgrades__
+<br>
+While this a sore sight for many citizens of $arcologies[0].name, the barracks stand proud before you.
+<<if $SecExp.buildings.barracks.upgrades.size == 0>>
+	The building is relatively small and able to house a limited number of units.
+<<elseif $SecExp.buildings.barracks.upgrades.size == 1>>
+	The building has been expanded and can now house more units comfortably.
+<<elseif $SecExp.buildings.barracks.upgrades.size == 2>>
+	The building has been further expanded and can now house a high number of units.
+<<elseif $SecExp.buildings.barracks.upgrades.size == 3>>
+	The building has been greatly expanded and can now house a sizable military.
+<<elseif $SecExp.buildings.barracks.upgrades.size == 4>>
+	The building has been greatly expanded and can now house a small army.
+<<else>>
+	The building has been greatly expanded and can now house an army worthy of an old world nation.
+<</if>>
+<<if $SecExp.buildings.barracks.upgrades.luxury == 0>>
+	The barracks are a spartan building, with little to make the day to day lives of your soldiers pleasant.
+<<elseif $SecExp.buildings.barracks.upgrades.luxury == 1>>
+	The barracks have been made more comfortable by installing high tech furniture.
+<<elseif $SecExp.buildings.barracks.upgrades.luxury == 2>>
+	The barracks have been made more comfortable by installing high tech furniture and advanced kitchen facilities.
+<<elseif $SecExp.buildings.barracks.upgrades.luxury == 3>>
+	The barracks have been made more comfortable by installing high tech furniture and advanced kitchen facilities. It also provides free access to any digital media.
+<<else>>
+	The barracks have been made more comfortable by installing high tech furniture and advanced kitchen facilities. It also provides free access to any digital media. A small limited-access brothel has been added to the structure.
+<</if>>
+<<if $SecExp.buildings.barracks.upgrades.training == 0>>
+	The building lacks the space and the equipment to train your units.
+<<elseif $SecExp.buildings.barracks.upgrades.training == 1>>
+	A training facility has been set up, allowing your units to better their skills with time.
+<<else>>
+	The training facility has been filled with specialized equipment and skilled trainers.
+<</if>>
+<<if $SecExp.buildings.barracks.upgrades.loyaltyMod == 0>>
+	The barracks lack an indoctrination facility.
+<<elseif $SecExp.buildings.barracks.upgrades.loyaltyMod == 1>>
+	The barracks have been fitted with an indoctrination facility.
+<<else>>
+	The barracks have been fitted with an advanced indoctrination facility.
+<</if>>
+<br>
+<br>
+<<if $SecExp.buildings.barracks.upgrades.size < 5>>
+	<<link "Increase the size of the barracks" "secBarracks">>
+		<<run cashX(forceNeg(Math.trunc((5000 * ($SecExp.buildings.barracks.upgrades.size + 1))*$upgradeMultiplierArcology)), "capEx")>>
+		<<set $SecExp.buildings.barracks.upgrades.size += 1>>
+	<</link>>
+	<br>//Costs <<print cashFormat((5000 * ($SecExp.buildings.barracks.upgrades.size + 1))*$upgradeMultiplierArcology)>> and will increase the maximum number of units by 2.//
+<<else>>
+	You've expanded the barracks to their maximum.
+<</if>>
+<br>
+<<if $SecExp.buildings.barracks.upgrades.luxury == 0>>
+	<<link "Increase the quality of life of your soldiers by installing high tech furniture and appliances." "secBarracks">>
+		<<set $SecExp.buildings.barracks.upgrades.luxury += 1>>
+		<<run cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierTrade)), "capEx")>>
+	<</link>>
+	<br>//Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierTrade))>> and will provide a 5% bonus to morale.//
+<<elseif $SecExp.buildings.barracks.upgrades.luxury == 1>>
+	<<link "Further increase the quality of life of your soldiers by installing advanced kitchen equipment and hiring skilled chefs." "secBarracks">>
+		<<set $SecExp.buildings.barracks.upgrades.luxury += 1>>
+		<<run cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierTrade)), "capEx")>>
+	<</link>>
+	<br>//Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierTrade))>> and will provide a 5% bonus to morale, for a total of +10%.//
+<<elseif $SecExp.buildings.barracks.upgrades.luxury == 2>>
+	<<link "Further increase the quality of life of your soldiers by providing high speed, free access to digital media" "secBarracks">>
+		<<set $SecExp.buildings.barracks.upgrades.luxury += 1>>
+		<<run cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierTrade)), "capEx")>>
+	<</link>>
+	<br>//Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierTrade))>> and will provide a 5% bonus to morale, for a total of +15%.//
+<<elseif $SecExp.buildings.barracks.upgrades.luxury == 3>>
+	<<link "Further increase the quality of life of your soldiers by adding and staffing an exclusive brothel to the structure" "secBarracks">>
+		<<set $SecExp.buildings.barracks.upgrades.luxury += 1>>
+		<<run cashX(forceNeg(Math.trunc(15000*$upgradeMultiplierArcology)), "capEx")>>
+	<</link>>
+	<br>//Costs <<print cashFormat(Math.trunc(15000*$upgradeMultiplierArcology))>> and will provide a 5% bonus to morale, for a total of +20%.//
+<<else>>
+	You've made life in your barracks as good as it can get.
+<</if>>
+<br>
+<<if $SecExp.buildings.barracks.upgrades.training == 0>>
+	<<link "Add a training facility to the barracks" "secBarracks">>
+		<<set $SecExp.buildings.barracks.upgrades.training += 1>>
+		<<run cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierArcology)), "capEx")>>
+	<</link>>
+	<br>//Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology))>> and will allow units to accumulate some experience each week.//
+<<elseif $SecExp.buildings.barracks.upgrades.training == 1>>
+	<<link "Improve the training facility with modern equipment and skilled personnel" "secBarracks">>
+		<<set $SecExp.buildings.barracks.upgrades.training += 1>>
+		<<run cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierTrade)), "capEx")>>
+	<</link>>
+	<br>//Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierTrade))>> and will allow units to accumulate experience each week.//
+<<else>>
+	You have improved the training facility to the limit.
+<</if>>
+<br>
+<<if $SecExp.buildings.barracks.upgrades.loyaltyMod == 0>>
+	<<link "Add an indoctrination facility to the barracks" "secBarracks">>
+		<<set $SecExp.buildings.barracks.upgrades.loyaltyMod += 1>>
+		<<run cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierArcology)), "capEx")>>
+	<</link>>
+	<br>//Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology))>> and will slowly raise loyalty of all units//
+<<elseif $SecExp.buildings.barracks.upgrades.loyaltyMod == 1>>
+	<<link "Improve the indoctrination facility with advanced equipment and skilled personnel" "secBarracks">>
+		<<set $SecExp.buildings.barracks.upgrades.loyaltyMod += 1>>
+		<<run cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierTrade)), "capEx")>>
+	<</link>>
+	<br>//Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierTrade))>> and will raise loyalty of all units faster.//
+<<else>>
+	You have improved the indoctrination facility to the limit.
+<</if>>
+
+<hr>
+__Units__
+<br>
+Your current maximum number of units is <<print App.SecExp.battle.maxUnits()>> (<<print num($secBots.maxTroops+(50*App.SecExp.battle.maxUnits()))>> troops), <<print App.SecExp.battle.activeUnits()>> (<<print num($secBots.maxTroops+($slavesEmployedManpower)+($militiaEmployedManpower)+($mercEmployedManpower))>> troops) are active and <<print (2 * App.SecExp.battle.deploySpeed())>> units can be deployed. <<if $SecExp.buildings.barracks.upgrades.luxury > 0>>The barracks provides <<print $SecExp.buildings.barracks.upgrades.luxury * 5>>% bonus morale when battle occurs.<</if>> <<if $SecExp.buildings.barracks.upgrades.training > 0>>The training facility will increase the effectiveness of your units with time.<</if>>
+<br>
+<<options $SecExp.settings.unitDescriptions>>
+	Unit descriptions are
+	<<option 1 "Abbreviated">>
+	<<option 0 "Summarized">>
+<</options>>
+<<if App.SecExp.battle.activeUnits() >= App.SecExp.battle.maxUnits()>>
+	<br>You have reached the maximum number of units. You'll have to disband one or enlarge the barracks before forming a new unit.
+<</if>>
+<<if $arcologies[0].FSRomanRevivalist != "unset" || $arcologies[0].FSChineseRevivalist != "unset" || $arcologies[0].FSArabianRevivalist != "unset" || $arcologies[0].FSEdoRevivalist != "unset" || $arcologies[0].FSEgyptianRevivalist != "unset" || $arcologies[0].FSAztecRevivalist != "unset">>
+<</if>>
+<br>
+<<replenishAllUnits>>
+
+<br>__Security Drones__
+/* drones */
+<br>
+
+<<if $arcologyUpgrade.drones == 1>>
+	<<= App.SecExp.unit.dec($secBots, "Bots")>>
+	<br>
+	<<if $secBots.active == 1>>
+		<<link "Review Equipment and upgrades" "seeUnit">>
+			<<set $targetUnit = "secBots">>
+		<</link>>
+		<<if $secBots.troops < $secBots.maxTroops>>
+			|
+			<<link "Replenish the unit" "secBarracks">>
+				<<run cashX(forceNeg(($secBots.maxTroops - $secBots.troops) * $secBotsCost), "securityExpansion")>>
+				<<set $secBots.troops = $secBots.maxTroops>>
+			<</link>>
+		<</if>>
+	<<else>>
+		<<link "Rebuild the unit" "secBarracks">>
+			<<run cashX(forceNeg(($secBots.maxTroops - $secBots.troops) * $secBotsCost), "securityExpansion")>>
+			<<set $secBots.troops = $secBots.maxTroops>>
+			<<set $secBots.active = 1>>
+		<</link>>
+	<</if>>
+<<else>>
+	You have not yet installed a drone security system in your arcology, you will not be able to form a unit of drones.
+<</if>>
+
+<br><br>__Slaves__
+<br>/* slaves */
+You are free to organize your menial slaves into fighting units. Currently you have <<print num($menials)>> slaves available, while <<print num($slavesEmployedManpower)>> are already employed as soldiers. During all your battles you lost a total of <<print num($slavesTotalCasualties)>>.
+<<run MenialPopCap()>>
+<<set _menialPrice = menialSlaveCost()>>
+<<set _bulkMax = $PopCap-$menials-$fuckdolls-$menialBioreactors>>
+<<if $cash > _menialPrice>>
+	<<if _bulkMax > 0>>
+		<br>
+		[[Buy|secBarracks][$menials+=1,$menialSupplyFactor-=1,cashX(forceNeg(_menialPrice), "menialTransfer")]]
+		<<if $cash > (menialSlaveCost(10))*10>>
+			[[(x10)|secBarracks][$menials+=10,$menialSupplyFactor-=10,cashX(forceNeg((menialSlaveCost(10))*10), "menialTransfer")]]
+		<</if>>
+		<<if $cash > (menialSlaveCost(100))*100>>
+			[[(x100)|secBarracks][$menials+=100,$menialSupplyFactor-=100,cashX(forceNeg((menialSlaveCost(100))*100), "menialTransfer")]]
+		<</if>>
+		<<if $cash > (_menialPrice+1)*2>>
+			<<set _menialBulkPremium = Math.trunc(1 + Math.clamp($cash/_menialPrice,0,_bulkMax)/400)>>
+			[[(max)|secBarracks][$menials+=Math.trunc(Math.clamp($cash/(_menialPrice+_menialBulkPremium),0,_bulkMax)),$menialSupplyFactor-=Math.trunc(Math.clamp($cash/(_menialPrice+_menialBulkPremium),0,_bulkMax)),cashX(forceNeg(Math.trunc(Math.clamp($cash/(_menialPrice+_menialBulkPremium),0,_bulkMax)*(_menialPrice+_menialBulkPremium))), "menialTransfer")]]
+		<</if>>
+		//Bulk transactions may require offering a premium.//
+	<</if>>
+<</if>>
+<br>
+<<set _sL = $slaveUnits.length>>
+<<if $menials > 0 && App.SecExp.battle.activeUnits() < App.SecExp.battle.maxUnits()>>
+	<br>
+	<<link "Form a new unit" "secBarracks">>
+		<<set _newUnit = {
+			ID: 0,
+			platoonName: ordinalSuffix(++$createdSlavesUnits) + " slave platoon",
+			active: 1,
+			isDeployed: 0,
+			troops: Math.min($maxTroops, $menials),
+			maxTroops: $maxTroops,
+			equip: 0,
+			training: 0,
+			loyalty: random(40,60),
+			cyber: 0,
+			medics: 0,
+			SF: 0,
+			commissars: 0,
+			battlesFought: 0}>>
+		<<generateUnitID _newUnit>>
+		<<set $slaveUnits.push(_newUnit)>>
+		<<set $menials -= _newUnit.troops>>
+		<<set $slavesEmployedManpower += _newUnit.troops>>
+	<</link>>
+<</if>>
+<<for _i = 0; _i < _sL; _i++>>
+	<<capture _i>>
+	<<if $slaveUnits[_i].active == 1>>
+		<br>
+		<<= App.SecExp.unit.dec($slaveUnits[_i], "Slaves")>>
+		<br>
+		<<link "Disband the unit" "secBarracks">>
+			<<set $menials += $slaveUnits[_i].troops>>
+			<<set $slavesEmployedManpower -= $slaveUnits[_i].troops>>
+			<<set $slaveUnits.deleteAt(_i)>>
+		<</link>>
+		|
+		<<link "Review Equipment and upgrades" "seeUnit">>
+			<<set $targetUnit = "slaveUnits">>
+			<<set $targetIndex = _i>>
+		<</link>>
+
+		<<if $slaveUnits[_i].troops < $slaveUnits[_i].maxTroops && $menials > 0>>
+			|
+			<<link "Replenish unit" "secBarracks">>
+				<<if $menials >= $slaveUnits[_i].maxTroops - $slaveUnits[_i].troops>>
+					<<set $menials -= $slaveUnits[_i].maxTroops - $slaveUnits[_i].troops>>
+					<<set $slavesEmployedManpower += $slaveUnits[_i].maxTroops - $slaveUnits[_i].troops>>
+					<<set _expLoss = ($slaveUnits[_i].maxTroops - $slaveUnits[_i].troops) / $slaveUnits[_i].troops>>
+					<<set $slaveUnits[_i].training -= $slaveUnits[_i].training * _expLoss>>
+					<<set $slaveUnits[_i].troops = $slaveUnits[_i].maxTroops>>
+				<<else>>
+					<<set $slavesEmployedManpower += $menials>>
+					<<set _expLoss = $menials / $slaveUnits[_i].troops>>
+					<<set $slaveUnits[_i].training -= $slaveUnits[_i].training * _expLoss>>
+					<<set $slaveUnits[_i].troops += $menials>>
+					<<set $menials = 0>>
+				<</if>>
+			<</link>>
+		<</if>>
+
+	<<else>>
+		<br>
+		<br>
+		$slaveUnits[_i].platoonName lost too many operatives to be considered active.
+		<br>
+		<<link "Disband the unit" "secBarracks">>
+			<<set _elimUnit = $slaveUnits[_i]>>
+			<<set _newSlaveUnits = []>>
+			<<for _y = 0; _y < _sL; _y++>>
+				<<if $slaveUnits[_y] != _elimUnit>>
+					<<set _newSlaveUnits.push($slaveUnits[_y])>>
+				<</if>>
+			<</for>>
+			<<set $slaveUnits = _newSlaveUnits>>
+		<</link>>
+
+		<<if $menials > 0>>
+			|
+			<<link "Reform the unit" "secBarracks">>
+				<<if $menials >= $slaveUnits[_i].maxTroops>>
+					<<set $slavesEmployedManpower += $slaveUnits[_i].maxTroops>>
+					<<set $menials -= $slaveUnits[_i].maxTroops>>
+					<<set $slaveUnits[_i].troops = $slaveUnits[_i].maxTroops>>
+					<<set $slaveUnits[_i].training = 0>>
+				<<else>>
+					<<set $slavesEmployedManpower += $menials>>
+					<<set $slaveUnits[_i].troops += $menials>>
+					<<set $menials = 0>>
+					<<set $slaveUnits[_i].training = 0>>
+				<</if>>
+				<<set $slaveUnits[_i].active = 1>>
+			<</link>>
+		<</if>>
+	<</if>>
+	<</capture>>
+<</for>>
+
+<<if $militiaFounded == 1>>
+<br>
+__Militia__
+<br>/* militia */
+	You founded the $arcologies[0].name free militia. You are now able to organize your citizens into fighting units.
+	<<if $recruitVolunteers == 1>>
+		The militia is composed entirely of volunteers, your manpower is approximately 1.5% of the citizens population of your arcology.
+	<<elseif $conscription == 1>>
+		With the establishment of conscription, your available manpower has increased to now approximately 3% of the arcology's citizens population.
+	<<elseif $militaryService == 1>>
+		By establishing obligatory military service to obtain citizenship you have enlarged your manpower pool to be approximately 5% of the arcology's citizens population.
+	<<elseif $militarizedSociety == 1>>
+		With the adoption of a militarized society, your available manpower has swelled to be approximately 15% of the arcology's citizens population.
+	<</if>>
+	Your current total manpower is <<print num($militiaTotalManpower)>>, of which <<print num($militiaEmployedManpower)>> is in active duty. You lost in total <<print num($militiaTotalCasualties)>> citizens, leaving you with <<print num($militiaFreeManpower)>> available citizens.
+	<<set _mL = $militiaUnits.length>>
+	<<if $militiaFreeManpower > 0 && App.SecExp.battle.activeUnits() < App.SecExp.battle.maxUnits()>>
+		<br><br>
+		<<link "Form a new unit" "secBarracks">>
+			<<set _newUnit = {
+				ID: 0,
+				platoonName: ordinalSuffix(++$createdMilitiaUnits) + " citizens' platoon",
+				active: 1,
+				isDeployed: 0,
+				troops: Math.min($maxTroops, $militiaFreeManpower),
+				maxTroops: $maxTroops,
+				equip: 0,
+				training: 0,
+				loyalty: random(40,60),
+				cyber: 0,
+				medics: 0,
+				SF: 0,
+				commissars: 0,
+				battlesFought: 0}>>
+			<<generateUnitID _newUnit>>
+			<<set $militiaUnits.push(_newUnit)>>
+			<<set $militiaFreeManpower -= _newUnit.troops>>
+			<<set $militiaEmployedManpower += _newUnit.troops>>
+		<</link>>
+	<</if>>
+	<<for _i = 0; _i < _mL; _i++>>
+		<<capture _i>>
+		<<if $militiaUnits[_i].active == 1>>
+			<br>
+			<<= App.SecExp.unit.dec($militiaUnits[_i], "Militia")>>
+			<br>
+			<<link "Disband the unit" "secBarracks">>
+				<<set $militiaFreeManpower += $militiaUnits[_i].troops>>
+				<<set $militiaEmployedManpower -= $militiaUnits[_i].troops>>
+				<<set $militiaUnits.deleteAt(_i)>>
+			<</link>>
+			|
+			<<link "Review Equipment and upgrades" "seeUnit">>
+				<<set $targetUnit = "militiaUnits">>
+				<<set $targetIndex = _i>>
+			<</link>>
+
+			<<if $militiaUnits[_i].troops < $militiaUnits[_i].maxTroops && $militiaFreeManpower > 0>>
+				|
+				<<link "Replenish unit" "secBarracks">>
+					<<if $militiaFreeManpower >= $militiaUnits[_i].maxTroops - $militiaUnits[_i].troops>>
+						<<set $militiaFreeManpower -= $militiaUnits[_i].maxTroops - $militiaUnits[_i].troops>>
+						<<set $militiaEmployedManpower += $militiaUnits[_i].maxTroops - $militiaUnits[_i].troops>>
+						<<set _expLoss = ($militiaUnits[_i].maxTroops - $militiaUnits[_i].troops) / $militiaUnits[_i].troops>>
+						<<set $militiaUnits[_i].training -= $militiaUnits[_i].training * _expLoss>>
+						<<set $militiaUnits[_i].troops = $militiaUnits[_i].maxTroops>>
+					<<else>>
+						<<set $militiaEmployedManpower += $militiaFreeManpower>>
+						<<set _expLoss = $militiaFreeManpower / $militiaUnits[_i].troops>>
+						<<set $militiaUnits[_i].training -= $militiaUnits[_i].training * _expLoss>>
+						<<set $militiaUnits[_i].troops += $militiaFreeManpower>>
+						<<set $militiaFreeManpower = 0>>
+					<</if>>
+				<</link>>
+			<</if>>
+		<<else>>
+			<br>
+			<br>
+			$militiaUnits[_i].platoonName lost too many operatives to be considered active.
+			<br>
+			<<link "Disband the unit" "secBarracks">>
+				<<set $militiaFreeManpower += $militiaUnits[_i].troops>>
+				<<set $militiaEmployedManpower -= $militiaUnits[_i].troops>>
+				<<set _elimUnit = $militiaUnits[_i]>>
+				<<set _newMilitiaUnits = []>>
+				<<for _y = 0; _y < _sL; _y++>>
+					<<if $militiaUnits[_y] != _elimUnit>>
+						<<set _newMilitiaUnits.push($militiaUnits[_y])>>
+					<</if>>
+				<</for>>
+				<<set $militiaUnits = _newMilitiaUnits>>
+			<</link>>
+
+			<<if $militiaFreeManpower > 0>>
+				|
+				<<link "Reform the unit" "secBarracks">>
+					<<if $militiaFreeManpower >= $militiaUnits[_i].maxTroops>>
+						<<set $militiaEmployedManpower += $militiaUnits[_i].maxTroops>>
+						<<set $militiaFreeManpower -= $militiaUnits[_i].maxTroops>>
+						<<set $militiaUnits[_i].troops = $militiaUnits[_i].maxTroops>>
+						<<set $militiaUnits[_i].training = 0>>
+					<<else>>
+						<<set $militiaEmployedManpower += $militiaFreeManpower>>
+						<<set $militiaUnits[_i].troops += $militiaFreeManpower>>
+						<<set $militiaFreeManpower = 0>>
+						<<set $militiaUnits[_i].training = 0>>
+					<</if>>
+					<<set $militiaUnits[_i].active = 1>>
+				<</link>>
+			<</if>>
+		<</if>>
+		<</capture>>
+	<</for>>
+	<br>
+<<else>>
+	<br><br>
+	You have not yet founded the militia, you will not be able to form citizens units.
+<</if>>
+
+<<if $mercenaries >= 1>>
+<br>
+__Mercenaries__
+<br>/* mercenaries */
+	With the installation of a mercenary company in the arcology, many other are attracted to your free city, hoping to land a contract with you.
+	You are able to organize them in units to use in the defense of the arcology. Excluding the defense force you set up, there are <<print num($mercTotalManpower)>> mercenaries in your arcology, of which <<print num($mercEmployedManpower)>> actively employed and <<print $mercFreeManpower>> not yet under contract. In total <<print num($mercTotalCasualties)>> mercenaries have died defending your arcology.
+	<<set _meL = $mercUnits.length>>
+	<<if $mercFreeManpower > 0 && App.SecExp.battle.activeUnits() < App.SecExp.battle.maxUnits()>>
+		<br><br>
+		<<link "Form a new unit" "secBarracks">>
+			<<set _newUnit = {
+				ID: 0,
+				platoonName: ordinalSuffix(++$createdMercUnits) + " mercenary platoon",
+				active: 1,
+				isDeployed: 0,
+				troops: Math.min($maxTroops, $mercFreeManpower),
+				maxTroops: $maxTroops,
+				equip: 0,
+				training: 0,
+				loyalty: random(40,60),
+				cyber: 0,
+				medics: 0,
+				SF: 0,
+				commissars: 0,
+				battlesFought: 0}>>
+			<<generateUnitID _newUnit>>
+			<<set $mercUnits.push(_newUnit)>>
+			<<set $mercFreeManpower -= _newUnit.troops>>
+			<<set $mercEmployedManpower += _newUnit.troops>>
+		<</link>>
+	<</if>>
+	<<for _i = 0; _i < _meL; _i++>>
+		<<capture _i>>
+		<<if $mercUnits[_i].active == 1>>
+			<br>
+			<<= App.SecExp.unit.dec($mercUnits[_i], "Mercs")>>
+			<br>
+			<<link "Disband the unit" "secBarracks">>
+				<<set $mercFreeManpower += $mercUnits[_i].troops>>
+				<<set $mercEmployedManpower -= $mercUnits[_i].troops>>
+				<<set $mercUnits.deleteAt(_i)>>
+			<</link>>
+			|
+			<<link "Review Equipment and upgrades" "seeUnit">>
+				<<set $targetUnit = "mercUnits">>
+				<<set $targetIndex = _i>>
+			<</link>>
+
+			<<if $mercUnits[_i].troops < $mercUnits[_i].maxTroops && $mercFreeManpower > 0>>
+				|
+				<<link "Replenish unit" "secBarracks">>
+					<<if $mercFreeManpower >= $mercUnits[_i].maxTroops - $mercUnits[_i].troops>>
+						<<set $mercFreeManpower -= $mercUnits[_i].maxTroops - $mercUnits[_i].troops>>
+						<<set $mercEmployedManpower += $mercUnits[_i].maxTroops - $mercUnits[_i].troops>>
+						<<set _expLoss = ($mercUnits[_i].maxTroops - $mercUnits[_i].troops) / $mercUnits[_i].troops>>
+						<<set $mercUnits[_i].training -= $mercUnits[_i].training * _expLoss>>
+						<<set $mercUnits[_i].troops = $mercUnits[_i].maxTroops>>
+					<<else>>
+						<<set $mercEmployedManpower += $mercFreeManpower>>
+						<<set _expLoss = $mercFreeManpower / $mercUnits[_i].troops>>
+						<<set $mercUnits[_i].training -= $mercUnits[_i].training * _expLoss>>
+						<<set $mercUnits[_i].troops += $mercFreeManpower>>
+						<<set $mercFreeManpower = 0>>
+					<</if>>
+				<</link>>
+			<</if>>
+
+		<<else>>
+			<br>
+			<br>
+			$mercUnits[_i].platoonName lost too many operatives to be considered active.
+			<br>
+			<<link "Disband the unit" "secBarracks">>
+				<<set _elimUnit = $mercUnits[_i]>>
+				<<set _newMercUnits = []>>
+				<<for _y = 0; _y < _sL; _y++>>
+					<<if $mercUnits[_y] != _elimUnit>>
+						<<set _newMercUnits.push($mercUnits[_y])>>
+					<</if>>
+				<</for>>
+				<<set $mercUnits = _newMercUnits>>
+			<</link>>
+
+			<<if $mercFreeManpower > 0>>
+				|
+				<<link "Reform the unit" "secBarracks">>
+					<<if $mercFreeManpower >= $mercUnits[_i].maxTroops>>
+						<<set $mercEmployedManpower += $mercUnits[_i].maxTroops>>
+						<<set $mercFreeManpower -= $mercUnits[_i].maxTroops>>
+						<<set $mercUnits[_i].troops = $mercUnits[_i].maxTroops>>
+						<<set $mercUnits[_i].training = 0>>
+					<<else>>
+						<<set $mercEmployedManpower += $mercFreeManpower>>
+						<<set $mercUnits[_i].troops += $mercFreeManpower>>
+						<<set $mercFreeManpower = 0>>
+						<<set $mercUnits[_i].training = 0>>
+					<</if>>
+					<<set $mercUnits[_i].active = 1>>
+				<</link>>
+			<</if>>
+		<</if>>
+		<</capture>>
+	<</for>>
+<<else>>
+	<br><br>
+	Mercenaries are not allowed inside the arcology. You will not be able to recruit mercenary units.
+<</if>>

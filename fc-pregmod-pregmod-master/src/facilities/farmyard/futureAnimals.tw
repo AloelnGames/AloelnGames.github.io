@@ -1,0 +1,360 @@
+/* Putting them here because commenting them out was breaking for some reason */
+
+		<<if $animalsBought.germanShepherds == 0>>
+		<<link "Purchase German Shepherds" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.germanShepherds = 1, $animalsBought.canines += 1, $canines.push("German Shepherds")>><</link>>
+		<br>
+	<<elseif $animalsBought.germanShepherds == 1>>
+		German Shepherds
+		<<if $activeCanine.breed != "German Shepherd">>
+			[[Set as active canine|FarmyardAnimals][$activeCanine = {species: "dog", speciesCap: "Dog", speciesPlural: "dogs", breed: "German Shepherd", type: "canine", dickSize: "big", ballType: "dog"}]]
+		<<else>>
+			//Set as active canine//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.goldenRetrievers == 0>>
+		<<link "Purchase Golden Retrievers" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.goldenRetrievers = 1, $animalsBought.canines += 1, $canines.push("Golden Retrievers")>><</link>>
+		<br>
+	<<elseif $animalsBought.goldenRetrievers == 1>>
+		Golden Retrievers
+		<<if $activeCanine.breed != "Golden Retriever">>
+			[[Set as active canine|FarmyardAnimals][$activeCanine = {species: "dog", speciesCap: "Dog", speciesPlural: "dogs", breed: "Golden Retriever", type: "canine", dickSize: "big", ballType: "dog"}]]
+		<<else>>
+			//Set as active canine//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.frenchBulldogs == 0>>
+		<<link "Purchase French Bulldogs" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.frenchBulldogs = 1, $animalsBought.canines += 1, $canines.push("French Bulldogs")>><</link>>
+		<br>
+	<<elseif $animalsBought.frenchBulldogs == 1>>
+		French Bulldogs
+		<<if $activeCanine.breed != "French Bulldog">>
+			[[Set as active canine|FarmyardAnimals][$activeCanine = {species: "dog", speciesCap: "Dog", speciesPlural: "dogs", breed: "French Bulldog", type: "canine", dickSize: "big", ballType: "dog"}]]
+		<<else>>
+			//Set as active canine//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.bulldogs == 0>>
+		<<link "Purchase Bulldogs" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.bulldogs = 1, $animalsBought.canines += 1, $canines.push("Bulldogs")>><</link>>
+		<br>
+	<<elseif $animalsBought.bulldogs == 1>>
+		Bulldogs
+		<<if $activeCanine.breed != "Bulldog">>
+			[[Set as active canine|FarmyardAnimals][$activeCanine = {species: "dog", speciesCap: "Dog", speciesPlural: "dogs", breed: "Bulldog", type: "canine", dickSize: "big", ballType: "dog"}]]
+		<<else>>
+			//Set as active canine//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.beagles == 0>>
+		<<link "Purchase Beagles" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.beagles = 1, $animalsBought.canines += 1, $canines.push("Beagles")>><</link>>
+		<br>
+	<<elseif $animalsBought.beagles == 1>>
+		Beagles
+		<<if $activeCanine.breed != "Beagle">>
+			[[Set as active canine|FarmyardAnimals][$activeCanine = {species: "dog", speciesCap: "Dog", speciesPlural: "dogs", breed: "Beagle", type: "canine", dickSize: "big", ballType: "dog"}]]
+		<<else>>
+			//Set as active canine//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.poodles == 0>>
+		<<link "Purchase Poodles" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.poodles = 1, $animalsBought.canines += 1, $canines.push("Poodles")>><</link>>
+		<br>
+	<<elseif $animalsBought.poodles == 1>>
+		Poodles
+		<<if $activeCanine.breed != "Poodle">>
+			[[Set as active canine|FarmyardAnimals][$activeCanine = {species: "dog", speciesCap: "Dog", speciesPlural: "dogs", breed: "Poodle", type: "canine", dickSize: "big", ballType: "dog"}]]
+		<<else>>
+			//Set as active canine//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.rottweilers == 0>>
+		<<link "Purchase Rottweilers" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.rottweilers = 1, $animalsBought.canines += 1, $canines.push("Rottweilers")>><</link>>
+		<br>
+	<<elseif $animalsBought.rottweilers == 1>>
+		Rottweilers
+		<<if $activeCanine.breed != "Rottweiler">>
+			[[Set as active canine|FarmyardAnimals][$activeCanine = {species: "dog", speciesCap: "Dog", speciesPlural: "dogs", breed: "Rottweiler", type: "canine", dickSize: "big", ballType: "dog"}]]
+		<<else>>
+			//Set as active canine//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.yorkshireTerriers == 0>>
+		<<link "Purchase Yorkshire Terriers" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.yorkshireTerriers = 1, $animalsBought.canines += 1, $canines.push("Yorkshire Terriers")>><</link>>
+		<br>
+	<<elseif $animalsBought.yorkshireTerriers == 1>>
+		Yorkshire Terriers
+		<<if $activeCanine.breed != "Yorkshire Terrier">>
+			[[Set as active canine|FarmyardAnimals][$activeCanine = {species: "dog", speciesCap: "Dog", speciesPlural: "dogs", breed: "Yorkshire Terrier", type: "canine", dickSize: "big", ballType: "dog"}]]
+		<<else>>
+			//Set as active canine//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.siberianHuskies == 0>>
+		<<link "Purchase Siberian Huskies" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.siberianHuskies = 1, $animalsBought.canines += 1, $canines.push("Siberian Huskies")>><</link>>
+		<br>
+	<<elseif $animalsBought.siberianHuskies == 1>>
+		Siberian Huskies
+		<<if $activeCanine.breed != "Siberian Husky">>
+			[[Set as active canine|FarmyardAnimals][$activeCanine = {species: "dog", speciesCap: "Dog", speciesPlural: "dogs", breed: "Siberian Husky", type: "canine", dickSize: "big", ballType: "dog"}]]
+		<<else>>
+			//Set as active canine//
+		<</if>>
+		<br>
+	<</if>>
+
+<<if $farmyardCages > 0>>
+	<br>
+	Cats:
+	<br><br>
+	<<if $animalsBought.siameses == 0>>
+		<<link "Purchase Siamese cats" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.siameses = 1, $animalsBought.felines += 1, $felines.push("Siamese cats")>><</link>>
+		<br>
+	<<elseif $animalsBought.siameses == 1>>
+		Siamese cats
+		<<if $activeFeline.breed != "Siamese">>
+			[[Set as active canine|FarmyardAnimals][$activeFeline = {species: "cat", speciesCap: "Cat", speciesPlural: "cats", breed: "Siamese", type: "feline", dickSize: "small", ballType: "cat"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.persians == 0>>
+		<<link "Purchase Persian cats" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.persians = 1, $animalsBought.felines += 1, $felines.push("Persian cats")>><</link>>
+		<br>
+	<<elseif $animalsBought.persians == 1>>
+		Persian cats
+		<<if $activeFeline.breed != "Persian">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "cat", speciesCap: "Cat", speciesPlural: "cats", breed: "Persian", type: "feline", dickSize: "small", ballType: "cat"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.maineCoons == 0>>
+		<<link "Purchase Maine Coon cats" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.maineCoons = 1, $animalsBought.felines += 1, $felines.push("Maine Coon cats")>><</link>>
+		<br>
+	<<elseif $animalsBought.maineCoons == 1>>
+		Maine Coon cats
+		<<if $activeFeline.breed != "Maine Coon">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "cat", speciesCap: "Cat", speciesPlural: "cats", breed: "Maine Coon", type: "feline", dickSize: "small", ballType: "cat"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.ragdolls == 0>>
+		<<link "Purchase Ragdoll cats" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.ragdolls = 1, $animalsBought.felines += 1, $felines.push("Ragdoll cats")>><</link>>
+		<br>
+	<<elseif $animalsBought.ragdolls == 1>>
+		Ragdoll cats
+		<<if $activeFeline.breed != "Ragdoll">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "cat", speciesCap: "Cat", speciesPlural: "cats", breed: "Ragdoll", type: "feline", dickSize: "small", ballType: "cat"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.bengals == 0>>
+		<<link "Purchase Bengal cats" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.bengals = 1, $animalsBought.felines += 1, $felines.push("Bengal cats")>><</link>>
+		<br>
+	<<elseif $animalsBought.bengals == 1>>
+		Bengal cats
+		<<if $activeFeline.breed != "Bengal">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "cat", speciesCap: "Cat", speciesPlural: "cats", breed: "Bengal", type: "feline", dickSize: "small", ballType: "cat"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.abbysinians == 0>>
+		<<link "Purchase Abbysinian cats" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.abbysinians = 1, $animalsBought.felines += 1, $felines.push("Abbysinian cats")>><</link>>
+		<br>
+	<<elseif $animalsBought.abbysinians == 1>>
+		Abbysinian cats
+		<<if $activeFeline.breed != "Abbysinian">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "cat", speciesCap: "Cat", speciesPlural: "cats", breed: "Abbysinian", type: "feline", dickSize: "small", ballType: "cat"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.birmans == 0>>
+		<<link "Purchase Birman cats" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.birmans = 1, $animalsBought.felines += 1, $felines.push("Birman cats")>><</link>>
+		<br>
+	<<elseif $animalsBought.birmans == 1>>
+		Birman cats
+		<<if $activeFeline.breed != "Birman">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "cat", speciesCap: "Cat", speciesPlural: "cats", breed: "Birman", type: "feline", dickSize: "small", ballType: "cat"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.orientalShorthairs == 0>>
+		<<link "Purchase Oriental Shorthair cats" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.orientalShorthairs = 1, $animalsBought.felines += 1, $felines.push("Oriental Shorthair cats")>><</link>>
+		<br>
+	<<elseif $animalsBought.orientalShorthairs == 1>>
+		Oriental Shorthair cats
+		<<if $activeFeline.breed != "Oriental Shorthair">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "cat", speciesCap: "Cat", speciesPlural: "cats", breed: "Oriental Shorthair", type: "feline", dickSize: "small", ballType: "cat"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.sphynxes == 0>>
+		<<link "Purchase Sphynx cats" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.sphynxes = 1, $animalsBought.felines += 1, $felines.push("Sphynx cats")>><</link>>
+		<br>
+	<<elseif $animalsBought.sphynxes == 1>>
+		Sphynx cats
+		<<if $activeFeline.breed != "Sphynx">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "cat", speciesCap: "Cat", speciesPlural: "cats", breed: "Sphynx", type: "feline", dickSize: "small", ballType: "cat"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.russianBlues == 0>>
+		<<link "Purchase Russian Blue cats" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.russianBlues = 1, $animalsBought.felines += 1, $felines.push("Russian Blue cats")>><</link>>
+		<br>
+	<<elseif $animalsBought.russianBlues == 1>>
+		Russian Blue cats
+		<<if $activeFeline.breed != "Russian Blue">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "cat", speciesCap: "Cat", speciesPlural: "cats", breed: "Russian Blue", type: "feline", dickSize: "small", ballType: "cat"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+<</if>>
+
+	<<if $animalsBought.foxes == 0>>
+		<<link "Purchase foxes" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.foxes = 1, $animalsBought.canines += 1, $canines.push("foxes")>><</link>>
+		<br>
+	<<elseif $animalsBought.foxes == 1>>
+		/*Red foxes play in one corner of their kennels, chasing one another.(OLD)*/
+		Foxes
+		<<if $activeCanine.species != "fox">>
+			[[Set as active canine|FarmyardAnimals][$activeCanine = {species: "fox", speciesCap: "Fox", speciesPlural: "foxes", type: "canine", dickSize: "large", ballType: "fox"}]]
+		<<else>>
+			//Set as active canine//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.jackals == 0>>
+		<<link "Purchase jackals" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.jackals = 1, $animalsBought.canines += 1, $canines.push("jackals")>><</link>>
+		<br>
+	<<elseif $animalsBought.jackals == 1>>
+		/*A group of male jackals are fighting over a potential mate, causing quite a ruckus.(OLD)*/
+		Jackals
+		<<if $activeCanine.species != "jackal">>
+			[[Set as active canine|FarmyardAnimals][$activeCanine = {species: "jackal", speciesCap: "Jackal", speciesPlural: "jackals", type: "canine", dickSize: "large", ballType: "jackal"}]]
+		<<else>>
+			//Set as active canine//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.dingos == 0>>
+		<<link "Purchase dingos" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.dingos = 1, $animalsBought.canines += 1, $canines.push("dingos")>><</link>>
+		<br>
+	<<elseif $animalsBought.dingos == 1>>
+		/*The dingos are eating their meal, growling at each other when one gets to close to another's food.(OLD)*/
+		Dingos
+		<<if $activeCanine.species != "dingo">>
+			[[Set as active canine|FarmyardAnimals][$activeCanine = {species: "dingo", speciesCap: "Dingo", speciesPlural: "dingos", type: "canine", dickSize: "large", ballType: "dingo"}]]
+		<<else>>
+			//Set as active canine//
+		<</if>>
+		<br>
+	<</if>>
+
+
+<<if $farmyardStable > 1>>
+	<br>
+	Hooved Animals:
+	<br><br>
+	<<if $animalsBought.zebras == 0>>
+		<<link "Purchase zebras" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.zebras = 1, $animalsBought.hooved += 1, $hooved.push("zebras")>><</link>>
+	<<elseif $animalsBought.zebras == 1>>
+		Zebras
+		<<if $activeHooved.species != "zebra">>
+			[[Set as active hooved|FarmyardAnimals][$activeHooved = {species: "zebra", speciesCap: "Zebra", speciesPlural: "zebras", type: "hooved", dickSize: "huge", ballType: "zebra"}]]
+		<<else>>
+			//Set as active hooved//
+		<</if>>
+	<</if>>
+	<br>
+<</if>>
+
+<<if $animalsBought.cougars == 0>>
+		<<link "Purchase cougars" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(30000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.cougars = 1, $animalsBought.felines += 1, $felines.push("cougars")>><</link>>
+		<br>
+	<<elseif $animalsBought.cougars == 1>>
+		/*The cougars are sleeping, their lean bodies scattered around under trees. (OLD)*/
+		Cougars
+		<<if $activeFeline.species != "cougar">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "cougar", speciesCap: "Cougar", speciesPlural: "cougars", type: "feline", dickSize: "large", ballType: "cougar"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.jaguars == 0>>
+		<<link "Purchase jaguars" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(30000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.jaguars = 1, $animalsBought.felines += 1, $felines.push("jaguars")>><</link>>
+		<br>
+	<<elseif $animalsBought.jaguars == 1>>
+		/*You can see a few jaguars laying around in the trees in their enclosure. (OLD)*/
+		Jaguars
+		<<if $activeFeline.species != "jaguar">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "jaguar", speciesCap: "Jaguar", speciesPlural: "jaguars", type: "feline", dickSize: "large", ballType: "jaguar"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.lynx == 0>>
+		<<link "Purchase lynxs" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(30000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.lynx = 1, $animalsBought.felines += 1, $felines.push("lynx")>><</link>>
+		<br>
+	<<elseif $animalsBought.lynx == 1>>
+		/*The lynxes are playfully running around their enclosure. (OLD)*/
+		Lynx
+		<<if $activeFeline.species != "lynx">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "lynx", speciesCap: "Lynx", speciesPlural: "lynx", type: "feline", dickSize: "large", ballType: "lynx"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.leopards == 0>>
+		<<link "Purchase leopards" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(30000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.leopards = 1, $animalsBought.felines += 1, $felines.push("leopards")>><</link>>
+		<br>
+	<<elseif $animalsBought.leopards == 1>>
+		/*The leopards are lazing about in the trees in their enclosure. (OLD)*/
+		Leopards
+		<<if $activeFeline.species != "leopard">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "leopard", speciesCap: "Leopard", speciesPlural: "leopards", type: "feline", dickSize: "large", ballType: "leopard"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>
+	<<if $animalsBought.tigers == 0>>
+		<<link "Purchase tigers" "FarmyardAnimals">><<set cashX(forceNeg(Math.trunc(30000*$upgradeMultiplierArcology)), "farmyard"), $animalsBought.tigers = 1, $animalsBought.felines += 1, $felines.push("tigers")>><</link>>
+		<br>
+	<<elseif $animalsBought.tigers == 1>>
+		/*Some of the tigers are swimming, and the ones that aren't are lazing about. (OLD)*/
+		Tigers
+		<<if $activeFeline.species != "tiger">>
+			[[Set as active feline|FarmyardAnimals][$activeFeline = {species: "tiger", speciesCap: "Tiger", speciesPlural: "tigers", type: "feline", dickSize: "large", ballType: "tiger"}]]
+		<<else>>
+			//Set as active feline//
+		<</if>>
+		<br>
+	<</if>>

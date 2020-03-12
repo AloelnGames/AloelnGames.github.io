@@ -1,0 +1,6 @@
+:: FAnimalImpreg Consummate [nobr]
+
+/* TODO: all of this */
+
+<<set _animal = $impregnatrix>>
+You have a servant lead the <<if _animal.species != "dog" || _animal.species != "cat">><<print _animal.species>><<else>><<print _animal.breed>><</if>> in on a leash and feed him a special treat, one laced with high amounts of aphrodisiacs and vasodilators. They have an effect very rapidly, and the <<if _animal.species != "dog" && _animal.species != "cat">><<print _animal.species>><<else>><<print _animal.breed>><</if>>'s <<print _animal.dickSize>> cock quickly stands at attention.

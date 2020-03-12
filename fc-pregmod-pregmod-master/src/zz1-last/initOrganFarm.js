@@ -1,0 +1,1 @@
+App.Medicine.OrganFarm.init();

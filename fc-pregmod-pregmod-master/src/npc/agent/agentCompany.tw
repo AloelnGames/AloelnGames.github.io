@@ -1,0 +1,64 @@
+:: Agent Company [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "Neighbor Interact", _ID = $activeSlave.ID>>
+
+<<= assignJob($activeSlave, "live with your agent")>>
+
+<<set $reservedChildren = FetusGlobalReserveCount("incubator")>>
+<<set $reservedChildrenNursery = FetusGlobalReserveCount("nursery")>>
+
+<<if $activeSlave.rivalry > 0>>
+	<<set _i = $slaveIndices[$activeSlave.rivalryTarget]>>
+	<<if def _i>>
+		<<set $slaves[_i].rivalry = 0, $slaves[_i].rivalryTarget = 0>>
+	<<else>>
+		@@.red;Error, activeSlave rival not found.@@
+	<</if>>
+	<<set $activeSlave.rivalry = 0, $activeSlave.rivalryTarget = 0>>
+<</if>>
+
+<<set _neighborArcology = $arcologies.find(function(s) { return $subSlave.ID == s.leaderID; })>>
+
+<<setLocalPronouns $subSlave 2>>
+
+Working in _neighborArcology.name's penthouse office, $subSlave.slaveName gets a video call from you. Naturally, _his2 personal assistant program has been instructed to give these the highest priority, and your face appears in front of _him2 immediately. _He2 greets you properly, and asks you what _he2 can do to serve you. You tell _him2 you're planning to send one of your slaves over to _his2 arcology to assist _him2. Exchanges of this kind are neither unusual nor particularly interesting, so a slight look of perplexity clouds $subSlave.slaveName's face as _he2 wonders why this merits a personal call. Normally, <<if $HeadGirl != 0>>$HeadGirl.slaveName<<else>>$assistant.name<</if>> would handle it with _him2 directly.
+
+<br><br>
+
+_His2 question is answered when you bring <<= contextualIntro($subSlave, $activeSlave)>> in close, putting $him in $subSlave.slaveName's view. $subSlave.slaveName's <<= App.Desc.eyesColor($subSlave)>> fly open with pleased surprise, but before _he2 can speak, $activeSlave.slaveName goes first.
+<<if !canTalk($activeSlave)>>
+	Unable to speak $himself, $he simply makes a heart shape with $his hand<<if hasBothArms($activeSlave)>>s<</if>> in view of the video call, and blows $his <<if $activeSlave.relationship == 4>>lover<<else>>_wife2<</if>> a kiss.
+<<else>>
+	<<run Enunciate($activeSlave)>>
+	"Hi <<if $activeSlave.relationship == 4>>lover<<else>><<s>>weetheart<</if>>," $he <<say>>s in a syrupy tone. "Mi<<ss>> me?"
+<</if>>
+
+<br><br>
+
+$subSlave.slaveName smiles back at $him, glowing with pleasure, and responds with exaggerated arousal.
+
+<<run Enunciate($subSlave)>>
+
+<<switch $subSlave.fetish>>
+<<case "submissive">>
+	"Looking forward to <<s>>leeping in your arm<<s>>, babe," the submissive
+<<case "cumslut">>
+	"Can't wait to ki<<ss>> you, babe," the orally fixated
+<<case "humiliation">>
+	"Can't wait to take you right in the middle of the pla<<z>>a here," the exhibitionist
+<<case "buttslut">>
+	"I can't wait to fuck you in your hot little a<<ss>>," the anally fixated
+<<case "boobs">>
+	"Looking forward to feeling your brea<<s>>t<<s>> again," the boob-loving
+<<case "pregnancy">>
+	"Can't wait to <<sh>>are all the pregnant girl<<s>> here with you," the impregnation fetishist
+<<case "dom">>
+	"Looking forward to <<sh>>oving you fa<<c>>edown, bitch," the dominant
+<<case "sadist">>
+	"Looking forward to making you bite the pillow again, bitch," the sadistic
+<<case "masochist">>
+	"Can't wait to feel you hurt me again, babe," the masochistic
+<<default>>
+	"Babe, I can't wait to <<if hasAnyArms($subSlave)>>give you a hug and <</if>>tell you about _neighborArcology.name," the loving
+<</switch>>
+leader of an entire arcology <<say>>s.

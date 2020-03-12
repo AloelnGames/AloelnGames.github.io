@@ -1,0 +1,41 @@
+:: BG Select [nobr]
+
+<<set $nextButton = "Back to Main", $nextLink = "Main", $showEncyclopedia = 1, $encyclopedia = "Bodyguard">>
+
+<p class="scene-intro">
+</p>
+
+<p>
+	<<if ($Bodyguard != 0)>>
+		<<set $Bodyguard = getSlave($Bodyguard.ID)>>
+		<<setLocalPronouns $Bodyguard>>
+		<span class="slave-name"><<= SlaveFullName($Bodyguard)>></span>
+		is serving as your bodyguard. $He will remain close to you at all times and guard your person.
+	<<else>>
+		You have not selected a bodyguard.
+	<</if>>
+</p>
+
+<div>
+	<<if $bodyguardTrains == 0>>
+		Your Bodyguard ''is not allowed'' to train potential successors.
+		<div class="choices">
+			[[Allow training|BG Select][$bodyguardTrains = 1]]
+		</div>
+	<<else>>
+		Your Bodyguard ''is allowed'' to train potential successors.
+		<div class="choices">
+			[[Stop training|BG Select][$bodyguardTrains = 0]]
+		</div>
+	<</if>>
+</div>
+
+<div style="font-weight:bold">
+	Appoint a bodyguard from your devoted slaves:
+</div>
+<div class="choices">
+	[[None|Main][removeJob($Bodyguard, "guard you")]]
+</div>
+<p>
+	<<print App.UI.SlaveList.facilityManagerSelection(App.Entity.facilities.armory, "Main")>>
+</p>

@@ -1,0 +1,15 @@
+:: Schoolteacher Select [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Schoolroom", $showEncyclopedia = 1, $encyclopedia = "Schoolteacher">>
+<<if ($Schoolteacher != 0)>>
+	<<set $Schoolteacher = getSlave($Schoolteacher.ID)>>
+	<<setLocalPronouns $Schoolteacher>>
+	<span class='slave-name'><<= SlaveFullName($Schoolteacher)>></span> is serving as your Schoolteacher.<br><br>$He will help teach your slaves.
+<<else>>
+	You have not selected a Schoolteacher.
+<</if>>
+
+<br><br>''Appoint a Schoolteacher from your devoted slaves:''
+<br><br>[[None|Schoolroom][removeJob($Schoolteacher, "be the Schoolteacher")]]
+<br><br>
+<<print App.UI.SlaveList.facilityManagerSelection(App.Entity.facilities.schoolroom, "Schoolroom")>>

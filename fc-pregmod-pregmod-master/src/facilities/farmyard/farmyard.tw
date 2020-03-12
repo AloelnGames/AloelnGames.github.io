@@ -1,0 +1,480 @@
+:: Farmyard [nobr]
+
+/* TODO: add "plots" of "crops" */
+/* TODO: allow slaves that can't walk to put on shows */
+/* TODO: write placeholders */
+
+<<set $nextButton = "Back to Main", $nextLink = "Main", $returnTo = "Farmyard", $showEncyclopedia = 1, $encyclopedia = "Farmyard">>
+
+<<if $farmyardName != "the Farmyard">>
+	<<set $farmyardNameCaps = $farmyardName.replace("the ", "The ")>>
+<</if>>
+
+<<set _CL = $canines.length, _HL = $hooved.length, _FL = $felines.length, _FyL = $FarmyardiIDs.length>>
+<p class="scene-intro">
+	$farmyardNameCaps is an oasis of growth in the midst of the jungle of steel and concrete that is $arcologies[0].name. Animals are kept in pens, tended to by your slaves, while <<if $farmyardUpgrade.hydroponics == 1>>rows of hydroponics equipment<<else>>makeshift fields<</if>> grow crops.
+	<<switch $farmyardDecoration>>
+		<<case "Roman Revivalist">>
+			Its red tiles and white stone walls are the very picture of a Roman farm villa's construction, as are the marble statues and reliefs. Saturn and Ceres look over the prosperity of the fields<<if $seeBestiality == 1>>, Mercury watches over the health of the animals, and Feronia ensures strong litters in your slaves.<<else>> and Mercury watches over the health of the animals.<</if>>. The slaves here are all looked after well, as they have one of the most important jobs in $arcologies[0].name.
+		<<case "Aztec Revivalist">>
+			It can't completely recreate the floating farms in the ancient Aztec fashion, but it comes as close as it can, shallow pseudo-canals dividing each field into multiple sections. Smooth stone and colorful murals cover the walls, depicting bloody stories of gods and mortals alike.
+		<<case "Egyptian Revivalist">>
+			It does its best to capture the wide open nature of ancient Egyptian farms, including mimicking the irrigation systems fed by the Nile. The stone walls are decorated with murals detailing its construction and your prowess in general, <<if $seeBestiality == 1>>with animal-bloated slaves featured prominently.<<else>>hieroglyphs spelling out a volumes of praise.<</if>>
+		<<case "Edo Revivalist">>
+			It does its best to mimic the rice patties and thatch roofed buildings of the Edo period despite the wide variety of crops tended by various slaves. Not every crop can thrive in flooded fields, but the ones that can take advantage of your attention to detail.
+		<<case "Arabian Revivalist">>
+			//This is a placeholder//
+		<<case "Chinese Revivalist">>
+			It does its best to capture the terraces that covered the ancient Chinese hills and mountains, turning every floor into ribbons of fields following a slight incline. Slaves wade through crops that can handle flooding and splash through the irrigation of the others when they aren't tending <<if $seeBestiality == 1>>or breeding with<</if>> your animals.
+		<<case "Chattel Religionist">>
+			It runs like a well oiled machine, slaves bent in humble service as they tend crops grown on the Prophet's command, or see to the animals' needs. Their clothing is tucked up and out of the way as they see to their tasks, keeping them clean as they work <<if $seeBestiality == 1>>around animal bloated bellies<</if>> as divine will dictates.
+		<<case "Degradationist">>
+			It is constructed less as a converted warehouse and more as something to visit, allowing guests to enjoy the spectacle of slaves <<if $seeBestiality == 1>>being pounded by eager animals<<else>>elbow deep in scrubbing animal waste<</if>> to their satisfaction.
+		<<case "Repopulation Focus">>
+			It teems with life, both in the belly of every animal and the belly of every slave, though the latter makes tending the fields difficult. They're ordered to take care, as they carry the future <<if $seeBestiality == 1>>of this farm<<else>>of the arcology<</if>> in their bellies.
+		<<case "Eugenics">>
+			It holds a wide variety of crops and animals, but the best of the best is easy to find. They're set apart from the others, given only the best care and supplies<<if $seeBestiality == 1>>and bred with only the highest quality slaves<</if>>, while the sub-par stock is neglected off to the side.
+		<<case "Asset Expansionist">>
+			It is not easy to look after animals and till fields with such enormous body parts, but your slaves are diligent regardless, working hard to provide food and livestock for the arcology.
+		<<case "Transformation Fetishist">>
+			//This is a placeholder//
+		<<case "Gender Radicalist">>
+			//This is a placeholder//
+		<<case "Gender Fundamentalist">>
+			//This is a placeholder//
+		<<case "Physical Idealist">>
+			Its animals are in exceptional shape, their coats unable to hide how muscular they are, requiring your slaves to be equally toned to control them. There's plenty of space for their exercise as well<<if $seeBestiality == 1>> and an abundance of curatives for the slaves full of their fierce kicking offspring<</if>>.
+		<<case "Supremacist">>
+			It is a clean and orderly operation, stables and cages mucked by a multitude of inferior slaves, along with grooming your animals and harvesting your crops.
+		<<case "Subjugationist">>
+			It is a clean and orderly operation, stables and cages mucked by a multitude of $arcologies[0].FSSubjugationistRace slaves, while the others are tasked with grooming your animals and harvesting your crops.
+		<<case "Paternalist">>
+			It's full of healthy animals, crops, and slaves, the former's every need diligently looked after by the latter. The fields flourish to capacity under such care, and the animals give the distinct impression of happiness. <<if $seeBestiality == 1>>Some more than others if the growing bellies of your slaves are anything to go by, the only indication that such rutting takes place.<</if>>	/* TODO: this sentence seems weird */
+		<<case "Pastoralist">>
+			//This is a placeholder//
+		<<case "Maturity Preferentialist">>
+			//This is a placeholder//
+		<<case "Youth Preferentialist">>
+			//This is a placeholder//
+		<<case "Body Purist">>
+			//This is a placeholder//
+		<<case "Slimness Enthusiast">>
+			It features trim animals and slaves alike, not a pound of excess among them. The feed for both livestock and crops are carefully maintained to ensure optimal growth without waste, letting them flourish without being weighed down.
+		<<case "Hedonistic">>
+			It features wider gates and stalls, for both the humans visiting or tending the occupants, and the animals starting to mimic their handlers <<if $seeBestiality == 1>>and company<</if>>, with plenty of seats along the way.
+		<<default>>
+			It is very much a converted warehouse still, sectioned off in various 'departments'<<if $farmyardUpgrade.machinery == 1>> with machinery placed where it can be<<if $farmyardUpgrade.hydroponics > 0>> and plumbing for the hydroponics system running every which way<</if>><</if>>.
+	<</switch>>
+
+	<<if _FyL > 2>>
+		$farmyardNameCaps is bustling with activity. Farmhands are hurrying about, on their way to feed animals and maintain farming equipment.
+	<<elseif _FyL > 0>>
+		$farmyardNameCaps is working steadily. Farmhands are moving about, looking after the animals and crops.
+	<<elseif $Farmer != 0>>
+		$Farmer.slaveName is alone in $farmyardName, and has nothing to do but look after the animals and crops.
+	<<else>>
+		$farmyardNameCaps is empty and quiet.
+		<div class="choices" style="font-style:normal">
+			<<link "Decommission the Farmyard" "Main">>
+				<<if $farmMenials > 0>>
+					<<set $menials += $farmMenials>>
+				<</if>>
+				<<set $farmyardName = "the Farmyard", $farmyard = 0, $farmyardDecoration = "standard", $farmMenials = 0, $farmMenialsSpace = 0, $farmyardShows = 0, $farmyardBreeding = 0, $farmyardUpgrade = {pump: 0, fertilizer: 0, hydroponics: 0, machinery: 0, seeds: 0, lab: 0}, $farmyardLab = 0, $farmyardLabUpgrades = {animalOvaries: 0, animalTesticles: 0, animalMpreg: 0}, $farmyardCrops = 0, $farmyardKennels = 0, $farmyardStable = 0, $farmyardCages = 0, $activeCanine = 0, $activeHooved = 0, $activeFeline = 0, $animalsBought = {canines: 0, hooved: 0, felines: 0, labradorRetrievers: 0, germanShepherds: 0, goldenRetrievers: 0, frenchBulldogs: 0, bulldogs: 0, beagles: 0, poodles: 0, rottweilers: 0, yorkshireTerriers: 0, siberianHuskies: 0, horses: 0, bulls: 0, pigs: 0, siameses: 0, persians: 0, maineCoons: 0, ragdolls: 0, bengals: 0, abbysinians: 0, birmans: 0, orientalShorthairs: 0, sphynxes: 0, russianBlues: 0, wolves: 0, foxes: 0, jackals: 0, dingos: 0, zebras: 0, cougars: 0, jaguars: 0, pumas: 0, lynx: 0, leopards: 0, lions: 0, tigers: 0}, $pitAnimal = 0, $pitAnimalType = 0, $canines = [], $hooved = [], $felines = []>>
+				<<run App.Arcology.cellUpgrade($building, App.Arcology.Cell.Manufacturing, "Farmyard", "Manufacturing")>>
+			<</link>>
+		</div>
+	<</if>>
+</p>
+
+<div>
+	<<set _Tmult0 = Math.trunc($farmyard*1000*$upgradeMultiplierArcology)>>
+	It can support $farmyard farmhands. Currently there <<if _FyL == 1>>is<<else>>are<</if>> _FyL farmhand<<if _FyL != 1>>s<</if>> at $farmyardName.
+	<div class= "choices">
+		[[Expand the farmyard|Farmyard][cashX(forceNeg(_Tmult0), "capEx"), $farmyard += 5, $PC.skill.engineering += .1]]
+		<span class="note">
+			Costs <<print cashFormat(_Tmult0)>> and will increase upkeep costs
+		</span>
+	</div>
+	<div class= "choices">
+		<<if _FyL > 0>>
+			<<removeFacilityWorkers "farmyard" "rest" "rest">>
+		<</if>>
+	</div>
+</div>
+<span id="menials">
+<br>
+<<if $farmMenials > 0>>
+	Assigned here are $farmMenials slaves working to produce as much food as possible.
+<</if>>
+	<<if $farmMenialsSpace > 0>>
+	You <<if $menials > 0>> own <<print num($menials)>><<else>>don't own any<</if>> free menial slaves. $farmyardNameCaps can house <<print $farmMenialsSpace>> menial slaves total, with <<print $farmMenialsSpace - $farmMenials>> free slots.
+	<</if>>
+
+<br>
+
+<<if ($farmMenials < $farmMenialsSpace) && ($farmMenialsSpace > 0)>>
+	<<if $menials >= 1>>
+		<<link "Transfer in a menial slave">>
+			<<set $menials-->>
+			<<set $farmMenials++>>
+			<<goto "Farmyard">>
+		<</link>>
+	<</if>>
+	<<if $menials >= 10 && $farmMenials <= ($farmMenialsSpace - 10)>>
+		| <<link "Transfer in 10 menial slaves">>
+			<<set $menials -= 10>>
+			<<set $farmMenials += 10>>
+			<<goto "Farmyard">>
+		<</link>>
+	<</if>>
+	<<if $menials > 0>>
+		| <<link "Transfer in all free menial slaves">>
+			<<if $menials > $farmMenialsSpace - $farmMenials>>
+				<<set $menials -= $farmMenialsSpace - $farmMenials>>
+				<<set $farmMenials = $farmMenialsSpace>>
+			<<else>>
+				<<set $farmMenials += $menials>>
+				<<set $menials = 0>>
+			<</if>>
+			<<goto "Farmyard">>
+		<</link>>
+	<</if>>
+	<<if $farmMenials > 0>>
+	<<if $menials > 0>>|<</if>>
+		<<link "Transfer out all menial slaves">>
+			<<set $menials += $farmMenials>>
+			<<set $farmMenials = 0>>
+			<<goto "Farmyard">>
+		<</link>>
+	<</if>>
+<<elseif $farmMenialsSpace <= 0>>
+	$farmyardNameCaps cannot currently house any menial slaves.
+<<else>>
+	$farmyardNameCaps has all the menial slaves it can currently house assigned to it.
+	<<link "Transfer out all menial slaves">>
+		<<set $menials += $farmMenials>>
+		<<set $farmMenials = 0>>
+		<<goto "Farmyard">>
+	<</link>>
+<</if>>
+
+<<if $farmMenialsSpace > 0>>
+	<<run MenialPopCap()>>
+	<<set _menialPrice = menialSlaveCost()>>
+	<<set _bulkMax = $PopCap-$menials-$fuckdolls-$menialBioreactors>>
+	<<if $cash > _menialPrice>>
+	<<if _bulkMax > 0 || $menials+$fuckdolls+$menialBioreactors == 0>>
+		| [[Buy |Farmyard][$menials+=1,$menialSupplyFactor-=1,cashX(forceNeg(Math.trunc(_menialPrice, "farmyard")))]]
+		<<if $cash > (menialSlaveCost(10))*10>>
+			[[(x10)|Farmyard][$menials+=10,$menialSupplyFactor-=10,cashX(forceNeg(Math.trunc(menialSlaveCost(10))*10), "farmyard")]]
+		<</if>>
+		<<if $cash > (menialSlaveCost(100))*100>>
+			[[(x100)|Farmyard][$menials+=100,$menialSupplyFactor-=100,cashX(forceNeg(Math.trunc(menialSlaveCost(100))*100), "farmyard")]]
+		<</if>>
+		<<if $cash > (_menialPrice+1)*2>>
+			[[(max)|Farmyard][$menials+=Math.trunc(Math.clamp($cash/(_menialPrice),0,_bulkMax)),$menialSupplyFactor-=Math.trunc(Math.clamp($cash/(_menialPrice),0,_bulkMax)),cashX(forceNeg(Math.trunc(Math.clamp($cash/(_menialPrice),0,_bulkMax)*(_menialPrice))), "farmyard")]]
+		<</if>>
+	<</if>>
+	<</if>>
+<</if>>
+
+<<if $farmMenialsSpace < 500>>
+	<br>
+	There is enough room in $farmyardName to build housing, enough to give <<print $farmMenialsSpace+100>> menials a place to sleep and relax.
+	[[Build a unit|Farmyard][cashX(forceNeg(Math.trunc(1000*$upgradeMultiplierArcology), "farmyard")), $farmMenialsSpace += 100]]
+	<span class="note">
+		Costs @@.yellowgreen;<<print cashFormat(Math.trunc(1000*$upgradeMultiplierArcology))>>@@ and will increase upkeep costs
+	</span>
+<</if>>	/* closes menial subsection */
+</span>
+
+<span id="rules">
+<<if _FyL > 0>>
+<br><br>
+	<<if $farmyardShows == 1 && (_CL > 0 || _HL > 0 || _FL > 0)>>
+		Slaves ''are'' putting on shows with animals.
+		[[End shows|Farmyard][$farmyardShows = 0, $farmyardBreeding = 0, $farmyardRestraints = 0]]
+		<<if $seeBestiality>>
+			<br>
+			<<if $farmyardBreeding == 1>>
+				Slaves ''are'' being bred with animals.
+				[[End breeding|Farmyard][$farmyardBreeding = 0, $farmyardRestraints = 0]]
+				<br>
+				<<if $farmyardRestraints == 1>>
+					''All of the slaves'' are being restrained.
+					[[Restrain only disobedient slaves|Farmyard][$farmyardRestraints = 0]]
+				<<else>>
+					''Only disobedient slaves'' are being restrained.
+					[[Restrain all of the slaves|Farmyard][$farmyardRestraints = 1]]
+				<</if>>
+			<<else>>
+				Slaves ''are not'' being bred with animals.
+				[[Begin breeding|Farmyard][$farmyardBreeding = 1]]
+				<br>
+			<</if>>
+		<</if>>
+	<<else>>
+		Slaves ''are not'' putting on shows with animals.
+		<<if (_CL > 0 || _HL > 0 || _FL > 0)>>
+			[[Begin shows|Farmyard][$farmyardShows = 1]]
+		<<else>>
+			//You must purchase animals before you can put on shows//
+		<</if>>
+	<</if>>
+<</if>>
+<br><br>
+</span>
+
+<span id="upgrades">
+<<if $farmyardUpgrade.pump == 0>>
+	[[Upgrade the water pump|Farmyard][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "farmyard"), $farmyardUpgrade.pump = 1]]
+	<span class="note">
+		Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>> and slightly increases crop yield.
+	</span>
+	<br>
+<<else>>
+	The water pump in $farmyardName is a more efficient model, slightly improving the amount of crops $farmyardName produces.
+	<br>
+	<<if $farmyardUpgrade.fertilizer == 0>>
+		[[Use a higher-quality fertilizer|Farmyard][cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierArcology)), "farmyard"), $farmyardUpgrade.fertilizer = 1]]
+		<span class="note">
+			Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology))>> moderately increases crop yield and slightly increases upkeep costs.
+		</span>
+		<br>
+	<<else>>
+		$farmyardNameCaps is using a higher-quality fertilizer, moderately increasing the amount of crops it produces and raising slightly raising upkeep costs.
+		<br>
+		<<if $farmyardUpgrade.hydroponics == 0>>
+			[[Purchase a hydroponics system|Farmyard][cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierArcology)), "farmyard"), $farmyardUpgrade.hydroponics = 1]]
+			<span class="note">
+				Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology))>> and moderately decreases upkeep costs.
+			</span>
+			<br>
+		<<else>>
+			$farmyardNameCaps is outfitted with an advanced hydroponics system, reducing the amount of water your crops consume and thus moderately reducing upkeep costs.
+			<br>
+			<<if $farmyardUpgrade.seeds == 0>>
+				[[Purchase genetically modified seeds|Farmyard][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"),$farmyardUpgrade.seeds = 1]]
+				<span class="note">
+					Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>> and significantly increases crop yield and moderately increases upkeep costs.
+				</span>
+				<br>
+			<<else>>
+				$farmyardNameCaps is using genetically modified seeds, significantly increasing the amount of crops it produces and moderately increasing upkeep costs.
+				<br>
+				<<if $farmyardUpgrade.machinery == 0>>
+					[[Upgrade the machinery|Farmyard][cashX(forceNeg(Math.trunc(50000*$upgradeMultiplierArcology)), "farmyard"), $farmyardUpgrade.machinery = 1]]
+					<span class="note">
+						Costs <<print cashFormat(Math.trunc(50000*$upgradeMultiplierArcology))>> significantly increases crop yield and significantly decreases upkeep costs.
+					</span>
+					<br>
+				<<else>>
+					The machinery in $farmyardName has been upgraded, and is more efficient, significantly increasing crop yields and significantly decreasing upkeep costs.
+					<br>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+<<if $rep > 18000>>
+	<<if $farmyardUpgrade.lab == 0>>
+		[[Purchase an R&D lab to experiment with different plant and animal types|Farmyard][cashX(forceNeg(Math.trunc(50000*$upgradeMultiplierArcology)), "farmyard"), $farmyardUpgrade.lab = 1, $farmyardLab = 1]]
+		<span class="note">
+			Costs <<print cashFormat(Math.trunc(50000*$upgradeMultiplierArcology))>> and unlocks the Research Lab.
+		</span>
+		<<run $merchantIllegalWares.push("AnimalOrgans")>>
+		<br>
+	<<else>>
+		A high-tech metal door, complete with retinal and fingerprint scanners, stands at the far end of $farmyardName.
+		<br>
+	<</if>>
+<</if>>
+</span>
+
+<span id="animalhousing">
+<<if ($farmyardKennels == 0)>>
+	<br>
+	[[Add kennels|Farmyard][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "farmyard"), $farmyardKennels = 1]]
+	<span class="note">
+		Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>> and allows you to keep dogs
+	</span>
+	<br>
+<<elseif ($farmyardKennels == 1)>>
+	<br>
+	<<link "Kennels" "FarmyardAnimals">><</link>> have been built in one corner of $farmyardName, and are currently <<if _CL <= 0>>empty.<<else>>occupied by
+		<<if _CL == 1>>
+			<<print $canines>>.
+		<<elseif _CL <= 3>>
+			a couple different breeds of dogs.
+		<<else>>
+			all kinds of dogs.
+		<</if>>
+	<</if>>
+
+	<<if $rep > 10000>>
+	<br>
+		[[Upgrade kennels|Farmyard][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $farmyardKennels = 2]]
+		<span class="note">
+			Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>> and allows you to keep exotic canines
+		</span>
+	<</if>>
+<<elseif ($farmyardKennels == 2)>>
+	<br>
+	<<link "Large kennels" "FarmyardAnimals">><</link>> have been built in one corner of $farmyardName, and are currently <<if _CL <= 0>>empty.<<else>>occupied by
+		<<if _CL == 1>>
+			<<print $canines>>.
+		<<elseif _CL <= 3>>
+			a couple different
+			<<set $onlyDogs = $canines.every(c => c.species == "dog")>>
+			<<if $onlyDogs>>
+				breeds of dogs.
+			<<else>>
+				types of canines.
+			<</if>>
+		<<else>>
+			all kinds of canines.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if ($farmyardStable == 0)>>
+	<br>
+	[[Add stables|Farmyard][cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierArcology)), "farmyard"), $farmyardStable = 1]]
+	<span class="note">
+		Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology))>> and allows you to keep hooved animals
+	</span>
+	<br>
+<<elseif ($farmyardStable == 1)>>
+	<br>
+	<<link "Stables" "FarmyardAnimals">><</link>> have been built at the far end of $farmyardName, and are currently <<if _HL <= 0>>empty.<<else>>occupied by
+		<<if _HL == 1>>
+			<<print $hooved>>.
+		<<elseif _HL <= 3>>
+			a couple different types of hooved animals.
+		<<else>>
+			all kinds of hooved animals.
+		<</if>>
+	<</if>>
+	<<if $rep > 15000>>
+	<br>
+		[[Upgrade stables|Farmyard][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $farmyardStable = 2]]
+		<span class="note">
+			Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>> and allows you to keep exotic hooved animals
+		</span>
+	<</if>>
+<<elseif $farmyardStable == 2>>
+	<br>
+	<<link "Large stables" "FarmyardAnimals">><</link>> have been build at the far end of $farmyardName, and are currently <<if _HL <= 0>>empty.<<else>>occupied by
+		<<if _HL == 1>>
+			<<print $hooved>>.
+		<<elseif _HL <= 3>>
+			a couple different types of hooved animals.
+		<<else>>
+			all kinds of hooved animals.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if ($farmyardCages == 0)>>
+	<br>
+	[[Add cages|Farmyard][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "farmyard"), $farmyardCages = 1]]
+	<span class="note">
+		Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>> and allows you to keep cats
+	</span>
+	<br>
+<<elseif ($farmyardCages == 1)>>
+	<br>
+	<<link "Cages" "FarmyardAnimals">><</link>> have been built in one corner of $farmyardName, and are currently <<if _FL <= 0>>empty.<<else>>occupied by
+		<<if _FL == 1>>
+			<<print $felines>>.
+		<<elseif _FL <= 3>>
+			a couple different breeds of cats.
+		<<else>>
+			all kinds of cats.
+		<</if>>
+	<</if>>
+	<<if $rep > 15000>>
+		<br>
+		[[Upgrade cages|Farmyard][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "farmyard"), $farmyardCages = 2]]
+		<span class="note">
+			Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>> and allows to keep exotic felines
+		</span>
+	<</if>>
+	<br>
+<<elseif ($farmyardCages == 2)>>
+	<br>
+	<<link "Large cages" "FarmyardAnimals">><</link>> have been built in one corner of $farmyardName, and are currently <<if _FL <= 0>>empty.<<else>>occupied by
+		<<if _FL == 1>>
+			<<print $felines>>.
+		<<elseif _FL <= 3>>
+			a couple different
+			<<set $onlyCats = $felines.every(f => f.species == "cat")>>
+			<<if $onlyCats>>
+				breeds of cats.
+			<<else>>
+				types of felines.
+			<</if>>
+		<<else>>
+			all kinds of felines.
+		<</if>>
+	<</if>>
+	<br>
+<</if>>
+<br>
+
+<<if $farmyardKennels > 0 || $farmyardStable > 0 || $farmyardCages > 0>>
+	<<set _removeCost = Math.trunc(($farmyardKennels+$farmyardStable+$farmyardCages)*5000)*$upgradeMultiplierArcology>>
+	[[Remove the animal housing|Farmyard][cashX(forceNeg(_removeCost), "farmyard"), $farmyardKennels = 0, $farmyardStable = 0, $farmyardCages = 0, $activeCanine = 0, $activeHooved = 0, $activeFeline = 0, $farmyardShows = 0, $farmyardBreeding = 0, $farmyardRestraints = 0, $animalsBought = {
+		canines: 0,
+		hooved: 0,
+		felines: 0,
+		labradorRetrievers: 0,
+		germanShepherds: 0,
+		goldenRetrievers: 0,
+		frenchBulldogs: 0,
+		bulldogs: 0,
+		beagles: 0,
+		poodles: 0,
+		rottweilers: 0,
+		yorkshireTerriers: 0,
+		siberianHuskies: 0,
+		horses: 0,
+		siameses: 0,
+		persians: 0,
+		maineCoons: 0,
+		ragdolls: 0,
+		bengals: 0,
+		abbysinians: 0,
+		birmans: 0,
+		orientalShorthairs: 0,
+		sphynxes: 0,
+		russianBlues: 0,
+		wolves: 0,
+		foxes: 0,
+		jackals: 0,
+		dingos: 0,
+		zebras: 0,
+		cougars: 0,
+		jaguars: 0,
+		pumas: 0,
+		lynx: 0,
+		leopards: 0,
+		lions: 0,
+		tigers: 0
+		}, $canines = [], $hooved = [], $felines = []]]
+	//Will cost @@.yellowgreen;<<print cashFormat(_removeCost)>>@@//
+<</if>>
+
+<<if $farmyardLab > 0>>
+	<br><br>
+	A <<link "research and development lab" "FarmyardLab">><</link>> has been built at one end of $farmyardName.
+<</if>>
+</span>
+
+<br><hr><br>
+
+<<print App.UI.SlaveList.stdFacilityPage(App.Entity.facilities.farmyard)>>
+
+<br><br>Rename $farmyardName: <<textbox "$farmyardName" $farmyardName "Farmyard">> //Use a noun or similar short phrase//
+
+<<run App.UI.SlaveList.ScrollPosition.restore()>>

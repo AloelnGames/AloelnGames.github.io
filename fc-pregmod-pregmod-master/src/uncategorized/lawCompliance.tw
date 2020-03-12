@@ -1,0 +1,525 @@
+:: Law Compliance [nobr]
+
+<<setLocalPronouns $activeSlave>>
+
+<<if $arcologies[0].FSSlimnessEnthusiastSMR == 1>>
+	<<set $activeSlave.weight = random(-80,0)>>
+	<<run setHealth($activeSlave, jsRandom(50, 90), 0, undefined, 0)>>
+	$He has been kept on a rigorous diet for sale, has been required to exercise regularly, and has had excellent care taken of $his health.
+<</if>>
+<<if $arcologies[0].FSRepopulationFocusSMR == 1>>
+	<<if $activeSlave.physicalAge < $fertilityAge>>
+		<<if $precociousPuberty == 0>>
+			<<set $activeSlave.physicalAge = $fertilityAge>>
+			<<set $activeSlave.visualAge = $fertilityAge>>
+			<<set $activeSlave.actualAge = $fertilityAge>>
+			<<set $activeSlave.ovaryAge = $fertilityAge>>
+		<</if>>
+	<</if>>
+	<<set $activeSlave.pubertyXX = 1>>
+	<<if $activeSlave.ovaryAge >= 42>>
+		/* corrects menopausal mothers */
+		<<set $activeSlave.ovaryAge = 40>>
+	<</if>>
+	<<if $activeSlave.preg < 1>> /* "if" needed here to avoid conflicts with already pregnant slaves from repopulation FS arcologies markets */
+		<<set $activeSlave.ovaries = 1>>
+		<<set $activeSlave.vagina = either(0, 0, 1, 1, 1, 1, 1, 2, 2, 3)>>
+		<<set $activeSlave.pregType = either(1, 1, 1, 1, 2, 2, 2, 3, 3, 4, 5)>>
+		<<set $activeSlave.preg = random(5,38)>>
+		<<set $activeSlave.pregWeek = $activeSlave.preg>>
+		<<set $activeSlave.pregKnown = 1>>
+		<<run SetBellySize($activeSlave)>>
+	<</if>>
+	If $he was unable to become pregnant before, $he has been made to now. $He is fertilized surgically to insure a healthy pregnancy.
+<</if>>
+<<if $arcologies[0].FSAssetExpansionistSMR == 1>>
+	<<set $activeSlave.clit = either(0, 0, 0, 1, 1, 2)>>
+	<<set $activeSlave.labia = either(0, 1, 2, 3)>>
+	<<set $activeSlave.boobs += random(2,5)*100>>
+	<<set $activeSlave.butt += random(1,2)>>
+	<<set $activeSlave.lips = random(15,55)>>
+	<<if $activeSlave.dick > 0>>
+		<<set $activeSlave.dick = random(4,7)>>
+	<</if>>
+	<<if $activeSlave.balls > 0>>
+		<<set $activeSlave.balls = random(4,7)>>
+	<</if>>
+	$He has been on powerful growth hormones for a long time, and has experienced growth in several areas as a result.
+<</if>>
+<<if $arcologies[0].FSPhysicalIdealistSMR == 1>>
+	Much of $his time before sale was spent
+	<<if $arcologies[0].FSPhysicalIdealistLaw == 1>>
+		<<set $activeSlave.muscles = random(20,50)>>
+		doing cardio,
+	<<else>>
+		<<set $activeSlave.muscles = random(50,100)>>
+		lifting weights,
+	<</if>>
+	and $his health has been raised to an almost unnatural level.
+	<<run setHealth($activeSlave, jsRandom(50, 90), 0, undefined, 0)>>
+	<<set $activeSlave.weight = random(-20,0)>>
+<<elseif $arcologies[0].FSHedonisticDecadenceSMR == 1>>
+	<<set $activeSlave.weight = random(50,200)>>
+	<<if $arcologies[0].FSHedonisticDecadenceStrongFat == 1>>
+		<<set $activeSlave.muscles = random(10,60)>>
+		<<run setHealth($activeSlave, jsRandom(10, 40), 0, undefined, 0)>>
+	<<else>>
+		<<run setHealth($activeSlave, jsRandom(-30, 10))>>
+		<<set $activeSlave.muscles = random(-80,0)>>
+	<</if>>
+	Much of $his time before sale was spent being fattened up and <<if $arcologies[0].FSHedonisticDecadenceStrongFat == 1>>pumping iron<<else>>lying around<</if>>.
+	<<if $activeSlave.devotion <= 20>>
+		$He had to be force-fed massive amounts of slave food while bound to meet requirements, filling $him with @@.gold;fear@@ and @@.mediumorchid;disgust.@@
+		<<set $activeSlave.trust -= 5>>
+		<<set $activeSlave.devotion -= 5>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSGenderFundamentalistSMR == 1>>
+	<<if $activeSlave.dick > 0>>
+		<<set $activeSlave.balls = 0>>
+		<<set $activeSlave.scrotum = 0>>
+		<<set $activeSlave.boobs += random(0,2)*100>>
+		<<set $activeSlave.butt += random(0,1)>>
+		<<if $activeSlave.face < 95>>
+			<<set $activeSlave.face = Math.trunc($activeSlave.face+random(0,20),-100,100)>>
+		<</if>>
+		$His balls were removed as soon as $he was enslaved, and $he's been kept on powerful female hormones for long enough to have a general feminizing effect.
+	<</if>>
+<<elseif $arcologies[0].FSSupremacistSMR == 1>>
+	<<if $activeSlave.dick > 0>>
+		<<if $activeSlave.race != $arcologies[0].FSSupremacistRace>>
+			<<set $activeSlave.balls = 0>>
+			<<set $activeSlave.scrotum = 0>>
+			$His balls were removed as soon as $he was enslaved to prevent $him from polluting fertile slaves with $his inferior semen.
+		<</if>>
+	<</if>>
+<<elseif $arcologies[0].FSSubjugationistSMR == 1>>
+	<<if $activeSlave.dick > 0>>
+		<<if $activeSlave.race == $arcologies[0].FSSubjugationistRace>>
+			<<set $activeSlave.balls = 0>>
+			<<set $activeSlave.scrotum = 0>>
+			$His balls were removed as soon as $he was enslaved to prevent $him from polluting fertile slaves with $his subhuman semen.
+		<</if>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSRestartSMR == 1>>
+	<<if $activeSlave.balls > 0 || $activeSlave.ovaries > 0>>
+		<<run TerminatePregnancy($activeSlave)>>
+		<<set $activeSlave.balls = 0>>
+		<<set $activeSlave.ovaries = 0>>
+		As a member of the lowest class,<<if $activeSlave.preg > 0>> $his pregnancy is immediately terminated, and<</if>> $he is promptly sterilized to prevent $him from passing on $his useless genes.
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSPaternalistSMR == 1>>
+	<<if $activeSlave.devotion <= 20>>
+		While $he came through the slave markets, $he was treated with decency. $He has begun to wonder whether $he can @@.mediumaquamarine;get away with@@ being disobedient.
+		<<set $activeSlave.trust += 10>>
+	<<else>>
+		While $he came through the slave markets, $he was treated with decency. $He has begun to hope that $he can expect @@.mediumaquamarine;basic respect@@ despite being a sex slave.
+		<<set $activeSlave.trust += 10>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSDegradationistSMR == 1>>
+	$His current owners @@.gold;brutalized $him@@ before putting $him on sale, using clever methods to produce agony without seriously damaging $his health.
+	<<set $activeSlave.trust -= 10>>
+<</if>>
+<<if $arcologies[0].FSPetiteAdmirationSMR == 1>>
+	$His height was meticulously taken before being allowed into the markets.
+	<<if !heightPass($activeSlave)>>
+		<<set $activeSlave.height = Math.trunc(Height.random($activeSlave, {limitMult: [-4, -2]}))>>
+	<</if>>
+<<elseif $arcologies[0].FSStatuesqueGlorificationSMR == 1>>
+	$His height, as well as $his potential for growth, were meticulously taken before being allowed into the markets.
+	<<if !heightPass($activeSlave)>>
+		<<set $activeSlave.height = Math.trunc(Height.random($activeSlave, {limitMult: [2, 4]}))>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSIntellectualDependencySMR == 1>>
+	$He passed the intelligence exam needed to be qualify $him for sale. A truly @@.hotpink;joyous achievement@@ for $him.
+	<<set $activeSlave.intelligence = Intelligence.random({limitIntelligence: [-100, -50]})>>
+	<<set $activeSlave.devotion += 5>>
+<<elseif $arcologies[0].FSSlaveProfessionalismSMR == 1>>
+	$He underwent an intense lesson plan to hone $his skills to a level appropriate for sale.
+	<<if $activeSlave.vagina >= 0>>
+		<<set $activeSlave.skill.vaginal = Math.clamp($activeSlave.skill.vaginal+50, 50, 100)>>
+	<</if>>
+	<<set $activeSlave.skill.anal = Math.clamp($activeSlave.skill.anal+50, 50, 100)>>
+	<<set $activeSlave.skill.oral = Math.clamp($activeSlave.skill.oral+50, 50, 100)>>
+	<<set $activeSlave.skill.entertainment = Math.clamp($activeSlave.skill.entertainment+50, 50, 100)>>
+	<<set $activeSlave.skill.whoring = Math.clamp($activeSlave.skill.whoring+50, 50, 100)>>
+	<<if $activeSlave.accent > 1>>
+		<<set $activeSlave.accent = 1>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSBodyPuristSMR == 1>>
+	In order to qualify for sale, $he has been meticulously inspected for implants, tattoos, and piercings, and any present have been removed.
+	<<set $activeSlave.nipplesPiercing = 0>>
+	<<set $activeSlave.areolaePiercing = 0>>
+	<<set $activeSlave.lipsPiercing = 0>>
+	<<set $activeSlave.vaginaPiercing = 0>>
+	<<set $activeSlave.dickPiercing = 0>>
+	<<set $activeSlave.clitPiercing = 0>>
+	<<set $activeSlave.anusPiercing = 0>>
+	<<set $activeSlave.corsetPiercing = 0>>
+	<<set $activeSlave.earPiercing = 0>>
+	<<set $activeSlave.eyebrowPiercing = 0>>
+	<<set $activeSlave.nosePiercing = 0>>
+	<<set $activeSlave.navelPiercing = 0>>
+	<<set $activeSlave.lipsTat = 0>>
+	<<set $activeSlave.buttTat = 0>>
+	<<set $activeSlave.anusTat = 0>>
+	<<set $activeSlave.vaginaTat = 0>>
+	<<set $activeSlave.dickTat = 0>>
+	<<set $activeSlave.boobsTat = 0>>
+	<<set $activeSlave.armsTat = 0>>
+	<<set $activeSlave.legsTat = 0>>
+	<<set $activeSlave.shouldersTat = 0>>
+	<<set $activeSlave.backTat = 0>>
+	<<set $activeSlave.stampTat = 0>>
+	<<if $activeSlave.boobsImplant > 0>>
+		<<set $activeSlave.boobs -= $activeSlave.boobsImplant>>
+		<<set $activeSlave.boobsImplant = 0>>
+		<<set $activeSlave.boobsImplantType = "none">>
+	<</if>>
+	<<if $activeSlave.buttImplant > 0>>
+		<<set $activeSlave.butt -= $activeSlave.buttImplant>>
+		<<set $activeSlave.buttImplant = 0>>
+		<<set $activeSlave.buttImplantType = "none">>
+	<</if>>
+	<<if $activeSlave.lipsImplant > 0>>
+		<<set $activeSlave.lips -= $activeSlave.lipsImplant>>
+		<<set $activeSlave.lipsImplant = 0>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSTransformationFetishistSMR == 1>>
+	In order to qualify for sale, $he has been kitted out with a basic set of breast, buttock, and lip implants.
+	<<if $activeSlave.devotion <= 20>>
+		Being turned into an assembly line bimbo fills $him with @@.gold;fear@@ and @@.mediumorchid;disgust.@@
+		<<set $activeSlave.trust -= 5>>
+		<<set $activeSlave.devotion -= 5>>
+	<</if>>
+	<<if $activeSlave.boobsImplant == 0>>
+		<<set $activeSlave.boobsImplant = 400>>
+		<<set $activeSlave.boobs += $activeSlave.boobsImplant>>
+		<<set $activeSlave.boobsImplantType = "normal">>
+	<</if>>
+	<<if $activeSlave.buttImplant == 0>>
+		<<set $activeSlave.buttImplant = 1>>
+		<<set $activeSlave.butt += $activeSlave.buttImplant>>
+		<<set $activeSlave.buttImplantType = "normal">>
+	<</if>>
+	<<if $activeSlave.lipsImplant == 0>>
+		<<set $activeSlave.lipsImplant = 10>>
+		<<set $activeSlave.lips += $activeSlave.lipsImplant>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSYouthPreferentialistSMR == 1>>
+	<<if $activeSlave.physicalAge > 35>>
+		$He was treated as a disposable old bitch in the slave pens, @@.gold;worrying $him.@@
+		<<set $activeSlave.trust -= 5>>
+	<<elseif $activeSlave.physicalAge <= 25>>
+		$He was treated reasonably well in the slave pens due to $his youth, @@.mediumaquamarine;reassuring $him.@@
+		<<set $activeSlave.trust += 5>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSMaturityPreferentialistSMR == 1>>
+	<<if $activeSlave.physicalAge > 35>>
+		$He was treated reasonably well in the slave pens due to $his maturity, @@.mediumaquamarine;reassuring $him.@@
+		<<set $activeSlave.trust += 5>>
+	<<elseif $activeSlave.physicalAge <= 25>>
+		$He was treated as a disposable little slut in the slave pens, @@.gold;worrying $him.@@
+		<<set $activeSlave.trust -= 5>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSPastoralistSMR == 1>>
+	<<if $activeSlave.lactation == 0>>
+		$He was implanted with permanent lactation drugs in order to qualify for sale, and was kept in the slave pens until $he could be put up on the block with dripping nipples.
+		<<set $activeSlave.lactation = 2, $activeSlave.lactationDuration = 2>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSChattelReligionistSMR == 1>>
+	$He has been consecrated for sale by being offered to the public for a full night, from sunset to sunrise.
+	<<if $activeSlave.devotion <= 20>>
+		Since $he was not willing to accept this treatment, $his consecration took the form of twelve hours of rape, @@.gold;terrifying $him@@ and @@.mediumorchid;filling $him with hatred.@@
+		<<set $activeSlave.trust -= 15>>
+		<<set $activeSlave.devotion -= 15>>
+	<<else>>
+		$He accepted this treatment, @@.hotpink;breaking $him@@ to sexual slavery.
+		<<set $activeSlave.devotion += 5>>
+	<</if>>
+
+	<<run seX($activeSlave, "oral", "public", "penetrative", 10)>>
+	<<if $activeSlave.vagina > 0>>
+		<<run seX($activeSlave, "vaginal", "public", "penetrative", 10)>>
+		<<if $activeSlave.vagina < 3>>
+			<<set $activeSlave.vagina += 1>>
+		<</if>>
+	<<else>>
+		<<run seX($activeSlave, "oral", "public", "penetrative", 10)>>
+	<</if>>
+	<<if $activeSlave.anus > 0>>
+		<<run seX($activeSlave, "anal", "public", "penetrative", 10)>>
+		<<if $activeSlave.anus < 3>>
+			<<set $activeSlave.anus += 1>>
+		<</if>>
+	<<else>>
+		<<run seX($activeSlave, "oral", "public", "penetrative", 10)>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSRomanRevivalistSMR == 1>>
+	As $he passed though the slave markets, $he saw many less valuable slaves selected to die in gladiatorial combats. $He is relieved $he wasn't one of them, but @@.gold;terrified@@ that will be $his fate if $he makes mistakes.
+	<<set $activeSlave.trust -= 10>>
+<</if>>
+<<if $arcologies[0].FSAztecRevivalistSMR == 1>>
+	As $he passed though the golden city, $he saw a less valuable <<if $arcologies[0].FSPaternalist != "unset">>slave's virginity get sacrificed<<else>>slave get sacrificed<</if>> on one of the many altars spread throughout the city. $He was <<if $arcologies[0].FSPaternalist != "unset">>@@.gold;startled@@<<else>>@@.gold;mortified@@<</if>> to learn what befalls lesser slaves here.
+	<<if $arcologies[0].FSPaternalist != "unset">>
+		<<set $activeSlave.trust -= 5>>
+	<<else>>
+		<<set $activeSlave.trust -= 20>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSEgyptianRevivalistSMR == 1>>
+	While $he was in the slave pens, $he was subjected to Egyptian cultural indoctrination.
+	<<if $activeSlave.skill.entertainment > 10>>
+		$He is now @@.mediumaquamarine;confident@@ that $his entertainment skills will be valued here.
+		<<set $activeSlave.trust += 10>>
+	<<elseif $activeSlave.intelligenceImplant >= 15>>
+		$He now @@.mediumaquamarine;hopes@@ that $his education will be valued here.
+		<<set $activeSlave.trust += 5>>
+	<<else>>
+		$He is @@.gold;concerned@@ that $he doesn't have what it takes to fit in.
+		<<set $activeSlave.trust -= 5>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSEdoRevivalistSMR == 1>>
+	While $he was in the slave pens, $he was subjected to Edo Revivalist cultural indoctrination.
+	<<if $activeSlave.nationality == "Japanese">>
+		$He is now @@.mediumaquamarine;confident@@ that, as a proper Japanese $girl, $he will receive preferential treatment.
+		<<set $activeSlave.trust += 10>>
+	<<elseif $activeSlave.skill.entertainment > 30>>
+		$He now @@.mediumaquamarine;hopes@@ that $his refined entertainment skills will make $him culturally as well as sexually valuable.
+		<<set $activeSlave.trust += 5>>
+	<<else>>
+		$He is @@.gold;concerned@@ that $he doesn't have what it takes to fit in.
+		<<set $activeSlave.trust -= 5>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSArabianRevivalistSMR == 1>>
+	While $he was in the slave pens, $he was subjected to classical Arabian cultural indoctrination.
+	<<if $activeSlave.face > 40>>
+		$He is now @@.mediumaquamarine;confident@@ that $his great beauty will be valued here.
+		<<set $activeSlave.trust += 10>>
+	<<elseif $activeSlave.accent <= 1>>
+		$He now @@.mediumaquamarine;hopes@@ that $his linguistic skill will be valued here.
+		<<set $activeSlave.trust += 5>>
+	<<else>>
+		$He is @@.gold;concerned@@ that $he doesn't have what it takes to fit in.
+		<<set $activeSlave.trust -= 5>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSChineseRevivalistSMR == 1>>
+	While $he was in the slave pens, $he was subjected to Imperial Chinese cultural indoctrination.
+	<<if $activeSlave.intelligence > 50>>
+		$He is now @@.mediumaquamarine;confident@@ that $his brilliance will be valued here.
+		<<set $activeSlave.trust += 10>>
+	<<elseif $activeSlave.intelligenceImplant >= 15>>
+		$He now @@.mediumaquamarine;hopes@@ that $his education will be valued here.
+		<<set $activeSlave.trust += 5>>
+	<<else>>
+		$He is @@.gold;concerned@@ that $he doesn't have what it takes to fit in.
+		<<set $activeSlave.trust -= 5>>
+	<</if>>
+<</if>>
+
+<<if $BasicSMR != 1>>
+	While $he came through the slave markets, $he was treated with inhuman callousness. It was very obvious and @@.gold;very terrifying@@ to $him that $he is now considered a piece of meat.
+	<<set $activeSlave.trust -= 5>>
+<</if>>
+
+<<if $HealthInspectionSMR == 1>>
+	<<if $activeSlave.health.condition < -10>>
+		$His current owners held $him for basic medical care before putting $him on sale, resolving some of $his health issues.
+		<<run improveCondition($activeSlave, 10)>>
+	<</if>>
+<</if>>
+
+<<if $EducationSMR == 1>>
+	<<if $activeSlave.intelligenceImplant == 0>>
+		$He arrived at $arcologies[0].name in a pitiably undereducated state, and has been held back until $he completed a basic course of slave education.
+		<<set $activeSlave.intelligenceImplant = 15>>
+	<</if>>
+<</if>>
+
+<<if $FrigiditySMR == 1>>
+	<<if $activeSlave.energy > 20>>
+		Before reaching the market, $he was trained to disregard sex until $he showed no interest in sex at all.
+		<<set $activeSlave.energy = 20>>
+	<</if>>
+<</if>>
+
+<<if $BasicBeautySMR == 1>>
+	<<if $activeSlave.face < 0>>
+		<<set $activeSlave.face = random(0,60)>>
+	<</if>>
+	While $he was in the slave pens, $he saw that less attractive slaves were immediately designated as menials and Fuckdolls, and $he is @@.gold;terrified@@ that should $he lose $his beauty, $he'll be considered worthless and be reassigned on the spot.
+	<<set $activeSlave.trust -= 5>>
+<</if>>
+
+<<if $QualityBeautySMR == 1>>
+	<<if $activeSlave.face < 20>>
+		<<set $activeSlave.face = random(20,100)>>
+	<</if>>
+	While $he was in the slave pens, $he saw that less attractive slaves were immediately designated as menials and Fuckdolls, and $he is @@.gold;terrified@@ that should $he loses $his beauty, $he'll be considered worthless and be reassigned on the spot.
+	<<set $activeSlave.trust -= 5>>
+<</if>>
+
+<<if $BasicWeightSMR == 1>>
+	<<if $activeSlave.weight > 100>>
+		<<set $activeSlave.weight = random(-50,50)>>
+	<</if>>
+	While $he was in the slave pens, $he saw that obese slaves were immediately designated as menials and cows, and $he is @@.gold;terrified@@ that should $he get fat, $he'll be considered worthless and be reassigned on the spot.
+	<<set $activeSlave.trust -= 5>>
+<</if>>
+
+<<if $BasicHeightSMR == 1>>
+	<<if $activeSlave.height < 170>>
+		<<if $activeSlave.height >= 160>>
+			Before $he was put up for sale, $he underwent height increasing surgery to fulfill your arcology's height SMR. $He was @@.gold;horrified@@ by how drastically $his body was altered just for a chance at sale.
+			<<set $activeSlave.trust -= 10>>
+			<<set $activeSlave.height += 10, $activeSlave.heightImplant = 1>>
+			<<run healthDamage($activeSlave, 40)>>
+		<<else>>
+			While $he was in the slave pens, $he was treated as nothing more than an unsalvageable slab of meat suitable only for the lowliest of jobs. $He's @@.hotpink;desperate@@ enough to follow any order in @@.gold;fear@@ that should $he fail, $he'll be discarded like so many other shorties.
+			<<set $activeSlave.devotion += 10, $activeSlave.trust -= 10>>
+		<</if>>
+	<<else>>
+		While $he was in the slave pens, $he saw that short and even average sized slaves were commonly designated as menials and Fuckdolls. $His tall stature gives $him a promising future compared to $his shorter peers, leaving $him @@.mediumOrchid;inappropriately proud@@ of $his height.
+		<<set $activeSlave.devotion -= 10>>
+	<</if>>
+<<elseif $BasicHeightSMR == -1>>
+	<<if $activeSlave.height >= 160>>
+		<<if $activeSlave.height <= 169>>
+			Before $he was put up for sale, $he underwent height reduction surgery to fulfill your arcology's height SMR. $He was @@.gold;horrified@@ by how drastically $his body was altered just for a chance at sale.
+			<<set $activeSlave.trust -= 10>>
+			<<set $activeSlave.height -= 10, $activeSlave.heightImplant = -1>>
+			<<run healthDamage($activeSlave, 40)>>
+		<<else>>
+			While $he was in the slave pens, $he was treated as nothing more than an unsalvageable slab of meat suitable only for the lowliest of jobs. $He's @@.hotpink;desperate@@ enough to follow any order in @@.gold;fear@@ that should $he fail, $he'll be discarded like all the other tall <<= $girl>>s.
+			<<set $activeSlave.devotion += 10, $activeSlave.trust -= 10>>
+		<</if>>
+	<<else>>
+		While $he was in the slave pens, $he saw that tall and even average sized slaves were commonly designated as menials and Fuckdolls. $His short stature gives $him a promising future compared to $his towering peers, leaving $him @@.mediumOrchid;inappropriately proud@@ of $his height.
+		<<set $activeSlave.devotion -= 10>>
+	<</if>>
+<</if>>
+
+<<if $AdvancedHeightSMR == 1>>
+	<<set $activeSlave.height = Math.round(Height.random($activeSlave, {skew: $AdvancedHeightSMR, limitMult: [0, 5 * $AdvancedHeightSMR]}))>>
+	While $he was in the slave pens, $he saw that slaves on the shorter end of the height curve were immediately designated as menials and Fuckdolls.
+	<<if $activeSlave.physicalAge < 16>>
+		$He is @@.gold;terrified@@ that if $he doesn't keep growing, $he'll be reassigned on the spot without a second thought.
+		<<set $activeSlave.trust -= 5>>
+	<<else>>
+		$His above average stature gives $him a promising future compared to $his shorter peers, leaving $him @@.mediumOrchid;inappropriately proud@@ of $his height.
+		<<set $activeSlave.devotion -= 10>>
+	<</if>>
+<<elseif $AdvancedHeightSMR == -1>>
+	<<set $activeSlave.height = Math.round(Height.random($activeSlave, {skew: $AdvancedHeightSMR, limitMult: [0, 5 * $AdvancedHeightSMR]}))>>
+	While $he was in the slave pens, $he saw that slaves on the taller end of the height curve were immediately designated as menials and Fuckdolls.
+	<<if $activeSlave.physicalAge < 16>>
+		$He is @@.gold;terrified@@ that if $he goes through a growth spurt, $he'll be reassigned on the spot without a second thought.
+		<<set $activeSlave.trust -= 5>>
+	<<else>>
+		$His below average stature gives $him a promising future compared to $his taller peers, leaving $him @@.mediumOrchid;inappropriately proud@@ of $his height.
+		<<set $activeSlave.devotion -= 10>>
+	<</if>>
+<</if>>
+
+<<if $BasicIntelligenceSMR == 1>>
+	<<if $activeSlave.intelligence <= -15>>
+		<<set $activeSlave.intelligence = Intelligence.random({limitIntelligence: [0,40]})>>
+	<</if>>
+	While $he was in the slave pens, $he saw that less intelligent slaves were immediately designated as menials and Fuckdolls, and $he is @@.gold;terrified@@ that if $he makes a mistake, $he'll be thought stupid and be reassigned on the spot.
+	<<set $activeSlave.trust -= 5>>
+<</if>>
+
+<<if $QualityIntelligenceSMR == 1>>
+	<<if $activeSlave.intelligence <= 15>>
+		<<set $activeSlave.intelligence = Intelligence.random({limitIntelligence: [16,100]})>>
+	<</if>>
+	While $he was in the slave pens, $he saw that less intelligent slaves were immediately designated as menials and Fuckdolls, and $he is @@.gold;terrified@@ that if $he makes a mistake, $he'll be thought stupid and be reassigned on the spot.
+	<<set $activeSlave.trust -= 5>>
+<</if>>
+
+<<if $IntelligenceEugenicsSMR + $HeightEugenicsSMR + $FaceEugenicsSMR > 0>>
+	<<set _eugenicsMarketTest = 1>>
+	As soon as $he arrived in the slave market, $he was subjected to a battery of testing:
+	<<if $IntelligenceEugenicsSMR == 1>>
+		an intelligence test,
+		<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant <= 50>>
+			<<set _eugenicsMarketTest = 0>>
+		<</if>>
+	<</if>>
+	<<if $HeightEugenicsSMR == 1>>
+		rigorous height and bone measurements,
+		<<if $activeSlave.height < (Height.mean($activeSlave) + 15)>>
+			<<set _eugenicsMarketTest = 0>>
+		<</if>>
+	<</if>>
+	<<if $FaceEugenicsSMR == 1>>
+		strict judgments of $his facial attractiveness,
+		<<if $activeSlave.face < 40>>
+			<<set _eugenicsMarketTest = 0>>
+		<</if>>
+	<</if>>
+	a physical exam, and more.
+	<<if _eugenicsMarketTest == 0>>
+		$He failed, and only then learned that by failing $he placed $himself under the merciless dictates of eugenic theory.
+		<<if $activeSlave.balls > 0 && (isFertile($activeSlave) || $activeSlave.preg > 0)>>
+			$His balls were promptly
+			<<if $seeExtreme == 1>>
+				removed
+				<<set $activeSlave.balls = 0>>
+				<<set $activeSlave.scrotum = 0>>
+			<<else>>
+				flooded with chemicals
+				<<set $activeSlave.ballType = "sterile">>
+			<</if>>
+			to prevent $him from passing on $his inferior genes, @@.mediumorchid;infuriating@@ and @@.gold;terrifying@@ $him.
+			Furthermore, $his <<if $activeSlave.preg > 0>>pregnancy was terminated and afterwards $his <</if>>tubes were promptly tied to prevent $him from passing on $his inferior genes, @@.mediumorchid;saddening@@ and @@.gold;frightening@@ $him.
+			<<run TerminatePregnancy($activeSlave)>>
+			<<set $activeSlave.devotion -= 30>>
+			<<set $activeSlave.trust -= 30>>
+		<<elseif $activeSlave.balls > 0>>
+			$His balls were promptly
+			<<if $seeExtreme == 1>>
+				removed
+				<<set $activeSlave.balls = 0>>
+				<<set $activeSlave.scrotum = 0>>
+			<<else>>
+				flooded with chemicals
+				<<set $activeSlave.ballType = "sterile">>
+			<</if>>
+			to prevent $him from passing on $his inferior genes, @@.mediumorchid;infuriating@@ and @@.gold;terrifying@@ $him.
+			<<set $activeSlave.devotion -= 20, $activeSlave.trust -= 20>>
+		<<elseif (isFertile($activeSlave) || $activeSlave.preg > 0)>>
+			$His <<if $activeSlave.preg > 0>>pregnancy was terminated and afterwards $his <</if>>tubes were promptly tied to prevent $him from passing on $his inferior genes, @@.mediumorchid;saddening@@ and @@.gold;frightening@@ $him.
+			<<run TerminatePregnancy($activeSlave)>>
+			<<set $activeSlave.devotion -= 10>>
+			<<set $activeSlave.trust -= 10>>
+		<<else>>
+			Fortunately for $him, $he was already incapable of passing on $his inferior genes.
+		<</if>>
+	<<else>>
+		$He passed, and only then learned that passing marked $him as fit to pass on $his genes, should $his owners decide to breed $him.
+		<<if $activeSlave.balls > 0 && (isFertile($activeSlave) || $activeSlave.preg > 0)>>
+			$His relief that $he won't have $his balls cut off and $his tubes tied is mixed with fear at being introduced to your society in this way.
+		<<elseif (isFertile($activeSlave) || $activeSlave.preg > 0)>>
+			$His relief that $he won't have $his tubes tied is mixed with fear at being introduced to your society in this way.
+		<<else>>
+			This is merely confusing to $him, since $he isn't able to reproduce as it is. Of course, $he doesn't know that you're quite capable of changing that.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<= checkForGingering()>> /* may store a backup of $activeSlave and make temporary changes; call removeGingering() to retrieve backup before making changes to $activeSlave */

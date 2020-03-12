@@ -1,0 +1,124 @@
+:: Description Options [nobr]
+
+<style>
+.subHeading {
+	width: 85%;
+	text-align: center;
+	margin-top: 1.5em;
+}
+</style>
+
+<<set $nextButton = "Back">>
+<<if $storedLink !== "Slave Interact">>
+	<<if lastVisited("Slave Interact") === 1>>
+		<<set $storedLink = "Slave Interact">>
+	<<else>>
+		<<set $storedLink = "Options">>
+	<</if>>
+<</if>>
+<<set $nextLink = $storedLink>>
+
+//These options will affect both the long form description of each slave and the miniscenes available from the main menu.//
+
+<br>
+<<options $surnameOrder>>
+	<<option 0 "Allow nationality name order">>
+	Order names ''based on country of origin''.
+	<<option 1 "Force name surname">>
+	Names will always be ''Name Surname''.
+	<<option 2 "Force surname name">>
+	Names will always be ''Surname Name''.
+<</options>>
+
+<br>
+<<options $seeRace>>
+	<<option 0 "Disable most mentions of race">>
+		Ethnicity will ''almost never'' be mentioned.
+	<<option 1 "Enable mentions of race">>
+		Ethnicity will ''occasionally'' be mentioned.
+<</options>>
+<br>
+<<options $seeNationality>>
+	<<option 0 "Disable most mentions of nationality">>
+		Nationality will ''almost never'' be mentioned.
+	<<option 1 "Enable mentions of nationality">>
+		Nationality will ''occasionally'' be mentioned.
+<</options>>
+
+<br>
+<<options $showImplantEffects>>
+	The effects of implants are
+	<<option 1 "Shown">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $showClothing>>
+	Clothing is mostly
+	<<option 1 "Shown">>
+	<<option 0 "Hidden">>
+<</options>>
+<br>
+<<options $showAgeDetail>>
+	Detailed slave age information is
+	<<option 1 "Shown">>
+	<<option 0 "Hidden">>
+<</options>>
+<br>
+<<options $showHeightCMs>>
+	Approximate height is
+	<<option 1 "Shown">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $showBodyMods>>
+	Cosmetic body mods are
+	<<option 1 "Shown">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<br>
+<<options $showSexualHistory>>
+	Sexual histories are
+	<<option 1 "Shown">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $showScores>>
+	Attractiveness and Sexual scores are
+	<<option 1 "Shown">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<br>
+<<options $showBoobCCs>>
+	Volume, in CCs, of breasts is
+	<<option 1 "Shown">>
+	<<option 0 "Hidden">>
+<</options>>
+<<options $showInches>>
+	Height and length units are in
+	<<option 2 "Imperial">>
+	<<option 1 "Metric">>
+<</options>>
+
+<div class="subHeading">
+<<if $seeDicks > 0>> <br>
+	<<options $showDickCMs>>
+		Approximate sizes of dicks and balls are
+		<<option 1 "Shown">>
+		<<option 0 "Hidden">>
+	<</options>>
+<</if>>
+</div>
+
+<div class="subHeading">
+<<if $showNumbers == 1>>Only numbers @@.cyan;UP TO $showNumbersMax@@<<else>>Numbers<</if>> are displayed as
+<<if $showNumbers == 1>>
+	words.
+	<<textbox "$showNumbersMax" $showNumbersMax>> //[[Words|Description Options][$showNumbers = 0]]// | //[[Integers|Description Options][$showNumbers = 2]]//
+<<elseif $showNumbers == 2>>
+	@@.yellow;INTEGERS.@@ //[[Words|Description Options][$showNumbers = 0]]// | //[[Both|Description Options][$showNumbers = 1, $showNumbersMax = 20]]//
+<<else>>
+	@@.yellow;WORDS.@@ //[[Integers|Description Options][$showNumbers = 2]]// | //[[Both|Description Options][$showNumbers = 1, $showNumbersMax = 20]]//
+<</if>>
+</div>

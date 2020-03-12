@@ -1,0 +1,267 @@
+:: End Week [nobr]
+
+<<set State.expired.length = 0>>
+
+<<run setupLastWeeksCash()>>
+<<run setupLastWeeksRep()>>
+
+<<set $gingering = 0, $oralUseWeight = 5, $vaginalUseWeight = 5, $analUseWeight = 5, $mammaryUseWeight = 1, $penetrativeUseWeight = 1, $inflatedSlavesMilk = 0, $inflatedSlavesCum = 0, $subSlaves = 0>>
+
+<<if $OralEncouragement == 1>>
+	<<set $oralUseWeight += 2, $vaginalUseWeight -= 1, $analUseWeight -= 1>>
+<<elseif $VaginalEncouragement == 1>>
+	<<set $oralUseWeight -= 1, $vaginalUseWeight += 2, $analUseWeight -= 1>>
+<<elseif $AnalEncouragement == 1>>
+	<<set $oralUseWeight -= 1, $vaginalUseWeight -= 1, $analUseWeight += 2>>
+<</if>>
+<<if $OralDiscouragement == 1>>
+	<<set $oralUseWeight -= 2, $vaginalUseWeight += 1, $analUseWeight += 1>>
+<</if>>
+<<if $VaginalDiscouragement == 1>>
+	<<set $oralUseWeight += 1, $vaginalUseWeight -= 2, $analUseWeight += 1>>
+<</if>>
+<<if $AnalDiscouragement == 1>>
+	<<set $oralUseWeight += 1, $vaginalUseWeight += 1, $analUseWeight -= 2>>
+<</if>>
+<<if $sexualOpeness == 1>>
+	<<set $penetrativeUseWeight++>>
+<</if>>
+
+<<run $slaves.forEach(function(s) {
+	if (s.inflationMethod == 1 || s.inflationMethod == 2) {
+		if (s.inflationType == "milk") {
+			$inflatedSlavesMilk++;
+		} else if (s.inflationType == "cum") {
+			$inflatedSlavesCum++;
+		}
+	}
+	if (s.assignment == "be a subordinate slave" && s.subTarget == 0) {
+		$subSlaves++;
+	}
+	s.lastWeeksCashIncome = 0;
+	s.lastWeeksRepIncome = 0;
+	s.lastWeeksRepExpenses = 0;
+})>>
+
+<<if $organs.length > 0>>
+	<<run $organs.forEach(function(o) {
+		if (o.weeksToCompletion > 0) {
+			if ($organFarmUpgrade == 3) {
+				o.weeksToCompletion -= 4;
+			} else if ($organFarmUpgrade == 2) {
+				o.weeksToCompletion -= 2;
+			} else {
+				o.weeksToCompletion--;
+			}
+		}
+	})>>
+	<<set $organs = $organs.filter(function(o) {
+		if (o.weeksToCompletion <= 0) {
+			$completedOrgans.push(o);
+			return false;
+		}
+		return true;
+	})>>
+<</if>>
+
+<<if $incubatorOrgans.length > 0>>
+	<<run $incubatorOrgans.forEach(function(io) {
+		if (io.weeksToCompletion > 0) {
+			if ($organFarmUpgrade == 3) {
+				io.weeksToCompletion -= 4;
+			} else if ($organFarmUpgrade == 2) {
+				io.weeksToCompletion -= 2;
+			} else {
+				io.weeksToCompletion--;
+			}
+		}
+	})>>
+<</if>>
+
+<<if $nurseryBabies > 0>>
+	<<run $cribs.forEach(function(c) {
+		c.growTime--;
+		c.birthWeek++;
+		if (c.birthWeek >= 52) {
+			c.birthWeek = 0;
+			c.actualAge++;
+		}
+		if (c.actualAge >= 3) {
+			App.Facilities.Nursery.infantToChild(c);
+		}
+	})>>
+<</if>>
+
+/* for potential future use
+<<if $nurseryOrgans.length > 0>>
+	<<run $nurseryOrgans.forEach(function(no) {
+		if (no.weeksToCompletion > 0) {
+			if ($organFarmUpgrade == 3) {
+				no.weeksToCompletion -= 4;
+			} else if ($organFarmUpgrade == 2) {
+				no.weeksToCompletion -= 2;
+			} else {
+				no.weeksToCompletion--;
+			}
+		}
+	})>>
+<</if>>
+*/
+
+<<if $adjustProsthetics.length > 0>>
+	<<run $adjustProsthetics.forEach(function(p) {
+		if (p.workLeft > 0) {
+			if ($prostheticsUpgrade == 3) {
+				p.workLeft -= 40;
+			} else if ($prostheticsUpgrade == 2) {
+				p.workLeft -= 20;
+			} else {
+				p.workLeft -= 10;
+			}
+			if (p.workLeft <= 0){
+				$adjustProstheticsCompleted++;
+			}
+		}
+	})>>
+<</if>>
+
+/% Begin section: ensure minimum age is set (game may have been loaded from a non-modded version). %/
+<<if $minimumSlaveAge <= 18 && $minimumSlaveAge > 0>>
+<<else>>
+	<<set $minimumSlaveAge = 18>>
+	<<set $pedo_mode = 0>>
+	<<if $fertilityAge <= 18 && $fertilityAge > 0>>
+	<<else>>
+		<<set $fertilityAge = 13>>
+	<</if>>
+	<<if $potencyAge <= 18 && $potencyAge > 0>>
+	<<else>>
+		<<set $potencyAge = 13>>
+	<</if>>
+<</if>>
+/% End section: ensure minimum age is set. %/
+
+<<set $TSS.schoolSale = 0, $GRI.schoolSale = 0, $SCP.schoolSale = 0, $LDE.schoolSale = 0, $TGA.schoolSale = 0, $HA.schoolSale = 0, $TFS.schoolSale = 0, $TCR.schoolSale = 0, $NUL.schoolSale = 0, $showEncyclopedia = 0, $shelterGirlsIDs = [], $cashLastWeek = $cash, $repLastWeek = $rep, $foodLastWeek = $food>>
+
+<<if $foodMarket > 0>>
+	<<set $foodConsumption = (($lowerClass*$foodRate.lower) + ($middleClass*$foodRate.middle) + ($upperClass*$foodRate.upper) + ($topClass*$foodRate.top))>>
+	<<run $slaves.forEach(function(s) {
+		if (s.diet == "restricted") {
+			V.foodConsumption += 1.8;
+		} else if (s.diet == "slimming") {
+			V.foodConsumption += 1.9;
+		} else if (s.diet == "muscle building") {
+			V.foodConsumption += 2.1;
+		} else if (s.diet == "fattening") {
+			V.foodConsumption += 2.2;
+		} else {
+			V.foodConsumption += 2;
+		}
+	})>>
+
+	<<set $food -= $foodConsumption>>
+	<<if $food < 0>>
+		<<set $food = 0>>
+	<</if>>
+	<<set $foodConsumption = 0>>
+<</if>>
+
+<<set $lastWeeksCashErrors = "Errors: ">>
+<<set $lastWeeksRepErrors = "Errors: ">>
+
+<<set $retiree = 0>>
+<<set $expiree = 0>>
+
+<<set $PC.sexualEnergy = 4>>
+<<if $PCSlutContacts == 2>>
+	<<set $PC.sexualEnergy -= 3>>
+<</if>>
+<<if $personalAttention == "sex">>
+	<<set $PC.sexualEnergy += 2>>
+<</if>>
+<<if $PC.physicalAge >= 80>>
+	<<set $PC.sexualEnergy -= 6>>
+<<elseif $PC.physicalAge >= 72>>
+	<<set $PC.sexualEnergy -= 5>>
+<<elseif $PC.physicalAge >= 65>>
+	<<set $PC.sexualEnergy -= 4>>
+<<elseif $PC.physicalAge >= 58>>
+	<<set $PC.sexualEnergy -= 3>>
+<<elseif $PC.physicalAge >= 50>>
+	<<set $PC.sexualEnergy -= 2>>
+<<elseif $PC.physicalAge >= 42>>
+	<<set $PC.sexualEnergy -= 1>>
+<<elseif $PC.physicalAge >= 35>>
+	<<set $PC.sexualEnergy += 0>>
+<<elseif $PC.physicalAge >= 31>>
+	<<set $PC.sexualEnergy += 1>>
+<<elseif $PC.physicalAge >= 28>>
+	<<set $PC.sexualEnergy += 2>>
+<<elseif $PC.physicalAge >= 21>>
+	<<set $PC.sexualEnergy += 3>>
+<<elseif $PC.physicalAge >= 13>>
+	<<set $PC.sexualEnergy += 4>>
+<<elseif $PC.physicalAge == 12>>
+	<<set $PC.sexualEnergy += 1>>
+<<elseif $PC.physicalAge == 11>>
+	<<set $PC.sexualEnergy -= 2>>
+<<elseif $PC.physicalAge >= 0>>
+	<<set $PC.sexualEnergy -= 6>>
+<</if>>
+<<if $PC.balls >= 10>>
+	<<set $PC.sexualEnergy += 2>>
+<<elseif $PC.balls >= 5>>
+	<<set $PC.sexualEnergy++>>
+<</if>>
+<<if $PC.preg > 20>>
+	<<if $PC.pregMood == 2>>
+		<<set $PC.sexualEnergy += 4>>
+	<<else>>
+		<<set $PC.sexualEnergy -= 3>>
+	<</if>>
+<<elseif $PC.preg > 0>>
+	<<set $PC.sexualEnergy -= 1>>
+<<else>>
+	<<if $PC.fertDrugs == 1>>
+		<<set $PC.sexualEnergy++>>
+	<</if>>
+	<<if $PC.forcedFertDrugs > 0>>
+		<<set $PC.sexualEnergy += 2>>
+	<</if>>
+<</if>>
+<<if $PC.staminaPills > 0>>
+	<<set $PC.sexualEnergy += 2>>
+<</if>>
+<<if $PC.preg > 0>>
+	<<set WombProgress($PC, 1, 1)>>
+	<<set WombNormalizePreg($PC), $PC.pregWeek = $PC.preg>>
+	<<set _newBelly = WombGetVolume($PC)>>
+	<<if _newBelly >= $PC.belly>>
+		<<set $PC.belly = _newBelly>>
+	<<elseif $PC.belly > 500>>
+		<<set $PC.belly *= .75>>
+	<</if>>
+	<<if $PC.fertDrugs != 0>>
+		<<set $PC.fertDrugs = 0>>
+	<</if>>
+<<elseif $PC.belly > 0>>
+	<<if $PC.belly < 100>>
+		<<set $PC.belly = 0>>
+	<<else>>
+		<<set $PC.belly *= .75>>
+	<</if>>
+<</if>>
+<<if $PC.pregWeek < 0>>
+	<<set $PC.pregWeek++>>
+<</if>>
+
+<<set $HGEnergy = 0, $HGCum = 0, $HGSlaveSuccess = 0, $HeadGirl = 0, $Recruiter = 0, $Madam = 0, $unMadam = 0, $madamCashBonus = 0, $whorePriceAdjustment = {}, $DJ = 0, $unDJ = 0, $DJRepBonus = 0, $Milkmaid = 0, $Farmer = 0, $Collectrix = 0, $Stewardess = 0, $Schoolteacher = 0, $Wardeness = 0, $Concubine = 0, $Attendant = 0, $Matron = 0, $Nurse = 0, $Bodyguard = 0, $Stud = 0, $StudCum = 0, $fuckSlaves = 0, $freeSexualEnergy = 0, $publicServants = 0, $cumSlaves = 0, $averageDick = 0, $slavesWithWorkingDicks = 0, $slaveJobValues = {}>>
+
+/* GAMEOVERS */
+<<if $slaves.length < 1>>
+	<<set $gameover = "no slaves">><<goto "Gameover">>
+<<elseif $arcologies[0].ownership < $arcologies[0].minority>>
+	<<set $gameover = "ownership">><<goto "Gameover">>
+<<else>>
+	<<goto "Slave Assignments Report">>
+<</if>>

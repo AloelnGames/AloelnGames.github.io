@@ -1,0 +1,98 @@
+:: FBellyFuck [nobr]
+
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+
+You have $him brought to you so that you can fuck $his hyperpregnant body.
+<<if tooBigBelly(getSlave($AS))>>
+	$He is pinned to the ground by $his
+	<<if getSlave($AS).bellyPreg >= 1000000>>
+		impossibly exploded baby bump,
+	<<elseif getSlave($AS).bellyPreg >= 750000>>
+		massively swollen baby bump,
+	<<elseif getSlave($AS).bellyPreg >= 600000>>
+		titanic baby belly,
+	<<else>>
+		massive belly,
+	<</if>>
+	and won't be a particularly able lover because of this, but enjoying $his immobility is half the point.
+<<elseif !hasAnyLegs(getSlave($AS))>>
+	$He has no limbs to stand on, so $he is left resting atop $his
+	<<if getSlave($AS).bellyPreg >= 1000000>>
+		impossibly exploded baby bump.
+	<<elseif getSlave($AS).bellyPreg >= 750000>>
+		massively swollen baby bump.
+	<<elseif getSlave($AS).bellyPreg >= 600000>>
+		titanic baby belly.
+	<<else>>
+		massive belly.
+	<</if>>
+	$He won't be a particularly able lover, but enjoying $his immobility is half the point.
+<<elseif !canWalk(getSlave($AS))>>
+	$He can't support $himself, so $he is left leaning against $his
+	<<if getSlave($AS).bellyPreg >= 1000000>>
+		impossibly exploded baby bump.
+	<<elseif getSlave($AS).bellyPreg >= 750000>>
+		massively swollen baby bump.
+	<<elseif getSlave($AS).bellyPreg >= 600000>>
+		titanic baby belly.
+	<<else>>
+		massive belly.
+	<</if>>
+	$He won't be a particularly able lover, but enjoying $his immobility is half the point.
+<<else>>
+	$He can still stand despite $his
+	<<if getSlave($AS).bellyPreg >= 1000000>>
+		impossibly exploded baby bump,
+	<<elseif getSlave($AS).bellyPreg >= 750000>>
+		massively swollen baby bump,
+	<<elseif getSlave($AS).bellyPreg >= 600000>>
+		titanic baby belly,
+	<<else>>
+		massive belly,
+	<</if>>
+	and won't be a particularly able lover because of this, but enjoying this obstacle is half the point.
+<</if>>
+Once $he is situated in the center of your office, you walk a circle around $him, taking special care to
+<<if (getSlave($AS).bellyTat == "a heart")>>
+	trace a hand over the obliterated heart shaped tattoo on the front of $his immensely stretched belly.
+<<elseif (getSlave($AS).bellyTat == "a star")>>
+	trace a hand over the obliterated star shaped tattoo on the front of $his immensely stretched belly.
+<<elseif (getSlave($AS).bellyTat == "a butterfly")>>
+	trace a hand over the obliterated butterfly tattoo on the front of $his immensely stretched belly.
+<<else>>
+	trace a hand over the obliterated, stretched out expanse of slightly darker flesh where $his belly button used to be.
+<</if>>
+<<if getSlave($AS).devotion > 95>>
+	$He purrs in response to your touch, leaning forward against $his belly and <<if !hasAnyLegs(getSlave($AS))>>wiggles<<else>>lifts $his toes off the ground as $he <<if hasBothLegs(getSlave($AS))>>spreads $his legs<<else>>moves $his leg<</if>><</if>> in preparation for you.
+<<elseif (getSlave($AS).trust < -20) && (getSlave($AS).devotion > -10)>>
+	$He groans at your touch.
+<<else>>
+	$He winces at your touch.
+<</if>>
+When you get to $his rear, you slap $his
+<<if getSlave($AS).butt > 11>>
+	insanely enormous ass,
+<<elseif getSlave($AS).butt > 5>>
+	huge ass,
+<<elseif Math.floor(getSlave($AS).buttImplant/getSlave($AS).butt) > .60>>
+	jiggly, saline filled ass,
+<<elseif getSlave($AS).butt > 2>>
+	thick ass,
+<<else>>
+	pert ass,
+<</if>>
+and then spread $his cheeks for easier access to $his <<if canDoVaginal(getSlave($AS))>>cunt. <<= VCheck.Vaginal()>><<else>>asshole. <<= VCheck.Anal()>><</if>> Heaving upward, you push $him fully onto $his belly, then lean into $him, fucking $him in a unique spin on the wheelbarrow position<<if $PC.dick == 0>> with your strap-on<</if>> and setting $his tightly packed gut to jiggling. $He moans in mixed pain and pleasure as you bring $him over the edge and, by the time you finish with $him and allow $him to return to $his duties, it's clear
+<<if getSlave($AS).belly > getSlave($AS).pregAdaptation*2000>>
+	that your recent escapades <span class="health dec">have done lasting damage to $his body.</span>
+	<<run healthDamage(getSlave($AS), 10)>>
+<<else>>
+	that you've left $him thoroughly exhausted.
+<</if>>
+
+<<if passage() != "Slave Interact">>
+	<<set _fv = $slaveIndices[getSlave($AS).ID]>>
+	<<if def _fv>>
+		<<set $slaves[_fv] = getSlave($AS)>>
+	<</if>>
+<</if>>

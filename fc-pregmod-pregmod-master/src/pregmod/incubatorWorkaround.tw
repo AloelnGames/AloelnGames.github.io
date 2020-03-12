@@ -1,0 +1,7 @@
+:: Incubator Workaround [nobr]
+
+<<if $tanks.length < $incubator>>
+	<<set $activeChild.growTime = Math.trunc($targetAge*52)>>
+	<<set $tanks.push($activeChild)>>
+	<<set $incubatorSlaves++>>
+<</if>>

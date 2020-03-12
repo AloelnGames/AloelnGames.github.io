@@ -1,0 +1,6 @@
+:: art widgets [nobr widget]
+
+<<widget "SlaveArtById">>
+	<<set _s = getSlave($args[0])>>
+	<<= SlaveArt(_s, $args[1])>>
+<</widget>>

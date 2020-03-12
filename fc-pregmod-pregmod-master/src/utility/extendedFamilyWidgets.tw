@@ -1,0 +1,1061 @@
+:: extended family widgets [nobr widget]
+
+<<widget "Family">>
+
+/*testtest PC parent passage - determines if the current slave is your mother or father*/
+<<if $activeSlave.ID == $PC.mother && $activeSlave.ID == $PC.father>>
+	$He @@.lightgreen;is both your mother and father;@@ $he impregnated $himself with you.
+<<elseif $activeSlave.ID == $PC.mother>>
+	$He @@.lightgreen;is your mother.@@
+<<elseif $activeSlave.ID == $PC.father>>
+	$He @@.lightgreen;is your father.@@
+<</if>>
+
+<<if $activeSlave.father == -1 && $activeSlave.mother == -1>>
+	$He's @@.lightgreen;your child;@@ you knocked yourself up and gave birth to $him.
+<<elseif $activeSlave.father == $activeSlave.mother && ($activeSlave.father > 0 || ($activeSlave.father in $missingTable && $showMissingSlaves))>>
+	<<if $activeSlave.father > 0>>
+		<<set _pName = $slaves[$slaveIndices[$activeSlave.father]].slaveName>>
+	<<else>>
+		<<set _pName = "your former slave "+$missingTable[$activeSlave.father].slaveName>>
+	<</if>>
+	$He was @@.lightgreen;both fathered and mothered by _pName.@@
+<</if>>
+
+<<if $activeSlave.father == -1 && $activeSlave.mother != -1>>
+	$He's @@.lightgreen;your child;@@ you knocked $his mother up.
+<<elseif ($activeSlave.father > 0 || ($activeSlave.father in $missingTable && $showMissingSlaves)) && $activeSlave.father != $activeSlave.mother>>
+	<<if $activeSlave.father > 0>>
+		<<set _pName = $slaves[$slaveIndices[$activeSlave.father]].slaveName>>
+	<<else>>
+		<<set _pName = "your former slave "+$missingTable[$activeSlave.father].slaveName>>
+	<</if>>
+	$He was @@.lightgreen;fathered by _pName's@@ virile dick.
+<</if>>
+
+<<if $activeSlave.father != -1 && $activeSlave.mother == -1>>
+	$He's @@.lightgreen;your child;@@ you gave birth to $him.
+<<elseif ($activeSlave.mother > 0 || ($activeSlave.mother in $missingTable && $showMissingSlaves)) && $activeSlave.father != $activeSlave.mother>>
+	<<if $activeSlave.mother > 0>>
+		<<set _pName = $slaves[$slaveIndices[$activeSlave.mother]].slaveName>>
+	<<else>>
+		<<set _pName = "your former slave "+$missingTable[$activeSlave.mother].slaveName>>
+	<</if>>
+	$He was @@.lightgreen;born from _pName's@@ fertile womb.
+<</if>>
+
+<<set _children = $slaves.filter(function(s) { return $activeSlave.ID == s.father; })>>
+<<if _children.length > 2>>
+	$He @@.lightgreen;fathered <<print _children.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+<<elseif _children.length > 1>>
+	$He @@.lightgreen;fathered a pair of your slaves: _children[0].slaveName, and _children[1].slaveName.@@
+<<elseif _children.length > 0>>
+	$He @@.lightgreen;fathered a single slave of yours: _children[0].slaveName.@@
+<</if>>
+
+<<set _children = $slaves.filter(function(s) { return $activeSlave.ID == s.mother; })>>
+<<if _children.length > 2>>
+	$He @@.lightgreen;gave birth to <<print _children.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+<<elseif _children.length > 1>>
+	$He @@.lightgreen;gave birth to a pair of your slaves: _children[0].slaveName, and _children[1].slaveName.@@
+<<elseif _children.length > 0>>
+	$He @@.lightgreen;gave birth to a single one of your slaves: _children[0].slaveName.@@
+<</if>>
+
+<<if (def $showDistantRelatives) && $showDistantRelatives == 1>>
+	/*testtest maternal grandma passage - determines if the current slave has a maternal grandmother*/
+	<<set _mi = $slaveIndices[$activeSlave.mother]>>
+	<<set _fi = $slaveIndices[$activeSlave.father]>>
+	<<if def _mi>>
+		<<set _mmi = $slaveIndices[$slaves[_mi].mother]>>
+		<<set _fmi = $slaveIndices[$slaves[_mi].father]>>
+	<<elseif $PC.ID == $activeSlave.mother>>
+		<<set _mmi = $slaveIndices[$PC.mother]>>
+		<<set _fmi = $slaveIndices[$PC.father]>>
+	<</if>>
+	<<if def _fi>>
+		<<set _mfi = $slaveIndices[$slaves[_fi].mother]>>
+		<<set _ffi = $slaveIndices[$slaves[_fi].father]>>
+	<<elseif $PC.ID == $activeSlave.father>>
+		<<set _mfi = $slaveIndices[$PC.mother]>>
+		<<set _ffi = $slaveIndices[$PC.father]>>
+	<</if>>
+	<<if (def _mi || def _fi) && ndef _mmi && ndef _fmi && ndef _mfi && ndef _ffi>>
+		<<if def _mi>>
+			<<if (def _fi) && _mi == _fi>>
+				<<if $PC.ID == $slaves[_mi].mother && $PC.ID == $slaves[_fi].father>>
+					$He is @@.lightgreen;your grandchild.@@ You impregnated yourself with $his sole biological parent.
+				<<elseif $PC.ID == $slaves[_mi].mother>>
+					$He is @@.lightgreen;your grandchild.@@ You gave birth to $his sole biological parent.
+				<<elseif $PC.ID == $slaves[_fi].father>>
+					$He is @@.lightgreen;your grandchild.@@ You fathered $his sole biological parent.
+				<</if>>
+			<<elseif (def _fi) && $PC.ID == $slaves[_mi].mother && $PC.ID == $slaves[_fi].mother>>
+				$He is @@.lightgreen;your grandchild.@@ You gave birth to both of $his parents.
+			<<elseif (def _fi) && $PC.ID == $slaves[_mi].father && $PC.ID == $slaves[_fi].father>>
+				$He is @@.lightgreen;your grandchild.@@ You fathered both of $his parents.
+			<<elseif $PC.ID == $slaves[_mi].mother>>
+				$He is @@.lightgreen;your grandchild.@@ You gave birth to $his mother.
+			<<elseif $PC.ID == $slaves[_mi].father>>
+				$He is @@.lightgreen;your grandchild.@@ You fathered $his mother.
+			<</if>>
+		<<elseif def _fi>>
+			<<if $PC.ID == $slaves[_fi].mother>>
+				$He is @@.lightgreen;your grandchild.@@ You gave birth to $his father.
+			<<elseif $PC.ID == $slaves[_fi].father>>
+				$He is @@.lightgreen;your grandchild.@@ You fathered $his father.
+			<</if>>
+		<</if>>
+	<<else>>
+		<<if (def _mmi) && (def _ffi) && _mmi == _ffi>>
+			$His sole @@.lightgreen;grandparent is $slaves[_mmi].slaveName.@@
+		<<else>>
+			<<if (def _mmi) && (def _mfi) && _mmi == _mfi>>
+				$His sole @@.lightgreen;grandmother is $slaves[_mmi].slaveName.@@
+			<<else>>
+				<<if def _mmi>>
+					$His maternal @@.lightgreen;grandmother is $slaves[_mmi].slaveName.@@
+				<</if>>
+				<<if def _mfi>>
+					$His paternal @@.lightgreen;grandmother is $slaves[_mfi].slaveName.@@
+				<</if>>
+			<</if>>
+			<<if (def _fmi) && (def _ffi) && _fmi == _ffi>>
+				$His sole @@.lightgreen;grandfather is $slaves[_ffi].slaveName.@@
+			<<else>>
+				<<if def _fmi>>
+					$His maternal @@.lightgreen;grandfather is $slaves[_fmi].slaveName.@@
+				<</if>>
+				<<if _ffi>>
+					$His paternal @@.lightgreen;grandfather is $slaves[_ffi].slaveName.@@
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+
+	/*testtest PC grandparents passage - determines if the current slave is your grandparent*/
+	<<set _pcMother = $slaveIndices[$PC.mother]>>
+	<<set _pcFather = $slaveIndices[$PC.father]>>
+	<<if def _pcMother>>
+		<<if (def _pcFather) && _pcMother == _pcFather>>
+			<<if $activeSlave.ID == $slaves[_pcMother].mother && $activeSlave.ID == $slaves[_pcFather].father>>
+				$He is @@.lightgreen;your sole grandparent.@@ $He impregnated $himself with your mother/father who in turn impregnated themselves with you.
+			<<elseif $activeSlave.ID == $slaves[_pcMother].mother>>
+				$He is @@.lightgreen;your sole grandmother.@@ $He gave birth to $slaves[_pcMother].slaveName who in turn impregnated themselves with you.
+			<<elseif $activeSlave.ID == $slaves[_pcFather].father>>
+				$He is @@.lightgreen;your sole grandfather.@@ $He fathered $slaves[_pcFather].slaveName who in turn impregnated themselves with you.
+			<</if>>
+		<<elseif (def _pcFather) && $activeSlave.ID == $slaves[_pcMother].mother && $activeSlave.ID == $slaves[_pcFather].mother>>
+			$He is @@.lightgreen;your sole grandmother.@@ $He gave birth to both of your parents, $slaves[_pcMother].slaveName and $slaves[_pcFather].slaveName.
+		<<elseif (def _pcFather) && $activeSlave.ID == $slaves[_pcMother].father && $activeSlave.ID == $slaves[_pcFather].father>>
+			$He is @@.lightgreen;your sole grandfather.@@ $He fathered both of your parents, $slaves[_pcFather].slaveName and $slaves[_pcMother].slaveName.
+		<<elseif $activeSlave.ID == $slaves[_pcMother].mother>>
+			$He is @@.lightgreen;your maternal grandmother.@@
+		<<elseif $activeSlave.ID == $slaves[_pcMother].father>>
+			$He is @@.lightgreen;your maternal grandfather.@@
+		<</if>>
+	<<elseif def _pcFather>>
+		<<if $activeSlave.ID == $slaves[_pcFather].mother>>
+			$He is @@.lightgreen;your paternal grandmother.@@
+		<<elseif $activeSlave.ID == $slaves[_pcFather].father>>
+			$He is @@.lightgreen;your paternal grandfather.@@
+		<</if>>
+	<</if>>
+
+	/*testtest grandchild passage - determines how many grandchildren the current slave has*/
+	<<set $children = $slaves.filter((s) => { return isGrandparentP(s, $activeSlave); });>>
+	<<if $children.length > 0>>
+		$He
+		<<if $children.length > 2>>
+			has @@.lightgreen;many grandchildren, <<print $children.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>, amongst your slaves.@@
+		<<elseif $children.length > 1>>
+			has @@.lightgreen;two grandchildren, $children[0].slaveName, and $children[1].slaveName as your slaves.@@
+		<<else>>
+			has a @@.lightgreen;grandchild, $children[0].slaveName as your slave.@@
+		<</if>>
+	<</if>>
+	<<set $children = []>>
+
+	/*testtest PC aunt and uncle passage - determines how many aunts and uncles you have*/
+	<<set _aunts = [], _uncles = []>>
+	<<if isAunt($PC, $activeSlave)>>
+		<<set _momsiblings = $slaves.filter((s) => { const sis = areSisters(s, $PC.mother); return sis == 1 || sis == 2; }),
+			  _dadsiblings = $slaves.filter((s) => { const sis = areSisters(s, $PC.father); return sis == 1 || sis == 2; })>>
+		<<for $i = 0; $i < _momsiblings.length; $i++>>
+			<<if _momsiblings[$i].ID != $activeSlave.ID>>
+				<<if _momsiblings[$i].genes == "XX">>
+					<<set _aunts.push(_momsiblings[$i])>>
+				<<else>>
+					<<set _uncles.push(_momsiblings[$i])>>
+				<</if>>
+			<</if>>
+		<</for>>
+		<<for $i = 0; $i < _dadsiblings.length; $i++>>
+			<<if _dadsiblings[$i].ID != $activeSlave.ID>>
+				<<if _dadsiblings[$i].genes == "XX">>
+					<<set _aunts.push(_dadsiblings[$i])>>
+				<<else>>
+					<<set _uncles.push(_dadsiblings[$i])>>
+				<</if>>
+			<</if>>
+		<</for>>
+
+		<<if $activeSlave.genes == "XX">>
+			$He
+			<<if _aunts.length > 1>>
+				is @@.lightgreen;your aunt along with <<print _aunts.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+			<<elseif _aunts.length > 0>>
+				is @@.lightgreen;your aunt along with _aunts[0].slaveName.@@
+			<<else>>
+				is @@.lightgreen;your aunt.@@
+			<</if>>
+		<<else>>
+			$He
+			<<if _uncles.length > 1>>
+				is @@.lightgreen;your uncle along with <<print _uncles.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+			<<elseif _uncles.length > 0>>
+				is @@.lightgreen;your uncle along with _uncles[0].slaveName.@@
+			<<else>>
+				is @@.lightgreen;your uncle.@@
+			<</if>>
+		<</if>>
+	<</if>>
+
+	/*testtest aunt and uncle passage - determines how many aunts and uncles a slave has*/
+	<<set _aunts = [], _uncles = []>>
+	<<set _momsiblings = $slaves.filter((s) => { const sis = areSisters(s, $activeSlave.mother); return sis == 1 || sis == 2; }),
+		  _dadsiblings = $slaves.filter((s) => { const sis = areSisters(s, $activeSlave.father); return sis == 1 || sis == 2; })>>
+	<<for $i = 0; $i < _momsiblings.length; $i++>>
+		<<if _momsiblings[$i].genes == "XX">>
+			<<set _aunts.push(_momsiblings[$i])>>
+		<<else>>
+			<<set _uncles.push(_momsiblings[$i])>>
+		<</if>>
+	<</for>>
+	<<for $i = 0; $i < _dadsiblings.length; $i++>>
+		<<if _dadsiblings[$i].genes == "XX">>
+			<<set _aunts.push(_dadsiblings[$i])>>
+		<<else>>
+			<<set _uncles.push(_dadsiblings[$i])>>
+		<</if>>
+	<</for>>
+
+	<<if _aunts.length > 0>>
+		$He
+		<<if _aunts.length > 2>>
+			has @@.lightgreen;many aunts, <<print _aunts.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+		<<elseif _aunts.length > 1>>
+			has @@.lightgreen;two aunts, _aunts[0].slaveName, and _aunts[1].slaveName.@@
+		<<else>>
+			has @@.lightgreen;an aunt, _aunts[0].slaveName.@@
+		<</if>>
+	<</if>>
+	<<if _uncles.length > 0>>
+		$He
+		<<if _uncles.length > 2>>
+			has @@.lightgreen;many uncles, <<print _uncles.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+		<<elseif _uncles.length > 1>>
+			has @@.lightgreen;two uncles, _uncles[0].slaveName, and _uncles[1].slaveName.@@
+		<<else>>
+			has @@.lightgreen;an uncle, _uncles[0].slaveName.@@
+		<</if>>
+	<</if>>
+
+	/*testtest PC niece and nephew passage - determines how many nieces and nephews you have*/
+	<<set _nieces = [], _nephews = []>>
+	<<if isAunt($activeSlave, $PC)>>
+		<<set _nieces = $slaves.filter((s) => { return (isAunt(s, $PC) && (s.genes == "XX")); })>>
+		<<set _nephews = $slaves.filter((s) => { return (isAunt(s, $PC) && (s.genes == "XY")); })>>
+
+		<<if $activeSlave.genes == "XX">>
+			$He
+			<<if _nieces.length > 1>>
+				is @@.lightgreen;your niece along with <<print _nieces.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+			<<elseif _nieces.length > 0>>
+				is @@.lightgreen;your niece along with _nieces[0].slaveName.@@
+			<<else>>
+				is @@.lightgreen;your niece.@@
+			<</if>>
+		<<else>>
+			$He
+			<<if _nephews.length > 1>>
+				is @@.lightgreen;your nephew along with <<print _nephews.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+			<<elseif _nephews.length > 0>>
+				is @@.lightgreen;your nephew along with _nephews[0].slaveName.@@
+			<<else>>
+				is @@.lightgreen;your nephew.@@
+			<</if>>
+		<</if>>
+	<</if>>
+
+	/* testtest niece and nephew passage - determines how many nieces and nephews a slave has*/
+	<<set _nieces = $slaves.filter((s) => { return( (s.ID != $activeSlave.ID) && (isAunt(s, $activeSlave)) && (s.genes == "XX")); })>>
+	<<set _nephews = $slaves.filter((s) => { return( (s.ID != $activeSlave.ID) && (isAunt(s, $activeSlave)) && (s.genes == "XY")); })>>
+
+	<<if _nieces.length > 0>>
+		$He
+		<<if _nieces.length > 2>>
+			has @@.lightgreen;many nieces, <<print _nieces.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>, who are your slaves.@@
+		<<elseif _nieces.length > 1>>
+			has @@.lightgreen;two nieces, _nieces[0].slaveName, and _nieces[1].slaveName, who are your slaves.@@
+		<<else>>
+			has @@.lightgreen;a niece, _nieces[0].slaveName, who is your slave.@@
+		<</if>>
+	<</if>>
+
+	<<if _nephews.length > 0>>
+		$He
+		<<if _nephews.length > 2>>
+			has @@.lightgreen;many nephews,	<<print _nephews.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>, who are your slaves.@@
+		<<elseif _nephews.length > 1>>
+			has @@.lightgreen;two nephews, _nephews[0].slaveName, and _nephews[1].slaveName, who are your slaves.@@
+		<<else>>
+			has @@.lightgreen;a nephew, _nephews[0].slaveName, who is your slave.@@
+		<</if>>
+	<</if>>
+	<<set $children = []>>
+<</if>> /* end distant relatives toggle check */
+
+/*testtest PC sibling passages - determines how many siblings you have*/
+<<set _twins = [], _sisters = [], _brothers = [], _halfsisters = [], _halfbrothers = [], _cousins = []>>
+<<for _efw = 0; _efw < $slaves.length; _efw++>>
+	<<set _sisterCheck = areSisters($slaves[_efw], $activeSlave)>>
+	<<if _sisterCheck == 1>>
+		<<run _twins.push($slaves[_efw])>>
+	<</if>>
+	<<if _sisterCheck == 2>>
+		<<run ($slaves[_efw].genes == 'XX' ? _sisters : _brothers).push($slaves[_efw])>>
+	<</if>>
+	<<if _sisterCheck == 3>>
+		<<run ($slaves[_efw].genes == 'XX' ? _halfsisters : _halfbrothers).push($slaves[_efw])>>
+	<</if>>
+	<<if (def $showDistantRelatives) && $showDistantRelatives == 1>>
+		<<if areCousins($slaves[_efw], $activeSlave) == true>>
+			<<run _cousins.push($slaves[_efw])>>
+		<</if>>
+	<</if>>
+<</for>>
+
+/*testtest PC twin passages - determines how many twins you have but not implemented yet*/
+<<if areSisters($activeSlave, $PC) == 1>>
+	$He
+	<<if _twins.length > 1>>
+		@@.lightgreen;shared a cramped womb with you, <<print _twins.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+	<<elseif _twins.length > 0>>
+		is @@.lightgreen;your twin along with _twins[0].slaveName.@@
+	<<else>>
+		is @@.lightgreen;your twin $sister.@@
+	<</if>>
+<</if>>
+
+/*testtest PC sister passages - determines how many sisters you have*/
+<<if areSisters($activeSlave, $PC) < 3 && areSisters($activeSlave, $PC) > 0 && $activeSlave.genes == "XX">>
+	$He
+	<<if _sisters.length > 1>>
+		@@.lightgreen;is your $sister along with <<print _sisters.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+	<<elseif _sisters.length > 0>>
+		is @@.lightgreen;your $sister along with _sisters[0].slaveName.@@
+	<<else>>
+		is @@.lightgreen;your $sister.@@
+	<</if>>
+<</if>>
+
+/*testtest PC brother passages - determines how many brothers you have*/
+<<if areSisters($activeSlave, $PC) < 3 && areSisters($activeSlave, $PC) > 0 && $activeSlave.genes == "XY">>
+	$He
+	<<if _brothers.length > 1>>
+		@@.lightgreen;is your $sister along with <<print _brothers.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+	<<elseif _brothers.length > 0>>
+		is @@.lightgreen;your $sister along with _brothers[0].slaveName.@@
+	<<else>>
+		is @@.lightgreen;your $sister.@@
+	<</if>>
+<</if>>
+
+/*testtest PC half-sister passages - determines how many half-sisters you have*/
+<<if areSisters($activeSlave, $PC) == 3 && $activeSlave.genes == "XX">>
+	$He
+	<<if _halfsisters.length > 1>>
+		@@.lightgreen;is your half-<<= $sister>> along with <<print _halfsisters.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+	<<elseif _halfsisters.length > 0>>
+		is @@.lightgreen;your half-<<= $sister>> along with _halfsisters[0].slaveName.@@
+	<<else>>
+		is @@.lightgreen;your half-<<= $sister>>.@@
+	<</if>>
+<</if>>
+
+/*testtest PC half-brother passages - determines how many half-brothers you have*/
+<<if areSisters($activeSlave, $PC) == 3 && $activeSlave.genes == "XY">>
+	$He
+	<<if _halfbrothers.length > 1>>
+		@@.lightgreen;is your half-<<= $sister>> along with <<print _halfbrothers.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+	<<elseif _halfbrothers.length > 0>>
+		is @@.lightgreen;your half-<<= $sister>> along with _halfbrothers[0].slaveName.@@
+	<<else>>
+		is @@.lightgreen;your half-<<= $sister>>.@@
+	<</if>>
+<</if>>
+
+/*testtest twins? - determines how many twins a slave has*/
+<<if _twins.length > 0>>
+	$He
+	<<if _twins.length > 2>>
+		@@.lightgreen;shared a cramped womb with <<print _twins.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+	<<elseif _twins.length > 1>>
+		is @@.lightgreen;one of a set of triplets; _twins[0].slaveName and _twins[1].slaveName@@ complete the trio.
+	<<else>>
+		is @@.lightgreen;twins with _twins[0].slaveName.@@
+	<</if>>
+<</if>>
+
+/*testtest sister - determines how many sisters a slave has*/
+<<if _sisters.length > 0>>
+	<<if _sisters.length > 1>>
+		@@.lightgreen;<<print _sisters.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>> are $his sisters.@@
+	<<else>>
+		<<setLocalPronouns _sisters[0] 2>>
+		@@.lightgreen; _sisters[0].slaveName is $his _sister2.@@
+	<</if>>
+<</if>>
+
+/*testtest brother - determines how many brothers a slave has*/
+<<if _brothers.length > 0>>
+	<<if _brothers.length > 1>>
+		@@.lightgreen;<<print _brothers.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>> are $his brothers.@@
+	<<else>>
+		<<setLocalPronouns _brothers[0] 2>>
+		@@.lightgreen;_brothers[0].slaveName is $his _sister2.@@
+	<</if>>
+<</if>>
+
+/*testtest half-sister - determines how many half-sisters a slave has*/
+<<set _children = $slaves.filter(function(s) { return s.ID != $activeSlave.ID && areSisters($activeSlave, s) == 3 && s.genes == "XX"; })>>
+<<if _children.length > 2>>
+	@@.lightgreen;<<print _children.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>> are half-sisters to $him.@@
+<<elseif _children.length > 1>>
+	@@.lightgreen;_children[0].slaveName and _children[1].slaveName are half-sisters to $him.@@
+<<elseif _children.length > 0>>
+	<<setLocalPronouns _children[0] 2>>
+	@@.lightgreen;_children[0].slaveName is a half-<<= _sister2>> to $him.@@
+<</if>>
+
+/*testtest half-brother - determines how many half-brothers a slave has*/
+<<set _children = $slaves.filter(function(s) { return s.ID != $activeSlave.ID && areSisters($activeSlave, s) == 3 && s.genes == "XY"; })>>
+<<if _children.length > 2>>
+	@@.lightgreen;<<print _children.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>> are half-brothers to $him.@@
+<<elseif _children.length > 1>>
+	@@.lightgreen;_children[0].slaveName and _children[1].slaveName are half-brothers to $him.@@
+<<elseif _children.length > 0>>
+	@@.lightgreen;_children[0].slaveName is a half-brother to $him.@@
+<</if>>
+
+<<if (def $showDistantRelatives) && $showDistantRelatives == 1>>
+	/*testtest PC cousin passage - determines how many cousins you have*/
+	<<if areCousins($activeSlave, $PC)>>
+		$He
+		<<if _cousins.length > 1>>
+			@@.lightgreen;is your cousin along with <<print _cousins.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>>.@@
+		<<elseif _cousins.length > 0>>
+			is @@.lightgreen;your cousin along with _cousins[0].slaveName.@@
+		<<else>>
+			is @@.lightgreen;your cousin.@@
+		<</if>>
+	<</if>>
+
+	/*testtest cousin - determines how many cousins a slave has*/
+	<<set _children = $slaves.filter(function(s) { return s.ID != $activeSlave.ID && areCousins($activeSlave, s)})>>
+	<<if _children.length > 2>>
+		@@.lightgreen;<<print _children.reduce(function(res, ch, i, arr) { return (res.slaveName || res) + (i == arr.length - 1 ? ' and ' : ', ') + ch.slaveName; })>> are cousins to $him.@@
+	<<elseif _children.length > 1>>
+		@@.lightgreen;_children[0].slaveName and _children[1].slaveName are cousins to $him.@@
+	<<elseif _children.length > 0>>
+		@@.lightgreen;_children[0].slaveName is a cousin to $him.@@
+	<</if>>
+<</if>> /* end distant relatives toggle check */
+
+<<if $activeSlave.clone != 0>>
+	$He is
+	<<if $activeSlave.cloneID == -1>>
+		your clone.
+	<<else>>
+		a clone of $activeSlave.clone.
+	<</if>>
+<</if>>
+
+<<if $cheatMode == 1>>
+	$He has $activeSlave.sisters sister<<if $activeSlave.sisters > 1>>s<</if>>, and $activeSlave.daughters daughter<<if $activeSlave.daughters > 1>>s<</if>>.
+<</if>>
+
+<</widget>>
+
+<<widget PlayerFamily>>
+
+<br><br>Your present family includes:
+
+/*Player parents, lists both your parents, or just one.*/
+<<if $showMissingSlaves>>
+	<<if $PC.mother in $missingTable>>
+		<<set $children.push($missingTable[$PC.mother])>>
+	<</if>>
+	<<if $PC.father in $missingTable && !($PC.father == $PC.mother)>>
+		<<set $children.push($missingTable[$PC.father])>>
+	<</if>>
+<</if>>
+<<for $i = 0; $i < $slaves.length; $i++>>
+	<<if $slaves[$i].ID == $PC.father || $slaves[$i].ID == $PC.mother>>
+		<<set $children.push($slaves[$i])>>
+	<</if>>
+<</for>>
+<<if $children.length > 1>>
+	<br>Your parents are @@.lightgreen;<<if $children[0].ID < 0>>your former slave<<if $children[1].ID < 0>>s<</if>><</if>> $children[0].slaveName and <<if $children[1].ID < 0 && $children[0].ID > 0>>your former slave<</if>> $children[1].slaveName.@@
+<<elseif $children.length > 0>>
+	<<if $PC.father == $PC.mother>>
+		<br>Your parent is @@.lightgreen;<<if $children[0].ID < 0>>your former slave<</if>> $children[0].slaveName,@@ who impregnated $himself with you.
+	<<else>>
+		<br>You know one of your parents, @@.lightgreen;<<if $children[0].ID < 0>>your former slave<</if>> $children[0].slaveName.@@
+	<</if>>
+<</if>>
+<<set $children = []>>
+
+/*Twins Test with aresisters*/
+<<for $i = 0; $i < $slaves.length; $i++>>
+	<<if $slaves[$i].ID != $PC.ID>>
+		<<if areSisters($slaves[$i], $PC) == 1 && areSisters($slaves[$i], $slaves[$i]) == 1>>
+			<<set $children.push($slaves[$i])>>
+		<</if>>
+	<</if>>
+<</for>>
+<<if $children.length > 2>>
+	<br>You are @@.lightgreen;twins with
+	<<for $j = 0; $j < $children.length; $j++>>
+		<<if $j < $children.length-1>>
+			$children[$j].slaveName,
+		<<else>>
+			and $children[$j].slaveName.@@
+		<</if>>
+	<</for>>
+<<elseif $children.length > 1>>
+	<br>You are twins with @@.lightgreen;$children[0].slaveName and $children[1].slaveName.@@
+<<elseif $children.length > 0>>
+	<br>Your twin is @@.lightgreen;$children[0].slaveName.@@
+<</if>>
+<<set $children = []>>
+
+/*Sister Test with aresisters*/
+<<for $i = 0; $i < $slaves.length; $i++>>
+	<<if $slaves[$i].ID != $PC.ID>>
+		<<if areSisters($PC, $slaves[$i]) === 2 && areSisters($slaves[$i], $PC) === 2>>
+			<<if $slaves[$i].genes == "XX">>
+				<<set $children.push($slaves[$i])>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</for>>
+<<if $children.length > 2>>
+	<br>@@.lightgreen;
+	<<for $j = 0; $j < $children.length; $j++>>
+		<<if $j < $children.length-1>>
+			$children[$j].slaveName,
+		<<else>>
+			and $children[$j].slaveName
+		<</if>>
+	<</for>>@@
+	are your sisters.
+<<elseif $children.length > 1>>
+	<br>@@.lightgreen;$children[0].slaveName and $children[1].slaveName@@ are your sisters.
+<<elseif $children.length > 0>>
+	<<setLocalPronouns $children[0]>>
+	<br>Your $sister is @@.lightgreen;$children[0].slaveName.@@
+<</if>>
+<<set $children = []>>
+
+/*Brother Test with aresisters*/
+<<for $i = 0; $i < $slaves.length; $i++>>
+	<<if $slaves[$i].ID != $PC.ID>>
+		<<if areSisters($PC, $slaves[$i]) === 2 && areSisters($slaves[$i], $PC) === 2>>
+			<<if $slaves[$i].genes == "XY">>
+				<<set $children.push($slaves[$i])>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</for>>
+<<if $children.length > 2>>
+	<br>@@.lightgreen;
+	<<for $j = 0; $j < $children.length; $j++>>
+		<<if $j < $children.length-1>>
+			$children[$j].slaveName,
+		<<else>>
+			and $children[$j].slaveName
+		<</if>>
+	<</for>>@@
+	are your brothers.
+<<elseif $children.length > 1>>
+	<br>@@.lightgreen;$children[0].slaveName and $children[1].slaveName@@ are your brothers.
+<<elseif $children.length > 0>>
+	<<setLocalPronouns $children[0]>>
+	<br>Your $sister is @@.lightgreen;$children[0].slaveName.@@
+<</if>>
+<<set $children = []>>
+
+/*Half-Sister Test with aresisters */
+<<for $i = 0; $i < $slaves.length; $i++>>
+	<<if $slaves[$i].ID != $PC.ID>>
+		<<if areSisters($slaves[$i], $PC) == 3 && areSisters($PC, $slaves[$i]) == 3>>
+			<<if $slaves[$i].genes == "XX">>
+				<<set $children.push($slaves[$i])>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</for>>
+<<if $children.length > 2>>
+	<br>@@.lightgreen;
+	<<for $j = 0; $j < $children.length; $j++>>
+		<<if $j < $children.length-1>>
+			$children[$j].slaveName,
+		<<else>>
+			and $children[$j].slaveName.
+		<</if>>
+	<</for>>@@
+	are your half-sisters.
+<<elseif $children.length > 1>>
+	<br>@@.lightgreen;$children[0].slaveName and $children[1].slaveName@@ are your half-sisters.
+<<elseif $children.length > 0>>
+	<<setLocalPronouns $children[0]>>
+	<br>You have one half-<<= $sister>>, @@.lightgreen;$children[0].slaveName.@@
+<</if>>
+<<set $children = []>>
+
+/*Half-Brother Test with aresisters */
+<<for $i = 0; $i < $slaves.length; $i++>>
+	<<if $slaves[$i].ID != $PC.ID>>
+		<<if areSisters($slaves[$i], $PC) == 3 && areSisters($PC, $slaves[$i]) == 3>>
+			<<if $slaves[$i].genes == "XY">>
+				<<set $children.push($slaves[$i])>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</for>>
+<<if $children.length > 2>>
+	<br>@@.lightgreen;
+	<<for $j = 0; $j < $children.length; $j++>>
+		<<if $j < $children.length-1>>
+			$children[$j].slaveName,
+		<<else>>
+			and $children[$j].slaveName.
+		<</if>>
+	<</for>>@@
+	are your half-brothers.
+<<elseif $children.length > 1>>
+	<br>@@.lightgreen;$children[0].slaveName and $children[1].slaveName@@ are your half-brothers.
+<<elseif $children.length > 0>>
+	<br>You have one half-brother, @@.lightgreen;$children[0].slaveName.@@
+<</if>>
+<<set $children = []>>
+
+/*
+<<if $PC.clone != 0>>
+	<br>You are a clone of
+	<<if $activeSlave.cloneID == -1>>
+		yourself.
+	<<else>>
+		$PC.clone.
+	<</if>>
+<</if>>
+*/
+
+/*Player is Father, lists children you fathered*/
+<<for $i = 0; $i < $slaves.length; $i++>>
+	<<if $PC.ID == $slaves[$i].father>>
+		<<set $children.push($slaves[$i])>>
+	<</if>>
+<</for>>
+<<if $children.length > 2>>
+	<br>You are the father of @@.lightgreen;
+	<<for $j = 0; $j < $children.length; $j++>>
+		<<if $j < $children.length-1>>
+			$children[$j].slaveName,
+		<<else>>
+			and $children[$j].slaveName.@@
+		<</if>>
+	<</for>>
+<<elseif $children.length > 1>>
+	<br>You are the father of two of your slaves, @@.lightgreen;$children[0].slaveName, and $children[1].slaveName.@@
+<<elseif $children.length > 0>>
+	<br>You are the father of one of your slaves, @@.lightgreen;$children[0].slaveName.@@
+<</if>>
+<<set $children = []>>
+
+/*Player is Mother, lists birthed children*/
+<<for $i = 0; $i < $slaves.length; $i++>>
+	<<if $PC.ID == $slaves[$i].mother>>
+		<<set $children.push($slaves[$i])>>
+	<</if>>
+<</for>>
+<<if $children.length > 2>>
+	<br>You are the mother of@@.lightgreen;
+	<<for $j = 0; $j < $children.length; $j++>>
+		<<if $j < $children.length-1>>
+			$children[$j].slaveName,
+		<<else>>
+			and $children[$j].slaveName.@@
+		<</if>>
+	<</for>>
+<<elseif $children.length > 1>>
+	<br>You are the mother of two of your slaves, @@.lightgreen;$children[0].slaveName, and $children[1].slaveName.@@
+<<elseif $children.length > 0>>
+	<br>You are the mother of one of your slaves, @@.lightgreen;$children[0].slaveName.@@
+<</if>>
+<<set $children = []>>
+
+<<if $cheatMode == 1>>
+	You have $PC.sisters sister<<if $PC.sisters > 1>>s<</if>>, and $PC.daughters daughter<<if $PC.daughters > 1>>s<</if>>.
+<</if>>
+
+<</widget>>
+
+<<widget "parentName">>
+<<if $activeSlave[$args[0]] == $PC.ID>>
+	You
+<<else>>
+	<<set _j = $slaveIndices[$activeSlave[$args[0]]]>>
+	<<if def _j>>
+		<<print $slaves[_j].slaveName>>
+	<<else>>
+		Unknown
+	<</if>>
+<</if>>
+<</widget>>
+
+<<widget "listOfSlavesWithSameParent">>
+<<if $activeSlave[$args[0]] != 0>>
+	<<set _printSeperator = false>>
+	<<if $activeSlave[$args[0]] == $PC[$args[0]]>>
+		You
+		<<set _printSeperator = true>>
+	<</if>>
+	<<for _j = 0; _j < $slaves.length; _j++>>
+		<<if $slaves[_j][$args[0]] == $activeSlave[$args[0]]>>
+			<<if _printSeperator>> | <</if>>
+			<<set _printSeperator = true>>
+			<<print $slaves[_j].slaveName>>
+		<</if>>
+	<</for>>
+<</if>>
+<</widget>>
+
+<<widget "redisplayFamily">>
+<<replace '#dontBeDumb'>><br> //You will break things by making impossible relations such as being your own father. If you do this, clearing all PC relations will fix it. Probably.//<</replace>>
+<<replace '#fatheredNames'>><<listOfSlavesWithParent "father" $activeSlave.ID>><</replace>>
+<<replace '#motheredNames'>><<listOfSlavesWithParent "mother" $activeSlave.ID>><</replace>>
+<<replace '#familySummary'>><<Family>><</replace>>
+<<replace '#motherName'>><<parentName "mother">><</replace>>
+<<replace '#fatherName'>><<parentName "father">><</replace>>
+<<replace '#sameMotherNames'>><<listOfSlavesWithSameParent 'mother'>><</replace>>
+<<replace '#sameFatherNames'>><<listOfSlavesWithSameParent 'father'>><</replace>>
+/* <<run updateFamilyTree($activeSlave, $slaves, $PC)>> */
+<<set _tSlaveList = [$activeSlave]>>
+<<set _tSlaveList.push.apply(_tSlaveList, $slaves)>>
+<<run renderFamilyTree(_tSlaveList, $activeSlave.ID)>>
+<</widget>>
+
+/* First parameter is e.g. "father" or "mother" and second parameter is the ID to match */
+<<widget "listOfSlavesWithParent">>
+<<if $args[1] != 0>>
+	<<set _printSeperator = false>>
+	<<if $args[1] == $PC[$args[0]]>>
+		You
+		<<set _printSeperator = true>>
+	<</if>>
+	<<for _j = 0; _j < $slaves.length; _j++>>
+		<<if $slaves[_j][$args[0]] == $args[1]>>
+			<<if _printSeperator>> | <</if>>
+			<<set _printSeperator = true>>
+			<<print $slaves[_j].slaveName>>
+		<</if>>
+	<</for>>
+<</if>>
+<</widget>>
+
+<<widget "editFamily">>
+<div id="editFamily"><div id="familyTable">
+
+<span id="dontBeDumb"></span>
+
+<br>''Mother:'' <span id="motherName"><<parentName "mother">></span>
+<<link "Reset">>
+	<<set $activeSlave.mother = 0>>
+	<<redisplayFamily>>
+<</link>>
+<<if $PC.vagina > 0 && (($PC.actualAge - $activeSlave.actualAge) >= $fertilityAge) && (($PC.mother != $activeSlave.mother) || ($activeSlave.mother == 0)) && $saveImported == 0>>
+	| <<link "You">><<set $activeSlave.mother = $PC.ID>><<redisplayFamily>><</link>>
+<</if>>
+<<for _efw = 0; _efw < $slaves.length; _efw++>>
+	<<if $slaves[_efw].vagina > 0 && (($slaves[_efw].actualAge - $activeSlave.actualAge) >= $fertilityAge) && (($slaves[_efw].mother != $activeSlave.mother) || ($activeSlave.mother == 0)) && $slaves[_efw].newGamePlus == 0>>
+		|
+		<<set _id = $slaves[_efw].ID>>
+		<<set _slaveName = $slaves[_efw].slaveName>>
+		<<print "
+			<<link _slaveName>>
+				<<set $activeSlave.mother = " + _id + ">>
+				<<redisplayFamily>>
+			<</link>>
+		">>
+	<</if>>
+<</for>>
+
+<br>''Father:'' <span id="fatherName"><<parentName "father">></span>
+<<link "Reset">>
+	<<set $activeSlave.father = 0>>
+	<<redisplayFamily>>
+<</link>>
+<<if ($PC.dick > 0) && (($PC.actualAge - $activeSlave.actualAge) >= $potencyAge) && (($PC.father != $activeSlave.father) || ($activeSlave.father == 0)) && $saveImported == 0>>
+	| <<link "You">><<set $activeSlave.father = $PC.ID>><<redisplayFamily>><</link>>
+<</if>>
+<<for _efw = 0; _efw < $slaves.length; _efw++>>
+	<<if ($slaves[_efw].dick > 0) && ((($slaves[_efw].actualAge - $activeSlave.actualAge) >= $potencyAge)) && (($slaves[_efw].father != $activeSlave.father) || ($activeSlave.father == 0)) && $slaves[_efw].newGamePlus == 0>>
+		|
+		<<set _id = $slaves[_efw].ID>>
+		<<set _slaveName = $slaves[_efw].slaveName>>
+		<<print "
+		<<link _slaveName>>
+			<<set $activeSlave.father = " + _id + ">>
+			<<redisplayFamily>>
+		<</link>>
+		">>
+	<</if>>
+<</for>>
+
+<br>''Same mother as:'' <span id="sameMotherNames"><<listOfSlavesWithSameParent 'mother'>></span>
+<<link "Reset">>
+	<<set $activeSlave.mother = 0>>
+	<<redisplayFamily>>
+<</link>>
+<<if ($activeSlave.mother != $PC.ID) && ($PC.mother != $activeSlave.ID) && ($saveImported == 0)>>
+	|
+	<<link "You">>
+		<<if $PC.mother != 0>>
+			<<set $activeSlave.mother = $PC.mother>>
+		<<elseif $activeSlave.mother != 0>>
+			<<set $PC.mother = $activeSlave.mother>>
+		<<else>>
+			<<set $activeSlave.mother = -20 - 2*$activeSlave.ID>>
+			<<set $PC.mother = $activeSlave.mother>>
+		<</if>>
+		<<redisplayFamily>>
+	<</link>>
+<</if>>
+<<for _efw = 0; _efw < $slaves.length; _efw++>>
+	<<if $slaves[_efw].newGamePlus == 0>>
+		<<if $saveImported == 1>>|<</if>>
+		<<set _slaveName = $slaves[_efw].slaveName>>
+		<<set _slave = $slaves[_efw]>>
+		<<if ($activeSlave.mother != _slave.ID) && (_slave.mother != $activeSlave.ID)>>
+			|
+			<<print "
+				<<link _slaveName>>
+					<<set _slave = $slaves[" + _efw + "]>>
+					<<if _slave.mother != 0>>
+						<<set $activeSlave.mother = _slave.mother>>
+					<<elseif $activeSlave.mother != 0>>
+						<<set _slave.mother = $activeSlave.mother>>
+					<<else>>
+						<<set $activeSlave.mother = -20 - 2*$activeSlave.ID>>
+						<<set _slave.mother = $activeSlave.mother>>
+					<</if>>
+					<<redisplayFamily>>
+				<</link>>
+			">>
+		<</if>>
+	<</if>>
+<</for>>
+
+<br>''Same father as:'' <span id="sameFatherNames"><<listOfSlavesWithSameParent 'father'>></span>
+<<link "Reset">>
+	<<set $activeSlave.father = 0>>
+	<<replace '#fatherName'>><</replace>>
+	<<replace '#sameFatherNames'>><</replace>>
+	<<redisplayFamily>>
+<</link>>
+<<if ($activeSlave.father != $PC.ID) && ($PC.father != $activeSlave.ID) && ($saveImported == 0)>>
+	|
+	<<link "You">>
+		<<if $PC.father != 0>>
+			<<set $activeSlave.father = $PC.father>>
+		<<elseif $activeSlave.father != 0>>
+			<<set $PC.father = $activeSlave.father>>
+		<<else>>
+			<<set $activeSlave.father = (-20 - 2*$activeSlave.ID -1)>>
+			<<set $PC.father = $activeSlave.father>>
+		<</if>>
+		<<redisplayFamily>>
+	<</link>>
+<</if>>
+<<for _efw = 0; _efw < $slaves.length; _efw++>>
+	<<if $slaves[_efw].newGamePlus == 0>>
+		<<if $saveImported == 1>>|<</if>>
+		<<set _slaveName = $slaves[_efw].slaveName>>
+		<<set _slave = $slaves[_efw]>>
+		<<if ($activeSlave.father != _slave.ID) && (_slave.father != $activeSlave.ID)>>
+			|
+			<<print "
+				<<link _slaveName>>
+					<<set _slave = $slaves[" + _efw + "]>>
+					<<if _slave.father != 0>>
+						<<set $activeSlave.father = _slave.father>>
+					<<elseif $activeSlave.father != 0>>
+						<<set _slave.father = $activeSlave.father>>
+					<<else>>
+						<<set $activeSlave.father = (-20 - 2*$activeSlave.ID -1)>>
+						<<set _slave.father = $activeSlave.father>>
+					<</if>>
+					<<redisplayFamily>>
+				<</link>>
+			">>
+		<</if>>
+	<</if>>
+<</for>>
+
+<br>''Mother of the children:'' <span id="motheredNames"><<listOfSlavesWithParent "mother" $activeSlave.ID>></span>
+<<link "Reset">>
+	<<for _efw = 0; _efw < $slaves.length; _efw++>>
+		<<if $slaves[_efw].mother == $activeSlave.ID && $slaves[_efw].newGamePlus == 0>>
+			<<set $slaves[_efw].mother = 0>>
+		<</if>>
+	<</for>>
+	<<if $PC.mother == $activeSlave.ID && $saveImported == 0>>
+		<<set $PC.mother = 0>>
+	<</if>>
+	<<redisplayFamily>>
+<</link>>
+<<if $activeSlave.vagina >= 0>>
+	<<if (($activeSlave.actualAge - $PC.actualAge) >= $fertilityAge) && (($PC.mother != $activeSlave.mother) || ($activeSlave.mother == 0)) && ($saveImported == 0)>>
+		|
+		<<link "You">>
+			<<set $PC.mother = $activeSlave.ID>>
+			<<if $activeSlave.vagina == 0>>
+				<<set $activeSlave.vagina = 1>>
+			<</if>>
+			<<redisplayFamily>>
+		<</link>>
+	<</if>>
+
+	<<for _efw = 0; _efw < $slaves.length; _efw++>>
+		<<if $slaves[_efw].newGamePlus == 0>>
+			<<set _slaveName = $slaves[_efw].slaveName>>
+			<<set _slave = $slaves[_efw]>>
+			<<if (($activeSlave.actualAge - _slave.actualAge) >= $fertilityAge) && ((_slave.mother != $activeSlave.mother) || ($activeSlave.mother == 0))>>
+				|
+				<<print "
+				<<link _slaveName>>
+					<<set _slave = $slaves[" + _efw + "]>>
+					<<set _slave.mother = $activeSlave.ID>>
+					<<if $activeSlave.vagina == 0>>
+						<<set $activeSlave.vagina = 1>>
+					<</if>>
+					<<redisplayFamily>>
+				<</link>>
+				">>
+			<</if>>
+		<</if>>
+	<</for>>
+<</if>>
+
+<br>''Father of the children:'' <span id="fatheredNames"><<listOfSlavesWithParent "father" $activeSlave.ID>></span>
+<<link "Reset">>
+	<<for _efw = 0; _efw < $slaves.length; _efw++>>
+		<<if $slaves[_efw].father == $activeSlave.ID && $slaves[_efw].newGamePlus == 0>>
+			<<set $slaves[_efw].father = 0>>
+		<</if>>
+	<</for>>
+	<<if $PC.father == $activeSlave.ID && $saveImported == 0>>
+		<<set $PC.father = 0>>
+	<</if>>
+	<<redisplayFamily>>
+<</link>>
+<<if $activeSlave.dick > 0>>
+	<<if (($activeSlave.actualAge - $PC.actualAge) >= $potencyAge) && (($PC.father != $activeSlave.father) || ($activeSlave.father == 0)) && ($saveImported == 0)>>
+		|
+		<<link "You">>
+			<<set $PC.father = $activeSlave.ID>>
+			<<redisplayFamily>>
+		<</link>>
+	<</if>>
+
+	<<for _efw = 0; _efw < $slaves.length; _efw++>>
+		<<if $slaves[_efw].newGamePlus == 0>>
+			<<set _slaveName = $slaves[_efw].slaveName>>
+			<<set _slave = $slaves[_efw]>>
+			<<if (($activeSlave.actualAge - _slave.actualAge) >= $potencyAge) && ((_slave.father != $activeSlave.father) || ($activeSlave.father == 0))>>
+				|
+				<<print "
+				<<link _slaveName>>
+					<<set _slave = $slaves[" + _efw + "]>>
+					<<set _slave.father = $activeSlave.ID>>
+					<<redisplayFamily>>
+				<</link>>
+				">>
+			<</if>>
+		<</if>>
+	<</for>>
+<</if>>
+
+<br>
+<<if $saveImported == 0>>
+	<<link "Reset ALL PC Relatives">>
+		<<set _sameMother = 0, _sameFather = 0>>
+		<<for _efw = 0; _efw < $slaves.length; _efw++>>
+			<<if $slaves[_efw].newGamePlus == 0>>
+				<<if $slaves[_efw].mother == $PC.ID>>
+					<<set $slaves[_efw].mother = 0>>
+				<</if>>
+				<<if $slaves[_efw].father == $PC.ID>>
+					<<set $slaves[_efw].father = 0>>
+				<</if>>
+				<<if $slaves[_efw].mother == $PC.mother>>
+					<<set _sameMother++>>
+				<</if>>
+				<<if $slaves[_efw].father == $PC.father>>
+					<<set _sameFather++>>
+				<</if>>
+			<</if>>
+		<</for>>
+		<<if _sameMother == 0 && $activeSlave.mother == $PC.mother>>
+			<<set $activeSlave.mother = 0>>
+		<</if>>
+		<<if _sameFather == 0 && $activeSlave.father == $PC.father>>
+			<<set $activeSlave.father = 0>>
+		<</if>>
+		<<for _efw = 0; (_efw < $slaves.length && (_sameMother == 1 || _sameFather == 1)); _efw++>>
+			<<if $slaves[_efw].newGamePlus == 0>>
+				<<if $slaves[_efw].mother == $PC.mother && _sameMother == 1>>
+					<<set $slaves[_efw].mother = 0, _sameMother = 0>>
+				<</if>>
+				<<if $slaves[_efw].father == $PC.father && _sameFather == 1>>
+					<<set $slaves[_efw].father = 0, _sameFather = 0>>
+				<</if>>
+			<</if>>
+		<</for>>
+		<<if $activeSlave.mother == $PC.ID>>
+			<<set $activeSlave.mother = 0>>
+		<</if>>
+		<<if $activeSlave.father == $PC.ID>>
+			<<set $activeSlave.father = 0>>
+		<</if>>
+		<<set $PC.father = 0>>
+		<<set $PC.mother = 0>>
+		<<redisplayFamily>>
+	<</link>>
+<</if>>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span id="familySummary"><<Family>></span>
+<br>
+</div>
+<div id="familyTree"></div>
+	<<set _tSlaveList = [$activeSlave]>>
+	<<set _tSlaveList.push.apply(_tSlaveList, $slaves)>>
+	<<run renderFamilyTree(_tSlaveList, $activeSlave.ID)>>
+</div>
+
+<</widget>>

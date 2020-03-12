@@ -1,0 +1,2017 @@
+:: Sell Slave [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Slave Interact">>
+
+You prepare $him for sale. $His response to being put up for purchase is
+<<if $activeSlave.devotion < -50>>
+	<<if $activeSlave.trust > 20>>
+		annoyance; $he must have thought $he had a good thing going here despite $his defiance.
+	<<else>>
+		muted; perhaps $he hopes a new master will be less hateful than you.
+	<</if>>
+<<elseif $activeSlave.devotion < -20>>
+	<<if $activeSlave.trust > 20>>
+		mild panic; $he seems to be concerned about $his future.
+	<<else>>
+		muted weeping; for some reason, $he doesn't like being treated like meat on a slab.
+	<</if>>
+<<elseif $activeSlave.devotion <= 20>>hesitant; $he can't seem to make up $his mind whether this is going to mean an improvement or not.
+<<elseif $activeSlave.devotion <= 50>>obedient, if mechanical; $he may want to stay with you.
+<<elseif $activeSlave.devotion <= 95>>ill-concealed sorrow; $he clearly wants to stay with you very much.
+<<else>>open, abject, and heart-wrenching begging. Staying with you truly seems to be $his only wish.
+<</if>>
+<<if $activeSlave.trust < -50>>$He's certainly very willing to get away from your horrible punishments.
+<<elseif $activeSlave.trust < -20>>$He's probably hoping $he'll be a little less frightened all the time, wherever $he goes.
+<<elseif $activeSlave.trust < 20>>$He does seem concerned that, hard as you are, $his buyer may be less fair.
+<<elseif $activeSlave.trust < 50>>$He's worried, probably because $he's learned how to avoid punishment here and will have to learn new rules.
+<<elseif $activeSlave.trust < 95>>
+	<<if $activeSlave.devotion < -20>>
+		$He's worried, probably because $he thinks you won't harm $him while another owner might.
+	<<else>>
+		$He promises $he will do $his best to make you proud by being a good slave to $his new owners.
+	<</if>>
+<<else>>
+	<<if $activeSlave.devotion < -20>>
+		$He's rather upset at the notion that $he may be going from a weak willed master to someone with the balls to actually try and break $him.
+	<<else>>
+		$He tries to conceal $his terror at going from a trustworthy slave master to the cruel and uncertain world outside your penthouse, but $he fails.
+	<</if>>
+<</if>>
+
+<<set _slaveCost = slaveCost($activeSlave)>>
+<<set _slaveCost = (random(70,80)*Math.trunc(_slaveCost/100))>>
+
+<<if $activeSlave.breedingMark == 1 && $propOutcome == 1 && $arcologies[0].FSRestart != "unset">>
+	Since you are selling a breeding slave, $he will be sent to auction before other members of the Societal Elite.
+<<else>>
+<<if $showAppraisal == 1>>
+<br><br>
+<<set _Reviewer = []>>
+<<if $arcologies[0].FSRomanRevivalist > 20>>
+	<<set _Reviewer.push("roman")>>
+<<elseif $arcologies[0].FSAztecRevivalist > 20>>
+	<<set _Reviewer.push("aztec")>>
+<<elseif $arcologies[0].FSEgyptianRevivalist > 20>>
+	<<set _Reviewer.push("egyptian")>>
+<<elseif $arcologies[0].FSEdoRevivalist > 20>>
+	<<set _Reviewer.push("edo")>>
+<<elseif $arcologies[0].FSArabianRevivalist > 20>>
+	<<set _Reviewer.push("arabian")>>
+<<elseif $arcologies[0].FSChineseRevivalist > 20>>
+	<<set _Reviewer.push("chinese")>>
+<</if>>
+<<if $arcologies[0].FSChattelReligionist > 20>>
+	<<set _Reviewer.push("priestess")>>
+<</if>>
+<<if $arcologies[0].FSRestartDecoration == 100>>
+	<<set _Reviewer.push("Elite")>>
+<</if>>
+<<if $seeDicks != 0>>
+	<<set _Reviewer.push("futa")>>
+	<<set _Reviewer.push("businesswoman")>>
+	<<set _Reviewer.push("slaver")>>
+	<<set _Reviewer.push("accountant")>>
+<<else>>
+	<<set _Reviewer.push("businesswoman")>>
+	<<set _Reviewer.push("slaver")>>
+	<<set _Reviewer.push("accountant")>>
+<</if>>
+<<set _appraiser = _Reviewer.random()>>
+
+A reputable slave appraiser arrives promptly to inspect $him and certify $his qualities for sale. The appraiser,
+<<switch _appraiser>>
+<<case "roman">>
+	one of the arcology's appointed censors, sweeps in grandly in his toga with its blue stripe of office, greets you confidently, and turns to the slave. He unrolls a scroll-shaped soft tablet, reviewing video of the $girl's skills and referring back to $his body as he works his way through the prescribed method of valuation. Finished, he turns to you.
+	<<if def $PC.customTitle>>
+		"$PC.customTitle,
+	<<else>>
+		<<if $arcologies[0].FSRomanRevivalist >= $FSLockinLevel*0.9>>
+			"First Consul,
+		<<elseif $arcologies[0].FSRomanRevivalist >= $FSLockinLevel*0.6>>
+			"Quaestor,
+		<<else>>
+			"Aedile,
+		<</if>>
+	<</if>>
+	I have appraised your slave. As directed by law, my appraisal is based on $his potential income in a brothel, with modification for any significant qualities. I have found the following.
+<<case "aztec">>
+	one of the arcology's slave examiners, walks elegantly in, wearing a very richly ornamented cape and a simple headdress to accentuate her face.<<if $arcologies[0].FSRepopulationFocusLaw == 1>> Her bronzed middle is noticeably swollen with pregnancy.<</if>> She acquaints herself with the slave and carries on a short inspection and a shorter conversation. She returns to you, goes on one knee, and follows by saying.
+	<<if def $PC.customTitle>>
+		"Your $PC.customTitle,
+	<<else>>
+		<<if $arcologies[0].FSAztecRevivalist >= $FSLockinLevel*0.9>>
+			"Piety,
+		<<elseif $arcologies[0].FSAztecRevivalist >= $FSLockinLevel*0.6>>
+			"Sanctity,
+		<<else>>
+			"Your Greatness,
+		<</if>>
+	<</if>>
+	I have appraised your slave. My appraisal is based on $his potential income in a brothel, with modification for $his special qualities. I have found the following.
+<<case "egyptian">>
+	one of the arcology's traditional slave examiners, comes elegantly in wearing a simple gown shift that sweeps low, baring her bronzed back.<<if $arcologies[0].FSRepopulationFocusLaw == 1>> Her gown is noticeably swollen with pregnancy.<</if>> She greets you warmly, and then turns to the slave. She inspects $him and carries on a polite conversation with $him, learning about $him by talking with $him. When she finishes, she turns to you and bows deeply.
+	<<if def $PC.customTitle>>
+		"My $PC.customTitle,
+	<<else>>
+		<<if $arcologies[0].FSEgyptianRevivalist >= $FSLockinLevel*0.9>>
+			"Your worship,
+		<<elseif $arcologies[0].FSEgyptianRevivalist >= $FSLockinLevel*0.6>>
+			"Pharaoh,
+		<<else>>
+			<<if $PC.title == 1>>
+				"My prince,
+			<<else>>
+				"My princess,
+			<</if>>
+		<</if>>
+	<</if>>
+	I have appraised your slave. My appraisal is based on $his potential income in a brothel, with modification for $his special qualities. I have found the following.
+<<case "edo">>
+	one of the arcology's recognized slave examiners, arrives alone, but is no less regal for it. She is dressed as a proper Edo lady, and is a natural at it, slim<<if $arcologies[0].FSRepopulationFocusLaw == 1>>, despite her large pregnancy<</if>>, pretty, and proper. She greets you correctly, the only sign of her middle age being a little creasing at the corners of her eyes, and then turns to the slave. She seems to have researched her skills already, and so performs a skilled inspection without even needing to touch the $girl.
+	<<if def $PC.customTitle>>
+		"$PC.customTitle,
+	<<else>>
+		<<if $arcologies[0].FSEdoRevivalist >= $FSLockinLevel*0.9>>
+			<<if $PC.title == 1>>
+				"Honored Emperor,
+			<<else>>
+				"Honored Deity,
+			<</if>>
+		<<elseif $arcologies[0].FSEdoRevivalist >= $FSLockinLevel*0.6>>
+			"Honored Shogun,
+		<<else>>
+			"Honored Daimyo,
+		<</if>>
+	<</if>>
+	I have appraised your slave. My appraisal is based on $his potential income in a brothel, with modification for special matters. I have found the following.
+<<case "arabian">>
+	a huge, jovial man, sweeps in and fills the room with bonhomie. He wears loose silk pantaloons, a silk sash with a short leather whip thrust into it, and a little jacket that leaves most of his dark-skinned, massive chest bare. After booming a respectful greeting, he turns to the slave. He seems to have asked around about $his skills, and so limits himself to a quick physical inspection before rumbling,
+	<<if def $PC.customTitle>>
+		"$PC.customTitle,
+	<<else>>
+		<<if $arcologies[0].FSArabianRevivalist >= $FSLockinLevel*0.9>>
+			<<if $PC.title == 1>>
+				"Honored Caliph,
+			<<else>>
+				"Handmaiden of Allah, your servant's heart is desolate with the honor of looking upon you.
+			<</if>>
+		<<elseif $arcologies[0].FSArabianRevivalist >= $FSLockinLevel*0.6>>
+			<<if $PC.title == 1>>
+				"Honored Sultan,
+			<<else>>
+				"Sultana, your servant's heart is desolate with the honor of looking upon you.
+			<</if>>
+		<<else>>
+			"Peace be upon you, honored slaveowner.
+		<</if>>
+	<</if>>
+	I have appraised your slave. My appraisal is based on $his potential income in the whorehouse, with modification for special matters. As to them, I have found the following.
+<<case "chinese">>
+	an older and rather stout woman<<if $arcologies[0].FSRepopulationFocusLaw == 1>>, with a noticeably heavy pregnancy,<</if>> in traditional Chinese dress, gives you a precise and proper greeting. She extracts a tablet from one of her wide sleeves and reviews video of the slave in action before performing a physical inspection. Then she seats herself, stows her tablet again, and recites in a didactic tone, "Honored
+	<<if def $PC.customTitle>>
+		$PC.customTitle,
+	<<else>>
+		<<if $arcologies[0].FSChineseRevivalist >= $FSLockinLevel*0.9>>
+			<<if $PC.title == 1>>
+				Emperor and Holder of the Mandate of Heaven,
+			<<else>>
+				Empress and Holder of the Mandate of Heaven,
+			<</if>>
+		<<elseif $arcologies[0].FSChineseRevivalist >= $FSLockinLevel*0.6>>
+			<<if $PC.title == 1>>
+				Emperor,
+			<<else>>
+				Empress,
+			<</if>>
+		<<else>>
+			<<if $PC.title == 1>>
+				Governor of the Province,
+			<<else>>
+				Governess of the Province,
+			<</if>>
+		<</if>>
+	<</if>>
+	my appraisals are based on a slave's potential income as a prostitute, with modifiers for special characteristics. I have appraised your slave, and I have found the following.
+<<case "priestess">>
+	a holy woman ordained to provide this service, wears a white surplice that covers her hair and a long white dress — but since she is a priestess of the new religion, not one of the old faiths, the ensemble also includes a white leather corset, chased with gold<<if $arcologies[0].FSRepopulationFocusLaw == 1>> and loosened to accommodate her rounded middle<</if>>, that displays her breasts magnificently. It's easy to tell she's no slave, though, since her nipples are covered. She accepts your gaze with a smile, and assumes a straight-backed recitation posture. "Book of the Slaver, Chapter Seven: the Appraisal, Verse Six. The appraiser shall value a slave based on $his income as a whore, with allowances for special qualities, which $he shall disclose to the Owner. Amen." She turns to her work, and then adopts her recitation posture again.
+	<<if def $PC.customTitle>>
+		"$PC.customTitle,
+	<<else>>
+		<<if $arcologies[0].FSChattelReligionistLaw == 1>>
+			"Prophet, this is an honor.
+		<<elseif $arcologies[0].FSChattelReligionist >= $FSLockinLevel*0.9>>
+			"Honored Keeper,
+		<<elseif $arcologies[0].FSChattelReligionist >= $FSLockinLevel*0.6>>
+			"Honored Champion of the Faith,
+		<<else>>
+			"Your Holiness,
+		<</if>>
+	<</if>>
+	I have examined your slave in accordance with the Book.
+<<case "Elite">>
+	a member of the Societal Elite you are familiar with greets you respectfully and <<if $PC.dick != 0>>tosses you a wink as she pats her rounded belly. "He's doing well.<<else>>calms her kicking child so she can continue. "Think he'll look as good as his father?<</if>> Anyway, as I'm sure you know, <<= properTitle()>>," she says as she uses curt instructions to direct $activeSlave.slaveName, "appraisals are based on a slave's potential worth as a toy, with modifiers for special characteristics." She scrolls down the list. "I'll just mention the interesting ones.
+<<case "futa">>
+	a curvy, middle aged, and quite attractive woman wearing a tank top and yoga pants greets you cheerfully and turns to the slave. As she does, you can't help but notice that the yoga pants make it obvious she has a penis almost as long as one of her forearms. She makes notes on a tablet, flipping through videos that display the slave in action as she works. "<<= properTitle()>>, I'm, like, sorry to have to say this to you since I know you know it better than I do, but it's the script, you know? Anyway appraisals are based on a slave's potential performance as a public slut, with modifiers for special characteristics." She makes notes. "I'll just mention the significant ones.
+<<case "businesswoman">>
+	an older<<if $arcologies[0].FSRepopulationFocusLaw == 1>>, slightly pregnant<</if>> businesswoman with a reputation for correctness gives you a prim nod before turning to the nude slave without wasting further time. She deftly makes notes on a haptic wrist interface, flipping through videos of the slave in action as she works. "As I'm sure you know, <<= properTitle()>>," she says as she uses curt instructions to direct $activeSlave.slaveName, "appraisals are based on a slave's potential income as a prostitute, with modifiers for special characteristics." Her fingers fly across the interface. "I'll just mention the significant ones.
+<<case "slaver">>
+	a scarred old slaver with calloused hands and a knowing face, greets you in his companionable way before clapping his hands together and turning to the slave. He switches back and forth between the $girl and a battered old tablet with video proving $his skills. "Well, as you know <<if def $PC.customTitle>>$PC.customTitle<<elseif $PC.title == 1>>suh<<else>>madame<</if>>," he says as he firmly repositions $activeSlave.slaveName, "appraisals are based on a slave's potential income as a whore, with modifiers for special things." He pauses, prodding the tablet. "I'll just mention the main items.
+<<default>>
+	a fashionably but formally dressed young man with slicked-back hair, greets you correctly before activating an examination visor and reviewing video evidence of the slave's skills. That done, he deactivates the visor and performs a quick physical examination. "As I'm sure you know, <<= properTitle()>>," he says as he gently repositions $activeSlave.slaveName to get a good look at $him, "appraisals are based on a slave's potential income as a whore, with modifiers for special characteristics." He pauses, using subvocalizations to make data entries. "I'll just mention the significant ones.
+<</switch>>
+
+<<if $arcologies[0].FSPetiteAdmirationSMR == 1 || $arcologies[0].FSStatuesqueGlorificationSMR == 1>>
+	<<if heightPass($activeSlave)>>
+		$He is an attractive height, which is a good start.
+	<</if>>
+<</if>>
+
+<<if getBestVision($activeSlave) === 0>>
+	$His blindness is an obvious issue.
+<</if>>
+
+<<if $activeSlave.geneticQuirks.albinism == 2>>
+	$His albinism makes $him rather desirable.
+<</if>>
+
+<<if $activeSlave.career != 0>>
+	<<if setup.bodyguardCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good Bodyguard; that's valuable.
+	<<elseif setup.wardenessCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good Wardeness; that's valuable.
+	<<elseif setup.attendantCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good Attendant; that's valuable.
+	<<elseif setup.matronCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good Matron; that's valuable.
+	<<elseif setup.schoolteacherCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good Schoolteacher; that's valuable.
+	<<elseif setup.stewardessCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good Stewardess; that's valuable.
+	<<elseif setup.milkmaidCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good Milkmaid; that's valuable.
+	<<elseif setup.farmerCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good Farmer; that's valuable.
+	<<elseif setup.madamCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good Madam; that's valuable.
+	<<elseif setup.DJCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good DJ; that's valuable.
+	<<elseif setup.HGCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good Head Girl; that's valuable.
+	<<elseif setup.recruiterCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good Recruiter; that's valuable.
+	<<elseif setup.matronCareers.includes($activeSlave.career)>>
+		$His background would help make $him a good Matron; that's valuable.
+	<<elseif setup.entertainmentCareers.includes($activeSlave.career)>>
+		$His background should help $his flirting a little.
+	<<elseif setup.whoreCareers.includes($activeSlave.career)>>
+		$His background should help $his fucking a little.
+	<<elseif setup.gratefulCareers.includes($activeSlave.career)>>
+		$His background should make $him a bit more trusting.
+	<<elseif setup.menialCareers.includes($activeSlave.career)>>
+		$His background should make $him a bit more tractable.
+	<<elseif setup.servantCareers.includes($activeSlave.career)>>
+		$His background should make $him a good servant.
+	<</if>>
+<</if>>
+<<if ($week-$activeSlave.weekAcquired >= 20) && ($activeSlave.skill.entertainment >= 100)>>
+	<<if setup.entertainmentCareers.includes($activeSlave.career)>>
+	<<else>>
+		$He's gotten enough experience as a slave entertainer that $he has the added value of a $girl with a history in entertainment from before $he was a slave.
+	<</if>>
+<</if>>
+<<if ($activeSlave.counter.oral + $activeSlave.counter.anal + $activeSlave.counter.vaginal + $activeSlave.counter.mammary + $activeSlave.counter.penetrative > 1000)>>
+	<<if setup.whoreCareers.includes($activeSlave.career)>>
+	<<else>>
+		I see $he's sexually very experienced; that counts as a stand-in for the usual bonus value from having been a sex worker before enslavement.
+	<</if>>
+<</if>>
+
+<<set _careers = []>>
+<<if ($activeSlave.skill.headGirl >= $masteredXP)>>
+	<<set _careers.push("Head Girl")>>
+<</if>>
+<<if ($activeSlave.skill.recruiter >= $masteredXP)>>
+	<<set _careers.push("Recruiter")>>
+<</if>>
+<<if ($activeSlave.skill.bodyguard >= $masteredXP)>>
+	<<set _careers.push("Bodyguard")>>
+<</if>>
+<<if ($activeSlave.skill.madam >= $masteredXP)>>
+	<<set _careers.push("Madam")>>
+<</if>>
+<<if ($activeSlave.skill.DJ >= $masteredXP)>>
+	<<set _careers.push("DJ")>>
+<</if>>
+<<if ($activeSlave.skill.nurse >= $masteredXP)>>
+	<<set _careers.push("Nurse")>>
+<</if>>
+<<if ($activeSlave.skill.teacher >= $masteredXP)>>
+	<<set _careers.push("Schoolteacher")>>
+<</if>>
+<<if ($activeSlave.skill.attendant >= $masteredXP)>>
+	<<set _careers.push("Attendant")>>
+<</if>>
+<<if ($activeSlave.skill.matron >= $masteredXP)>>
+	<<set _careers.push("Matron")>>
+<</if>>
+<<if ($activeSlave.skill.stewardess >= $masteredXP)>>
+	<<set _careers.push("Stewardess")>>
+<</if>>
+<<if ($activeSlave.skill.milkmaid >= $masteredXP)>>
+	<<set _careers.push("Milkmaid")>>
+<</if>>
+<<if ($activeSlave.skill.farmer >= $masteredXP)>>
+	<<set _careers.push("Farmer")>>
+<</if>>
+<<if ($activeSlave.skill.wardeness >= $masteredXP)>>
+	<<set _careers.push("Wardeness")>>
+<</if>>
+<<if ($activeSlave.skill.servant >= $masteredXP)>>
+	<<set _careers.push("Servant")>>
+<</if>>
+<<if ($activeSlave.skill.entertainer >= $masteredXP)>>
+	<<set _careers.push("Entertainer")>>
+<</if>>
+<<if ($activeSlave.skill.whore >= $masteredXP)>>
+	<<set _careers.push("Whore")>>
+<</if>>
+<<if ($activeSlave.skill.matron >= $masteredXP)>>
+	<<set _careers.push("Matron")>>
+<</if>>
+<<if _careers.length > 0>>
+	$He has working experience as a
+	<<if _careers.length > 2>>
+		<<for _j = 0; _j < _careers.length; _j++>>
+			<<if _j < _careers.length-1>>
+				<<print _careers[_j]>>,
+			<<else>>
+				and <<print _careers[_j]>>.
+			<</if>>
+		<</for>>
+	<<elseif _careers.length > 1>>
+		_careers[1] and <<print _careers[0]>>.
+	<<else>>
+		<<print _careers[0]>>. Providing $him the same additional value if $he had a relevant career.
+	<</if>>
+<</if>>
+
+<<if $activeSlave.behavioralFlaw != "none">>
+	<<if $activeSlave.sexualFlaw != "none">>
+		$He has both a behavioral flaw and a sexual flaw; those are both minor negatives.
+	<<else>>
+		$He has a behavioral flaw, which is a minor negative.
+	<</if>>
+<</if>>
+<<if $activeSlave.sexualFlaw == "breeder" && $arcologies[0].FSRepopulationFocus != "unset">>
+	$He is obsessed with breeding, which will make $him very popular in your arcology.
+<<elseif $activeSlave.sexualFlaw != "none">>
+	<<if $activeSlave.behavioralFlaw == "none">>
+		$He has a sexual flaw, which is a minor negative.
+	<</if>>
+<</if>>
+<<if ($activeSlave.behavioralFlaw != "none") || ($activeSlave.sexualFlaw != "none")>>
+	<<if $activeSlave.behavioralQuirk != "none">>
+		<<if $activeSlave.sexualQuirk != "none">>
+			On the other hand, $he has both a behavioral quirk and a sexual quirk; those are both minor positives.
+		<<else>>
+			On the other hand, $he has a behavioral quirk, which is a minor positive.
+		<</if>>
+	<</if>>
+	<<if $activeSlave.sexualQuirk != "none">>
+		<<if $activeSlave.behavioralQuirk == "none">>
+			On the other hand, $he has a sexual quirk, which is a minor positive.
+		<</if>>
+	<</if>>
+<<else>>
+	<<if $activeSlave.behavioralQuirk != "none">>
+		<<if $activeSlave.sexualQuirk != "none">>
+			$He has both a behavioral quirk and a sexual quirk; those are both minor positives.
+		<<else>>
+			$He has a behavioral quirk, which is a minor positive.
+		<</if>>
+	<</if>>
+	<<if $activeSlave.sexualQuirk != "none">>
+		<<if $activeSlave.behavioralQuirk == "none">>
+			$He has a sexual quirk, which is a minor positive.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.fetish == "mindbroken">>
+	It's a shame $he's mindbroken. From a price perspective.
+<<elseif $activeSlave.fetish != "none" && $activeSlave.fetishKnown == 1>>
+	$His fetish is good for performance, of course, but it adds a little bonus to value, too.
+<<elseif $activeSlave.fetishKnown == 1>>
+	$His tastes are a tad plain, but at least it won't hurt $his value.
+<<else>>
+	It's a pity there's no information on $his fetishes. Without it, buyers tend to assume the worst.
+<</if>>
+
+<<if $activeSlave.attrKnown == 1>>
+	<<if $activeSlave.energy > 95>>
+		Nymphomania adds a major price bonus.
+	<</if>>
+<<else>>
+	With $his sex drive not well tested, I cannot award $him any value in that area.
+<</if>>
+
+<<if $activeSlave.vagina == 0>>
+	Virgin pussies are less common than you might think; that's a minor positive.
+<</if>>
+<<if $arcologies[0].FSRepopulationFocusSMR != 0>>
+	<<if $activeSlave.preg < -1>>
+		The lack of an ability to become pregnant greatly decreases value, the global market being what it is.
+	<<elseif ($activeSlave.bellyPreg >= 300000)>>
+		That belly is all child? Incredible. Such fertility will price $him very high, the global market being what it is.
+	<<elseif ($activeSlave.bellyPreg >= 120000)>>
+		Such a massive pregnancy demands a high value, the global market being what it is.
+	<<elseif ($activeSlave.preg > $activeSlave.pregData.normalBirth/4)>>
+		The advanced pregnancy adds a little value, the global market being what it is.
+	<</if>>
+<<elseif $arcologies[0].FSRestartSMR != 0>>
+	<<if $activeSlave.preg < -1>>
+		$His infertility improves $his value, since $his kind should not be allowed to reproduce.
+	<<elseif ($activeSlave.bellyPreg >= 300000)>>
+		That belly is all child? How horrible. $He'd make a better example of the horrors of pregnancy than a sex slave.
+	<<elseif ($activeSlave.bellyPreg >= 30000)>>
+		What a disgusting creature, that filth inside $him will destroy $his value.
+	<<elseif ($activeSlave.preg > $activeSlave.pregData.normalBirth/4)>>
+		What a waste, if $he weren't pregnant, $he might be worth something.
+	<</if>>
+<<else>>
+	<<if $activeSlave.ovaries == 0 && $activeSlave.vagina > -1 && $activeSlave.genes == "XY">>
+		The lack of a natural vagina still removes a little value, the global market being what it is.
+	<<elseif ($activeSlave.bellyPreg >= 300000)>>
+		Such an obscene and life threatening display of fertility will turn off most buyers and considerably damage $his value, the global market being what it is.
+	<<elseif ($activeSlave.bellyPreg >= 120000)>>
+		Such a massive and dangerous pregnancy removes some value, the global market being what it is.
+	<<elseif ($activeSlave.preg > $activeSlave.pregData.normalBirth/4)>>
+		The advanced pregnancy removes a little value, the global market being what it is.
+	<</if>>
+<</if>>
+<<if $activeSlave.mpreg == 1>>
+	What's this strange organ listed here? $He can become anally pregnant? That will certainly interest some buyers.
+<</if>>
+<<if $activeSlave.pregWeek < 0>>
+	$He seems a little uncomfortable with $his holes being touched. By the feel of it, $he is a new mother, no? A lack of receptivity will not go over well with buyers; it may more profitable to let $him recover first.
+<</if>>
+<<set _intelligenceScore = ($activeSlave.intelligenceImplant < 0 ? $activeSlave.intelligence+$activeSlave.intelligenceImplant : $activeSlave.intelligence)>> /* negative education makes a slave seem slower than they are */
+<<if $arcologies[0].FSIntellectualDependencySMR == 1>>
+	<<if _intelligenceScore >= -15>>
+		$He's too smart to be of interest to local bidders, but there is still a demand for smart slaves elsewhere.
+		<<if $activeSlave.intelligenceImplant >= 15>>
+			$His education is an added positive too, in that regard.
+		<</if>>
+	<<else>>
+		$His idiotic mind will draw in local bids.
+	<</if>>
+<<elseif $arcologies[0].FSSlaveProfessionalismSMR == 1>>
+	<<if _intelligenceScore <= 50>>
+		$He's no where near smart enough to compete with the local markets, so outside bids are going to be the only option.
+	<<else>>
+		$His brain is probably going to bring in very generous bids on its own.
+		<<if $activeSlave.intelligenceImplant >= 15>>
+			$His education is an added positive, beyond that.
+		<<else>>
+			$He's uneducated, though, which will turn off some buyers.
+		<</if>>
+	<</if>>
+<<else>>
+	<<if _intelligenceScore > 95>>
+		$His genius is probably going to bring in very generous bids.
+		<<if $activeSlave.intelligenceImplant >= 15>>
+			$His education is an added positive, beyond that.
+		<</if>>
+	<<elseif _intelligenceScore > 15>>
+		Of course, $his intelligence is an asset outside of its sexual applications.
+		<<if $activeSlave.intelligenceImplant >= 15>>
+			$His education is an added positive, beyond that.
+		<</if>>
+	<<elseif _intelligenceScore < -15>>
+		Of course, $his stupidity will be a minor negative.
+		<<if $activeSlave.intelligenceImplant >= 15>>
+			$His education will help ameliorate that in price terms.
+		<<else>>
+			$He's uneducated, too.
+		<</if>>
+	<<elseif _intelligenceScore < -95>>
+		$His sheer idiocy will likely hamper bids.
+		<<if $activeSlave.intelligenceImplant >= 15>>
+			$His education will help a little, though I can't imagine the hassle it must have been to get $him to remember anything.
+		<<else>>
+			$He's uneducated, too, not that there's a surprise in that.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.anus == 0>>
+	$His virgin anus is a minor positive, since anal defloration is in such high demand.
+<</if>>
+
+<<if $activeSlave.vagina > -1>>
+	<<if $activeSlave.dick > 0>>
+		$He has both sets of equipment, I see; that's very valuable.
+		<<if $activeSlave.ovaries > 0 && $activeSlave.balls > 0 && $activeSlave.ballType != "sterile">>
+			<<if $arcologies[0].FSRestartSMR == 1>>
+				And both are fertile? Horrible. Such fertility is wasted on trash.
+			<<else>>
+				And both are fertile? Incredible. $He'll appraise extremely well for that.
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.pubertyXY == 0 && $activeSlave.physicalAge >= $potencyAge && $arcologies[0].FSGenderRadicalist == "unset" && $activeSlave.balls > 0>>
+	$He never went through male puberty, that's a plus.
+<</if>>
+
+<<if $activeSlave.prestige > 0>>
+	I see notes on $his notoriety in $his file. That will drive up $his price.
+<</if>>
+
+<<if $activeSlave.porn.prestige == 3>>
+	$He's pretty popular in $activeSlave.porn.fameType smut, isn't $he? Buyers will be lining up for $him.
+<<elseif $activeSlave.porn.prestige == 2>>
+	$He's gained quite the following in $activeSlave.porn.fameType smut. In fact, I've even seen some of $his smut; buyers will flock to $him.
+<<elseif $activeSlave.porn.prestige == 1>>
+	$He's got a small fanbase in $activeSlave.porn.fameType smut. Who knows? Maybe one of them will want $him all to themselves?
+<</if>>
+
+<<if $activeSlave.devotion > 95>>
+	$His worshipfulness is a major positive
+	<<set _trustPositive = 1>>
+<<elseif $activeSlave.devotion > 50>>
+	$His devotion is a significant positive
+	<<set _trustPositive = 1>>
+<<elseif $activeSlave.devotion > 20>>
+	$His acceptance of slavery is a minor positive
+	<<set _trustPositive = 1>>
+<<elseif $activeSlave.devotion >= -20>>
+	$His acceptance of slavery is equivocal
+	<<set _trustPositive = 0>>
+<<elseif $activeSlave.devotion >= -50>>
+	$His resistance to slavery is a minor negative
+	<<set _trustPositive = 0>>
+<<elseif $activeSlave.devotion >= -75>>
+	$His hatred of slavery is a significant negative
+	<<set _trustPositive = -1>>
+<<else>>
+	$His rebelliousness is a major negative
+	<<set _trustPositive = -1>>
+<</if>>
+<<if _trustPositive == 1>>
+	<<if $activeSlave.trust > 95>>
+		and $his powerful trust is a major positive.
+	<<elseif $activeSlave.trust > 50>>
+		and $his trust is a significant positive.
+	<<elseif $activeSlave.trust > 20>>
+		and $his carefulness is a minor positive.
+	<<elseif $activeSlave.trust >= -20>>
+		and $his fearfulness is equivocal.
+	<<elseif $activeSlave.trust >= -50>>
+		but $his fear is a minor negative.
+	<<elseif $activeSlave.devotion >= -90>>
+		but $his terrified state is a significant negative.
+	<<else>>
+		but $his abjectly terrified state is a major negative.
+	<</if>>
+<<elseif _trustPositive == 0>>
+	<<if $activeSlave.trust > 95>>
+		but $his powerful trust is worrisome.
+	<<elseif $activeSlave.trust > 50>>
+		but $his trust is a little out of place.
+	<<elseif $activeSlave.trust > 20>>
+		and $his carefulness is a minor positive.
+	<<elseif $activeSlave.trust >= -20>>
+		and $his fearfulness is useful.
+	<<elseif $activeSlave.trust >= -50>>
+		and $his fear is useful.
+	<<elseif $activeSlave.devotion >= -90>>
+		but $his terrified state will aid in fully breaking $him.
+	<<else>>
+		but $his abjectly terrified state will make it easy to break $him.
+	<</if>>
+<<else>>
+	<<if $activeSlave.trust > 95>>
+		and $his powerful trust is a problem.
+	<<elseif $activeSlave.trust > 50>>
+		and $his trust is troublesome.
+	<<elseif $activeSlave.trust > 20>>
+		and $his carefulness is bad sign.
+	<<elseif $activeSlave.trust >= -20>>
+		but $his fearfulness is useful.
+	<<elseif $activeSlave.trust >= -50>>
+		but $his fear is useful.
+	<<elseif $activeSlave.devotion >= -90>>
+		but $his terrified state will aid in fully breaking $him.
+	<<else>>
+		but $his abjectly terrified state will make it easy to break $him.
+	<</if>>
+<</if>>
+
+<<if (!jQuery.isEmptyObject($activeSlave.brand))>>
+	<<if $rep > 10000>>
+		I see $he's branded with your mark; with your stellar reputation, that will make $him appraise better.
+	<<elseif $rep < 5000>>
+		I see $he's branded with your mark; unfortunately, that will make $him appraise slightly less well.
+	<<else>>
+		I see $he's branded with your mark; that won't have a significant impact.
+	<</if>>
+<</if>>
+
+<<if ($activeSlave.actualAge >= $retirementAge-5) && $PhysicalRetirementAgePolicy != 1>>
+	<<set _TimeBeforeAgeRetirement = 52*($retirementAge-$activeSlave.actualAge)>>
+	Since $he has a mere _TimeBeforeAgeRetirement weeks left until the local retirement age for sex slaves, buyers will be willing to offer much less for $him.
+<</if>>
+<<if ($activeSlave.physicalAge >= $retirementAge-5) && $PhysicalRetirementAgePolicy == 1>>
+	<<set _TimeBeforeAgeRetirement = 52*($retirementAge-$activeSlave.physicalAge)>>
+	Since $he has a mere _TimeBeforeAgeRetirement weeks left until the local retirement age for sex slaves, buyers will be willing to offer much less for $him.
+<</if>>
+
+<<if $arcologies[0].FSSupremacistLawME != 0 && $activeSlave.race != $arcologies[0].FSSupremacistRace>>
+	Your supremacism has pushed a lot of subhumans like $him into the market, so offers will be low.
+<<elseif $arcologies[0].FSSubjugationistLawME != 0 && $activeSlave.race == $arcologies[0].FSSubjugationistRace>>
+	Your subjugationism has pushed a lot of animals like $him into the market, so $his race marks $him as low quality.
+<</if>>
+<<if $arcologies[0].FSRepopulationFocusSMR != 0>>
+	<<if $activeSlave.pregKnown == 1>>
+		Pregnant slaves appraise quite well, thanks to your leadership on repopulation.
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSRestartSMR != 0>>
+	<<if $activeSlave.dick > 0>>
+		Subhumans with dicks appraise less well, since they don't need them.
+	<</if>>
+	<<if $activeSlave.balls > 0>>
+		$He has balls too. A slave that can impregnate is worth little under your vision of the future.
+	<</if>>
+	<<if $activeSlave.vagina > 0>>
+		Subhumans with vaginas appraise less well, since they don't need them.
+	<</if>>
+	<<if $activeSlave.ovaries > 0>>
+		$He can get pregnant too. A slave that can bear children is worth little under your vision of the future.
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSHedonisticDecadenceSMR != 0>>
+	<<if $activeSlave.weight > 60 && $activeSlave.muscles < 5>>
+		Plush, soft slaves like $him appraise well, thanks to the shifting views on beauty.
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSGenderFundamentalistSMR != 0>>
+	<<if $activeSlave.dick > 0>>
+		Slaves with dicks appraise less well, thanks to your leadership on gender.
+		<<if $activeSlave.balls > 0>>
+			That's especially true for $him, since $he still has $his balls.
+		<</if>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSGenderRadicalistLawFuta != 0>>
+	<<if $arcologies[0].FSGenderRadicalistLawFuta == 1>>
+		<<if $activeSlave.dick > 0>>
+			<<if $activeSlave.vagina > -1>>
+				Futas appraise better than ever, thanks to your leadership on gender.
+			<</if>>
+		<</if>>
+	<<elseif $arcologies[0].FSGenderRadicalistLawFuta == 2>>
+		<<if $activeSlave.dick > 0>>
+			<<if $activeSlave.balls > 0>>
+				Slaves with cocks and balls appraise quite well, thanks to your leadership on gender.
+			<</if>>
+		<</if>>
+	<<else>>
+		<<if $activeSlave.butt >= 5>>
+			<<if $activeSlave.anus >= 2>>
+				<<if $activeSlave.hips >= 1>>
+					<<if $activeSlave.skill.anal > 60>>
+						Slaves with big butts and skilled anuses appraise quite well, thanks to your leadership on gender.
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSArabianRevivalist > 50>>
+	And of course, we can't forget the premium you get on selling slaves.
+<</if>>
+
+<<if $activeSlave.indenture > -1>>
+	Though I dislike mentioning something so obvious, being an indentured servant will have a huge impact on $his valuation.
+<</if>>
+
+<<switch _appraiser>>
+	<<case "roman">>
+		That is all." He rolls his screen-scroll up and tucks it into his toga, and nods. "A pleasure."
+	<<case "aztec">>
+		That's all. Thank you." She turns to go, her long cape swiveling in the air, showing a glimpse of her <<if $arcologies[0].FSRepopulationFocusLaw == 1>>fecund<<else>>pleasant<</if>> figure.
+	<<case "egyptian">>
+		That's all. Thank you for this delightful opportunity." She turns to go, but turns again in the doorway to offer another deep bow, this one so low that her linen dress discloses just a hint of her dimpled rear.
+	<<case "edo">>
+		That is all. Thank you." She performs a perfect bow and retreats.
+	<<case "arabian">>
+		That is all. $He may fetch a fine price, if the Almighty will it." He bows deeply and backs out the door.
+	<<case "chinese">>
+		That is all." She bows and backs out the door.
+	<<case "priestess">>
+		Amen." She forms a holy symbol with her hands, kneels before you to bow so low that her cleavage presses against the floor, and retreats.
+	<<case "futa">>
+		That's all. Thanks! Cute $girl." She goes, but pauses in the doorway to give you a little wave.
+	<<case "Elite">>
+		That's all. <<if $PC.dick != 0>>See you around! Have to have a few other guy's kids before we can have some more fun, but I'll keep you in mind!<<else>>See you around, we'll have to go drinking after I'm done sometime!<</if>>" She waves as she leaves.
+	<<case "businesswoman">>
+		That will be all. Thank you, and good day." She bows curtly and goes.
+	<<case "slaver">>
+		That's all I've got for you, <<if def $PC.customTitle>>$PC.customTitle<<elseif $PC.title == 1>>suh<<else>>ma'am<</if>>, thank you kindly." He offers a genteel bow and leaves.
+	<<default>>
+		And that is all. Thank you." He nods in a businesslike fashion and departs.
+<</switch>>
+
+<br><br>
+__Financial Records__
+<<SlaveExpenses $activeSlave>>
+
+<</if>> /* CLOSES APPRAISAL */
+<</if>> /* closes breeding mark */
+
+<br><br>
+
+<<if $activeSlave.breedingMark == 1 && $propOutcome == 1 && $arcologies[0].FSRestart != "unset">>
+<<set $buyer = 0>>
+<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+	<br>The current offer for $him stands at ''<<print cashFormat(_Price)>>''.
+	<<link "Accept bid" "Slave Sold">>
+		<<run cashX(_Price, "slaveTransfer")>>
+		<<set $buyer = "elite auction">>
+	<</link>>
+<<else>>
+__Bids Received__
+<br>
+
+<<set $buyer = 0>>
+<<set _Price = 500*Math.trunc((_slaveCost*1.15)/500)>>
+
+<<if ($activeSlave.visualAge < 20) && ($activeSlave.weight < -10) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who likes his slaves young and slender.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.visualAge > 40) && ($activeSlave.weight > 10) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who likes her slaves mature and motherly.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.dick > 3) && canAchieveErection($activeSlave) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who likes fat cocks.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.dick > 3) && ($activeSlave.balls == 0) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who likes a big limp dick flopping around when he fucks a slave's asspussy.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.dick == 1) && ($activeSlave.balls == 0 || $activeSlave.ballType == "sterile") && ($activeSlave.anus == 3) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who likes sissies with anal slits longer than their little limp dicks.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.dick > 0) && ($activeSlave.boobs < 300) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who likes traps.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.dick > 0) && ($activeSlave.balls > 0) && ($activeSlave.boobs > 600) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who likes lusty shemales.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.anusPiercing > 1) && ($activeSlave.nipplesPiercing > 1) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who is clearly fascinated by $his lewd piercings.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.anusTat > 1) && ($activeSlave.buttTat > 1) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who is clearly aroused by $his slutty tattoos.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.boobs > 800) && ($activeSlave.areolaeShape != "circle") && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who can't take his eyes off $his unique areolae.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.clit > 2) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who keeps running her tongue over her lips while staring at the slave's giant clit.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.labia > 1) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who has an obvious fascination with $his dangling labia.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.boobs > 2000) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen with an obvious breast expansion fetish.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.preg > $activeSlave.pregData.normalBirth/2) && ($activeSlave.lactation == 1) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who pays obsessive attention to $his gravid belly and naturally lactating breasts.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.ovaries == 1) && ($activeSlave.physicalAge < 25) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who pays unusually close attention to the section of the medical report on $his fertility.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.butt > 6) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen with an obvious butt expansion fetish.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.face > 10) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who can't keep his eyes off $his pretty face.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.skill.anal >= 100) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen interested in acquiring a skilled butthole bitch.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.skill.vaginal >= 100) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen interested in acquiring a slut with real vaginal skill.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.skill.oral >= 100) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen interested in acquiring a skilled cocksucker.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.health.condition > 80) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen who pays creepily close attention to the state of $his health, and ignores everything else.
+	<<set _NewOwner = 1>>
+<<elseif ($activeSlave.nationality != 0) && (random(1,100) > 80)>>
+	<br>''<<print cashFormat(_Price)>>'' from a citizen with a special appetite for <<print moreNational($activeSlave.nationality)>> <<= $girl>>s.
+	<<set _NewOwner = 1>>
+<</if>>
+<<if _NewOwner == 1>>
+	<<link "Accept bid" "Slave Sold">>
+		<<run cashX(_Price, "slaveTransfer")>>
+	<</link>>
+<</if>>
+
+<<if $activeSlave.physicalAge > 30>>
+	<<if $activeSlave.devotion > 20>>
+		<<if random(1,100) > 50>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*0.9)/500))>>'' from a polite older citizen looking for a housekeeper and bedwarmer.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*0.9)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "housekeeper">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if isFertile($activeSlave) && $seePreg != 0>>
+
+	<<if _slaveCost > 10000>>
+		<<if random(1,100) > 60>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.05)/500))>>'' from a male citizen who wants to ensure his posterity by using $him to carry his children.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.05)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "preg fetishist">>
+			<</link>>
+		<</if>>
+	<</if>>
+
+	<<if $activeSlave.mpreg == 1>>
+		<<if random(1,100) > 60>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.05)/500))>>'' from an organ modifier interested in $his anal womb.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.05)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "organ crafter">>
+			<</link>>
+		<</if>>
+	<</if>>
+
+	<<if $seeHyperPreg == 1 && $seeExtreme == 1>>
+		<<if $activeSlave.vagina == 0>>
+			<<if random(1,100) > 60>>
+				<br>''<<print cashFormat(400*Math.trunc((_slaveCost*1.05)/500))>>'' from a pharmaceuticals corporation looking for fertile virgins for testing extreme fertility drugs.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 400*Math.trunc((_slaveCost*1.05)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "womb filler">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<if $activeSlave.intelligence > 50>>
+		<<if $activeSlave.face >= 55>>
+			<<if $activeSlave.faceShape != "masculine">>
+				<<if random(1,100) > 90>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a fellow arcology owner seeking a smart, pretty slave to use as a breeder to produce superior children.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "eugenics arcology">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<if $activeSlave.hips > 1>>
+		<<if $activeSlave.vagina == 0>>
+			<<if random(1,100) > 60>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.05)/500))>>'' from a fellow arcology owner focusing on building a future society based on his genes: he seeks fertile virgins with wide hips, feeling they will be the best mothers.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.05)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "repopulationist arcology">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<if $activeSlave.vagina == 0>>
+		<<if random(1,100) > 60>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.3)/500))>>'' from a slave trader with a notorious virgin impregnation fetish: he uses his work to provide himself with an endless supply of virgins to knock up and resell.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.3)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "virgin trader">>
+			<</link>>
+		<</if>>
+	<</if>>
+
+<</if>>
+
+<<if $seePreg != 0>>
+	<<if $seeHyperPreg == 1 && $seeExtreme == 1>>
+		<<if $activeSlave.preg > $activeSlave.pregData.normalBirth/2>>
+			<<if $activeSlave.bellyPreg >= 300000>>
+				<<if random(1,100) > 60>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.05)/500))>>'' from a group that takes pleasure in performing abortions on live TV.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 400*Math.trunc((_slaveCost*1.05)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "abortion TV">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.nipples == "huge">>
+	<<if random(1,100) > 60>>
+		<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.05)/500))>>'' from a female citizen with a very specific fetish: she loves breasts to the point of enjoying slaves with nipples large enough to meaningfully penetrate her.
+		<<link "Accept bid" "Slave Sold">>
+			<<set _Price = 500*Math.trunc((_slaveCost*1.05)/500)>>
+			<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+			<<set $buyer = "nipple fetishist">>
+		<</link>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.nipples == "fuckable">>
+	<<if random(1,100) > 60>>
+		<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a male citizen with a kink that's hard to satisfy: he loves nipple fucking, but hates how breasts just don't work that way.
+		<<link "Accept bid" "Slave Sold">>
+			<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+			<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+			<<set $buyer = "nipple fetishist">>
+		<</link>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.balls > 0>>
+	<<if $activeSlave.skill.anal > 10>>
+		<<if $activeSlave.devotion > 20>>
+			<<if random(1,100) > 60>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.05)/500))>>'' from a citizen who enjoys buttfucking slaves with the necessary equipment, willingness, and anal skill to reward his efforts with messy, hands-free orgasms of their own.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.05)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "anal fetishist">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.skill.oral > 30>>
+	<<if $activeSlave.devotion > 20>>
+		<<if random(1,100) > 60>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.05)/500))>>'' from an unusually well-endowed citizen who strongly prefers oral sex with willing partners who can deepthroat him successfully.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.05)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "oral fetishist">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.fetish != "masochist">>
+	<<if $activeSlave.devotion > 50>>
+		<<if random(1,100) > 60>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.05)/500))>>'' from a sadistic citizen who likes hurting her slaves, dislikes masochists for their enjoyment of her treatment, yet prefers slaves who will not hate her.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.05)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "pain fetishist">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.muscles > 30>>
+	<<if $activeSlave.height >= 170>>
+		<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant < -15>>
+			<<if random(1,100) > 60>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.05)/500))>>'' from a sadistic citizen who is looking for an imposing, stupid slave she can train to rape her victims on command.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.05)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "sadism fetishist">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.devotion > 20>>
+	<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant > 50>>
+		<<if $activeSlave.intelligenceImplant >= 15>>
+			<<if random(1,100) > 60>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.05)/500))>>'' from a newly wealthy citizen who is expanding his household and is interested in smart, educated, and obedient slaves for leadership roles.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.05)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "dom fetishist">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.devotion > 50>>
+	<<if $activeSlave.skill.oral >= 100>>
+		<<if random(1,100) > 60>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.05)/500))>>'' from a citizen whose job keeps her deskbound; bored, she's looking for a devoted oral slave to occupy the space under the desk and be her constant pussylicking appliance.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.05)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "sub fetishist">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.anus == 0>>
+	<<if random(1,100) > 60>>
+		<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.3)/500))>>'' from a wealthy citizen infamous for cruelly raping anal virgins in public; he buys and abuses a new one every few weeks.
+		<<link "Accept bid" "Slave Sold">>
+			<<set _Price = 500*Math.trunc((_slaveCost*1.3)/500)>>
+			<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+			<<set $buyer = "buttbreaker">>
+		<</link>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.skill.oral >= 100>>
+	<<if $activeSlave.skill.anal >= 100>>
+		<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant > 15>>
+			<<if random(1,100) > 60>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a small, local slave trainer interested in using $him to help train new slaves in the sexual arts.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "trainer staffing">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.skill.oral >= 100>>
+	<<if $activeSlave.skill.anal >= 100>>
+		<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant > 15>>
+			<<if $activeSlave.intelligenceImplant >= 15>>
+				<<if $activeSlave.physicalAge > 35>>
+					<<if random(1,100) > 60>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.4)/500))>>'' from a skilled slave trainer who feels that MILFs make the best slave trainers.
+						<<link "Accept bid" "Slave Sold">>
+							<<set _Price = 500*Math.trunc((_slaveCost*1.4)/500)>>
+							<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+							<<set $buyer = "D milf staffing">>
+						<</link>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.boobsImplant == 0>>
+	<<if $activeSlave.lactation > 0>>
+		<<if $activeSlave.ovaries > 0>>
+			<<if $activeSlave.boobs > 1000>>
+				<<if random(1,100) > 60>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a prominent citizen with a notorious fetish for fertile, natural cows.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "D hucow">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.muscles > 5>>
+	<<if $activeSlave.weight < -10>>
+		<<if $activeSlave.teeth == "pointy">>
+			<<if $activeSlave.skill.combat > 0>>
+				<<if random(1,100) > 60>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.35)/500))>>'' from a prominent citizen who's pursuing some sort of mercenary project that requires worryingly large numbers of thin <<= $girl>>s with sharp teeth.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.35)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "D startled the witch">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.vagina == 0>>
+	<<if $activeSlave.anus > 1>>
+		<<if $activeSlave.skill.anal >= 100>>
+			<<if $activeSlave.physicalAge < 25>>
+				<<if random(1,100) > 60>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.35)/500))>>'' from a prominent citizen who appreciates <<= $girl>>s who are both vaginal virgins and anal veterans.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.35)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "D virgin asspussy">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.vagina == 0>>
+	<<if ($activeSlave.fetish == "submissive") || ($activeSlave.fetish == "pregnancy")>>
+		<<if $activeSlave.skill.entertainment > 30>>
+			<<if $activeSlave.physicalAge < 30>>
+				<<if random(1,100) > 60>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.35)/500))>>'' from a prominent citizen with moist palms who insistently refers to $him as "his waifu," whatever that means.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.35)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "D waifu">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.vagina > 0 && $activeSlave.dick == 0 && $activeSlave.balls == 0>>
+	<<if $activeSlave.physicalAge >= 20 && $activeSlave.physicalAge < 25>>
+		<<if $activeSlave.visualAge >= 20 && $activeSlave.visualAge < 25>>
+			<<if $activeSlave.preg <= 0 && $activeSlave.bellyImplant <= 0>>
+				<<if $activeSlave.weight < 10 && $activeSlave.weight > -10>>
+					<<if $activeSlave.waist < 10 && $activeSlave.waist > -50>>
+						<<if $activeSlave.boobs >= 550 && $activeSlave.boobs < 1000>>
+							<<if $activeSlave.butt > 2 && $activeSlave.butt < 5>>
+								<<if $activeSlave.hips > 0 && $activeSlave.hips < 3>>
+									<<if $activeSlave.face >= 20>>
+										<<set _movieDouble = random(1,100)>>
+										<<if _movieDouble > 90 && $seePreg != 0>>
+											<br>''<<print cashFormat(700*Math.trunc((_slaveCost*1.35)/700))>>'' from a production studio interested in using $him as a double.
+											<<link "Accept bid" "Slave Sold">>
+												<<set _Price = 700*Math.trunc((_slaveCost*1.35)/700)>>
+												<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+												<<set $buyer = "monster movie">>
+											<</link>>
+										<<elseif _movieDouble > 70>>
+											<br>''<<print cashFormat(700*Math.trunc((_slaveCost*1.35)/700))>>'' from a production studio interested in using $him as a double.
+											<<link "Accept bid" "Slave Sold">>
+												<<set _Price = 700*Math.trunc((_slaveCost*1.35)/700)>>
+												<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+												<<set $buyer = "sex double">>
+											<</link>>
+										<</if>>
+									<</if>>
+								<</if>>
+							<</if>>
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.dick > 0>>
+	<<if $activeSlave.skill.oral >= 100>>
+		<<if $activeSlave.height < 160>>
+			<<if $activeSlave.butt > 3>>
+				<<if random(1,100) > 60>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.35)/500))>>'' from a prominent citizen who likes to provide his favored, well-endowed slaves with subordinate, orally skilled dickgirls with nice butts.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.35)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "D oral servants">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.dick > 0>>
+	<<if $activeSlave.devotion > 20>>
+		<<if $activeSlave.fetish == "buttslut">>
+			<<if $activeSlave.visualAge < 25>>
+				<<if $activeSlave.boobs < 400>>
+					<<if $activeSlave.weight <= 10>>
+						<<if random(1,100) > 60>>
+							<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.35)/500))>>'' from a prominent citizen who prefers slaves that look like demure <<= $girl>>s with their clothes on, and are willing to take cock up their pretty asspussies.
+							<<link "Accept bid" "Slave Sold">>
+								<<set _Price = 500*Math.trunc((_slaveCost*1.35)/500)>>
+								<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+								<<set $buyer = "D trap lover">>
+							<</link>>
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.height > 185>>
+	<<if $activeSlave.butt > 8>>
+		<<if $activeSlave.buttImplant < 2>>
+			<<if $activeSlave.weight > 10>>
+				<<if random(1,100) > 60>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.35)/500))>>'' from an eccentric citizen notorious for keeping tall slaves with huge soft butts, just so he can bury himself between their cheeks when they're standing.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.35)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "D butt bury">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.dick > 1>>
+	<<if $activeSlave.balls == 1>>
+		<<if $activeSlave.vagina > -1>>
+			<<if canAchieveErection($activeSlave)>>
+				<<if $activeSlave.lactation > 0>>
+					<<if $activeSlave.face > 10>>
+						<<if $activeSlave.faceShape != "masculine">>
+							<<if random(1,100) > 60>>
+								<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.35)/500))>>'' from a prominent citizen with strong opinions on futas: he likes a feminine $girl with a nice cock, a lovely pussy, no visible balls and yet the ability to get hard, and plentifully milky nipples.
+								<<link "Accept bid" "Slave Sold">>
+									<<set _Price = 500*Math.trunc((_slaveCost*1.35)/500)>>
+									<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+									<<set $buyer = "D milky herm">>
+								<</link>>
+							<</if>>
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.dick == 0>>
+	<<if $activeSlave.muscles > 30>>
+		<<if $activeSlave.devotion > 20>>
+			<<if $activeSlave.height > 180>>
+				<<if random(1,100) > 60>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.35)/500))>>'' from a prominent citizen whose friends never let him hear the end of his incorrigibly romantic treatment of his apartment full of amazons.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.35)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "D amazon hunter">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $seePreg != 0>>
+	<<if $activeSlave.ovaries == 1>>
+		<<if $activeSlave.preg > -2>>
+			<<if $activeSlave.muscles > 30>>
+				<<if $activeSlave.weight <= 10>>
+					<<if $activeSlave.height < 165>>
+						<<if random(1,100) > 60>>
+							<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.35)/500))>>'' from a prominent citizen who keeps a large harem of lithe, muscular <<= $girl>>s to bear him children.
+							<<link "Accept bid" "Slave Sold">>
+								<<set _Price = 500*Math.trunc((_slaveCost*1.35)/500)>>
+								<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+								<<set $buyer = "D shorty breeder">>
+							<</link>>
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.devotion > 20>>
+	<<if $activeSlave.fetish == "cumslut">>
+		<<if $activeSlave.lips > 30>>
+			<<if hasAnyArms($activeSlave) && hasAnyLegs($activeSlave)>>
+				<<if $activeSlave.skill.oral > 50>>
+					<<if random(1,100) > 60>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.35)/500))>>'' from a prominent citizen who's looking for a fresh, skilled pair of lips eager to wrap around a thick cock.
+						<<link "Accept bid" "Slave Sold">>
+							<<set _Price = 500*Math.trunc((_slaveCost*1.35)/500)>>
+							<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+							<<set $buyer = "D oral servants">>
+						<</link>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.skill.vaginal <= 10>>
+	<<if $activeSlave.skill.anal <= 10>>
+		<<if $activeSlave.skill.oral <= 10>>
+			<<if $activeSlave.skill.whoring <= 10>>
+				<<if $activeSlave.skill.entertainment <= 10>>
+					<<if random(1,100) > 80>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.15)/500))>>'' from a prominent citizen who's a notoriously inexperienced lover; it's painfully obvious that he prefers inexperienced slaves as they make him feel less insecure.
+						<<link "Accept bid" "Slave Sold">>
+							<<set _Price = 500*Math.trunc((_slaveCost*1.15)/500)>>
+							<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+							<<set $buyer = "D r9k">>
+						<</link>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.weight > 10>>
+	<<if $activeSlave.muscles > 5>>
+		<<if $activeSlave.health.condition > 60>>
+			<<if _slaveCost < 10000>>
+				<<if random(1,100) > 60>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a prominent citizen who takes unusually close interest in $his health and muscle tone, and cannot quite hide his salivation as he does so.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "D cannibal">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.porn.prestige == 1>>
+	<<if random(1,100) == 69>>
+		<br>''<<print cashFormat(200*Math.trunc((_slaveCost*2)/200))>>'' from an obsessive fan who absolutely must have $him for himself.
+		<<link "Accept bid" "Slave Sold">>
+			<<set _Price = 200*Math.trunc((_slaveCost*2)/200)>>
+			<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+			<<set $buyer = "obsessed fan">>
+		<</link>>
+	<</if>>
+<<elseif $activeSlave.porn.prestige == 3>>
+	<<if random(1,100) > 90>>
+		<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.3)/500))>>'' from a studio interested in continued production of $his porn.
+		<<link "Accept bid" "Slave Sold">>
+			<<set _Price = 500*Math.trunc((_slaveCost*1.3)/500)>>
+			<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+			<<set $buyer = "porn studio">>
+		<</link>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSDegradationist == "unset">>
+	<<if $activeSlave.intelligenceImplant < 15>>
+		<<if random(1,100) > 60>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a slave trainer that specializes in educating slaves and reselling them at a profit.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "teaching trainer">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSBodyPurist == "unset">>
+	<<if $activeSlave.boobsImplant == 0>>
+		<<if random(1,100) > 60>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a slave trainer that specializes in filling slaves with implants before resale.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "implanting trainer">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSTransformationFetishist == "unset">>
+	<<if $activeSlave.boobsImplant > 0>>
+		<<if random(1,100) > 60>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a slave trainer that specializes in fixing slaves who have been surgically ruined with overimplantation.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "purifying trainer">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSAssetExpansionist == "unset">>
+	<<if $activeSlave.boobs > 600>>
+		<<if $activeSlave.butt > 3>>
+			<<if $activeSlave.weight > 10>>
+				<<if random(1,100) > 60>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a slave trainer that specializes in slimming down fat slaves to appeal to buyers who prefer slim <<= $girl>>s.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "slimming trainer">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSSlimnessEnthusiast == "unset">>
+	<<if $activeSlave.boobs < 600>>
+		<<if $activeSlave.butt < 3>>
+			<<if $activeSlave.weight < -10>>
+				<<if random(1,100) > 60>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a slave trainer that specializes in improving slaves with disappointing assets; they prefer pharmaceutical means but are not averse to surgical intervention if necessary.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "broadening trainer">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.boobs > 1000>>
+	<<if $activeSlave.boobsImplant == 0>>
+		<<if $activeSlave.lactation == 0>>
+			<<if random(1,100) > 60>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a slave trainer that specializes in getting $women ready to be dairy cows by using aggressive hormonal and pharmaceutical treatment to balloon their tits.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "cow trainer">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSGenderFundamentalist == "unset">>
+	<<if $activeSlave.balls > 0>>
+		<<if $activeSlave.boobs < 500>>
+			<<if random(1,100) > 60>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a slave trainer that specializes in feminizing imperfect shemales; an orchiectomy is invariably their first step.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "clipping trainer">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSGenderRadicalist == "unset">>
+	<<if $activeSlave.dick > 0>>
+		<<if _slaveCost > 10000>>
+			<<if random(1,100) > 60>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a slave trainer that specializes in creating proper slave women from raw material that falls short of that ideal but has potential anyway.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "reassignment trainer">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.boobs - $activeSlave.boobsImplant > 2000>>
+	<<if $activeSlave.lactation > 1>>
+		<<if random(1,100) > 70>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner working towards autarkic slave pastoralism. He's awed by $his milk productivity.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "pastoralist arcology">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.devotion > 50>>
+	<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant > 50>>
+		<<if $activeSlave.intelligenceImplant >= 30>>
+			<<if random(1,100) > 70>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner building a facsimile of ancient Egypt. He's in the market for wise and educated slaves willing to pass on their skills.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "egyptian revivalist arcology">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.skill.combat >= 1>>
+	<<if $activeSlave.health.condition > 40>>
+		<<if $activeSlave.muscles > 25>>
+			<<if random(1,100) > 70>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner building a recreation of the Great Aztec Empire. He's in the market for willing, strong and combat ready slaves, to bolster his empire
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "aztec revivalist arcology">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.skill.combat > 0>>
+	<<if $activeSlave.health.condition > 40>>
+		<<if $activeSlave.muscles > 5>>
+			<<if random(1,100) > 70>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner building a facsimile of classical Rome. He's in the market for slaves with basic combat skills to fight in modern gladiatorial combats.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "roman revivalist arcology">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.face > 10>>
+	<<if $activeSlave.counter.anal < 100>>
+		<<if random(1,100) > 70>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner with interesting religious beliefs, which require beautiful slaves to be available to the public. Since $activeSlave.slaveName is pretty and not heavily used, he considers it a duty to buy $him and make $him a holy prostitute.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "chattel religionist arcology">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.muscles > 5>>
+	<<if $activeSlave.muscles <= 95>>
+		<<if $activeSlave.health.condition > 60>>
+			<<if random(1,100) > 70>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner devoted to muscular ladies. He seems to feel that $activeSlave.slaveName is not at $his true potential, and wants a try at improving $his physique himself.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "physical idealist arcology">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.weight > 30>>
+	<<if $activeSlave.weight <= 95>>
+		<<if $activeSlave.health.condition > 60>>
+			<<if random(1,100) > 70>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner devoted to chubby ladies. He seems to feel that $activeSlave.slaveName can handle a fair bit more weight, and wants a try at fattening $him up himself.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "hedonistic decadence arcology">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSSlimnessEnthusiast != "unset">>
+	<<if $activeSlave.weight < 10>>
+		<<if $activeSlave.muscles < 10>>
+			<<if $activeSlave.belly == 0 && $activeSlave.preg < 1>>
+				<<if random(1,100) > 80>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/400))>>'' from a chef that likes stuffing more than just turkeys.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.1)/400)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "stuffer chef">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.boobs > 1000>>
+	<<if $activeSlave.boobsImplant == 0>>
+		<<if random(1,100) > 70>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner who loves breast implants. Since large natural breasts can support larger implants, he seems to feel $activeSlave.slaveName has good potential to be implanted up to a truly gigantic size without too much stretching.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "transformation fetishist arcology">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.boobs > 800>>
+	<<if $activeSlave.boobsImplant == 0>>
+		<<if $activeSlave.physicalAge < 25>>
+			<<if random(1,100) > 70>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner who never fails to dream big. He's interested in $him mostly for growth potential, since $his assets have grown so big, so young.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "asset expansionist arcology">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.boobs < 500>>
+	<<if $activeSlave.butt < 3>>
+		<<if $activeSlave.physicalAge < 25>>
+			<<if $activeSlave.anus < 2>>
+				<<if random(1,100) > 70>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner with simple tastes. He likes his slaves young, slim, and reasonably innocent.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "slimness enthusiast arcology">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.boobsImplant > 0>>
+	<<if $activeSlave.buttImplant > 0>>
+		<<if $activeSlave.lipsImplant > 0>>
+			<<if random(1,100) > 70>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner with a hatred of implants that reaches missionary zeal. He buys slaves full of silicone, removes their implants, reconditions them, and resells them whenever his finances will permit.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "body purist arcology">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.trust > 20>>
+	<<if random(1,100) > 70>>
+		<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner who runs a terrifyingly degrading society. He prefers slaves who have been well-treated previously; it lends their screams a certain special authenticity.
+		<<link "Accept bid" "Slave Sold">>
+			<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+			<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+			<<set $buyer = "degradationist arcology">>
+		<</link>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.intelligenceImplant < 5>>
+	<<if $activeSlave.devotion > 20>>
+		<<if $activeSlave.fetish != "mindbroken">>
+			<<if random(1,100) > 70>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner with an almost messianic calling to educate and improve slaves, though somewhat hypocritically, he prefers to start with reasonably obedient <<= $girl>>s, which usually means slaves broken by someone else.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "paternalist arcology">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.dick == 0>>
+	<<if $activeSlave.boobs > 800>>
+		<<if $activeSlave.butt > 3>>
+			<<if $activeSlave.devotion > 20>>
+				<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant < -15>>
+					<<if random(1,100) > 70>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner who likes willing, uncomplicated young ladies with bouncing boobs and big butts. He's an uncomplicated sort.
+						<<link "Accept bid" "Slave Sold">>
+							<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+							<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+							<<set $buyer = "gender fundamentalist arcology">>
+						<</link>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.dick > 0>>
+	<<if $activeSlave.face < -10>>
+		<<if $activeSlave.boobs < 400>>
+			<<if random(1,100) > 70>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner with a notorious fetish for the process of feminization. He prefers diamonds in the rough, because the process of polishing is so much fun.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "gender radicalist arcology">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.race != "mixed race">>
+	<<if $activeSlave.devotion <= 20>>
+		<<if $activeSlave.trust < 20>>
+			<<if random(1,100) > 70>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner with a strongly held belief that $activeSlave.race people should not be slaves. He devotes as much of his resources as he can to manumission of such <<= $girl>>s, concentrating on the downtrodden.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "supremacist arcology">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $seePreg != 0>>
+	<<if $activeSlave.race != "mixed race">>
+		<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant < -50>>
+			<<if $activeSlave.ovaries == 1>>
+				<<if random(1,100) > 70>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.25)/500))>>'' from a fellow arcology owner working on a project to breed a race of $activeSlave.race people with natural, unquestioning obedience. He clearly considers $him good stock for the project.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*1.25)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "subjugationist arcology">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSPaternalist == "unset">>
+	<<if _slaveCost < 10000>>
+		<<if random(1,100) > 50>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a cheap brothel chain that operates a franchise on a lower level of the arcology.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "cheap brothel">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSPaternalist == "unset">>
+	<<if _slaveCost < 20000>>
+		<<if $activeSlave.boobsImplant == 0>>
+			<<if random(1,100) > 50>>
+				<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a factory farm notorious for extracting every drop of value from its slaves' bodies.
+				<<link "Accept bid" "Slave Sold">>
+					<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+					<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<<set $buyer = "factory farm">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSPaternalist == "unset">>
+	<<if _slaveCost < 5000>>
+		<<if random(1,100) > 50>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a sex arcade that maintains good service quality by rapidly cycling new slaves through their facilities.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "arcade">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $seePreg != 0>>
+	<<if $arcologies[0].FSPaternalist == "unset">>
+		<<if _slaveCost < 10000>>
+			<<if $activeSlave.health.condition > 40>>
+				<<if $activeSlave.ovaries == 1>>
+					<<if random(1,100) > 50>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a high-volume breeding operation interested in $him mostly for $his healthy, functional womb.
+						<<link "Accept bid" "Slave Sold">>
+							<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+							<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+							<<set $buyer = "volume breeder">>
+						<</link>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSDegradationist == "unset">>
+	<<if _slaveCost > 20000>>
+		<<if random(1,100) > 50>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.1)/500))>>'' from a group of partners that run a handsome brothel off the promenade.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.1)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "nice brothel">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSDegradationist == "unset">>
+	<<if _slaveCost < 50000>>
+		<<if $activeSlave.boobsImplant == 0>>
+			<<if $activeSlave.health.condition > 40>>
+				<<if random(1,100) > 50>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*0.8)/500))>>'' from a free-range farm that pays for the high costs of high quality livestock care by aggressively marketing its cruelty-free products.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*0.8)/500)>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "free range">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.health.condition > 40>>
+	<<if _slaveCost < 5000>>
+		<<if random(1,100) > 10>>
+			<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.2)/500))>>'' from an organ harvesting firm that acquires healthy raw materials cheaply.
+			<<link "Accept bid" "Slave Sold">>
+				<<set _Price = 500*Math.trunc((_slaveCost*1.2)/500)>>
+				<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+				<<set $buyer = "harvester">>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if _slaveCost < 5000>>
+	<<if random(1,100) > 10>>
+		<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1)/500))>>'' from a manufacturer of large sexual appliances that include a living inmate, drugged into helplessness.
+		<<link "Accept bid" "Slave Sold">>
+			<<set _Price = 500*Math.trunc((_slaveCost*1)/500)>>
+			<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+			<<set $buyer = "fuckdoll">>
+		<</link>>
+	<</if>>
+<</if>>
+
+<<if $seeExtreme == 1>>
+	<<if _slaveCost < 5000>>
+		<<if $activeSlave.vagina > -1>>
+			<<if $activeSlave.bellyImplant > -1>>
+				<<if random(1,100) > 90>>
+					<br>''<<print cashFormat(7000)>>'' from a porn director interested in a cheap slave with a belly implant for use in a snuff film.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 7000>>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+						<<set $buyer = "tentacle bred">>
+					<</link>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if random(1,100) > 30>>
+	<br>''<<print cashFormat(500*Math.trunc((_slaveCost*0.9)/500))>>'' from a reputable slave trader who will likely ship $him out of the arcology.
+	<<link "Accept bid" "Slave Sold">>
+		<<set _Price = 500*Math.trunc((_slaveCost*0.9)/500)>>
+		<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+	<</link>>
+<</if>>
+
+<<if $activeSlave.fetish == "mindbroken">>
+	<<if random(1,100) > 20>>
+		<br>''<<print cashFormat(500*Math.trunc((_slaveCost*0.9)/500))>>'' from a slave trader who buys vast numbers of mindbroken <<= $girl>>s. His purpose is unknown, and none of them are ever seen again.
+		<<link "Accept bid" "Slave Sold">>
+			<<set _Price = 500*Math.trunc((_slaveCost*0.9)/500)>>
+			<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+		<</link>>
+	<</if>>
+<</if>>
+
+<<if ($activeSlave.hears == -2)>>
+	<<if random(1,100) > 60>>
+		<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.3)/500))>>'' from a concert venue that wants a sex slave to keep the stage crew satisfied, but doesn't want to worry about any possible hearing loss.
+		<<link "Accept bid" "Slave Sold">>
+			<<set _Price = 500*Math.trunc((_slaveCost*1.3)/500)>>
+			<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+			<<set $buyer = "concert hall">>
+		<</link>>
+	<</if>>
+<</if>>
+
+<<if ($activeSlave.sexualFlaw == "crude")>>
+	<<if random(1,100) > 60>>
+		<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.4)/500))>>'' from a slave trainer that specializes in teaching proper manners and etiquette to low-class slaves.
+		<<link "Accept bid" "Slave Sold">>
+			<<set _Price = 500*Math.trunc((_slaveCost*1.4)/500)>>
+			<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+			<<set $buyer = "etiquette coach">>
+		<</link>>
+	<</if>>
+<</if>>
+
+<<if $plot>>
+	<<if $peacekeepers>>
+		<<if $peacekeepers.strength >= 50>>
+			<<if $peacekeepers.attitude < 100>>
+				<<if $activeSlave.skill.oral + $activeSlave.skill.anal + $activeSlave.skill.vaginal > 100>>
+					<br>''<<print cashFormat(500*Math.trunc((_slaveCost*0.5)/500))>>'' from the officer in charge of 'recreational activities' for General $peacekeepers.generalName's forces. This is far less than the slave is worth, but the bid comes with the implicit offer of more influence over the peacekeepers.
+					<<link "Accept bid" "Slave Sold">>
+						<<set _Price = 500*Math.trunc((_slaveCost*0.5)/500), $buyer = "peacekeepers">>
+						<<run cashX(_Price, "slaveTransfer", $activeSlave)>>
+					<</link>>
+				<</if>>
+			<<else>>
+				<<switch $peacekeepers.tastes>>
+				<<case "lusty futanari">>
+					<<if $activeSlave.balls > 0 && $activeSlave.ballType != "sterile" && $activeSlave.scrotum > 0 && $activeSlave.dick > 0 && $activeSlave.vagina > -1 && $activeSlave.energy > 50>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.2)/500))>>'' from the sex slave buyer for General $peacekeepers.generalName's client state, which prefers $peacekeepers.tastes.
+						<<link "Accept bid" "Slave Sold">><<set _Price = 500*Math.trunc((_slaveCost*1.2)/500), $buyer = "peacekeepers">><<run cashX(_Price, "slaveTransfer", $activeSlave)>><</link>>
+					<</if>>
+				<<case "cum addicts">>
+					<<if $activeSlave.fetish == "cumslut" && $activeSlave.fetishStrength > 95 && $activeSlave.sexualFlaw == "cum addict">>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.2)/500))>>'' from the sex slave buyer for General $peacekeepers.generalName's client state, which prefers $peacekeepers.tastes.
+						<<link "Accept bid" "Slave Sold">><<set _Price = 500*Math.trunc((_slaveCost*1.2)/500), $buyer = "peacekeepers">><<run cashX(_Price, "slaveTransfer", $activeSlave)>><</link>>
+					<</if>>
+				<<case "horny MILFs">>
+					<<if $activeSlave.physicalAge > 34 && $activeSlave.visualAge > 34 && $activeSlave.energy > 80>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.2)/500))>>'' from the sex slave buyer for General $peacekeepers.generalName's client state, which prefers $peacekeepers.tastes.
+						<<link "Accept bid" "Slave Sold">><<set _Price = 500*Math.trunc((_slaveCost*1.2)/500), $buyer = "peacekeepers">><<run cashX(_Price, "slaveTransfer", $activeSlave)>><</link>>
+					<</if>>
+				<<case "big-breasted cows">>
+					<<if $activeSlave.boobs > 2000 && $activeSlave.lactation > 1>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.2)/500))>>'' from the sex slave buyer for General $peacekeepers.generalName's client state, which prefers $peacekeepers.tastes.
+						<<link "Accept bid" "Slave Sold">><<set _Price = 500*Math.trunc((_slaveCost*1.2)/500), $buyer = "peacekeepers">><<run cashX(_Price, "slaveTransfer", $activeSlave)>><</link>>
+					<</if>>
+				<<case "beautiful young sex slaves">>
+					<<if $activeSlave.physicalAge < 25 && $activeSlave.visualAge < 25 && $activeSlave.face > 95>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.2)/500))>>'' from the sex slave buyer for General $peacekeepers.generalName's client state, which prefers $peacekeepers.tastes.
+						<<link "Accept bid" "Slave Sold">><<set _Price = 500*Math.trunc((_slaveCost*1.2)/500), $buyer = "peacekeepers">><<run cashX(_Price, "slaveTransfer", $activeSlave)>><</link>>
+					<</if>>
+				<<case "fertile virgins">>
+					<<if $activeSlave.vagina == 0 && isFertile($activeSlave)>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.2)/500))>>'' from the sex slave buyer for General $peacekeepers.generalName's client state, which prefers $peacekeepers.tastes.
+						<<link "Accept bid" "Slave Sold">><<set _Price = 500*Math.trunc((_slaveCost*1.2)/500), $buyer = "peacekeepers">><<run cashX(_Price, "slaveTransfer", $activeSlave)>><</link>>
+					<</if>>
+				<<case "lusty preggos">>
+					<<if $activeSlave.preg > $activeSlave.pregData.normalBirth/4 && $activeSlave.energy > 50>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.2)/500))>>'' from the sex slave buyer for General $peacekeepers.generalName's client state, which prefers $peacekeepers.tastes.
+						<<link "Accept bid" "Slave Sold">><<set _Price = 500*Math.trunc((_slaveCost*1.2)/500), $buyer = "peacekeepers">><<run cashX(_Price, "slaveTransfer", $activeSlave)>><</link>>
+					<</if>>
+				<<case "baby obsessed breeders">>
+					<<if $activeSlave.preg > $activeSlave.pregData.normalBirth/4 && $activeSlave.fetish == "pregnancy" && $activeSlave.sexualFlaw == "breeder">>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.2)/500))>>'' from the sex slave buyer for General $peacekeepers.generalName's client state, which prefers $peacekeepers.tastes.
+						<<link "Accept bid" "Slave Sold">><<set _Price = 500*Math.trunc((_slaveCost*1.2)/500), $buyer = "peacekeepers">><<run cashX(_Price, "slaveTransfer", $activeSlave)>><</link>>
+					<</if>>
+				<<case "bellies with girls attached">>
+					<<if $activeSlave.belly >= 300000>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.2)/500))>>'' from the sex slave buyer for General $peacekeepers.generalName's client state, which prefers $peacekeepers.tastes.
+						<<link "Accept bid" "Slave Sold">><<set _Price = 500*Math.trunc((_slaveCost*1.2)/500), $buyer = "peacekeepers">><<run cashX(_Price, "slaveTransfer", $activeSlave)>><</link>>
+					<</if>>
+				<<case "flesh balloons">>
+					<<if $activeSlave.boobs > 20000 && $activeSlave.butt > 10>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.2)/500))>>'' from the sex slave buyer for General $peacekeepers.generalName's client state, which prefers $peacekeepers.tastes.
+						<<link "Accept bid" "Slave Sold">><<set _Price = 500*Math.trunc((_slaveCost*1.2)/500), $buyer = "peacekeepers">><<run cashX(_Price, "slaveTransfer", $activeSlave)>><</link>>
+					<</if>>
+				<<case "oppai loli">>
+					<<if $activeSlave.boobs > 2000 && $activeSlave.physicalAge < 13 && $activeSlave.visualAge < 13>>
+						<br>''<<print cashFormat(500*Math.trunc((_slaveCost*1.2)/500))>>'' from the sex slave buyer for General $peacekeepers.generalName's client state, which prefers $peacekeepers.tastes.
+						<<link "Accept bid" "Slave Sold">><<set _Price = 500*Math.trunc((_slaveCost*1.2)/500), $buyer = "peacekeepers">><<run cashX(_Price, "slaveTransfer", $activeSlave)>><</link>>
+					<</if>>
+				<</switch>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<br><br>
+<<link "Re-list $him" "Sell Slave">><<run cashX(-500, "personalBusiness")>><</link>>
+//This will cost <<print cashFormat(500)>>//
+
+<</if>>

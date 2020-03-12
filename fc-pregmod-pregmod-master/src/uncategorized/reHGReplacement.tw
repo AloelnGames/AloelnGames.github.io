@@ -1,0 +1,71 @@
+:: RE HG replacement [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "Next Week", $activeSlave = $eventSlave>>
+<<run Enunciate($activeSlave)>>
+<<setLocalPronouns $activeSlave>>
+<<setLocalPronouns $HeadGirl 2>>
+<<setSpokenLocalPronouns $activeSlave $HeadGirl>>
+
+<<set _clothesTemp = $activeSlave.clothes, $activeSlave.clothes = "no clothing">>
+<<set _clothesTemp2 = $HeadGirl.clothes>>
+<span id="artFrame">
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<div class="imageColumn">
+		<div class="imageRef medImg">
+			<<= SlaveArt($activeSlave, 2, 0)>>
+		</div>
+		<div class="imageRef medImg">
+			<<= SlaveArt($HeadGirl, 2, 0)>>
+		</div>
+	</div>
+<</if>>
+/* 000-250-006 */
+</span>
+<<set $activeSlave.clothes = _clothesTemp>>
+<<set $HeadGirl.clothes = _clothesTemp2>>
+
+There's a constant traffic of slaves in and out of your office as your chattel comes in and out for instructions, inspections, and sex. Your Head Girl $HeadGirl.slaveName is one of the most frequent visitors, since although you trust _him2, _he2's still a slave and has to check with you before acting on some matters.<<if $HeadGirl.relationship == -3>> (_He2's also your _wife2, making _his2 visits a pleasant diversion.)<<elseif $arcologies[0].FSEgyptianRevivalistLaw == 1>> (_He2's also your Consort, making _his2 visits a pleasant diversion.)<</if>> During one of _his2 visits, <<= App.UI.slaveDescriptionDialog($activeSlave)>> happens to come in for $his scheduled inspection. $He perches politely on the couch, waiting $his turn like a good $girl. $His <<= App.Desc.eyesColor($activeSlave)>> are watchful, however, and $he seems to be paying very close attention to your conversation with your Head Girl.
+
+When $HeadGirl.slaveName leaves, $he clears $his throat nervously. $He gathers $his courage, and <<say>>s, "<<Master>>, I think I would make a better Head Girl than $him." $He takes a deep breath and plunges on. "I'm ju<<s>>t a<<s>> <<s>>mart a<<s>> <<he 2>> i<<s>>. And, <<Master>>, I'm <<s>>ure you've noti<<c>>ed <<he 2>> i<<s>>n't very good at teaching other girl<<s>> vaginal <<s>>kill<<s>>.
+<<if $HeadGirl.vagina > 0>>
+	I could do it much better than <<he 2>> doe<<s>>,
+<<elseif $HeadGirl.vagina == 0>>
+	How could <<he 2>> be? <<He 2>>'<<s>> a virgin! I can manage it,
+<<else>>
+	How could <<he 2>> be? <<He 2>> doe<<s>>n't have a pu<<ss>>y! I can manage it,
+<</if>>
+<<Master>>. Plea<<s>>e, give me a try." $He goes on like this for a while, slowly degenerating into repetition of $his points as your failure to give $him an immediate positive or negative response starts to worry $him.
+
+<br><br>
+
+<span id="result">
+	<<link "$He's right">>
+		<<replace "#result">>
+			After giving the matter some consideration, you agree, instructing $assistant.name that $activeSlave.slaveName is now the Head Girl. $activeSlave.slaveName is @@.hotpink;overjoyed,@@ and bounces to $his feet, clearly very eager to begin. You caution $him that $he is not to undermine $HeadGirl.slaveName by letting anyone know why you decided to change Head Girls. $He nods obediently. As far as $HeadGirl.slaveName knows, it's just a standard change of Head Girls, and _he2's too good a slave to let it affect _him2 seriously.
+			<<set $activeSlave.devotion += 5>>
+			<<= assignJob($activeSlave, "be your Head Girl")>>
+		<</replace>>
+	<</link>>
+	<br><<link "Pretend you didn't hear $him">>
+		<<replace "#result">>
+			You pretend you didn't hear $him, and go about your business. $He quickly catches on, and shuts $his mouth, sitting stiffly on the couch and waiting for you to say something. After letting $him wait for a good long while, you steeple your fingers and look over them at $him. $He quails at your gaze, but does not look away from you. You tell $him that, for $his general information, you prefer to make decisions about what slaves do which job yourself, and are not interested in input from the slaves themselves on the matter. You continue to observe that if any slave were to offer input, $he might suggest to you that $he thought $his own judgment superior to yours. Then, you dismiss $him. "Ye<<s>> <<Master>>, thank you, <<Master>>," $he <<say>>s, and flees.
+			<<set $activeSlave.trust += 4>>
+		<</replace>>
+	<</link>>
+	<br><<link "Let your Head Girl sort this out however _he2 sees fit">>
+		<<replace "#result">>
+			<<run Enunciate($HeadGirl)>>
+			You page $HeadGirl.slaveName, telling _him2 to get back up to your office. $activeSlave.slaveName hears you, of course, and stiffens with fear. $He knows $he's in trouble, but $he doesn't yet know how much. You tell $HeadGirl.slaveName to have a seat next to $activeSlave.slaveName on the couch, and instruct $assistant.name to replay the last five minutes of the feeds from your office on a wallscreen. $activeSlave.slaveName's<<if $activeSlave.lips > 40>> pillowlike<</if>> lower lip begins to tremble at this, and $he can barely manage to keep $his gaze on the fatal replay of $his attempt to convince you to replace $HeadGirl.slaveName with $him. $HeadGirl.slaveName, who is no fool, is not surprised by this, but the replay still angers _him2. As it rolls on, _his2 hands begin to roam across $activeSlave.slaveName, who winces at _his2 touch. About halfway through, $HeadGirl.slaveName looks straight at you and cruelly pinches one of $activeSlave.slaveName's nipples. You respond to the nonverbal question with a silent nod, and $HeadGirl.slaveName smiles briefly at you. Then, _he2 sticks _his2 tongue in $activeSlave.slaveName's ear. The poor slave starts at the warm, wet intrusion, but knows better than to try to resist. $He closes $his eyes tight.
+			<br><br>
+			$HeadGirl.slaveName hops off the couch, gets down in front of _his2 victim, and shoves $his legs apart. $activeSlave.slaveName scrunches up $his face, expecting something agonizing to happen to $his <<if $activeSlave.dick == 0>>pussy, but $HeadGirl.slaveName shocks $him by starting to hungrily eat $him out.<<else>>cock, but $HeadGirl.slaveName shocks $him by giving $him a lush blowjob.<</if>> $activeSlave.slaveName clearly expects a trap, but $HeadGirl.slaveName's attentions slowly distract $him. When $he's on the very verge of orgasm, your Head Girl suddenly stops and <<if $activeSlave.dick == 0>>pinches the $girl's pussylips,<<else>>tugs the $girl's cock downward by its head,<</if>> not painfully, but hard enough to communicate threat. $activeSlave.slaveName, shocked out of $his pleasure, looks down at _him2. $HeadGirl.slaveName <<say>>s menacingly, "Bitch, if you orga<<s>>m, I'm going to fucking de<<s>>troy you." Then _he2 goes back to giving $activeSlave.slaveName oral. $activeSlave.slaveName begins to cry, realizing how comprehensively fucked $he is.
+			<br><br>
+			Eventually, $he climaxes. $HeadGirl.slaveName has a talented tongue. $HeadGirl.slaveName does not begrudge the slave $his pleasure, <<if $activeSlave.dick == 0>>tonguing $his clit all the way through $his orgasm.<<else>>industriously sucking $his cock until _he2's swallowed every last drop of cum.<</if>> _He2 stands up and seizes $activeSlave.slaveName by the ear, <<say>>ing, "And now, <<s>>lut, you are fucked." $activeSlave.slaveName's weeping stopped during $his climax, but now $he starts to @@.gold;sob with terror,@@ and $he cries harder as your Head Girl hauls $him out of your office by $his ear. $HeadGirl.slaveName @@.mediumaquamarine;waves cheerfully@@ to you as _he2 leaves with _his2 victim.
+			<<set $i = $slaveIndices[$HeadGirl.ID]>>
+			<<set $slaves[$i].trust += 4, $slaves[$i].counter.oral += 1>>
+			<<set $oralTotal += 1>>
+			<<set $activeSlave.trust -= 4, $activeSlave.counter.oral += 1>>
+			<<set $oralTotal += 1>>
+		<</replace>>
+	<</link>>
+</span>

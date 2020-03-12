@@ -1,0 +1,68 @@
+:: RE devoted mother daughter [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "RIE Eligibility Check">>
+
+<<set $i = $slaveIndices[$devMother]>>
+<<set $j = $slaveIndices[$devDaughter]>>
+<<setLocalPronouns $slaves[$i]>>
+<<setLocalPronouns $slaves[$j] 2>>
+
+<<set _clothesTemp = $slaves[$i].clothes, $slaves[$i].clothes = "no clothing">>
+<<set _clothesTemp2 = $slaves[$j].clothes, $slaves[$j].clothes = "no clothing">>
+<span id="artFrame">
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<div class="imageColumn">
+			<div class="imageRef medImg">
+				<<= SlaveArt($slaves[$i], 2, 0)>>
+			</div>
+			<div class="imageRef medImg">
+				<<= SlaveArt($slaves[$j], 2, 0)>>
+			</div>
+		</div>
+	<</if>>
+	/* 000-250-006 */
+</span>
+<<set $slaves[$i].clothes = _clothesTemp>>
+<<set $slaves[$j].clothes = _clothesTemp2>>
+
+$slaves[$i].slaveName and $his _daughter2 $slaves[$j].slaveName are both good slaves, devoted and obedient. They'd probably do anything you order them to do. By happenstance they come before you for inspection one after the other. They certainly see each other stark naked frequently enough. As you finish $slaves[$i].slaveName's inspection, $his _daughter2 waits patiently for _his2 turn. It occurs to you that they probably would do //anything// you order them to do, and that they're so acclimated to sexual slavery that they might well enjoy it.
+
+<br><br>
+
+<span id="result">
+<br><<link "Spend the night sharing your bed with them, and each of them with the other">>
+	<<replace "#result">>
+	Neither of them bat an eye when you announce you're turning in early and that they'll be joining you. Since they're already naked, they get into your big soft bed before you and lie facing each other, with enough room in between them for you to take a central position. They clearly assume you'll start with one of them on each side of you, so they're quite surprised when you slide in behind $slaves[$i].slaveName instead. $slaves[$j].slaveName snuggles up to _his2 $mother happily enough, however. You extend the foreplay for hours, eventually bringing both of them to such a state of naked arousal that they begin grinding against each other as much as they do you. They get the idea, and things turn into a sort of unspoken mutual one-upmanship between them. What starts with $slaves[$j].slaveName clearly feeling very daring as _he2 sucks _his2 $mother's nipple ends with $slaves[$i].slaveName lying on $his back getting fucked by you while $he orally pleasures $slaves[$j].slaveName. You're face to face with $slaves[$j].slaveName and _he2 groans happily into your mouth as $slaves[$i].slaveName moans into _his2 fuckhole.
+	@@.mediumaquamarine;They have both become more trusting of you.@@
+
+	<<set $slaves[$i].trust += 4, $slaves[$j].trust += 4, $slaves[$i].counter.oral += 1, $slaves[$j].counter.oral += 1, $oralTotal += 2>>
+
+	<<if canDoAnal($slaves[$i])>>
+		<<set $slaves[$i].counter.anal += 1>>
+		<<set $analTotal += 1>>
+	<<elseif canDoVaginal($slaves[$i])>>
+		<<set $slaves[$i].counter.vaginal += 1>>
+		<<set $vaginalTotal += 1>>
+	<</if>>
+
+	<<if canDoAnal($slaves[$j])>>
+		<<set $slaves[$j].counter.anal += 1>>
+		<<set $analTotal += 1>>
+	<<elseif canDoVaginal($slaves[$j])>>
+		<<set $slaves[$j].counter.vaginal += 1>>
+		<<set $vaginalTotal += 1>>
+	<</if>>
+
+	<</replace>>
+<</link>>
+<br><<link "Get them started and then keep them at it in your office">>
+	<<replace "#result">>
+	You give them orders of devastating simplicity: they are to repair to the couch in your office and are to take turns getting each other off until such time as you tell them otherwise. They're momentarily stunned, but $slaves[$i].slaveName takes the lead and draws $his _daughter2 over to the couch<<if hasAnyArms($slaves[$i]) && hasAnyArms($slaves[$j])>> by the hand<</if>>. They're both accomplished sex slaves and obey orders well, so they are quite successful in the little game, if a bit mechanical. For the rest of the day, interviewees come and go and are treated to the sight of the two of them having subdued sex on the couch. Showing off one's slaves for business interlocutors is a common Free Cities practice, but more than one perceptive person figures out what the resemblance between the two slaves and the age gap between them really means. Of course, all those who figure it out are impressed by your sheer decadence.
+	@@.green;Your reputation has increased considerably.@@
+	<<run repX(2500, "event", $slaves[$i])>>
+	<<run repX(2500, "event", $slaves[$j])>>
+	<<set $slaves[$i].counter.oral += 5, $slaves[$j].counter.oral += 5, $oralTotal += 10>>
+	<</replace>>
+<</link>>
+</span>

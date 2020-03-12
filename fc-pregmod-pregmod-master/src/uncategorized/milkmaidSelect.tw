@@ -1,0 +1,15 @@
+:: Milkmaid Select [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Dairy", $showEncyclopedia = 1, $encyclopedia = "Milkmaid">>
+<<if ($Milkmaid != 0)>>
+	<<set $Milkmaid = getSlave($Milkmaid.ID)>>
+	<<setLocalPronouns $Milkmaid>>
+	<span class='slave-name'><<= SlaveFullName($Milkmaid)>></span> is serving as your Milkmaid.<br><br>$He will look after your livestock, helping them give milk<<if $seeDicks > 0>> and semen<</if>>.
+<<else>>
+	You have not selected a Milkmaid.
+<</if>>
+
+<br><br>''Appoint a Milkmaid from your obedient slaves:''
+<br><br>[[None|Dairy][removeJob($Milkmaid, "be the Milkmaid")]]
+<br><br>
+<<print App.UI.SlaveList.facilityManagerSelection(App.Entity.facilities.dairy, "Dairy")>>

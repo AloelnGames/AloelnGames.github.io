@@ -1,0 +1,998 @@
+:: pregmod widgets [nobr widget]
+
+<<widget "setLocalPronouns">>
+/*
+	"He has a camera. The camera belongs to him. It is his camera. The camera is his."
+	"She has a diamond ring. The diamond ring belongs to her. It is her diamond ring. The diamond ring is hers."
+
+	Pronouns are tricky to get right, and this widget should make it easier to use variables naturally in writing. There are two problems in English pronouns that matter here:
+
+	1. Her/her vs his/him. To solve this ambiguity, variables use male pronouns throughout, although players will of course see the contents of the variable. "$He glared" can be printed as "She glared."
+
+	2. Her/hers vs his/his. Here, the opposite problem. In this one case and this alone, where you would use "hers," (the possessive pronoun) the variable is female, since the distinction is only important there. I am very sorry for English.
+*/
+	<<run App.Utils.setLocalPronouns($args[0], $args[1])>>
+<</widget>>
+
+<<widget "setNonlocalPronouns">>
+	/* a fake slave object, we need the .pronoun attribute only */
+	<<set _fSlave = {pronoun: App.Data.Pronouns.Kind.female}>>
+	/* Used for generic slaves, citizens, security, etc. */
+	<<if $diversePronouns == 1>>
+		<<if $args[0] === 100>>
+			<<set _fSlave.pronoun = App.Data.Pronouns.Kind.male>>
+		<<elseif ($args[0] > 0) && (random(1,100) <= $args[0])>>
+			<<set _fSlave.pronoun = App.Data.Pronouns.Kind.male>>
+		<</if>>
+	<</if>>
+	<<run App.Utils.setLocalPronouns(_fSlave, 'U')>>
+<</widget>>
+
+<<widget "setPlayerPronouns">>
+	<<set _pl = ["he", "his", "hers", "him", "himself", "woman", "women", "loli", "girl", "daughter", "sister", "wife", "wives",
+		"He", "His", "Hers", "Him", "Himself", "Woman", "Women", "Loli", "Girl", "Daughter", "Sister", "Wife", "Wives"]>>
+	<<run App.Utils.setLocalPronouns($PC, 'P', _pl)>>
+	<<unset _pl>>
+<</widget>>
+
+<<widget "setAssistantPronouns">>
+	<<set _apl = ["he", "his", "hers", "him", "himself", "woman", "women", "loli", "girl", "daughter", "sister", "wife", "wives",
+		"He", "His", "Hers", "Him", "Himself", "Woman", "Women", "Loli", "Girl", "Daughter", "Sister", "Wife", "Wives"]>>
+
+	<<run App.Utils.setLocalPronouns(assistant.pronouns().main, 'A', _apl)>>
+	<<if $assistant.market>>
+		<<run App.Utils.setLocalPronouns(assistant.pronouns().market, 'M', _apl)>>
+	<</if>>
+	<<unset _apl>>
+<</widget>>
+
+/*
+	Should be called with two slave objects as arguments, the primary and secondary. E.g. <<setSpokenLocalPronouns $activeSlave $subSlave>>
+	_primarySlaveLisp and _secondarySlaveLisp only exist so that we don't have to rely on using the exact variables $activeSlave and $subSlave
+*/
+<<widget "setSpokenLocalPronouns">>
+	<<set _primarySlaveLisp = SlaveStatsChecker.checkForLisp($args[0])>>
+
+	<<set _heLisp = lispReplace($he)>>
+	<<set _hisLisp = lispReplace($his)>>
+	<<set _hersLisp = lispReplace($hers)>>
+	<<set _himselfLisp = lispReplace($himself)>>
+	<<set _daughterLisp = lispReplace($daughter)>>
+	<<set _sisterLisp = lispReplace($sister)>>
+	<<set _loliLisp = lispReplace($loli)>>
+	<<set _wifeLisp = lispReplace($wife)>>
+	<<set _wivesLisp = lispReplace($wives)>>
+
+	<<set _HeLisp = lispReplace($He)>>
+	<<set _HisLisp = lispReplace($His)>>
+	<<set _HersLisp = lispReplace($Hers)>>
+	<<set _HimselfLisp = lispReplace($Himself)>>
+	<<set _DaughterLisp = lispReplace($Daughter)>>
+	<<set _SisterLisp = lispReplace($Sister)>>
+	<<set _LoliLisp = lispReplace($Loli)>>
+	<<set _WifeLisp = lispReplace($Wife)>>
+	<<set _WivesLisp = lispReplace($Wives)>>
+
+	<<if def _he2>>
+		<<set _secondarySlaveLisp = SlaveStatsChecker.checkForLisp($args[1])>>
+
+		<<set _he2Lisp = lispReplace(_he2)>>
+		<<set _his2Lisp = lispReplace(_his2)>>
+		<<set _hers2Lisp = lispReplace(_hers2)>>
+		<<set _himself2Lisp = lispReplace(_himself2)>>
+		<<set _daughter2Lisp = lispReplace(_daughter2)>>
+		<<set _sister2Lisp = lispReplace(_sister2)>>
+		<<set _loli2Lisp = lispReplace(_loli2)>>
+		<<set _wife2Lisp = lispReplace(_wife2)>>
+		<<set _wives2Lisp = lispReplace(_wives2)>>
+
+		<<set _He2Lisp = lispReplace(_He2)>>
+		<<set _His2Lisp = lispReplace(_His2)>>
+		<<set _Hers2Lisp = lispReplace(_Hers2)>>
+		<<set _Himself2Lisp = lispReplace(_Himself2)>>
+		<<set _Daughter2Lisp = lispReplace(_Daughter2)>>
+		<<set _Sister2Lisp = lispReplace(_Sister2)>>
+		<<set _Loli2Lisp = lispReplace(_Loli2)>>
+		<<set _Wife2Lisp = lispReplace(_Wife2)>>
+		<<set _Wives2Lisp = lispReplace(_Wives2)>>
+	<</if>>
+<</widget>>
+
+<<widget "setSpokenPlayerPronouns">>
+	<<set _playerSlaveLisp = SlaveStatsChecker.checkForLisp($args[0])>>
+
+	<<set _hePLisp = lispReplace(_heP)>>
+	<<set _hisPLisp = lispReplace(_hisP)>>
+	<<set _hersPLisp = lispReplace(_hersP)>>
+	<<set _himselfPLisp = lispReplace(_himselfP)>>
+	<<set _daughterPLisp = lispReplace(_daughterP)>>
+	<<set _sisterPLisp = lispReplace(_sisterP)>>
+	<<set _loliPLisp = lispReplace(_loliP)>>
+	<<set _wifePLisp = lispReplace(_wifeP)>>
+	<<set _wivesPLisp = lispReplace(_wivesP)>>
+
+	<<set _HePLisp = lispReplace(_HeP)>>
+	<<set _HisPLisp = lispReplace(_HisP)>>
+	<<set _HersPLisp = lispReplace(_HersP)>>
+	<<set _HimselfPLisp = lispReplace(_HimselfP)>>
+	<<set _DaughterPLisp = lispReplace(_DaughterP)>>
+	<<set _SisterPLisp = lispReplace(_SisterP)>>
+	<<set _LoliPLisp = lispReplace(_LoliP)>>
+	<<set _WifePLisp = lispReplace(_WifeP)>>
+	<<set _WivesPLisp = lispReplace(_WivesP)>>
+<</widget>>
+
+<<widget "setSpokenAssistantPronouns">>
+	<<set _assistantSlaveLisp = SlaveStatsChecker.checkForLisp($args[0])>>
+
+	<<set _heALisp = lispReplace(_heA)>>
+	<<set _hisALisp = lispReplace(_hisA)>>
+	<<set _hersALisp = lispReplace(_hersA)>>
+	<<set _himselfALisp = lispReplace(_himselfA)>>
+	<<set _daughterALisp = lispReplace(_daughterA)>>
+	<<set _sisterALisp = lispReplace(_sisterA)>>
+	<<set _loliALisp = lispReplace(_loliA)>>
+	<<set _wifeALisp = lispReplace(_wifeA)>>
+	<<set _wivesALisp = lispReplace(_wivesA)>>
+
+	<<set _HeALisp = lispReplace(_HeA)>>
+	<<set _HisALisp = lispReplace(_HisA)>>
+	<<set _HersALisp = lispReplace(_HersA)>>
+	<<set _HimselfALisp = lispReplace(_HimselfA)>>
+	<<set _DaughterALisp = lispReplace(_DaughterA)>>
+	<<set _SisterALisp = lispReplace(_SisterA)>>
+	<<set _LoliALisp = lispReplace(_LoliA)>>
+	<<set _WifeALisp = lispReplace(_WifeA)>>
+	<<set _WivesALisp = lispReplace(_WivesA)>>
+<</widget>>
+
+<<widget "InitStandards">>
+
+<<set $activeStandard = {age: 24, weightMax: 0, weightMin: 0, musclesMin: 0, musclesMax: 0, raceSup: "white", raceSub: "white", boobs: 0, boobsImplant: 0, lactation: 0, hips: 0, hipsImplant: 0, butt: 0, buttImplant: 0, face: 0, faceImplant: 0, lips: 15, lipsImplant: 0, chem: 0, addict: 0, intelligence: 0, intelligenceImplant: 0, bellyImplant: -1, beauty: 0, dick: 0, balls: 0, health: 0, skill: 0, accent: 0, height: 150, energy: 100}>>
+
+<<UpdateStandards>>
+<<BreedingStandards>>
+<</widget>>
+
+<<widget "UpdateStandards">>
+<<if $failedElite > 100>>
+	<<set $activeStandard.intelligence = 95>>
+	<<set $activeStandard.beauty = 120>>
+	<<set $activeStandard.face = 95>>
+<<else>>
+	<<set $activeStandard.intelligence = 50>>
+	<<set $activeStandard.beauty = 100>>
+	<<set $activeStandard.face = 40>>
+<</if>>
+<<if $arcologies[0].FSIntellectualDependency > 20>>
+	<<set $activeSlave.energy = 100>>
+<<elseif $arcologies[0].FSSlaveProfessionalism > 20>>
+	<<if $failedElite > 100>>
+		<<set $activeStandard.skill = 500>>
+	<<else>>
+		<<set $activeStandard.skill = 400>>
+	<</if>>
+	<<set $activeStandard.accent = 1>>
+<</if>>
+<<if $arcologies[0].FSPetiteAdmiration > 20>>
+	<<set $activeStandard.height = 150>>
+<<elseif $arcologies[0].FSStatuesqueGlorification > 20>>
+	<<set $activeStandard.height = 185>>
+<</if>>
+<<set $activeStandard.chem = 20>>
+<<set $activeStandard.addict = 0>>
+<<if $arcologies[0].FSSupremacist > 20>>
+	<<set $activeStandard.raceSup = $arcologies[0].FSSupremacistRace>>
+<</if>>
+<<if $arcologies[0].FSSubjugationist > 20>>
+	<<set $activeStandard.raceSub = $arcologies[0].FSSubjugationistRace>>
+<</if>>
+<<if $arcologies[0].FSGenderRadicalist > 20>>
+	<<set $activeStandard.dick = 1>>
+	<<set $activeStandard.balls = 1>>
+<<elseif $arcologies[0].FSGenderFundamentalist > 20>>
+	<<set $activeStandard.dick = 0>>
+	<<set $activeStandard.balls = 0>>
+<</if>>
+<<if $arcologies[0].FSPaternalist > 20>>
+	<<set $activeStandard.intelligenceImplant = 15>>
+	<<set $activeStandard.health = 60>>
+<<elseif $arcologies[0].FSDegradationist > 20>>
+	<<set $activeStandard.intelligenceImplant = 15>>
+	<<set $activeStandard.health = 0>>
+<</if>>
+<<if $arcologies[0].FSSlaveProfessionalism > 20>>
+	<<set $activeStandard.intelligenceImplant = 30>>
+<</if>>
+<<if $arcologies[0].FSBodyPurist > 20>>
+	<<if $failedElite > 100>>
+		<<set $activeStandard.chem = 0>>
+	<<else>>
+		<<set $activeStandard.chem = 15>>
+	<</if>>
+	<<set $activeStandard.boobsImplant = 0>>
+	<<set $activeStandard.buttImplant = 0>>
+	<<set $activeStandard.lipsImplant = 0>>
+	<<set $activeStandard.hipsImplant = 0>>
+	<<set $activeStandard.shouldersImplant = 0>>
+	<<set $activeStandard.faceImplant = 5>>
+	<<set $activeStandard.bellyImplant = -1>>
+<<elseif $arcologies[0].FSTransformationFetishist > 20>>
+	<<set $activeStandard.chem = 20>>
+<</if>>
+<<if $arcologies[0].FSSlimnessEnthusiast > 20>>
+	<<if $arcologies[0].FSHedonisticDecadence > 20>>
+		<<set $activeStandard.weightMax = 30>>
+	<<else>>
+		<<set $activeStandard.weightMax = 0>>
+	<</if>>
+	<<set $activeStandard.butt = 2>>
+	<<set $activeStandard.boobs = 400>>
+<<elseif $arcologies[0].FSAssetExpansionist > 20>>
+	<<set $activeStandard.butt = 6>>
+	<<set $activeStandard.boobs = 1000>>
+<</if>>
+<<if $arcologies[0].FSPastoralist > 20>>
+	<<set $activeStandard.lactation = 1>>
+<</if>>
+<<if $arcologies[0].FSPhysicalIdealist > 20>>
+	<<if $arcologies[0].FSPhysicalIdealistLaw == 1>>
+		<<set $activeStandard.weightMax = 30>>
+		<<set $activeStandard.musclesMin = 20>>
+		<<set $activeStandard.musclesMax = 50>>
+	<<else>>
+		<<set $activeStandard.musclesMin = 95>>
+	<</if>>
+<<elseif $arcologies[0].FSHedonisticDecadence > 20>>
+	<<if $arcologies[0].FSSlimnessEnthusiast > 20>>
+		<<set $activeStandard.weightMin = 10>>
+	<<else>>
+		<<set $activeStandard.weightMin = 95>>
+	<</if>>
+<</if>>
+<</widget>>
+
+<<widget "BreedingStandards">>
+<br><br>
+In order to be eligible to be bred, the potential breeding bitch must first satisfy the following conditions:
+<<if $failedElite > 100>>
+	<br>She must be of finest intelligence.
+	<br>She must be unbelievably beautiful.
+	<br>Her face must be breathtaking.
+<<else>>
+	<br>She must be very smart.
+	<br>She must be beautiful.
+	<br>Her face must be gorgeous.
+<</if>>
+<br>Her health must not be overly impacted by drug use.
+<br>She must not be addicted to drugs.
+<<if $arcologies[0].FSPetiteAdmiration > 20>>
+	<br>She must be very short. (150cm)
+	<br>She must be very short for her age.
+	<br>She must not have had height altering surgery to reach it.
+<<elseif $arcologies[0].FSStatuesqueGlorification > 20>>
+	<br>She must be very tall. (186cm)
+	<br>She must not have had height altering surgery to reach it.
+<</if>>
+<<if $arcologies[0].FSSupremacist > 20>>
+	<br>She must be $arcologies[0].FSSupremacistRace.
+<</if>>
+<<if $arcologies[0].FSSubjugationist > 20>>
+	<br>She must not be $arcologies[0].FSSubjugationistRace.
+<</if>>
+<<if $arcologies[0].FSGenderRadicalist > 20>>
+	<br>She must have a functional penis.
+<<elseif $arcologies[0].FSGenderFundamentalist > 20>>
+	<br>She must be physically female.
+<</if>>
+<<if $arcologies[0].FSPaternalist > 20>>
+	<<if $arcologies[0].FSSlaveProfessionalism > 20>>
+		<br>She must be well educated.
+	<<else>>
+		<br>She must be educated.
+	<</if>>
+	<br>She must be in good health.
+<<elseif $arcologies[0].FSSlaveProfessionalism > 20>>
+	<br>She must be well educated.
+<</if>>
+<<if $arcologies[0].FSIntellectualDependency > 20>>
+	<br>She must be sexually receptive at all times.
+<<elseif $arcologies[0].FSSlaveProfessionalism > 20>>
+	<br>She must be capable of mastering her skills.
+	<br>She must be capable of eloquent and accurate speech.
+<</if>>
+<<if $arcologies[0].FSBodyPurist > 20>>
+	<br>She must have low carcinogen levels.
+	<br>She must be implant free.
+<</if>>
+<<if $arcologies[0].FSMaturityPreferentialist > 20>>
+	<br>She must be older than 24.
+<<elseif $arcologies[0].FSYouthPreferentialist > 20>>
+	<br>She must be younger than 24.
+<</if>>
+<<if $arcologies[0].FSSlimnessEnthusiast > 20>>
+	<<if $arcologies[0].FSHedonisticDecadence > 20>>
+		<br>She may be no larger than "plush".
+	<<else>>
+		<br>She must be thin.
+	<</if>>
+	<br>She must have a trim rear.
+	<br>She must have a sleek chest.
+<<elseif $arcologies[0].FSAssetExpansionist > 20>>
+	<br>She must have a naturally gigantic rear.
+	<br>She must be naturally busty.
+<</if>>
+<<if $arcologies[0].FSPastoralist > 20>>
+	<br>She must be lactating naturally.
+<</if>>
+<<if $arcologies[0].FSPhysicalIdealist > 20>>
+	<<if $arcologies[0].FSPhysicalIdealistLaw == 1>>
+		<br>She must not be overweight.
+		<br>She must be fit, but not too muscular.
+	<<else>>
+		<br>She must be extremely muscular.
+	<</if>>
+
+<<elseif $arcologies[0].FSHedonisticDecadence > 20>>
+	<<if $arcologies[0].FSSlimnessEnthusiast > 20>>
+		<br>She must be more than "trim".
+	<<else>>
+		<br>She must be big, soft and fat.
+	<</if>>
+<</if>>
+<br>For each slave examined, a fee of @@.yellowgreen;<<print cashFormat(5000)>>@@ will be deducted from your account.
+<br>Failures will be sterilized. Please make sure your slave fits the criteria before submitting them for testing. We shall not be held responsible for time wasted.
+<br>Updates will be posted periodically. It is your responsibility to keep up to date with current standards.
+<</widget>>
+
+<<widget "BreedingEligibility">>
+<<set _passing = 0>>
+<br><br>
+$activeSlave.slaveName is up for review:
+<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant >= $activeStandard.intelligence>>
+	<br>$He @@.lime;PASSED@@ the intelligence test.
+<<else>>
+	<br>$He @@.red;FAILED@@ the intelligence test.
+	<<set _passing-->>
+<</if>>
+<<if Beauty($activeSlave) >= $activeStandard.beauty>>
+	<br>$He @@.lime;PASSED@@ the beauty test.
+<<else>>
+	<br>$He @@.red;FAILED@@ the beauty test.
+	<<set _passing-->>
+<</if>>
+<<if $activeSlave.face >= $activeStandard.face>>
+	<br>$He @@.lime;PASSED@@ the facial attractiveness test.
+<<else>>
+	<br>$He @@.red;FAILED@@ the facial attractiveness test.
+	<<set _passing-->>
+<</if>>
+<<if $activeSlave.chem <= $activeStandard.chem>>
+	<br>$He @@.lime;PASSED@@ the carcinogen test.
+<<else>>
+	<br>$He @@.red;FAILED@@ the carcinogen test.
+	<<set _passing-->>
+<</if>>
+<<if $activeSlave.addict <= $activeStandard.addict>>
+	<br>$He @@.lime;PASSED@@ the drug test.
+<<else>>
+	<br>$He @@.red;FAILED@@ the drug test.
+	<<set _passing-->>
+<</if>>
+<<if $arcologies[0].FSSupremacist > 20>>
+	<<if $activeSlave.race == $activeStandard.raceSup>>
+		<br>$He @@.lime;PASSED@@ racial testing.
+	<<else>>
+		<br>$He @@.red;FAILED@@ racial testing.
+		<<set _passing-->>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSSubjugationist > 20>>
+	<<if $activeSlave.race != $activeStandard.raceSub>>
+		<br>$He @@.lime;PASSED@@ racial testing.
+	<<else>>
+		<br>$He @@.red;FAILED@@ racial testing.
+		<<set _passing-->>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSPetiteAdmiration > 20>>
+	<<if ($activeSlave.height-($activeSlave.heightImplant*10)) > $activeStandard.height>>
+		<<if $activeSlave.height-($activeSlave.heightImplant*10)) < Height.mean($activeSlave)-15>>
+			<br>$He @@.lime;MET@@ height requirements.
+		<<else>>
+			<br>$He @@.red;FAILED@@ to meet height requirements.
+		<</if>>
+	<<else>>
+		<br>$He @@.red;FAILED@@ to meet height requirements.
+		<<set _passing-->>
+	<</if>>
+<<elseif $arcologies[0].FSStatuesqueGlorification > 20>>
+	<<if ($activeSlave.height-($activeSlave.heightImplant*10)) > $activeStandard.height>>
+		<br>$He @@.lime;MET@@ height requirements.
+	<<else>>
+		<br>$He @@.red;FAILED@@ to meet height requirements.
+		<<set _passing-->>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSGenderRadicalist > 20>>
+	<<if $activeSlave.dick >= $activeStandard.dick && $activeSlave.balls >= $activeStandard.balls>>
+		<br>$He @@.lime;PASSED@@ penis inspection.
+	<<else>>
+		<br>$He @@.red;FAILED@@ penis inspection.
+		<<set _passing-->>
+	<</if>>
+<<elseif $arcologies[0].FSGenderFundamentalist > 20>>
+	<<if $activeSlave.dick == $activeStandard.dick && $activeSlave.balls == $activeStandard.balls>>
+		<br>$He @@.lime;PASSED@@ genital inspection.
+	<<else>>
+		<br>$He @@.red;FAILED@@ genital inspection.
+		<<set _passing-->>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSPaternalist > 20>>
+	<<if $activeSlave.intelligenceImplant >= $activeStandard.intelligenceImplant>>
+		<br>$He @@.lime;PASSED@@ educational trials.
+	<<else>>
+		<br>$He @@.red;FAILED@@ educational trials.
+		<<set _passing-->>
+	<</if>>
+	<<if $activeSlave.health.condition >= $activeStandard.health>>
+		<br>$He @@.lime;PASSED@@ health examinations.
+	<<else>>
+		<br>$He @@.red;FAILED@@ health examinations.
+		<<set _passing-->>
+	<</if>>
+<<elseif $arcologies[0].FSSlaveProfessionalism > 20>>
+	<<if $activeSlave.intelligenceImplant >= $activeStandard.intelligenceImplant>>
+		<br>$He @@.lime;PASSED@@ educational trials.
+	<<else>>
+		<br>$He @@.red;FAILED@@ educational trials.
+		<<set _passing-->>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSIntellectualDependency > 20>>
+	<<if $activeSlave.energy >= $activeStandard.energy>>
+		<br>$He @@.lime;PASSED@@ libido testing.
+	<<else>>
+		<br>$He @@.red;FAILED@@ libido testing.
+		<<set _passing-->>
+	<</if>>
+<<elseif $arcologies[0].FSSlaveProfessionalism > 20>>
+	<<if $activeSlave.skill.vaginal + $activeSlave.skill.anal + $activeSlave.skill.oral + $activeSlave.skill.entertainment + $activeSlave.skill.vaginal >= $activeStandard.skill>>
+		<br>$He @@.lime;PASSED@@ skill retention trails.
+	<<else>>
+		<br>$He @@.red;FAILED@@ skill retention trails.
+		<<set _passing-->>
+	<</if>>
+	<<if $activeSlave.accent <= $activeStandard.accent>>
+		<br>$He @@.lime;PASSED@@ $his speech test.
+	<<else>>
+		<br>$He @@.red;FAILED@@ $his speech test.
+		<<set _passing-->>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSBodyPurist > 20>>
+	<<if $activeSlave.chem <= $activeStandard.chem>>
+		<br>$He @@.lime;PASSED@@ health examinations.
+	<<else>>
+		<br>$He @@.red;FAILED@@ health examinations.
+		<<set _passing-->>
+	<</if>>
+	<<if $activeSlave.boobsImplant == 0 && $activeSlave.buttImplant == 0 && $activeSlave.lipsImplant == 0 && $activeSlave.hipsImplant == 0 && $activeSlave.shouldersImplant == 0 && $activeSlave.faceImplant <= 5 && $activeSlave.bellyImplant == -1>>
+		<br>$He @@.lime;PASSED@@ implant examinations.
+	<<else>>
+		<br>$He @@.red;FAILED@@ implant examinations.
+		<<set _passing-->>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSMaturityPreferentialist > 20>>
+	<<if $activeSlave.physicalAge > $activeStandard.age>>
+		<br>$He @@.lime;PASSED@@ age examinations.
+	<<else>>
+		<br>$He @@.red;FAILED@@ age examinations.
+		<<set _passing-->>
+	<</if>>
+<<elseif $arcologies[0].FSYouthPreferentialist > 20>>
+	<<if $activeSlave.physicalAge < $activeStandard.age>>
+		<br>$He @@.lime;PASSED@@ age examinations.
+	<<else>>
+		<br>$He @@.red;FAILED@@ age examinations.
+		<<set _passing-->>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSSlimnessEnthusiast > 20>>
+	<<if $activeSlave.weight <= $activeStandard.weightMax>>
+		<br>$He @@.lime;MET@@ weight limits.
+	<<else>>
+		<br>$He @@.red;EXCEEDED@@ weight limits.
+		<<set _passing-->>
+	<</if>>
+	<<if $activeSlave.butt <= $activeStandard.butt>>
+		<br>$He @@.lime;MET@@ ass measurements.
+	<<else>>
+		<br>$He @@.red;EXCEEDED@@ ass measurements.
+		<<set _passing-->>
+	<</if>>
+	<<if $activeSlave.boobs <= $activeStandard.boobs>>
+		<br>$He @@.lime;MET@@ chest measurements.
+	<<else>>
+		<br>$He @@.red;EXCEEDED@@ chest measurements.
+		<<set _passing-->>
+	<</if>>
+<<elseif $arcologies[0].FSAssetExpansionist > 20>>
+	<<if ($activeSlave.butt - $activeSlave.buttImplant) >= $activeStandard.butt>>
+		<br>$He @@.lime;MET@@ ass measurements.
+	<<else>>
+		<br>$He @@.red;FAILED@@ to meet ass measurements.
+		<<set _passing-->>
+	<</if>>
+	<<if ($activeSlave.boobs - $activeSlave.boobsImplant) >= $activeStandard.boobs>>
+		<br>$He @@.lime;MET@@ chest measurements.
+	<<else>>
+		<br>$He @@.red;FAILED@@ to meet chest measurements.
+		<<set _passing-->>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSPastoralist > 20>>
+	<<if $activeSlave.lactation == $activeStandard.lactation>>
+		<br>$He @@.lime;MET@@ milk production standards.
+	<<elseif $activeSlave.lactation > $activeStandard.lactation>>
+		<br>$He @@.red;EXCEEDED@@ milk production standards.
+		<<set _passing-->>
+	<<else>>
+		<br>$He @@.red;FAILED@@ to meet milk production standards.
+		<<set _passing-->>
+	<</if>>
+<</if>>
+<<if $arcologies[0].FSPhysicalIdealist > 20>>
+	<<if $arcologies[0].FSPhysicalIdealistLaw == 1>>
+		<<if $arcologies[0].FSSlimnessEnthusiast > 20>>
+			<<if $activeSlave.weight <= $activeStandard.weightMax>>
+				<br>$He @@.lime;MET@@ weight limits.
+			<<else>>
+				<br>$He @@.red;EXCEEDED@@ weight limits.
+				<<set _passing-->>
+			<</if>>
+		<</if>>
+		<<if $activeSlave.muscles > $activeStandard.musclesMin && $activeSlave.muscles < $activeStandard.musclesMax>>
+			<br>$He @@.lime;MET@@ the required muscle standard.
+		<<elseif ($activeSlave.muscles <= $activeStandard.musclesMin && $activeSlave.muscles > $activeStandard.musclesMin-20) || ($activeSlave.muscles >= $activeStandard.musclesMax && $activeSlave.muscles < $activeStandard.musclesMax+30)>>
+			<br>$He @@.yellow;failed@@ to match the required muscle standard, but was deemed within fixable range.
+			<<if _passing == 0>>
+				<<set _passing = 2>>
+			<</if>>
+		<<else>>
+			<br>$He @@.red;FAILED@@ to match the required muscle standard.
+			<<set _passing-->>
+		<</if>>
+	<<else>>
+		<<if $activeSlave.muscles > $activeStandard.musclesMin>>
+			<br>$He @@.lime;MET@@ the required muscle mass.
+		<<else>>
+			<br>$He @@.red;FAILED@@ to meet the required muscle mass.
+			<<set _passing-->>
+		<</if>>
+	<</if>>
+<<elseif $arcologies[0].FSHedonisticDecadence > 20>>
+	<<if $activeSlave.weight > $activeStandard.weightMin>>
+		<br>$He @@.lime;MET@@ the minimum weight limit.
+	<<else>>
+		<br>$He @@.red;failed@@ to meet minimum weight limits.
+		<<set _passing-->>
+	<</if>>
+<</if>>
+<br><br>
+<<if _passing == 2>>
+	The slave known as "<<= SlaveFullName($activeSlave)>>" has been deemed @@.yellow;currently unsuitable@@ for breeding, but may be resubmitted after corrections are applied. We understand the subjective nature of "fit" and do not wish to preclude the use a viable breeder over such a trivial fix. $He has been placed on a contraceptive routine to protect against "accidents" in the interim.
+<<elseif _passing != 0>>
+	The slave known as "<<= SlaveFullName($activeSlave)>>" has been deemed @@.red;unsuitable@@ for breeding and has been @@.green;sterilized@@ as per agreement.
+	<<set $activeSlave.preg = -3>>
+<<else>>
+	The slave known as "<<= SlaveFullName($activeSlave)>>" has been deemed @@.green;worthy@@ of being used for breeding and has been marked as such. Please note the increased restrictions on breeding slaves.
+	<br>They are not permitted for public use or anything that may harm their growing child. The child within them is considered a member of the Elite class and as such, any harm that comes to them will result in severe penalties to the breeder's owner. Development of the child will be closely monitored; should the fetus be identified as not of the owner's blood (or any other member of the Elite class), said owner shall face severe fines.
+	<<set $activeSlave.breedingMark = 1, $activeSlave.pregControl = "none">>
+<</if>>
+<br>@@.yellowgreen;<<print cashFormat(5000)>>@@ has been deducted from your account as agreed.
+<<= removeJob($activeSlave, $activeSlave.assignment)>>
+<</widget>>
+
+<<widget "PlayerRace">>
+	<<replace #ethnicity>>
+		You're $PC.race.
+	<</replace>>
+<</widget>>
+
+<<widget "PlayerSkin">>
+	<<replace #skin>>
+		You have $PC.origSkin skin.
+	<</replace>>
+<</widget>>
+
+<<widget "PlayerMarkings">>
+	<<replace #markings>>
+		<<if $PC.markings == "none">>
+			Your skin is pure and clear of any freckles.
+		<<elseif $PC.markings == "freckles">>
+			You have some freckles on your cheeks and elsewhere.
+		<<elseif $PC.markings == "heavily freckled">>
+			You have dense freckles on your cheeks and elsewhere.
+		<</if>>
+	<</replace>>
+<</widget>>
+
+<<widget "BodyguardWeapon">>
+
+<<if ($activeSlave.muscles+$activeSlave.height-100)/25 > 5>>
+	$He has a long ceramic sword strapped to $his back,
+	<<switch $activeSlave.nationality>>
+	<<case "American">>
+		and, in keeping with $his heritage, a US Ordnance Mk43 Mod.1 GPMG
+	<<case "Armenian" "Belarusian" "Cuban" "Hungarian" "Kazakh" "Uzbek">>
+		and, in keeping with $his heritage, a PKM GPMG
+	<<case "Australian">>
+		and, in keeping with $his heritage, a Lithgow F89 Maximi GPMG
+	<<case "Austrian">>
+		and, in keeping with $his heritage, a Steyr MG 74 GPMG
+	<<case "Belgian">>
+		and, in keeping with $his heritage, a FN Minimi M3 LMG
+	<<case "British" "Scottish">>
+		and, in keeping with $his heritage, an L7A2 GPMG
+	<<case "Canadian">>
+		and, in keeping with $his heritage, a Colt Canada 5.56-LSW LMG
+	<<case "Chilean" "German">>
+		and, in keeping with $his heritage, a Rheinmetall MG3 GPMG
+	<<case "Chinese">>
+		and, in keeping with $his heritage, a Norinco QJY-88 LMG
+	<<case "Czech" "Slovak">>
+		and, in keeping with $his heritage, a ZVI Uk vz.59 Rachot GPMG
+	<<case "Filipina">>
+		and, in keeping with $his heritage, a Government Arsenal M60E4 GPMG
+	<<case "Finnish">>
+		and, in keeping with $his heritage, a Valmet KvKK 62 LMG
+	<<case "French">>
+		and, in keeping with $his heritage, a MAS AAT-F1 GPMG
+	<<case "Indian">>
+		and, in keeping with $his heritage, an OFB MG 2A1 GPMG
+	<<case "Indonesian">>
+		and, in keeping with $his heritage, a Pindad SM2 LMG
+	<<case "Iranian">>
+		and, in keeping with $his heritage, a DIO MGA3 GPMG
+	<<case "Israeli">>
+		and, in keeping with $his heritage, an IWI Negev NG7 GPMG
+	<<case "Japanese">>
+		and, in keeping with $his heritage, a Sumitomo Type 62 GPMG
+	<<case "Korean">>
+		and, in keeping with $his heritage, a S&T K12 GPMG
+	<<case "Mexican">>
+		and, in keeping with $his heritage, a SEDENA MG-21 GPMG
+	<<case "Polish">>
+		and, in keeping with $his heritage, a ZMT UKM-2000 GPMG
+	<<case "Romanian">>
+		and, in keeping with $his heritage, a FACSA PM md.93 LMG
+	<<case "Russian">>
+		and, in keeping with $his heritage, a PKP Pecheneg GPMG
+	<<case "Serbian">>
+		and, in keeping with $his heritage, a Zastava M09 LMG
+	<<case "South African">>
+		and, in keeping with $his heritage, a Vektor SS-77 GPMG
+	<<case "Spanish">>
+		and, in keeping with $his heritage, a CETME MG 82 Ameli LMG
+	<<case "Swiss">>
+		and, in keeping with $his heritage, a W+F-Bern MG51 GPMG
+	<<case "Turkish">>
+		and, in keeping with $his heritage, a MKEK MG3 GPMG
+	<<case "Ukrainian">>
+		and, in keeping with $his heritage, a Fort-401 LMG
+	<<case "Vietnamese">>
+		and, in keeping with $his heritage, a Z111 RPK LMG
+	<<case "Zimbabwean">>
+		<<if $activeSlave.race == "white">>
+			and, in keeping with $his heritage, a FN MAG-58 GPMG
+		<<else>>
+			and a FN MAG 60.20 GPMG
+		<</if>>
+	<<default>>
+		and a FN MAG 60.20 GPMG
+	<</switch>>
+	slung crosswise on $his chest.
+<<elseif ($activeSlave.muscles+$activeSlave.height-100)/25 > 4>>
+	$He has a ceramic sword strapped to $his back
+	<<switch $activeSlave.nationality>>
+	<<case "American">>
+		and, in keeping with $his heritage, a Colt M16A4 assault rifle
+	<<case "Argentinian">>
+		and, in keeping with $his heritage, a FMAP FARA-83 assault rifle
+	<<case "Armenian" "Belarusian" "Kazakh" "Uzbek">>
+		and, in keeping with $his heritage, a Kalashnikov AK-74M assault rifle
+	<<case "Australian">>
+		and, in keeping with $his heritage, a Lithgow EF88 Austeyr bullpup assault rifle
+	<<case "Austrian">>
+		and, in keeping with $his heritage, a Steyr AUG A3 bullpup assault rifle
+	<<case "Belgian">>
+		and, in keeping with $his heritage, a FN FNC M2 assault rifle
+	<<case "Brazilian">>
+		and, in keeping with $his heritage, an IMBEL IA2 assault rifle
+	<<case "British" "Scottish">>
+		and, in keeping with $his heritage, an L85A3 bullpup assault rifle
+	<<case "Canadian">>
+		and, in keeping with $his heritage, a Colt Canada MRR assault rifle
+	<<case "Chilean">>
+		and, in keeping with $his heritage, a FAMAE ACE 22NC assault rifle
+	<<case "Chinese">>
+		and, in keeping with $his heritage, a Norinco QBZ-95-1 bullpup assault rifle
+	<<case "Colombian">>
+		and, in keeping with $his heritage, an Indumil ACE 22 assault rifle
+	<<case "Croatian">>
+		and, in keeping with $his heritage, an HS Produkt VHS-2 bullpup assault rifle
+	<<case "Cuban">>
+		and, in keeping with $his heritage, an AKM assault rifle
+	<<case "Czech" "Slovak">>
+		and, in keeping with $his heritage, a CZUB CZ-806 BREN-2 assault rifle
+	<<case "Filipina">>
+		and, in keeping with $his heritage, an Elitool M653P carbine
+	<<case "Finnish">>
+		and, in keeping with $his heritage, a SAKO Rk 95 TP assault rifle
+	<<case "French">>
+		and, in keeping with $his heritage, a Nexter FAMAS G2 bullpup assault rifle
+	<<case "German">>
+		and, in keeping with $his heritage, a H&K G36A2 assault rifle
+	<<case "Hungarian">>
+		and, in keeping with $his heritage, a FEG AMD-65M assault rifle
+	<<case "Indian">>
+		and, in keeping with $his heritage, an OFB MCIWS assault rifle
+	<<case "Indonesian">>
+		and, in keeping with $his heritage, a Pindad SS2 assault rifle
+	<<case "Iranian">>
+		and, in keeping with $his heritage, a DIO KH-2002 Khaybar bullpup assault rifle
+	<<case "Israeli">>
+		and, in keeping with $his heritage, an IWI MTAR-21 bullpup assault rifle
+	<<case "Italian">>
+		and, in keeping with $his heritage, a Beretta ARX-160 assault rifle
+	<<case "Japanese">>
+		and, in keeping with $his heritage, a Howa Type 89 assault rifle
+	<<case "Korean">>
+		and, in keeping with $his heritage, a Daewoo K2C1 assault rifle
+	<<case "Mexican">>
+		and, in keeping with $his heritage, a DGIM FX-05 Xiuhcoatl assault rifle
+	<<case "Peruvian">>
+		and, in keeping with $his heritage, a SIMA FAD bullpup assault rifle
+	<<case "Polish">>
+		and, in keeping with $his heritage, a FB MSBS assault rifle
+	<<case "Romanian">>
+		and, in keeping with $his heritage, a ROMARM PA md.86 assault rifle
+	<<case "Russian">>
+		and, in keeping with $his heritage, an Izhmash AN-94 Abakan assault rifle
+	<<case "Serbian">>
+		and, in keeping with $his heritage, a Zastava M21A assault rifle
+	<<case "South African">>
+		and, in keeping with $his heritage, a Vektor R4 assault rifle
+	<<case "Spanish">>
+		and, in keeping with $his heritage, a CETME Model C battle rifle
+	<<case "Swedish">>
+		and, in keeping with $his heritage, a Bofors Ak-5C assault rifle
+	<<case "Swiss">>
+		and, in keeping with $his heritage, a SIG SG 550 assault rifle
+	<<case "Thai">>
+		and, in keeping with $his heritage, a MND Type 11 assault rifle
+	<<case "Turkish">>
+		and, in keeping with $his heritage, a MKEK MPT-76 assault rifle
+	<<case "Ukrainian">>
+		and, in keeping with $his heritage, a Fort-227 assault rifle
+	<<case "Vietnamese">>
+		and, in keeping with $his heritage, a Z111 AKM assault rifle
+	<<case "Zimbabwean">>
+		<<if $activeSlave.race == "white">>
+			and, in keeping with $his heritage, a FN FAL battle rifle
+		<<else>>
+			and a FN F2000 bullpup assault rifle
+		<</if>>
+	<<default>>
+		and a FN F2000 bullpup assault rifle
+	<</switch>>
+	slung across $his chest.
+<<elseif ($activeSlave.muscles+$activeSlave.height-100)/25 > 3>>
+	$He has a straight ceramic sword strapped to $his back
+	<<switch $activeSlave.nationality>>
+	<<case "American">>
+		and, in keeping with $his heritage, a KRISS Vector SMG
+	<<case "Argentinian">>
+		and, in keeping with $his heritage, a Halcon ML-63 SMG
+	<<case "Armenian" "Belarusian" "Kazakh" "Uzbek">>
+		and, in keeping with $his heritage, a Kalashnikov AKS-74U PDW
+	<<case "Austrian">>
+		and, in keeping with $his heritage, a Steyr AUG A3 Para XS bullpup SMG
+	<<case "Belgian">>
+		and, in keeping with $his heritage, a FN P90 bullpup PDW
+	<<case "Brazilian">>
+		and, in keeping with $his heritage, a Taurus MT40 G2 SMG
+	<<case "British" "Scottish">>
+		and, in keeping with $his heritage, an L91A1 SMG
+	<<case "Chilean">>
+		and, in keeping with $his heritage, a FAMAE SAF-200 SMG
+	<<case "Chinese">>
+		and, in keeping with $his heritage, a Norinco QCQ-05 SMG
+	<<case "Croatian">>
+		and, in keeping with $his heritage, a PM Agram 2000 SMG
+	<<case "Filipina">>
+		and, in keeping with $his heritage, a Ferfrans SCW7 PDW
+	<<case "German">>
+		and, in keeping with $his heritage, an H&K MP7A1 PDW
+	<<case "Indian">>
+		and, in keeping with $his heritage, an OFB MSMC SMG
+	<<case "Indonesian">>
+		and, in keeping with $his heritage, a Pindad PM1A1 SMG
+	<<case "Iranian">>
+		and, in keeping with $his heritage, a DIO MPT-9 Tondar SMG
+	<<case "Israeli">>
+		and, in keeping with $his heritage, an IWI Uzi SMG
+	<<case "Italian">>
+		and, in keeping with $his heritage, a Beretta MX4 SMG
+	<<case "Korean">>
+		and, in keeping with $his heritage, a Daewoo K1A PDW
+	<<case "Mexican">>
+		and, in keeping with $his heritage, a Mendoza Cobra SMG
+	<<case "Polish">>
+		and, in keeping with $his heritage, a FB PM-06 Glauberyt SMG
+	<<case "Romanian">>
+		and, in keeping with $his heritage, a UM Cugir LP7 SMG
+	<<case "Russian">>
+		and, in keeping with $his heritage, a KBP PP-90M1 SMG
+	<<case "Serbian">>
+		and, in keeping with $his heritage, a Zastava Master FLG SMG
+	<<case "South African">>
+		and, in keeping with $his heritage, a Milkor BXP SMG
+	<<case "Spanish">>
+		and, in keeping with $his heritage, a Star Z84 SMG
+	<<case "Swedish">>
+		and, in keeping with $his heritage, a Carl Gustav m/45 SMG
+	<<case "Swiss">>
+		and, in keeping with $his heritage, a SIG MPX SMG
+	<<case "Turkish">>
+		and, in keeping with $his heritage, a Sarsilmaz SAR 109 SMG
+	<<case "Ukrainian">>
+		and, in keeping with $his heritage, a Fort-224 bullpup SMG
+	<<case "Vietnamese">>
+		and, in keeping with $his heritage, a Z111 K-50M LMG
+	<<case "Zimbabwean">>
+		<<if $activeSlave.race == "white">>
+			and, in keeping with $his heritage, a Sterling Mk.IV SMG
+		<<else>>
+			and a H&K MP5 SMG
+		<</if>>
+	<<default>>
+		and a H&K MP5 SMG
+	<</switch>>
+	slung across $his chest.
+<<else>>
+	$He has a short ceramic sword strapped to $his back
+	<<switch $activeSlave.nationality>>
+	<<case "American">>
+		and, in keeping with $his heritage, a MAC-10 machine pistol
+	<<case "Armenian" "Belarusian" "Cuban" "Kazakh" "Ukrainian" "Uzbek">>
+		and, in keeping with $his heritage, a Molot Ordnance Stechkin APS machine pistol
+	<<case "Austrian">>
+		and, in keeping with $his heritage, a Steyr TMP machine pistol
+	<<case "Belgian">>
+		and, in keeping with $his heritage, a VBR-Belgium PDW machine pistol
+	<<case "Chinese">>
+		and, in keeping with $his heritage, a Chongqing Changfeng CF-05 machine pistol
+	<<case "Czech" "Slovak">>
+		and, in keeping with $his heritage, a CZUB CZ 75 Automatic machine pistol
+	<<case "German">>
+		and, in keeping with $his heritage, a H&K VP70 machine pistol
+	<<case "Hungarian">>
+		and, in keeping with $his heritage, a FEG KGP-9 machine pistol
+	<<case "Israeli">>
+		and, in keeping with $his heritage, an IWI Uzi Pro machine pistol
+	<<case "Italian">>
+		and, in keeping with $his heritage, a Beretta 93R machine pistol
+	<<case "Japanese">>
+		and, in keeping with $his heritage, a Minebea PM-9 machine pistol
+	<<case "Mexican">>
+		and, in keeping with $his heritage, a Trejo Modelo 2 Especial machine pistol
+	<<case "Peruvian">>
+		and, in keeping with $his heritage, a SIMA MGP-87 machine pistol
+	<<case "Polish">>
+		and, in keeping with $his heritage, a WITU PMM machine pistol
+	<<case "Romanian">>
+		and, in keeping with $his heritage, a UMS Pistolul md.98 Dracula machine pistol
+	<<case "Russian">>
+		and, in keeping with $his heritage, a KBP OTs-33 Pernach machine pistol
+	<<case "Swedish">>
+		and, in keeping with $his heritage, a Saab Bofors Dynamics CBJ-MS machine pistol
+	<<case "Swiss">>
+		and, in keeping with $his heritage, a B+T MP9 machine pistol
+	<<case "Turkish">>
+		and, in keeping with $his heritage, a TiSAS Zigana F machine pistol
+	<<default>>
+		and a Glock 18 machine pistol
+	<</switch>>
+	at $his side.
+<</if>>
+
+<</widget>>
+
+<<widget "ParentNames">>
+<<set _currentSlaveNames = $slaves.map(s => s.slaveName)>>
+<<if $allowMaleSlaveNames>>
+	<<set _sanityCheck = '>>', /* to appease sanityCheck */
+		$args[1].slaveName = generateName($args[0].nationality, $args[1].race, $args[1].genes === "XY", sn => !_currentSlaveNames.includes(sn))>>
+	<<if !$args[1].slaveName>>
+		/* we ran out of names ... How? */
+		<<set _maxTries = 10>>
+		<<for _maxTries > 0 && !$args[1].slaveName>>
+			<<set _continentNationality = hashChoice($nationalities)>>
+			<<set _sanityCheck = '>>', /* to appease sanityCheck */
+				$args[1].slaveName = generateName(_continentNationality, $args[1].race, $args[1].genes === "XY", sn => !_currentSlaveNames.includes(sn))>>
+		<</for>>
+	<</if>>
+	<<if !$args[1].slaveName>>
+		/* give up, duplicate name is fine I guess */
+		<<set $args[1].slaveName = generateName($args[0].nationality, $args[1].race, $args[1].genes === "XY")>>
+	<</if>>
+<<else>>
+	<<set _sanityCheck = '>>', /* to appease sanityCheck */
+		$args[1].slaveName = generateName($args[0].nationality, $args[1].race, false, sn => !_currentSlaveNames.includes(sn))>>
+	<<if !$args[1].slaveName>>
+		/* we ran out of names ... How? */
+		<<set _maxTries = 10>>
+		<<for _maxTries > 0 && !$args[1].slaveName>>
+			<<set _continentNationality = hashChoice($nationalities)>>
+			<<set _sanityCheck = '>>', /* to appease sanityCheck */
+				$args[1].slaveName = generateName(_continentNationality, $args[1].race, false, sn => !_currentSlaveNames.includes(sn))>>
+		<</for>>
+	<</if>>
+	<<if !$args[1].slaveName>>
+		/* give up, duplicate name is fine I guess */
+		<<set $args[1].slaveName = generateName($args[0].nationality, $args[1].race, false)>>
+	<</if>>
+<</if>>
+<<unset _currentSlaveNames, _maxTries, _continentNationality>>
+<</widget>>
+
+<<widget "NewChildName">>
+<<set $args[0].birthName = generateName($args[0].nationality, $args[0].race, $args[0].genes === "XY")>>
+<<if $args[0].genes === "XY" && !$allowMaleSlaveNames && isMaleName($args[0].birthName, $args[0].nationality, $args[0].race)>>
+	/* grab a female name for the slave name instead */
+	<<set $args[0].slaveName = generateName($args[0].nationality, $args[0].race, false)>>
+<<else>>
+	<<set $args[0].slaveName = $args[0].birthName>>
+<</if>>
+<</widget>>
+
+<<widget "AgePCEffects">>
+<<switch $PC.actualAge>>
+<<case 3>>
+	<<set $AgeTrainingLowerBoundPC = 18, $AgeTrainingUpperBoundPC = 20, $AgeEffectOnTrainerPricingPC = .1, $AgeEffectOnTrainerEffectivenessPC = .1>>
+<<case 4>>
+	<<set $AgeTrainingLowerBoundPC = 17, $AgeTrainingUpperBoundPC = 19, $AgeEffectOnTrainerPricingPC = .15, $AgeEffectOnTrainerEffectivenessPC = .15>>
+<<case 5>>
+	<<set $AgeTrainingLowerBoundPC = 16, $AgeTrainingUpperBoundPC = 18, $AgeEffectOnTrainerPricingPC = .35, $AgeEffectOnTrainerEffectivenessPC = .35>>
+<<case 6>>
+	<<set $AgeTrainingLowerBoundPC = 15, $AgeTrainingUpperBoundPC = 17, $AgeEffectOnTrainerPricingPC = .55, $AgeEffectOnTrainerEffectivenessPC = .55>>
+<<case 7>>
+	<<set $AgeTrainingLowerBoundPC = 14, $AgeTrainingUpperBoundPC = 16, $AgeEffectOnTrainerPricingPC = .75, $AgeEffectOnTrainerEffectivenessPC = .75>>
+<<case 8>>
+	<<set $AgeTrainingLowerBoundPC = 13, $AgeTrainingUpperBoundPC = 15, $AgeEffectOnTrainerPricingPC = .85, $AgeEffectOnTrainerEffectivenessPC = .85>>
+<<case 9>>
+	<<set $AgeTrainingLowerBoundPC = 12, $AgeTrainingUpperBoundPC = 14, $AgeEffectOnTrainerPricingPC = 1.00, $AgeEffectOnTrainerEffectivenessPC = 1.00>>
+<<case 10>>
+	<<set $AgeTrainingLowerBoundPC = 11, $AgeTrainingUpperBoundPC = 13, $AgeEffectOnTrainerPricingPC = 1.0005, $AgeEffectOnTrainerEffectivenessPC = 1.0005>>
+<<case 11>>
+	<<set $AgeTrainingLowerBoundPC = 10, $AgeTrainingUpperBoundPC = 12, $AgeEffectOnTrainerPricingPC = 1.01, $AgeEffectOnTrainerEffectivenessPC = 1.01>>
+<<case 12>>
+	<<set $AgeTrainingLowerBoundPC = 9, $AgeTrainingUpperBoundPC = 11, $AgeEffectOnTrainerPricingPC = 1.02, $AgeEffectOnTrainerEffectivenessPC = 1.02>>
+<<case 13>>
+	<<set $AgeTrainingLowerBoundPC = 8, $AgeTrainingUpperBoundPC = 10, $AgeEffectOnTrainerPricingPC = 1.03, $AgeEffectOnTrainerEffectivenessPC = 1.03>>
+<<case 14>>
+	<<set $AgeTrainingLowerBoundPC = 7, $AgeTrainingUpperBoundPC = 9, $AgeEffectOnTrainerPricingPC = 1.04, $AgeEffectOnTrainerEffectivenessPC = 1.04>>
+<<case 15>>
+	<<set $AgeTrainingLowerBoundPC = 6, $AgeTrainingUpperBoundPC = 8, $AgeEffectOnTrainerPricingPC = 1.05, $AgeEffectOnTrainerEffectivenessPC = 1.05>>
+<<case 16>>
+	<<set $AgeTrainingLowerBoundPC = 5, $AgeTrainingUpperBoundPC = 7, $AgeEffectOnTrainerPricingPC = 1.06, $AgeEffectOnTrainerEffectivenessPC = 1.06>>
+<<case 17>>
+	<<set $AgeTrainingLowerBoundPC = 4, $AgeTrainingUpperBoundPC = 6, $AgeEffectOnTrainerPricingPC = 1.07, $AgeEffectOnTrainerEffectivenessPC = 1.07>>
+<<case 18>>
+	<<set $AgeTrainingLowerBoundPC = 3, $AgeTrainingUpperBoundPC = 5, $AgeEffectOnTrainerPricingPC = 1.08, $AgeEffectOnTrainerEffectivenessPC = 1.08>>
+<</switch>>
+<</widget>>

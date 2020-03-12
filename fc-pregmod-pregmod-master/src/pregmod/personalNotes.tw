@@ -1,0 +1,255 @@
+:: Personal Notes [nobr]
+
+<<if $useTabs == 0>>__Personal Notes__<</if>>
+<br>
+<<if ($playerAging != 0)>>Your birthday is <<if $PC.birthWeek == 51>>next week<<if $playerAging == 2>>; you'll be turning <<print $PC.actualAge+1>><</if>><<else>>in <<print 52-$PC.birthWeek>> weeks<</if>>.<</if>>
+<<PlayerBoobs>>
+<<PlayerBelly>>
+<<PlayerCrotch>>
+<<PlayerButt>>
+<<if $PC.lactation > 0>>
+	<<if $PC.rules.lactation != "none" && $PC.rules.lactation != "induce">>
+		<<set $PC.lactationDuration = 2>>
+		<<if $PC.rules.lactation == "sell">>
+			/* watch this be a disaster */
+			<<set _milk = milkAmount($PC)>>
+			Whenever you have a free moment and a chest swollen with milk, you spend your time attached to the nearest milker. As a result, you produce _milk liters of sellable milk over the week.
+			<<if ($arcologies[0].FSPastoralistLaw == 1)>>
+				<<set _milkSale = _milk*(28+Math.trunc($arcologies[0].FSPastoralist/30))>>
+				Since breast milk is $arcologies[0].name's only legal dairy product, and yours is in a class all of its own, society can't get enough of it and you make @@.yellowgreen;<<print cashFormat(_milkSale)>>.@@
+			<<elseif ($arcologies[0].FSPastoralist != "unset")>>
+				<<set _milkSale = _milk*(12+Math.trunc($arcologies[0].FSPastoralist/30))>>
+				Since milk is fast becoming a major part of the $arcologies[0].name's dietary culture, and yours is in a class all of its own, you make @@.yellowgreen;<<print cashFormat(_milkSale)>>.@@
+			<<else>>
+				<<set _milkSale = _milk*8>>
+				Your milk is sold for @@.yellowgreen;<<print cashFormat(_milkSale)>>.@@
+			<</if>>
+			<<run cashX(_milkSale, "personalBusiness")>>
+		<<else>>
+			You regularly see to your breasts to make sure your milk production doesn't dry up; be it by hand, milker, or mouth, you keep yourself comfortably drained.
+		<</if>>
+	<<else>>
+		<<if $PC.belly < 1500>>
+			<<set $PC.lactationDuration-->>
+			<<if $PC.lactationDuration == 0>>
+				With no reason to continue production, your @@.yellow;lactation has stopped.@@
+				<<set $PC.lactation = 0>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+<<if $PC.preg > 0>>
+	<<set _oldCount = $PC.pregType>>
+	<<if $PC.preg <= 2>>
+		<<run fetalSplit($PC, 1000)>>
+		<<run WombCleanYYFetuses($PC)>>
+	<</if>>
+	<<if $pregnancyMonitoringUpgrade == 1>>
+		<<if _oldCount < $PC.pregType>>
+			While making use of the advanced pregnancy monitoring equipment, you are surprised to find @@.lime;your womb is a little more occupied than last checkup.@@
+		<<elseif _oldCount > $PC.pregType>>
+			While making use of the advanced pregnancy monitoring equipment, you are surprised to find @@.orange;your womb houses less life than last checkup.@@
+			<<if $PC.pregType == 0>>
+				For all intents and purposes, @@.yellow;you are no longer pregnant.@@
+				<<run TerminatePregnancy($PC)>>
+			<</if>>
+		<</if>>
+	<<elseif _oldCount > $PC.pregType && $PC.pregType == 0>>
+		<<run TerminatePregnancy($PC)>>
+	<</if>>
+	<<if $PC.preg == 15>>
+		<<if $PC.pregKnown == 0>>
+			Your areolae have gotten dark. Some cursory tests reveal @@.lime;you are about fifteen weeks pregnant.@@ How did that manage to slip past you?
+			<<set $PC.pregKnown = 1>>
+		<<else>>
+			Your areolae have gotten dark. Just another step along your pregnancy.
+		<</if>>
+	<<elseif $PC.belly >= 1500>>
+		<<if ($PC.preg > 20) && ($PC.lactation == 0)>>
+			<<if $PC.preg > random(18,30)>>
+				A moist sensation on your breasts draws your attention; @@.lime;your milk has come in.@@
+				<<set $PC.lactation = 1>>
+			<</if>>
+		<</if>>
+		<<if $PC.lactation == 1>>
+			<<set $PC.lactationDuration = 2>>
+		<</if>>
+	<</if>>
+	<<if ($PC.preg >= $PC.pregData.normalBirth/4)>>
+		<<set _gigantomastiaMod = $PC.geneticQuirks.gigantomastia == 2 ? ($PC.geneticQuirks.macromastia == 2 ? 3 : 2) : 1>>
+		/* trim this down */
+		<<if $PC.geneMods.NCS == 1>>
+			<<set _boobTarget = 100>>
+		<<elseif $PC.geneticQuirks.androgyny == 2>>
+			<<set _boobTarget = 400>>
+		<<elseif $PC.physicalAge >= 18>>
+			<<if $PC.pregType >= 8>>
+				<<set _boobTarget = 1500>> /* 2000 */
+			<<elseif $PC.pregType >= 5>>
+				<<set _boobTarget = 1400>>
+			<<elseif $PC.pregType >= 2>>
+				<<set _boobTarget = 1000>>
+			<<else>>
+				<<set _boobTarget = 800>>
+			<</if>>
+		<<elseif $PC.physicalAge >= 13>>
+			<<if $PC.pregType >= 8>>
+				<<set _boobTarget = 1500>> /* 1800 */
+			<<elseif $PC.pregType >= 5>>
+				<<set _boobTarget = 1400>>
+			<<elseif $PC.pregType >= 2>>
+				<<set _boobTarget = 1000>>
+			<<else>>
+				<<set _boobTarget = 800>>
+			<</if>>
+		<<elseif $PC.physicalAge >= 8>>
+			<<if $PC.pregType >= 8>>
+				<<set _boobTarget = 1400>>
+			<<elseif $PC.pregType >= 5>>
+				<<set _boobTarget = 1000>>
+			<<elseif $PC.pregType >= 2>>
+				<<set _boobTarget = 800>>
+			<<else>>
+				<<set _boobTarget = 600>>
+			<</if>>
+		<<else>>
+			<<if $PC.pregType >= 8>>
+				<<set _boobTarget = 1000>>
+			<<elseif $PC.pregType >= 5>>
+				<<set _boobTarget = 8000>>
+			<<elseif $PC.pregType >= 2>>
+				<<set _boobTarget = 600>>
+			<<else>>
+				<<set _boobTarget = 400>>
+			<</if>>
+		<</if>>
+		/*<<set _boobTarget *= _gigantomastiaMod>>*/
+		<<if ($PC.geneMods.NCS == 0)>>
+			/*
+			<<if $PC.pregType >= 30>>
+				<<if ($PC.weight <= 65)>>
+					$He has @@.lime;gained weight@@ in order to better sustain $himself and $his children.
+					<<set $PC.weight += 1>>
+				<</if>>
+				<<if (random(1,100) > 60)>>
+					<<if (($PC.boobs - $PC.boobsImplant) < _boobTarget)>>
+						$His breasts @@.lime;greatly swell@@ to meet the upcoming demand.
+						<<set $PC.boobs += 100>>
+						<<if $PC.boobShape != "saggy" && $PC.preg > $PC.pregData.normalBirth/1.25 && ($PC.breastMesh != 1) && ($PC.drugs != "sag-B-gone")>>
+							$His immensely engorged @@.orange;breasts become saggy@@ in the last stages of $his pregnancy as $his body undergoes changes in anticipation of the forthcoming birth.
+							<<set $PC.boobShape = "saggy">>
+						<</if>>
+					<</if>>
+					<<if $PC.geneticQuirks.androgyny != 2>>
+						<<if ($PC.hips < 2)>>
+							$His hips @@.lime;widen@@ for $his upcoming birth.
+							<<set $PC.hips += 1>>
+						<</if>>
+						<<if ($PC.butt < 14)>>
+							$His butt @@.lime;swells with added fat@@ from $his changing body.
+							<<set $PC.butt += 1>>
+						<</if>>
+					<</if>>
+				<</if>>
+			<<elseif ($PC.pregType >= 10)>>
+				<<if random(1,100) > 80 && (($PC.boobs - $PC.boobsImplant) < _boobTarget)>>
+					<<set $PC.boobs += 50>>
+					<<if $PC.boobShape != "saggy" && ($PC.breastMesh != 1) && ($PC.drugs != "sag-B-gone")>>
+						<<if $PC.preg > random($PC.pregData.normalBirth/1.25, $PC.pregData.normalBirth*2.05)>>
+							$His swollen @@.orange;breasts become saggy@@ in the last stages of $his pregnancy as $his body undergoes changes in anticipation of the forthcoming birth.
+							<<set $PC.boobShape = "saggy">>
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+			*/
+			<<if ($PC.boobs - $PC.boobsImplant) < _boobTarget>>
+				<<if $PC.boobs >= 1400>>
+					<<if random(1,100) > 90>>
+						Unsurprisingly, your cow tits @@.lime;have swollen even larger@@ with your pregnancy.
+						<<set $PC.boobs += 25>>
+					<</if>>
+				<<elseif $PC.boobs >= 1200>>
+					<<if random(1,100) > 90>>
+						Your already huge breasts have @@.lime;grown even heavier@@ with your pregnancy.
+						<<set $PC.boobs += 25>>
+						<<if $PC.boobs >= 1400>>
+							Your desk is steadily starting to disappear; @@.lime;H-cups will do that.@@
+						<</if>>
+					<</if>>
+				<<elseif $PC.boobs >= 1000>>
+					<<if random(1,100) > 75>>
+						Your already large breasts have @@.lime;grown even larger@@ with your pregnancy.
+						<<set $PC.boobs += 25>>
+						<<if $PC.boobs >= 1200>>
+							Nothing fits comfortably now; your tailor says @@.lime;it's your G-cup knockers.@@ Your back agrees.
+						<</if>>
+					<</if>>
+				<<elseif $PC.boobs >= 800>>
+					<<if random(1,100) > 75>>
+						Your breasts have @@.lime;grown a bit larger@@ to feed your coming child<<if $PC.pregType > 1>>ren<</if>>.
+						<<set $PC.boobs += 25>>
+						<<if $PC.boobs >= 1000>>
+							You popped your bra when you put it on; @@.lime;time to order some F-cups.@@
+						<</if>>
+					<</if>>
+				<<elseif $PC.boobs >= 650>>
+					<<if random(1,100) > 80>>
+						Your breasts have @@.lime;grown a bit larger@@ to feed your coming child<<if $PC.pregType > 1>>ren<</if>>.
+						<<set $PC.boobs += 25>>
+						<<if $PC.boobs >= 800>>
+							Their prominence, and a quick measuring, reveals @@.lime;you now sport DDs.@@
+						<</if>>
+					<</if>>
+				<<elseif $PC.boobs >= 500>>
+					<<if random(1,100) > 80>>
+						Your breasts have @@.lime;grown a bit larger@@ to feed your coming child<<if $PC.pregType > 1>>ren<</if>>.
+						<<set $PC.boobs += 25>>
+						<<if $PC.boobs >= 650>>
+							They're big, sensitive, @@.lime;and now a D-cup.@@
+						<</if>>
+					<</if>>
+				<<elseif $PC.boobs >= 400>>
+					<<if random(1,100) > 80>>
+						Your breasts have @@.lime;gotten heavier@@ alongside your pregnancy.
+						<<set $PC.boobs += 25>>
+						<<if $PC.boobs >= 500>>
+							They spill dramatically out of your bra now, which means @@.lime;you've graduated to a C-cup.@@
+						<</if>>
+					<</if>>
+				<<elseif $PC.boobs >= 300>>
+					<<if random(1,100) > 75>>
+						Your breasts have @@.lime;swollen@@ alongside your pregnancy.
+						<<set $PC.boobs += 25>>
+						<<if $PC.boobs >= 400>>
+							A quick measuring after your top started to feel too constricting reveals @@.lime;you are now a B-cup!@@
+						<</if>>
+					<</if>>
+				<<else>>
+					<<if random(1,100) > 75>>
+						Your chest @@.lime;has filled out slightly@@ with your pregnancy.
+						<<set $PC.boobs += 25>>
+						<<if $PC.boobs >= 300>>
+							They've gotten so big that @@.lime;you can now fill an A-cup bra.@@
+						<</if>>
+					<</if>>
+				<</if>>
+				<<if _sagCheck>>
+					<<if $PC.boobShape != "saggy" && $PC.preg > random($PC.pregData.normalBirth/1.25, $PC.pregData.normalBirth*2.5) && ($PC.breastMesh != 1) && ($PC.drugs != "sag-B-gone")>>
+						$His @@.orange;breasts become saggy@@ in the last stages of $his pregnancy as $his body undergoes changes in anticipation of the forthcoming birth.
+						<<set $PC.boobShape = "saggy">>
+					<</if>>
+				<</if>>
+			<</if>>
+			/*
+			<<if $PC.preg > $PC.pregData.normalBirth/1.25 && $PC.physicalAge >= 18 && $PC.hips == 1 && $PC.hipsImplant == 0 && random(1,100) > 90>>
+				$His hips @@.lime;widen@@ to better support $his gravidity.
+				<<set $PC.hips += 1>>
+			<<elseif $PC.preg > $PC.pregData.normalBirth/1.42 && $PC.physicalAge >= 18 && $PC.hips == 0 && $PC.hipsImplant == 0 && random(1,100) > 70>>
+				$His hips @@.lime;widen@@ to better support $his gravidity.
+				<<set $PC.hips += 1>>
+			<</if>>
+			*/
+		<</if>>
+	<</if>>
+<</if>>

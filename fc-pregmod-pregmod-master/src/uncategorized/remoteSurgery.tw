@@ -1,0 +1,2210 @@
+:: Remote Surgery [nobr]
+
+<style>
+.active {
+	background-color: grey;
+}
+</style>
+
+<<set $nextButton = "Confirm changes", $nextLink = "AS Dump", $returnTo = "Slave Interact">>
+
+<<set $surgeryType = 0, $showEncyclopedia = 1, $encyclopedia = "The Remote Surgery">>
+<<set _belly = bellyAdjective($activeSlave)>>
+/* get all prosthetics that are ready for this slave */
+<<if $adjustProstheticsCompleted > 0>>
+	<<set $adjustProsthetics = $adjustProsthetics.filter(function(p) {
+		if (p.workLeft <= 0 && p.slaveID == $activeSlave.ID) {
+			addProsthetic($activeSlave, p.id);
+			$adjustProstheticsCompleted--;
+			return false;
+		}
+		return true;
+	})>>
+<</if>>
+
+<<run App.UI.tabbar.handlePreSelectedTab($tabChoice.RemoteSurgery)>>
+
+<h1>The Remote Surgery</h1>
+
+<div style="padding-bottom:2em">
+	<span class="note">$activeSlave.slaveName is lying strapped down on the table in your <<if $surgeryUpgrade == 1>>heavily upgraded and customized remote surgery.<<else>>remote surgery.<</if>> The surgical equipment reads <<if $activeSlave.health.health < -20>><span class="red">SLAVE UNHEALTHY, SURGERY NOT RECOMMENDED.</span><<elseif $activeSlave.health.health <= 20>><span class="yellow">SLAVE HEALTHY, SURGERY SAFE.</span><<else>><span class="green">SLAVE HEALTHY, SURGERY ENCOURAGED.</span><</if>><<if $PC.skill.medicine >= 100>> The remote surgery mechanisms that allow a surgeon to be brought in by telepresence are inactive, and the autosurgery is ready for your control inputs. Surgery on your slaves is a challenge and a pleasure you wouldn't dream of sharing.<</if>></span>
+</div>
+
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<<if $imageChoice == 1>>
+		<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 3, 0)>></div>
+	<<else>>
+		<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 3, 0)>></div>
+	<</if>>
+<</if>>
+/* 000-250-006 */
+
+<div>
+	<<if $activeSlave.indentureRestrictions >= 1>>
+		<span class="yellow">This slave is subject to a restrictive indenture which forbids many invasive surgeries.</span>
+	<</if>>
+</div>
+
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'hairFace')" id="tab hairFace">Hair and face</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'upper')" id="tab upper">Upper</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'lower')" id="tab lower">Lower</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Race')" id="tab Race">Race</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Structural')" id="tab Structural">Structural</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'ExtremeSurgery')" id="tab ExtremeSurgery">ExtremeSurgery</button>
+
+<div id="hairFace" class="tabcontent">
+<div class="content">
+	<h3>Hair:</h3>
+	/*Main Hair*/
+	<div>
+		<<set _pubertyAge = Math.min($activeSlave.pubertyAgeXX, $activeSlave.pubertyAgeXY)>>
+		<<if $activeSlave.bald == 0 && $activeSlave.hStyle != "bald">>
+			$He naturally grows $activeSlave.origHColor hair from $his head.
+			<div class="choices">
+				<<if $activeSlave.indentureRestrictions > 1>>
+					<span class="note">$His indenture forbids elective surgery</span>
+				<<else>>
+					[["Surgically remove " + $his + " ability to grow hair"|Surgery Degradation][cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),$activeSlave.bald = 1,$surgeryType = "hair removal"]]
+				<</if>>
+			</div>
+		<<else>>
+			$He is no longer capable of growing hair on $his head.
+		<</if>>
+	</div>
+
+	/*Eyebrows*/
+	<div>
+		<<if ($activeSlave.eyebrowHStyle != "bald")>>
+			$He has $activeSlave.origHColor eyebrows.
+			<div class="choices">
+				<<if $activeSlave.indentureRestrictions > 1>>
+					<span class="note">$His indenture forbids elective surgery</span>
+				<<else>>
+					[["Surgically remove " + $his + " ability to grow eyebrows"|Surgery Degradation][cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),$surgeryType = "eyebrow removal"]]
+				<</if>>
+			</div>
+		<<else>>
+			$He is no longer capable of growing eyebrow hair.
+		<</if>>
+	</div>
+
+	/*Armpit hair*/
+	<div>
+		<<if ($activeSlave.underArmHStyle != "bald" && $activeSlave.underArmHStyle != "hairless") || ($activeSlave.pubicHStyle != "bald" && $activeSlave.pubicHStyle != "hairless")>>
+			$He <<if $activeSlave.physicalAge >= _pubertyAge>>naturally grows<<elseif $activeSlave.physicalAge >= _pubertyAge-1>>is beginning to grow<<else>>will someday grow<</if>> $activeSlave.origHColor body hair.
+			<div class="choices">
+				<<if $activeSlave.indentureRestrictions > 1>>
+					<span class="note">$His indenture forbids elective surgery</span>
+				<<else>>
+					[["Surgically remove " + $his + " ability to grow body hair"|Surgery Degradation][cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),$surgeryType = "body hair removal"]]
+				<</if>>
+			</div>
+		<<else>>
+			$His $activeSlave.skin skin is silky smooth and hair free from $his neck to $his <<if !hasAnyLegs($activeSlave)>>hips<<else>>toes<</if>>.
+		<</if>>
+	</div>
+
+	<h3>Face:</h3>
+	<div>
+		$His $activeSlave.faceShape face is
+		<<if $activeSlave.face < -95>>
+			very ugly.
+		<<elseif $activeSlave.face < -40>>
+			ugly.
+		<<elseif $activeSlave.face < -10>>
+			unattractive.
+		<<elseif ($activeSlave.face <= 10)>>
+			quite average.
+		<<elseif ($activeSlave.face <= 40)>>
+			attractive.
+		<<elseif ($activeSlave.face <= 95)>>
+			beautiful.
+		<<elseif ($activeSlave.face > 95)>>
+			very beautiful.
+		<</if>>
+
+		<<if $activeSlave.faceImplant == 0>>
+			It is entirely natural.
+		<<elseif $activeSlave.faceImplant > 5>>
+			It has seen some work.
+		<<elseif $activeSlave.faceImplant > 30>>
+			It has been totally reworked.
+		<</if>>
+		<div class="choices">
+			<<if $activeSlave.indentureRestrictions >= 2>>
+				<span class="note">$His indenture forbids elective surgery</span>
+			<<elseif $activeSlave.faceImplant > 95>>
+				<span class="note">$His face cannot sustain further cosmetic surgery</span>
+			<<else>>
+				<<set _artificiality = 25-(5*Math.trunc($PC.skill.medicine/50))-(5*$surgeryUpgrade)>>
+				<<if $activeSlave.faceShape != "normal">>
+					[[Make conventionally feminine|Surgery Degradation][$activeSlave.faceShape = "normal",$activeSlave.faceImplant = Math.clamp($activeSlave.faceImplant+_artificiality,0,100),cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave,10),$surgeryType = "face"]] |
+				<</if>>
+				<<if $activeSlave.faceShape == "masculine">>
+					[[Soften to androgynous|Surgery Degradation][$activeSlave.faceShape = "androgynous",$activeSlave.faceImplant = Math.clamp($activeSlave.faceImplant+_artificiality,0,100),cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave,10),$surgeryType = "face"]] |
+				<<else>>
+					<<if $activeSlave.faceShape != "cute">>
+						[[Cute|Surgery Degradation][$activeSlave.faceShape = "cute",$activeSlave.faceImplant = Math.clamp($activeSlave.faceImplant+_artificiality,0,100),cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave,10),$surgeryType = "face"]] |
+					<</if>>
+					<<if $activeSlave.faceShape != "exotic">>
+						[[Exotic|Surgery Degradation][$activeSlave.faceShape = "exotic",$activeSlave.faceImplant = Math.clamp($activeSlave.faceImplant+_artificiality,0,100),cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave,10),$surgeryType = "face"]] |
+					<</if>>
+					<<if $activeSlave.faceShape != "sensual">>
+						[[Sensual|Surgery Degradation][$activeSlave.faceShape = "sensual",$activeSlave.faceImplant = Math.clamp($activeSlave.faceImplant+_artificiality,0,100),cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave,10),$surgeryType = "face"]] |
+					<</if>>
+					<<if $activeSlave.faceShape != "androgynous">>
+						[[Androgynous|Surgery Degradation][$activeSlave.faceShape = "androgynous",$activeSlave.faceImplant = Math.clamp($activeSlave.faceImplant+_artificiality,0,100),cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave,10),$surgeryType = "face"]] |
+					<<else>>
+						[[Masculine|Surgery Degradation][$activeSlave.faceShape = "masculine",$activeSlave.faceImplant = Math.clamp($activeSlave.faceImplant+_artificiality,0,100),cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave,10),$surgeryType = "face"]] |
+					<</if>>
+				<</if>>
+				[[Just improve attractiveness|Surgery Degradation][$activeSlave.faceImplant = Math.clamp($activeSlave.faceImplant+_artificiality,0,100),cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave,10),$surgeryType = "face"]]
+				<span class="note">
+					Facial surgery can either rework it and improve its attractiveness, or simply make it more attractive. No facial surgery is perfect and each surgery will make it look less natural.
+					<<if $PC.skill.medicine >= 100 && $surgeryUpgrade>>
+						Your surgical skills and the advanced surgical suite will minimize this effect as much as possible.
+					<<elseif $PC.skill.medicine >= 100>>
+						Your surgical skills will reduce this effect.
+					<<elseif $surgeryUpgrade>>
+						The advanced surgical suite will reduce this effect.
+					<</if>>
+					<<if $activeSlave.faceImplant+_artificiality > 95>>
+						<span class="yellow"><<if $activeSlave.faceImplant != 0>>Further f<<else>>F<</if>>acial surgery will create a severe uncanny valley effect.</span>
+					<<elseif $activeSlave.faceImplant+_artificiality > 60 && $activeSlave.faceImplant <= 60>>
+						<span class="yellow"><<if $activeSlave.faceImplant != 0>>Further f<<else>>F<</if>>acial surgery will be extremely obvious.</span>
+					<<elseif $activeSlave.faceImplant+_artificiality > 30 && $activeSlave.faceImplant <= 30>>
+						<span class="yellow"><<if $activeSlave.faceImplant != 0>>Further f<<else>>F<</if>>acial surgery will eliminate a natural appearance.</span>
+					<<elseif $activeSlave.faceImplant+_artificiality > 10 && $activeSlave.faceImplant <= 10>>
+						<span class="yellow"><<if $activeSlave.faceImplant != 0>>Further f<<else>>F<</if>>acial surgery will disturb a perfectly natural appearance.</span>
+					<<else>>
+						A single facial surgery is not projected to significantly impact artificiality.
+					<</if>>
+				</span>
+			<</if>>
+		</div>
+	</div>
+
+	<div>
+		<<if $activeSlave.indentureRestrictions < 2 && $activeSlave.faceImplant <= 95>>
+			<<if ($activeSlave.ageImplant > 1)>>
+				$He's had a multiple facelifts and other cosmetic procedures in an effort to preserve $his youth.
+			<<elseif ($activeSlave.ageImplant > 0)>>
+				$He's had a face lift and other minor cosmetic procedures to make $him look younger.
+			<<elseif ($activeSlave.physicalAge >= 25) && ($activeSlave.visualAge >= 25)>>
+				$He's old enough that a face lift and other minor cosmetic procedures could make $him look younger.
+				<div class="choices">
+					[[Age lift|Surgery Degradation][applyAgeImplant($activeSlave),$activeSlave.faceImplant = Math.clamp($activeSlave.faceImplant+_artificiality,0,100),cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "age"]]
+				</div>
+			<</if>>
+		<</if>>
+	</div>
+
+	/*Eyes*/
+	<div>
+		$He has <<print App.Desc.eyesType($activeSlave)>><<if hasAnyEyes($activeSlave)>>, they are <<print App.Desc.eyesVision($activeSlave)>><</if>>.
+		<div class="choices">
+			/* eye blur and fix */
+			<<if hasAnyEyes($activeSlave)>>
+				/* Blur eyes*/
+				<<if $activeSlave.indentureRestrictions > 1>>
+					<span class="note">$His indenture forbids elective surgery</span>
+				<<else>>
+					<<set _n = 0>>
+					<<if getLeftEyeVision($activeSlave) === 2 && getLeftEyeType($activeSlave) === 1>>
+						<<set _n++>>
+						[[Blur left eye|Surgery Degradation][eyeSurgery($activeSlave, "left", "blur"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "eyeBlur"]]
+					<</if>>
+					<<if getRightEyeVision($activeSlave) === 2 && getRightEyeType($activeSlave) === 1>>
+						<<if _n > 0>>
+							|
+						<</if>>
+						<<set _n++>>
+						[[Blur right eye|Surgery Degradation][eyeSurgery($activeSlave, "right", "blur"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "eyeBlur"]]
+					<</if>>
+					<<if _n === 2>>
+						| [[Blur both eyes|Surgery Degradation][eyeSurgery($activeSlave, "both", "blur"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "eyeBlur"]]
+					<</if>>
+				<</if>>
+
+				/* Fix eyes */
+				<<set _n = 0>>
+				<<if getLeftEyeVision($activeSlave) === 1 && getLeftEyeType($activeSlave) === 1>>
+					<<set _n++>>
+					| [[Fix left eye|Surgery Degradation][eyeSurgery($activeSlave, "left", "fix"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "eyeFix"]]
+				<</if>>
+				<<if getRightEyeVision($activeSlave) === 1 && getRightEyeType($activeSlave) === 1>>
+					<<set _n++>>
+					| [[Fix right eye|Surgery Degradation][eyeSurgery($activeSlave, "right", "fix"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "eyeFix"]]
+				<</if>>
+				<<if _n === 2>>
+					| [[Fix both eyes|Surgery Degradation][eyeSurgery($activeSlave, "both", "fix"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "eyeFix"]]
+				<</if>>
+			<</if>>
+
+			<<if ($seeExtreme == 1)>>
+				<<if $activeSlave.indentureRestrictions < 1>>
+					/* blind */
+					<<set _n = 0>>
+					<<if getLeftEyeVision($activeSlave) > 0 && getLeftEyeType($activeSlave) === 1>>
+						<<set _n++>>
+						| [[Blind left eye|Surgery Degradation][eyeSurgery($activeSlave, "left", "blind"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "blind"]]
+					<</if>>
+					<<if getRightEyeVision($activeSlave) > 0 && getRightEyeType($activeSlave) === 1>>
+						<<set _n++>>
+						| [[Blind right eye|Surgery Degradation][eyeSurgery($activeSlave, "right", "blind"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "blind"]]
+					<</if>>
+					<<if _n === 2>>
+						| [[Blind both eyes|Surgery Degradation][eyeSurgery($activeSlave, "both", "blind"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "blind"]]
+					<</if>>
+					/* remove */
+					<<set _n = 0>>
+					<<if hasLeftEye($activeSlave)>>
+						<<set _n++>>
+						| [[Remove left eye|Surgery Degradation][eyeSurgery($activeSlave, "left", "remove"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "remove eyes"]]
+					<</if>>
+					<<if hasRightEye($activeSlave)>>
+						<<set _n++>>
+						| [[Remove right eye|Surgery Degradation][eyeSurgery($activeSlave, "right", "remove"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "remove eyes"]]
+					<</if>>
+					<<if _n === 2>>
+						| [[Remove both eyes|Surgery Degradation][eyeSurgery($activeSlave, "both", "remove"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20), $surgeryType = "remove eyes"]]
+					<</if>>
+					/* implant */
+					<<if isProstheticAvailable($activeSlave, "ocular")>>
+						<<set _n = 0>>
+						<<if !hasLeftEye($activeSlave)>>
+							<<set _n++>>
+							| [[Give left eye ocular implant|Surgery Degradation][eyeSurgery($activeSlave, "left", "cybernetic"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "ocular implant"]]
+						<</if>>
+						<<if !hasRightEye($activeSlave)>>
+							<<set _n++>>
+							| [[Give right eye ocular implant|Surgery Degradation][eyeSurgery($activeSlave, "right", "cybernetic"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "ocular implant"]]
+						<</if>>
+						<<if _n === 2>>
+							| [[Give ocular implants|Surgery Degradation][eyeSurgery($activeSlave, "both", "cybernetic"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20), $surgeryType = "ocular implant"]]
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+		</div>
+	</div>
+
+	/*Regular Ears*/
+	<div>
+		$He has
+		<<if $activeSlave.earShape == "normal">>
+			normal ears.
+		<<elseif $activeSlave.earShape == "damaged">>
+			damaged ears.
+			| [[Repair|Surgery Degradation][$activeSlave.earShape = "normal", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earRestore"]]
+		<<elseif $activeSlave.earShape == "pointy">>
+			small elfin ears.
+		<<elseif $activeSlave.earShape == "elven">>
+			long elf ears.
+		<<elseif $activeSlave.earShape == "ushi">>
+			floppy cow ears.
+		<<elseif $activeSlave.earShape == "none">>
+			no ears.
+		<<else>>
+			bugged ears. You done goofed. <span class="note">Report This</span>
+		<</if>>
+
+		<div class="choices">
+			<<if $activeSlave.indentureRestrictions >= 2>>
+				<span class="note">$His indenture forbids elective surgery</span>
+			<<else>>
+				<<if $activeSlave.earShape != "normal" && $activeSlave.earShape != "none">>
+					[[Restore to normal|Surgery Degradation][$activeSlave.earShape = "normal", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earRestore"]]
+				<</if>>
+				<<if $activeSlave.earShape != "normal" && $activeSlave.earShape !== "none" && $seeExtreme == 1 && $activeSlave.indentureRestrictions < 1>> | <</if>>
+				<<if $activeSlave.earShape != "none" && $seeExtreme == 1 && $activeSlave.indentureRestrictions < 1>>
+					[[Remove them|Surgery Degradation][surgeryAmp($activeSlave, "left ear"), surgeryAmp($activeSlave, "right ear"), $surgeryType = "earGone", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)]]
+				<</if>>
+				<<if $activeSlave.earShape == "none">>
+					<<if $activeSlave.hears != -2 && $activeSlave.earImplant != 1>>
+						<<set $activeSlave.hears = -1>>
+					<</if>>
+				<<else>>
+					<<if $activeSlave.earShape != "pointy">>
+						| [[Reshape into small elfin ears|Surgery Degradation][$activeSlave.earShape = "pointy", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earMinor"]]
+					<</if>>
+					<<if $surgeryUpgrade == 1>>
+						<<if $activeSlave.earShape != "elven">>
+							| [[Reshape into long elf ears|Surgery Degradation][$activeSlave.earShape = "elven", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earMajor"]]
+						<</if>>
+						<<if $activeSlave.earShape != "ushi">>
+							| [[Reshape into bovine ears|Surgery Degradation][$activeSlave.earShape = "ushi", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earMajor"]]
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+		</div>
+	</div>
+
+	/*Top Ears*/
+	<div>
+		<<if $activeSlave.earT != "none">>
+			$He has
+			<<if $activeSlave.earT == "none">>
+				<<if $activeSlave.earShape != "none">>only one set of ears<<else>>no secondary ears<</if>>.
+			<<elseif $activeSlave.earT == "normal">>
+				<<if $activeSlave.earShape != "none">>a second pair of ears grafted to $his head<<else>>a pair of ears grafted to the top of $his head<</if>>.
+			<<elseif $activeSlave.earT == "neko">>
+				a pair of cat ears adorning $his head.
+			<<elseif $activeSlave.earT == "inu">>
+				a pair of dog ears adorning $his head.
+			<<elseif $activeSlave.earT == "kit">>
+				a pair of fox ears adorning $his head.
+			<<elseif $activeSlave.earT == "tanuki">>
+				a pair of tanuki ears adorning $his head.
+			<<else>>
+				You done goofed. <span class="note">Report This</span>
+			<</if>>
+			<<if $activeSlave.indentureRestrictions >= 2>>
+				<span class="note">$His indenture forbids elective surgery</span>
+			<<else>>
+				<<if $activeSlave.earT != "none" && $seeExtreme == 1 && $activeSlave.indentureRestrictions < 1>>
+					[[Remove them|Surgery Degradation][$activeSlave.earT = "none", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20), $surgeryType = "earGone"]]
+				<</if>>
+				<<if $activeSlave.earT == "normal">>
+					<<if $activeSlave.earT != "neko">>
+						| [[Reshape into cat Ears|Surgery Degradation][$activeSlave.earT = "neko", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earMajor"]]
+					<</if>>
+					<<if $activeSlave.earT != "inu">>
+						| [[Reshape into dog Ears|Surgery Degradation][$activeSlave.earT = "inu", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earMajor"]]
+					<</if>>
+					<<if $activeSlave.earT != "kit">>
+						| [[Reshape into fox Ears|Surgery Degradation][$activeSlave.earT = "kit", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earMajor"]]
+					<</if>>
+					<<if $activeSlave.earT != "tanuki">>
+						| [[Reshape into tanuki Ears|Surgery Degradation][$activeSlave.earT = "tanuki", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earMajor"]]
+					<</if>>
+				<<else>>
+					<<if $activeSlave.earTColor == "hairless">>
+						They are completely bald.
+						[[Implant hair mimicking fibers|Surgery Degradation][$activeSlave.earTColor = $activeSlave.hColor, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earMinor"]]
+					<<else>>
+						They are covered by a multitude of implanted $activeSlave.earTColor fibers mimicking hair.
+						[[Remove them|Surgery Degradation][$activeSlave.earTColor = "hairless", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earMinor"]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	</div>
+
+	/*Hearing*/
+	<div>
+		<<if $activeSlave.earImplant == 1>>
+			$He has cochlear implants.
+		<<elseif ($activeSlave.hears <= -2)>>
+			$He is deaf.
+		<<else>>
+			$He has working
+			<<if $activeSlave.hears == -1>>
+				inner ears, but is hearing impaired<<if $activeSlave.earShape == "none">>, likely due to missing the outer structure<</if>>.
+			<<else>>
+				ears and good hearing.
+			<</if>>
+		<</if>>
+	</div>
+
+	<div class="choices">
+		<<if $activeSlave.earImplant !== 1>>
+			<<if $activeSlave.hears == -1>>
+				<<if ($activeSlave.earImplant != 1) && $activeSlave.earShape != "none">>
+					[[Correct hearing|Surgery Degradation][$activeSlave.hears = 0, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earFix"]]
+				<</if>>
+			<<else>>
+				<<if ($seeExtreme == 1) && ($activeSlave.earImplant != 1) && $activeSlave.indentureRestrictions < 1>>
+					[[Muffle hearing|Surgery Degradation][$activeSlave.hears = -1, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "earMuffle"]]
+				<</if>>
+			<</if>>
+		<</if>>
+
+		<<if ($seeExtreme == 1) && $activeSlave.indentureRestrictions < 1>>
+			<<if $activeSlave.earImplant == 0>>
+				<<if ($activeSlave.hears > -2)>>
+					| [[Deafen|Surgery Degradation][$activeSlave.hears = -2,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "deafen"]]
+				<</if>>
+				<<if isProstheticAvailable($activeSlave, "cochlear")>>
+					| [["Give " + $him + " cochlear implants"|Surgery Degradation][$activeSlave.earImplant = 1, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20), $surgeryType = "cochlear implant"]]
+				<</if>>
+			<</if>>
+		<</if>>
+	</div>
+
+	/*Horns*/
+	<div>
+		$He has <<if $activeSlave.horn == "none">>no horns<<else>>$activeSlave.horn<</if>>.
+		<div class="choices">
+			<<if $activeSlave.indentureRestrictions >= 2>>
+				<span class="note">$His indenture forbids elective surgery</span>
+			<<elseif $activeSlave.horn == "none">>
+				Give $him:
+				<<if $activeSlave.horn != "curved succubus horns">>
+					[[Succubus horns|Surgery Degradation][$activeSlave.horn = "curved succubus horns", $activeSlave.hornColor = "jet black", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "horn"]]
+				<</if>>
+				<<if $activeSlave.horn != "backswept horns">>
+					| [[Backswept horns|Surgery Degradation][$activeSlave.horn = "backswept horns", $activeSlave.hornColor = "jet black", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "horn"]]
+				<</if>>
+				<<if $activeSlave.horn != "cow horns">>
+					| [[Bovine horns|Surgery Degradation][$activeSlave.horn = "cow horns", $activeSlave.hornColor = "ivory", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "horn"]]
+				<</if>>
+				<<if $activeSlave.horn != "one long oni horn">>
+					| [[One oni horn|Surgery Degradation][$activeSlave.horn = "one long oni horn", $activeSlave.hornColor = $activeSlave.skin, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "horn"]]
+				<</if>>
+				<<if $activeSlave.horn != "two long oni horns">>
+					| [[Two oni horns|Surgery Degradation][$activeSlave.horn = "two long oni horns", $activeSlave.hornColor = $activeSlave.skin, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "horn"]]
+				<</if>>
+				<<if $activeSlave.horn != "small horns">>
+					| [[Small horns|Surgery Degradation][$activeSlave.horn = "small horns", $activeSlave.hornColor = "ivory", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "horn"]]
+				<</if>>
+			<<elseif $activeSlave.horn != "one long oni horn">>
+				[[Remove them|Surgery Degradation][surgeryAmp($activeSlave, "horn"), $surgeryType = "hornGone", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)]]
+			<<else>>
+				[[Remove it|Surgery Degradation][surgeryAmp($activeSlave, "horn"), $surgeryType = "hornGone", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)]]
+			<</if>>
+		</div>
+	</div>
+
+	/*Lips*/
+	<div>
+		$He has
+		<<if $activeSlave.lips <= 10>>
+			thin, unattractive lips.
+		<<elseif $activeSlave.lips <= 20>>
+			normal lips.
+		<<elseif $activeSlave.lips <= 40>>
+			full, attractive lips.
+		<<elseif $activeSlave.lips <= 70>>
+			plump, beestung lips.
+		<<elseif $activeSlave.lips <= 95>>
+			huge, obviously augmented lips.
+		<<else>>
+			a facepussy: $his lips are so huge that they're always a bit parted in the middle, forming a moist, inviting hole for cock.
+		<</if>>
+		<<if $activeSlave.lipsImplant == 0>>
+		<<elseif $activeSlave.lipsImplant <= 10>>
+			$He has moderate lip implants.
+		<<elseif $activeSlave.lipsImplant <= 20>>
+			$He has large lip implants.
+		<<else>>
+			$He has enormous lip implants.
+		<</if>>
+		<div class="choices">
+			<<if $activeSlave.indentureRestrictions >= 2>>
+				<span class="note">$His indenture forbids elective surgery</span>
+			<<elseif ($activeSlave.lips <= 75) || (($activeSlave.lips <= 95) && ($seeExtreme == 1))>>
+				<<if $activeSlave.lipsImplant > 0>>
+					[[Replace with the next size up|Surgery Degradation][$activeSlave.lipsImplant += 20,$activeSlave.lips += 20,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "lips"]] <span class="note">This will reduce $his oral skills</span>
+				<<else>>
+					[[Lip implants|Surgery Degradation][$activeSlave.lipsImplant = 20,$activeSlave.lips += 20,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "lips"]] <span class="note">This will reduce $his oral skills</span>
+				<</if>>
+			<</if>>
+			<<if $activeSlave.lipsImplant != 0>>
+				<<if $activeSlave.indentureRestrictions < 2>>
+					| [[Remove lip implants|Surgery Degradation][surgeryAmp($activeSlave, "lips"), $surgeryType = "lips", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)]]
+				<</if>>
+			<</if>>
+			<<if ($activeSlave.lips >= 10) && ($activeSlave.lipsImplant == 0)>>
+				<<if $activeSlave.indentureRestrictions < 2>>
+					| [[Reduce lips|Surgery Degradation][$activeSlave.lips -= 10,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $surgeryType = "lips"]]
+				<</if>>
+			<</if>>
+		</div>
+	</div>
+
+	/*Teeth*/
+	<div>
+		<<switch $activeSlave.teeth>>
+			<<case "crooked">>
+				$He has crooked teeth.
+				<div class="choices">
+					[[Apply braces|Surgery Degradation][$activeSlave.teeth = "straightening braces",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),$surgeryType = "braces"]]
+					<<if ($seeExtreme == 1) && ($activeSlave.indentureRestrictions < 1)>>
+						| [[Replace them with removable prosthetics|Surgery Degradation][$activeSlave.teeth = "removable",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "teeth"]] |
+						[[Replace them with sharp teeth|Surgery Degradation][$activeSlave.teeth = "pointy",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "sharp"]]
+					<</if>>
+				</div>
+			<<case "gapped">>
+				$He has a noticeable gap in $his front teeth.
+				<div class="choices">
+					[[Apply braces|Surgery Degradation][$activeSlave.teeth = "straightening braces",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),$surgeryType = "braces"]]
+					<<if ($seeExtreme == 1) && ($activeSlave.indentureRestrictions < 1)>>
+						| [[Replace them with removable prosthetics|Surgery Degradation][$activeSlave.teeth = "removable",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "teeth"]] |
+						[[Replace them with sharp teeth|Surgery Degradation][$activeSlave.teeth = "pointy",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "sharp"]]
+					<</if>>
+				</div>
+			<<case "straightening braces">>
+				$His crooked teeth are in braces.
+				<div class="choices">
+					[[Remove braces|Remote Surgery][$activeSlave.teeth = "crooked",$surgeryType = "removeBraces"]]
+					<<if ($seeExtreme == 1) && ($activeSlave.indentureRestrictions < 1)>>
+						| [[Replace them with removable prosthetics|Surgery Degradation][$activeSlave.teeth = "removable",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "teeth"]] |
+						[[Replace them with sharp teeth|Surgery Degradation][$activeSlave.teeth = "pointy",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "sharp"]]
+					<</if>>
+				</div>
+			<<case "cosmetic braces">>
+				$He has braces on $his straight teeth.
+				<div class="choices">
+					[[Remove braces|Remote Surgery][$activeSlave.teeth = "normal"]]
+					<<if ($seeExtreme == 1) && ($activeSlave.indentureRestrictions < 1)>>
+						| [[Replace them with removable prosthetics|Surgery Degradation][$activeSlave.teeth = "removable",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "teeth"]] |
+						[[Replace them with sharp teeth|Surgery Degradation][$activeSlave.teeth = "pointy",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "sharp"]]
+					<</if>>
+				</div>
+			<<case "removable">>
+				$He has prosthetic teeth that can be removed for extreme oral sex.
+				<div class="choices">
+					<<if ($seeExtreme == 1) && ($activeSlave.indentureRestrictions < 1)>>
+						[[Replace them with sharp teeth|Surgery Degradation][$activeSlave.teeth = "pointy",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "sharp"]] |
+						[[Normal dental implants|Surgery Degradation][$activeSlave.teeth = "normal",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "oral"]]
+					<</if>>
+				</div>
+			<<case "pointy">>
+				$His teeth have been replaced with sturdy, realistic implants that mimic the dentition of a predator.
+				<div class="choices">
+					<<if ($seeExtreme == 1) && ($activeSlave.indentureRestrictions < 1)>>
+						[[Replace them with removable prosthetics|Surgery Degradation][$activeSlave.teeth = "removable",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "teeth"]] |
+						[[Normal dental implants|Surgery Degradation][$activeSlave.teeth = "normal",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "oral"]]
+					<</if>>
+				</div>
+			<<case "baby">>
+				$He has baby teeth.
+				<div class="choices">
+					<<if ($seeExtreme == 1) && ($activeSlave.indentureRestrictions < 1)>>
+						[[Replace them with removable prosthetics|Surgery Degradation][$activeSlave.teeth = "removable",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "teeth"]] |
+						[[Replace them with sharp teeth|Surgery Degradation][$activeSlave.teeth = "pointy",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "sharp"]] |
+						[[Normal dental implants|Surgery Degradation][$activeSlave.teeth = "normal",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "oral"]]
+					<</if>>
+				</div>
+			<<case "mixed">>
+				$He has a mix of baby and normal teeth.
+				<div class="choices">
+					<<if ($seeExtreme == 1) && ($activeSlave.indentureRestrictions < 1)>>
+						[[Replace them with removable prosthetics|Surgery Degradation][$activeSlave.teeth = "removable",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "teeth"]] |
+						[[Replace them with sharp teeth|Surgery Degradation][$activeSlave.teeth = "pointy",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "sharp"]] |
+						[[Normal dental implants|Surgery Degradation][$activeSlave.teeth = "normal",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "oral"]]
+					<</if>>
+				</div>
+			<<default>>
+				$He has normal, healthy teeth.
+				<div class="choices">
+					[[Unnecessary braces|Surgery Degradation][$activeSlave.teeth = "cosmetic braces",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),$surgeryType = "braces"]]
+					<<if ($seeExtreme == 1) && ($activeSlave.indentureRestrictions < 1)>>
+						| [[Replace them with removable prosthetics|Surgery Degradation][$activeSlave.teeth = "removable",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "teeth"]] |
+						[[Replace them with sharp teeth|Surgery Degradation][$activeSlave.teeth = "pointy",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "sharp"]]
+					<</if>>
+				</div>
+		<</switch>>
+	</div>
+
+	/*Voice*/
+	<div>
+		<<if $activeSlave.electrolarynx == 1>>
+			$He has an artificial larynx.
+		<<else>>
+			<<if $activeSlave.voice == 0>>
+				$He is mute.
+			<<elseif $activeSlave.voice == 1>>
+				$He has a deep voice.
+			<<elseif $activeSlave.voice == 2>>
+				$He has a feminine voice.
+			<<elseif $activeSlave.voice == 3>>
+				$He has a high, girly voice.
+			<</if>>
+			<<if $activeSlave.voiceImplant >= 1>>
+				$He has had surgery on $his voice box to raise $his voice.
+			<<elseif $activeSlave.voiceImplant <= -1>>
+				$He has had surgery on $his voice box to lower $his voice.
+			<</if>>
+		<</if>>
+		<<if ($activeSlave.indentureRestrictions < 1) && ($activeSlave.electrolarynx != 1)>>
+			<div class="choices">
+				<<if $activeSlave.voice != 0>>
+					<<if $activeSlave.voice < 3>>
+						[[Perform surgery to raise voice|Surgery Degradation][$activeSlave.voice += 1, $activeSlave.voiceImplant += 1, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "voice"]]
+					<</if>>
+					<<if $activeSlave.voice == 2>>
+						|
+					<</if>>
+					<<if $activeSlave.voice > 1>>
+						[[Perform surgery to lower voice|Surgery Degradation][$activeSlave.voice -= 1, $activeSlave.voiceImplant -= 1, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "voice2"]]
+					<</if>>
+					<<if $seeExtreme == 1>>
+						| [[Remove vocal cords|Surgery Degradation][surgeryAmp($activeSlave, "voicebox"), $surgeryType = "mute", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)]]
+					<</if>>
+				<<elseif isProstheticAvailable($activeSlave, "electrolarynx")>>
+					[["Give " + $him + " an electrolarynx"|Surgery Degradation][$activeSlave.electrolarynx = 1, $activeSlave.voice = 2, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20), $surgeryType = "electrolarynx"]]
+				<</if>>
+			</div>
+		<</if>>
+	</div>
+
+	/*Smell*/
+	<div>
+		<<if $activeSlave.smells == 0 && $activeSlave.tastes == 0>>
+			$He has a working chemosensory system.
+		<<elseif $activeSlave.smells == 0>>
+			$He has a working olfactory system and an impaired gustatory system.
+		<<elseif $activeSlave.tastes == 0>>
+			$He has a working gustatory system and an impaired olfactory system.
+		<<else>>
+			$He has an impaired chemosensory system.
+		<</if>>
+		<<if $activeSlave.indentureRestrictions < 1>>
+			<div class="choices">
+				<<if ($activeSlave.smells == 0) && ($seeExtreme == 1)>>
+					[[Remove sense of smell|Surgery Degradation][$activeSlave.smells = -1, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "desmell"]]
+				<<elseif $activeSlave.smells == -1>>
+					| [[Repair sense of smell|Surgery Degradation][$activeSlave.smells = 0, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "resmell"]]
+				<</if>>
+				<<if ($activeSlave.tastes == 0) && ($seeExtreme == 1)>>
+					| [[Remove sense of taste|Surgery Degradation][$activeSlave.tastes = -1, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "detaste"]]
+				<<elseif $activeSlave.tastes == -1>>
+					| [[Repair sense of taste|Surgery Degradation][$activeSlave.tastes = 0, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "retaste"]]
+				<</if>>
+			</div>
+		<</if>>
+	</div>
+
+	/*Scars*/
+	<div>
+		<<if $activeSlave.scar["left cheek"]>>
+			$He has <<= App.Desc.expandScarString($activeSlave, "left cheek")>> on $his left cheek.
+			<div class="choices">
+				[[Remove all scars there|Surgery Degradation][delete $activeSlave.scar["left cheek"], cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "scarRemov"]]
+			</div>
+		<<else>>
+			$His face is unscarred.
+			<div class="choices">
+				<<if $activeSlave.indentureRestrictions > 1>>
+					<span class="note">$His indenture forbids elective surgery</span>
+				<<else>>
+					[[Give a menacing scar|Surgery Degradation][App.Medicine.Modification.addScar($activeSlave, "left cheek", "menacing"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "scarFear"]] |
+					[[Give an exotic scar|Surgery Degradation][App.Medicine.Modification.addScar($activeSlave, "left cheek", "exotic"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "scarExo"]]
+				<</if>>
+			</div>
+		<</if>>
+		</div>
+	</div>
+</div>
+
+<div id="upper" class="tabcontent">
+<div class="content">
+	/*Generic boob desc*/
+	<h3>Chest:</h3>
+	<div>
+		$His
+		<<if $activeSlave.boobs < 300>><<print either("androgynous", "flat")>> chest is barely there.
+		<<elseif $activeSlave.boobs < 400>><<print either("pointy", "tiny")>>, <<print $activeSlave.boobs>>cc chest only fill A-cups.
+		<<elseif $activeSlave.boobs < 8500>>
+			<<if $showBoobCCs == 1>>
+				<<print App.Desc.boobBits.format("%ADJ %NOUN, %VOLUME CCs, would fill %ACUP.", $activeSlave.boobs)>>
+			<<else>>
+				<<print App.Desc.boobBits.format("%ADJ %NOUN, would fill %ACUP.", $activeSlave.boobs)>>
+			<</if>>
+		<<else>>
+			<<print App.Desc.boobBits.format("%ADJ %NOUN, %VOLUME CCs, ", $activeSlave.boobs)>> fill out an enormous custom bra; $his tits dominate $his entire frame.
+		<</if>>
+	</div>
+
+	/*Boob implants*/
+	<div>
+		$He has
+		<<if ["fillable", "advanced fillable", "hyper fillable"].includes($activeSlave.boobsImplantType)>>
+			<<if $activeSlave.boobsImplantType == "hyper fillable">>
+				<<if $activeSlave.boobsImplant < 20000>>
+					underfilled,
+				<<else>>
+					enormous,
+				<</if>>
+			<<elseif $activeSlave.boobsImplantType == "advanced fillable">>
+				<<if $activeSlave.boobsImplant <= 1000>>
+					deflated,
+				<<elseif $activeSlave.boobsImplant < 2200>>
+					underfilled,
+				<<elseif $activeSlave.boobsImplant > 10000>>
+					massively overfilled,
+				<<else>>
+					massive,
+				<</if>>
+			<<else>>
+				<<if $activeSlave.boobsImplant <= 500>>
+					deflated,
+				<<elseif $activeSlave.boobsImplant < 800>>
+					underfilled,
+				<<elseif $activeSlave.boobsImplant > 1800>>
+					massively overfilled,
+				<<elseif $activeSlave.boobsImplant > 1000>>
+					massive,
+				<<elseif $activeSlave.boobsImplant >= 800>>
+					giant,
+				<</if>>
+			<</if>>
+			<<print $activeSlave.boobsImplant>>cc $activeSlave.boobsImplantType breast implants.
+		<<elseif $activeSlave.boobsImplantType != "none">>
+			<<if $activeSlave.boobsImplant > 1000>>
+				massive, <<print $activeSlave.boobsImplant>>cc
+			<<elseif $activeSlave.boobsImplant > 800>>
+				giant, <<print $activeSlave.boobsImplant>>cc
+			<<elseif $activeSlave.boobsImplant > 600>>
+				huge, <<print $activeSlave.boobsImplant>>cc
+			<<elseif $activeSlave.boobsImplant > 400>>
+				large, <<print $activeSlave.boobsImplant>>cc
+			<<elseif $activeSlave.boobsImplant > 200>>
+				moderate, <<print $activeSlave.boobsImplant>>cc
+			<<elseif $activeSlave.boobsImplant > 0>>
+				small, <<print $activeSlave.boobsImplant>>cc
+			<</if>>
+			<<if $activeSlave.boobsImplantType != "normal">>
+				$activeSlave.boobsImplantType
+			<</if>>
+			breast implants.
+			<<if $activeSlave.boobsImplant > 8000 && $activeSlave.boobsImplantType == "string">>
+				<span class="yellow">Large string based implants are a risk to a slave's health.</span>
+			<</if>>
+		<<else>>
+			no implants.
+		<</if>>
+		<div class="choices">
+			<<set _surgeries = App.Medicine.Surgery.sizingProcedures.boobs($activeSlave, App.Medicine.Surgery.allSizingOptions())>>
+			<<set _surgeryLinks = _surgeries.map(s => App.Medicine.Surgery.makeLink("Surgery Degradation", s, $activeSlave))>>
+			<<= _surgeryLinks.join('&thinsp;|&thinsp;')>>
+		</div>
+	</div>
+
+	<div>
+		<<if $activeSlave.boobsImplant != 0>>
+			The shape of $his breasts is determined by $his implants.
+		<<else>>
+			<<if $activeSlave.boobs <= 250>>
+				$He's so flat-chested that $his breasts don't have much shape.
+			<<else>>
+				<<switch $activeSlave.boobShape>>
+					<<case "perky">>
+						They're perky, with nipples that point slightly upwards.
+					<<case "downward-facing">>
+						They're not attractively shaped; $his nipples pointing downward.
+					<<case "torpedo-shaped">>
+						They're torpedo-shaped, projecting some way from $his chest.
+					<<case "wide-set">>
+						They're wide-set, with nipples pointing away from $his sternum.
+					<<case "saggy">>
+						They're not attractively shaped, with $his nipples pointing down.
+					<<default>>
+						They're nicely rounded and rest naturally.
+				<</switch>>
+				<div class="choices">
+					<<if $activeSlave.indentureRestrictions >= 2>>
+						<span class="note">$His indenture does not allow breast restructuring</span>
+					<<elseif $activeSlave.breastMesh == 1>>
+						<span class="note">$His supportive mesh implant prevents reconstruction</span>
+					<<else>>
+						<<if ($activeSlave.boobShape == "saggy") || ($activeSlave.boobShape == "downward-facing")>>
+							[[Breast lift|Surgery Degradation][$activeSlave.boobShape = "normal", surgeryDamage($activeSlave,20),cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $surgeryType = "breastLift"]]<<if $activeSlave.preg > $activeSlave.pregData.normalBirth/1.42 || ($activeSlave.boobs >= 5000 && $activeSlave.boobs < 8000)>> <span class="note">$His current state may result in $his breasts becoming saggy again</span><</if>>
+						<<else>>
+							<<if ($activeSlave.boobShape == "normal")>>
+								[[Reshape them to be perkier|Surgery Degradation][$activeSlave.boobShape = "perky",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave,10),$surgeryType = "breastReconstruction"]]
+								| [[Make them torpedo-shaped|Surgery Degradation][$activeSlave.boobShape = "torpedo-shaped",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave,10),$surgeryType = "breastReconstruction"]]
+							<<else>>
+								[[Reshape them to be more normal|Surgery Degradation][$activeSlave.boobShape = "normal",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave,10),$surgeryType = "breastReconstruction"]]
+							<</if>>
+							<<if ($activeSlave.boobShape != "saggy") && ($activeSlave.boobShape != "downward-facing") && ($activeSlave.boobs >= 2000) && ($activeSlave.boobsImplant == 0) && ($meshImplants == 1) && ($surgeryUpgrade == 1)>>
+								| [[Implant a supportive mesh to preserve their shape|Surgery Degradation][$activeSlave.breastMesh = 1,cashX(forceNeg($surgeryCost*($activeSlave.boobs/100)), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave,10),$surgeryType = "breastShapePreservation"]]
+							<</if>>
+						<</if>>
+					<</if>>
+				</div>
+			<</if>>
+		<</if>>
+	</div>
+
+	/* Nipples*/
+	<div>
+		<<if $surgeryUpgrade == 1>>
+			$He has $activeSlave.nipples nipples.
+			<div class="choices">
+				<<if $activeSlave.indentureRestrictions >= 2>>
+					<span class="note">$His indenture forbids elective surgery</span>
+				<<elseif $activeSlave.indentureRestrictions == 1>>
+					<span class="note">$His indenture forbids extreme body modification</span>
+				<<else>> /* split for possible dicknips later on, should lcd wish to attempt it again. */
+					<<if $activeSlave.nipples == "fuckable">>
+						[[Restore their shape and function|Surgery Degradation][$activeSlave.nipples = "huge",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "areolae"]]
+					<<else>>
+						<<if $activeSlave.boobs-$activeSlave.boobsMilk < 500>>
+							<span class="note">$His breasts are too small to support reshaping $his nipples to be penetratable</span>
+						<<elseif $activeSlave.boobs-$activeSlave.boobsImplant-$activeSlave.boobsMilk < 500>>
+							<span class="note">$His implants are too large to support reshaping $his nipples to be penetratable</span>
+						<<elseif $activeSlave.nipples != "huge">>
+							<span class="note">$His nipples are too small to be made fuckable</span>
+						<<else>>
+							[[Reshape them to support being penetrated|Surgery Degradation][$activeSlave.nipples = "fuckable",$activeSlave.nipplesPiercing = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "nippleCunts"]]<<if $activeSlave.nipplesPiercing > 0>> <span class="note">Will remove piercings.</span><</if>>
+						<</if>>
+					<</if>>
+				<</if>>
+			</div>
+		<</if>>
+	</div>
+
+	/*Areolae*/
+	<div>
+		<<if $activeSlave.areolae == 0>>
+			$His areolae are small <<if $activeSlave.areolaeShape != "circle">>and have been surgically altered to be <<= $activeSlave.areolaeShape>>-shaped<<else>>and fairly normal<</if>>.
+		<<elseif $activeSlave.areolae == 1>>
+			$His areolae are large <<if $activeSlave.areolaeShape != "circle">>and have been surgically altered to be <<= $activeSlave.areolaeShape>>-shaped<<else>>but still fairly normal<</if>>.
+		<<elseif $activeSlave.areolae > 1>>
+			$He has <<if $activeSlave.areolae == 2>>wide<<elseif $activeSlave.areolae == 3>>huge<<elseif $activeSlave.areolae == 4>>massive<</if>> areolae<<if $activeSlave.areolaeShape != "circle">>, which have been surgically altered to be <<= $activeSlave.areolaeShape>>-shaped<</if>>.
+		<</if>>
+		<<if $activeSlave.indentureRestrictions < 2>>
+			<<if $activeSlave.areolaeShape != "circle">>
+				$His <<= $activeSlave.areolaeShape>>-shaped areolae can be normalized or reshaped:
+				<div class="choices">
+					[[Normal|Surgery Degradation][$activeSlave.areolaeShape = "circle",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "areolae"]]
+					<<if $activeSlave.areolaeShape != "heart">>
+						| [[Heart-shaped|Surgery Degradation][$activeSlave.areolaeShape = "heart",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "areolae"]]
+					<</if>>
+					<<if $activeSlave.areolaeShape != "star">>
+						| [[Star-shaped|Surgery Degradation][$activeSlave.areolaeShape = "star",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "areolae"]] |
+					<</if>>
+				</div>
+			<</if>>
+			<<if ($activeSlave.areolae > 0) && ($activeSlave.areolaeShape == "circle")>>
+				They are big enough that they could be reshaped into a pattern. Graft skin to make $his areolae:
+			<</if>>
+			<div class="choices">
+				<<if ($activeSlave.areolae > 0) && ($activeSlave.areolaeShape == "circle")>>
+					[[Heart-shaped|Surgery Degradation][$activeSlave.areolaeShape = "heart",$activeSlave.areolae -= 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "areolae"]]
+					| [[Star-shaped|Surgery Degradation][$activeSlave.areolaeShape = "star",$activeSlave.areolae -= 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "areolae"]]
+				<</if>>
+				<<if $activeSlave.areolae > 0>>
+					| [[Reduce areolae|Surgery Degradation][$activeSlave.areolae -= 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "areolae"]]
+				<</if>>
+				<<if $activeSlave.areolae > 0>>|<</if>>
+				<<if $activeSlave.areolae < 4>>
+					[[Enlarge areolae|Surgery Degradation][$activeSlave.areolae += 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "areolae"]]
+				<</if>>
+			</div>
+		<</if>>
+	</div>
+
+	/*Lactation*/
+	<div>
+		<<if $activeSlave.lactation == 0>>
+			$He is not lactating.
+		<<elseif $activeSlave.lactation == 2>>
+			$He is implanted with slow-release pro-lactation drugs.
+		<<else>>
+			$He is lactating naturally.
+		<</if>>
+		<div class="choices">
+			<<if $activeSlave.lactation < 2>>
+				<<if $activeSlave.indentureRestrictions < 2>>
+					[[Implant slow-release pro-lactation drugs|Surgery Degradation][$activeSlave.lactation = 2, $activeSlave.lactationDuration = 2, $activeSlave.induceLactation = 0, $activeSlave.boobs -= $activeSlave.boobsMilk, $activeSlave.boobsMilk = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "lactation"]] <span class="note">This may increase $his natural breast size</span>
+				<</if>>
+			<</if>>
+			<<if $activeSlave.lactation > 1>>
+				| [[Remove lactation implant|Surgery Degradation][$activeSlave.lactation = 0, $activeSlave.lactationDuration = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $surgeryType = "endlac"]]
+			<</if>>
+		</div>
+	</div>
+
+	<h3>Midrif:</h3>
+	/*Fat*/
+	<div>
+		<<if $activeSlave.indentureRestrictions >= 2 && $activeSlave.weight > 30>>
+			<span class="note">$His indenture forbids elective surgery</span>
+		<<elseif $activeSlave.weight > 30>>
+			<<if $activeSlave.weight > 190>>
+				$He is extremely fat. [[Major liposuction|Surgery Degradation][surgeryDamage($activeSlave,40), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $surgeryType = "liposuction"]]
+			<<elseif $activeSlave.weight > 130>>
+				$He is fat. [[Heavy liposuction|Surgery Degradation][surgeryDamage($activeSlave,20), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $surgeryType = "liposuction"]]
+			<<elseif $activeSlave.weight > 30>>
+				$He is overweight. [[Liposuction|Surgery Degradation][surgeryDamage($activeSlave,10), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $surgeryType = "liposuction"]]
+			<</if>>
+			<<if $surgeryUpgrade == 1>>
+				| [[Fat grafting|fat grafting workaround][surgeryDamage($activeSlave,40), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)*2, $availabeFat = Math.round($activeSlave.weight/10), $boobFat = 0, $buttFat = 0, $surgeryType = "fat graft"]]
+			<</if>>
+		<</if>>
+	</div>
+
+	/*Also fat*/
+	<div>
+		$He has
+		<<if $activeSlave.waist > 95>>a masculine
+		<<elseif $activeSlave.waist > 40>>an ugly
+		<<elseif $activeSlave.waist > 10>>an unattractive
+		<<elseif $activeSlave.waist >= -10>>an average
+		<<elseif $activeSlave.waist >= -40>>a feminine
+		<<elseif $activeSlave.waist >= -95>>an hourglass
+		<<else>>an absurd
+		<</if>>
+		waist.
+		<<if $activeSlave.waist >= -75>>
+			<<if $activeSlave.indentureRestrictions < 2>>
+				[[Liposuction|Surgery Degradation][$activeSlave.waist -= 20,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "lipo"]]
+			<</if>>
+		<</if>>
+		<<if ($activeSlave.waist >= -95) && ($activeSlave.waist < -75) && ($seeExtreme == 1)>>
+			<<if $activeSlave.indentureRestrictions < 1 && ($activeSlave.breedingMark != 1 || $propOutcome == 0 || $eugenicsFullControl == 1 || $arcologies[0].FSRestart == "unset")>>
+				[["Remove ribs to severely narrow " + $his + " waist"|Surgery Degradation][$activeSlave.waist = -100,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "ribs"]]
+			<</if>>
+		<</if>>
+	</div>
+
+	/*Belly*/
+	<div>
+		$He's
+		<<if $activeSlave.pregKnown > 0>>
+			pregnant.
+		<<elseif $activeSlave.womb.length == 0 && $activeSlave.broodmother > 0>>
+			got a dormant broodmother implant in $his womb.
+		<<elseif $activeSlave.preg > 0>>
+			showing unusual discomfort as $his stomach is inspected. A quick test reveals that <span class="lime">$he is pregnant.</span>
+			<<set $activeSlave.pregKnown = 1>>
+		<<elseif $activeSlave.bellyImplant > 0>>
+			got a <<print $activeSlave.bellyImplant>>cc implant filled implant located in $his abdomen.
+			<<if $activeSlave.cervixImplant == 1 >>
+				$He also has micropump filter installed in $his cervix feeding into the implant.
+			<<elseif $activeSlave.cervixImplant == 2>>
+				$He also has micropump filter installed in $his rectum feeding into the implant.
+			<<elseif $activeSlave.cervixImplant == 3>>
+				$He also has micropump filter installed in both $his holes feeding into the implant.
+			<</if>>
+		<<elseif $activeSlave.bellyFluid >= 1500>>
+			got a <<print $activeSlave.inflationType>>-filled implant located in $his abdomen.
+			<<if $activeSlave.cervixImplant == 1 >>
+				$He also has micropump filter installed in $his cervix feeding into the implant.
+			<<elseif $activeSlave.cervixImplant == 2>>
+				$He also has micropump filter installed in $his rectum feeding into the implant.
+			<<elseif $activeSlave.cervixImplant == 3>>
+				$He also has micropump filter installed in both $his holes feeding into the implant.
+			<</if>>
+		<<elseif $activeSlave.bellyImplant == 0>>
+			got an empty fillable implant located in $his abdomen.
+			<<if $activeSlave.cervixImplant == 1 >>
+				$He also has micropump filter installed in $his cervix feeding into the implant.
+			<<elseif $activeSlave.cervixImplant == 2>>
+				$He also has micropump filter installed in $his rectum feeding into the implant.
+			<<elseif $activeSlave.cervixImplant == 3>>
+				$He also has micropump filter installed in both $his holes feeding into the implant.
+			<</if>>
+		<<else>>
+			got a normal stomach.
+		<</if>>
+		<div class="choices">
+			<<if $activeSlave.indentureRestrictions >= 2>>
+				<span class="note">$His indenture forbids elective surgery</span>
+			<<elseif $activeSlave.breedingMark == 1 && $propOutcome == 1 && $eugenicsFullControl != 1 && $arcologies[0].FSRestart != "unset">>
+				<span class="note">You are forbidden from affecting $his fertility</span>
+			<<elseif $activeSlave.preg > 0 || $activeSlave.inflation > 0 || $activeSlave.broodmother > 0>>
+				<span class="note">$He is unable to support an abdominal implant at this time</span>
+			<<elseif $activeSlave.bellyImplant >= 750000>>
+				<span class="note">$His abdominal implant is so far beyond its maximum limit it is at risk of rupturing</span>
+			<<elseif $activeSlave.bellyImplant >= 600000>>
+				<span class="note">$His abdominal implant is greatly beyond its maximum limit</span>
+			<<elseif $activeSlave.bellyImplant >= 450000>>
+				<span class="note">$His abdominal implant is over-filled</span>
+			<<elseif $activeSlave.bellyImplant >= 400000>>
+				<span class="note">$His abdominal implant is at its capacity</span>
+			<<elseif $activeSlave.bellyImplant > 130000 && $arcologies[0].FSTransformationFetishistResearch != 1>>
+				<span class="note">$His abdominal implant is at its capacity</span>
+			<<elseif $activeSlave.bellyImplant == -1 && ($activeSlave.ovaries == 1 || $activeSlave.mpreg == 1) && $bellyImplants == 1>>
+				[[Implant fillable abdominal implant|Surgery Degradation][$activeSlave.bellyImplant = 0,$activeSlave.preg = -2, $activeSlave.bellyPain += 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "bellyIn"]]
+			<<elseif $activeSlave.bellyImplant == -1 && $bellyImplants == 1>>
+				[[Implant a fillable abdominal implant|Surgery Degradation][$activeSlave.bellyImplant = 0, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $activeSlave.bellyPain += 2, surgeryDamage($activeSlave,50), $surgeryType = "bellyInMale"]]
+			<<elseif $activeSlave.bellyPain == 2>>
+				<span class="note">$His body cannot handle more filler this week</span>
+			<<elseif $activeSlave.bellyImplant > -1 && $activeSlave.bellyPain == 0>>
+				[[Add inert filler|Surgery Degradation][$activeSlave.bellyImplant += 200, $activeSlave.bellyPain += 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "bellyUp"]]
+				| [[Add a considerable amount of inert filler|Surgery Degradation][$activeSlave.bellyImplant += 500, $activeSlave.bellyPain += 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "bellyUp"]]
+			<<elseif $activeSlave.bellyImplant > -1 && $activeSlave.bellyPain == 1>>
+				[[Add more inert filler|Surgery Degradation][$activeSlave.bellyImplant += 200, $activeSlave.bellyPain += 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,30),$surgeryType = "bellyUp"]]
+				| [[Add a considerable amount of inert filler|Surgery Degradation][$activeSlave.bellyImplant += 500, $activeSlave.bellyPain += 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "bellyUp"]]<<if $activeSlave.health.health < 0>><span class="note red">This may cause severe health issues</span><</if>>
+			<</if>>
+			<<if $activeSlave.bellyImplant > -1>>
+				| [[Drain implant|Surgery Degradation][$activeSlave.bellyImplant -= 200,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "bellyDown"]]
+				<<if $activeSlave.bellyImplant >= 500>>
+					| [[Greatly drain implant|Surgery Degradation][$activeSlave.bellyImplant -= 500, surgeryDamage($activeSlave,5),cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $surgeryType = "bellyDown"]]
+				<</if>>
+				<<if $activeSlave.indentureRestrictions < 2>>
+					| [[Remove implant|Surgery Degradation][$activeSlave.bellyImplant = -1, $activeSlave.cervixImplant = 0, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "bellyOut"]]
+					<<if $activeSlave.cervixImplant != 1 && $activeSlave.cervixImplant != 3 && $cervixImplants >= 1 && $activeSlave.vagina > -1>> /* slave should have vagina */
+						<div>
+							[[Install cervix micropump filter|Surgery Degradation][$activeSlave.cervixImplant = ($activeSlave.cervixImplant==0?1:3), surgeryDamage($activeSlave, 5), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $surgeryType = "cervixPump"]]
+							<span class="note">Will allow $his belly implant to slowly swell as people cum in $his vagina</span>
+						</div>
+					<</if>>
+					<<if $activeSlave.cervixImplant != 2 && $activeSlave.cervixImplant != 3 && $cervixImplants == 2>>
+						<div>
+							[[Install rectal micropump filter|Surgery Degradation][$activeSlave.cervixImplant = ($activeSlave.cervixImplant==0?2:3), surgeryDamage($activeSlave, 20), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $surgeryType = "cervixPumpA"]]
+							<span class="note">Will allow $his belly implant to slowly swell as people cum in $his anus</span>
+						</div>
+					<</if>>
+				<</if>>
+			<</if>>
+		</div>
+	</div>
+
+	/* Uterine Implants */
+	<div>
+		<<if $activeSlave.wombImplant == "none" && ($UterineRestraintMesh == 1) && ($activeSlave.ovaries == 1 || $activeSlave.mpreg == 1)>>
+			$He has a normal uterus<<if $activeSlave.mpreg == 1>>, though slightly repositioned<</if>>.
+			<<if $activeSlave.indentureRestrictions >= 1>>
+				<span class="note">$His indenture forbids invasive elective surgery</span>
+			<<elseif $activeSlave.bellyImplant > 0 || $activeSlave.preg > 0>>
+				<span class="note">$His womb is currently in use and unsafe to operate on</span>
+			<<else>>
+				<<if $surgeryUpgrade == 1>>
+					<<if $UterineRestraintMesh == 1>>
+						[[Install reinforcing organic mesh|Surgery Degradation][$activeSlave.wombImplant = "restraint", surgeryDamage($activeSlave,25), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $surgeryType = "womb"]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<elseif $activeSlave.wombImplant == "restraint">>
+			$He has a mesh reinforced uterus.
+			<<if $activeSlave.indentureRestrictions >= 1>>
+				<span class="note">$His indenture forbids invasive elective surgery</span>
+			<<elseif $activeSlave.bellyImplant > 0 || $activeSlave.preg > 0>>
+				<span class="note">$His womb is currently in use and unsafe to operate on</span>
+			<<else>>
+				[[Remove organic mesh|Surgery Degradation][$activeSlave.wombImplant = "none", surgeryDamage($activeSlave,50), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $surgeryType = "womb"]]<<if $activeSlave.health.health < 0>><span class="note red">This may cause severe health issues</span><</if>>
+			<</if>>
+		<</if>>
+	</div>
+
+	/*Belly sag*/
+	<div>
+		<<if $activeSlave.bellySagPreg > 0>>
+			<<if $activeSlave.belly >= 1500>>
+				$He has a sagging midriff, ruined from excessive pregnancy. It is currently filled out by $his swollen belly and cannot safely be worked on.
+			<<else>>
+				$He has a sagging midriff, ruined from excessive pregnancy.
+				[[Tummy tuck|Surgery Degradation][$activeSlave.bellySag = 0,$activeSlave.bellySagPreg = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "tummyTuck"]]
+			<</if>>
+		<<elseif $activeSlave.bellySag > 0>>
+			<<if $activeSlave.belly >= 1500>>
+				$He has a sagging midriff, ruined from excessive distention. It is currently filled out by $his swollen belly and cannot safely be worked on.
+			<<else>>
+				$He has a sagging midriff, ruined from excessive distention.
+				[[Tummy tuck|Surgery Degradation][$activeSlave.bellySag = 0,$activeSlave.bellySagPreg = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "tummyTuck"]]
+			<</if>>
+		<</if>>
+	</div>
+
+	/*Csec*/
+	<div>
+		<<if ($activeSlave.scar.hasOwnProperty("belly") && $activeSlave.scar.belly.hasOwnProperty("c-section"))>>
+			<<if $activeSlave.scar.belly["c-section"] > 0>>
+				$He has an unsightly c-section scar.
+				<<link "Remove Caesarean scar">>
+					<<run App.Medicine.Modification.removeScar($activeSlave, "belly", "c-section")>>
+					<<run cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave, 10)>>
+					<<set $surgeryType = "bellyscar">>
+					<<goto "Surgery Degradation">>
+				<</link>>
+			<</if>>
+		<</if>>
+	</div>
+</div>
+</div>
+
+<div id="lower" class="tabcontent">
+<div class="content">
+	<h3>Butt:</h3>
+	<div>
+		$He's got a
+		<<if $activeSlave.butt <= 1>>flat and <<print either("skinny", "slim", "taut")>> ass.
+		<<elseif $activeSlave.butt <= 2>><<print either("rounded, small", "small but rounded", "small, sleek")>> rear end.
+		<<elseif $activeSlave.butt <= 3>><<print either("big and healthy", "curved and plump", "healthy and plump")>> derrière.
+		<<elseif $activeSlave.butt <= 4>><<print either("big bubble", "curvy and enticing", "juicy and large")>> butt.
+		<<elseif $activeSlave.butt <= 5>><<print either("huge", "juicy and huge", "massive and undeniable")>> rear end.
+		<<elseif !hasBothLegs($activeSlave)>>ridiculous ass. It's so big it would jiggle as $he walked — if $he could walk.
+		<<else>>ridiculous ass. It's so big it jiggles as $he walks.
+		<</if>>
+
+		<<if $activeSlave.buttImplant > 0>>
+			$He has
+			<<if $activeSlave.buttImplantType == "string">>
+				<<if $activeSlave.buttImplant > 2>>
+					massively engorged
+				<</if>>
+			<<elseif $activeSlave.buttImplantType == "normal">>
+				<<if $activeSlave.buttImplant == 1>>
+					moderate
+				<<elseif $activeSlave.buttImplant == 2>>
+					enormous
+				<<else>>
+					absurd
+				<</if>>
+			<<elseif $activeSlave.buttImplantType == "hyper fillable">>
+				<<if $activeSlave.buttImplant > 19>>
+					overfilled
+				<<elseif $activeSlave.buttImplant < 9>>
+					underfilled
+				<<elseif $activeSlave.buttImplant <= 5>>
+					deflated
+				<<else>>
+					absurd
+				<</if>>
+			<<elseif $activeSlave.buttImplantType == "advanced fillable">>
+				<<if $activeSlave.buttImplant > 8>>
+					overfilled
+				<<elseif $activeSlave.buttImplant < 5>>
+					underfilled
+				<<elseif $activeSlave.buttImplant <= 3>>
+					deflated
+				<<else>>
+					massive
+				<</if>>
+			<<elseif $activeSlave.buttImplantType == "fillable">>
+				<<if $activeSlave.buttImplant > 4>>
+					overfilled
+				<<elseif $activeSlave.buttImplant < 3>>
+					underfilled
+				<<elseif $activeSlave.buttImplant == 1>>
+					deflated
+				<<else>>
+					massive
+				<</if>>
+			<</if>>
+			<<if $activeSlave.buttImplantType != "normal">>
+				$activeSlave.buttImplantType
+			<</if>>
+			butt implants.
+			<<if $activeSlave.buttImplant > 3 && $activeSlave.buttImplantType == "string">>
+				<span class="yellow">Large string based implants are a risk to a slave's health.</span>
+			<</if>>
+		<</if>>
+
+		<div class="choices">
+			<<set _surgeries = App.Medicine.Surgery.sizingProcedures.butt($activeSlave, App.Medicine.Surgery.allSizingOptions())>>
+			<<set _surgeryLinks = _surgeries.map(s => App.Medicine.Surgery.makeLink("Surgery Degradation", s, $activeSlave))>>
+			<<= _surgeryLinks.join('&thinsp;|&thinsp;')>>
+		</div>
+	</div>
+
+	/*Asshole*/
+	<div>
+		$He has
+		<<if $activeSlave.anus == 0>>
+			a virgin asshole.
+		<<elseif $activeSlave.anus == 1>>
+			a tight asshole.
+		<<elseif $activeSlave.anus == 2>>
+			a loose asshole.
+		<<elseif $activeSlave.anus == 3>>
+			a very loose asshole.
+		<<else>>
+			a permanently gaping asshole.
+		<</if>>
+	</div>
+
+	/*Pucker up*/
+	<div>
+		<<if ($activeSlave.anus > 3)>>
+			$His anal sphincter could benefit from surgical repair.
+			<div class="choices">
+				[[Repair asshole|Surgery Degradation][$activeSlave.anus = 3,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "anus"]] <span class="note">This will reduce $his anal skills</span>
+			</div>
+		<<elseif ($surgeryUpgrade == 1) && ($activeSlave.indentureRestrictions < 2)>>
+			<<if ($activeSlave.anus > 1)>>
+				$His anal sphincter could benefit from microsurgical rejuvenation.
+				<div class="choices">
+					[[Tighten asshole|Surgery Degradation][$activeSlave.anus = 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "anus"]] <span class="note">This will reduce $his anal skills</span>
+				</div>
+			<<elseif ($activeSlave.anus > 0)>>
+				$His butthole is fairly narrow, but could be tightened to virgin status.
+				<div class="choices">
+					[[Restore anal virginity|Surgery Degradation][$activeSlave.anus = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "anus"]] <span class="note">This will reduce $his anal skills</span>
+				</div>
+			<</if>>
+		<</if>>
+	</div>
+
+	<h3>Sex:</h3>
+	/*Female sex*/
+	<div>
+		<<if $activeSlave.vagina > -1>>
+			<<if $activeSlave.labia == 0>>
+				$He has minimal pussylips.
+			<<elseif $activeSlave.labia == 1>>
+				$He has pretty, noticeable pussylips.
+			<<elseif $activeSlave.labia == 2>>
+				$He has large pussylips.
+			<<elseif $activeSlave.labia > 2>>
+				$He has extremely large pussylips.
+			<</if>>
+			<<if $activeSlave.labia > 0>>
+				<<if $activeSlave.indentureRestrictions < 2>>
+					[[Apply labiaplasty|Surgery Degradation][$activeSlave.labia = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "labiaplasty"]]
+				<</if>>
+			<</if>>
+			<<if ($activeSlave.labia < 3) && ($surgeryUpgrade == 1)>>
+				<<if $activeSlave.indentureRestrictions < 1>>
+					<<if $activeSlave.labia > 0>> | <</if>>
+					[[Increase labia|Surgery Degradation][$activeSlave.labia += 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "labiaplasty"]]
+				<</if>>
+			<</if>>
+			<div>
+				<<if $activeSlave.dick == 0>>
+					$He has
+					<<if $activeSlave.clit == 0>>
+						a small clit<<if ($seeCircumcision == 1) && $activeSlave.foreskin > 0>> with a hood<</if>>.
+					<<elseif $activeSlave.clit == 1>>
+						a big clit<<if ($seeCircumcision == 1) && $activeSlave.foreskin > 0>> with a hood<</if>>.
+					<<elseif $activeSlave.clit == 2>>
+						a huge clit<<if ($seeCircumcision == 1) && $activeSlave.foreskin > 0>> with a hood<</if>>.
+					<<elseif $activeSlave.clit > 2>>
+						an enormous clit<<if ($seeCircumcision == 1) && $activeSlave.foreskin > 0>> with a hood<</if>>.
+					<</if>>
+					<<if $activeSlave.clit > 0>>
+						<<if $activeSlave.indentureRestrictions < 2>>
+							[[Apply clitoral reduction|Surgery Degradation][$activeSlave.clit = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "clitoral reduction"]]
+						<</if>>
+					<</if>>
+					<<if ($activeSlave.clit < 3) && ($surgeryUpgrade == 1)>>
+						<<if $activeSlave.indentureRestrictions < 1>>
+							<<if $activeSlave.clit > 0>> | <</if>>
+							[[Increase clit|Surgery Degradation][$activeSlave.clit += 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "clitoral enlargement"]]
+						<</if>>
+					<</if>>
+					<<if ($activeSlave.foreskin > 0) && $activeSlave.clit > 0>>
+						<<if $seeCircumcision == 1>>
+							<<if $activeSlave.indentureRestrictions < 2>>
+								| [[Remove clitoral hood|Surgery Degradation][$activeSlave.foreskin = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "circumcision"]]
+							<</if>>
+						<</if>>
+					<</if>>
+
+				<</if>>
+			</div>
+		<</if>>
+ </div>
+
+	/* TODO: add a check for slave's eggType */
+	/*Fertility*/
+	<div>
+		<<if ($activeSlave.preg > -2) && ($activeSlave.preg < 1) && ($activeSlave.ovaries != 0 || $activeSlave.mpreg != 0) && ($activeSlave.pubertyXX == 0)>>
+			$He has not had $his first period.
+		<<elseif ($activeSlave.preg > -2) && ($activeSlave.preg < 1) && ($activeSlave.ovaries != 0 || $activeSlave.mpreg != 0)>>
+			$He has a working womb.
+		<<elseif ($activeSlave.preg <= -2) && ($activeSlave.ovaries != 0 || $activeSlave.mpreg != 0)>>
+			$He has a sterile womb.
+		<</if>>
+
+		<<if isFertile($activeSlave) && $activeSlave.preg == 0>>
+			[[Artificially inseminate|Artificial Insemination]] |
+		<</if>>
+
+		<<if ($activeSlave.preg > -2) && ($activeSlave.preg < 1) && ($activeSlave.ovaries != 0 || $activeSlave.mpreg != 0)>>
+			<<if $activeSlave.indentureRestrictions < 1 && ($activeSlave.breedingMark != 1 || $propOutcome == 0 || $eugenicsFullControl == 1 || $arcologies[0].FSRestart == "unset")>>
+			[[Sterilize|Surgery Degradation][$activeSlave.preg = -2,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "ster"]]
+			<</if>>
+		<<elseif ($activeSlave.preg < 1) && ($activeSlave.ovaries != 0 || $activeSlave.mpreg != 0) && ($activeSlave.preg != -3)>>
+			[[Restore fertility|Surgery Degradation][$activeSlave.preg = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "fert"]]
+		<</if>>
+
+		<<if ($activeSlave.ovaries == 1 || $activeSlave.mpreg == 1)>>
+			<div>
+				<<if ($activeSlave.pubertyXX == 0)>>
+					$He has <<if ($activeSlave.eggType != "human")>><<print ($activeSlave.eggType)>><</if>> ovaries but has not had $his first period.
+				<<else>>
+					$He has working <<if ($activeSlave.eggType != "human")>><<print ($activeSlave.eggType)>><</if>> ovaries<<if $activeSlave.mpreg>> and a womb attached to $his rectum<</if>>.
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.indentureRestrictions > 0>>
+					<span class="note">$His indenture forbids invasive elective surgery</span>
+				<<else>>
+					<<if $activeSlave.ovaImplant != 0>>
+						<<switch $activeSlave.ovaImplant>>
+						<<case "fertility">>
+							They have fertility implants attached to them.
+							[[Remove implants|Surgery Degradation][$activeSlave.ovaImplant = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "ovaImplant removed"]]
+						<<case "sympathy">>
+							They are linked via implants and ovulate in concert.
+							[[Remove implants|Surgery Degradation][$activeSlave.ovaImplant = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "ovaImplant removed"]]
+						<<case "asexual">>
+							One has been replaced with a sperm producing analog for self-fertilization.
+						<</switch>>
+					<<else>>
+						<<if $fertilityImplant == 1>>
+							[[Install fertility implants|Surgery Degradation][$activeSlave.ovaImplant = "fertility",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "ovaImplant added"]]
+						<</if>>
+						<<if $fertilityImplant || $sympatheticOvaries>>
+							<br>
+						<</if>>
+						<<if $sympatheticOvaries == 1>>
+							[[Install sympathetic ovulation implants|Surgery Degradation][$activeSlave.ovaImplant = "sympathy",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "ovaImplant added"]]
+						<</if>>
+					<</if>>
+				<</if>>
+			</div>
+
+			<div>
+			<<if $activeSlave.indentureRestrictions < 1 && ($activeSlave.breedingMark != 1 || $propOutcome == 0 || $eugenicsFullControl == 1 || $arcologies[0].FSRestart == "unset")>>
+				<<if $activeSlave.ovaries == 1>>
+					<<if $activeSlave.preg > 0>>
+						$His ovaries and womb cannot be removed while $he is pregnant.
+					<<else>>
+						[[Oophorectomy|Surgery Degradation][$activeSlave.ovaries = 0,$activeSlave.ovaImplant = 0,$activeSlave.wombImplant = "none",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "ster"]]
+					<</if>>
+				<</if>>
+				<<if $activeSlave.mpreg == 1>>
+					<<if $activeSlave.preg > 0>>
+						$His anal womb cannot be removed while $he is pregnant.
+					<<else>>
+						[[Remove anal reproductive organs|Surgery Degradation][$activeSlave.mpreg = 0,$activeSlave.ovaImplant = 0, $activeSlave.wombImplant = "none",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,30),$surgeryType = "mpreg removed"]]
+					<</if>>
+				<</if>>
+			<</if>>
+			</div>
+
+			<<if $seeExtreme == 1 && $seeHyperPreg == 1 && $seePreg != 0 && $permaPregImplant == 1>>
+				<div>
+					<<if $activeSlave.assignment == "work in the dairy" && $dairyPregSetting > 0>>
+						$His womb is already rented out for the production of calves.
+					<<elseif $activeSlave.broodmother > 0>>
+						$He has been made into a <<if $activeSlave.broodmother > 1>>hyper-<</if>>broodmother.
+						<<if $activeSlave.womb.length == 0 >>
+							<div class="choices">
+								[[Remove the pregnancy generator|Surgery Degradation][$activeSlave.preg = 0,$activeSlave.pregWeek = -1,$activeSlave.pregSource = 0,$activeSlave.pregKnown = 0,$activeSlave.pregType = 0,$activeSlave.broodmother = 0,$activeSlave.broodmotherFetuses = 0,$activeSlave.broodmotherOnHold = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),$activeSlave.pregControl = "none",surgeryDamage($activeSlave,10),$surgeryType = "pregRemove"]]
+							</div>
+						<<else>>
+							$He is pregnant right now, so $his broodmother implant can't be safely extracted.
+							<div class="choices">
+								<<if $activeSlave.broodmother == 1 && $activeSlave.broodmotherFetuses == 1 && $PGHack == 1>> /*hack can be applied only one time, for type 1 broodmothers, and only if implant already present*/
+									[[Hack the pregnancy generator|Surgery Degradation][cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),$activeSlave.pregControl = "none",surgeryDamage($activeSlave,1),$surgeryType = "preg1hack"]] <span class="note">This will trick the generator ova release logic, forcing it to release more than one ova each week. This is an untested override and can cause severe health problems.</span>
+								<<elseif $activeSlave.broodmother == 1 && $activeSlave.broodmotherFetuses > 1>>
+									The implant firmware has already been adjusted.
+								<</if>>
+							</div>
+						<</if>>
+					<<elseif $activeSlave.indentureRestrictions > 0 || ($activeSlave.breedingMark == 1 && $propOutcome == 1 && $eugenicsFullControl != 1 && $arcologies[0].FSRestart != "unset")>>
+						<span class="note">$He is protected from extreme surgery</span>
+					<<elseif isFertile($activeSlave) && $activeSlave.ovaryAge <= 46>>
+						$He could be made into a broodmother.
+						<div class="choices">
+							[[Implant a pregnancy generator|Surgery Degradation][$activeSlave.preg = 1,$activeSlave.pregWeek = 1,$activeSlave.pregKnown = 1,$activeSlave.pregType = 1,$activeSlave.broodmother = 1,$activeSlave.broodmotherFetuses = 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),$activeSlave.pregControl = "none",surgeryDamage($activeSlave,10),$surgeryType = "preg"]] <span class="note">This will have severe effects on $his health and mind</span>
+						</div>
+					<<else>>
+						$His body cannot support being a broodmother.
+					<</if>>
+				</div>
+			<</if>>
+		<</if>>
+	</div>
+
+	/*Sex description*/
+	<div>
+		<<if ($activeSlave.dick == 0) && ($activeSlave.vagina == -1)>>
+			$He is a null, possessing neither penis nor vagina.
+		<<elseif ($activeSlave.dick != 0)>>
+			$He has
+			<<if ($seeCircumcision == 1)>>
+				<<if ($activeSlave.foreskin == 0)>>
+					a circumcised
+				<<elseif ($activeSlave.foreskin >= 1)>>
+					an uncircumcised
+				<</if>>
+			<<else>>
+				a
+			<</if>>
+			<<if ($activeSlave.vagina == -1)>>
+				penis.
+			<<elseif ($activeSlave.ovaries != 0)>>
+				penis and a
+			<<elseif ($activeSlave.vagina != -1)>>
+				penis and a<<if $activeSlave.genes == "XY">>n artificial<</if>>
+			<</if>>
+		<<elseif ($activeSlave.dick == 0)>>
+			$He has a
+		<</if>>
+
+		<<if $activeSlave.vagina > -1>>
+			<<if $activeSlave.vagina == 0>>
+				virgin pussy.
+			<<elseif $activeSlave.vagina == 1>>
+				tight pussy.
+			<<elseif $activeSlave.vagina == 2>>
+				used pussy.
+			<<elseif $activeSlave.vagina == 3>>
+				loose pussy.
+			<<elseif $activeSlave.vagina == 10>>
+				ruined cunt.
+			<<else>>
+				gaping cunt.
+			<</if>>
+		<</if>>
+
+		<<if ($activeSlave.dick != 0) && (($activeSlave.ovaries != 0) || ($activeSlave.vagina != -1))>>
+			It's possible to remove either and leave $him sexually functional.
+		<</if>>
+		<div class="choices">
+			<<if $activeSlave.vagina > -1>>
+				<<if $activeSlave.indentureRestrictions < 1 && ($activeSlave.breedingMark != 1 || $propOutcome == 0 || $eugenicsFullControl == 1 || $arcologies[0].FSRestart == "unset")>>
+					[[Remove pussy|Surgery Degradation][surgeryAmp($activeSlave, "vagina"), $surgeryType = "vaginaRemoval", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)]] <<if $activeSlave.ovaries == 1>><span class="note">This will remove $his ovaries as well</span><</if>>
+				<</if>>
+			<</if>>
+
+			<<if $activeSlave.indentureRestrictions < 1 && ($activeSlave.breedingMark != 1 || $propOutcome == 0 || $eugenicsFullControl == 1 || $arcologies[0].FSRestart == "unset")>>
+				<<if ($activeSlave.vagina == -1) && ($activeSlave.dick != 0)>>
+					| [[Convert genitalia to female|Surgery Degradation][$activeSlave.dick = 0,$activeSlave.dickAccessory = "none",$activeSlave.chastityPenis = 0,$activeSlave.dickTat = 0,$activeSlave.foreskin = 0,$activeSlave.scrotum = 0,$activeSlave.balls = 0,$activeSlave.ballType = "human",$activeSlave.vasectomy = 0,$activeSlave.vagina = 0,$activeSlave.preg = -2,$activeSlave.skill.vaginal = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $surgeryType = "mtf"]]
+				<</if>>
+				<<if ($activeSlave.vagina == -1) && ($activeSlave.dick == 0) && ($surgeryUpgrade == 1)>>
+					| [[Create a vagina|Surgery Degradation][$activeSlave.vagina = 0,$activeSlave.skill.vaginal = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $surgeryType = "ntf"]]
+				<</if>>
+				<<if ($activeSlave.dick > 0) && ($seeExtreme == 1)>>
+					| [[Remove penis|Surgery Degradation][surgeryAmp($activeSlave, "dick"), $surgeryType = "chop", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)]]
+				<</if>>
+				<<if ($activeSlave.foreskin > 0) && $activeSlave.dick > 0>>
+					<<if $activeSlave.indentureRestrictions < 2>>
+						<<if $seeCircumcision == 1>>
+							| [[Remove foreskin|Surgery Degradation][$activeSlave.foreskin = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "circumcision"]]
+						<</if>>
+						<<if $activeSlave.foreskin - $activeSlave.dick > 0>>
+							| [[Remove excess foreskin|Surgery Degradation][$activeSlave.foreskin = $activeSlave.dick,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "foreskinTuck"]]
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+
+			<<if ($activeSlave.dick != 0) && ($activeSlave.vagina == -1) && ($surgeryUpgrade == 1)>>
+				<<if $activeSlave.indentureRestrictions < 1>>
+					| [[Create surgical hermaphrodite|Surgery Degradation][$activeSlave.vagina = 0,$activeSlave.skill.vaginal = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $surgeryType = "herm"]]
+				<</if>>
+			<</if>>
+		</div>
+	</div>
+
+	/*Extra sex surgery*/
+	<div>
+		<<if ($activeSlave.vagina > 3)>>
+			$His vagina could benefit from surgical repair.
+			<div class="choices">
+				[[Repair pussy|Surgery Degradation][$activeSlave.vagina = 3,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "vagina"]] <span class="note">This will reduce $his vaginal skills</span>
+			</div>
+		<<elseif ($surgeryUpgrade == 1) && ($activeSlave.indentureRestrictions < 2)>>
+			<<if ($activeSlave.vagina > 1)>>
+				$His vaginal muscles could benefit from microsurgical rejuvenation.
+				<div class="choices">
+					[[Tighten pussy|Surgery Degradation][$activeSlave.vagina = 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "vagina"]] <span class="note">This will reduce $his vaginal skills</span>
+				</div>
+			<<elseif ($activeSlave.vagina > 0)>>
+				$His pussy is as tight as a virgin's, and $his hymen could be restored.
+				<div class="choices">
+					[[Restore virginity|Surgery Degradation][$activeSlave.vagina = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "vagina"]] <span class="note">This will reduce $his vaginal skills</span>
+				</div>
+			<</if>>
+		<</if>>
+	</div>
+
+	<<if ($activeSlave.balls > 0)>>
+		<div>
+			<<if ($activeSlave.balls == 1)>>
+				$His testicles are vestigial, but $he has balls. Technically. They are
+			<<elseif ($activeSlave.balls > 1)>>
+				$He has testicles
+			<</if>>
+			<<if ($activeSlave.scrotum > 0)>>
+				located in $his scrotum.
+			<<else>>
+				<<if ($activeSlave.genes == "XY")>>
+					relocated inside $his abdomen, and $his scrotum has been removed.
+				<<else>>
+					implanted inside $his abdomen.
+				<</if>>
+			<</if>>
+			<div class="choices">
+				<<if ($activeSlave.scrotum > 0)>>
+					<<if $activeSlave.indentureRestrictions < 2>>
+						<<if $activeSlave.scrotum - $activeSlave.balls > 0>>
+							[[Remove excess scrotal skin|Surgery Degradation][$activeSlave.scrotum = $activeSlave.balls,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "scrotalTuck"]]
+							<<if $activeSlave.indentureRestrictions < 1>> | <</if>>
+						<</if>>
+					<</if>>
+					<<if $activeSlave.indentureRestrictions < 1>>
+						[[Move them inside abdomen and remove scrotum|Surgery Degradation][$activeSlave.scrotum = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20), $surgeryType = "relocate"]]
+						<span class="note">This will have a negative impact on cum production</span>
+					<</if>>
+				<</if>>
+				<<if ($seeExtreme == 1)>>
+					<<if ($activeSlave.scrotum > 0)>>
+						|
+					<</if>>
+					[[Geld|Surgery Degradation][$activeSlave.balls = 0,$activeSlave.ballType = "human",$activeSlave.scrotum = 0,$activeSlave.vasectomy = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $surgeryType = "geld"]]
+				<</if>>
+				<<if $activeSlave.ballType != "sterile">>
+					<<if ($activeSlave.scrotum > 0)>>
+						|
+					<</if>>
+					[[Chemically castrate|Surgery Degradation][$activeSlave.ballType = "sterile",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), $surgeryType = "chem castrate"]]
+				<</if>>
+			</div>
+		</div>
+
+		<div>
+			<<if ($activeSlave.vasectomy == 1)>>
+				$He has had a vasectomy and shoots blanks when $he cums<<if $activeSlave.pubertyXY == 0 || $activeSlave.ballType == "sterile">>, or would, if $he were potent<</if>>.
+				<div class="choices">
+					[[Reverse vasectomy|Surgery Degradation][$activeSlave.vasectomy = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "vasectomy undo"]]
+				</div>
+			<<else>>
+				<<if $activeSlave.ballType == "sterile">>
+					$He has non-functional testicles.
+					<<if $activeSlave.indentureRestrictions < 1>>
+						<div class="choices">
+							[[Clamp vas deferens|Surgery Degradation][$activeSlave.vasectomy = 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "vasectomy"]]
+						</div>
+					<</if>>
+				<<else>>
+					$He has working testicles<<if $activeSlave.pubertyXY == 0>>, though $he isn't potent<</if>>.
+					<<if $activeSlave.indentureRestrictions < 1>>
+						<div class="choices">
+							[[Clamp vas deferens to cull potency|Surgery Degradation][$activeSlave.vasectomy = 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "vasectomy"]]
+						</div>
+					<</if>>
+				<</if>>
+			<</if>>
+		</div>
+ <</if>>
+
+	/*Prostate*/
+	<div>
+		<<if $activeSlave.prostate>>
+			$He has a <<if $activeSlave.prostate > 2>>hyperactive, ejaculation enhancing<<elseif $activeSlave.prostate > 1>>hyperactive<<else>>normal<</if>> prostate.
+			<div class="choices">
+				<<if $activeSlave.prostate >= 2 && $prostateImplants == 1>>
+					<<if $activeSlave.prostate < 3>>
+						<<if $activeSlave.indentureRestrictions < 2>>
+							[[Implant prostate with an ejaculation boosting implant|Surgery Degradation][$activeSlave.prostate = 3,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "ejaculation"]] <span class="note">This will thin $his ejaculate but greatly increase its quantity</span>
+						<</if>>
+					<</if>>
+					<<if $activeSlave.prostate == 3>>
+						| [[Remove ejaculation implant|Surgery Degradation][$activeSlave.prostate = 2,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "endejac"]]
+					<<elseif $activeSlave.prostate == 2>>
+						| [[Remove drug implant|Surgery Degradation][$activeSlave.prostate=1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),$surgeryType="endprecum"]]
+					<</if>>
+				<<else>>
+					<<if $activeSlave.prostate > 1>>
+						[[Remove drug implant|Surgery Degradation][$activeSlave.prostate=1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),$surgeryType="endprecum"]]
+					<</if>>
+					<<if $activeSlave.prostate < 2>>
+						<<if $activeSlave.indentureRestrictions < 2>>
+							| [[Implant slow-release productivity drugs|Surgery Degradation][$activeSlave.prostate=2,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave),surgeryDamage($activeSlave, 10),$surgeryType="precum"]] <span class="note">This may cause some leaking</span>
+						<</if>>
+					<</if>>
+				<</if>>
+				<<if ($seeExtreme == 1)>>
+					<<if $activeSlave.indentureRestrictions < 1>>
+						| [[Remove prostate|Surgery Degradation][$activeSlave.prostate = 0,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $surgeryType = "prostate"]]
+					<</if>>
+				<</if>>
+			</div>
+		<</if>>
+	</div>
+</div>
+</div>
+
+<div id="Race" class="tabcontent">
+<div class="content">
+	/*Race*/
+	<div>
+		<<if $activeSlave.indentureRestrictions < 1>>
+			$He is $activeSlave.race<<if $activeSlave.race != $activeSlave.origRace>>, but was originally $activeSlave.origRace<</if>>. Surgically alter $him to look more:
+			<div class="choices">
+				<<if $activeSlave.race != "white">>
+					[[White|Surgery Degradation][$activeSlave.race = "white", $activeSlave.skin = randomRaceSkin($activeSlave.race), $activeSlave.hColor = randomRaceHair($activeSlave.race), setEyeColor($activeSlave, randomRaceEye($activeSlave.race)), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "race"]] |
+				<</if>>
+				<<if $activeSlave.race != "latina">>
+					[[Latina|Surgery Degradation][$activeSlave.race = "latina", $activeSlave.skin = randomRaceSkin($activeSlave.race), $activeSlave.hColor = randomRaceHair($activeSlave.race), setEyeColor($activeSlave, randomRaceEye($activeSlave.race)), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "race"]] |
+				<</if>>
+				<<if $activeSlave.race != "black">>
+					[[Black|Surgery Degradation][$activeSlave.race = "black", $activeSlave.skin = randomRaceSkin($activeSlave.race), $activeSlave.hColor = randomRaceHair($activeSlave.race), setEyeColor($activeSlave, randomRaceEye($activeSlave.race)), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "race"]] |
+				<</if>>
+				<<if $activeSlave.race != "asian">>
+					[[Asian|Surgery Degradation][$activeSlave.race = "asian", $activeSlave.skin = randomRaceSkin($activeSlave.race), $activeSlave.hColor = randomRaceHair($activeSlave.race), setEyeColor($activeSlave, randomRaceEye($activeSlave.race)), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "race"]] |
+				<</if>>
+				<<if $activeSlave.race != "middle eastern">>
+					[[Middle Eastern|Surgery Degradation][$activeSlave.race = "middle eastern", $activeSlave.skin = randomRaceSkin($activeSlave.race), $activeSlave.hColor = randomRaceHair($activeSlave.race), setEyeColor($activeSlave, randomRaceEye($activeSlave.race)), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "race"]] |
+				<</if>>
+				<<if $activeSlave.race != "indo-aryan">>
+					[[Indo-Aryan|Surgery Degradation][$activeSlave.race = "indo-aryan", $activeSlave.skin = randomRaceSkin($activeSlave.race), $activeSlave.hColor = randomRaceHair($activeSlave.race), setEyeColor($activeSlave, randomRaceEye($activeSlave.race)), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "race"]] |
+				<</if>>
+				<<if $activeSlave.race != "pacific islander">>
+					[[Pacific Islander|Surgery Degradation][$activeSlave.race = "pacific islander", $activeSlave.skin = randomRaceSkin($activeSlave.race), $activeSlave.hColor = randomRaceHair($activeSlave.race), setEyeColor($activeSlave, randomRaceEye($activeSlave.race)), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "race"]] |
+				<</if>>
+				<<if $activeSlave.race != "malay">>
+					[[Malay|Surgery Degradation][$activeSlave.race = "malay", $activeSlave.skin = randomRaceSkin($activeSlave.race), $activeSlave.hColor = randomRaceHair($activeSlave.race), setEyeColor($activeSlave, randomRaceEye($activeSlave.race)), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "race"]] |
+				<</if>>
+				<<if $activeSlave.race != "amerindian">>
+					[[Amerindian|Surgery Degradation][$activeSlave.race = "amerindian", $activeSlave.skin = randomRaceSkin($activeSlave.race), $activeSlave.hColor = randomRaceHair($activeSlave.race), setEyeColor($activeSlave, randomRaceEye($activeSlave.race)), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "race"]] |
+				<</if>>
+				<<if $activeSlave.race != "southern european">>
+					[[Southern European|Surgery Degradation][$activeSlave.race = "southern european", $activeSlave.skin = randomRaceSkin($activeSlave.race), $activeSlave.hColor = randomRaceHair($activeSlave.race), setEyeColor($activeSlave, randomRaceEye($activeSlave.race)), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "race"]] |
+				<</if>>
+				<<if $activeSlave.race != "semitic">>
+					[[Semitic|Surgery Degradation][$activeSlave.race = "semitic", $activeSlave.skin = randomRaceSkin($activeSlave.race), $activeSlave.hColor = randomRaceHair($activeSlave.race), setEyeColor($activeSlave, randomRaceEye($activeSlave.race)), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "race"]] |
+				<</if>>
+				<<if $activeSlave.race != "mixed race">>
+					[[Mixed Race|Surgery Degradation][$activeSlave.race = "mixed race", $activeSlave.skin = randomRaceSkin($activeSlave.race), $activeSlave.hColor = randomRaceHair($activeSlave.race), setEyeColor($activeSlave, randomRaceEye($activeSlave.race)), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "race"]]
+				<</if>>
+			</div>
+		<<else>>
+			<div class="note choices">$His indenture forbids elective surgery</div>
+		<</if>>
+	</div>
+</div>
+</div>
+
+<div id="Structural" class="tabcontent">
+<div class="content">
+	/*Shoulder bones*/
+	<div>
+		<<if $activeSlave.indentureRestrictions < 1>>
+			<<if ($activeSlave.shoulders < -1)>>
+				$He has very narrow shoulders.
+			<<elseif ($activeSlave.shoulders < 0)>>
+				$He has narrow shoulders.
+			<<elseif ($activeSlave.shoulders < 1)>>
+				$He has average shoulders.
+			<<elseif ($activeSlave.shoulders < 2)>>
+				$He has broad shoulders.
+			<<elseif ($activeSlave.shoulders == 2)>>
+				$He has very broad shoulders.
+			<</if>>
+			<<if ($activeSlave.shouldersImplant == 0)>>
+				$He has a natural shoulder structure.
+			<<elseif ($activeSlave.shouldersImplant > 3)>>
+				$His shoulders have been completely rebuilt to be massively wider.
+			<<elseif ($activeSlave.shouldersImplant > 2)>>
+				$His shoulders have been heavily restructured to broaden them.
+			<<elseif ($activeSlave.shouldersImplant > 1)>>
+				$His shoulders have been repeatedly restructured to broaden them.
+			<<elseif ($activeSlave.shouldersImplant > 0)>>
+				$His shoulders have been restructured to broaden them.
+			<<elseif ($activeSlave.shouldersImplant < -3)>>
+				$His shoulders have been completely rebuilt to be massively narrower.
+			<<elseif ($activeSlave.shouldersImplant < -2)>>
+				$His shoulders have been heavily restructured to narrow them.
+			<<elseif ($activeSlave.shouldersImplant < -1)>>
+				$His shoulders have been repeatedly restructured to narrow them.
+			<<elseif ($activeSlave.shouldersImplant < 0)>>
+				$His shoulders have been restructured to narrow them.
+			<</if>>
+			<div class="choices">
+				<<if ($activeSlave.shouldersImplant == 0)>>
+					<<if $activeSlave.shoulders > -2 && $activeSlave.shoulders < 2>>
+						[[Restructure shoulders more broadly|Surgery Degradation][$activeSlave.shouldersImplant++,$activeSlave.shoulders++,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "shoulders"]] | [[Restructure shoulders more narrowly|Surgery Degradation][$activeSlave.shouldersImplant--,$activeSlave.shoulders--,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "shoulders"]]
+					<<elseif $activeSlave.shoulders <= -1>>
+						[[Restructure shoulders more broadly|Surgery Degradation][$activeSlave.shouldersImplant++,$activeSlave.shoulders++,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "shoulders"]]
+					<<elseif $activeSlave.shoulders >= 2>>
+						[[Restructure shoulders more narrowly|Surgery Degradation][$activeSlave.shouldersImplant--,$activeSlave.shoulders--,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "shoulders"]]
+					<</if>>
+				<<elseif $surgeryUpgrade == 1>>
+					<<if $activeSlave.shoulders > -2 && $activeSlave.shoulders < 2>>
+						[[Advanced shoulder broadening surgery|Surgery Degradation][$activeSlave.shouldersImplant++,$activeSlave.shoulders++,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "shoulders"]] | [[Advanced shoulder narrowing surgery|Surgery Degradation][$activeSlave.shouldersImplant--,$activeSlave.shoulders--,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "shoulders"]]
+					<<elseif $activeSlave.shoulders <= -1>>
+						[[Advanced shoulder broadening surgery|Surgery Degradation][$activeSlave.shouldersImplant++,$activeSlave.shoulders++,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "shoulders"]]
+					<<elseif $activeSlave.shoulders >= 2>>
+						[[Advanced shoulder narrowing surgery|Surgery Degradation][$activeSlave.shouldersImplant--,$activeSlave.shoulders--,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "shoulders"]]
+					<</if>>
+				<</if>>
+			</div>
+		<</if>>
+	</div>
+
+	/*Hip bones*/
+	<div>
+		<<if $activeSlave.indentureRestrictions < 1>>
+			<<if ($activeSlave.hips < -1)>>
+				$He has very narrow hips.
+			<<elseif ($activeSlave.hips < 0)>>
+				$He has narrow hips.
+			<<elseif ($activeSlave.hips < 1)>>
+				$He has average hips.
+			<<elseif ($activeSlave.hips < 2)>>
+				$He has broad hips.
+			<<elseif ($activeSlave.hips < 3)>>
+				$He has very broad hips.
+			<<elseif ($activeSlave.hips == 3)>>
+				$He has doorway-jamming hips.
+			<</if>>
+			<<if ($activeSlave.hipsImplant == 0)>>
+				They have not been altered.
+			<<elseif ($activeSlave.hipsImplant > 3)>>
+				$His pelvis has been completely rebuilt to be massively wider.
+			<<elseif ($activeSlave.hipsImplant > 2)>>
+				$His pelvis has been heavily broadened.
+			<<elseif ($activeSlave.hipsImplant > 1)>>
+				$His pelvis has been repeatedly broadened.
+			<<elseif ($activeSlave.hipsImplant > 0)>>
+				$His pelvis has been broadened.
+			<<elseif ($activeSlave.hipsImplant < -3)>>
+				$His pelvis has been completely rebuilt to be massively narrower.
+			<<elseif ($activeSlave.hipsImplant < -2)>>
+				$His pelvis has heavily narrowed.
+			<<elseif ($activeSlave.hipsImplant < -1)>>
+				$His pelvis has been repeatedly narrowed.
+			<<elseif ($activeSlave.hipsImplant < 0)>>
+				$His pelvis has been narrowed.
+			<</if>>
+			<div class="choices">
+				<<if ($activeSlave.hipsImplant == 0)>>
+					<<if $activeSlave.hips > -2 && $activeSlave.hips < 3 && $surgeryUpgrade == 1>>
+						[[Broaden pelvis|Surgery Degradation][$activeSlave.hipsImplant++,$activeSlave.hips++,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "hips"]] | [[Narrow pelvis|Surgery Degradation][$activeSlave.hipsImplant--,$activeSlave.hips--,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "hips"]]
+					<<elseif $activeSlave.hips > -2 && $activeSlave.hips < 2>>
+						[[Broaden pelvis|Surgery Degradation][$activeSlave.hipsImplant++,$activeSlave.hips++,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "hips"]] | [[Narrow pelvis|Surgery Degradation][$activeSlave.hipsImplant--,$activeSlave.hips--,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "hips"]]
+					<<elseif $activeSlave.hips <= -1>>
+						[[Broaden pelvis|Surgery Degradation][$activeSlave.hipsImplant++,$activeSlave.hips++,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "hips"]]
+					<<elseif $activeSlave.hips >= 2>>
+						[[Narrow pelvis|Surgery Degradation][$activeSlave.hipsImplant--,$activeSlave.hips--,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "hips"]]
+					<</if>>
+				<<elseif $surgeryUpgrade == 1>>
+					<<if $activeSlave.hips > -2 && $activeSlave.hips < 3>>
+						[[Advanced pelvis broadening|Surgery Degradation][$activeSlave.hipsImplant++,$activeSlave.hips++,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "hips"]] | [[Advanced pelvis narrowing|Surgery Degradation][$activeSlave.hipsImplant--,$activeSlave.hips--,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "hips"]]
+					<<elseif $activeSlave.hips <= -1>>
+						[[Advanced pelvis broadening|Surgery Degradation][$activeSlave.hipsImplant++,$activeSlave.hips++,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "hips"]]
+					<<elseif $activeSlave.hips >= 3>>
+						[[Advanced pelvis narrowing|Surgery Degradation][$activeSlave.hipsImplant--,$activeSlave.hips--,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "hips"]]
+					<</if>>
+				<</if>>
+			</div>
+		<</if>>
+	</div>
+
+	/*Tweak height*/
+	<<if hasAllNaturalLimbs($activeSlave)>>
+		<div>
+			<<if ($activeSlave.heightImplant == 0)>>
+				$He has normal femurs and humeri.
+			<<elseif ($activeSlave.heightImplant > 0)>>
+				$His femurs, humeri, and other major bones have been lengthened.
+			<<elseif ($activeSlave.heightImplant < 0)>>
+				$His femurs, humeri, and other major bones have been shortened.
+			<</if>>
+			<div class="choices">
+				<<if ($activeSlave.heightImplant == 0)>>
+					<<if $activeSlave.indentureRestrictions < 1>>
+						[[Lengthen major bones|Surgery Degradation][$activeSlave.heightImplant = 1,$activeSlave.height += 10,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "height"]] | [[Shorten major bones|Surgery Degradation][$activeSlave.heightImplant = -1,$activeSlave.height -= 10,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "height"]]
+					<</if>>
+				<<elseif ($activeSlave.height < (Height.mean($activeSlave)+15)) && ($activeSlave.height >= (Height.mean($activeSlave)-15)) && ($surgeryUpgrade == 1)>>
+					<<if $activeSlave.indentureRestrictions < 1>>
+						[[Advanced height gain surgery|Surgery Degradation][$activeSlave.heightImplant = 1,$activeSlave.height += 10,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "height"]] | [[Advanced height reduction surgery|Surgery Degradation][$activeSlave.heightImplant = -1,$activeSlave.height -= 10,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "height"]]
+					<</if>>
+				<<elseif ($activeSlave.height < (Height.mean($activeSlave)+15)) && ($surgeryUpgrade == 1)>>
+					<<if $activeSlave.indentureRestrictions < 1>>
+						[[Advanced height gain surgery|Surgery Degradation][$activeSlave.heightImplant = 1,$activeSlave.height += 10,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "height"]]
+					<</if>>
+				<<elseif ($activeSlave.height >= (Height.mean($activeSlave)-15)) && ($surgeryUpgrade == 1)>>
+					<<if $activeSlave.indentureRestrictions < 1>>
+						[[Advanced height reduction surgery|Surgery Degradation][$activeSlave.heightImplant = -1,$activeSlave.height -= 10,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40),$surgeryType = "height"]]
+					<</if>>
+				<</if>>
+			</div>
+		</div>
+
+		<div>
+			<<if ($activeSlave.heels == 0) && hasAnyNaturalLegs($activeSlave)>>
+				$He has healthy calves.
+			<<elseif ($activeSlave.heels == 1) && hasAnyNaturalLegs($activeSlave)>>
+				$His calves have been altered so that $he cannot walk in anything but very high heels.
+			<</if>>
+			<div class="choices">
+				<<if ($activeSlave.heels == 0) && hasAnyNaturalLegs($activeSlave) && ($seeExtreme == 1)>>
+					<<if $activeSlave.indentureRestrictions < 1>>
+						[[Shorten tendons|Surgery Degradation][$activeSlave.heels = 1,$activeSlave.shoes = "heels",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "heels"]] <span class="note">Prevents $him from walking in anything but very high heels</span>
+					<</if>>
+				<</if>>
+				<<if ($activeSlave.heels == 1)>>
+					[[Replace tendons|Surgery Degradation][$activeSlave.heels = 0,$activeSlave.shoes = "none",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10),$surgeryType = "heelsRestoration"]]
+				<</if>>
+			</div>
+		</div>
+	<</if>>
+
+	/* PROSTHETICS */
+	<h3>Prosthetics</h3>
+	<<= App.Desc.limbs($activeSlave)>>
+	<<if isAmputee($activeSlave)>>
+		<<if $activeSlave.PLimb == 1>>
+			$He has been implanted with a basic PLimb interface.
+		<<elseif $activeSlave.PLimb == 2>>
+			$He has been implanted with an advanced PLimb interface.
+		<</if>>
+	<</if>>
+
+	<<if $seeExtreme === 1 && $activeSlave.indentureRestrictions < 1 && hasAnyNaturalLimbs($activeSlave)>>
+		<style>
+			.container {
+				display: grid;
+				grid-template-columns: max-content 100px 100px;
+			}
+		</style>
+		<<set _LA = 0, _RA = 0, _LL = 0, _RL = 0>>
+
+		<div class="container">
+		<<if getLeftArmID($activeSlave) === 1>>
+			<div>Left arm:</div>
+			<div><label><<radiobutton "_LA" 0 checked>> Leave </label></div>
+			<div><label><<radiobutton "_LA" 1>> Amputate </label></div>
+		<</if>>
+		<<if getRightArmID($activeSlave) === 1>>
+			<div>Right arm:</div>
+			<div><label><<radiobutton "_RA" 0 checked>> Leave </label></div>
+			<div><label><<radiobutton "_RA" 1>> Amputate </label></div>
+		<</if>>
+		<<if getLeftLegID($activeSlave) === 1>>
+			<div>Left leg:</div>
+			<div><label><<radiobutton "_LL" 0 checked>> Leave </label></div>
+			<div><label><<radiobutton "_LL" 1>> Amputate </label></div>
+		<</if>>
+		<<if getRightLegID($activeSlave) === 1>>
+			<div>Right leg:</div>
+			<div><label><<radiobutton "_RL" 0 checked>> Leave </label></div>
+			<div><label><<radiobutton "_RL" 1>> Amputate </label></div>
+		<</if>>
+		</div>
+
+		<div>
+			<<link "Amputate limb(s)">>
+				<<set _atleastOne = 0>>
+				/* temporary story variable */
+				<<set $oldLimbs = App.Desc.limbChange().currentLimbs($activeSlave)>>
+				<<if _LA === 1>>
+					<<run removeLimbs($activeSlave, "left arm")>>
+					<<set _atleastOne++>>
+				<</if>>
+				<<if _RA === 1>>
+					<<run removeLimbs($activeSlave, "right arm")>>
+					<<set _atleastOne++>>
+				<</if>>
+				<<if _LL === 1>>
+					<<run removeLimbs($activeSlave, "left leg")>>
+					<<set _atleastOne++>>
+				<</if>>
+				<<if _RL === 1>>
+					<<run removeLimbs($activeSlave, "right leg")>>
+					<<set _atleastOne++>>
+				<</if>>
+				<<if _atleastOne>>
+					<<run surgeryDamage($activeSlave,_atleastOne * 10), cashX(-$surgeryCost, "slaveSurgery", $activeSlave)>>
+					<<if !hasAnyArms($activeSlave)>>
+						<<set $activeSlave.rules.release.masturbation = 0>>
+					<</if>>
+					<<set $surgeryType = "amp">>
+					<<goto "Surgery Degradation">>
+				<<else>>
+					<<unset $oldLimbs>>
+				<</if>>
+			<</link>> <span class="note">This will greatly restrict $him.</span>
+		</div>
+	<</if>> /* extreme toggle */
+
+	<div>
+		<<if !hasAllNaturalLimbs($activeSlave) && $activeSlave.PLimb == 0>>
+			<<if isProstheticAvailable($activeSlave, "interfaceP1")>>
+				[[Install basic prosthetic interface|Surgery Degradation][$oldLimbs = App.Desc.limbChange().currentLimbs($activeSlave), $activeSlave.PLimb = 1, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20), $surgeryType = "PLimb interface"]]
+			<</if>>
+			<<if isProstheticAvailable($activeSlave, "interfaceP2")>> |
+				[[Install advanced prosthetic interface|Surgery Degradation][$oldLimbs = App.Desc.limbChange().currentLimbs($activeSlave), $activeSlave.PLimb = 2, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20), $surgeryType = "PLimb interface"]]
+			<</if>>
+		<<elseif $activeSlave.PLimb == 1 && isProstheticAvailable($activeSlave, "interfaceP2")>>
+			[[Upgrade to advanced prosthetic interface|Surgery Degradation][$oldLimbs = App.Desc.limbChange().currentLimbs($activeSlave), $activeSlave.PLimb = 2, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,5), $surgeryType = "PLimb interface"]]
+		<</if>>
+	</div>
+
+	<div>
+		<<if $activeSlave.PTail == 1>>
+			$He has a neural interface allowing attachment of tails.
+		<<elseif isProstheticAvailable($activeSlave, "interfaceTail")>>
+			$He lacks a neural interface allowing attachment of tails.
+			[[Implant interface|Surgery Degradation][$activeSlave.PTail = 1, $activeSlave.tail = "none", $activeSlave.tailColor = "none", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,10), $surgeryType = "tailInterface"]]
+		<<else>>
+			$He lacks a neural interface allowing attachment of tails and you have none ready for $him.
+		<</if>>
+	</div>
+
+	<<print App.Medicine.OrganFarm.fullMenu($activeSlave)>>
+
+	<<if $geneticMappingUpgrade >= 1>>
+		<h3>Retro-virus treatments:</h3>
+		<<if ($activeSlave.indentureRestrictions >= 1)>>
+			<div>
+				<span class="note">Modification at a genetic level clearly violates $his indenture contract</span>
+			</div>
+		<<elseif $activeSlave.health.health < 0>>
+			<div>
+				<span class="note">$He's too unhealthy to undergo gene therapy</span>
+			</div>
+		<<else>>
+			<div>
+				<<if $arcologies[0].childhoodFertilityInducedNCSResearch == 1>>
+					<<if $activeSlave.geneMods.NCS == 0>>
+						[[Induced NCS treatment|Surgery Degradation][$activeSlave.geneMods.NCS = 1,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,80), $activeSlave.chem += 40,$surgeryType = "retrograde virus injection NCS"]] <span class="note">This will induce <span class="orange">NCS</span> in $his genetic code</span>
+					<<else>>
+						<span class="note">$He already has Induced <span class="orange">NCS</span></span>
+					<</if>>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $RapidCellGrowthFormula == 1>>
+					<<if $activeSlave.geneMods.rapidCellGrowth == 0>>
+						[[Increased elasticity treatment|Surgery Degradation][$activeSlave.geneMods.rapidCellGrowth = 1,cashX(forceNeg($surgeryCost * 4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "elasticity treatment"]] <span class="note">This will alter $his genetic code to encourage $his body to stretch</span>
+					<<else>>
+						<span class="note">$He already has received the plasticity increasing elasticity treatment</span>
+					<</if>>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.albinism == 2>>
+					[[Albinism prevention treatment|Surgery Degradation][induceAlbinism($activeSlave, 0), cashX(forceNeg($surgeryCost * 4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave, 40), $activeSlave.chem += 100, $surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.albinism == 1 && $geneticMappingUpgrade >= 2>>
+					[[Albinism activation treatment|Surgery Degradation][induceAlbinism($activeSlave, 2), cashX(forceNeg($surgeryCost * 4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave, 40), $activeSlave.chem += 100, $surgeryType = "gene treatment"]] <span class="note">Will not have an active effect</span>
+					| [[Albinism carrier corrective treatment|Surgery Degradation][induceAlbinism($activeSlave, 0), cashX(forceNeg($surgeryCost * 4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced albinism treatment|Surgery Degradation][induceAlbinism($activeSlave, 2), cashX(forceNeg($surgeryCost * 10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave, 40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">albinism</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.androgyny == 2>>
+					[[Androgyny correction treatment|Surgery Degradation][$activeSlave.geneticQuirks.androgyny = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.androgyny == 1 && $geneticMappingUpgrade >= 2>>
+					[[Androgyny activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.androgyny = 2,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Androgyny carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.androgyny = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced androgyny treatment|Surgery Degradation][$activeSlave.geneticQuirks.androgyny = 2,cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">natural androgyny</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.dwarfism == 2>>
+					[[Dwarfism correction treatment|Surgery Degradation][$activeSlave.geneticQuirks.dwarfism = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.dwarfism == 1 && $geneticMappingUpgrade >= 2>>
+					[[Dwarfism activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.dwarfism = 2,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Dwarfism carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.dwarfism = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced dwarfism treatment|Surgery Degradation][$activeSlave.geneticQuirks.dwarfism = 2,cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">dwarfism</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.gigantism == 2>>
+					[[Gigantism correction treatment|Surgery Degradation][$activeSlave.geneticQuirks.gigantism = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.gigantism == 1 && $geneticMappingUpgrade >= 2>>
+					[[Gigantism activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.gigantism = 2,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Gigantism carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.gigantism = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced gigantism treatment|Surgery Degradation][$activeSlave.geneticQuirks.gigantism = 2,cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">gigantism</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.pFace == 2>>
+					[[Prevent passing of perfect faces|Surgery Degradation][$activeSlave.geneticQuirks.pFace = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.uFace == 2>>
+					[[Prevent passing of hideous faces|Surgery Degradation][$activeSlave.geneticQuirks.uFace = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.hyperFertility == 2>>
+					[[Correct genetic hyper fertility|Surgery Degradation][$activeSlave.geneticQuirks.hyperFertility = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.hyperFertility == 1 && $geneticMappingUpgrade >= 2>>
+					[[Hyper fertility activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.hyperFertility = 2,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Hyper fertility carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.hyperFertility = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced hyper fertility treatment|Surgery Degradation][$activeSlave.geneticQuirks.hyperFertility = 2,cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">inhumanly high fertility</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.fertility == 2>>
+					[[Correct heightened fertility|Surgery Degradation][$activeSlave.geneticQuirks.fertility = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.fertility == 1 && $geneticMappingUpgrade >= 2>>
+					[[Heightened fertility activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.fertility = 2,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Heightened fertility carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.fertility = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced heightened fertility treatment|Surgery Degradation][$activeSlave.geneticQuirks.fertility = 2,cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">heightened fertility</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.superfetation == 2>>
+					[[Correct ova release during pregnancy|Surgery Degradation][$activeSlave.geneticQuirks.superfetation = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.superfetation == 1 && $geneticMappingUpgrade >= 2>>
+					[[Superfetation activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.superfetation = 2,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Superfetation carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.superfetation = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced superfetation treatment|Surgery Degradation][$activeSlave.geneticQuirks.superfetation = 2,cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">superfetation</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.gigantomastia >= 2>>
+					[[Correct gigantomastia|Surgery Degradation][$activeSlave.geneticQuirks.gigantomastia = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.gigantomastia == 1 && $geneticMappingUpgrade >= 2>>
+					[[Gigantomastia activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.gigantomastia = 2,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Gigantomastia carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.gigantomastia = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.gigantomastia == 0 && $geneticFlawLibrary == 1>>
+					[[Induced gigantomastia treatment|Surgery Degradation][$activeSlave.geneticQuirks.gigantomastia = 2,cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">gigantomastia</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.macromastia >= 2>>
+					[[Correct macromastia|Surgery Degradation][$activeSlave.geneticQuirks.macromastia = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.macromastia == 1 && $geneticMappingUpgrade >= 2>>
+					[[Macromastia activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.macromastia = 2,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Macromastia carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.macromastia = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.macromastia == 0 && $geneticFlawLibrary == 1>>
+					[[Induced macromastia treatment|Surgery Degradation][$activeSlave.geneticQuirks.macromastia = 2,cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">macromastia</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.rearLipedema == 2>>
+					[[Correct lipedema|Surgery Degradation][$activeSlave.geneticQuirks.rearLipedema = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.rearLipedema == 1 && $geneticMappingUpgrade >= 2>>
+					[[Lipedema activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.rearLipedema = 2,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Lipedema carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.rearLipedema = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced lipedema treatment|Surgery Degradation][$activeSlave.geneticQuirks.rearLipedema = 2,cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">lipedema</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.wellHung == 2>>
+					[[Correct genetic predisposition for large genitals|Surgery Degradation][$activeSlave.geneticQuirks.wellHung = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.wellHung == 1 && $geneticMappingUpgrade >= 2>>
+					[[Enhanced penile development activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.wellHung = 2,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Enhanced penile development carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.wellHung = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced penile development treatment|Surgery Degradation][$activeSlave.geneticQuirks.wellHung = 2,cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">penile development</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.wGain == 2>>
+					[[Correct hyperleptinemia|Surgery Degradation][$activeSlave.geneticQuirks.wGain = 0, $activeSlave.weightDirection = 0, cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.wGain == 1 && $geneticMappingUpgrade >= 2>>
+					[[Hyperleptinemia activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.wGain = 2, $activeSlave.weightDirection = 1, cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Hyperleptinemia carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.wGain = 0, $activeSlave.weightDirection = 0, cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced hyperleptinemia treatment|Surgery Degradation][$activeSlave.geneticQuirks.wGain = 2, $activeSlave.weightDirection = 1, cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">hyperleptinemia</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.wLoss == 2>>
+					[[Correct hypoleptinemia|Surgery Degradation][$activeSlave.geneticQuirks.wLoss = 0, $activeSlave.weightDirection = 0, cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.wLoss == 1 && $geneticMappingUpgrade >= 2>>
+					[[Hypoleptinemia activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.wLoss = 2, $activeSlave.weightDirection = -1, cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Hypoleptinemia carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.wLoss = 0, $activeSlave.weightDirection = 0, cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced hypoleptinemia treatment|Surgery Degradation][$activeSlave.geneticQuirks.wLoss = 2, $activeSlave.weightDirection = -1, cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">hypoleptinemia</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.mGain == 2>>
+					[[Correct myotonic hypertrophy|Surgery Degradation][$activeSlave.geneticQuirks.mGain = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.mGain == 1 && $geneticMappingUpgrade >= 2>>
+					[[Myotonic hypertrophy activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.mGain = 2,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Myotonic hypertrophy carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.mGain = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced myotonic hypertrophy treatment|Surgery Degradation][$activeSlave.geneticQuirks.mGain = 2,cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">myotonic hypertrophy</span> in $his genetic code</span>
+				<</if>>
+			</div>
+
+			<div>
+				<<if $activeSlave.geneticQuirks.mLoss == 2>>
+					[[Correct myotonic dystrophy|Surgery Degradation][$activeSlave.geneticQuirks.mLoss = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $activeSlave.geneticQuirks.mLoss == 1 && $geneticMappingUpgrade >= 2>>
+					[[Myotonic dystrophy activation treatment|Surgery Degradation][$activeSlave.geneticQuirks.mLoss = 2,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+					| [[Myotonic dystrophy carrier corrective treatment|Surgery Degradation][$activeSlave.geneticQuirks.mLoss = 0,cashX(forceNeg($surgeryCost*4), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 100,$surgeryType = "gene treatment"]]
+				<<elseif $geneticFlawLibrary == 1>>
+					[[Induced myotonic dystrophy treatment|Surgery Degradation][$activeSlave.geneticQuirks.mLoss = 2,cashX(forceNeg($surgeryCost*10), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,40), $activeSlave.chem += 40,$surgeryType = "gene treatment"]] <span class="note">This will induce <span class="orange">myotonic dystrophy</span> in $his genetic code</span>
+				<</if>>
+			</div>
+		<</if>>
+	<</if>>
+</div>
+</div>
+
+<div id="ExtremeSurgery" class="tabcontent">
+<div class="content">
+	/*Fuckdoll*/
+	<div>
+		<<if $seeExtreme == 1>>
+			<<if $activeSlave.fuckdoll == 0>>
+				$He is a normal sex slave, not a living sex toy.
+				<div class="choices">
+					<<if $activeSlave.indentureRestrictions < 1 && ($activeSlave.breedingMark != 1 || $propOutcome == 0 || $eugenicsFullControl == 1 || $arcologies[0].FSRestart == "unset")>>
+						[[Encase in a Fuckdoll suit|Surgery Degradation][beginFuckdoll($activeSlave), $surgeryType = "fuckdoll"]] <span class="note">This will greatly restrict $him</span>
+					<</if>>
+				</div>
+			<<else>>
+				$He is encased in a Fuckdoll suit.
+				<div class="choices">
+					[["Extract " + $him|Surgery Degradation][$activeSlave.fuckdoll = 0, $activeSlave.clothes = "no clothing", $activeSlave.shoes = "none", $surgeryType = "fuckdollExtraction"]]
+				</div>
+			<</if>>
+		<</if>>
+	</div>
+
+	/*Scorch mind*/
+	<div>
+		<<if ($seeExtreme == 1)>>
+			<<if $activeSlave.fetish != "mindbroken">>
+				$He is mentally competent.
+			<<elseif $activeSlave.fetish == "mindbroken">>
+				$His mind is gone; $he has either been chemically lobotomized, or has lost $his mind due to extreme abuse.
+			<</if>>
+			<div class="choices">
+				<<if $activeSlave.indentureRestrictions < 1 && ($activeSlave.breedingMark != 1 || $propOutcome == 0 || $eugenicsFullControl == 1 || $arcologies[0].FSRestart == "unset")>>
+					<<if $activeSlave.fetish != "mindbroken">>
+						[[Chemically lobotomize|Surgery Degradation][$activeSlave.fetish = "mindbroken",$activeSlave.fetishKnown = 1,cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave,20),$surgeryType = "mindbreak"]]
+						<span class="note">Warning: this is permanent and irreversible. It will destroy $his will and $his ability to remember anything but the simplest skills.</span>
+					<</if>>
+				<</if>>
+			</div>
+		<</if>>
+	</div>
+
+	/*Bodyswap*/
+	<div>
+		<<if $bodyswapAnnounced == 1 && $activeSlave.indenture < 0>>
+			<<if $activeSlave.bodySwap == 0>>
+				$He is in $his native body.
+			<<elseif $activeSlave.origBodyOwner != "">>
+				$He currently occupies <<print $activeSlave.origBodyOwner>>'s body.
+			<<else>>
+				$He is no longer in $his native body.
+			<</if>>
+			<div class="choices">
+				<<if $activeSlave.indenture == -1>>
+					[["Swap " + $his + " body with another of your stock"|Slave Slave Swap Workaround]]
+				<<else>>
+					<span class="note">Indentured servants must remain in their own bodies.</span>
+				<</if>>
+			</div>
+		<<elseif $cheatMode == 1>>
+			<div class="choices">
+				[[Force enable bodyswapping|Remote Surgery][$bodyswapAnnounced = 1]]
+			</div>
+		<</if>>
+	</div>
+</div>
+</div>

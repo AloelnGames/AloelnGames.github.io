@@ -1,0 +1,61 @@
+:: REM merger [nobr]
+
+<<set $nextButton = "Continue">>
+<<set $nextLink = "RIE Eligibility Check">>
+
+<<set _slaveCompany = App.Corporate.divisionList
+											.filter(div => div.founded && div.hasMergers)
+											.map   (div => div.mergerChoices.map((merger, index) => ({merger, index, division:div})))
+											.flat  ()>>
+<<set _maxCompanies = Math.trunc(Math.log2(App.Corporate.divisionList.filter(div => div.founded).length)) + 1>>
+<<set _numCompanies = random(1, _maxCompanies)>>
+
+<<set _companies = []>>
+<<for _index = 0; _index < _numCompanies; ++_index>>
+	<<run _companies.push(_slaveCompany.pluck())>>
+<</for>>
+<<set _assistant = $assistant.market ? "your market assistant" : $assistant.name>>
+
+<p><<= capFirstChar(_assistant)>> constantly combs business records, tax receipts and the media for leads on opportunities for your corporation to take advantage of. Small businesses go under all the time, and with a large amount of cash on hand, your corporation can afford to step in and acquire them. This week, _assistant has found <<= numberWithPlural(_numCompanies, "troubled organization") >> you could easily fold into your corporation.</p>
+
+<<if _companies.length == 1>>
+	<<set _company = _companies[0]>>
+	<div class="majorText">This week you come across <<= _company.merger.text.trouble >></div>
+<<else>>
+	<<for _index, _company range _companies>>
+		<div class="majorText">The <<= ordinalSuffixWords(_index + 1)>> is <<= _company.merger.text.trouble >></div>
+	<</for>>
+<</if>>
+<div id="result">
+<<for _company range _companies>>
+	<<capture _company>>
+	<div>
+	<<set _absorbName = "Absorb the " + _company.merger.name>>
+	<<link _absorbName>>
+		<<replace "#result">>
+			You quickly acquire the <<= _company.merger.name>><<= _company.merger.text.acquire >>
+			<<set _devCount = _company.merger.result.development,
+						_slaveCount = _company.merger.result.slaves>>
+			<<if _devCount != null>>
+				<<set _company.division.developmentCount += _devCount>>
+			<</if>>
+			<<if _slaveCount != null>>
+				<<set _company.division.activeSlaves += _slaveCount>>
+			<</if>>
+			<<set _cost = (_company.merger.cost || 50) * 1000 >>
+			<<if _devCount != null && _slaveCount != null>>
+				<<set App.Corporate.chargeAsset(_cost / 2, "development")>>
+				<<set App.Corporate.chargeAsset(_cost / 2, "slaves")>>
+			<<elseif _devCount != null>>
+				<<set App.Corporate.chargeAsset(_cost, "development")>>
+			<<elseif _slavecount != null>>
+				<<set App.Corporate.chargeAsset(_cost, "slaves")>>
+			<<else>>
+				@@.red;ERROR! No changes to the corporation are made!@@
+			<</if>>
+		<</replace>>
+	<</link>>
+	</div>
+	<</capture>>
+<</for>>
+</div>

@@ -1,0 +1,8 @@
+:: BreedingTest [nobr]
+
+<<set $nextButton = "Confirm changes", $nextLink = "AS Dump", $returnTo = "Slave Interact">>
+
+<<UpdateStandards>>
+<<BreedingStandards>>
+<br><br>
+<<BreedingEligibility>>

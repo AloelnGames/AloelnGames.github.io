@@ -1,0 +1,192 @@
+:: Schoolroom [nobr]
+
+<<set $nextButton = "Back to Main", $nextLink = "Main", $returnTo = "Schoolroom", $showEncyclopedia = 1, $encyclopedia = "Schoolroom">>
+
+<<if $schoolroomName != "the Schoolroom">>
+	<<set $schoolroomNameCaps = $schoolroomName.replace("the ", "The ")>>
+<</if>>
+<p class="scene-intro">
+	$schoolroomNameCaps is well-equipped, with wallscreens to display lessons. These are currently
+	<<switch $schoolroomDecoration>>
+		<<case "Roman Revivalist">>
+			showing the story of a famous Roman slave who sacrificed her life for the life of her <<= properMaster()>>.
+		<<case "Aztec Revivalist">>
+			showing the reenactment of a legendary story of a slave who ascended by offering her blood to the gods, and was granted eternal life.
+		<<case "Egyptian Revivalist">>
+			showing an interpretation of Egyptian history that attributes many great monuments to the enlightened use slave labor.
+		<<case "Edo Revivalist">>
+			showing an interpretation of Japanese cultural history that emphasizes a serf's duty to her social superiors.
+		<<case "Arabian Revivalist">>
+			showing an interpretation of Arabian cultural history that focuses on thriving slave markets and vibrant harems.
+		<<case "Chinese Revivalist">>
+			showing an interpretation of Chinese cultural history that focuses on concubinage, palace etiquette, and social order.
+		<<case "Chattel Religionist">>
+			displaying a passage from the holy book that supports slavery.
+		<<case "Degradationist">>
+			displaying a rote recitation of a slave's proper acceptance of her subhuman status.
+		<<case "Repopulation Focus">>
+			reviewing a number of sexual positions to accommodate a heavily pregnant girl.
+		<<case "Eugenics">>
+			reviewing ways to better your owner's standing intermixed with exaggerated pregnancy horror stories focused on slave pregnancy.
+		<<case "Asset Expansionist">>
+			reviewing techniques that allow two slaves with huge breasts to inspect and moisturize each others' hard to reach areas.
+		<<case "Transformation Fetishist">>
+			offering a brief primer on surgical recovery, with practical techniques to make it quicker.
+		<<case "Gender Radicalist">>
+			going over how to keep one's asspussy ready for intercourse at any time, including how to schedule regular enemata and pre-lubrication.
+		<<case "Gender Fundamentalist">>
+			going over the trifecta that is the standard approach of sex slaves: a blowjob, followed by vaginal, finished with anal.
+		<<case "Physical Idealist">>
+			offering a brief primer on the arcology's nutritional system which will allow slaves to double check their own protein intake.
+		<<case "Supremacist">>
+			reviewing the scientific evidence for $arcologies[0].FSSupremacistRace superiority.
+		<<case "Subjugationist">>
+			reviewing the scientific evidence for $arcologies[0].FSSubjugationistRace inferiority.
+		<<case "Paternalist">>
+			reviewing a lesson on time-management skills, and the students are taking notes on their own tablets.
+		<<case "Pastoralist">>
+			reviewing how to help fellow slaves with huge, lactating breasts.
+		<<case "Maturity Preferentialist">>
+			going over daily sets of exercises designed to keep mature slaves' holes as tight as possible.
+		<<case "Youth Preferentialist">>
+			reviewing social cues that young slaves who have been enslaved through their entire adulthood might not understand.
+		<<case "Body Purist">>
+			offering a brief primer on the arcology's nutritional system which will allow slaves to double check their own caloric intake.
+		<<case "Slimness Enthusiast">>
+			offering a brief primer on the arcology's nutritional system which will allow slaves to double check their own caloric intake.
+		<<case "Hedonistic">>
+			exposing slaves to new, fascinating forms of pleasure; both for others and for themselves.
+		<<case "Intellectual Dependency">>
+			reviewing various sexual positions, and the students are practicing with each other.
+		<<case "Slave Professionalism">>
+			reviewing a complex lesson on social cues and when to act on them to better shift things in <<= properTitle()>>'s favor.
+		<<case "Petite Admiration">>
+			exploring methods to pleasure a partner far taller than oneself.
+		<<case "Statuesque Glorification">>
+			reviewing the reasons why tall individuals are widely considered more attractive.
+		<<default>>
+			reviewing the often complex subject of how to address citizens other that one's owner.
+	<</switch>>
+
+	<<if $SchlRiIDs.length > 2>>
+		$schoolroomNameCaps is busy with slaves, repeating their lessons out loud to drill the instruction home. A few students are maintaining uncomfortable positions in the corner as punishment for poor work.
+	<<elseif $SchlRiIDs.length > 0>>
+		$schoolroomNameCaps is sparsely populated, the few students repeating their lessons out loud to drill the instruction home. One slave is maintaining an uncomfortable position in the corner as punishment for poor work.
+	<<elseif $Schoolteacher != 0>>
+		<<setLocalPronouns $Schoolteacher>>
+		$Schoolteacher.slaveName is alone in $schoolroomName, and has nothing to do but work on $his lesson plans.
+	<<else>>
+		None of your slaves are learning in $schoolroomName.
+		<div class="choices" style="font-style:normal">
+			[[Decommission the schoolroom|Main][$schoolroom = 0, $schoolroomUpgradeSkills = 0, $schoolroomUpgradeLanguage = 0, $schoolroomUpgradeRemedial = 0, $schoolroomRemodelBimbo = 0, $schoolroomDecoration = "standard"]]
+		</div>
+	<</if>>
+</p>
+
+<div>
+	<<set _Tmult0 = Math.trunc($schoolroom*1000*$upgradeMultiplierArcology)>>
+	$schoolroomNameCaps has room to house $schoolroom slaves while they learn. There <<if $SchlRiIDs.length == 1>>is<<else>>are<</if>> currently $SchlRiIDs.length slave<<if $SchlRiIDs.length != 1>>s<</if>> learning in $schoolroomName.
+	<div class="choices">
+		[[Expand the schoolroom|Schoolroom][cashX(forceNeg(_Tmult0), "capEx"), $schoolroom += 5, $PC.skill.engineering += .1]] 
+		<span class="note">
+			Costs <<print cashFormat(_Tmult0)>>
+		</span>
+	</div>
+	<div class="choices">
+		<<if $SchlRiIDs.length > 0>>
+			<<removeFacilityWorkers "schoolroom" "rest" "take classes">>
+		<</if>>
+	</div>
+
+</div>
+
+<div>
+	<<if $schoolroomUpgradeSkills == 1>>
+		$schoolroomNameCaps provides slaves with some intermediate skills, including a solid foundation in sex, efficient and safe prostitution, and the rudiments of courtesanship.
+	<<else>>
+		<<set _Tmult1 = Math.trunc(10000*$upgradeMultiplierArcology)>>
+		$schoolroomNameCaps inculcates the basic skills necessary to a sex slave.
+		<div class="choices">
+			[[Upgrade the curriculum to cover some intermediate skills|Schoolroom][cashX(forceNeg(_Tmult1), "capEx"), $schoolroomUpgradeSkills = 1]] 
+			<span class="note">
+				Costs <<print cashFormat(_Tmult1)>>
+			</span>
+		</div>
+	<</if>>
+</div>
+
+<div>
+	<<set _Tmult2 = Math.trunc(5000*$upgradeMultiplierArcology*$HackingSkillMultiplier)>>
+	<<if $schoolroomUpgradeLanguage == 1>>
+		$schoolroomNameCaps boasts state of the art linguistic interfaces that allow it to teach the basics of the arcology's lingua franca with increased success.
+	<<else>>
+		$schoolroomNameCaps includes only basic language classes in its curriculum.
+		<div class="choices">
+			[[Install advanced linguistic interfaces to efficiently teach the arcology's lingua franca|Schoolroom][cashX(forceNeg(_Tmult2), "capEx"), $schoolroomUpgradeLanguage = 1, $PC.skill.hacking += 0.1]] 
+			<span class="note">
+				Costs <<print cashFormat(_Tmult2)>>
+			</span>
+		</div>
+	<</if>>
+</div>
+
+<div>
+	<<if $schoolroomRemodelBimbo == 1>>
+		<<set _Tmult3 = Math.trunc(7500*$upgradeMultiplierArcology*$HackingSkillMultiplier)>>
+		<div>
+			$schoolroomNameCaps is designed with moronic slaves in mind and seeks to dumb down slaves by providing them a confusing, contradictory education that retards decision making skills and undoes existing schooling. [[Restore the curriculum to the standard|Schoolroom][cashX(forceNeg(_Tmult3), "capEx"), $schoolroomRemodelBimbo = 0]] 
+			<span class="note">
+				Costs <<print cashFormat(_Tmult3)>>
+			</span>
+		</div>
+		<div>
+			<<if $schoolroomUpgradeRemedial == 1>>
+				$schoolroomNameCaps has been upgraded with advanced teaching tools to help even the smartest slave learn at an acceptable pace. Dumb slaves won't learn much faster as a result, but smarties will benefit a great deal.
+			<<else>>
+				$schoolroomNameCaps teaches woefully smart slaves using its modified methods. [[Purchase specialized materials to help smart slaves get on the right track|Schoolroom][cashX(forceNeg(_Tmult2), "capEx"), $schoolroomUpgradeRemedial = 1]] 
+				<span class="note">
+					Costs <<print cashFormat(_Tmult2)>>
+				</span>
+			<</if>>
+		</div>
+	<<else>>
+		<div>
+			<<if $arcologies[0].FSIntellectualDependency > 80>>
+				<<set _Tmult3 = Math.trunc(7500*$upgradeMultiplierArcology*$HackingSkillMultiplier)>>
+				$schoolroomNameCaps is designed with intelligent slaves in mind and seeks to smarten slaves by providing them with an education.
+				<div class="choices">
+					[[Redesign the curriculum to undo pesky educations and retard slaves while benefiting the most simple of minds|Schoolroom][cashX(forceNeg(_Tmult3), "capEx"), $schoolroomRemodelBimbo = 1]] 
+					<span class="note">
+						Costs <<print cashFormat(_Tmult3)>>
+					</span>
+				</div>
+			<</if>>
+		</div>
+		<div>
+			<<if $schoolroomUpgradeRemedial == 1>>
+				$schoolroomNameCaps has been upgraded with advanced teaching tools to help even the stupidest slave learn at an acceptable pace. Intelligent slaves won't learn much faster as a result, but idiots will benefit a great deal.
+			<<else>>
+				$schoolroomNameCaps teaches idiots using standard methods.
+				<div class="choices">
+					[[Purchase specialized materials to help stupid slaves learn good|Schoolroom][cashX(forceNeg(_Tmult2), "capEx"), $schoolroomUpgradeRemedial = 1]] 
+					<span class="note">
+						Costs <<print cashFormat(_Tmult2)>>
+					</span>
+				</div>
+			<</if>>
+		</div>
+	<</if>>
+</div>
+
+<p>
+	<<print App.UI.SlaveList.stdFacilityPage(App.Entity.facilities.schoolroom, true)>>
+</p>
+
+<p>
+	Rename $schoolroomName: <<textbox "$schoolroomName" $schoolroomName "Schoolroom">> 
+	<span class="note">
+		Use a noun or similar short phrase
+	</span>
+</p>
+
+<<run App.UI.SlaveList.ScrollPosition.restore()>>

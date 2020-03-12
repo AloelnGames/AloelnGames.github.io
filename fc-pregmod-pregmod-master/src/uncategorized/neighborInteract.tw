@@ -1,0 +1,850 @@
+:: Neighbor Interact [nobr]
+
+<<if def $buyArcologyDirection>>
+	<<run delete $buyArcologyDirection>>
+<</if>>
+<<if def $sellArcologyDirection>>
+	<<run delete $sellArcologyDirection>>
+<</if>>
+<<if def $transaction>>
+	<<run delete $transaction>>
+<</if>>
+
+<<set $averageProsperity = 0>>
+<<set _neighboringArcologyCount = 0>>
+<<for $i = 0; $i < $arcologies.length; $i++>>
+	<<set $averageProsperity += $arcologies[$i].prosperity>>
+	<<set _neighboringArcologyCount += 1>>
+<</for>>
+<<set $averageProsperity = $averageProsperity/_neighboringArcologyCount>>
+
+<<if $cheatMode == 1>>
+	[[Cheat Edit Neighboring Arcologies|MOD_Edit Neighbor Arcology Cheat]]<br><br>
+<</if>>
+
+<<if $sideBarOptions.compact > 0>>
+	<<set $nextLink = "Manage Arcology">>
+<<else>>
+	<<set $nextLink = "Main">>
+<</if>>
+<<set $nextButton = "Back">>
+You have <<print $arcologies.length-1>> neighbors. <br><br>
+
+<<if $arcologies[0].embargoTarget == -1>>
+	You are not engaged in economic warfare against a neighboring arcology.
+<<else>>
+	<<set _nei = $arcologies.findIndex(function(s) { return s.direction == $arcologies[0].embargoTarget; })>>
+	You have targeted '' $arcologies[_nei].name'' for economic warfare.
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Its planned impacts will be
+	<<if $arcologies[0].embargo == 3>>
+		''widespread.'' [[Moderate|Neighbor Interact][$arcologies[0].embargo -= 1]]
+	<<elseif $arcologies[0].embargo == 2>>
+		''limited.'' [[Intensify|Neighbor Interact][$arcologies[0].embargo += 1]] | [[Moderate|Neighbor Interact][$arcologies[0].embargo -= 1]]
+	<<else>>
+		''nominal.'' [[Intensify|Neighbor Interact][$arcologies[0].embargo += 1]]
+	<</if>>
+	| [[Cancel|Neighbor Interact][$arcologies[0].embargoTarget = -1]]
+<</if>>
+
+<br>
+<<if $arcologies[0].influenceTarget == -1>>
+	You are not using your arcology's culture to attempt to influence neighboring arcologies' development.
+<<else>>
+	<<set _nei = $arcologies.findIndex(function(s) { return s.direction == $arcologies[0].influenceTarget; })>>
+	You have targeted '' $arcologies[_nei].name'' for cultural influence.
+	[[Stop|Neighbor Interact][$arcologies[0].influenceTarget = -1]]
+<</if>>
+
+<<if $PC.skill.hacking > 0>>
+	<br>
+	<<if $arcologies[0].CyberEconomicTarget == -1>>
+		You are not engaged in cyber warfare against a neighboring arcology.
+	<<else>>
+		<<set _nei = $arcologies.findIndex(function(s) { return s.direction == $arcologies[0].CyberEconomicTarget; })>>
+		You have targeted ''$arcologies[_nei].name'' for cyber economic warfare.
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;Its planned impacts will be
+		<<if $arcologies[0].CyberEconomic == 3>>
+			''widespread.'' [[Moderate|Neighbor Interact][$arcologies[0].CyberEconomic -= 1]]
+		<<elseif $arcologies[0].CyberEconomic == 2>>
+			''limited.'' [[Intensify|Neighbor Interact][$arcologies[0].CyberEconomic += 1]] | [[Moderate|Neighbor Interact][$arcologies[0].CyberEconomic -= 1]]
+		<<else>>
+			''nominal.'' [[Intensify|Neighbor Interact][$arcologies[0].CyberEconomic += 1]]
+		<</if>>
+		| [[Revert|Neighbor Interact][$arcologies[0].CyberEconomicTarget = -1]]
+	<</if>>
+
+	<br>
+	<<if $arcologies[0].CyberReputationTarget == -1>>
+		You are not engaged in character assassination against a neighboring arcology.
+	<<else>>
+		<<set _nei = $arcologies.findIndex(function(s) { return s.direction == $arcologies[0].CyberReputationTarget; })>>
+		You have targeted the leadership of ''$arcologies[_nei].name'' for character assassination.
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;Its planned impacts will be
+		<<if $arcologies[0].CyberReputation == 3>>
+			''widespread.'' [[Moderate|Neighbor Interact][$arcologies[0].CyberReputation -= 1]]
+		<<elseif $arcologies[0].CyberReputation == 2>>
+			''limited.'' [[Intensify|Neighbor Interact][$arcologies[0].CyberReputation += 1]] | [[Moderate|Neighbor Interact][$arcologies[0].CyberReputation -= 1]]
+		<<else>>
+			''nominal.'' [[Intensify|Neighbor Interact][$arcologies[0].CyberReputation += 1]]
+		<</if>>
+		| [[Abort|Neighbor Interact][$arcologies[0].CyberReputationTarget = -1]]
+	<</if>>
+<</if>>
+
+<<set $desc = []>>
+<<if $arcologies[0].FSSubjugationist > 60>>
+	<<set $desc.push("Racial Subjugation")>>
+<</if>>
+<<if $arcologies[0].FSSupremacist > 60>>
+	<<set $desc.push("Racial Supremacy")>>
+<</if>>
+<<if $arcologies[0].FSRepopulationFocus > 60>>
+	<<set $desc.push("Repopulation Focus")>>
+<</if>>
+<<if $arcologies[0].FSRestart > 60>>
+	<<set $desc.push("Eugenics")>>
+<</if>>
+<<if $arcologies[0].FSGenderRadicalist > 60>>
+	<<set $desc.push("Gender Radicalism")>>
+<</if>>
+<<if $arcologies[0].FSGenderFundamentalist > 60>>
+	<<set $desc.push("Gender Fundamentalism")>>
+<</if>>
+<<if $arcologies[0].FSPaternalist > 60>>
+	<<set $desc.push("Paternalism")>>
+<</if>>
+<<if $arcologies[0].FSDegradationist > 60>>
+	<<set $desc.push("Degradationism")>>
+<</if>>
+<<if $arcologies[0].FSBodyPurist > 60>>
+	<<set $desc.push("Body Purism")>>
+<</if>>
+<<if $arcologies[0].FSTransformationFetishist > 60>>
+	<<set $desc.push("Transformation Fetishism")>>
+<</if>>
+<<if $arcologies[0].FSYouthPreferentialist > 60>>
+	<<set $desc.push("Youth Preferentialism")>>
+<</if>>
+<<if $arcologies[0].FSMaturityPreferentialist > 60>>
+	<<set $desc.push("Maturity Preferentialism")>>
+<</if>>
+<<if $arcologies[0].FSSlimnessEnthusiast > 60>>
+	<<set $desc.push("Slimness Enthusiasm")>>
+<</if>>
+<<if $arcologies[0].FSAssetExpansionist > 60>>
+	<<set $desc.push("Asset Expansionism")>>
+<</if>>
+<<if $arcologies[0].FSPastoralist > 60>>
+	<<set $desc.push("Pastoralism")>>
+<</if>>
+<<if $arcologies[0].FSCummunism > 60>>
+	<<set $desc.push("Cummunism")>>
+<</if>>
+<<if $arcologies[0].FSPhysicalIdealist > 60>>
+	<<set $desc.push("Physical Idealism")>>
+<</if>>
+<<if $arcologies[0].FSHedonisticDecadence > 60>>
+	<<set $desc.push("Hedonistic Decadence")>>
+<</if>>
+<<if $arcologies[0].FSIncestFetishist > 60>>
+	<<set $desc.push("Incest Fetishism")>>
+<</if>>
+<<if $arcologies[0].FSIntellectualDependency > 60>>
+	<<set $desc.push("Intellectual Dependency")>>
+<</if>>
+<<if $arcologies[0].FSSlaveProfessionalism > 60>>
+	<<set $desc.push("Slave Professionalism")>>
+<</if>>
+<<if $arcologies[0].FSPetiteAdmiration > 60>>
+	<<set $desc.push("Petite Admiration")>>
+<</if>>
+<<if $arcologies[0].FSStatuesqueGlorification > 60>>
+	<<set $desc.push("Statuesque Glorification")>>
+<</if>>
+<<if $arcologies[0].FSChattelReligionist > 60>>
+	<<set $desc.push("Chattel Religionism")>>
+<</if>>
+<<if $arcologies[0].FSRomanRevivalist > 60>>
+	<<set $desc.push("Roman Revivalism")>>
+<</if>>
+<<if $arcologies[0].FSAztecRevivalist > 60>>
+	<<set $desc.push("Aztec Revivalism")>>
+<</if>>
+<<if $arcologies[0].FSEgyptianRevivalist > 60>>
+	<<set $desc.push("Egyptian Revivalism")>>
+<</if>>
+<<if $arcologies[0].FSEdoRevivalist > 60>>
+	<<set $desc.push("Edo Revivalism")>>
+<</if>>
+<<if $arcologies[0].FSArabianRevivalist > 60>>
+	<<set $desc.push("Arabian Revivalism")>>
+<</if>>
+<<if $arcologies[0].FSChineseRevivalist > 60>>
+	<<set $desc.push("Chinese Revivalism")>>
+<</if>>
+
+<br> <span id="Security"> <br>
+<<if $desc.length == 0>>
+	Your arcology's culture has not developed to the point where it can meaningfully influence other arcologies.
+<<elseif $desc.length > 2>>
+	Your arcology's mature culture is capable of exerting great cultural sway over other arcologies. It can readily project $desc[0],
+	<<for $i = 1; $i < $desc.length; $i++>>
+		<<if $i < $desc.length-1>>
+			$desc[$i],
+		<<else>>
+			and $desc[$i].
+		<</if>>
+	<</for>>
+<<elseif $desc.length == 2>>
+	Your arcology's culture is capable of exerting some cultural sway over other arcologies. It can effectively project $desc[0] and $desc[1].
+<<else>>
+	Your arcology's culture is capable of starting to exert cultural sway over other arcologies. It can project $desc[0].
+<</if>>
+<br>
+
+<<for _currentNeighbor = 1; _currentNeighbor < $arcologies.length; _currentNeighbor++>>
+<<set _Agent = App.currentAgent(_currentNeighbor)>>
+<<capture _currentNeighbor, _Agent>>
+	<<set $arcologies[_currentNeighbor].prosperity = Math.clamp($arcologies[_currentNeighbor].prosperity, 1, 300)>>
+	<br>You own $arcologies[_currentNeighbor].PCminority% of
+	<<link "$arcologies[_currentNeighbor].name">>
+	<<replace "#Security">> <<set $activeArcologyIdx = _currentNeighbor>>
+	<br>[[Back to the main diplomacy page|Neighbor Interact]]
+	<<set $i = _currentNeighbor>> <<include "Neighbor Description">> <br>
+
+		<<set _ownershipCost = 500*Math.trunc($arcologies[_currentNeighbor].prosperity*(1+($arcologies[_currentNeighbor].demandFactor/100)))>>
+		<br>A 1% interest in this arcology is worth <<print cashFormat(_ownershipCost)>>.
+		<<if ($arcologies[_currentNeighbor].ownership + $arcologies[_currentNeighbor].PCminority + $arcologies[_currentNeighbor].minority < 100)>>
+			The transaction fee is <<print cashFormat(10000)>>.
+		<</if>>
+		<<if ($arcologies[_currentNeighbor].ownership + $arcologies[_currentNeighbor].PCminority + $arcologies[_currentNeighbor].minority < 100)>>
+			<br>&nbsp;
+			<<link "Buy" "Neighbor Interact">>
+				<<run cashX(forceNeg(_ownershipCost), "war")>>
+				<<run cashX(-10000, "war")>>
+				<<set $arcologies[_currentNeighbor].PCminority += 1>>
+				<<set $arcologies[_currentNeighbor].demandFactor += 1*5>>
+			<</link>>
+			<<if ($arcologies[_currentNeighbor].ownership + $arcologies[_currentNeighbor].PCminority + $arcologies[_currentNeighbor].minority <= 90)>>
+				<<if $cash > _ownershipCost*10>>
+					| <<link "10%" "Neighbor Interact">>
+						<<run cashX(forceNeg(_ownershipCost*10), "war")>>
+						<<run cashX(-10000, "war")>>
+						<<set $arcologies[_currentNeighbor].PCminority += 10>>
+						<<set $arcologies[_currentNeighbor].demandFactor += 10*5>>
+					<</link>>
+					//Transaction costs will only be paid once.//
+				<</if>>
+			<</if>>
+		<</if>>
+
+		<<if $arcologies[_currentNeighbor].PCminority > 0>>
+			<br>&nbsp;
+			<<link "Sell" "Neighbor Interact">>
+				<<run cashX(_ownershipCost, "war")>>
+				<<set $arcologies[_currentNeighbor].PCminority -= 1>>
+				<<set $arcologies[_currentNeighbor].demandFactor -= 1*2>>
+				<<if $arcologies[_currentNeighbor].government != "your agent" && $arcologies[_currentNeighbor].government != "your trustees" && $arcologies[_currentNeighbor].rival != 1>>
+					<<if $arcologies[_currentNeighbor].ownership + $arcologies[_currentNeighbor].PCminority + $arcologies[_currentNeighbor].minority < 10>>
+						<<set $arcologies[_currentNeighbor].ownership += 10>>
+					<</if>>
+				<</if>>
+			<</link>>
+			<<if $arcologies[_currentNeighbor].PCminority >= 10>>
+				| <<link "10%" "Neighbor Interact">>
+					<<run cashX((_ownershipCost*10), "war")>>
+					<<set $arcologies[_currentNeighbor].PCminority -= 10>>
+					<<set $arcologies[_currentNeighbor].demandFactor -= 10*2>>
+					<<if $arcologies[_currentNeighbor].government != "your agent" && $arcologies[_currentNeighbor].government != "your trustees" && $arcologies[_currentNeighbor].rival != 1>>
+						<<if $arcologies[_currentNeighbor].ownership + $arcologies[_currentNeighbor].PCminority + $arcologies[_currentNeighbor].minority < 10>>
+							<<set $arcologies[_currentNeighbor].ownership += 10>>
+						<</if>>
+					<</if>>
+			<</link>>
+			<</if>>
+		<</if>>
+		<br>
+
+		<<if $arcologies[_currentNeighbor].direction !== $arcologies[0].embargoTarget>>
+			<br>[[Target them for economic warfare|Neighbor Interact][$arcologies[0].embargoTarget = $arcologies[_currentNeighbor].direction]]
+		<</if>>
+
+		<<if $PC.skill.hacking > 0>>
+			<<if $arcologies[_currentNeighbor].direction !== $arcologies[0].CyberEconomicTarget>>
+				<br>[[Target them for cyber economic warfare|Neighbor Interact][$arcologies[0].CyberEconomicTarget = $arcologies[_currentNeighbor].direction]]
+			<</if>>
+			<<if $arcologies[_currentNeighbor].direction !== $arcologies[0].CyberReputationTarget>>
+				<br>[[Target their leadership for character assassination|Neighbor Interact][$arcologies[0].CyberReputationTarget = $arcologies[_currentNeighbor].direction]]
+			<</if>>
+		<</if>>
+		<<if $desc.length > 0>>
+			<<if $arcologies[_currentNeighbor].direction !== $arcologies[0].influenceTarget>>
+				<br>[[Set as influence target|Neighbor Interact][$arcologies[0].influenceTarget = $arcologies[_currentNeighbor].direction]]
+			<</if>>
+		<</if>>
+
+	<<if $arcologies[_currentNeighbor].government == "your trustees" || $arcologies[_currentNeighbor].government == "your agent">>
+		<br><br>
+		<<if $arcologies[_currentNeighbor].government == "your trustees">>
+			[[Appoint an agent|Agent Select]] <<set $him = "them">>
+		<<else>>
+			<<setLocalPronouns _Agent>>
+			Your agent @@.deeppink;<<= SlaveFullName(_Agent)>>@@ is running this arcology. <<link "Recall and reenslave $him" "Neighbor Interact">><<run removeJob(_Agent, "be your agent")>><</link>>
+		<</if>>
+		<span id="rename"> | <<link "Instruct $him to rename the arcology">><<replace #rename>> | <<textbox "$arcologies[$activeArcologyIdx].name" $arcologies[$activeArcologyIdx].name>> [[Confirm name|Neighbor Interact]]<</replace>><</link>></span>
+		<<if $arcologies[_currentNeighbor].government === "your agent">>
+			<br>$His <<if _Agent.intelligence > 95>>brilliance<<else>>intelligence<</if>> and education are the most important qualities for $him.
+			<<if _Agent.actualAge > 35>>
+				As with the Head Girl position, $his age and experience lend $him leadership weight.
+			<</if>>
+			<<if _Agent.career == "an arcology owner">>
+				$His career as an arcology owner $himself is, obviously, useful to $him.
+			<<elseif setup.HGCareers.includes(_Agent.career)>>
+				$His career in leadership helps $him.
+			<</if>>
+			<<if _Agent.fetishStrength > 95>>
+				<<if (_Agent.fetish == "dom") || (_Agent.fetish == "sadist")>>
+					$His sexually dominant fetish helps $him fill a leadership role.
+				<<elseif (_Agent.fetish == "submissive") || (_Agent.fetish == "masochist")>>
+					Unfortunately, $he has an inappropriate fetish for a leader.
+				<<else>>
+					$His sexual fetishes will influence how $he leads the arcology.
+				<</if>>
+			<</if>>
+			<<if _Agent.energy > 95>>
+				Finally, $his sexual depravity lets $him fit into arcology society naturally.
+			<</if>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSSubjugationist != "unset">>
+			<br><<link "Force Abandonment of Racial Subjugation" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSSubjugationist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSSupremacist != "unset">>
+			<br><<link "Force Abandonment of Racial Supremacy" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSSupremacist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSRepopulationFocus != "unset">>
+			<br><<link "Force Abandonment of Repopulationism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSRepopulationFocus = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSRestart != "unset">>
+			<br><<link "Force Abandonment of Eugenics" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSRestart = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSGenderRadicalist != "unset">>
+			<br><<link "Force Abandonment of Gender Radicalism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSGenderRadicalist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSIntellectualDependency != "unset">>
+			<br><<link "Force Abandonment of Intellectual Dependency" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSIntellectualDependency = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSSlaveProfessionalism != "unset">>
+			<br><<link "Force Abandonment of Slave Professionalism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSSlaveProfessionalism = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSGenderFundamentalist != "unset">>
+			<br><<link "Force Abandonment of Gender Fundamentalism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSGenderFundamentalist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSPaternalist != "unset">>
+			<br><<link "Force Abandonment of Paternalism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSPaternalist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSDegradationist != "unset">>
+			<br><<link "Force Abandonment of Degradationism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSDegradationist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSBodyPurist != "unset">>
+			<br><<link "Force Abandonment of Body Purism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSBodyPurist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSTransformationFetishist != "unset">>
+			<br><<link "Force Abandonment of Transformation Fetishism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSTransformationFetishist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSYouthPreferentialist != "unset">>
+			<br><<link "Force Abandonment of Youth Preferentialism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSYouthPreferentialist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSMaturityPreferentialist != "unset">>
+			<br><<link "Force Abandonment of Maturity Preferentialism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSMaturityPreferentialist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSPetiteAdmiration != "unset">>
+			<br><<link "Force Abandonment of Petite Admiration" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSPetiteAdmiration = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSStatuesqueGlorification != "unset">>
+			<br><<link "Force Abandonment of Statuesque Glorification" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSStatuesqueGlorification = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSSlimnessEnthusiast != "unset">>
+			<br><<link "Force Abandonment of Slimness Enthusiasm" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSSlimnessEnthusiast = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSAssetExpansionist != "unset">>
+			<br><<link "Force Abandonment of Asset Expansionism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSAssetExpansionist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSPastoralist != "unset">>
+			<br><<link "Force Abandonment of Pastoralism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSPastoralist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSCummunism != "unset">>
+			<br><<link "Force Abandonment of Cummunism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSCummunism = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSPhysicalIdealist != "unset">>
+			<br><<link "Force Abandonment of Physical Idealism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSPhysicalIdealist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSHedonisticDecadence != "unset">>
+			<br><<link "Force Abandonment of Hedonistic Decadence" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSHedonisticDecadence = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSIncestFetishist != "unset">>
+			<br><<link "Force Abandonment of Incest Fetishism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSIncestFetishist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSChattelReligionist != "unset">>
+			<br><<link "Force Abandonment of Chattel Religionism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSChattelReligionist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSRomanRevivalist != "unset">>
+			<br><<link "Force Abandonment of Roman Revivalism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSRomanRevivalist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSAztecRevivalist !== "unset">>
+			<br><<link "Force Abandonment of Aztec Revivalism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSAztecRevivalist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSEgyptianRevivalist != "unset">>
+			<br><<link "Force Abandonment of Egyptian Revivalism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSEgyptianRevivalist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSEdoRevivalist != "unset">>
+			<br><<link "Force Abandonment of Edo Revivalism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSEdoRevivalist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSArabianRevivalist != "unset">>
+			<br><<link "Force Abandonment of Arabian Revivalism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSArabianRevivalist = "unset">><</link>>
+		<</if>>
+		<<if $arcologies[_currentNeighbor].FSChineseRevivalist != "unset">>
+			<br><<link "Force Abandonment of Chinese Revivalism" "Neighbor Interact">><<set $arcologies[_currentNeighbor].FSChineseRevivalist = "unset">><</link>>
+		<</if>>
+	<</if>>
+
+	<br><br>
+	If $arcologies[_currentNeighbor].name has developed enough to begin exporting worthwhile goods, it may be of interest to acquire some.
+	<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+		Since it is under your control, it is no problem at all to request the transfer of goods to $arcologies[0].name.
+	<<elseif $PC.skill.hacking >= 50>>
+		It is within your skills to redirect an outgoing shipment to $arcologies[0].name for your retrieval.
+	<<elseif $arcologies[_currentNeighbor].direction === $arcologies[0].embargoTarget>>
+		Due to your active embargo, trade with $arcologies[_currentNeighbor].name is not possible.
+	<<else>>
+		<<set _opinion = arcologyOpinion($arcologies[_currentNeighbor], $arcologies[0])>>
+		<<set _prices = _opinion*10>>
+	<</if>>
+	<<if $arcologies[_currentNeighbor].FSRomanRevivalist > 95>>
+		<<if !isItemAccessible("a toga")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of togas" "Neighbor Interact">>
+					<<set $clothesBoughtToga = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of togas" "Neighbor Interact">>
+					<<set $clothesBoughtToga = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of togas" "Neighbor Interact">>
+					<<set $clothesBoughtToga = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough togas.
+		<</if>>
+		<<set _exports = 1>>
+	<<elseif $arcologies[_currentNeighbor].FSEdoRevivalist > 95>>
+		<<if !isItemAccessible("a kimono")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of kimonos" "Neighbor Interact">>
+					<<set $clothesBoughtKimono = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of kimonos" "Neighbor Interact">>
+					<<set $clothesBoughtKimono = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of kimonos" "Neighbor Interact">>
+					<<set $clothesBoughtKimono = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough kimonos.
+		<</if>>
+		<<set _exports = 1>>
+	<<elseif $arcologies[_currentNeighbor].FSArabianRevivalist > 95>>
+		<<if !isItemAccessible("harem gauze")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of silken harem garb" "Neighbor Interact">>
+					<<set $clothesBoughtHarem = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of silken harem garb" "Neighbor Interact">>
+					<<set $clothesBoughtHarem = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of silken harem garb" "Neighbor Interact">>
+					<<set $clothesBoughtHarem = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough silk.
+		<</if>>
+		<<set _exports = 1>>
+	<<elseif $arcologies[_currentNeighbor].FSAztecRevivalist > 95>>
+		<<if !isItemAccessible("a huipil")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of huipils" "Neighbor Interact">>
+					<<set $clothesBoughtHuipil = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of huipils" "Neighbor Interact">>
+					<<set $clothesBoughtHuipil = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of huipils" "Neighbor Interact">>
+					<<set $clothesBoughtHuipil = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough huipils.
+		<</if>>
+		<<set _exports = 1>>
+	<<elseif $arcologies[_currentNeighbor].FSChineseRevivalist > 95>>
+		<<if !isItemAccessible("a slutty qipao")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of qipaos" "Neighbor Interact">>
+					<<set $clothesBoughtQipao = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of qipaos" "Neighbor Interact">>
+					<<set $clothesBoughtQipao = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of qipaos" "Neighbor Interact">>
+					<<set $clothesBoughtQipao = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough skimpy qipaos.
+		<</if>>
+		<<set _exports = 1>>
+	<<elseif $arcologies[_currentNeighbor].FSEgyptianRevivalist > 95>>
+		<<if !isItemAccessible("ancient Egyptian")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of Egyptian necklace replicas" "Neighbor Interact">>
+					<<set $clothesBoughtEgypt = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of Egyptian necklace replicas" "Neighbor Interact">>
+					<<set $clothesBoughtEgypt = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of Egyptian necklace replicas" "Neighbor Interact">>
+					<<set $clothesBoughtEgypt = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough replicas of Egyptian necklaces.
+		<</if>>
+		<<set _exports = 1>>
+	<</if>>
+	<<if $arcologies[_currentNeighbor].FSPaternalist > 95>>
+		<<if !isItemAccessible("conservative clothing")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of conservative clothing" "Neighbor Interact">>
+					<<set $clothesBoughtConservative = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of conservative clothing" "Neighbor Interact">>
+					<<set $clothesBoughtConservative = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of conservative clothing" "Neighbor Interact">>
+					<<set $clothesBoughtConservative = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough modest clothing.
+		<</if>>
+		<<set _exports = 1>>
+	<<elseif $arcologies[_currentNeighbor].FSDegradationist > 95>>
+		<<if !isItemAccessible("chains")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of binding chains" "Neighbor Interact">>
+					<<set $clothesBoughtChains = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of binding chains" "Neighbor Interact">>
+					<<set $clothesBoughtChains = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of binding chains" "Neighbor Interact">>
+					<<set $clothesBoughtChains = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough chains.
+		<</if>>
+		<<set _exports = 1>>
+	<</if>>
+	<<if $arcologies[_currentNeighbor].FSGenderFundamentalist > 95>>
+		<<if !isItemAccessible("a bunny outfit")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of bunny suits" "Neighbor Interact">>
+					<<set $clothesBoughtBunny = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of bunny suits" "Neighbor Interact">>
+					<<set $clothesBoughtBunny = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of bunny suits" "Neighbor Interact">>
+					<<set $clothesBoughtBunny = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough bunny suits and bowties.
+		<</if>>
+		<<set _exports = 1>>
+	<</if>>
+	<<if $arcologies[_currentNeighbor].FSIntellectualDependency > 95>>
+		<<if !isItemAccessible("a bimbo outfit")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of outfits suitable for bimbos" "Neighbor Interact">>
+					<<set $clothesBoughtBimbo = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of outfits suitable for bimbos" "Neighbor Interact">>
+					<<set $clothesBoughtBimbo = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of outfits suitable for bimbos" "Neighbor Interact">>
+					<<set $clothesBoughtBimbo = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough bimbo attire.
+		<</if>>
+		<<set _exports = 1>>
+	<</if>>
+	<<if $arcologies[_currentNeighbor].FSSlaveProfessionalism > 95>>
+		<<if !isItemAccessible("a courtesan dress")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of courtesan dresses" "Neighbor Interact">>
+					<<set $clothesBoughtCourtesan = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of courtesan dresses" "Neighbor Interact">>
+					<<set $clothesBoughtCourtesan = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of courtesan dresses" "Neighbor Interact">>
+					<<set $clothesBoughtCourtesan = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough courtesan dresses.
+		<</if>>
+		<<set _exports = 1>>
+	<</if>>
+	/*
+	<<if $arcologies[_currentNeighbor].FSPetiteAdmiration > 95>>
+		<<if !isItemAccessible("temp")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of petite-sized dresses" "Neighbor Interact">>
+					<<set $clothesBoughtPetite = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of petite-sized dresses" "Neighbor Interact">>
+					<<set $clothesBoughtPetite = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of petite-sized dresses" "Neighbor Interact">>
+					<<set $clothesBoughtPetite = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough temp.
+		<</if>>
+		<<set _exports = 1>>
+	<</if>>
+	*/
+	<<if $arcologies[_currentNeighbor].FSPhysicalIdealist > 95>>
+		<<if !isItemAccessible("body oil")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of body oil" "Neighbor Interact">>
+					<<set $clothesBoughtOil = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of body oil" "Neighbor Interact">>
+					<<set $clothesBoughtOil = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of body oil" "Neighbor Interact">>
+					<<set $clothesBoughtOil = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough body oil.
+		<</if>>
+		<<set _exports = 1>>
+	<<elseif $arcologies[_currentNeighbor].FSHedonisticDecadence > 95>>
+		<<if !isItemAccessible("stretch pants and a crop-top")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of stretch pants and crop-tops" "Neighbor Interact">>
+					<<set $clothesBoughtLazyClothes = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of stretch pants and crop-tops" "Neighbor Interact">>
+					<<set $clothesBoughtLazyClothes = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of stretch pants and crop-tops" "Neighbor Interact">>
+					<<set $clothesBoughtLazyClothes = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough elastic waistbands and tight tops.
+		<</if>>
+		<<set _exports = 1>>
+	<</if>>
+	<<if $arcologies[_currentNeighbor].FSChattelReligionist > 95>>
+		<<if !isItemAccessible("a chattel habit")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of chattel religionist habits" "Neighbor Interact">>
+					<<set $clothesBoughtHabit = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of chattel religionist habits" "Neighbor Interact">>
+					<<set $clothesBoughtHabit = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of chattel religionist habits" "Neighbor Interact">>
+					<<set $clothesBoughtHabit = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough chattel religionist habits.
+		<</if>>
+		<<set _exports = 1>>
+	<</if>>
+	<<if $arcologies[_currentNeighbor].FSPastoralist > 95>>
+		<<if !isItemAccessible("Western clothing")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of Western clothing" "Neighbor Interact">>
+					<<set $clothesBoughtWestern = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of Western clothing" "Neighbor Interact">>
+					<<set $clothesBoughtWestern = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of Western clothing" "Neighbor Interact">>
+					<<set $clothesBoughtWestern = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough rancher outfits.
+		<</if>>
+		<<set _exports = 1>>
+	<</if>>
+	<<if $arcologies[_currentNeighbor].FSRepopulationFocus > 95>>
+		<<if !isItemAccessible("a maternity dress")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of maternity clothing" "Neighbor Interact">>
+					<<set $clothesBoughtMaternityDress = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of maternity clothing" "Neighbor Interact">>
+					<<set $clothesBoughtMaternityDress = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of maternity clothing" "Neighbor Interact">>
+					<<set $clothesBoughtMaternityDress = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough maternity dresses.
+		<</if>>
+		<<if !isItemAccessible("attractive lingerie for a pregnant woman")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of maternity lingerie" "Neighbor Interact">>
+					<<set $clothesBoughtMaternityLingerie = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of maternity lingerie" "Neighbor Interact">>
+					<<set $clothesBoughtMaternityLingerie = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of maternity lingerie" "Neighbor Interact">>
+					<<set $clothesBoughtMaternityLingerie = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough lingerie suited for pregnant women.
+		<</if>>
+		<<if !isItemAccessible("a small empathy belly")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of empathy bellies" "Neighbor Interact">>
+					<<set $clothesBoughtBelly = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of empathy bellies" "Neighbor Interact">>
+					<<set $clothesBoughtBelly = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of empathy bellies" "Neighbor Interact">>
+					<<set $clothesBoughtBelly = 1>>
+					<<run cashX(forceNeg(Math.trunc((15000-(_prices*2))*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc(15000-(_prices*2)))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough fake baby bumps.
+		<</if>>
+		<<set _exports = 1>>
+	<</if>>
+	<<if $arcologies[_currentNeighbor].FSStatuesqueGlorification > 95>>
+		<<if !isItemAccessible("platform heels")>>
+			<<if ($arcologies[_currentNeighbor].government == "your trustees") || ($arcologies[_currentNeighbor].government == "your agent")>>
+				<br><<link "Request a shipment of height boosting footwear" "Neighbor Interact">>
+					<<set $shoesBoughtHeels = 1>>
+				<</link>>
+			<<elseif $PC.skill.hacking >= 50>>
+				<br><<link "Divert an outgoing shipment of height boosting footwear" "Neighbor Interact">>
+					<<set $shoesBoughtHeels = 1>>
+				<</link>>
+			<<elseif $arcologies[_currentNeighbor].direction != $arcologies[0].embargoTarget>>
+				<br><<link "Purchase a shipment of height boosting footwear" "Neighbor Interact">>
+					<<set $shoesBoughtHeels = 1>>
+					<<run cashX(forceNeg(Math.trunc((7500-_prices)*$upgradeMultiplierTrade)), "capEx")>>
+				<</link>> //Will cost <<print cashFormat(Math.trunc((7500-_prices)*$upgradeMultiplierTrade))>>//
+			<</if>>
+		<<else>>
+			<br>You already have enough varieties of platform shoe.
+		<</if>>
+		<<set _exports = 1>>
+	<</if>>
+	<<if _exports != 1>>
+		<<if $arcologies[_currentNeighbor].direction == $arcologies[0].embargoTarget>>
+			Fortunately,
+		<<else>>
+			Unfortunately,
+		<</if>>
+		they have nothing of value.
+	<</if>>
+
+	<</replace>>
+	<</link>>
+	which has an estimated GSP of @@.yellowgreen;<<print cashFormat(Math.trunc((0.1*$arcologies[_currentNeighbor].prosperity*random(100-$economicUncertainty,100+$economicUncertainty))/100))>>m@@ and is run by
+	<<if $arcologies[_currentNeighbor].government !== "your agent">>
+		$arcologies[_currentNeighbor].government who own $arcologies[_currentNeighbor].ownership%.
+	<<else>>
+		your agent @@.deeppink;<<= SlaveFullName(_Agent)>>@@.
+	<</if>>
+<</capture>>
+<</for>>
+</span>

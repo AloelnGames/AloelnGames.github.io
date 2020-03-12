@@ -1,0 +1,446 @@
+:: FBeg [nobr]
+
+/* things I need: checks for canWalk() to see how easily she can move, blindness checks, replacement for BoobsDesc, maybe devotion catches for certain flaws */
+/* priority! femPC support! */
+
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+<<run Enunciate($activeSlave)>>
+<<setSpokenLocalPronouns $activeSlave $activeSlave>>
+
+You call $him over to you for inspection.
+<<print App.Desc.boobs(getSlave($AS))>> /* this part needs expansion */
+You look at $him lustfully and instruct $him to strip.
+<<if (getSlave($AS).sexualFlaw == "shamefast")>>
+	Tears well up in $his eyes at the idea of showing $his naked body.
+<<elseif (getSlave($AS).sexualQuirk == "tease")>>
+	$He blushes with arousal. $He has kept $his innate embarrassment at the thought of being naked, but you have infused this with overwhelming arousal. $His cheeks are red as $he removes $his clothes, giving quite a strip tease as $he does.
+<<elseif (getSlave($AS).sexualFlaw == "repressed")>>
+	$He subconsciously uses $his hand<<if hasBothArms(getSlave($AS))>>s<</if>> to try to cover $his body. $He is still repressing $his own sexuality. That type of behavior may have been allowed in the old world, but it has no place in a Free City.
+<<elseif (getSlave($AS).sexualFlaw == "idealistic")>>
+	$He shakes $his head pleadingly. "But I don't con<<s>>ent," $he responds. You laugh in such a way that tells $him that $his consent is irrelevant. $He is still idealistic, believing that sex should be a consensual expression of love and intimacy. Such ideas were common in the Old World, but they have no place in a Free City. You decide to grab $him and forcefully rip $his clothes from $his body, since obedience could simply be seen as consent. $He screams and plead as you pin $his arms, ripping and tearing at the cloth that keeps $his beauty from sight.
+<<elseif (getSlave($AS).sexualFlaw == "neglectful")>>
+	$He replies "Ye<<s>>,
+	<<if getSlave($AS).rudeTitle == 1>>
+		<<= PoliteRudeTitle(getSlave($AS))>>,"
+	<<else>>
+		<<Master>>,"
+	<</if>>
+	$he replies contritely. $He has no sense of self beyond your usefulness of $him, and selflessly sacrifices $his own comfort for your pleasure.
+<<elseif (getSlave($AS).sexualFlaw == "attention whore")>>
+	$He eagerly begins to shirk $his wear, drawing as much attention to the process as possible.
+<<else>>
+	<<if (getSlave($AS).devotion < -20)>>
+		$He resists, forcing you to undress $him yourself.
+	<<elseif (getSlave($AS).devotion >= -20)>>
+		$He obeys, and moves to the center of your office to disrobe for you.
+	<</if>>
+<</if>>
+<<if (getSlave($AS).devotion >= -20)>>
+	$He begins to undress with
+	<<if (getSlave($AS).skill.entertainment >= 100)>>
+		masterful skill, teasing and taunting all the way down. $He rolls $his hips and most sexual parts as $he removes $his clothing.
+	<<elseif (getSlave($AS).skill.entertainment >= 80)>>
+		arousing skill. Even though the goal is just to get $him naked, your slave knows that $his job is to entertain you with $his every move.
+	<<elseif (getSlave($AS).skill.entertainment >= 50)>>
+		notable skill. $He takes the opportunity to give you a light strip tease as $he undresses.
+	<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+		a decent effort. $He isn't your most entertaining slave, but $he still makes an effort to arouse you with $his undressing.
+	<<elseif (getSlave($AS).skill.entertainment >= 9)>>
+		some effort to be sexy. $His moves are less than skillful and the undressing is more pragmatic than arousing.
+	<<else>>
+		no effort to be sexy. $He has no entertainment skill, and the only goal of $his actions is to go from clothed to naked.
+	<</if>>
+<</if>>
+
+<<if (getSlave($AS).fetishStrength > 60)>>
+	<<switch getSlave($AS).fetish>>
+	<<case "submissive">>
+		As $he begins to strip you grab $him without warning and begin to tear off $his clothes. Your slave expected you to allow $him to obey your command, and so $he is initially taken aback by the sudden force but $his submissive nature keeps $him from resisting. $He is such a submissive slut that you feel obligation to push $his status even further. You bind $his arms tightly behind $his back in a leather monoglove, lacing it tighter until $his elbows are touching. $He gives a soft whimper, but you both know that this is for your benefit and not a protest.
+		<<if (getSlave($AS).nipplesPiercing >= 1)>>
+			You then retrieve heavy bells and attach them to $his nipple rings.
+		<<else>>
+			You reach into your pocket and retrieve two weighted and belled nipple clamps, attaching them tightly to your slave's delicate nipples.
+		<</if>>
+		You tell $him to bounce so that they jingle, reminding $him of $his status.
+	<<case "masochist">>
+		Once $he is fully exposed you give $him a firm slap across the tits. $He's a masochist and relishes the pain with sexual arousal. You ask your painslut if $he deserves to be punished. "Oh ye<<s>>,
+		<<if getSlave($AS).rudeTitle == 1>>
+			<<= PoliteRudeTitle(getSlave($AS))>>.
+		<<else>>
+			<<Master>>.
+		<</if>>
+		Plea<<s>>e puni<<sh>> your little <<s>>lut." Sensing that your slave is getting too much enjoyment from $his beating, you cease.
+	<</switch>>
+<</if>>
+
+You stare at the naked figure standing before you.
+
+<<if canSee(getSlave($AS))>>
+	<<if (getSlave($AS).boobsTat == "rude words")>>
+		The words on $his chest stand out at you. You ask $him what $his tits say. "Fuck<<s>>lave," $he replies. You ask if that's what $he is.
+		<<if (getSlave($AS).behavioralFlaw == "liberated")>>
+			"I'm nobody'<<s>> property. I'm a free $woman!" $he shoots back. "We shall see," you reply.
+		<<elseif (getSlave($AS).devotion < -20)>>
+			$He does $his best to shake $his head.
+		<<else>>
+			"Yes <<Master>>, that'<<s>> what I am."
+		<</if>>
+	<<elseif (getSlave($AS).boobsTat == "possessive")>>
+		The words on $his chest stand out at you. You ask $him what $his tits say. "It'<<s>> your per<<s>>onal <<s>>ymbol," $he replies. You ask if that's what $he is.
+		<<if (getSlave($AS).behavioralFlaw == "liberated")>>
+			"I'm nobody'<<s>> property. I'm a free $woman!" $he shoots back. "We shall see," you reply.
+		<<elseif (getSlave($AS).devotion < -20)>>
+			$He does $his best to shake $his head.
+		<<else>>
+			"Ye<<s>> <<Master>>, that'<<s>> what I am."
+		<</if>>
+	<<elseif (getSlave($AS).boobsTat == "degradation")>>
+		The words on $his chest stand out at you. You ask $him what $his tits say. "<<Master>>'<<s>> Bitch," $he replies. You ask if that's what $he is.
+		<<if (getSlave($AS).behavioralFlaw == "liberated")>>
+			"I'm nobody'<<s>> property. I'm a free $woman!" $he shoots back. "We shall see," you reply.
+		<<elseif (getSlave($AS).devotion < -20)>>
+			$He does $his best to shake $his head.
+		<<else>>
+			"Ye<<s>> <<Master>>, that'<<s>> what I am."
+		<</if>>
+	<<else>>
+		$His body belongs to you, and your slave needs to remember that.
+	<</if>>
+<<else>>
+	$His body belongs to you, and your slave needs to remember that.
+<</if>>
+
+You then tell your slave to kneel at your feet.
+<<if (getSlave($AS).behavioralFlaw == "bitchy")>>
+	$He rolls $his eyes sasses you a bit, "Whatever," $he scoffs and
+<<elseif (getSlave($AS).behaviorFlaw == "arrogant")>>
+	$He stands up even straighter than before, <<if (hasBothArms(getSlave($AS)))>>crossing $his arms and <</if>>widening $his stance. $His arrogance makes obeying commands like this difficult, but that is not your concern. You give $him a look that tells $him that pain will await if $he does not obey. $He
+<<elseif (getSlave($AS).behavioralQuirk == "confident")>>
+	$He confidently moves to obey. $He
+<<elseif (getSlave($AS).behavioralFlaw == "liberated")>>
+	$He stands up even straighter than before, <<if (hasBothArms(getSlave($AS)))>>crossing $his arms and <</if>>widening $his stance. "I am not <<s>>ome animal," $he protests, "I am a free $woman." You laugh at $his continued delusions. Liberated $women have no place in a Free City. You remind $him that pain awaits $him should $he defy you further and $he
+<<elseif (getSlave($AS).behavioralQuirk == "advocate")>>
+	$He smiles at the demonstration of $his rightful place as a lowly slave. $He
+<<elseif (getSlave($AS).behavioralFlaw == "odd")>>
+	$He sticks $his tongue out at you, blowing raspberries in an act of futile defiance. $He really is an odd one. $He
+<<elseif (getSlave($AS).behavioralQuirk == "funny")>>
+	$He smiles and turns $his butt to you, swaying it cutely as $his silly way of acknowledging your command. $He
+<<else>>
+	$He
+<</if>>
+
+<<if (getSlave($AS).devotion < -20)>>
+	<<if (getSlave($AS).trust < -50)>>
+		drops terrified to the ground.
+	<<else>>
+		<<if !canTalk(getSlave($AS))>>
+			gestures
+		<<elseif (_lisping == 1)>>
+			lisps
+		<<else>>
+			declares
+		<</if>>
+		angrily that slavery is wrong and $he will not bow. You look at your assistant who silently summons two other, more obedient slaves from their duties.
+		<<if (getSlave($AS).nipplesPiercing > 1)>>
+			You reach out and grab $him by $his nipple chain, pulling $him in harshly. $He yelps in pain, but knows better than to pull away.
+		<<elseif (getSlave($AS).nosePiercing > 1)>>
+			You reach out and grab $him by $his nose ring, pulling $him in harshly. $He yelps in pain, but knows better than to pull away.
+		<<else>>
+			You reach out and grab $him firmly by the collar.
+		<</if>>
+		"One more chance, slut." By now, the other slaves have arrived and are standing loyally by your side. Your loyal slaves force $him to <<if hasAnyLegs(getSlave($AS))>>$his knee<<if hasBothLegs(getSlave($AS))>>s<</if>><<else>>the ground<</if>>.
+	<</if>>
+	"Head at crotch level," you clarify. "Remember your purpose."
+<<elseif (getSlave($AS).devotion < 20)>>
+	is not enthusiastic, but is obedient enough to go down without much threat of discipline.
+<<elseif (getSlave($AS).devotion > 20)>>
+	<<if (getSlave($AS).fetishKnown == 1)>>
+		<<switch getSlave($AS).fetish>>
+		<<case "submissive">>
+			bows $his head and humbly assumes $his rightful position at $his <<= WrittenMaster()>>'s feet.
+		<<case "dom">>
+			would rather be standing by your side making your other sluts bow, but $he still knows that you are $his <<= WrittenMaster()>>.
+		<<case "sadist">>
+			would rather be pushing one of your other whores painfully to their knees, but $he still obeys.
+		<<case "masochist">>
+			waits just long enough to receive a disciplinary slap, making $him blush with arousal as $he kneels before you.
+		<<case "cumslut">>
+			is excited to be closer to your <<if canTaste(getSlave($AS))>>delicious<<else>>heavenly<</if>> crotch, and hurries to match $his eyes to your <<if $PC.dick > 0>>package<<else>>crotch<</if>>.
+		<<case "humiliation">>
+			makes a big show of it as $he lowers $himself dramatically before you.
+		<<case "buttslut">>
+			leans heavily forward so that $his ass sticks out ridiculously far as $he <<if hasAnyLegs(getSlave($AS))>>bends $his knee<<if hasBothLegs(getSlave($AS))>>s<</if>> and <</if>>goes to the floor.
+		<<case "pregnancy">>
+			obeys your command and goes to <<if hasBothLegs(getSlave($AS))>>$his knees<<else>>the floor<</if>>.
+		<<case "boobs">>
+			pulls $his shoulders back strongly while leaning far enough forward to drag $his
+			<<if (getSlave($AS).boobs >= 10000)>>
+				weighty mammaries
+			<<elseif (getSlave($AS).boobs >= 2000)>>
+				cumbersome udders
+			<<elseif (getSlave($AS).boobs >= 1000)>>
+				massive slave tits
+			<<elseif (getSlave($AS).boobs >= 800)>>
+				forward-thrust breasts
+			<<elseif (getSlave($AS).boobs >= 500)>>
+				meager chest
+			<<elseif (getSlave($AS).boobs <= 400)>>
+				pathetic slave boobs
+			<<else>>
+				tits
+			<</if>>
+			across your body as $he goes down.
+		<<default>>
+			obeys your command and goes to <<if hasBothLegs(getSlave($AS))>>$his knees<<else>>the floor<</if>>.
+		<</switch>>
+	<<else>>
+		obeys your command and goes to <<if hasBothLegs(getSlave($AS))>>$his knees<<else>>the floor<</if>>.
+	<</if>>
+<</if>>
+<<if (getSlave($AS).devotion < -20)>>
+	The other slaves guide $him to adjust $his posture so $his eyes are directly in line with your <<if $PC.dick > 0>>package<<else>>crotch<</if>>.
+<<else>>
+	$He kneels so that $his eyes are directly level with your <<if $PC.dick > 0>>package<<else>>crotch<</if>>.
+<</if>>
+
+<<if $PC.dick > 0>>
+	<<if (getSlave($AS).energy > 50)>>
+		$He cant help but stare in lust at your
+		<<if $PC.balls >= 30>>
+			monstrous, massive pair of watermelon sized balls.
+		<<elseif $PC.balls >= 14>>
+			enormous, heavy pair of balls.
+		<<elseif $PC.balls >= 9>>
+			huge pair of balls, bulging like softballs from behind your suit.
+		<<elseif $PC.balls >= 5>>
+			large pair of balls, swinging heavily as you move.
+		<<else>>
+			manly package.
+		<</if>>
+	<<elseif $PC.scrotum > 0>>
+		Your balls loom directly in front of $his face.
+	<</if>>
+<</if>>
+
+Now kneeling at your feet naked before you, your slave waits for $his <<= WrittenMaster()>>'s command. You take some time to survey the slut's properly displayed body.
+<<if getSlave($AS).butt > 6>>
+	$His massive ass is so huge that $he it squishes around $his heel<<if hasBothLegs(getSlave($AS))>>s<</if>>, almost reaching the floor.
+<<elseif getSlave($AS).butt > 4>>
+	$His <<print either("ass", "rear end")>> is so round and large it rolls out from $his back in two perfect mounds. The cheeks are so thick it forms a perfect crevice between them, more than a couple <<if $showInches == 2>>inches<<else>>centimeters<</if>> deep.
+<<elseif getSlave($AS).butt > 2>>
+	$His nice <<print either("plump", "thick")>> <<print either("ass", "butt")>> curves out noticeably, even while $he sits on $his knee<<if hasBothLegs(getSlave($AS))>>s<</if>>.
+<<else>>
+	$His cute and tight ass rests gently on $his ankle<<if hasBothLegs(getSlave($AS))>>s<</if>>.
+<</if>>
+
+
+<<if (getSlave($AS).energy > 95)>>
+	$His eyes fill with lust at the helplessness of kneeling at your crotch.
+<</if>>
+<<if (getSlave($AS).fetishKnown == 1)>>
+	<<if (getSlave($AS).fetishStrength > 60)>>
+		<<switch getSlave($AS).fetish>>
+		<<case "submissive">>
+			$He keeps $his eyes down and poises $his body to be fully available to $his <<= WrittenMaster()>>, trying to model for you the image of the perfect submissive.
+		<<case "dom">>
+			Despite $his kneeling stature, $his back is straight and shoulders back.
+		<<case "masochist">>
+			$He positions $himself uncomfortably, bringing visual pleasure to you and pain to $himself. $He accentuates $his most sensitive parts, inviting you to slap or spank them.
+		<<case "cumslut">>
+			$he goes to $his knee<<if hasBothLegs(getSlave($AS))>>s<</if>>, all the while staring at your <<if $PC.dick != 0>>manly bulge<<if $PC.vagina != -1>> and <</if>><</if>><<if $PC.vagina != -1>>feminine mound<</if>>.
+		<<case "humiliation">>
+			$He eagerly takes to this humiliating position, hoping to demonstrate $his willingness to be degraded by $his <<= WrittenMaster()>>.
+		<<case "buttslut">>
+			$He positions $himself, sticking $his butt out as far as $he can manage, hoping to draw your attention to $his favorite area.
+		<<case "boobs">>
+			$he kneels with $his back strongly arching far back and diligently works to touch $his elbows behind $his back to best display $his
+			<<if (getSlave($AS).boobs >= 10000)>>
+				colossal mammaries
+			<<elseif (getSlave($AS).boobs >= 2000)>>
+				gigantic udders
+			<<elseif (getSlave($AS).boobs >= 1000)>>
+				massive slave tits
+			<<elseif (getSlave($AS).boobs >= 800)>>
+				prominent breasts
+			<<elseif (getSlave($AS).boobs >= 400)>>
+				modest chest
+			<<elseif (getSlave($AS).boobs <= 400)>>
+				pathetic slave boobs
+			<</if>>
+			for $his <<= WrittenMaster()>>.
+			<<if (getSlave($AS).lactation > 0)>>
+				milk dribbles down the soft curves of $his chest as a further sign of $his arousal.
+			<</if>>
+			This is, of course, how all slaves are supposed to kneel, but $he takes the pose with added dedication.
+		<<default>>
+			$He positions $himself with $his knee<<if hasBothLegs(getSlave($AS))>>s<</if>> spread wide, hoping that you will turn your attention to <<if canDoVaginal(getSlave($AS))>>$his wet pussy<<elseif canAchieveErection(getSlave($AS))>>$his hard cock<<else>>$him<</if>>.
+		<</switch>>
+	<</if>>
+<</if>>
+You give $him permission to speak, and tell $him that $he may beg $his <<= WrittenMaster()>>.
+
+<<if (getSlave($AS).devotion < -20)>>
+	<<if (getSlave($AS).trust < -50)>>
+		<<switch getSlave($AS).rules.punishment>>
+		<<case "confinement">>
+			Your slave simply <<if hasAnyArms(getSlave($AS))>>presses $his hand<<if hasBothArms(getSlave($AS))>>s<</if>> together and <</if>>begs you not to lock $him up in the bad-<<= $girl>> box.
+		<<case "whipping">>
+			Your slave simply <<if hasAnyArms(getSlave($AS))>>presses $his hand<<if hasBothArms(getSlave($AS))>>s<</if>> together and <</if>>begs you not to whip $him.
+		<<case "chastity">>
+			<<if (getSlave($AS).energy > 60)>>
+				Your slave simply presses $his hand<<if hasBothArms(getSlave($AS))>>s<</if>> together and begs you not to take away $his next orgasm
+			<<else>>
+				Your slave simply asks that you not change $his punishment. $He fears you, but using chastity as a punishment is not an efficient way to command $his obedience, since $he has no sexual energy.
+			<</if>>
+		<</switch>>
+	<<else>>
+		<<if (getSlave($AS).behavioralFlaw == "bitchy")>>
+			$He turns $his nose up in utter disgust. "Why, to feed your <<if $girl == "boy">>mi<<s>>andri<<s>>tic<<else>>mi<<s>>ogyni<<s>>tic<</if>> ego? Thank<<s>>, but no." $He looks at your other slaves holding $him down, "Why don't you get one of these mindle<<ss>> cunt<<s>> to do it? Or are they not hot enough?" $He is disobedient and bitchy, a bad combo.
+		<<elseif (getSlave($AS).behaviorFlaw == "arrogant")>>
+			$He tries to cock $his shoulders back, giving a death glare to the slaves holding $him in place, "I don't need anything from you," $he hisses. $He is disobedient and arrogant, a bad combo.
+		<<elseif (getSlave($AS).behavioralFlaw == "liberated")>>
+			$He does $his best to spit in your face, but the height difference means $he only stains your shirt. "I demand you relea<<s>>e me!" $he scowls, "Or I'm going to call the poli<<c>>e!" You smile at $his pathetically outdated worldview. You tell $him that's a good idea, since you know how rebellious slaves fare in jail.
+		<<elseif (getSlave($AS).behavioralFlaw == "odd")>>
+			$He purses $his lips and bounces on $his heels in futile rebellion. "Nuh-uh." $he puffs, shaking $his head wildly.
+		<<else>>
+			$He simply sits there, struggling against the hands holding $him down.
+		<</if>>
+	<</if>>
+	This is clearly the best you are going to get out of $him until $he is better trained. You
+	<<if (getSlave($AS).trust >= -50)>>
+		signal your loyal slaves to lift $him to $his feet, and
+	<</if>>
+	send $him away for now.
+<<elseif (getSlave($AS).devotion < 20)>>
+	<<if (getSlave($AS).behavioralFlaw == "bitchy")>>
+		$He turns $his nose up in utter disgust. "Why, to feed your <<if $girl == "boy">>mi<<s>>andri<<s>>tic<<else>>mi<<s>>ogyni<<s>>tic<</if>> ego? Thank<<s>>, but no." $He looks at your other slaves holding $him down, "Why don't you get one of the<<s>>e mindle<<ss>> cunt<<s>> to do it? Or are they not hot enough?" $He is disobedient and bitchy, a bad combo.
+	<<elseif (getSlave($AS).behaviorFlaw == "arrogant")>>
+		$He tries to cock $his shoulders back, giving a death glare to the slaves holding $him in place, "I don't need anything from you," $he hisses. $He is disobedient and arrogant, a bad combo.
+	<<elseif (getSlave($AS).behavioralFlaw == "liberated")>>
+		$He does $his best to spit in your face, but the height difference means $he only stains your shirt. "I demand you relea<<s>>e me!" $he scowls, "Or I'm going to call the poli<<c>>e!" You smile at $his pathetically outdated worldview. You tell $him that's a good idea, since you know how rebellious slaves fair in jail.
+	<<elseif (getSlave($AS).behavioralFlaw == "odd")>>
+		$He purses $his lips and bounces on $his heels in futile rebellion. "Nuh-uh." $he puffs, shaking $his head wildly.
+	<<elseif (getSlave($AS).sexualFlaw == "shamefast")>>
+		$He tries to cover $his naked body from your gaze "Plea<<s>>e, can I ju<<s>>t put <<s>>ome clothe<<s>> on?"
+	<<else>>
+		$He looks up at you with a sudden glimpse of hope, and begins to plead, "Plea<<s>>e, <<s>>ir, plea<<s>>e <<s>>et me free. I don't want to be here.
+		<<if (getSlave($AS).energy < 50)>>
+			I have no de<<s>>ire for <<s>>e<<x>>. I don't want to be your toy! Plea<<s>>e let me go."
+		<<else>>
+			I might even come back to <<sh>>are con<<s>>en<<s>>ual love with you. I ju<<s>>t don't want to be property. Plea<<s>>e, let me go."
+		<</if>>
+	<</if>>
+	You tell your slave to rise to $his feet. Even though $he desired the impossible, it wasn't a total waste. You feel as though you have a pretty good understanding of where your slave stands. You send $him away with $his request denied, and you resolve to break $him more in the coming weeks.
+<<elseif (getSlave($AS).devotion <= 60)>>
+	Your slave looks at $his <<= WrittenMaster()>> with obedient eyes.
+<<elseif (getSlave($AS).devotion <= 100)>>
+	Your devoted slave takes the begging position,
+	<<if (getSlave($AS).fetish != "submissive")>>
+		$he even brings $his hand<<if hasBothArms(getSlave($AS))>>s<</if>> up like a dog's paws.
+	<<else>>
+		<<if (getSlave($AS).fetishKnown == 1) && (getSlave($AS).fetishStrength > 60)>>
+			and $he bows $his head in total submission.
+			<<if (getSlave($AS).nipplesPiercing > 0)>>
+				The armbinder thrusts $his tits out nicely, and $his nipple rings are pulled tight by the weighted bells weighing them down.
+			<<elseif (getSlave($AS).nipplesPiercing > 1)>>
+				The armbinder thrusts $his tits out nicely, and ensures that $his nipple chains are pulled tight by the angle of $his shoulders. <<BoobWatch>> The bells on $his nipple piercings jungle sweetly as $he breathes.
+			<<else>>
+				The armbinder thrusts $his tits out nicely and $his nipples are now red from the clamps pressing down hard on $his sensitive flesh. Every painful shudder makes the bells jungle ever so sweetly.
+			<</if>>
+		<<else>>
+			$he even brings $his hand<<if hasBothArms(getSlave($AS))>>s<</if>> up like a dog's paws.
+		<</if>>
+	<</if>>
+	"Ye<<s>> Ma<<s>>ter. Thank you, <<Master>>." $He is fully subservient to you, and would do anything to please you.
+<</if>>
+
+<<if (getSlave($AS).devotion > 20)>>
+/*eventually plan to make a string of Paraphilia text, which will be stronger versions of their fetish counterparts. */
+	<<if (getSlave($AS).fetishKnown == 1)>>
+		<<if (getSlave($AS).fetishStrength > 60)>>
+			<<switch getSlave($AS).fetish>>
+			<<case "submissive">>
+				$He adjusts $his monoglove behind $his back, jingling $his nipple bells as $he does "Plea<<s>>e <<Master>>," $he begs with genuine humility, "Plea<<s>>e use your slave in whatever way you see fit. This <<s>>lave has no purpose but to please $his <<Master>>"
+			<<case "dom">>
+				$He looks up at you. Even from $his kneeling position $his eyes carry confident domination. "<<Master>>, I know my pla<<c>>e i<<s>> beneath you. Give me the authority to lord over your other <<s>>lave<<s>> and I will for<<c>>e them to <<s>>erve you a<<s>> I do."
+			<<case "masochist">>
+				"I know I haven't di<<s>>obeyed," $he begins, "but I ju<<s>>t need to be puni<<sh>>ed." You smile down at your little painslut, running your finger along $his chin. "Plea<<s>>e <<Master>>, beat me. Beat my a<<ss>> until it'<<s>> red and clamp my nipple<<s>> until they bleed. Plea<<s>>e! I need to feel your <<s>>trength!"
+			<<case "cumslut">>
+				Your little cumslut can't stop staring at your
+				<<if $PC.balls >= 30>>
+					monstrous, massive pair of watermelon sized balls.
+				<<elseif $PC.balls >= 14>>
+					enormous, heavy pair of balls.
+				<<elseif $PC.balls >= 9>>
+					huge pair of balls, bulging like softballs from behind your suit.
+				<<elseif $PC.balls >= 5>>
+					large pair of balls, swinging heavily as you move.
+				<<else>>
+					crotch.
+				<</if>>
+				Drool begins to drip from $his lips, and you have to remind your slave that $he is here to beg.
+				"<<Master>>," $he breathes heavily, "Plea<<s>>e let me
+				<<if $PC.dick != 0>>
+					<<s>>uck your magnifi<<c>>ent
+					<<if $PC.vagina != -1>>
+						cock and eat you out,
+					<<else>>
+						cock,
+					<</if>>
+				<<else>>
+					eat your deli<<c>>iou<<s>> pu<<ss>>y,
+				<</if>>
+				plea<<s>>e." You smile at the little cocksucker, so eager to please.
+			<<case "humiliation">>
+				$He sits so that $his body is on full display, "Plea<<s>>e <<Master>>, u<<s>>e me and humiliate me. Take me out to the public <<s>>quare <<s>>o that everyone can <<s>>ee you overpower me."
+			<<case "buttslut">>
+				$He positions $his back so $his ass sticks out even further "<<Master>>," $he begs, "u<<s>>e my a<<ss>>!
+				<<if (getSlave($AS).sexualQuirk == "painal")>>
+					Make me <<s>>queal!
+				<</if>>
+				I ju<<s>>t need your cock in my mo<<s>>t u<<s>>eful fuckhole, plea<<s>>e!"
+			<<case "boobs">>
+				$He <<if (!hasAnyArms(getSlave($AS)))>>leans $his head back and juts out $his tits, raising<<else>>takes $his hand<<if (hasBothArms(getSlave($AS)))>>s<</if>> and presses $his tits together, lifting<</if>> them to display for you $his primary purpose in life.
+				<<if (getSlave($AS).lactation > 0)>>
+					More milk <<if (!hasAnyArms(getSlave($AS)))>>dribbles<<else>>squirts<</if>> from each teat as $he bears them.
+				<</if>>
+				"I beg of you, <<Master>>, I need you to u<<s>>e my tit<<s>>. <<S>>uck them, <<s>>queeze them, fuck them, I cannot cum without you u<<s>>ing my <<s>>lave tit<<s>>! I am nothing more than a <<if canWalk(getSlave($AS))>>walking <</if>>tit-carrier, and my only purpo<<s>>e i<<s>> to offer the<<s>>e brea<<s>>t<<s>> to you."
+			<<case "pregnant">>
+				$He begins to <<if (hasAnyArms(getSlave($AS)))>>caress<<else>>stick out<</if>> $his stomach. "U<<s>>e me a<<s>> your breeder, <<Master>>, plea<<s>>e! I ju<<s>>t want to be filled with your <<s>>eed forever!"
+			<<default>>
+				$He kneels <<if hasBothLegs(getSlave($AS))>>with $his legs far spread<<else>>on the floor<</if>>. "U<<s>>e my fuckhole <<Master>>, I beg you. Plea<<s>>e, I need you to fuck me!"
+			<</switch>>
+		<<else>>
+			"<<Master>>, I e<<x>>i<<s>>t to <<s>>erve you." $He say, "I have no other purpo<<s>>e in life. I beg of you, plea<<s>>e never let me leave your <<s>>ervi<<c>>e. Let me wait on you forever. I <<s>>wear I will alway<<s>> be obedient. Let me cook your meal<<s>>, clean your penthou<<s>>e, care for your other <<s>>lave<<s>>, even make me a cow. I don't care, a<<s>> long a<<s>> I'm here <<s>>erving you." $He knows that $his rightful place is a slave, and $he is dedicated to living out that role to the fullest.
+			<<if (getSlave($AS).behavioralQuirk == "advocate")>>
+				"I <<s>>ee now," $he continues, "that <<s>>lavery really i<<s>> a $woman'<<s>> rightful pla<<c>>e. <<He>> ha<<s>> no purpo<<s>>e e<<x>><<c>>ept to <<s>>erve <<his>> <<Master>>."
+			<</if>>
+		<</if>>
+	<<else>>
+		"<<Master>>, I exi<<s>>t to <<s>>erve you." $He says, "I have no other purpo<<s>>e in life. I beg of you, plea<<s>>e never let me leave your <<s>>ervi<<c>>e. Let me wait on you forever. I <<s>>wear I will alway<<s>> be obedient. Let me cook your meal<<s>>, clean your penthou<<s>>e, care for your other <<s>>lave<<s>>, even make me a cow. I don't care, a<<s>> long a<<s>> I'm here <<s>>erving you." $He knows that $his rightful place is a slave, and $he is dedicated to living out that role to the fullest.
+		<<if (getSlave($AS).behavioralQuirk == "advocate")>>
+			"I <<s>>ee now," $he continues, "that <<s>>lavery really i<<s>> a $woman'<<s>> rightful pla<<c>>e. <<He>> ha<<s>> no purpo<<s>>e e<<x>><<c>>ept to <<s>>erve <<his>> <<Master>>."
+		<</if>>
+	<</if>>
+	You smile at your obedient little slave, and agree to grant $his request.
+<</if>>
+
+<<if (random(1,100) > (100 + getSlave($AS).devotion))>>
+	<<if (getSlave($AS).fetish != "submissive") && (getSlave($AS).energy <= 95) && (getSlave($AS).behavioralFlaw != "liberated")>>
+		Seeing the humiliating acts your slaves are expected to perform has made $him @@.red;determined to be free.@@
+		<<set getSlave($AS).behavioralFlaw = "liberated">>
+	<</if>>
+<<elseif (random(1,100) > (110 - getSlave($AS).devotion))>>
+	<<if (getSlave($AS).fetish == "none") && (getSlave($AS).behavioralFlaw != "liberated")>>
+		Feeling the joy of kneeling before such a powerful <<= WrittenMaster()>> and begging at his feet has @@.lightcoral;encouraged $him to be more submissive.@@
+		<<set getSlave($AS).fetish = "submissive", getSlave($AS).fetishKnown = 1>>
+	<</if>>
+<</if>>
+
+<<if passage() != "Slave Interact">>
+	<<set _fl = $slaveIndices[getSlave($AS).ID]>>
+	<<if def _fl>>
+		<<set $slaves[_fl] = getSlave($AS)>>
+	<</if>>
+<</if>>

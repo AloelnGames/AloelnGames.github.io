@@ -1,0 +1,1083 @@
+:: Options [nobr]
+
+<style>
+.active {
+	background-color: grey;
+}
+.subHeading {
+	width: 85%;
+	text-align: center;
+	margin-top: 1.5em;
+}
+.rebellionOption {
+	margin-top: -30px;
+	width: 75%;
+	text-align: right;
+}
+.rebellionOption2 {
+	margin-top: -30px;
+	width: 63.2%;
+	text-align: right;
+}
+.scLink {
+	width: 85%;
+	text-align: center;
+}
+.scLink2 {
+	width: 73%;
+	text-align: center;
+}
+</style>
+
+<<if lastVisited("Slave Interact") === 1>>
+	<<set $storedLink = "Slave Interact">>
+<<else>>
+	<<set $storedLink = "Main">>
+<</if>>
+
+<<set $showEncyclopedia = 0>>
+<<set $nextButton = "Back", $nextLink = $storedLink>>
+
+<<options $autosave>>
+	End of week autosaving is currently
+	<<option 1 "Enabled">>
+	<<option 0 "Disabled">>
+<</options>>
+
+<br>
+This save was created using FC version $ver build $releaseID.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;[[Apply Backwards Compatibility Update|Backwards Compatibility]]
+<<if $secExpEnabled == 1>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;[[Apply Security Expansion mod backwards compatibility |SecExpBackwardCompatibility]]
+<</if>>
+<<if $SF.Toggle && $SF.Active >= 1>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Apply Special Force Expansion mod backwards compatibility">>
+		<<= App.SF.BC()>>
+		<<goto "Options">>
+	<</link>>
+<</if>>
+<<if $familyTesting == 1>>
+	<br><<link "Reset extended family mode controllers">><<goto "family panic">><</link>> //Clears and rebuilds .sister and .daughter tracking.//
+<</if>>
+<<if isNaN($rep)>>
+	<br>[[Reset Reputation|Options][$rep = 0]]
+<</if>>
+<<if isNaN($cash)>>
+	<br>[[Reset Money|Options][$cash = 500]]
+<</if>>
+<<if $releaseID == 1057>>
+	<br>[[Free male anatomy removal due to accidentally flawed updater|Options][$PC.dick = 0, $PC.balls = 0, $PC.prostate = 0, $PC.scrotum = 0, $PC.ballsImplant = 0]] //Use this if your female PC picked up a few extra parts during the conversion process.//
+<</if>>
+
+<<if ($releaseID >= 1000) || $ver.startsWith("0.9") || $ver.startsWith("0.8") || $ver.startsWith("0.7") || $ver.startsWith("0.6")>>
+	<br><br>
+	''NEW GAME PLUS''
+	<br>
+	//You can begin a new game with up to five (or more) of your current slaves, although starting resources other than these slaves will be reduced. New Game Plus @@.yellow;MAY@@ work across versions. To attempt to migrate a save across versions://
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;//1) Save on this screen//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;//2) Re-open the .html in a new tab then load the above save.//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;//3) [[Activate New Game Plus.|New Game Plus][$ui = "start"]]
+<<else>>
+	//New Game Plus is not available because this game was not started with a compatible version.//
+<</if>>
+<br>
+
+<<run App.UI.tabbar.handlePreSelectedTab($tabChoice.Options)>>
+
+<br>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Display')" id="tab Display">Display</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'CONTENT&FLAVOR')" id="tab CONTENT&FLAVOR">Content & flavour</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'MODS')" id="tab MODS">Mods</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'DEBUG/CHEATING')" id="tab DEBUG/CHEATING">Debug/cheating</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Experimental')" id="tab Experimental">Experimental</button>
+<br>
+
+<div id="Display" class="tabcontent">
+	<div class="content">
+		<div class="subHeading">
+			''Reports''
+		</div>
+
+		<<options $showEWD>>
+			End week report descriptive details are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $showEWM>>
+			End week report performance modifier descriptions are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $verboseDescriptions>>
+			Master Suite report details such as slave changes are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $useAccordion>>
+			Accordion effects on weekly reports are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $useTabs>>
+			Economic Tabs on weekly reports are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $showEconomicDetails>>
+			Economic detail sheets for facilities are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $showNeighborDetails>>
+			Economic report neighbor details such as trade impacts on culture are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $formatNumbers>>
+			Numeric formatting is currently
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			This will comma-format numbers in some areas.
+		<</options>>
+
+		<div class="subHeading">
+			''General''
+		</div>
+
+		<div class="scLink">
+			''COLOR CONTROL''
+			<<link "Flip lighting">><<run flipColors(setup.lightColorMap)>><<goto "Options">><</link>>
+		</div>
+
+		<<options $positionMainLinks>>
+			Main menu leadership controls displayed
+			<<option 1 "Above">>
+			<<option 0 "Above and below">>
+			<<option -1 "Below">>
+		<</options>>
+
+		<br>
+
+		<<options $newModelUI>>
+			New Model UI
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $verticalizeArcologyLinks>>
+				Penthouse Facility Display
+				<<option 3 "Triple Column">>
+				<<option 2 "Double Column">>
+				<<option 1 "Single Column">>
+				<<option 0 "Collapsed">>
+		<</options>>
+
+		<<options $seeArcology>>
+			Main menu arcology description
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $seeDesk>>
+			Main menu desk description
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $seeFCNN>>
+			Main menu newsfeed
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $showTipsFromEncy>>
+			Tips from the Encyclopedia are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $tooltipsEnabled>>
+			Help tooltips are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			This is mostly for new players. @@.exampleTooltip.noteworthy;Colored text@@ can have tooltips.
+		<</options>>
+
+		<<options $useSlaveSummaryTabs>>
+			Main menu slave tabs are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<option 2 "Cardstyle">>
+		<</options>>
+
+		<<options $useSlaveListInPageJSNavigation>>
+			The slave Quick list in-page scroll-to is
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $useSlaveSummaryOverviewTab>>
+			Condense special slaves into their own tab
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $fucktoyInteractionsPosition>>
+			Interactions with your fucktoys are
+			<<option 1 "next to them">>
+			<<option 0 "at page bottom">>
+		<</options>>
+
+		<<options $lineSeparations "Summary Options">>
+			Line separations are
+			<<option 1 "Shown">>
+			<<option 0 "Hidden">>
+		<</options>>
+
+		<div class="subHeading">
+			''Sidebar''
+		</div>
+
+		<<if ndef $sideBarOptions.compact>> <<set $sideBarOptions.compact = 1>> <</if>>
+		<<options $sideBarOptions.compact>>
+			The side bar is very compact:
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			Disabling this will move the sidebar 'Manage Arcology' links onto the Main menu, while keeping the passage visible.
+		<</options>>
+
+		<<options $sideBarOptions.Cash>>
+			Cash is
+			<<option 1 "Shown">>
+			<<option 0 "Hidden">>
+		<</options>>
+
+		<<options $sideBarOptions.Upkeep>>
+			Upkeep is
+			<<option 1 "Shown">>
+			<<option 0 "Hidden">>
+		<</options>>
+
+		<<options $sideBarOptions.SexSlaveCount>>
+			Sex slave count is
+			<<option 1 "Shown">>
+			<<option 0 "Hidden">>
+		<</options>>
+
+		<<options $sideBarOptions.roomPop>>
+			Room population is
+			<<option 1 "Shown">>
+			<<option 0 "Hidden">>
+		<</options>>
+
+		<<options $sideBarOptions.GSP>>
+			GSP is
+			<<option 1 "Shown">>
+			<<option 0 "Hidden">>
+		<</options>>
+
+		<<options $sideBarOptions.Rep>>
+			Rep is
+			<<option 1 "Shown">>
+			<<option 0 "Hidden">>
+		<</options>>
+
+		<<if $secExpEnabled > 0>>
+			<<options $sideBarOptions.Authority>>
+				Authority is
+				<<option 1 "Shown">>
+				<<option 0 "Hidden">>
+			<</options>>
+
+			<<options $sideBarOptions.Security>>
+				Security is
+				<<option 1 "Shown">>
+				<<option 0 "Hidden">>
+			<</options>>
+
+			<<options $sideBarOptions.Crime>>
+				Crime is
+				<<option 1 "Shown">>
+				<<option 0 "Hidden">>
+			<</options>>
+		<</if>>
+
+		<div class="subHeading">
+			''Images''
+		</div>
+
+		<<options $seeImages>>
+			Images are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<if $seeImages > 0>>
+			<div class="imageRef" style="width:200px;height:200px;margin:0 auto;">
+				<<= SlaveArt(BaseSlave(), 0, 0)>>
+			</div>
+
+			<<options $imageChoice>>
+				<<option 3 "Revamped embedded vector art">>
+				<<option 2 "Non-embedded vector art">>
+				<<option 1 "NoX/Deepmurk's vector art">>
+				<<option 0 "Shokushu's rendered imagepack">>
+			<</options>>
+
+			<<if $seeImages === 1>>
+				<<options $seeFaces>>
+					Face artwork is
+					<<option 1 "Enabled">>
+					<<option 0 "Disabled">>
+				<</options>>
+
+				<<options $seeVectorArtHighlights>>
+					Highlights on shiny clothing
+					<<option 1 "Enabled">>
+					<<option 0 "Disabled">>
+				<</options>>
+
+				<<options $seeHeight>>
+					Height scaling
+					<<option 2 "All images">>
+					<<option 1 "Small images">>
+					<<option 0 "Disabled">>
+				<</options>>
+
+				<<options $showClothingErection>>
+					Clothing erection bulges
+					<<option true "Enabled">>
+					<<option false "Disabled">>
+				<</options>>
+			<<elseif $seeImages === 0>>
+				<<options $seeMainFetishes>>
+					Slave summary fetish images
+					<<option 1 "Enabled">>
+					<<option 0 "Disabled">>
+				<</options>>
+			<<elseif $seeImages === 3>>
+				<<options $showClothingErection>>
+					Clothing erection bulges
+					<<option true "Enabled">>
+					<<option false "Disabled">>
+					<<comment>>
+					@@.red;Git compiled only, no exceptions.@@
+				<</options>>
+			<</if>>
+
+			<<options $seeAvatar>>
+				PA avatar art is
+				<<option 1 "Enabled">>
+				<<option 0 "Disabled">>
+			<</options>>
+
+			<<options $seeSummaryImages>>
+				Slave images in lists are
+				<<option 1 "Enabled">>
+				<<option 0 "Disabled">>
+			<</options>>
+
+			<<options $seeReportImages>>
+				Slave images in the weekly report are
+				<<option 1 "Enabled">>
+				<<option 0 "Disabled">>
+			<</options>>
+		<</if>>
+	</div>
+</div>
+
+<div id="CONTENT&FLAVOR" class="tabcontent">
+	<div class="content">
+		<div class="subHeading">
+			''Content''
+		</div>
+		<<options $baseDifficulty>>
+			The difficulty setting is currently set to
+			<<option 1 "Very Easy">>
+			<<option 2 "Easy">>
+			<<option 3 "Default">>
+			<<option 4 "Hard">>
+			<<option 5 "Very Hard">>
+		<</options>>
+
+		<<options $seeIllness>>
+			Slaves falling ill is currently
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			Will not affect existing ill slaves already in-game.
+		<</options>>
+
+		<<options $seeExtreme>>
+			Extreme content like amputation is currently
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			Will not affect extreme surgeries already applied in-game.
+		<</options>>
+		<div align="center">
+			//More granular control of what appears is in// [[Description Options]].
+		</div>
+		<br>
+		<<options $seeBestiality>>
+			Bestiality related content is currently
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $seePee>>
+			Watersports related content is currently
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $seeIncest>>
+			Incest content is currently
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $seePreg>>
+			Pregnancy related content is currently
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			Will not affect existing pregnancies already in-game.
+		<</options>>
+
+		<<options $seeDicksAffectsPregnancy>>
+			Child gender to be generated based off dick content settings
+			<<option 1 "Enabled">>
+			<<comment>>
+			Currently <<print $seeDicks>>% of children will be born male.
+			<<option 0 "Disabled">>
+			<<comment>>
+			Will not affect existing pregnancies already in-game.
+		<</options>>
+
+		<<if $seeDicksAffectsPregnancy > 0>>
+			<<options $adamPrinciple>>
+				XX slaves can have sons
+				<<option 1 "Enabled">>
+				<<option 0 "Disabled">>
+				<<comment>>
+				Will not affect existing pregnancies already in-game.
+			<</options>>
+		<</if>>
+
+		<<options $seeHyperPreg>>
+			Extreme pregnancy content like broodmothers is currently
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			Will not affect existing hyperpregnancies already in-game.
+		<</options>>
+
+		<<options $dangerousPregnancy>>
+			Pregnancy complications due to multiples and body size are currently
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $precociousPuberty>>
+			Precocious puberty (pregnancy younger than $fertilityAge)
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			Will not affect existing precocious puberty cases already in-game.
+		<</options>>
+
+		<<options $disableLisping>>
+			Slaves with fat lips or heavy oral piercings can lisp
+			<<option 1 "False">>
+			<<option 0 "True">>
+		<</options>>
+
+		<<options $disableTiredness>>
+			Disables the tiredness mechanic. //Temp option//
+			<<option 1 "Disabled">>
+			<<option 0 "Enabled">>
+		<</options>>
+
+		<<options $disableLongDamage>>
+			Disables the long term damage mechanic. //Temp option//
+			<<option 1 "Disabled">>
+			<<option 0 "Enabled">>
+		<</options>>
+
+		<<options $diversePronouns>>
+			Experimental male pronouns are currently
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+		<div align="center">
+			//Apply Backwards Compatibility after changing to update slave's pronouns. Not all scenes support male pronouns and this is not yet incorporated into the lore or mechanics.//
+		</div>
+		<br>
+		<<options $allowMaleSlaveNames>>
+			Male slave names are currently
+			<<option true "Enabled">>
+			<<option false "Disabled">>
+			<<comment>>
+			This only affects slave generation and not your ability to name your slaves.
+		<</options>>
+
+
+		<br>
+		<<options $showMissingSlaves>>
+			Missing slave names are currently
+			<<option true "Enabled">>
+			<<option false "Disabled">>
+		<</options>>
+
+		<br>
+		<div class="subHeading">
+		''Intersecting mechanics''
+		</div>
+
+		<<options $weightAffectsAssets>>
+			Slave assets affected by weight is
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			Diet will still affect asset size.
+		<</options>>
+
+		<<options $curativeSideEffects>>
+			Curative side effects are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			If enabled, curatives have a chance to give slaves harmful side effects.
+		<</options>>
+
+		<div class="subHeading">
+			''Flavour''
+		</div>
+
+		<<options $showAssignToScenes>>
+			Slave reactions to facility assignments are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $postSexCleanUp>>
+			Post sex clean up
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $showAppraisal>>
+			Appraisal miniscenes on slave sale are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $showVignettes>>
+			Assignment performance vignettes on the end week report are
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<options $newDescriptions>>
+			Slaves can have alternate titles
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+
+		<<if $familyTesting > 0>>
+			<<options $allowFamilyTitles>>
+				Family titles for relatives
+				<<option 1 "Enabled">>
+				<<option 0 "Disabled">>
+			<</options>>
+
+			<<options $showDistantRelatives>>
+				Distant relatives such as aunts, nieces and cousins are
+				<<option 1 "Enabled">>
+				<<option 0 "Disabled">>
+			<</options>>
+		<</if>>
+	</div>
+</div>
+
+<div id="MODS" class="tabcontent">
+	<div class="content">
+		<<options $SF.Toggle>>
+			The Special Force Mod is currently
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+		<</options>>
+		/*
+		<<if $SF.Toggle > 0>>
+			<<options $SF.Facility.Toggle>>
+				<br>&nbsp;The support facility is
+				<<option 1 "Enabled">>
+				<<option 0 "Disabled">>
+			<</options>>
+		<</if>> //Prep for future content.//
+		*/
+
+		<br>
+		<<options $secExpEnabled>>
+			The Security Expansion mod is
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			<br>The mod can be activated in any moment, but it may result in unbalanced gameplay if activated very late in the game.
+			<br>''If you are enabling the mod mid game for the first time, run the either the main or mod specific BC option listed near the top.''
+		<</options>>
+
+		<<if $secExpEnabled > 0>>
+			<div class="subHeading">
+				''Security Expansion mod options''
+			</div>
+
+			<<if $terrain === "oceanic">>
+				<br>Oceanic arcologies are not by default subject to external attacks. You can however allow them to happen anyway. If you choose to do so please keep in mind that descriptions and mechanics are not intended for naval combat but land combat.
+			<</if>>
+
+			<<if $SecExp.settings.battle.enabled > 0 || $SecExp.settings.rebellion.enabled > 0>>
+				<<options $SecExp.settings.showStats>>
+					Detailed battle statistics are
+					<<option 1 "Shown">>
+					<<option 0 "Hidden">>
+					<<comment>>
+					Visability of detailed statistics and battle turns.
+				<</options>>
+
+				<<options $SecExp.settings.difficulty>>
+					Difficulty is
+					<<option 2 "Extremly hard">>
+					<<option 1.5 "Very hard">>
+					<<option 1.25 "Hard">>
+					<<option 1 "Normal">>
+					<<option 0.75 "Easy">>
+					<<option 0.5 "Very easy">>
+				<</options>>
+				<br>
+				<<options $SecExp.settings.unitDescriptions>>
+					Unit descriptions are
+					<<option 1 "Abbreviated">>
+					<<option 0 "Summarized">>
+				<</options>>
+				<br>
+			<</if>>
+
+			<<options $SecExp.settings.battle.enabled>>
+				Battles are
+				<<option 1 "Enabled">>
+				<<option 0 "Disabled">>
+			<</options>>
+
+			<<options $SecExp.settings.rebellion.enabled>>
+				Rebellions are
+				<<option 1 "Enabled">>
+				<<option 0 "Disabled">>
+			<</options>>
+
+			<<if $SecExp.settings.battle.enabled > 0>>
+				<<options $SecExp.settings.battle.frequency>>
+					Frequency
+					<<option 2 "Extremly high">>
+					<<option 1.5 "Very high">>
+					<<option 1.25 "High">>
+					<<option 1 "Normal">>
+					<<option 0.75 "Low">>
+					<<option 0.5 "Very low">>
+				<</options>>
+			<</if>>
+
+			<<if $SecExp.settings.rebellion.enabled > 0>>
+				<<options $SecExp.settings.rebellion.speed>>
+					Buildup
+					<<option 2 "Extremly fast">>
+					<<option 1.5 "Very fast">>
+					<<option 1.25 "Fast">>
+					<<option 1 "Normal">>
+					<<option 0.75 "Slow">>
+					<<option 0.5 "Very slow">>
+				<</options>>
+			<</if>>
+
+			<<if $SecExp.settings.battle.enabled > 0>> <br>
+				<<options $SecExp.settings.battle.allowSlavePrestige>>
+					For every 10 victories a slave commander
+					<<option 1 "Gains">>
+					<<option 0 "Does not gain">>
+				<</options>>
+				a prestige rank.
+			<</if>>
+
+			<<if $SecExp.settings.battle.enabled+$SecExp.settings.rebellion.enabled > 0>>
+				<br><br>
+				<div class="subHeading">
+					//Force the chosen option to happen every week. <<if $SecExp.settings.rebellion.enabled > 0>> Rebellions will take precedence over battles.<</if>>//
+				</div>
+			<</if>>
+
+			<<if $SecExp.settings.battle.enabled > 0>>
+				<<options $SecExp.settings.battle.force>>
+					Force battles
+					<<option 1 "Yes">>
+					<<option 0 "No">>
+				<</options>>
+			<</if>>
+			<<if $SecExp.settings.rebellion.enabled > 0>>
+				<<options $SecExp.settings.rebellion.force>>
+					Force rebellions
+					<<option 1 "Yes">>
+					<<option 0 "No">>
+				<</options>>
+			<</if>>
+
+			<<if $SecExp.settings.battle.enabled > 0>>
+				<br><br>
+				<<options $SecExp.settings.battle.major.enabled>>
+					Major battles are
+					<<option 1 "Enabled">>
+					<<option 0 "Disabled">>
+					<<comment>>
+					Enable/disable late game large scale battles.
+				<</options>>
+			<</if>>
+
+			<<if $SecExp.settings.battle.enabled > 0 && $SecExp.settings.battle.major.enabled > 0>> <br>
+					<<options $SecExp.settings.battle.major.mult>>
+						Multiplier is
+						<<option 2 "Extremly high">>
+						<<option 1.5 "Very high">>
+						<<option 1.25 "High">>
+						<<option 1 "Normal">>
+						<<option 0.75 "Low">>
+						<<option 0.5 "Very low">>
+					<</options>>
+
+					<br>
+					<<options $SecExp.settings.battle.major.force>>
+						A major battle is
+						<<option 1 "Guaranteed">>
+						<<option 0 "Not guaranteed">>
+					<</options>>
+					this week.
+			<</if>>
+
+			<<if $SecExp.settings.battle.enabled > 0 && $SecExp.settings.battle.major.enabled > 0>>
+				<br>
+				<<options $SecExp.settings.battle.major.gameOver>>
+					Gameover on battle loss
+					<<option 1 "Yes">>
+					<<option 0 "No">>
+				<</options>>
+			<</if>>
+
+			<<if $SecExp.settings.rebellion.enabled > 0>>
+				<<options $SecExp.settings.rebellion.gameOver>>
+					Gameover on rebellion loss
+					<<option 1 "Yes">>
+					<<option 0 "No">>
+				<</options>>
+			<</if>>
+
+			<br>
+			<div class="subHeading">
+			<<if $debugMode || $cheatMode || $cheatModeM>>
+				''Debug/cheat''
+				<<run MenialPopCap()>>
+
+				<style>
+					table.invisible {
+						table-layout: fixed;
+						border-collapse: separate;
+						border-spacing: 5px;
+						margin:1em auto;
+					}
+				</style>
+
+				<table class="invisible">
+				<tr style="text-align:center">
+				<td colspan="2" >
+				<<link "Set loyalty high" "Options">>
+					<<for _i = 0; _i < $militiaUnits.length; _i++>>
+						<<set $militiaUnits[_i].loyalty = random(80,100)>>
+					<</for>>
+
+					<<for _i = 0; _i < $slaveUnits.length; _i++>>
+						<<set $slaveUnits[_i].loyalty = random(80,100)>>
+					<</for>>
+
+					<<for _i = 0; _i < $mercUnits.length; _i++>>
+						<<set $mercUnits[_i].loyalty = random(80,100)>>
+					<</for>>
+				<</link>>
+				| <<link "Set loyalty average" "Options">>
+					<<for _i = 0; _i < $militiaUnits.length; _i++>>
+						<<set $militiaUnits[_i].loyalty = random(40,60)>>
+					<</for>>
+
+					<<for _i = 0; _i < $slaveUnits.length; _i++>>
+						<<set $slaveUnits[_i].loyalty = random(40,60)>>
+					<</for>>
+
+					<<for _i = 0; _i < $mercUnits.length; _i++>>
+						<<set $mercUnits[_i].loyalty = random(40,60)>>
+					<</for>>
+				<</link>>
+				| <<link "Set loyalty low" "Options">>
+					<<for _i = 0; _i < $militiaUnits.length; _i++>>
+						<<set $militiaUnits[_i].loyalty = random(20)>>
+					<</for>>
+
+					<<for _i = 0; _i < $slaveUnits.length; _i++>>
+						<<set $slaveUnits[_i].loyalty = random(20)>>
+					<</for>>
+
+					<<for _i = 0; _i < $mercUnits.length; _i++>>
+						<<set $mercUnits[_i].loyalty = random(20)>>
+					<</for>>
+				<</link>>
+				| <<link "Randomize loyalty" "Options">>
+					<<for _i = 0; _i < $militiaUnits.length; _i++>>
+						<<set $militiaUnits[_i].loyalty = random(100)>>
+					<</for>>
+
+					<<for _i = 0; _i < $slaveUnits.length; _i++>>
+						<<set $slaveUnits[_i].loyalty = random(100)>>
+					<</for>>
+
+					<<for _i = 0; _i < $mercUnits.length; _i++>>
+						<<set $mercUnits[_i].loyalty = random(100)>>
+					<</for>>
+				<</link>>
+				</td>
+				</tr>
+
+				<tr style="text-align:center">
+				<td colspan="2">
+				<<link "Give Authority" "Options">>
+					<<set $SecExp.core.authority = Math.clamp($SecExp.core.authority + 1000, 0, 20000)>>
+				<</link>>
+				| <<link "Remove Authority" "Options">>
+					<<set $SecExp.core.authority = Math.clamp($SecExp.core.authority - 1000, 0, 20000)>>
+				<</link>>
+				</td>
+				</tr>
+
+				<tr>
+				<td style="text-align:right">
+				<<link "Raise security" "Options">>
+					<<set $SecExp.security.cap = Math.clamp($SecExp.security.cap + 5, 0, 100)>>
+				<</link>>
+				| <<link "Lower security" "Options">>
+					<<set $SecExp.security.cap = Math.clamp($SecExp.security.cap - 5, 0, 100)>>
+				<</link>>
+				</td>
+
+				<td style="text-align:left">
+				<<link "Raise crime" "Options">>
+					<<set $SecExp.core.crimeLow = Math.clamp($SecExp.core.crimeLow + 5, 0, 100)>>
+				<</link>>
+				| <<link "Lower crime" "Options">>
+					<<set $SecExp.core.crimeLow = Math.clamp($SecExp.core.crimeLow - 5, 0, 100)>>
+				<</link>>
+				</td>
+				</tr>
+
+				<tr>
+				<td style="text-align:right">
+				<<link "Give militia manpower" "Options">>
+					<<set $militiaFreeManpower += 30>>
+					<<recalcManpower>>
+				<</link>>
+				| <<link "Remove militia manpower" "Options">>
+					<<set $militiaFreeManpower = Math.max($militiaFreeManpower - 30, 0)>>
+					<<recalcManpower>>
+				<</link>>
+				</td>
+
+				<td style="text-align:left">
+				<<link "Give mercs manpower" "Options">>
+					<<set $mercFreeManpower += 30>>
+					<<recalcManpower>>
+				<</link>>
+				| <<link "Remove mercs manpower" "Options">>
+					<<set $mercFreeManpower = Math.max($mercFreeManpower - 30, 0)>>
+					<<recalcManpower>>
+				<</link>>
+				</td>
+				</tr>
+
+				</table>
+			<</if>>	/* closes cheatmode check */
+			</div>
+		<</if>> /* closes SecExp check*/
+	</div>
+</div>
+
+<div id="DEBUG/CHEATING" class="tabcontent">
+	<div class="content">
+		<div class="subHeading">
+			''Debug''
+		</div>
+		<<options $debugMode>>
+			DebugMode is
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			This will add a Display Variables and Bug Report passage to the sidebar.
+		<</options>>
+
+		<<if $debugMode > 0>>
+			<<if ndef $debugModeCustomFunction>> <<set $debugModeCustomFunction = 0>> <</if>>
+			<<options $debugModeCustomFunction>>
+				The custom function part of debug mode is currently
+				<<option 1 "Enabled">>
+				<<option 0 "Disabled">>
+			<</options>>
+		<</if>>
+		<br>
+		<div class="scLink2">
+		Genetics array test:
+		<<link "Run Test">><<goto "test genetics">><</link>><<if $cheatMode == 1>> | [[Edit Genetics]]<<else>> | @@.gray;Edit Genetics@@ (Enable cheat mode)<</if>>
+		<br><<link "Reset RA Rules">><<include "Init Rules">><<goto "Rules Assistant">><</link>>
+		</div>
+
+		<<options $profiler>>
+			Passage Profiler is
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			Outputs performance data at the bottom of every passage.
+		<</options>>
+
+		<div class="subHeading">
+			''Cheating''
+		</div>
+
+		<<options $cheatMode>>
+			CheatMode is
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			This will allow manual selection of events and unlock some options that would usually be restricted by progress.
+		<</options>>
+
+		<<if $cheatMode > 0>>
+			<br>
+			<<options $cheatModeM>>
+				Sidebar Cheats are currently
+				<<option 1 "Shown">>
+				<<option 0 "Hidden">>
+			<</options>>
+			<br>
+			<div class="scLink2">
+			[[Add 100000 money|Options][$cheater = 1, cashX(100000, "cheating")]] | [[Add 10000 rep|Options][$cheater = 1, repX(10000, "cheating")]] //Cheating will be flagged in your save//
+			</div>
+
+			<div class="scLink2">
+			<<= SectorCounts()>>
+			<<link "Raise prosperity cap" "Options">>
+				<<set $AProsperityCapModified += 10>>
+			<</link>>
+			| <<link "Lower prosperity cap" "Options">>
+				<<set $AProsperityCapModified -= 10>>
+			<</link>>
+
+			<br>
+			<<link "Raise prosperity" "Options">>
+				<<set $arcologies[0].prosperity = Math.clamp($arcologies[0].prosperity + 10, 0, $AProsperityCap)>>
+			<</link>>
+			| <<link "Lower prosperity" "Options">>
+				<<set $arcologies[0].prosperity = Math.clamp($arcologies[0].prosperity - 10, 0, $AProsperityCap)>>
+			<</link>>
+
+			<br>
+			<<link "Give menial slaves" "Options">>
+				<<set $menials = Math.clamp($menials + 30, 0, $PopCap)>>
+			<</link>>
+			| <<link "Remove menial slaves" "Options">>
+				<<set $menials = Math.clamp($menials - 30, 0, $PopCap)>>
+			<</link>>
+			</div>
+
+			/%
+			<br>Thanks for making this a right pain twine
+			<br>
+			<<link "Add citizens" "Options">> /*Will no longer work as intended due to population changes*/
+				<<set $lowerClass = Math.max($lowerClass + 200, 0)>>
+			<</link>>
+			| <<link "Remove citizens" "Options">> /*also no longer properly functional*/
+				<<set $lowerClass = Math.max($lowerClass - 200, 0)>>
+			<</link>>
+
+			<br>
+			<<link "Add slaves" "Options">> /*Will work to a limited degree, minimums and maximums for slaves are set through population*/
+				<<set $NPCSlaves = Math.max($NPCSlaves + 200, 0)>>
+			<</link>>
+			| <<link "Remove slaves" "Options">> /*Will work to a limited degree*/
+				<<set $NPCSlaves = Math.max($NPCSlaves - 200, 0)>>
+			<</link>>
+			%/
+
+			<<options $seeAge>>
+				<<option 2 "Slaves will celebrate birthdays, but not age.">>
+				<<option 1 "Enable slave aging">>
+				<<option 0 "Disable slave aging">>
+			<</options>>
+		<</if>>
+	</div>
+</div>
+
+<div id="Experimental" class="tabcontent">
+	<div class="subHeading" style="fontWeight:bold">
+		Experimental means just that: experimental.  Options below are likely to be in an <span class="yellow">even more incomplete or broken state than usual.</span>  <span class="red">THEY MAY NOT WORK AT ALL.</span>  Make sure you back up your save before enabling any of these, and if you are that interested, consider helping to improve them.
+	</div>
+	<<if ($familyTesting === 1 && $seePreg !== 0)>>
+		<<options $experimental.nursery>>
+			Nursery is
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			This will enable the experimental nursery, which allows players to interact with growing slave children.  An alternative to the incubator.
+		<</options>>
+	<</if>>
+
+	<<options $experimental.food>>
+		Food is
+		<<option 1 "Enabled">>
+		<<option 0 "Disabled">>
+		<<comment>>
+		This will enable the experimental food supply and demand system, as well as a new farmyard building and assignments.
+	<</options>>
+
+	<<if $seeExtreme === 1 && $seeBestiality === 1>>
+		<<options $experimental.animalOvaries>>
+			Animal Ovaries
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			This will allow slaves to be impregnated by animals.
+		<</options>>
+	<</if>>
+
+	<<if $seeExtreme === 1>>
+		<<options $experimental.dinnerParty>>
+			Dinner party
+			<<option 1 "Enabled">>
+			<<option 0 "Disabled">>
+			<<comment>>
+			This will enable a controversial but very broken event.  Warning: Snuff, cannibalism.
+		<</options>>
+	<</if>>
+</div>

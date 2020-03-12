@@ -1,0 +1,408 @@
+:: P rivalry hostage [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Nonrandom Event">>
+
+<<set $hostageAnnounced = 1>>
+
+<<set $oneTimeDisableDisability = 1>>
+<<if $arcologies[0].FSSupremacistLawME == 1>>
+	<<set $fixedRace = $arcologies[0].FSSupremacistRace>>
+<<elseif $arcologies[0].FSSubjugationistLawME == 1>>
+	<<set _races = setup.filterRacesLowercase.filter(race => race !== $arcologies[0].FSSubjugationistRace)>>
+	<<set $fixedRace = _races.random()>>
+<</if>>
+<<set $activeSlave = GenerateNewSlave("XX")>>
+<<set $activeSlave.origin = "You were acquainted with $him before you were an arcology owner; your rival tried to use $him to manipulate you, but you rescued $him.">>
+<<set $activeSlave.boobs = 400>>
+<<set $activeSlave.butt = 3>>
+<<set $activeSlave.muscles = 0>>
+<<set $activeSlave.behavioralFlaw = "none">>
+<<set $activeSlave.sexualFlaw = "none">>
+<<set $activeSlave.behavioralQuirk = "none">>
+<<set $activeSlave.sexualQuirk = "none">>
+<<set $activeSlave.waist = Math.clamp($activeSlave.waist,-55,15)>>
+<<set $activeSlave.lactation = 0>>
+<<set $activeSlave.lactationDuration = 0>>
+<<set $activeSlave.hips = 0>>
+<<set $activeSlave.shoulders = -1>>
+<<if $activeSlave.vagina <= 0>><<set $activeSlave.vagina = 1>><</if>>
+<<if $activeSlave.anus == 0>><<set $activeSlave.anus = 1>><</if>>
+<<set $activeSlave.energy = 50>>
+<<set $activeSlave.canRecruit = 0>>
+<<if $activeSlave.voice < 2>><<set $activeSlave.voice = 2>><</if>>
+<<if $activeSlave.faceShape == "masculine">><<set $activeSlave.faceShape = "cute">><</if>>
+<<set $activeSlave.geneMods.NCS = 0, $activeSlave.geneMods.rapidCellGrowth = 0>>
+<<set $activeSlave.NCSyouthening = 0>>
+<<set $activeSlave.slaveName = $activeSlave.birthName>>
+<<set $activeSlave.slaveSurname = $activeSlave.birthSurname>>
+
+<<set $activeSlave.actualAge = Number($activeSlave.actualAge) || 18>>
+<<set $activeSlave.devotion = Number($activeSlave.devotion) || 0>>
+<<set $activeSlave.trust = Number($activeSlave.trust) || 0>>
+<<set $activeSlave.boobs = Number($activeSlave.boobs) || 400>>
+
+<<set WombFlush($activeSlave)>>
+
+<<switch $PC.career>>
+<<case "wealth">>
+	<<set $activeSlave.career = "a party girl">>
+	<<if $pedo_mode == 1>>
+		<<set $activeSlave.actualAge = random(16,18)>>
+	<<else>>
+		<<set $activeSlave.actualAge = random(18,24)>>
+	<</if>>
+	<<set $activeSlave.face = 100>>
+	<<set $activeSlave.intelligence = random(51,95)>>
+	<<set $activeSlave.intelligenceImplant = 0>>
+	<<set $activeSlave.skill.oral = 100>>
+	<<set $activeSlave.skill.entertainment = 100>>
+<<case "escort">>
+	<<set $activeSlave.career = "a prostitute">>
+	<<if $pedo_mode == 1>>
+		<<set $activeSlave.actualAge = random(16,18)>>
+	<<else>>
+		<<set $activeSlave.actualAge = random(18,20)>>
+	<</if>>
+	<<set $activeSlave.face = 100>>
+	<<set $activeSlave.intelligence = random(-15,15)>>
+	<<set $activeSlave.intelligenceImplant = 0>>
+	<<set $activeSlave.skill.oral = 100>>
+	<<set $activeSlave.skill.entertainment = 100>>
+	<<set $activeSlave.skill.anal = 100>>
+	<<set $activeSlave.skill.vaginal = 100>>
+	<<set $activeSlave.skill.whoring = 100>>
+	<<set $activeSlave.counter.oral = 453>>
+	<<set $activeSlave.counter.vaginal = 158>>
+	<<set $activeSlave.counter.anal = 76>>
+	<<set $activeSlave.counter.mammary = 320>>
+	<<run App.Medicine.Modification.addScar($activeSlave, "belly", "c-section")>>
+<<case "servant">>
+	<<set $activeSlave.career = "a maid">>
+	<<if $pedo_mode == 1>>
+		<<set $activeSlave.actualAge = random(12,18)>>
+	<<else>>
+		<<set $activeSlave.actualAge = random(18,20)>>
+	<</if>>
+	<<set $activeSlave.face = 25>>
+	<<set $activeSlave.intelligence = random(-50,-16)>>
+	<<set $activeSlave.intelligenceImplant = 0>>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.entertainment = 0>>
+	<<set $activeSlave.skill.anal = 15>>
+	<<set $activeSlave.skill.vaginal = 15>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.counter.oral = 57>>
+	<<set $activeSlave.counter.vaginal = 65>>
+	<<set $activeSlave.counter.anal = 12>>
+	<<set $activeSlave.counter.mammary = 1>>
+	<<set $activeSlave.counter.birthsTotal = 3>>
+<<case "gang">>
+	<<set $activeSlave.career = "a gang member">>
+	<<if $pedo_mode == 1>>
+		<<set $activeSlave.actualAge = random(16,18)>>
+	<<else>>
+		<<set $activeSlave.actualAge = random(20,24)>>
+	<</if>>
+	<<set $activeSlave.muscles = 40>>
+	<<run setHealth($activeSlave, 100, 0, 0, 0, jsRandom(10, 30))>>
+	<<set $activeSlave.skill.combat = 1>>
+<<case "BlackHat">>
+	<<set $activeSlave.career = "a shut-in">>
+	<<if $pedo_mode == 1>>
+		<<set $activeSlave.actualAge = random(13,18)>>
+	<<else>>
+		<<set $activeSlave.actualAge = random(18,21)>>
+	<</if>>
+	<<set $activeSlave.face = 75>>
+	<<set $activeSlave.intelligence = 100>>
+	<<set $activeSlave.intelligenceImplant = 30>>
+<<case "capitalist">>
+	<<set $activeSlave.career = "a manager">>
+	<<if $pedo_mode == 1>>
+		<<set $activeSlave.actualAge = random(16,18)>>
+	<<else>>
+		<<set $activeSlave.actualAge = random(18,24)>>
+	<</if>>
+	<<set $activeSlave.face = 55>>
+	<<set $activeSlave.intelligence = 100>>
+	<<set $activeSlave.intelligenceImplant = 30>>
+<<case "mercenary">>
+	<<set $activeSlave.career = "a soldier">>
+	<<if $pedo_mode == 1>>
+		<<set $activeSlave.actualAge = random(16,18)>>
+	<<else>>
+		<<set $activeSlave.actualAge = random(20,24)>>
+	<</if>>
+	<<set $activeSlave.face = 55>>
+	<<set $activeSlave.intelligence = 100>>
+	<<set $activeSlave.intelligenceImplant = 15>>
+<<case "engineer">>
+	<<set $activeSlave.career = "a saleswoman">>
+	<<if $pedo_mode == 1>>
+		<<set $activeSlave.actualAge = random(16,18)>>
+	<<else>>
+		<<set $activeSlave.actualAge = random(18,24)>>
+	<</if>>
+	<<set $activeSlave.face = 100>>
+	<<set $activeSlave.intelligence = 100>>
+	<<set $activeSlave.intelligenceImplant = 30>>
+<<case "medicine">>
+	<<set $activeSlave.career = "a nurse">>
+	<<if $pedo_mode == 1>>
+		<<set $activeSlave.actualAge = random(16,18)>>
+	<<else>>
+		<<set $activeSlave.actualAge = random(16,24)>>
+	<</if>>
+	<<set $activeSlave.face = 55>>
+	<<set $activeSlave.intelligence = 100>>
+	<<set $activeSlave.intelligenceImplant = 30>>
+<<case "slaver">>
+	<<set $activeSlave.career = "a prison guard">>
+	<<if $pedo_mode == 1>>
+		<<set $activeSlave.actualAge = random(16,18)>>
+	<<else>>
+		<<set $activeSlave.actualAge = random(20,24)>>
+	<</if>>
+	<<set $activeSlave.face = 55>>
+	<<set $activeSlave.intelligence = random(51,95)>>
+	<<set $activeSlave.intelligenceImplant = 0>>
+	<<set $activeSlave.muscles = 20>>
+	<<set $activeSlave.fetish = "sadist">>
+	<<set $activeSlave.fetishStrength = 100>>
+	<<set $activeSlave.fetishKnown = 1>>
+<<case "celebrity">>
+	<<set $activeSlave.career = "a party girl">>
+	<<if $pedo_mode == 1>>
+		<<set $activeSlave.actualAge = random(16,18)>>
+	<<else>>
+		<<set $activeSlave.actualAge = random(18,24)>>
+	<</if>>
+	<<set $activeSlave.face = 100>>
+	<<set $activeSlave.intelligence = random(51,95)>>
+	<<set $activeSlave.intelligenceImplant = 0>>
+	<<set $activeSlave.skill.oral = 100>>
+	<<set $activeSlave.skill.entertainment = 100>>
+<<case "arcology owner">>
+	<<set $activeSlave.career = "a leading arcology citizen">>
+	<<if $pedo_mode == 1>>
+		<<set $activeSlave.actualAge = random(16,18)>>
+	<<else>>
+		<<set $activeSlave.actualAge = random(36,39)>>
+	<</if>>
+	<<set $activeSlave.face = 100, $activeSlave.faceImplant = 15>>
+	<<set $activeSlave.intelligence = 100, $activeSlave.intelligenceImplant = 30>>
+	<<set $activeSlave.skill.whoring = 100, $activeSlave.skill.entertainment = 100>>
+<</switch>>
+
+<<set $activeSlave.trust = 0>>
+<<set $activeSlave.devotion = 0>>
+<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+<<= resyncSlaveHight($activeSlave)>>
+
+<<switch $rivalryFS>>
+<<case "Repopulation Focus">>
+	<<set $activeSlave.preg = -3>>
+<<case "Body Purism">>
+	<<set $activeSlave.boobs = 300>>
+<<case "Slimness Enthusiasm">>
+	<<set $activeSlave.weight = -20>>
+	<<set $activeSlave.boobs = 800>>
+<<case "Pastoralism">>
+	<<set $activeSlave.weight = 100>>
+	<<set $activeSlave.muscles = 0>>
+	<<set $activeSlave.boobs = 1200>>
+<<case "Cummunism">>
+	<<set $activeSlave.boobs = 800>>
+	<<set $activeSlave.weight = -20>>
+<<case "Physical Idealism">>
+	<<set $activeSlave.boobs = 200>>
+	<<set $activeSlave.butt = 1>>
+	<<set $activeSlave.weight = -20>>
+<<case "Hedonistic Decadence">>
+	<<set $activeSlave.weight = 100>>
+	<<set $activeSlave.muscles = 0>>
+	<<set $activeSlave.boobs = 1200>>
+<</switch>>
+
+<span id="artFrame">
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<<if $imageChoice == 1>>
+			<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+		<<else>>
+			<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+		<</if>>
+	<</if>>
+	/* 000-250-006 */
+</span>
+
+<<if $rivalGender == 2>>
+	<<set _heR = "he">>
+<<else>>
+	<<set _heR = "she">>
+<</if>>
+<<setLocalPronouns $activeSlave>>
+<<setPlayerPronouns>>
+
+Only a few days into your inter-arcology war, you receive a video message from your rival. Once $assistant.name is satisfied that the file is clean, you clear your office and pull it up. To your surprise, there are two faces on your desk, not one. One of them is your rival, and after a moment, you remember who the other is. You recognize $him from your
+<<switch $PC.career>>
+<<case "wealth">>
+	time as a wealthy _womanP of leisure. $He was a pretty little party $girl who ran in those circles. You were never particularly close,
+<<case "escort">>
+	time as a _womanP of sexual promiscuity. $He was a pretty little slut who ran in the same sex circles. You were never particularly close,
+<<case "servant">>
+	time as a _womanP of servitude. $He was a <<if $PC.title == 1>>maid<<else>>fellow maid<</if>> under your late Master. <<if $PC.title == 0>>You may have delivered several of $his children, but you<<else>>You<</if>> were never particularly close,
+<<case "gang">>
+	time as a gang leader. $He was one of your best, yet you never got close enough,
+<<case "BlackHat">>
+	time as a hacker for hire. $He supported you on jobs, even sent some choice pictures of $himself, but you were never really close,
+<<case "capitalist">>
+	career in venture capital. $He was a rising manager, young, attractive, and bright. You never worked particularly closely with $him,
+<<case "mercenary">>
+	career as a mercenary. $He was in logistical support, and was clever and pretty, but without the essential hardness. You were never that close,
+<<case "engineer">>
+	career as an arcology engineer. $He was a glorified sales<<= $woman>>, with the gorgeous looks and extreme intelligence necessary to sell entire arcologies. You were never close,
+<<case "medicine">>
+	career in medicine. $He was a surgical nurse, one of the best. $He was smart, pretty, and $he had sure hands. You were never that close,
+<<case "slaver">>
+	career as a slaver. $He was a guard in one of the slave receiving pens, and a notorious one, at that. Nobody was quite as eager to break in new slaves as $he was. You were never that close,
+<<case "celebrity">>
+	time as a minor celebrity. $He was a pretty little groupie who flitted from entourage to entourage. You were never particularly close,
+<<case "arcology owner">>
+	time owning another arcology. $He was a prominent citizen who supported your government. You were never particularly close,
+<</switch>>
+but you do remember $him, and your rival knows it. This is obviously the best _heR could come up with to provoke an emotional reaction.
+
+<br><br>
+"Hello, <<= PlayerName()>>," your rival sneers. "Sorry to pull you away from
+<<switch $rivalryFS>>
+<<case "Racial Subjugationism">>
+	whipping some poor $arcologies[0].FSSubjugationistRace girl's back bloody,
+<<case "Racial Supremacism">>
+	blowing your $arcologies[0].FSSubjugationistRace girls, or whatever it is you do with your spare time,
+<<case "Gender Radicalism">>
+	buttfucking your catamites, or whatever it is you do with your spare time,
+<<case "Gender Fundamentalism">>
+	teatime with your slave wives,
+<<case "Repopulation Focus">>
+	rolling around in the afterbirth, or whatever it is you do with your spare time,
+<<case "Eugenics">>
+	circle jerking with your "elites", or whatever it is you do with your spare time,
+<<case "Paternalism">>
+	handholding time with your slaves,
+<<case "Degradationism">>
+	stitching your name into some poor girl's taint, or whatever it is you do with your spare time,
+<<case "Body Purism">>
+	playing house with your perfect pure little angels, or whatever it is you do with your spare time,
+<<case "Transformation Fetishism">>
+	stuffing silicone up some poor girl's nostrils,
+<<case "Youth Preferentialism">>
+	your horrible schoolgirl fantasy playtime,
+<<case "Maturity Preferentialism">>
+	the world's leading collection of saggy tits,
+<<case "Slimness Enthusiasm">>
+	your pathological collection of flat chested bitches,
+<<case "Asset Expansionism">>
+	your disgusting breast monsters,
+<<case "Pastoralism">>
+	your most flatulent cowgirls,
+<<case "Physical Idealism">>
+	your sweaty, spandexed throwback collection,
+<<case "Hedonistic Decadence">>
+	your greasy, flatulent mounds of fat,
+<<case "Chattel Religionism">>
+	your afternoon prayer meeting,
+<<case "Multiculturalism">>
+	whatever it is you do to liven up your boring arcology,
+<<case "Roman Revivalism">>
+	feeding slaves to the lions, or whatever it is you do with your spare time,
+<<case "Aztec Revivalism">>
+	sacrificing slaves to the gods, or whatever it is you do with your spare time,
+<<case "Egyptian Revivalism">>
+	your latest experiment in exactly how disgusting incest can possibly be,
+<<case "Edo Revivalism">>
+	your katana polishing, or whatever it is you do with your spare time,
+<<case "Arabian Revivalism">>
+	your hookah sucking,
+<<case "Chinese Revivalism">>
+	your footbinding,
+<<case "Intellectual Dependency">>
+	tard wrangling, or whatever it is you do with your spare time,
+<<case "Slave Professionalism">>
+	being talked down to by your own slaves, or whatever it is you do with your spare time,
+<<case "Petite Admiration">>
+	tripping over all those midgets you're obsessed with,
+<<case "Statuesque Glorification">>
+	those face high crotches you love,
+<<default>>
+	whatever it is you do with your spare time,
+<</switch>>
+but look what I have here! I just acquired $him recently. Lovely, isn't $he? I know $he wasn't important to you, but $he //is// a reminder of who you were. I think $he must have been your type." Your rival turns to the slave and continues. "While we have our little war,
+<<switch $rivalryFS>>
+<<case "Racial Subjugationism">>
+	I'm going to treat $him well. Train $him. $He's a fine Head Girl prospect, don't you think? $He'll have lots of nice $arcologies[0].FSSubjugationistRace girls to make love to whenever $he wants. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<<case "Racial Supremacism">>
+	I'm going to destroy $him. $He's got a whipping post with $his name on it, right between a couple of $arcologies[0].FSSupremacist bitches. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave begins to scream, and the noise goes on and on as the slave is tied up and scourged.
+<<case "Gender Radicalism">>
+	I'm going to treat $him well. Train $him. Teach $him $his proper role in society, and make $him happy here. Isn't that right, $activeSlave.slaveName?" The slave nods uncertainly.
+<<case "Gender Fundamentalism">>
+	$He's going to be my special pet. $He'll have everything $he could ever want, as long as $he has a dick up $his ass. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods hesitantly, but with evident arousal.
+<<case "Paternalism">>
+	I'm going to destroy $him. Holes first, of course. I'll have to get more inventive after that, and I'll leave $his vocal cords for last. That way, $he'll be able to beg. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave begins to scream, and the noise goes on and on. And on.
+<<case "Repopulation Focus">>
+	I'm going to ruin $his womb, making sure $he can never have children again. I bet you spent lots of nights fantasizing about $him with a huge belly didn't you?
+<<case "Eugenics">>
+	<<if $seeHyperPreg == 1>>
+		I'm going to have $him knocked up; not with my seed, of course, but the seed of the lowest of the low. I'm also going to fill $him with the most powerful experimental fertility drugs out there. $He'll have so many children shoved into $his poor womb $he'll be bursting at the seams. But $he'll enjoy that, won't you <<= SlaveFullName($activeSlave)>>?" The slave nods hesitantly, but with evident arousal.
+	<<else>>
+		I'm going to have $him knocked up; not with my seed, of course, but the seed of the lowest of the low. I'm also going to fill $him with the most powerful fertility drugs I can get. $His poor little womb will be stretched to the limit with society's worst. But $he'll enjoy that, won't you <<= SlaveFullName($activeSlave)>>?" The slave nods hesitantly, but with evident arousal.
+	<</if>>
+<<case "Degradationism">>
+	$He's going to be my lover. $He'll have everything $he could ever want, and I'll be sure to let $him know all about what you do to your slaves. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<<case "Body Purism">>
+	I'm going to give $him a nice pair of fake tits. No reason to be excessively clever when I can just make $his tits so huge $he won't be able to walk. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave begins to sob.
+<<case "Transformation Fetishism">>
+	$He's going to be my lover. I'll be sure to let $him know all about what you do to your slaves, and rest assured, I'll never treat $him that way. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<<case "Youth Preferentialism">>
+	I've set $him up with a nice motherly woman already. I believe they'll be a perfect match. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<<case "Maturity Preferentialism">>
+	I've set $him up with a nice young girl already. I believe they'll be a perfect match. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<<case "Slimness Enthusiasm">>
+	I think I'll make $his IV line permanent. After all, $he's never going off breast growth hormones. I'd estimate $he shouldn't be able to walk within a month. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave begins to sob.
+<<case "Asset Expansionism">>
+	$He's going to be my lover. I'll be sure to let $him know all about what you do to your slaves, and rest assured, I'll never give $him growth hormones, not one single dose. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<<case "Pastoralism">>
+	$He's going to be my spotter. Girls should be strong, smoking hot ladies, not disgusting cows. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<<case "Cummunism">>
+	$He's going to be my personal milk dispenser. I shouldn't have to chain $him to my desk after the first month, since $his udders will pin $him in place. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave begins to sob.
+<<case "Physical Idealism">>
+	$He's going to learn to enjoy yourself. I'm going to force $his face full of food, $his cunt full of dicks and discover $his deepest, darkest desires. Wouldn't you like that, <<= SlaveFullName($activeSlave)>>?" The slave begins to sob. "To start, how about a weigh in? Sixty three and a half kilograms, such a pity, but don't worry, I'll have $him nice and plump soon enough."
+<<case "Hedonistic Decadence">>
+	$He's going to be my spotter. Girls should be strong, smoking hot ladies, not disgusting obese slobs. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<<case "Chattel Religionism">>
+	$He's going to be the perfect courtesan. No preaching, no praying, just good, clean sex for money. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<<case "Multiculturalism">>
+	$He's going to be the ideal holy whore. Thousands of citizens are going to find rapture inside $him. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<<case "Intellectual Dependency">>
+	$He's going to be a skilled courtesan. $He'll know how to best please $his partners, and most importantly, $he'll perfectly understand $his place in society.
+	<<if $activeSlave.intelligence < 0>>
+		Shame $he's an idiot though. But $he can learn and improve still, I'll see to that.
+	<</if>>
+	Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods begrudgingly.
+<<case "Slave Professionalism">>
+	$He's going to become a moron<<if $activeSlave.intelligence < 0>>, though $he isn't exactly smart to begin with<</if>>. No time for higher thought when all $his brain power is caught up with how to satisfy $his raging libido. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave begins to sob.
+<<case "Petite Admiration">>
+	I've set $him up with a particularly lovely giant. I believe they'll be a perfect match, even though $he's half her size. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<<case "Statuesque Glorification">>
+	I've set $him up with a lovely little dwarf already. I believe they'll be a perfect match, even though she's half $his size. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<<default>>
+	$He's shaping up to be a good slave. I'm keeping $him informed of your <<if $rivalryFS != 0>>revisionist <</if>>nonsense, and what your slaves suffer because of it. Isn't that right, <<= SlaveFullName($activeSlave)>>?" The slave nods uncertainly.
+<</switch>>
+
+Your rival smiles icily. "I'll keep you informed of $his progress. I wouldn't want you to miss a moment of it."
+<br><br>
+You're forging a new frontier in warfare here. This, then, is the new frontier in psychological warfare.
+
+<<set $hostage = $activeSlave>>

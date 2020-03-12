@@ -1,0 +1,337 @@
+:: Pit [nobr]
+
+<<set $nextButton = "Back to Main", $nextLink = "Main", $returnTo = "Pit", $showEncyclopedia = 1, $encyclopedia = "Pit", _DL = $fighterIDs.length, _SL = $slaves.length, _CL = $canines.length, _HL = $hooved.length, _FL = $felines.length>>
+<<if $pitName != "the Pit">>
+	<<set $pitNameCaps = $pitName.replace("the ", "The ")>>
+<</if>>
+<<if $pitBG == 1 && $fighterIDs.includes($Bodyguard.ID)>>
+	<<set $fighterIDs.delete($Bodyguard.ID), _DL-->>
+<</if>>
+
+$pitNameCaps is clean and ready,
+<<if _DL > 2>>
+	with a pool of slaves assigned to fight in the week's bout.
+<<elseif _DL == 1>>
+	but only one slave is assigned to the week's bout.
+<<elseif _DL > 0>>
+	with slaves assigned to the week's bout.
+<<else>>
+	but no slaves are assigned to fight.
+	<div class="choices" style="font-style:normal">
+		<<link "Decommission the pit" "Main">>
+			<<set $pit = 0, $pitAnimal = 0, $pitAnimalType = 0>>
+			<<run App.Arcology.cellUpgrade($building, App.Arcology.Cell.Market, "Pit", "Markets")>>
+		<</link>>
+	</div>
+<</if>>
+
+//<<= properTitle()>>, slaves assigned here can continue their usual duties.//
+
+<br><br>
+<<if $pitAudience == "none">>
+	Fights here are strictly private. [[Open them for free|Pit][$pitAudience = "free"]] | [[Open them and charge admission|Pit][$pitAudience = "paid"]]
+<<elseif $pitAudience == "free">>
+	Fights here are free and open to the public. [[Close them|Pit][$pitAudience = "none"]] | [[Charge admission|Pit][$pitAudience = "paid"]]
+<<else>>
+	Admission is charged to the fights here. [[Close them|Pit][$pitAudience = "none"]] | [[Stop charging|Pit][$pitAudience = "free"]]
+<</if>>
+
+<<if $killChoice != 2>>
+	<<if $Bodyguard != 0 || (_CL > 0 && $activeCanine != 0) || (_HL > 0 && $activeHooved != 0) || (_FL > 0 && $activeFeline != 0)>>
+		<br>
+		<<if $pitBG == 0>>
+			<<if $pitAnimal == 0>>
+				Two fighters will be selected from the pool at random.
+				<<if $Bodyguard != 0>>[[Guarantee your Bodyguard a slot|Pit][$pitBG = 1, $pitAnimal = 0]]<</if>>
+				<<if $Bodyguard != 0 && ($activeCanine != 0 || $activeHooved != 0 || $activeFeline != 0)>> | <</if>>
+				<<if $activeCanine != 0 || $activeHooved != 0 || $activeFeline != 0>>[[Have a slave fight an animal|Pit][$pitBG = 0, $pitAnimal = 1]]<</if>>
+			<<else>>
+				A random slave will fight an animal. [[Have them fight another slave|Pit][$pitBG = 0, $pitAnimal = 0]]<<if $Bodyguard != 0>> | [[Have them fight your Bodyguard|Pit][$pitBG = 1, $pitAnimal = 0]]<</if>>
+			<</if>>
+		<<else>>
+			Your Bodyguard will fight a slave selected from the pool at random. [[Make both slots random|Pit][$pitBG = 0, $pitAnimal = 0]]
+			<<if _CL > 0 || _HL > 0 || _FL > 0>> | [[Have a slave fight an animal|Pit][$pitBG = 0, $pitAnimal = 1]]<</if>>
+		<</if>>
+	<</if>>
+
+	<br>
+	<<if $pitLethal == 1>>
+		<<if $pitAnimal == 1>>
+			The fighter will be armed with a sword and will fight to the death. [[Nonlethal|Pit][$pitLethal = 0]]
+		<<else>>
+			Fighters will be armed with swords, and fights will be to the death. [[Nonlethal|Pit][$pitLethal = 0]]
+		<</if>>
+	<<else>>
+		<<if $pitAnimal == 0>>
+			Fighters will use their fists and feet, and fights will be to submission. [[Lethal|Pit][$pitLethal = 1]]
+
+			<br>
+			<<if $pitVirginities == 0>>
+				''No'' virginities of the loser will be respected.
+				[[Vaginal|Pit][$pitVirginities = 1]] |
+				[[Anal|Pit][$pitVirginities = 2]] |
+				[[All|Pit][$pitVirginities = 3]]
+			<<elseif $pitVirginities == 1>>
+				''Vaginal'' virginity of the loser will be respected.
+				[[Neither|Pit][$pitVirginities = 0]] |
+				[[Anal|Pit][$pitVirginities = 2]] |
+				[[All|Pit][$pitVirginities = 3]]
+			<<elseif $pitVirginities == 2>>
+				''Anal'' virginity of the loser will be respected.
+				[[Neither|Pit][$pitVirginities = 0]] |
+				[[Vaginal|Pit][$pitVirginities = 1]] |
+				[[All|Pit][$pitVirginities = 3]]
+			<<elseif $pitVirginities == 3>>
+				''All'' virginities of the loser will be respected.
+				[[Neither|Pit][$pitVirginities = 0]] |
+				[[Vaginal|Pit][$pitVirginities = 1]] |
+				[[Anal|Pit][$pitVirginities = 2]]
+			<</if>>
+
+		<<else>>
+			The slave will be restrained and will try to avoid being used by the animal. [[Lethal|Pit][$pitLethal = 1]]
+		<</if>>
+	<</if>>
+
+	<<if $activeCanine != 0 || $activeHooved != 0 || $activeFeline != 0>>
+
+	<<switch $activeCanine.breed>>
+	<<case "French Bulldog" "Beagle" "Poodle" "Yorkshire Terrier">>
+		<<set _animalEligible = 0>>
+	<<default>>
+		<<set _animalEligible = 1>>
+	<</switch>>
+
+	<<if $pitAnimal == 1>>
+		<br>
+		<<if $pitLethal == 1>>
+			<<if $pitAnimalType == $activeCanine.type>>
+				<<if $activeCanine.species != "dog">>
+					Your slave will fight a ''$activeCanine.species''.
+					$activeCanine.speciesCap
+					<<if _HL > 0>> | [["" + $activeHooved.speciesCap + ""|Pit][$pitAnimalType = "hooved"]]<</if>>
+					<<if _FL > 0>> |
+						<<if $activeFeline.species != "cat">>
+							[["" + $activeFeline.speciesCap + ""|Pit][$pitAnimalType = "feline"]]
+						<<else>>
+							//House cats are too small for your slave to fight//
+						<</if>>
+					<</if>>
+				<<else>>
+					<<if _animalEligible == 1>>
+						Your slave will fight a ''$activeCanine.breed''.
+						$activeCanine.breed
+						<<if _HL > 0>> | [["" + $activeHooved.speciesCap + ""|Pit][$pitAnimalType = "hooved"]]<</if>>
+						<<if _FL > 0>> |
+							<<if $activeFeline.species != "cat">>
+								[["" + $activeFeline.speciesCap + ""|Pit][$pitAnimalType = "feline"]]
+							<<else>>
+								//House cats are too small for your slave to fight//
+							<</if>>
+						<</if>>
+					<<else>>
+						//<<print $activeCanine.breed>>s are too small for your slave to fight//
+						<<if _HL > 0>> | [["" + $activeHooved.speciesCap + ""|Pit][$pitAnimalType = "hooved"]]<</if>>
+						<<if _FL > 0>> |
+							<<if $activeFeline.species != "cat">>
+								[["" + $activeFeline.speciesCap + ""|Pit][$pitAnimalType = "feline"]]
+							<<else>>
+								//House cats are too small for your slave to fight//
+							<</if>>
+						<</if>>
+					<</if>>
+				<</if>>
+			<<elseif $pitAnimalType == $activeHooved.type>>
+				Your slave will fight a ''$activeHooved.species''.
+				<<if _CL > 0>>
+					<<if $activeCanine.species != "dog">>
+						[["" + $activeCanine.speciesCap + ""|Pit][$pitAnimalType = "canine"]] |
+					<<else>>
+						<<if _animalEligible == 1>>
+							[["" + $activeCanine.breed + ""|Pit][$pitAnimalType = "canine"]] |
+						<<else>>
+							//<<print $activeCanine.breed>>s are too small for your slave to fight// |
+						<</if>>
+					<</if>>
+				<</if>>
+				$activeHooved.speciesCap
+				<<if _FL > 0>> |
+					<<if $activeFeline.species != "cat">>
+						[["" + $activeFeline.speciesCap + ""|Pit][$pitAnimalType = "feline"]]
+					<<else>>
+						//House cats are too small for your slave to fight//
+					<</if>>
+				<</if>>
+			<<elseif $pitAnimalType == $activeFeline.type>>
+				<<if $activeFeline.species != "cat">>
+					Your slave will fight a ''$activeFeline.species''.
+			<<else>>
+					//House cats are too small for your slave to fight//
+			<</if>>
+				<<if _CL > 0>>
+					<<if $activeCanine.species != "dog">>
+						[["" + $activeCanine.speciesCap + ""|Pit][$pitAnimalType = "canine"]]
+					<<else>>
+						<<if _animalEligible == 1>>
+							[["" + $activeCanine.breed + ""|Pit][$pitAnimalType = "canine"]]
+						<<else>>
+							//<<print $activeCanine.breed>>s are too small for your slave to fight//
+						<</if>>
+					<</if>>
+				<</if>>
+				<<if _HL > 0>> | [["" + $activeHooved.speciesCap + ""|Pit][$pitAnimalType = "hooved"]] | <</if>>
+				<<if $activeFeline.species != "cat">>
+					$activeFeline.speciesCap
+				<<else>>
+					//House cats are too small for your slave to fight//
+				<</if>>
+			<<else>>
+				Select an animal for your slave to fight.
+				<<if _CL > 0>>
+					<<if $activeCanine.species != "dog">>
+						[["" + $activeCanine.speciesCap + ""|Pit][$pitAnimalType = "canine"]]
+					<<else>>
+						<<if _animalEligible == 1>>
+							[["" + $activeCanine.breed + ""|Pit][$pitAnimalType = "canine"]]
+						<<else>>
+							//<<print $activeCanine.breed>>s are too small for your slave to fight//
+						<</if>>
+					<</if>>
+				<</if>>
+				<<if (_CL > 0 && _HL > 0) || (_CL > 0 && _FL > 0) || (_HL > 0 && _FL > 0)>> | <</if>>
+				<<if _HL > 0>>
+					[["" + $activeHooved.speciesCap + ""|Pit][$pitAnimalType = "hooved"]]
+				<</if>>
+				<<if (_HL > 0 && _FL > 0)>> | <</if>>
+				<<if _FL > 0>>
+					<<if $activeFeline.species != "cat">>
+						[["" + $activeFeline.speciesCap + ""|Pit][$pitAnimalType = "feline"]]
+					<<else>>
+						//House cats are too small for your slave to fight//
+					<</if>>
+				<</if>>
+
+			<</if>>
+		<<elseif $pitLethal == 0>>
+			<<if $pitAnimalType == $activeCanine.type>>
+				<<if $activeCanine.species != "dog">>
+					Your slave will try to avoid being used by a ''$activeCanine.species''.
+					$activeCanine.speciesCap
+				<<else>>
+					<<if _animalEligible == 1>>
+						Your slave will try to avoid being used by a ''$activeCanine.breed''.
+						$activeCanine.breed
+						<<if _HL > 0>> | [["" + $activeHooved.speciesCap + ""|Pit][$pitAnimalType = "hooved"]]<</if>>
+						<<if _FL > 0>> |
+							<<if $activeFeline.species != "cat">>
+								[["" + $activeFeline.speciesCap + ""|Pit][$pitAnimalType = "feline"]]
+							<<else>>
+								//House cats are too small to use your slave//
+							<</if>>
+						<</if>>
+					<<else>>
+						//<<print $activeCanine.breed>>s are too small to use your slave//
+						<<if _HL > 0>> | [["" + $activeHooved.speciesCap + ""|Pit][$pitAnimalType = "hooved"]]<</if>>
+						<<if _FL > 0>> |
+							<<if $activeFeline.species != "cat">>
+								[["" + $activeFeline.speciesCap + ""|Pit][$pitAnimalType = "feline"]]
+							<<else>>
+								//House cats are too small to use your slave//
+							<</if>>
+						<</if>>
+					<</if>>
+				<</if>>
+				<<if _HL > 0>> | [["" + $activeHooved.speciesCap + ""|Pit][$pitAnimalType = "hooved"]]<</if>>
+				<<if _FL > 0>> |
+					<<if $activeFeline.species != "cat">>
+						[["" + $activeFeline.speciesCap + ""|Pit][$pitAnimalType = "feline"]]
+					<<else>>
+						//House cats are too small to use your slave//
+					<</if>>
+				<</if>>
+			<<elseif $pitAnimalType == $activeHooved.type>>
+				Your slave will try to avoid being used by a ''$activeHooved.species''.
+				<<if _CL > 0>>
+					<<if $activeCanine.species != "dog">>
+						[["" + $activeCanine.speciesCap + ""|Pit][$pitAnimalType = "canine"]] |
+					<<else>>
+						<<if _animalEligible == 1>>
+							[["" + $activeCanine.breed + ""|Pit][$pitAnimalType = "canine"]] |
+						<<else>>
+							//<<print $activeCanine.breed>>s are too small for your slave to fight// |
+						<</if>>
+					<</if>>
+				<</if>>
+				$activeHooved.speciesCap
+				<<if _FL > 0>> |
+					<<if $activeFeline.species != "cat">>
+						[["" + $activeFeline.speciesCap + ""|Pit][$pitAnimalType = "feline"]]
+					<<else>>
+						//House cats are too small to use your slave//
+					<</if>>
+				<</if>>
+			<<elseif $pitAnimalType == $activeFeline.type>>
+				<<if $activeFeline.species != "cat">>
+					Your slave will try to avoid being used by a ''$activeFeline.species''.
+			<<else>>
+					//House cats are too small to use your slave//
+			<</if>>
+				<<if _CL > 0>>
+					<<if $activeCanine.species != "dog">>
+						[["" + $activeCanine.speciesCap + ""|Pit][$pitAnimalType = "canine"]]
+					<<else>>
+						<<if _animalEligible == 1>>
+							[["" + $activeCanine.breed + ""|Pit][$pitAnimalType = "canine"]]
+						<<else>>
+							//<<print $activeCanine.breed>>s are too small for your slave to fight//
+						<</if>>
+					<</if>>
+				<</if>>
+				<<if _HL > 0>> | [["" + $activeHooved.speciesCap + ""|Pit][$pitAnimalType = "hooved"]] | <</if>>
+				<<if $activeFeline.species != "cat">>
+					$activeFeline.speciesCap
+				<<else>>
+					//House cats are too small to use your slave//
+				<</if>>
+			<<else>>
+				Select an animal for your slave to try to avoid.
+				<<if _CL > 0>>
+					<<if $activeCanine.species != "dog">>
+						[["" + $activeCanine.speciesCap + ""|Pit][$pitAnimalType = "canine"]]
+					<<else>>
+						<<if _animalEligible == 1>>
+							[["" + $activeCanine.breed + ""|Pit][$pitAnimalType = "canine"]]
+						<<else>>
+							//<<print $activeCanine.breed>>s are too small for your slave to fight//
+						<</if>>
+					<</if>>
+				<</if>>
+				<<if (_CL > 0 && _HL > 0) || (_CL > 0 && _FL > 0) || (_HL > 0 && _FL > 0)>> | <</if>>
+				<<if _HL > 0>>
+					[["" + $activeHooved.speciesCap + ""|Pit][$pitAnimalType = "hooved"]]
+				<</if>>
+				<<if (_HL > 0 && _FL > 0)>> | <</if>>
+				<<if _FL > 0>>
+					<<if $activeFeline.species != "cat">>
+						[["" + $activeFeline.speciesCap + ""|Pit][$pitAnimalType = "feline"]]
+					<<else>>
+						//House cats are too small to use your slave//
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<else>> /* if animal fight is unselected */
+		<<set $pitAnimalType = 0>>
+	<</if>>
+	<</if>>
+
+<<else>>	/* if $killChoice != 2 */
+	<br>
+	You have scheduled a fight to the death this week. [[Cancel it|Pit][$killChoice = -1]]
+<</if>>
+<br><br>
+
+<<print App.UI.SlaveList.listSJFacilitySlaves(App.Entity.facilities.pit, passage(), false,
+{assign: "Select a slave to fight", remove: "Cancel a slave's fight"})>>
+
+<br><br>Rename $pitName: <<textbox "$pitName" $pitName "Pit">> //Use a noun or similar short phrase//

@@ -1,0 +1,17 @@
+#Add files or folders to be excluded for certain checks.
+#L : logic checks, like <<if>><</if>>
+#O : OnlyUsedOnce, if variables are used more than once
+#S : SpellCheck, matches based on dictionaries in devTools/
+#
+src/art/;LO
+src/gui/svgFilters.tw;L
+src/pregmod/editGenetics.tw;L
+#
+#JS files, logic won't be checked here anyways
+src/001-lib/Jquery/Jquery.js;O
+src/001-lib/mousetrap/mousetrap.js;O
+src/002-config/sugarCubeConfig.js;O
+src/SecExp/js/secExp.js;O
+src/js/economyJS.js;S
+src/npc/assistant/assistant.js;O
+src/data/backwardsCompatibility/backwardsCompatibility.js;O

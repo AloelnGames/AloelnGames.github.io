@@ -1,0 +1,347 @@
+:: P raped [nobr]
+
+<<set $raped = 1, $nextLink = "Nonrandom Event", $returnTo = "Nonrandom Event">>
+
+<<setPlayerPronouns>>
+
+<<set $activeSlaveOneTimeMinAge = 16>>
+<<set $oneTimeDisableDisability = 1>>
+<<if $arcologies[0].FSSupremacistLawME == 1>>
+	<<set $fixedRace = $arcologies[0].FSSupremacistRace>>
+<<elseif $arcologies[0].FSSubjugationistLawME == 1>>
+	<<set _races = setup.filterRacesLowercase.filter(race => race !== $arcologies[0].FSSubjugationistRace)>>
+	<<set $fixedRace = _races.random()>>
+<</if>>
+<<if $PC.vagina >= 0>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.dick = 6>>
+	<<set $activeSlave.balls = 5>>
+	<<set $activeSlave.boobs = 0>>
+	<<set $activeSlave.waist = 50>>
+	<<set $activeSlave.skill.oral = 0>>
+	<<set $activeSlave.skill.anal = 0>>
+<<else>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.vagina = 1>>
+	<<set $activeSlave.preg = 0>>
+	<<set $activeSlave.weight = random(-20,30)>>
+	<<set $activeSlave.waist = -20>>
+<</if>>
+<<set $activeSlave.origin = "You sentenced $him to enslavement for the attempted rape of a free " + _womanP + ".">>
+<<set $activeSlave.devotion = -100>>
+<<set $activeSlave.trust = -100>>
+<<run setHealth($activeSlave, jsRandom(-40, -20), normalRandInt(15, 3), undefined, 1, jsRandom(30, 80))>>
+<<set $activeSlave.anus = 0>>
+<<set $activeSlave.behavioralFlaw = "arrogant">>
+<<set $activeSlave.sexualFlaw = "judgemental">>
+
+<<setLocalPronouns $activeSlave>>
+
+While returning from a meeting with a prospective investor, an unfortunate wrong turn has led you into a rather seedy area of your arcology. You feel distinctly uncomfortable for some reason.
+
+<<if $PC.career == "mercenary" || $PC.skill.warfare >= 85>>
+	The moment you hear the sound of the knife unsheathe your reflexes take over. With a single strike, the $woman tailing you lies in a heap on the ground.
+	<<set $raped = 0>>
+<<elseif $PC.career == "slaver" || $PC.skill.warfare >= 45>>
+	The moment you notice an arm coming around from behind you does your training kick in. You quickly disarm the assailant and knock them to the floor before placing them in a choke-hold. Once they are subdued, you stand back to decide what to do next.
+	<<set $raped = 0>>
+<<elseif $PC.career == "gang">>
+	The moment you hear the sound of the knife unsheathe your reflexes take over. With a single stab, your own shiv is buried in $his chest, incapacitating $him.
+	<<set $raped = 0>>
+<<else>>
+	You stifle a <<if $PC.title == 1>>swear<<else>>scream<</if>> when you feel your arm grabbed and the knife pressed to your throat, knowing that it will only end badly for you in this place.
+<</if>>
+<br><br>
+<<if $raped == 1>>
+	<<set $fcnn.push("...plans for increased security measures, but refused to answer questions regarding...")>>
+	<<if $PC.vagina >= 0>>
+		"Well, well, well, look what <<if $PC.belly >= 5000 || $PC.preg >= 20>>waddled<<else>>walked<</if>> into my territory. If it isn't $PC.slaveName, come to grace me with _hisP presence."
+	<<else>>
+		"I've been watching you ever since you first moved in, $PC.slaveName, waiting for the perfect moment to make you mine. We are going to have a little fun, you and I."
+	<</if>>
+	The $woman binds your hands behind you, all the while keeping the knife to your throat. "Smart keeping your mouth shut; maybe I won't have to hurt you. Heh, I know what you're thinking, that you'll find out who I am and punish me. Don't worry, I made sure to not to leave you any trails to follow. Now let's see what we have here."
+
+	<<if $PC.vagina >= 0>>
+		With $his free hand, $he begins to explore your vulnerable body.
+		<<switch $PC.career>>
+		<<case "wealth">>
+			<<if $PC.boobs >= 300>>
+				"Nice and supple. How much did you have to pay for these babies?" he smirks as he gropes your breasts.
+			<</if>>
+			<<if $PC.preg >= 20 || $PC.belly >= 5000>>
+				"Couldn't afford an abortion after you took over? How sad," he chuckles as he rubs your pregnant belly.
+			<</if>>
+			<<if $PC.dick > 0>>
+				"Went with the full package didn't you?" he mocks as he flicks the tip of your stiffening cock.
+			<</if>>
+		<<case "capitalist">>
+			<<if $PC.boobs >= 300>>
+				"Nice and supple. Bet these got you some great deals with guys, didn't they?" he smirks as he gropes your breasts.
+			<</if>>
+			<<if $PC.preg >= 20 || $PC.belly >= 5000>>
+				"Sleeping with guys to close deals? Such a slut," he chuckles as he rubs your pregnant belly.
+			<</if>>
+			<<if $PC.dick > 0>>
+				"Guess you fuck people over in more ways than one, don't you?" he mocks as he flicks the tip of your stiffening cock.
+			<</if>>
+		<<case "engineer">>
+			<<if $PC.boobs >= 300>>
+				"Nice and supple. Did the other engineers care about your designs or just your tits?" he smirks as he gropes your breasts.
+			<</if>>
+			<<if $PC.preg >= 20 || $PC.belly >= 5000>>
+				"I can see why your designs were so popular, you fucked your way into the spotlight!" he chuckles as he rubs your pregnant belly.
+			<</if>>
+			<<if $PC.dick > 0>>
+				"Well you do know how to erect things, don't you?" he mocks as he flicks the tip of your stiffening cock.
+			<</if>>
+		<<case "medicine">>
+			<<if $PC.boobs >= 300>>
+				"Nice and supple. Did you implant them yourself?" he smirks as he gropes your breasts.
+			<</if>>
+			<<if $PC.preg >= 20 || $PC.belly >= 5000>>
+				<<if $PC.dick > 0>>
+					"Look at that belly! I bet you inseminated yourself with your own seed," he chuckles as he rubs your pregnant belly.
+				<<else>>
+					"I see how you work. Mess up a surgery and give the guy a pity fuck. Surprised you couldn't get their spawn out of your belly though. Guess you aren't that good of a surgeon," he chuckles as he rubs your pregnant belly.
+				<</if>>
+			<</if>>
+			<<if $PC.dick > 0>>
+				"I'm impressed. Your woman impression is quite good. Did you do the surgery yourself?" he mocks as he flicks the tip of your stiffening cock. "Still going to fuck you though."
+			<</if>>
+		<<case "celebrity">>
+			<<if $PC.boobs >= 300>>
+				"Nice and supple. I wonder how many guys jacked off to your pictures?" he smirks as he gropes your breasts.
+			<</if>>
+			<<if $PC.preg >= 20 || $PC.belly >= 5000>>
+				"I can see how you got so popular!" he chuckles as he rubs your pregnant belly.
+			<</if>>
+			<<if $PC.dick > 0>>
+				"How much tape did it take to hold this guy down?" he mocks as he flicks the tip of your stiffening cock.
+			<</if>>
+		<<case "escort">>
+			<<if $PC.boobs >= 300>>
+				"Nice and soft. How many dicks have been between these babies?" he smirks as he gropes your breasts.
+			<</if>>
+			<<if $PC.preg >= 20 || $PC.belly >= 5000>>
+				"What kind of whore doesn't know about protection?" he chuckles as he rubs your pregnant belly.
+			<</if>>
+			<<if $PC.dick > 0>>
+				"So, did you ever get to use this when you were a prostitute?" he mocks as he flicks the tip of your stiffening cock.
+			<</if>>
+		<<case "servant">>
+			<<if $PC.boobs >= 300>>
+				"Nice and supple. Bet your Master spent a fortune making these so nice," he smirks as he gropes your breasts.
+			<</if>>
+			<<if $PC.preg >= 20 || $PC.belly >= 5000>>
+				"Holding on to your Master's final gift are you?" he chuckles as he rubs your pregnant belly.
+			<</if>>
+			<<if $PC.dick > 0>>
+				"When your Master first undressed you, what did he think of his 'girl'?" he mocks as he flicks the tip of your stiffening cock.
+			<</if>>
+		<<case "BlackHat">>
+			<<if $PC.boobs >= 300>>
+				"Nice and supple. What are the odds that I can find these babies on the internet?" he smirks as he gropes your breasts.
+			<</if>>
+			<<if $PC.preg >= 20 || $PC.belly >= 5000>>
+				"You'd think someone so skilled at breaking security would understand protection themselves. Or did you trade your pussy for information?" he chuckles as he rubs your pregnant belly.
+			<</if>>
+			<<if $PC.dick > 0>>
+				"Trying to catch a signal with that?" he mocks as he flicks the tip of your stiffening cock.
+			<</if>>
+		<</switch>>
+		Finally he reaches your moistening pussy. "Already wet are we? Glad you know your place," he states as he pulls your clothes off and bends you over.<<if $PC.vagina == 0>> "And you still have your innocence, how delightful!"<</if>>
+		<br><br>
+		You can feel the head of his cock teasing your
+		<<if $PC.vagina == 0>>
+			virgin pussy; you grit your teeth knowing what will come next. Without mercy, he @@.red;tears through your hymen@@ and forces himself as deep as your tight pussy lets him. You choke back a sob as he struggles to hilt himself in you. He must have undergone surgery or something because there is no way your body can handle such a monster. You're in agony already - you can't fathom what will happen when he loses his patience.
+		<<else>>
+			pussy lips; you hope it feels bigger than it really is. As he struggles to force it into you, you regret thinking about it. He must have undergone surgery or something because he fills you completely. You feel weak just from him sticking it in, you can't fathom what will happen once he starts thrusting.
+		<</if>>
+		You soon find out as he wastes no time starting slow. He violently rams his oversized cock deep into you, threatening to penetrate your cervix with each thrust. He quickens his pace, fucking you like a beast.
+		<<if $PC.preg < 1>>
+			<<if random(1,100) > 60>>
+				His hand rises to your lips and forces something into your mouth. "Swallow it." You obey, hoping to just get this over with.
+				<<set $PC.forcedFertDrugs += 3>>
+			<</if>>
+			With one final thrust, he forces through your battered cervix and unloads in the depths of your <<if canGetPregnant($PC)>>fertile <</if>>womb.
+		<<else>>
+			With one final thrust, he forces it in as deep as he can into you and blows his seed deep in your aching cunt.
+		<</if>>
+		<<if $PC.preg >= 20 || $PC.belly >= 5000>>"Now your child<<if $PC.pregType > 1>>ren<</if>> will know what a real man's sperm is like!" <</if>>
+		He shoves you to the ground, pussy gaping from the size of his shaft and leaking his huge load all over yourself. By the time you loosen your bindings, he is long gone.
+		<br><br>
+		It would be prudent to up security in your arcology. That or take a guard along when you leave the penthouse. Such a thing, happening to you. You can't allow such an indignity to happen again, <<if $PC.vagina == 0>>not that you'll ever get your first time back<<else>>you think to yourself<</if>>, as you try to coax his sperm from your abused pussy.
+		<<if canGetPregnant($PC)>>
+			For some reason your body feels really satisfied, despite <<if $PC.vagina == 0>>what transpired<<else>>not climaxing<</if>>... Is this what it feels like to be bred by someone so dominant? You should take a pregnancy test right away and make sure he didn't knock you up.
+			<<= knockMeUp($PC, 100, 0, -2, 1)>>
+		<</if>>
+		<<if $PC.vagina == 0>><<set $PC.vagina++>><</if>>
+	<<else>>
+		With $his free hand, $he begins to explore your bound body.
+		<<switch $PC.career>>
+		<<case "wealth">>
+			<<if $PC.boobs >= 300>>
+				"Spared no expenses for these babies, did you?" $he smirks as $he gropes your breasts.
+			<</if>>
+			$He slips $his hand down your pants. "Now there's the money maker!"
+		<<case "capitalist">>
+			<<if $PC.boobs >= 300>>
+				"Ever wonder if they were listening to you or just ogling the man with the breasts?" $he smirks as $he gropes your breasts.
+			<</if>>
+			$He slips $his hand down your pants. "Now that explains how you were so successful!"
+		<<case "engineer">>
+			<<if $PC.boobs >= 300>>
+				"How did you get any work done with these hanging over your designs?" $he smirks as $he gropes your breasts.
+			<</if>>
+			$He slips $his hand down your pants. "I see what kind of tools you like. Big and strong!"
+		<<case "medicine">>
+			<<if $PC.boobs >= 300>>
+				"I'm sure you had quite the number of clients after a pair of these," $he smirks as $he gropes your breasts.
+			<</if>>
+			$He slips $his hand down your pants. "Huh, I wonder if that's real..."
+		<<case "celebrity">>
+			<<if $PC.boobs >= 300>>
+				"Nice and supple. Just like I'd expect from a man sporting tits." $he smirks as $he gropes your breasts.
+			<</if>>
+			$He slips $his hand down your pants; "Oh, now those tabloids make sense."
+		<<case "escort">>
+			<<if $PC.boobs >= 300>>
+				"With these hanging out, how many men tried to pick you up?" $he smirks as $he gropes your breasts.
+			<</if>>
+			$He slips $his hand down your pants. "Now there's the money maker!"
+		<<case "servant">>
+			<<if $PC.boobs >= 300>>
+				"Did your Master even ask before he stuck you with these?" $he smirks as $he gropes your breasts.
+			<</if>>
+			$He slips $his hand down your pants. "Now that's surprising. I expected something smaller."
+		<<case "BlackHat">>
+			<<if $PC.boobs >= 300>>
+				"Nice and supple. What are the odds that I can find these babies on the internet?" $he smirks as $he gropes your breasts.
+			<</if>>
+			$He slips $his hand down your pants. "You wouldn't mind if I download a few files now would you? Well, not that it matters."
+		<</switch>>
+		Satisfied, $he pulls your cock out of its increasingly cramped confines. "Look at him grow, he knows what comes next..." $He teases as $he pushes you to the ground and climbs on top of you.
+		<br><br>
+		$He lines $himself up with the tip of your dick before taking its entire length into $himself. $He lets out a lust filled moan as $he begins to bounce on your traitorous member. You can do nothing to stop $him from riding you to climax, so you just enjoy the sight of $his breasts bouncing to $his pace. As you feel your orgasm approaching, you try to time it so you can slip out of $him just before you blow your load, but you have no such luck.
+		"You really think I'd let you spoil my plans?" $he asks as $he grinds against you, making sure you cum deep in $his pussy. $He leans back and massages $his <<if $PC.balls >= 20>>taut <</if>>stomach, savoring the sensation of your seed seeping into $him. "That's it, make me a mommy." $He leans in close and you pop free of $his snatch. "Be a good _girlP and make this arcology a nice place for your bastard. I want to retire in luxury." $He blows you a kiss as $he stuffs a plug up $his vagina, redresses and heads on $his way. By the time you loosen your bindings, $he is long gone.
+		<br><br>
+		It would be prudent to up security in your arcology, that or take a guard along when you leave the penthouse. You can't allow such an indignity to happen again, nor do you need the stress of a bastard trying to seize control of your estate when you want to retire, but you wouldn't mind having your way with $him if you get the chance.
+	<</if>>
+
+<<else>>
+
+	Now the only question is what to do with the would-be rapist. You could toss them out of the arcology, but it might be more fun to turn the tables on $him.
+
+	<<set _ContractCost = 1000>>
+	<<set _slaveCost = slaveCost($activeSlave)>>
+	<<set _slaveCost -= 1000>>
+	<br>
+	//Applying enslavement as punishment will cost <<print cashFormat(_ContractCost)>>. Doing so and then selling $him immediately will bring in approximately <<print cashFormat(_slaveCost)>>.//
+	<br>
+	<<set $saleDescription = 1>>
+	<<include "Long Slave Description">>
+
+	<span id="result">
+	<<if $cash >= _ContractCost>>
+		<br><<link "Enslave $him">>
+			<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+			<<replace "#result">>
+				You complete the legalities and biometric scanning quickly and without fuss. The idiot will regret crossing you when $he wakes in the penthouse for basic slave induction.
+				<<include "New Slave Intro">>
+			<</replace>>
+		<</link>>
+		<br><<link "Sentence $him to a day in the stocks, then enslave $him">>
+			<<run healthDamage($activeSlave, 10)>>
+			<<set $activeSlave.behavioralFlaw = "odd">>
+			<<set $activeSlave.sexualFlaw = "hates penetration">>
+			<<set $activeSlave.anus = 2>>
+			<<run seX($activeSlave, "oral", "public", "penetrative", 23)>>
+			<<run seX($activeSlave, "anal", "public", "penetrative", 12)>>
+			<<if $activeSlave.vagina > -1>>
+				<<set $activeSlave.vagina = 2>>
+				<<run seX($activeSlave, "vaginal", "public", "penetrative", 12)>>
+				<<if random(1,100) > 60 && isFertile($activeSlave)>>
+					<<= knockMeUp($activeSlave, 100, 0, -2, 1)>>
+				<</if>>
+			<<else>>
+				<<run seX($activeSlave, "anal", "public", "penetrative", 12)>> /* even more anal */
+			<</if>>
+			<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+			<<replace "#result">>
+				You declare $his holes fair game for the entire arcology. $He spends a torturous day in the stocks before being hauled in for enslavement, somewhat @@.red;the worse for wear@@ and @@.red;acting oddly@@ due to $his ordeal, bruises all over $his body, cum leaking from $his @@.lime;loosened@@ anus<<if $activeSlave.vagina > -1>> and @@.lime;fucked-out@@ pussy<</if>>. The public @@.green;enjoys the fun.@@
+				<<run repX(500, "event")>>
+				<<set $arcologies[0].prosperity += 2>>
+				<<include "New Slave Intro">>
+			<</replace>>
+		<</link>>
+		<<if $arcade > 0>>
+			<br><<link "Enslave $him and sentence $him to a month in the arcade">>
+				<<= assignJob($activeSlave, "be confined in the arcade")>>
+				<<set $activeSlave.sentence = 4>>
+				<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+				<<replace "#result">>
+					You complete the legalities and biometric scanning quickly and cautiously. The idiot will be in for a surprise when $he awakes to find $he can't move and a dick is in $his ass.
+					<<run newSlave($activeSlave)>> /* skip New Slave Intro */
+				<</replace>>
+			<</link>>
+		<</if>>
+		<<if $dairy > 0>>
+			<<if $dairyRestraintsSetting > 1>>
+				<br><<link "Enslave $him and send $him straight to the industrial dairy">>
+					<<= assignJob($activeSlave, "work in the dairy")>>
+					<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+					<<replace "#result">>
+						You complete the legalities and biometric scanning quickly and cautiously. The idiot will wake up <<if $dairyStimulatorsSetting > 1>>in agony as $his anus takes the rectal hydration dildo<<else>>to find $his chest has begun swelling with milk<</if>>.
+						<<set $activeSlave.boobs += 300>>
+						<<run newSlave($activeSlave)>> /* skip New Slave Intro */
+					<</replace>>
+				<</link>>
+			<</if>>
+		<</if>>
+		<<if $farmyard > 0>>
+			<br><<link "Enslave $him and send $him straight to the farmyard">>
+				<<= assignJob($activeSlave, "work as a farmhand")>>
+				<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+				<<replace "#result">>
+					You complete the legalities and biometric scanning quickly and cautiously. The idiot will wake up in $farmyardName, where $he will spend the rest of $his days working the fields<<if $farmyardShows == 1>> and <<if $seeBestiality == 1>>getting fucked by animals<<else>>putting on shows with animals<</if>><</if>>.
+					<<run newSlave($activeSlave)>> /* skip New Slave Intro */
+				<</replace>>
+			<</link>>
+		<</if>>
+		<<if $seeExtreme > 0>>
+			<br><<link "Punitively amputate $his limbs, and then enslave $him">>
+				<<run healthDamage($activeSlave, 20)>>
+				<<run removeLimbs($activeSlave, "all")>>
+				<<set $activeSlave.behavioralFlaw = "odd">>
+				<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+				<<replace "#result">>
+					You want $him to suffer for what $he tried to pull on you. You make sure $he is fully awake as $he is strapped into the autosurgery. You take great pleasure in watching $him struggle as $his limbs are taken, one by one. Of course, @@.red;$his health is affected@@ and the horrible experience has left $him @@.red;acting oddly.@@ After $he has stabilized, it's off to the penthouse for basic slave induction. You'd like to see $him try and touch you again without arms and legs.
+				<</replace>>
+			<</link>>
+			<<if $activeSlave.balls > 0>>
+				<br><<link "Enslave the criminal and geld $him">>
+					<<run healthDamage($activeSlave, 20)>>
+					<<set $activeSlave.balls = 0>>
+					<<set $activeSlave.devotion -= 25>>
+					<<set $activeSlave.trust -= 25>>
+					<<run newSlave($activeSlave)>>
+					<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+					<<replace "#result">>
+						You want $him to suffer for what $he tried to pull on you. You make sure $he is fully awake as $he is strapped into the autosurgery, taking the time to roughly fondle $his balls. You take great pleasure in watching $him struggle as $his testicles are removed. Once $he can stand again, it's off to the penthouse for basic slave induction.
+						<<include "New Slave Intro">>
+					<</replace>>
+				<</link>>
+			<</if>>
+		<</if>>
+	<<else>>
+		//You lack the necessary funds to enslave $him.//
+	<</if>>
+	<br><<link "Publicly flog the criminal">>
+		<<replace "#result">>
+			Naturally, the wretch will be thrown out of the arcology, but an example must first be made. Free people must understand that criminals who commit outrages against them will be severely punished. The protesting malefactor is stripped and flogged on the promenade before being escorted bleeding from the arcology. The public @@.green;approves of this harshness.@@
+			<<run repX(500, "event")>>
+		<</replace>>
+	<</link>>
+	</span>
+
+<</if>>

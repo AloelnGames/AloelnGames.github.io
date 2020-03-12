@@ -1,0 +1,147 @@
+:: SE FCTV Watch [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Scheduled Event", $returnTo = "Scheduled Event", $showEncyclopedia = 1, $encyclopedia = "FCTV", $randShow = "", $FCTVshow = 0>>
+
+
+Tired after a long day, you tell <<if $Concubine != 0>>@@.pink;$Concubine.slaveName@@<<else>>$assistant.name<</if>> to turn on the TV and
+<<if $cheatMode == 1 || $debugMode == 1 || $FCTVremote > 0>>
+	bring you the remote so you can choose whatever show you find interesting.
+	<br>
+
+	<style>
+		table.finances {
+			text-align: left;
+			border-collapse: separate;
+			border-spacing: 5px;
+			border-style: hidden;
+			empty-cells: hide;
+			/*width: 75%;*/
+		}
+	</style>
+
+	<table class="finances" border="1">
+	<tr><th>
+	<<link 0>>
+		<<set $randShow = 0>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 1>>
+		<<set $randShow = 1>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 2>>
+		<<set $randShow = 2>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<if $cheatMode == 1 || $debugMode == 1>> /* Disable the home slave shopping network for normies because exploits. */
+		<<link 3>>
+			<<set $randShow = 3>>
+			<<replace "#show">>
+				<<include "SE FCTV Shows">>
+			<</replace>>
+		<</link>>
+		<<link 4>>
+			<<set $randShow = 4>>
+			<<replace "#show">>
+				<<include "SE FCTV Shows">>
+			<</replace>>
+		<</link>>
+	<<else>>
+		3 4
+	<</if>>
+	<<link 5>>
+		<<set $randShow = 5>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 6>>
+		<<set $randShow = 6>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 7>>
+		<<set $randShow = 7>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 8>>
+		<<set $randShow = 8>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 9>>
+		<<set $randShow = 9>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 10>>
+		<<set $randShow = 10>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 11>>
+		<<set $randShow = 11>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 12>>
+		<<set $randShow = 12>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 13>>
+		<<set $randShow = 13>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 14>>
+		<<set $randShow = 14>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 15>>
+		<<set $randShow = 15>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<link 16>>
+		<<set $randShow = 16>>
+		<<replace "#show">>
+			<<include "SE FCTV Shows">>
+		<</replace>>
+	<</link>>
+	<<if $cheatMode == 1 || $debugMode == 1>> /* remove toggle for normies */
+		|
+		<<link "Toggle inappropriate">>
+			<<if _FCTVShowAll>>
+				<<set _FCTVShowAll = 0>>
+			<<else>>
+				<<set _FCTVShowAll = 1>>
+			<</if>>
+		<</link>>
+	<</if>>
+	</th></tr></table>
+<<else>>
+	set FCTV to random show. Your larger-than-life screen flashes on, and is soon playing a random show from the popular streaming service.
+<</if>>
+
+<span id="show">
+	<<include "SE FCTV Shows">>
+</span>

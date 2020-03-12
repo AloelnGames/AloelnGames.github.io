@@ -1,0 +1,28 @@
+:: FSlaveImpreg [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Slave Interact", $impregnatrix = 0>>
+<<set $AS = $activeSlave.ID>>
+
+<p class="scene-intro">
+	<<= getSlave($AS).slaveName>> is fertile; now you must select a slave with both a penis and potent testicles.
+</p>
+
+<p>
+	__Select an eligible slave to serve as the semen donatrix:__
+</p>
+
+<<set _eligibles = $slaves.filter((s) => (s.ID != getSlave($AS).ID) && canImpreg(getSlave($AS), s))>>
+<<for _i = 0; _i < _eligibles.length; _i++>>
+	<<set _name = SlaveFullName(_eligibles[_i])>>
+	<br><<print "[[_name|FSlaveImpreg Consummate][$impregnatrix = _eligibles[" + _i + "]]]">>
+	<<if _eligibles[_i].custom.label>> (@@.yellow;''<<print _eligibles[_i].custom.label>>''@@)<</if>>
+	<<if $familyTesting == 1 && totalRelatives(getSlave($AS)) > 0>>
+		<<set _relTerm = relativeTerm(getSlave($AS), _eligibles[_i])>>
+		<<if _relTerm != null>>
+			@@.lightgreen;<<= capFirstChar(_relTerm)>>@@
+		<</if>>
+	<</if>> /* closes extended family mode */
+<</for>>
+<<if (_eligibles.length === 0)>>
+	//You have no slaves capable of inseminating others.//
+<</if>>

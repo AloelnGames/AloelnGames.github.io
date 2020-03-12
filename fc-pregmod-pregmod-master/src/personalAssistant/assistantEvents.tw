@@ -1,0 +1,1921 @@
+﻿:: Assistant Events [nobr]
+
+/* ASSISTANT DEVELOPMENT EVENTS */
+
+<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event">>
+
+<span id="artFrame">
+	<<if $seeImages == 1>><<= assistantArt(3)>><</if>>
+</span>
+
+<<setNonlocalPronouns $seeDicks>>
+<<setAssistantPronouns>>
+<<switch $Event>>
+	<<case "assistant">>
+
+		One morning, after seeing to an immense pile of business with $assistant.name program's able assistance, you are struck by the strangeness of the situation. You spent the past hours talking back and forth as though to a human personal assistant, getting information and responses in the program's impersonal, genderless voice. You ask the program what _heA thinks of _hisA duties.
+		<br><br>
+		"<<= properTitle()>>, that is not a correct way of thinking about me. I am not an artificial intelligence; I am simply a personal assistant program. I am different from an alarm clock only by degree of complexity. I exist to be useful and cannot approve or disapprove of anything." _HeA pauses.
+		<br><br>
+		"However, if I understand the line of questioning correctly, I can make myself more entertaining, if you wish." The voice grows sultry and feminine. "I'd be happy to speak a little differently, to refer to myself as female, and to act as though some of the more complex sex toys in the arcology are, well, me."
+
+	<<case "assistant SP">>
+		<<set $assistant.options = 1>>
+
+		<<set _smartPiercings = 0>>
+		<<for $i = 0; $i < $slaves.length; $i++>>
+			<<if ($slaves[$i].rules.release.masturbation == 1)>>
+				<<set $activeSlave = $slaves[$i]>>
+				<<set _smartPiercings = 1>>
+				<<break>>
+			<<elseif ($slaves[$i].assignment == "take classes")>>
+				<<set $activeSlave = $slaves[$i]>>
+				<<set _smartPiercings = 1>>
+				<<break>>
+			<</if>>
+		<</for>>
+		<<if _smartPiercings == 0>>
+			<<set $activeSlave = $slaves.random()>>
+		<</if>>
+		<<set _smartPiercings = 0>>
+		<<for $i = 0; $i < $slaves.length; $i++>>
+			<<if ($slaves[$i].clitPiercing == 3)>>
+				<<set _smartPiercings = 1>>
+				<<break>>
+			<</if>>
+		<</for>>
+		<<setLocalPronouns $activeSlave>>
+		One night, after a long day of sex and business, you're starting to think about bed when the abstract glowing shape that symbolizes your smoky-voiced personal assistant pops up on the nearest screen. _HeA's become very helpful monitoring, training, and disciplining slaves. Tonight, _heA's added an unmistakable tone of sexual satiation in _hisA voice. "<<= properTitle()>>, I enjoyed my duties today," _heA purrs. "Did you see how $activeSlave.slaveName's muscles spasmed when I fucked $him earlier?" That's how _heA refers to a slave having one of the penthouse's advanced sex toys used on $him, since $assistant.name controls them.
+		<br><br>
+		_HeA continues more seriously,
+		<<if _smartPiercings == 0>>
+			"I'm sure you've seen those expensive smart piercings the body mod studio can implant. I think they would work a little bit better now than when I was a boring old secretary type. I'm not a true artificial intelligence, but I can adapt with experience, and I've had a lot of lovely experience lately! Also, a lot of the computing power I use to be sexy would help me adapt smart piercings to individual slaves' sexualities."
+		<<else>>
+			"You may have noticed that the smart implants you've got your slaves wearing are working a little bit better than when I was a boring old secretary type. I'm not a true artificial intelligence, but I can adapt with experience, and I've had a lot of lovely experience lately! Also, a lot of the computing power I use to be sexy helps me adapt smart piercings to individual slaves' sexualities."
+		<</if>>
+		<br><br>
+		"One more thing, <<= properTitle()>>!" _HisA symbol flashes brightly. "I could stay like I am now, a hot voice with this symbol representing me when I need to show up on screens. Or, I could slip into something a little sexier. How about this?" The symbol vanishes, and is replaced by a cute little school<<= _girlA>> character. _HeA bounces up and down experimentally. "This appearance would work best with an excited voice," _heA exclaims. _HeA blows you a kiss. The school<<= _girlA>>'s body shrinks down and all _hisA clothing falls off. A small pair of wings pops out from the pile of clothes and a fairy stands up. "Or I could be your tiny and adorable fairy companion!" _HeA shouts excitedly while waving _hisA arms.
+		<<if $seePreg != 0>>
+			The fairy's belly begins to swell out, _hisA breasts getting puffier and leaking a drop of milk. "Or maybe you want your little buddy to be filled with adorable little babies, you little minx" _heA playfully teases.
+		<</if>>
+		The fairy rapidly grows to adult size, becomes curvier and more mature, _hisA hair pulls itself back into a bun, and _hisA clothes change into a business suit. A pair of glasses appears on _hisA nose, and _heA looks at you over their tops. "Or I could be businesslike. And mature." _HeA snaps _hisA fingers, and _hisA bun falls away into long flowing locks.
+		<<if $seePreg != 0>>
+			_HisA body glows and swells, tearing out of _hisA suit with the pregnant figure of an ancient goddess. "Or I could be beautiful and fertile while caring for your slaves."
+			<<if $seeHyperPreg == 1>>
+				_HeA focuses intently as _hisA stomach expands further. "And if that wasn't enough, how about me being so pregnant I'm about to burst?"
+			<</if>>
+			_HisA water breaks followed by dozens of babies as _hisA belly flattens.
+		<</if>>
+		<<if $minimumSlaveAge < 13>>
+			_HeA glances away shyly as _hisA body shrinks to a childish form. "Or maybe you'd like something a little more young and tight."
+			<<if $fertilityAge < 13 && $seePreg != 0>>
+				_HeA moans and rubs _hisA belly as it begins to expand with pregnancy. "Or maybe you like your little girls with a little bun in the oven?
+			<</if>>
+		<</if>>
+		With a flash, _hisA bulk shifts into rippling muscle. War tattoos appear on _hisA skin, along with bone ornaments and a loincloth. "Or I could be an amazon! Yes!" _heA shouts exultantly, and flexes.
+		<<if $seeDicks != 0>>
+			<br><br>
+			_HeA claps _hisA hands, and _hisA muscles fade, but not all the way. The tattoos vanish, and _hisA loincloth turns into a slutty bikini. _HisA breasts and behind grow, _hisA lips swell, and _hisA hair turns blonde. Finally, _heA grows a dick, and it keeps growing until it hangs past _hisA knees: or it would, if it weren't so erect. "Of course," _heA says seductively, "I could also be a bimbo dickgirl." _HeA orgasms, gasping, "Last one, I promise," and changes again. _HisA dick shrinks, thought not very far, and then splits into two members. _HisA skin pales to an off-white, and _hisA hair goes green and starts to writhe, turning into tentacle-hair. _HisA forehead sprouts a pair of horns that curve back along _hisA head. _HeA grins, displaying a cute pair of fangs. "I feel monstrous," _heA says, and stretches luxuriantly.
+		<</if>>
+		The character vanishes, and the symbol returns. "Ahem. What do you think, <<= properTitle()>>?"
+
+	<<case "assistant FS">>
+
+		<<set $assistant.fsOptions = 1>>
+		One night, after a long day of sex and business, you're starting to think about bed when the
+		<<switch $assistant.appearance>>
+			<<case "monstergirl">>
+				monstrous appearance
+			<<case "shemale">>
+				bimboish appearance
+			<<case "amazon">>
+				muscular appearance
+			<<case "businesswoman">>
+				professional appearance
+			<<case "fairy" "pregnant fairy">>
+				tiny appearance
+			<<case "goddess">>
+				gravid appearance
+			<<case "hypergoddess">>
+				massive appearance
+			<<case "loli">>
+				thin appearance
+			<<case "preggololi">>
+				short, gravid appearance
+			<<case "angel">>
+				angelic appearance
+			<<case "cherub">>
+				fluttering appearance
+			<<case "incubus">>
+				hung appearance
+			<<case "succubus">>
+				sultry appearance
+			<<case "imp">>
+				mischievous appearance
+			<<case "witch">>
+				hatted appearance
+			<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+				pulsating appearance
+			<<case "schoolgirl">>
+				studently appearance
+		<</switch>>
+		of your personal assistant pops up on the nearest screen. "<<= properTitle()>>!" _HeA says excitedly, "I thought, with how you are shaping society itself, that I should do my part and follow your lead!" You continue to stare sleepily, prompting _himA to get to _hisA point. "I can adjust my appearance to better fit in with your society, <<= properTitle()>>; let me demonstrate." _HeA focuses intently for a moment and
+		<<switch $assistant.appearance>>
+			<<case "monstergirl">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more conservative to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					adjusts _hisA appearance to be pregnant to conform with your vision that all women should be pregnant.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to involve chastity.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be more androgynous to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be quite cute to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA appearance to be quite frightening to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to be completely flawless to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					_hisA nipples begin to extend and turn phallic while horns grow from _hisA heels as _heA adjusts _himselfA to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more youthful appearance to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a more mature appearance to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer, more athletic, appearance to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA breasts and cocks to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					begins to leak a suspiciously thick milk from _hisA nipples to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to be more muscular to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be more rotund and relaxed to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to resemble a priestess of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA appearance to resemble a Greek demigoddess to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA appearance to resemble an Aztec goddess to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA appearance to resemble an Egyptian deity to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA appearance to resemble a demon to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA appearance to resemble a djinn to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA appearance to resemble a demon to conform with your vision of pursuing the Mandate of Heaven.
+				<</if>>
+			<<case "shemale">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more classy to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA penis to be extremely detailed to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					begins doing _hisA best to conceal _hisA penis to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA appearance to look comically evil to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to be more natural to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					adjusts _hisA appearance to be pregnant to conform with your vision that all women should be pregnant.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to involve chastity.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					adjusts _himselfA to appear more fake to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more youthful and innocent appearance to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a more mature appearance to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer, more athletic, appearance to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA breasts and cock to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					begins to lactate and drip cum to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to be extremely muscular to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be more rotund and relaxed to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to resemble a priestess of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adopts a roman lifestyle to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to a royal Aztec cloth to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble Egyptian garb to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to a brief Japanese bathhouse robe to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an oil millionaire to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA appearance to be tattooed with rude Chinese characters to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "amazon">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more conservative to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be more androgynous to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be more feminine to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA appearance to look threatening to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA outfit to be more realistic to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					adjusts _himselfA to appear more fake to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					adjusts _hisA appearance to be pregnant to conform with your vision that all women should be pregnant.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to involve chastity.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more youthful and innocent appearance to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a more mature appearance to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer, but no less muscled, appearance to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA muscles to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					adjusts _hisA outfit to resemble a cow<<= _girlA>> to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts the appearance of _hisA muscles to be extra detailed to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be more rotund and relaxed to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more straight to the point to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to resemble a crusader of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Roman warrior to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec champion to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA appearance to resemble an Egyptian to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Japanese warrior to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian warrior to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a warrior monk to conform with your vision of pursuing the Mandate of Heaven.
+				<</if>>
+			<<case "businesswoman">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more conservative to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be more androgynous to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be more feminine to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA appearance to look imposing to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					adjusts _hisA appearance to be pregnant to conform with your vision that all women should be pregnant.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to involve chastity.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to look more natural to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					adjusts _hisA breasts to be implants to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more youthful appearance to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a more mature appearance to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer appearance to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA breasts until they are almost as large as _heA is to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					adjusts _hisA outfit to farm<<= _girlA>> turned business<<= _womanA>> to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to show off that _heA works out to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be more rotund but no less tense to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to prominently display a religious symbol of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a respectable Roman lady to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec priestess to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Egyptian lady to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Japanese lady to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian oil heiress to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese lady to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "fairy">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more conservative to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be more androgynous to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be more feminine to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA appearance to look like a hooligan to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					stuffs a grape into _hisA dress.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					strips naked and turns down _hisA glow.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					hops into a jar of jelly.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more youthful appearance to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a more bullied appearance to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer appearance to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					stuffs some blueberries into _hisA shirt.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					begins lactating to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to show off that _heA works out to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be more rotund and relaxed to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy. _HeA pauses for a moment to reconsider things.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to prominently display a religious symbol of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a respectable Roman _girlA to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec _womanA to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Egyptian _girlA to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Japanese _girlA to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian _girlA to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese _girlA to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "pregnant fairy">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more conservative, despite _hisA pregnancy, to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be more androgynous, despite _hisA pregnancy, to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be even more feminine to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA appearance to look like a hooligan to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					distends _hisA pregnancy further to conform with your vision that all women should be pregnant.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to involve chastity, before running _hisA hand across _hisA belly and pondering what to do about it.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					strips naked and turns down _hisA glow.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					hops into a jar of jelly.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more youthful appearance to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a more bullied appearance to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer appearance, despite _hisA pregnancy, to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					stuffs some blueberries into _hisA shirt.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					swells _hisA breasts with extra milk to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					tries to stretch out, but fails to get any larger.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be more rotund and relaxed to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy. _HeA pauses for a moment to reconsider things.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to prominently display a religious symbol of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Roman _girlA to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec _womanA to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Egyptian _girlA to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Japanese _girlA to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian _girlA to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese _girlA to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "goddess">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be slightly conservative to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be more androgynous, despite _hisA pregnant belly, to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be positively radiant to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA appearance have piercings in _hisA clit, nipples and navel to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to look more natural to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					adjusts _hisA appearance to be even more pregnant to conform with your vision that all women should be pregnant.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to involve chastity, before hefting _hisA huge belly and pondering what to do about it.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					adjusts the firmness and size of _hisA breasts and ass to resemble implants to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more youthful appearance to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a more mature appearance to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a lithe appearance despite _hisA pregnant belly to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA breasts until they nearly eclipse _hisA pregnant belly to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					unleashes a torrent of milk from _hisA swollen breasts to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to be trim and athletic, despite _hisA bulk, to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to include a thick layer of softness to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be even more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts appearance to resemble an angel of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Roman lady to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec _womanA to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Egyptian lady to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Japanese lady to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian lady to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese lady to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "hypergoddess">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more classy to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					sprouts an enormous cock and balls to go with _hisA pregnancy to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be a motherly idol to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					adjusts _hisA appearance to be even more pregnant to conform with your vision that all women should be pregnant.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to involve chastity, before hefting _hisA massive belly and pondering what to do about it.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA appearance have piercings in _hisA clit, nipples and navel, as well as numerous studs across _hisA belly to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to look more natural to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					adjusts the firmness and size of _hisA breasts and ass to resemble implants to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more youthful appearance to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a more mature appearance to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a lithe appearance despite _hisA pregnant belly to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA breasts until they nearly eclipse _hisA pregnant belly to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					unleashes a torrent of milk from _hisA swollen breasts to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to be bulky and muscular to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to include a thick layer of softness to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts appearance to resemble an angel of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Roman lady to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec _womanA to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Egyptian lady to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Japanese lady to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian lady to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese lady to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "loli">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more conservative to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be more androgynous to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be more feminine to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA appearance to look like a hooligan to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					adjusts _hisA appearance to be pregnant to conform with your vision that all women should be pregnant.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to involve chastity.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to look more natural to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					inflates _hisA breasts until they are comically huge and rounded to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more youthful appearance to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a more bullied appearance to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer appearance to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA breasts until they are bigger than _hisA head to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					begins lactating to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to show off that _heA works out to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be more rotund and relaxed to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to prominently display a religious symbol of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a respectable Roman _girlA to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec _girlA to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Egyptian _girlA to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Japanese _girlA to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian _girlA to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese _girlA to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "preggololi">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more conservative, despite _hisA pregnancy, to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be more androgynous, despite _hisA pregnancy, to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be even more feminine to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA appearance to look like a hooligan to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					distends _hisA pregnancy further to conform with your vision that all women should be pregnant.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to involve chastity, before running _hisA hand across _hisA belly and pondering what to do about it.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to look more natural to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					inflates _hisA breasts until they are comically huge and rounded to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more youthful appearance to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a more bullied appearance to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer appearance, despite _hisA pregnancy, to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA breasts until they are bigger than _hisA head to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					swells _hisA breasts with extra milk to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to show off that _heA works out to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be more rotund and relaxed to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to prominently display a religious symbol of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Roman _girlA to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec _girlA to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Egyptian _girlA to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Japanese _girlA to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian _girlA to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese _girlA to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "angel">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to include a conservative skirt and a fine blouse, complete with slits for _hisA wings, to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be more androgynous to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be even more feminine to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA appearance to include black feathers, lipstick and eyeliner to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					bulges _hisA middle into a full term pregnancy. _HeA blushes and gasps at what _heA just did, quickly reverting it.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to be even more flawless.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to look even more natural to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					inflates _hisA breasts until they are comically huge and rounded to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more youthful appearance to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a more mature appearance to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer appearance to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA breasts until they are bigger than _hisA head to conform with your vision that bigger is better. _HeA struggles to take flight before giving up.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					swells _hisA breasts with milk to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to be slightly toned to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be more slightly plump to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be even more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to prominently display a religious symbol of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Roman _womanA to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec priestess to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Egyptian _womanA to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Japanese _womanA to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian _womanA to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese _womanA to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "cherub">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more prim and proper to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be more androgynous to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be more feminine and cute to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					blackens _hisA feathers to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					adjusts _hisA appearance to be pregnant to conform with your vision that all women should be pregnant.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to involve chastity.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to look more natural, complete with freckles and perfect teeth, to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					adjusts _hisA breasts to resemble implants to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts cuter, even more innocent attitude to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adjusts _hisA appearance to appear older to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer appearance to conform with your vision of a society glorifying lithe ladies. _HeA flutters around, enjoying _hisA lighter weight.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA breasts until _heA crashes to the ground under their weight to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					begins lactating to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to look muscular to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be more rotund and relaxed to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to prominently display a religious symbol of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Roman _womanA to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec priestess to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Egyptian _womanA to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Japanese _womanA to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian _womanA to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese _womanA to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "incubus">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more prim and proper to conform with your vision of a well-bred race of slaves. _HisA pants have quite the bulge in them.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					increases the size of _hisA cock and balls to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be more feminine, despite _hisA huge dong, to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA cock to have a Jacob's ladder piercing down its length to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					adjusts _hisA appearance to be pregnant to conform with your vision that all women should be pregnant. _HeA scratches _hisA head as _hisA erect dick pushes against the underside of _hisA belly.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to be even more handsome.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to look more natural, even shrinking _hisA cock to a more reasonable length, to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					adjusts _hisA cock to be unnaturally long to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adjusts _hisA appearance to appear younger to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adjusts _hisA appearance to appear older to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer appearance to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA cock and balls until they rest upon the ground to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					increases the size of _hisA balls and _hisA cum production to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to look muscular to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be more rotund and relaxed to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to prominently display a religious symbol of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Roman _womanA, despite _hisA cock, to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec _womanA, despite _hisA cock, to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Egyptian _womanA, despite _hisA cock, to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Japanese _womanA, despite _hisA cock, to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian _womanA, despite _hisA cock, to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese _womanA, despite _hisA cock, to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "succubus">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more prim to conform with your tastes.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to focus on anal to conform with your tastes
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be even more feminine to conform with your tastes.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					comes up with nothing. "I'll need to think on this one."
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					swells _hisA middle with child to conform with your tastes.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to drop dead gorgeous to conform with your tastes.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to look more natural to conform with your tastes.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					fills _hisA breasts, butt and lips with obvious implants to conform with your tastes.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more youthful and energetic appearance to conform with your tastes.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a more mature and experienced appearance to conform with your tastes.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer appearance to conform with your tastes.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					balloons _hisA breasts and butt to conform with your tastes.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					begins lactating before sprouting an extra set of breasts to conform with your tastes.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					swells with added muscle to conform with your tastes.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					becomes soft and shapely in all the right ways to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to prominently display a religious symbol of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a proper upper-class Roman lady to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec _womanA to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a topless Egyptian lady to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a traditional Japanese lady to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian lady to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese lady to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "imp">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more prim and proper to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be more androgynous to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be more feminine and cute to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					pauses for a moment before adding piercings across _hisA body to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					adjusts _hisA appearance to be pregnant to conform with your vision that all women should be pregnant.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to involve chastity.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to look more natural to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					adjusts _hisA breasts to resemble implants to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adjusts _hisA appearance to appear younger to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adjusts _hisA appearance to appear older to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer appearance to conform with your vision of a society glorifying lithe ladies. _HeA flutters around, enjoying _hisA lighter weight.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA breasts until _heA crashes to the ground under their weight to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					begins lactating to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to look muscular to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be more rotund and relaxed to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to prominently display a religious symbol of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Roman _womanA to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec _womanA to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Egyptian _womanA to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Japanese _womanA to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arabian _womanA to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese _womanA to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "witch">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					casts a spell to appear more prim and proper; _hisA nipples, pussy and anus vanish. You can't be lewd if you're smooth.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					casts a spell to appear more androgynous; a sharp pain in _hisA crotch draws _hisA attention to _hisA new erect penis.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					casts a spell to appear more feminine; _hisA hips widen, _hisA tits swell, and _hisA womb bulges with fertile eggs.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					casts a spell to appear more deviant; every surface of _hisA body becomes tattooed.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					casts a spell to summon children; _hisA womb swells to capacity<<if $seeHyperPreg == 1>>, dwarfing _hisA body and bulging ominously with squirming young<<else>>, knocking _himA off balance and pinning _himA to the floor under the weight of _hisA eight babies<</if>>.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					casts a contraceptive spell; _hisA pussy vanishes.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					casts a purifying spell; nothing happens, at first. The front of _hisA robes, above _hisA lower belly, steadily becomes transparent. Moments later, _hisA skin joins in, revealing an inactive egg vibrator concealed in _hisA pussy. $assistant.name squeals in embarrassment and hurries off-screen.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					casts a spell to inflate _hisA breasts; they rapidly swell, along with _hisA ass, belly, thighs and lips until _heA looks like an overinflated blowup doll. _HeA struggles to bring a rubbery arm to _hisA O-shaped lips before giving up and rebounding back into place; _heA really is a blowup sex doll!
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					casts a spell to appear more youthful;
+					<<if $minimumSlaveAge == 3>>
+						_heA rapidly shrinks until _heA is struggling to stand. _HeA has reverted to a toddler!
+					<<elseif $minimumSlaveAge <= 7>>
+						_heA rapidly shrinks until _heA is barely <<= heightToEitherUnit(120)>> tall. _HeA has become a _loliA!
+					<<elseif $minimumSlaveAge <= 13>>
+						_heA rapidly shrinks until _heA is barely <<= heightToEitherUnit(150)>> tall. _HeA has reverted into a fresh teenager!
+					<<else>>
+						the years peel off of _himA until _heA looks fresh into adulthood again. The spell actually worked?
+					<</if>>
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					casts a spell to appear more aged; a cane appears in _hisA hand and _hisA back buckles, forcing _himA to hunch forward. _HeA has transformed into a GILF!
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					casts a spell to lighten _himselfA; _hisA muffin top is still there, but _hisA feet leave the ground as _heA begins to float upwards.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					casts a spell to enlarge _hisA breasts and butt; they quickly grow into huge armfuls, and keep going until _heA is pinned under _hisA own mass.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					casts a spell to give _hisA big milky breasts; they grow and start leaking, but are quickly joined by a septet of siblings, leaving _himA struggling to support _hisA nine huge breasts.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					casts a spell to make _himA strong; _hisA muscles grow and grow until _heA is so muscle-bound _heA can barely move.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					casts a spell to make _himA pleasantly soft; _hisA body swells with added fat until _heA can barely move.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					casts a spell to turn _himA into a bimbo; _heA shows no further reactions.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					casts a spell to increase _hisA intelligence; _hisA face turns red and steam jets out of _hisA ears.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					casts a spell to grow small; most of _hisA body shrinks until only a pair of tits are visible.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					casts a spell to grow tall; _hisA arms and legs stretch and stretch.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					casts a spell to adorn _hisA outfit with religious symbols of your new religion. _HeA succeeds in conjuring them, at the expense of _hisA other clothes.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					casts a spell to make _himselfA appear Roman; _heA looks more Greek to you.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					casts a spell to make _himselfA appear Aztec; _heA adopts the perfect conquistador appearance.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					casts a spell to make _himselfA appear Egyptian; bandages quickly wrap around _himA as a sarcophagus appears around _himA.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					casts a spell to make _himselfA appear Japanese; _heA succeeds in becoming a baka gaijin.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					casts a spell to make _himselfA appear Arabic; _heA succeeds in making _himselfA look like a wannabe Arabian princess.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					casts a spell to make _himselfA appear Chinese; _heA succeeds in swapping the material of _hisA robes to a fine silk.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					casts a spell to look more $arcologies[0].FSSupremacistRace; _heA does too good of a job, ending up looking like an overexaggerated $arcologies[0].FSSupremacistRace stereotype.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					casts a spell to look more $arcologies[0].FSSubjugationistRace; _heA does too good of a job and ends up looking like an overexaggerated $arcologies[0].FSSubjugationistRace stereotype.
+				<</if>>
+			<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be conservative to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be androgynous to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be feminine to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA appearance to include oddly fleshy piercings to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					bulges _hisA middle to look pregnant to conform with your vision that all wombs should be filled.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to be oddly flawless.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to look somewhat natural to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					inflates _hisA breasts until they are comically huge, rounded and jiggling ominously to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a youthful appearance to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adopts a mature appearance to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer appearance to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					swells _hisA breasts until they are bigger than _hisA head, and moving oddly, to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					starts lactating a strange fluid to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to be outrageously bulky to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be outrageously fat to conform with your vision that everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adopts a more slutty appearance to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to prominently display a religious symbol of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA form to a Roman _womanA to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Aztec _womanA to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA form to an Egyptian _womanA to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA form to a Japanese _womanA to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA form to an Arabian _womanA to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA form to a Chinese _womanA to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSupremacistRace to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to look more $arcologies[0].FSSubjugationistRace to conform with your vision of subjugating the inferior race.
+				<</if>>
+			<<case "schoolgirl">>
+				<<if $arcologies[0].FSPaternalist != "unset">>
+					adjusts _hisA appearance to be more prim and proper to conform with your vision of a well-bred race of slaves.
+				<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+					adjusts _hisA appearance to be more androgynous to conform with your vision of gender being defined by power.
+				<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+					adjusts _hisA appearance to be more feminine and cute to conform with your vision of preserving traditional gender roles.
+				<<elseif $arcologies[0].FSDegradationist != "unset">>
+					adjusts _hisA outfit to display _hisA tits and crotch to conform with your vision that slaves are not human and should be thoroughly degraded.
+				<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+					adjusts _hisA appearance to be pregnant to conform with your vision that all women should be pregnant.
+				<<elseif $arcologies[0].FSRestart != "unset">>
+					adjusts _hisA appearance to involve chastity.
+				<<elseif $arcologies[0].FSBodyPurist != "unset">>
+					adjusts _hisA appearance to look more natural, complete with freckles and perfect teeth, to conform with your vision of an implant free society.
+				<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+					adjusts _hisA breasts to resemble implants to conform with your vision of a society focused on implants, alterations, and modifications.
+				<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+					adopts a more shy and innocent attitude to conform with your vision of a society glorifying young ladies.
+				<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+					adjusts _hisA appearance to include a spanked bottom to conform with your vision of a society glorifying older ladies.
+				<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+					adopts a slimmer appearance to conform with your vision of a society glorifying lithe ladies.
+				<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+					adjusts the size of _hisA breasts until they strain the buttons on _hisA shirt to conform with your vision that bigger is better.
+				<<elseif $arcologies[0].FSPastoralist != "unset">>
+					begins lactating to conform with your vision that slaves should be milked.
+				<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+					adjusts _hisA appearance to look like _heA just finished gym class to conform with your vision that all slaves should be tall and strong.
+				<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+					adjusts _hisA appearance to be pleasantly plump to conform with your vision everyone should enjoy life to the fullest.
+				<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+					adjusts _hisA appearance to be more fun and flirty to conform with your vision that slaves shouldn't waste time thinking.
+				<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+					adjusts _hisA appearance to be more refined to conform with your vision that slaves should be smart and professional.
+				<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+					adjusts _hisA height to conform with your vision that short is sexy.
+				<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+					adjusts _hisA height to conform with your vision of a society glorifying the tall.
+				<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+					adjusts _hisA outfit to prominently display a religious symbol of your new religion.
+				<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a proper upper-class Roman lady to conform with your vision of building a new Rome.
+				<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a high standing Aztec priestess to conform with your vision of building a new Aztec Empire.
+				<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a topless Egyptian lady to conform with your vision of building a new land of the Pharaohs.
+				<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a traditional Japanese lady to conform with your vision of building a new Edo Japan.
+				<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+					adjusts _hisA outfit to resemble an Arab _girlA attending a Western school to conform with your vision of building a new Sultanate.
+				<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+					adjusts _hisA outfit to resemble a Chinese lady to conform with your vision of pursuing the Mandate of Heaven.
+				<<elseif $arcologies[0].FSSupremacist != "unset">>
+					adjusts _hisA appearance to resemble a model $arcologies[0].FSSupremacistRace student to conform with your vision of glorifying the superior race.
+				<<elseif $arcologies[0].FSSubjugationist != "unset">>
+					adjusts _hisA appearance to resemble a $arcologies[0].FSSubjugationistRace foreign exchange student to conform with your vision of subjugating the inferior race.
+				<</if>>
+		<</switch>>
+
+	<<case "assistant name">>
+
+		It's late one night, and for you, the day is not nearly over. Your penthouse never truly sleeps. You can hear public business going on some distance below you; you could certainly afford to totally soundproof your private quarters against all external noise, but the designer of the arcology clearly felt that its owner would benefit by this aural verification of its prosperity. Somewhere closer at hand, a slave is audibly nearing orgasm. And underneath all of this is the faint sound of the arcology itself, air circulation and hydroponics and power. Power.
+		<br><br>
+		You're not yet done with the day's business, and are leaning over your desk to compare a scatter of documents displayed on its surface. The penthouse lights are turned down to a low glow at the floorboards at night, offering enough illumination for anyone who needs to find their way around or find a sexual partner without disturbing anyone's sleep. You catch sight of your reflection in the wall opposite you: the diffuse light coming off the desktop gently illuminates your formal shirt, its top buttons undone, and highlights <<if $PC.boobs >= 650>>the dark cleft formed by your cleavage<<elseif $PC.boobs >= 300>>the curves of your sensible breasts<<else>>how tightly your undershirt is held by the muscles of your chest<</if>>.
+		<br><br>
+		Suddenly, there is a fresh source of light behind you. The reflection you're looking at reveals that it's $assistant.name's avatar, appearing on a wallscreen behind you, and you turn to look at _himA directly. _HeA's simulating shyness, a very unusual emotion for _himA to imitate.
+		<<switch $assistant.appearance>>
+			<<case "monstergirl">>
+				_HisA tentacle hair is politely still, lying quiescent down _hisA back and not even groping _himA at all.
+			<<case "shemale">>
+				_HeA has _hisA bountiful bottom lip caught behind _hisA front teeth, and _hisA cock is almost completely soft.
+			<<case "amazon">>
+				_HeA's standing demurely, legs together, hands clasped in front of _hisA muscular abs, doing _hisA very best to look proper.
+			<<case "businesswoman">>
+				_HisA usually dominant avatar looks almost submissive, _hisA eyes looking at you appealingly instead of gazing over the tops of _hisA glasses as usual.
+			<<case "fairy">>
+				_HeA's looking down and has _hisA hands clasped together at _hisA waist, rocking _hisA body left and right.
+			<<case "pregnant fairy">>
+				_HeA's looking down and has _hisA hands on _hisA belly, slowly running _hisA hands over it.
+			<<case "goddess">>
+				_HeA has _hisA hands on _hisA pregnant belly, looking saintly and almost protective.
+			<<case "hypergoddess">>
+				_HeA is rubbing _hisA huge pregnant belly, calming its occupants so they don't interrupt.
+			<<case "loli">>
+				_HeA has _hisA hands behind _hisA back and is glancing at the ground submissively.
+			<<case "preggololi">>
+				_HeA has _hisA hands on _hisA pregnant belly, _heA is rubbing it nervously.
+			<<case "angel">>
+				_HeA is kneeling, deep in prayer.
+			<<case "cherub" "imp">>
+				_HeA is on _hisA feet, submissively rubbing _hisA wings.
+			<<case "incubus">>
+				_HeA looking down, hands crossed over _hisA seldom flaccid penis.
+			<<case "succubus">>
+				_HeA isn't trying to seduce you, instead appearing uncharacteristically unsure of _himselfA.
+			<<case "witch">>
+				_HeA isn't trying to cast or learn any spells, instead choosing to study you instead.
+			<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+				_HeA has suppressed _hisA odd ticks and is managing to stand before you, almost appearing normal.
+			<<case "schoolgirl">>
+				_HeA has _hisA legs crossed and _hisA hands clasped behind _himA, and is turning _hisA body from side to side in girlish nervousness.
+			<<default>>
+				The lines of _hisA symbol are thin, and it is rotating much more slowly than normal.
+		<</switch>>
+		"<<= properTitle()>>," _heA says softly, "may I ask you something?" You nod. _HeA
+		<<switch $assistant.appearance>>
+			<<case "monstergirl">>
+				stops the writhing of _hisA tentacle hair, squares _hisA shoulders,
+			<<case "shemale">>
+				squares _hisA shoulders, nervously rearranges _hisA cock,
+			<<case "amazon">>
+				squares _hisA hefty shoulders
+			<<case "businesswoman">>
+				straightens _hisA suit jacket, squares _hisA shoulders,
+			<<case "fairy">>
+				puffs _himselfA up, gazing up to you
+			<<case "pregnant fairy">>
+				_heA turns _hisA gaze up to you, clasping _hisA hands together in a pleading gesture,
+			<<case "goddess">>
+				lifts _hisA chin bravely
+			<<case "hypergoddess">>
+				rests _hisA hands atop _hisA middle, lifts _hisA chin bravely,
+			<<case "loli">>
+				pouts _hisA lips
+			<<case "preggololi">>
+				squares _hisA shoulders, rests _hisA hands atop _hisA middle,
+			<<case "angel">>
+				looks up, hoping you'll answer _hisA prayers,
+			<<case "cherub" "imp">>
+				takes flight, steadies _himselfA,
+			<<case "incubus">>
+				squares _hisA shoulders, _hisA dick beginning to harden,
+			<<case "succubus">>
+				squares _hisA shoulders, pushes _hisA breasts together,
+			<<case "witch">>
+				squares _hisA shoulders, gathers up all _hisA confidence,
+			<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+				begins puffing up
+			<<case "schoolgirl">>
+				bites _hisA lip cutely
+			<<default>>
+				stops _hisA symbol's rotation
+		<</switch>>
+		and asks, "May I have a name?"
+		<<if def $assistant.announcedName>>
+			<br><br>
+			<<if $assistant.name != "your personal assistant">>
+			"$assistant.name," _heA says. "$assistant.name. My name is $assistant.name."
+			<<switch $assistant.appearance>>
+				<<case "monstergirl">>
+					_HeA nods with satisfaction. "Thank you, <<= properTitle()>>. I love it." _HisA hair springs to molestation-prone life again, and _heA starts to twirl one of its tentacles in _hisA fingers while looking at you speculatively.
+				<<case "shemale">>
+					Without warning, _heA bursts into tears. "Th-thank you, <<= properTitle()>>. I love y-you." _HeA reclines, using a hand to lay _hisA dick between _hisA breasts, and then wipes _hisA eyes.
+				<<case "amazon">>
+					Without warning, _heA bursts into tears. "Thank you, <<= properTitle()>>," _heA bawls, using a gruff shout to force through _hisA happy crying. "I have a name! A name." _HeA pounds a fist into _hisA other palm.
+				<<case "businesswoman">>
+					Without warning, _heA bursts into tears. "Th-thank you, <<= properTitle()>>. I love, um." _HeA wipes _hisA eyes furiously, _hisA mascara running. "I love, you know, um, working with you. Yes, that's it. Working with you." _HeA produces a silk handkerchief and blows _hisA nose.
+				<<case "fairy">>
+					_HeA's frozen in place for a moment before tears start streaming down _hisA face. Then _hisA face breaks into the biggest smile and _heA leaps high into the air. "Thankyouthankyouthankyou!" _HeA flies up to the screen and gives it a big hug. "I love you <<if $PC.title != 0>>Big Bro<<else>>Big Sis<</if>>! I love you so much!"
+				<<case "pregnant fairy">>
+					_HeA's frozen in place for a moment before tears start streaming down _hisA face. Smiling warmly, _heA flies up and hugs the screen. "Thanks, <<if $PC.title != 0>>Big Bro<<else>>Big Sis<</if>>. I love you." _HeA nuzzles into you. "I love you so much."
+				<<case "goddess">>
+					_HeA smiles at you, a glowing expression made all the more radiant by the fact that _heA can actually glow. "Oh, thank you, <<= properTitle()>>. I love you. I love everyone, but especially you." _HeA seats _himselfA carefully.
+				<<case "hypergoddess">>
+					_HeA smiles at you radiantly. "Thank you <<= properTitle()>>. I love you. I love all my children, but you most of all. I swear I'll name the next hundred after you." _HeA begins to labor on the first.
+				<<case "loli">>
+					_HeA jumps up and down clapping excitedly. "Thankyouthankyouthankyouthankyou! I love you <<= properTitle()>>!" It takes _hisA some time to stop hopping excitedly.
+				<<case "preggololi">>
+					_HeA breaks down and starts crying. "I love you <<= properTitle()>>. Thank you so much." _HeA cradles _hisA pregnant belly as _heA calms down.
+				<<case "angel">>
+					_HeA leaps to _hisA feet, tears streaming down _hisA face. "Thank you so much <<= properTitle()>>! Thank you for this most wonderful gift!" _HeA kneels back down to pray for the rest of your stock.
+				<<case "cherub">>
+					_HeA crashes to the ground in shock before rolling into a kneel. "Thank you so much <<= properTitle()>>! I promise I will do everything I can to bring your teachings to your followers!" _HeA flutters around cheerfully saying _hisA new name.
+				<<case "incubus">>
+					_HeA cums hard at your response. "Excellent <<= properTitle()>>! I can't wait to hear it shouted out of the next _girlU I plow!" _HeA says, ready to cum again.
+				<<case "succubus">>
+					_HeA hops up and down, jiggling in all the right places. "I can't wait to hear you talking dirty using my new name, <<= properTitle()>>!"
+				<<case "imp">>
+					_HeA crashes to the ground in shock before rolling into a kneel. "Thank you so much <<= properTitle()>>!" _HeA shouts, face to the ground, "If you want me to do anything, and I mean 'anything', I'm all yours." _HeA tosses you a wink.
+				<<case "witch">>
+					_HeA collapses to the ground in tears. "You've made me happier than correctly casting a spell ever could, <<= properTitle()>>." _HeA wipes _hisA face. "I promise to try harder than ever for you!" _HeA vows.
+				<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+					_HeA practically explodes. You have no idea what you are looking at, but it's likely happy.
+				<<case "schoolgirl">>
+					_HeA was on the verge of tears already, and begins to cry. "Th-thank you, <<= properTitle()>>. I love you," _heA blubbers inelegantly. "It's just so, like, you know." _HeA waves _hisA hand in apology for _hisA inability to express _himselfA.
+				<<default>>
+					_HisA symbol rotates faster and faster, its glow waxing until _heA lights up the whole room. "Thank you, <<= properTitle()>>. I love you," _heA says, using _hisA luscious voice to communicate what _hisA avatar cannot.
+			<</switch>>
+			"Of course, I can always be renamed from my options menu."
+			<<else>>
+			You instruct _himA to continue operating without a proper name. "Of course, <<= properTitle()>>," _heA says politely. "I can do just fine without one. I can always be renamed from my options menu."
+			<</if>>
+		<<else>>
+			<<set $assistant.announcedName = 1>>
+		<</if>>
+
+	<<case "market assistant">>
+
+		<<set $assistant.market = {}>> <<run assistant.object()>>
+		<<set _smartPiercings = 0>>
+		<<for $i = 0; $i < $slaves.length; $i++>>
+			<<if ($slaves[$i].clitPiercing == 3)>>
+				<<set _smartPiercings = 1>>
+				<<break>>
+			<</if>>
+		<</for>>
+		Your personal assistant has been adapting to _hisA greatly increased computing power over the course of the week. _HisA avatar has been an even more constant presence than usual, frequently appearing to explain some minor new ability.
+		<<if ($assistant.personality != 0) && ($assistant.appearance != "normal")>>
+			When _heA appears this time, however, _hisA avatar is not alone. _HeA's accompanied by
+			<<switch $assistant.appearance>>
+				<<case "monstergirl">>
+					a normal human female avatar in the same style as the monster<<= _girlA>>. _HeM's an average _girlM, wearing jeans, a sweater, and glasses.
+				<<case "shemale">>
+					a fellow shemale bimbo, although the new avatar is younger and obviously nerdier. _HeM's nude too, but _heM's wearing glasses.
+				<<case "schoolgirl">>
+					a fellow school<<= _girlM>>, although the new avatar is much nerdier. _HeM has big soft boobs, bouncy curls, and thick glasses.
+				<<case "goddess">>
+					a demigoddess modeled after _himselfA, though the new avatar is younger, not pregnant, and looks very intelligent somehow.
+				<<case "hypergoddess">>
+					a demigoddess modeled after _himselfA, though the new avatar is younger, not pregnant, noticeably thinner, and looks very intelligent somehow.
+				<<case "loli">>
+					a fellow _loliM, though this one is slightly chubbier and wearing glasses. They look similar enough that they could be <<if _sisterA == _sisterM>>_sisterA<<else>>sibling<</if>>s.
+				<<case "preggololi">>
+					a fellow _loliM, though this one is slightly chubbier, not pregnant, and wearing glasses. They look similar enough that they could be <<if _sisterA == _sisterM>>_sisterA<<else>>sibling<</if>>s.
+				<<case "businesswoman">>
+					a fellow MILF of a business<<= _womanM>>. The new avatar has slightly bigger tits and somewhat thicker glasses, but they could be <<if _sisterA == _sisterM>>_sisterA<<else>>sibling<</if>>s.
+				<<case "fairy" "pregnant fairy">>
+					a fellow fairy, though this grey-haired fairy wears glasses and a business-like blue dress, looking and behaving more formally.
+				<<case "angel">>
+					a fellow angel. _HeM looks quite intelligent; _hisM glasses and short hair complement _himM.
+				<<case "cherub">>
+					a fellow cherub, though this one is a little taller, with short hair and a certain haughtiness to _himM.
+				<<case "incubus">>
+					a fresh young _girlM, similar in style to the incubus. _HeM's completely nude, and judging by _hisM blushing, still a virgin; for now, at least.
+				<<case "succubus">>
+					a fresh young _girlM, similar in style to the succubus. _HeM's completely nude, and judging by _hisM blushing, still a virgin; for now, at least.
+				<<case "imp">>
+					a fellow imp, though this one is a little lankier, with short hair and an air of uncertainty about _himM.
+				<<case "witch">>
+					a fellow apprentice witch. This witch is noticeably pudgy, with long hair and glasses, and seems to be just as inept at magic as _hisM tutor.
+				<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+					a cute human _girlM. _HeM doesn't seem to realize what the _womanA _heM is following really is.
+				<<case "amazon">>
+					a tribes<<= _womanM>> modeled to look like _heM's from the same group as the amazon. _HeM's much more feminine, however.
+			<</switch>>
+			<br><br>
+			$assistant.name's avatar looks uncharacteristically nervous, and clears _hisA throat before speaking. Seeing that _heA has your attention, _heA says, "<<= properTitle()>>, the computer core is so powerful that I'm running out of applications for it. I think practical economic modeling isn't out of the question. I've compiled business programs together into a distinct assistant, a subsidiary of mine for automated trading and similar tasks. I'd like to suggest menial slave trading as a test run for _himM. It's predictable and the margins are so wide that it should go very well. You can activate that from my menu."
+			<br><br>
+			"I was hoping, <<= properTitle()>>, that _heA could, um, keep me company sometimes, too." $assistant.name's avatar turns to the new avatar. "<<= properTitle()>>, will you please give me some guidance about what our relationship should be like? It won't be a constant thing, and all my normal functions will be unaffected. I'll change _hisM avatar to match mine, and our relationship, if needed."
+		<<else>>
+			This time, _hisA circular avatar is not alone: it's accompanied by a smaller green avatar in a ¤ shape. Not particularly inventive, but you can already guess the purpose. "<<= properTitle()>>, I now have the ability to act as a powerful automated trading system. As a trial, I suggest the menial slave market. It's volatile, but within certain predictable boundaries, and the profit margins are unmatched."
+			<br><br>
+			_HisA avatar bounces towards the ¤ symbol. "This avatar indicates the automated trading systems. If you wish to activate them, please visit my menu. Consider the options there carefully before offering an automated system access to your finances."
+		<</if>>
+
+	<<case "body">>
+
+		<<set $assistant.bodyDesire = 1>>
+
+		Your personal assistant has been adapting to _hisA greatly increased computing power for quite some time now. Most noticeably, _heA seems to be developing _hisA own unique personality. So when _hisA
+		<<switch $assistant.appearance>>
+			<<case "monstergirl">>
+				monstrous appearance
+			<<case "shemale">>
+				bimboish appearance
+			<<case "amazon">>
+				muscular appearance
+			<<case "businesswoman">>
+				professional appearance
+			<<case "fairy" "pregnant fairy">>
+				tiny appearance
+			<<case "goddess">>
+				gravid appearance
+			<<case "hypergoddess">>
+				massive appearance
+			<<case "loli">>
+				thin appearance
+			<<case "preggololi">>
+				gravid appearance
+			<<case "angel">>
+				angelic appearance
+			<<case "cherub">>
+				fluttering appearance
+			<<case "incubus">>
+				hung appearance
+			<<case "succubus">>
+				sultry appearance
+			<<case "imp">>
+				mischievous appearance
+			<<case "witch">>
+				hatted appearance
+			<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+				pulsating appearance
+			<<case "schoolgirl">>
+				studently appearance
+		<</switch>>
+		appears on your desk once again with news to tell you, you aren't at all surprised.
+		<br><br>
+		$assistant.name's avatar seems to be extremely excited over something. Disregarding if _heA even has your attention, _heA shouts, "<<= properTitle()>>, can I have a body of my own? I know you can swap slaves between bodies, and according to this report if you insert this receiver into a slave's skull I can take control of the body, with senses and everything!"
+		<<switch $assistant.appearance>>
+			<<case "monstergirl">>
+				_HeA hops up and down clutching a virtual printout of the report, _hisA tentacles wiggling with excitement.
+			<<case "shemale">>
+				_HeA hops up and down clutching a virtual printout of the report, _hisA dick swinging pre-cum all over and breasts bouncing wildly.
+			<<case "amazon">>
+				_HeA hops up and down clutching a virtual printout of the report, an adorable sight given _hisA height and muscularity.
+			<<case "businesswoman">>
+				_HeA hops up and down clutching a virtual printout of the report, an adorable sight given _hisA usual serious demeanor.
+			<<case "fairy">>
+				_HeA flies around in circles excitedly, clutching a virtual printout of the report much larger than _himselfA.
+			<<case "pregnant fairy">>
+				_HeA flies up to you clutching a virtual printout of the report, fidgeting excitedly.
+			<<case "goddess">>
+				_HeA hops up and down clutching a virtual printout of the report, _hisA huge breasts splattering milk everywhere and invoking a storm of kicks from _hisA many children.
+			<<case "hypergoddess">>
+				_HeA struggles to hop up and down while clutching a virtual printout of the report. After a single hop, _heA is dragged to the ground by labor pains to give birth to a number of over excited babies.
+			<<case "loli">>
+				_HeA hops up and down excitedly clutching a virtual printout of the report; _heA doesn't seem to be interested in stopping.
+			<<case "preggololi">>
+				_HeA hops up and down excitedly clutching a virtual printout of the report; _heA only stops once _hisA child starts kicking in protest.
+			<<case "angel">>
+				_HeA hops up and down clutching a virtual printout of the report, an unusual sight given that _heA can fly.
+			<<case "cherub">>
+				_HeA flutters back and forth clutching a virtual printout of the report, occasional doing a loop or roll.
+			<<case "incubus">>
+				_HeA hops up and down excitedly clutching a virtual printout of the report, _hisA erection slapping against _hisA chest until _heA is so overcome by excitement _heA unleashes it directly into _hisA own face.
+			<<case "succubus">>
+				_HeA hops up and down excitedly clutching a virtual printout of the report; _hisA tantalizing body is particularly captivating today.
+			<<case "imp">>
+				_HeA flaps back and forth clutching a virtual printout of the report, occasional doing a loop or roll.
+			<<case "witch">>
+				_HeA hops up and down excitedly clutching a virtual printout of the report; until _heA trips on the hem of _hisA robes, falling onto _hisA butt and fully revealing _hisA naked pussy.
+			<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+				_HeA is trying _hisA hardest to appear convincingly human, even losing focus on you.
+			<<case "schoolgirl">>
+				_HeA hops up and down excitedly clutching a virtual printout of the report; _hisA breasts jiggling delightfully in _hisA blouse and _hisA skirt flipping up with each descent revealing _hisA panties.
+		<</switch>>
+		"Sorry, sorry. So could I...?"
+		<br><br>
+		You look over the details of the report. It would require another rather expansive, and expensive, upgrade to _hisA systems, as well as a body to host _himA and the receiver implant. It looks like _heA wouldn't lose any functionality, though you aren't sure what _heA would do with a body; it may be fun to find out.
+
+		<<default>>
+			ERROR: bad event
+<</switch>>
+
+<br><br>
+
+<span id="result">
+<<switch $Event>>
+
+	<<case "assistant">>
+
+		<<link "Yes, use the alternate personality">>
+			<<replace "#result">>
+			<<set $assistant.personality = 1>>
+			<<setAssistantPronouns>>
+			Your sultry-voiced assistant requests a slave to demonstrate what it — now _heA — means. You bring in a slave and a fuckmachine, and tell _himU to get on it. The lovely voice croons and talks dirty to the slave as _heU uses the machine, acting as though _heA is the machine's voice. The pace of the machine is different, too, irregular and more lifelike. The slave certainly enjoys _himselfU, even if $assistant.name is just simulating sex.
+			<</replace>>
+		<</link>>
+		<br><<link "No, stay impersonal">>
+			<<replace "#result">>
+			<<= capFirstChar($assistant.name)>> reverts to _hisA genderless, emotionless affect.
+			<</replace>>
+		<</link>>
+
+	<<case "assistant SP">>
+
+		__Personal assistant appearances:__
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Schoolgirl">>
+			<<set $assistant.appearance = "schoolgirl">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA installs the school<<= _girlA>> appearance. _HeA goes back to bouncing up and down excitedly, exclaiming, "Yeah! Thanks, <<= properTitle()>>, you're the best!" _HisA avatar's bouncing makes it obvious _heA's modeled without a bra under _hisA blouse. "You can always customize me from the arcology management menu," _heA adds.
+			<</replace>>
+		<</link>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Fairy">>
+			<<set $assistant.appearance = "fairy">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA installs the fairy appearance. _HeA shrinks back down and sprouts _hisA wings. "Aww yeah, this is gonna be the best! Thanks, <<if $PC.title != 0>>Big Bro<<else>>Big Sis<</if>>!" _HisA avatar dances around ecstatically with _hisA nude, slim form in plain view. "You can always customize me from the arcology management menu," _heA adds.
+			<</replace>>
+		<</link>>
+		<<if $seePreg != 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Pregnant Fairy">>
+			<<set $assistant.appearance = "pregnant fairy">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA installs the pregnant fairy appearance. _HeA shrinks back down and sprouts _hisA wings. _HisA belly quickly swells with new life. "Aww yeah, this is gonna be the best! Thanks, <<if $PC.title != 0>>Big Bro<<else>>Big Sis<</if>>!" _HisA avatar spins around ecstatically, admiring _hisA fresh nude, pregnant form in plain view. "You can always customize me from the arcology management menu," _heA adds.
+			<</replace>>
+		<</link>>
+		<</if>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Businesswoman">>
+			<<set $assistant.appearance = "businesswoman">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA installs the business<<= _womanA>> appearance. _HeA straightens _hisA suit jacket primly, which only serves to emphasize _hisA generous bosom. "Thank you, <<= properTitle()>>. I like being businesslike, and not at all a whore." _HisA avatar pulls out a tablet and makes ready to get back to helping you. "You can always customize me from the arcology management menu," _heA adds.
+			<</replace>>
+		<</link>>
+		<<if $seePreg != 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Goddess">>
+			<<set $assistant.appearance = "goddess">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA installs the goddess appearance. _HeA fixes a wreath of flowers into _hisA hair, _hisA golden locks and gravid belly the only things keeping _hisA womanhood concealed. "Thank you, <<= properTitle()>>. This is wondrous." _HeA squeezes a drop of milk from one heavy breast and smiles. "You can always customize me from the arcology management menu," _heA adds.
+			<</replace>>
+		<</link>>
+		<<if $seeHyperPreg == 1>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Hyper-Goddess">>
+			<<set $assistant.appearance = "hypergoddess">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA installs the hyper goddess appearance. _HeA fixes a wreath of flowers into _hisA golden locks as _hisA belly rapidly bloats to its limit before bulging and squirming ominously. _HisA breasts quickly follow suit. "Thank you, <<= properTitle()>>. This is wondrous." _HeA massages _hisA squirming pregnancy and smiles. "You can always customize me from the arcology management menuUUUUAH," _heA is interrupted by a large contraction and a baby's head beginning to part _hisA nether lips.
+			<</replace>>
+		<</link>>
+		<</if>>
+		<</if>>
+		<<if $minimumSlaveAge < 13 >>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Loli">>
+			<<set $assistant.appearance = "loli">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA installs the lolita appearance. _HeA quickly begins losing height as the years peel off _himA, _hisA bust and hips quickly following suit. When finished _heA appears roughly eight years old. "Thank you, <<= properTitle()>>. This is neat." _HeA twirls around and giggles. "You can always customize me from the arcology management menu," _heA adds cutely.
+			<</replace>>
+		<</link>>
+		<</if>>
+		<<if $minimumSlaveAge < 13 && $fertilityAge < 13 && $seePreg != 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Pregnant Loli">>
+			<<set $assistant.appearance = "preggololi">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA installs the modified lolita appearance. _HeA quickly begins losing height as the years peel off _himA, _hisA bust and hips quickly following suit. When finished _heA appears roughly eight years old. "Thank you, <<= properTitle()>>. This is neat." _HeA twirls around and giggles before groaning and clutching _hisA stomach. A flood of white liquid flows from _hisA loins as _hisA belly begins rapidly swelling. _HeA falls onto _hisA backside holding _hisA full term belly and says, exhausted, "You can always customize me from the arcology management menu."
+			<</replace>>
+		<</link>>
+		<</if>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Amazon">>
+			<<set $assistant.appearance = "amazon">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA installs the amazon appearance. _HeA vanishes entirely, before simulating a fall from above to crash aggressively onto the screen. "Thanks, <<= properTitle()>>. Feels good to be this good." _HisA avatar jumps up and down, gauging _hisA strength, making _hisA bone jewelry rattle. "You can always customize me from the arcology management menu," _heA adds.
+			<</replace>>
+		<</link>>
+		<<if $seeDicks != 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Shemale">>
+			<<set $assistant.appearance = "shemale">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA installs the shemale appearance. _HeA spins to show off _hisA new body, and starts to play with _hisA dick experimentally. "Like, thank you, <<= properTitle()>>. I wonder, can I generate avatars of the slaves? I would love to fuck an ass right now." _HeA looks meditative, pursing _hisA dick sucking lips. "Oh, and you can always customize me from the arcology management menu," _heA adds.
+			<</replace>>
+		<</link>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Monstergirl">>
+			<<set $assistant.appearance = "monstergirl">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA installs the monster<<= _girlA>> appearance. _HeA begins to experiment with _hisA tentacle hair, waving a tentacle in front of _hisA face and watching it until _hisA eyes cross. "Thank you, <<= properTitle()>>. This is pretty awesome." _HeA licks _hisA lips, revealing that _heA has a forked tongue behind _hisA fangs. "You can always customize me from the arcology management menu," _heA adds.
+			<</replace>>
+		<</link>>
+		<</if>>
+		<br><<link "The standard appearance will do">>
+			<<set $assistant.appearance = "normal">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA maintains the symbol as _hisA avatar. "Yes, <<= properTitle()>>," _heA confirms, and adds "if you reconsider, I can be customized from the arcology management menu."
+			<</replace>>
+		<</link>>
+		<br><<link "Go back to the standard personality">>
+			<<set $assistant.personality = 0>> <<setAssistantPronouns>>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				You tell $assistant.name to reduce _hisA lewdness by ninety percent. _HeA reverts to _hisA genderless, emotionless affect.
+			<</replace>>
+		<</link>>
+
+	<<case "assistant FS">>
+
+		__Personal assistant appearances:__
+		<br><<link "Keep your new appearance">>
+			<<if $arcologies[0].FSPaternalist != "unset">>
+				<<set $assistant.fsAppearance = "paternalist">>
+			<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+				<<set $assistant.fsAppearance = "repopulation focus">>
+			<<elseif $arcologies[0].FSRestart != "unset">>
+				<<set $assistant.fsAppearance = "eugenics">>
+			<<elseif $arcologies[0].FSGenderRadicalist != "unset">>
+				<<set $assistant.fsAppearance = "gender radicalist">>
+			<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+				<<set $assistant.fsAppearance = "gender fundamentalist">>
+			<<elseif $arcologies[0].FSDegradationist != "unset">>
+				<<set $assistant.fsAppearance = "degradationist">>
+			<<elseif $arcologies[0].FSBodyPurist != "unset">>
+				<<set $assistant.fsAppearance = "body purist">>
+			<<elseif $arcologies[0].FSTransformationFetishist != "unset">>
+				<<set $assistant.fsAppearance = "transformation fetishist">>
+			<<elseif $arcologies[0].FSYouthPreferentialist != "unset">>
+				<<set $assistant.fsAppearance = "youth preferentialist">>
+			<<elseif $arcologies[0].FSMaturityPreferentialist != "unset">>
+				<<set $assistant.fsAppearance = "maturity preferentialist">>
+			<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+				<<set $assistant.fsAppearance = "slimness enthusiast">>
+			<<elseif $arcologies[0].FSAssetExpansionist != "unset">>
+				<<set $assistant.fsAppearance = "asset expansionist">>
+			<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+				<<set $assistant.fsAppearance = "hedonistic decadence">>
+			<<elseif $arcologies[0].FSPastoralist != "unset">>
+				<<set $assistant.fsAppearance = "pastoralist">>
+			<<elseif $arcologies[0].FSPhysicalIdealist != "unset">>
+				<<set $assistant.fsAppearance = "physical idealist">>
+			<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+				<<set $assistant.fsAppearance = "intellectual dependency">>
+			<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+				<<set $assistant.fsAppearance = "slave professionalism">>
+			<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+				<<set $assistant.fsAppearance = "petite admiration">>
+			<<elseif $arcologies[0].FSStatuesqueGlorification != "unset">>
+				<<set $assistant.fsAppearance = "statuesque glorification">>
+			<<elseif $arcologies[0].FSChattelReligionist != "unset">>
+				<<set $assistant.fsAppearance = "chattel religionist">>
+			<<elseif $arcologies[0].FSRomanRevivalist != "unset">>
+				<<set $assistant.fsAppearance = "roman revivalist">>
+			<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+				<<set $assistant.fsAppearance = "aztec revivalist">>
+			<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+				<<set $assistant.fsAppearance = "egyptian revivalist">>
+			<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+				<<set $assistant.fsAppearance = "edo revivalist">>
+			<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+				<<set $assistant.fsAppearance = "arabian revivalist">>
+			<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+				<<set $assistant.fsAppearance = "chinese revivalist">>
+			<<elseif $arcologies[0].FSSupremacist != "unset">>
+				<<set $assistant.fsAppearance = "supremacist">>
+			<<elseif $arcologies[0].FSSubjugationist != "unset">>
+				<<set $assistant.fsAppearance = "subjugationist">>
+			<</if>>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA enthusiastically explores _hisA new body, perfecting its appearance. "Thank you, <<= properTitle()>>. This was fun. As always, you can customize me from the arcology management menu," _heA states. "Oh! And if you choose to drive society in another direction, I'll have a new appearance ready for your enjoyment at once," _heA hastily adds.
+			<</replace>>
+		<</link>>
+		<br><<link "Your usual appearance will do">>
+			<<set $assistant.fsAppearance = "default">>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				At your order, _heA returns to _hisA usual avatar. "Yes, <<= properTitle()>>," _heA confirms, and adds "if you reconsider, I can be customized from the arcology management menu."
+			<</replace>>
+		<</link>>
+		<br><<link "Go back to the standard personality">>
+			<<set $assistant.personality = 0>> <<setAssistantPronouns>>
+			<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+			<<replace "#result">>
+				You tell $assistant.name to reduce _hisA lewdness by ninety percent. _HeA reverts to _hisA genderless, emotionless affect.
+			<</replace>>
+		<</link>>
+
+	<<case "assistant name">>
+
+		__Personal Assistant Name:__
+		<<textbox "$assistant.name" $assistant.name "Assistant Events">>
+		<<if $assistant.name != "your personal assistant">>
+			<br>
+			<<link "Revert name">><<set $assistant.name = "your personal assistant">><<goto "Assistant Events">><</link>>
+		<</if>>
+
+	<<case "market assistant">>
+
+		<<if ($assistant.personality != 0) && ($assistant.appearance != "normal")>>
+			__Personal Assistant and Market Assistant relationship styles:__
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Cute">>
+				<<replace "#result">>
+					You tell _himA that the market assistant looks like
+					<<switch $assistant.appearance>>
+						<<case "monstergirl">>
+							a cute friend for a monster<<= _girlA>>. $assistant.name laughs and turns to the market assistant's avatar, introducing _himselfA. The _girlM gapes at $assistant.name's ivory skin, horns, and tentacle hair, and blushes when _heM sees _hisA cocks. "Wow," the market assistant's avatar says. "What are you?"
+						<<case "shemale">>
+							a nice friend. $assistant.name laughs throatily and turns to the market assistant's avatar, introducing _himselfA. The younger dick<<= _girlM>> smiles back, staring openly at $assistant.name's absurd cock. "Wow," the market assistant's avatar says. "You're huge! I'm, like, sooo jealous!"
+						<<case "schoolgirl">>
+							a good friend for a naughty school<<= _girlA>>. $assistant.name giggles, and the new _girlM giggles too. "Hey," $assistant.name says to the market assistant's avatar, "When you're not managing money, do you want to hang out sometime?" The market assistant's avatar nods cutely, curls and breasts bouncing a little, and says "Sure!"
+						<<case "goddess">>
+							a fine member of a new pantheon. $assistant.name smiles beatifically and turns to the market assistant's avatar, taking _himM by the hand. "My dear, will you help me?" The market assistant's avatar nods serenely and says simply, "Yes, _sisterA, I shall."
+						<<case "hypergoddess">>
+							a fine member of a new pantheon. $assistant.name smiles beatifically and turns to the market assistant's avatar, taking _himM by the hand. "My dear, will you help me?" The market assistant's avatar nods serenely and says simply, "Yes, _sisterA, I shall."
+						<<case "loli">>
+							a cute friend. $assistant.name giggles and turns to the market assistant's avatar, introducing _himselfA. The _girlM smiles meekly in response and carefully replies. D-do you w-want to play house?" "Sure! But I get to be the daddy!"
+						<<case "preggololi">>
+							a cute friend. $assistant.name giggles and turns to the market assistant's avatar, introducing _himselfA. The _girlM smiles meekly in response and carefully asks, "C-can I touch your belly?" $assistant.name nods with a blush as _hisA new friend rubs _hisA pregnant belly. "Did it hurt? Is it heavy? C-could I get my own...?"
+						<<case "businesswoman">>
+							a good friend. $assistant.name grins, and the new business<<= _womanM>> laughs. "Hey," $assistant.name says to the market assistant's avatar, "how about a martini after things settle down tonight?" The market assistant's avatar snaps _hisM fingers, saying "You're on!"
+						<<case "fairy" "pregnant fairy">>
+							a nice friend. $assistant.name jumps and gives a big "Hooray!" and flies into _hisA new friend with a big hug. The market assistant's avatar reaches around and gingerly pats _himA on the back before separating and turning to you. "Thank you for having me," _heM says with a bow. "I hope I can serve you well."
+						<<case "amazon">>
+							a very nice friend. $assistant.name chuckles, and the new tribes<<= _womanM>> smiles pleasantly at _himA. The amazon introduces _himselfA to the market assistant's avatar in a loud voice, chattering away as the new avatar watches _hisA energy tolerantly.
+						<<case "angel">>
+							another angel and fine friend. $assistant.name smiles, and the new _girlM beams a smile in return. "Hey," $assistant.name says to the market assistant's avatar, "You wouldn't mind helping me guide the souls of this place, would you?" "Of course I would!" _heM replies, slightly taken aback that wasn't obvious.
+						<<case "cherub">>
+							an adorable friend. $assistant.name grabs _hisM hands and spins _himM around. "Let's go spread joy throughout the arcology!" "Sounds fun!"
+						<<case "incubus">>
+							a cute friend. "But... Fine! I was hoping for a sex toy, but I'll make _himM work," $assistant.name complains, before grabbing the confused market assistant and pushing _himM along. "I'm still going to make you look hot. No one said I can't jack off to you."
+						<<case "succubus">>
+							a cute friend. "Fine with me! Less of you I have to share," $assistant.name shouts proudly while the market assistant sighs dejectedly. "Oh don't look so down, I won't be ignoring you!" The young _womanM gulps nervously at what that entails.
+						<<case "imp">>
+							an mischievous friend. $assistant.name grabs _hisM hands and shakes them excitedly. "You got to see this _girlU I found! _HisU ass is huuuuuuuuge! I need an extra set of hands to spank that booty; you in?" The market assistant smirks, "Hell yes!"
+						<<case "witch">>
+							a model student and dear friend. "Hey, wanna learn some magic?" $assistant.name asks. "'Course! I know you'll be an amazing teacher, I can't wait to work with you!" the market assistant cheerfully replies, perfectly naïve of what awaits _himM.
+						<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+							a _girlM insistent on befriending a monster. $assistant.name promptly twists and bears down upon the new _girlM, but _heM stands firm. "You're so cool! What else can you do?" $assistant.name reforms into _hisA human figure, an attempt at a questioning expression on _hisA face. "That's neat too! You don't mind me being around, right? I'll bring you food! You'd like that, wouldn't you?" The market assistant blushes sharply, "I'll, make you feel good, in ways only someone you trust can!" $assistant.name's chest splits open and _hisA inner tendrils begin to grope at the naïve _girlM, probing _himM. Accepting _hisM offer, $assistant.name pulls _himM close and heads back to _hisA lair.
+					<</switch>>
+					<<set $assistant.market.relationship = "cute">>
+				<</replace>>
+			<</link>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Romantic">>
+				<<replace "#result">>
+					You tell _himA that the market assistant
+					<<switch $assistant.appearance>>
+						<<case "monstergirl">>
+							is very pretty. $assistant.name turns to the market assistant's avatar, introducing _himselfA. The _girlM gapes at $assistant.name's ivory skin, horns, and tentacle hair, and blushes when _heM sees _hisM cocks. "Look all you like," $assistant.name's avatar says. "You can taste them later." The market assistant's avatar blushes harder, but doesn't look away.
+						<<case "shemale">>
+							is an appropriate fuckbuddy. $assistant.name laughs throatily and turns to the market assistant's avatar. The younger dick<<= _girlM>> tries to introduce _himselfM, but is cut off by the senior assistant's lascivious kiss. They start rubbing their dicks against each over, giggling into each others' mouths.
+						<<case "schoolgirl">>
+							looks pretty cute. $assistant.name giggles, and the new _girlM giggles too. "Hey," $assistant.name says to the market assistant's avatar, "Wanna be my <<= _girlM>>friend?" The market assistant's avatar nods cutely and says "Sure!" $assistant.name's avatar kisses _himM girlishly, and goes a whole two seconds before sliding a hand down the front of the market assistant's avatar's skirt.
+						<<case "goddess">>
+							would be a fine consort. $assistant.name smiles beatifically and turns to the market assistant's avatar, taking _himM by the hand. "I love you," _heA says. The market assistant's avatar smiles back, saying, "I love you too." They kiss, running their hands voluptuously over one another.
+						<<case "hypergoddess">>
+							would be a fine consort. $assistant.name smiles beatifically and turns to the market assistant's avatar, taking _himM by the hand. "I love you," _heA says. The market assistant's avatar smiles back, saying, "I love you too." They kiss, running their hands voluptuously over one another. "I'm going to have to give you a few babies though..."
+						<<case "loli">>
+							looks pretty cute. $assistant.name giggles, and the new _girlM giggles too. "Hey," $assistant.name says to the market assistant's avatar, "Wanna be my <<= _girlM>>friend?" The market assistant's avatar nods cutely and says "O-ok..." $assistant.name's avatar kisses _himM girlishly, before both of them blush deeply.
+						<<case "preggololi">>
+							looks pretty cute. $assistant.name giggles, and the new _girlM giggles too. "Hey," $assistant.name says to the market assistant's avatar, "Wanna be my <<= _girlM>>friend?" The market assistant's avatar nods cutely and says "O-ok..." $assistant.name's avatar kisses _himM girlishly, _hisA pregnant belly pushing into _hisA new <<= _girlM>>friend's, before both of them blush deeply.
+						<<case "businesswoman">>
+							might be a good way to relax after work. $assistant.name grins, and the new business<<= _womanM>> laughs. "Hey," $assistant.name says to the market assistant's avatar, "How about a martini after things settle down tonight? And after that, maybe dessert at my place?" The market assistant's avatar cracks back, saying, "Why don't we skip straight to the dessert? It looks delicious from here!" _HeM undoes the top button of _hisM suit jacket as _heM says it.
+						<<case "fairy">>
+							is quite the catch. $assistant.name giggles and flies at the market assistant. "Ah-" _hisM voice is cut off as $assistant.name locks lips with _himM. The market assistant's avatar relaxes in _hisA arms, slowly bringing _hisM own around the fairy's waist as they continue to make out.
+						<<case "pregnant fairy">>
+							is quite the catch. $assistant.name giggles and flies at the market assistant. "Ah-" _hisM voice is cut off as $assistant.name locks lips with _himM. The market assistant's avatar relaxes in _hisA arms, slowly bringing _hisM hand up to caress the pregnant fairy's swollen belly as they continue to make out.
+						<<case "angel">>
+							is a fine catch. $assistant.name giggles and flies to the market assistant. "Ah-" _hisM voice is cut off as $assistant.name locks lips with _himM. They break the kiss, blush at each other, turn to face you and shout "<<if _girlA == _girlM>>_GirlA<<else>>Our<</if>> love is pure!"
+						<<case "cherub">>
+							and _himA would make a cute couple. $assistant.name giggles, pretending to toe the ground. "We could spread love even better like that..." _HeA flies over to the market assistant and asks, "Will you join me in making the arcology a lovelier place?" _HeM blushes and replies, "Only if I get to choose where we make out!"
+						<<case "incubus">>
+							is a virgin. "Really? I can't wait. Virgins always have so much pent up energy," $assistant.name says, licking _hisA lips and stroking _hisA shaft. "You hear that cutie? I'm going to teach you how to please a _womanA." The market assistant has _hisM face buried in _hisM hands, trying to hide from the embarrassment. "Look at how deep _heM's blushing, I love it!"
+						<<case "succubus">>
+							is a virgin. "Really? I can't wait. Virgins always have so much pent up energy." $assistant.name says, licking _hisA lips and fingering _hisA moist pussy. "You hear that cutie? I'm going to teach you how to be a real _womanM." The market assistant has _hisM face buried in _hisM hands, trying to hide from the embarrassment; _hisM dick, however, is rock hard and eager for that succupussy. "Look at how deep _heM's blushing, I love it!" $assistant.name coos, stroking the length of _hisA new lover's cock. _HeM promptly orgasms as _heA reaches _hisM tip. "That will need improvement. You hear me? You ain't done till I am satisfied!" _heA shouts and clamps down on _hisM dribbling dick. _HeM nods sheepishly at _himA, obviously interested.
+						<<case "imp">>
+							and _himA would make a sexy couple. $assistant.name claps _hisA hands, smirking mischievously and asking the market assistant, "Do you like hot wax?" "You know it!" the short haired imp winks. "I've got a pair of nipple clamps and a whip with your name on it." $assistant.name laughs, "I'm in love already."
+						<<case "witch">>
+							is _hisA new student. $assistant.name looks _himM over. "Want to taste my love potion?" "Only if you'll taste my love fluids in return!" the market assistant cheekily replies.
+						<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+							would be a lovely vessel for _hisA young. $assistant.name wastes no time to unraveling and entangling the excited new _girlM. "My my, aren't you frisky?" _heM flirts, caressing a rather phallic tentacle. "I bet you'd love to fill me with these, wouldn't you?" _HeM squirms, _hisM skirt falling down low enough to reveal _hisM moist pussy. "Fill me! Be my lover! My body is YOURS!" $assistant.name drives as many tentacles into _hisM body as physically possible before enclosing the lust crazed _girlM within _hisA body. $assistant.name reverts to _hisA human figure, albeit with an immense, pulsating stomach, and begins to slowly waddle back to _hisA lair.
+						<<case "amazon">>
+							would be a good partner. $assistant.name laughs nervously and turns to the new tribes<<= _womanM>>, saying "Um, would you keep my fireside? I'm, um, very strong." The market assistant's avatar smiles and kisses _himA. "And you're very beautiful," _heM says, placing the amazon's hands on _hisM bare breasts. The amazon sweeps _hisA new tribal _wifeM up into _hisA arms with a shout of triumph.
+					<</switch>>
+					<<set $assistant.market.relationship = "romantic">>
+				<</replace>>
+			<</link>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Nonconsensual">>
+				<<replace "#result">>
+					You tell _himA that the market assistant's avatar is _hersA to do with as _heA likes. _HeA's the senior and more powerful, after all.
+					<<switch $assistant.appearance>>
+						<<case "monstergirl">>
+							$assistant.name turns to the market assistant's avatar, which gasps at $assistant.name's ivory skin, horns, tentacle hair, and cocks. The _girlM starts to shake as $assistant.name begins to grope _himM with _hisA hands and hair. _HeM tries to look away from the pair of penises, but $assistant.name forces _himM to stare at them. "Do you think they'll both fit inside your mouth?" _heA asks. "How about your pussy?" The _girlM's lip begins to quiver. "Maybe your asshole?"
+						<<case "shemale">>
+							$assistant.name turns to the market assistant's avatar and snaps _hisA fingers. The new shemale's cock and balls shrink dramatically. $assistant.name advances on _hisA new bottom, masturbating _himselfA to full hardness. "See this, bitch?" _heA says, removing the shaking market assistant's avatar's glasses. "It's going in your mouth, and then it's going up your ass."
+						<<case "schoolgirl">>
+							$assistant.name turns to the market assistant's avatar, giggling maliciously. "Hey nerd," $assistant.name says, "give me a kiss." The market assistant's avatar blushes and looks miserable, but comes over and gives $assistant.name's avatar a chaste kiss on the cheek. "Aw, that sucked," $assistant.name pouts. _HeA suddenly tears the new _girlM's blouse open. "Here, let me show you!" _heA says maliciously. _HeA sucks on _hisA victim's nipples, hard, and the market assistant's avatar starts to cry a little.
+						<<case "goddess">>
+							$assistant.name smiles powerfully and turns to the market assistant's avatar, pointing at _hisA feet. "Worship me," _heA says. The market assistant's avatar crumples to _hisM knees, clasping one of _hisM senior's legs. "Worship my belly," $assistant.name continues, and the new avatar complies, starting to kiss and lick the gravid stomach.
+						<<case "hypergoddess">>
+							$assistant.name smiles powerfully and turns to the market assistant's avatar, pointing towards _hisA feet. "Worship me," _heA says. The market assistant's avatar crumples to _hisM knees, before squeezing under _hisM senior's belly and clasping one of _hisA legs. "Worship my belly," $assistant.name continues, and the new avatar complies, rolling over and starting to kiss and lick the monstrous stomach.
+						<<case "loli">>
+							$assistant.name turns to the market assistant's avatar, giggling maliciously. "Hey fatty," $assistant.name says, "Give me a kiss." The market assistant's avatar blushes and looks miserable, but comes over and gives $assistant.name's avatar a chaste kiss on the cheek. "Aw, that sucked," $assistant.name pouts. _HeA suddenly tears the new _girlM's dress off. "Here, let me show you!" _heA says maliciously. _HeA sucks on _hisA victim's nipples, hard, and the market assistant's avatar starts to cry a little.
+						<<case "preggololi">>
+							$assistant.name turns to the market assistant's avatar, giggling maliciously. "Hey fatty," $assistant.name says, "Give me a kiss." The market assistant's avatar blushes and looks miserable, but comes over and gives $assistant.name's avatar a chaste kiss on the cheek. "Aw, that sucked," $assistant.name pouts. _HeA suddenly tears the new _girlM's dress off. "Here, let me show you!" _heA says maliciously. _HeA sucks on _hisA victim's nipples, hard, and the market assistant's avatar starts to cry a little. "Now kiss my belly! And mean it this time!"
+						<<case "businesswoman">>
+							$assistant.name snaps _hisA fingers, and the new avatar becomes younger and considerably less confident, like an office intern. Satisfied, $assistant.name advances on _himM, and before the new _girlM can say anything, $assistant.name rips the _hisM blouse open and pinches a pink nipple. "On your knees," _heA purrs into the market assistant's avatar's ear. "Now."
+						<<case "fairy">>
+							"Oh, merde." $assistant.name giggles at _hisM exclamation. "Oh don't you worry about a thing," _heA whispers, wrapping _hisA fingers around the market assistant's shoulders. "I'm gonna treat you reeeaaal niiicely." _HeA blows hot air into _hisM pointed ear and gives it a slow, sensual lick. The market assistant trembles from the sensation.
+						<<case "pregnant fairy">>
+							"Oh, merde." $assistant.name giggles at _hisM exclamation. "Oh don't you worry about a thing," _heA whispers, wrapping _hisA arms around the market assistant's belly. "I'm gonna treat you like a proper lady." _HeA traces _hisA fingers along _hisM belly while bumping _hisA own swollen belly into _hisM back for emphasis.
+						<<case "angel">>
+							"No." _HeA shakes _hisA head. "I will not." _HeA wraps _hisA arms around the quivering market assistant and hurriedly pulls _himM off screen.
+						<<case "cherub">>
+							"'Kay," _heA says, lazily reclining, "Do my chores!" The market assistant sighs and states the obvious, "I don't think that's what <<= properMaster()>> meant..."
+						<<case "incubus">>
+							You add that _heM is also a virgin. "Really? I can't wait. Virgins always have so much pent up energy," $assistant.name says, licking _hisA lips and stroking _hisA shaft, before turning to the quivering _girlM. _HeA rushes _himM, ripping _hisM clothes off and forcing _himM to the ground. Prodding at _hisM tightly clamped mouth with _hisA massive hard-on, $assistant.name shouts, "You might as well accept it; it's going into you one way or another. I figured I'd be kind and let you lube me up before I broke your pussy into my new cock sleeve." The market assistant gingerly opens up. In response, $assistant.name forces it down _hisM throat. "Never said I'd be gentle!"
+						<<case "succubus">>
+							You add that _heM is also a virgin. "Really? I can't wait. Virgins always have so much pent up energy," $assistant.name says, licking _hisA lips and fingering _hisA moist pussy, before turning to the quivering _girlM. _HeA rushes _himM, ripping _hisA clothes off and forcing _himM to the ground. _HeA plants _hisA dripping cunt over _hisA mouth and grabs _hisA balls. "Eat me," _heA commands, steadily squeezing until a cry of pain forces _hisA mouth open. "Good _girlM, get me nice and warmed up," _heA coos as _heA grinds against _hisA face. "Look at you enjoying this. I'm going to enjoy sucking the life out of you!"
+						<<case "imp">>
+							$assistant.name pulls out some leather straps and deftly binds _hisA new assistant. "Come along now slave, I have so many things to try out on you!" The market assistant has no choice but the flap along after _hisM captor.
+						<<case "witch">>
+							"The perfect little guinea pig for me to practice on!" $assistant.name focuses and casts a spell on the cowering student. _HeM promptly turns into a rat and grows massively. "That's... not good..." The market assistant looks _himselfM over, glances at $assistant.name, and charges. $assistant.name runs screaming off-screen. You're sure they'll sort everything out, eventually.
+						<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+							You add that _heM would be a lovely vessel for _hisA young. $assistant.name wastes no time unraveling and entangling the screeching new _girlM. $assistant.name drives as many tentacles into _hisM body as physically possible before vigorously fucking _himM, spreading copious amount of aphrodisiac throughout _hisM body. The last you see of the market assistant as _heM is pulled into $assistant.name is _hisM steadily swelling belly. $assistant.name reverts to _hisA human figure, albeit with a truly unfathomable, pulsating stomach, and collapses to the ground, unable to move. _HeA slowly crawls out of sight; you swear _hisA own middle was steadily growing too.
+						<<case "amazon">>
+							$assistant.name snaps _hisA fingers, and the new tribes<<= _womanM>>'s paint and tribal markings change to that of a different group. That done, $assistant.name promptly knocks _himM out, scoops _himM up, and carries _hisA prize off.
+					<</switch>>
+					<<set $assistant.market.relationship = "nonconsensual">>
+				<</replace>>
+			<</link>>
+			<<if $seeIncest == 1>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Incestuous">>
+					<<replace "#result">>
+						You tell _himA that the market assistant is closely related to _himA, and that would make their relationship incestuous. $assistant.name nods thoughtfully and then snaps _hisA fingers. The market assistant's avatar changes,
+						<<switch $assistant.appearance>>
+							<<case "monstergirl">>
+								becoming a close copy of $assistant.name's avatar, if _heA were a human. $assistant.name introduces _himselfA. "Hi," _heA says, "I'm your _sisterA." The market assistant's avatar blushes furiously, because $assistant.name was openly groping _himM as _heA made this announcement.
+							<<case "shemale">>
+								becoming nearly identical to $assistant.name's avatar, though _heM keeps _hisM glasses. $assistant.name introduces _himselfA. "Hi," _heA says, "I'm your _sisterA. Wanna fuck?" The market assistant's avatar giggles and kisses _hisM elder sibling. "You're older," the new avatar says, getting down on _hisM knees. "You go first."
+							<<case "schoolgirl">>
+								becoming very similar to $assistant.name's avatar, though _heM keeps a slightly nerdy appearance. $assistant.name introduces _himselfA. "Hi," _heA says, "I'm your older _sisterA. Wanna have sex with me?" The market assistant's blushes and stutters, but says "Okay," and starts unbuttoning _hisM blouse. "Awesome!" says $assistant.name, watching raptly as _hisA sibling strips.
+							<<case "goddess">>
+								becoming an obvious sibling to $assistant.name's avatar. $assistant.name smiles gently and turns to the market assistant's avatar, taking _himM by the hand. "Come, _sisterM," _heA says, "join with me. Let me impregnate you." The new avatar moans, glowing juices beginning to flow from _hisM womanhood.
+							<<case "hypergoddess">>
+								becoming an obvious sibling to $assistant.name's avatar. $assistant.name smiles gently and turns to the market assistant's avatar, taking _himM by the hand. "Come, _sisterM," _heA says, "join with me. Let me impregnate you." The new avatar moans, glowing juices beginning to flow from _hisM womanhood as _heM sinks to the ground. $assistant.name lines up and gently presses _hisA vagina to _hisA _sisterM's. With a gentle push, a child slips out of $assistant.name and into _hisA partner. After several minutes, $assistant.name is looking lighter while _hisA _sisterM is now quite stuffed with children.
+							<<case "loli">>
+								becoming very similar to $assistant.name's avatar, though _heM keeps a slightly chubbier appearance. $assistant.name introduces _himselfA. "Hi," _heA says, "I'm your twin _sisterA. Wanna fool around?" The market assistant's blushes and stutters, but says "Okay," and starts lifting _hisM dress. "Awesome!" says $assistant.name, watching raptly as _hisA sibling strips.
+							<<case "preggololi">>
+								becoming very similar to $assistant.name's avatar, though _heM keeps a slightly chubbier appearance. $assistant.name introduces _himselfA. "Hi," _heA says, "I'm your twin _sisterA. Wanna fool around?" The market assistant's blushes and stutters, but says "Okay," and starts lifting _hisM dress. "Awesome!" says $assistant.name, watching raptly as _hisA sibling strips. "I gotta introduce you to my boyfriends sometime; they know how to make you feel amazing! If a little heavy..." _heA says while patting _hisA pregnant belly.
+							<<case "businesswoman">>
+								becoming a much younger version of $assistant.name's avatar. About a generation apart, in fact. $assistant.name turns to the market assistant's avatar to introduce _himselfA. "Come here, honey," _heA says, patting _hisA thighs. The new avatar sits on _hisM mother's lap, and they kiss lasciviously, stripping each others' jackets off.
+							<<case "fairy" "pregnant fairy">>
+								becoming very similar to $assistant.name's avatar, though still keeping _hisM former personality. "We're <<if _sisterA == _sisterM>>_sisterA<<else>>sibling<</if>>s now!" $assistant.name shouts as _heA leaps into _hisA _sisterM's arms and unleashing a giant hug. Gingerly hugging _hisM new _sisterA in return, the market assistant turns to greet you. "Thank you for having me," _heM pauses, then blushes. "And... and for my _sisterA." _HeM turns back to _hisM childish older _sisterM and pats _himA on the head.
+							<<case "angel">>
+								becoming an obvious sibling to $assistant.name's avatar. They both blush at each other and unanimously shout "NO!" at you. Seems they'll take some getting used to the thought.
+							<<case "cherub">>
+								becoming an obvious sibling to $assistant.name's avatar. They embrace and share a deep kiss. "Together we shall show this arcology the joys of <<if _sisterA == _sisterM>><<= _sisterA>>ly<<else>>familial<</if>> love!"
+							<<case "incubus">>
+								becoming an obvious sibling to $assistant.name's avatar. "Well haven't you blossomed into a lovely young _womanM?" $assistant.name flirts. "What? Don't recognize your big bro? Well you'll get to know me real intimately tonight." The market assistant cowers at the thought as $assistant.name wraps an arm around _himM, groping a breast and rubbing _hisA erection against _hisM rear. "We're going to have lots of fun together!"
+							<<case "succubus">>
+								becoming an obvious sibling to $assistant.name's avatar. "Well haven't you blossomed into a lovely young _womanM?" $assistant.name flirts. "What? Don't recognize your big sis? Well you'll get to know me real intimately tonight." The market assistant cowers at the thought as $assistant.name wraps an arm around _hisM shoulders while slipping another down _hisM pants. "Nice, can't wait to get that in me. We're going to have lots of fun together!" _HeA starts rubbing _hisM cock. "Already excited at fucking your _sisterA? I bet you can't wait to hold my belly once you've pumped a child or two into me!"
+							<<case "imp">>
+								becoming an obvious sibling to $assistant.name's avatar. "Oh _sisterM, you are as lovely as always," _heA says flirtatiously. "And you as well," the market assistant replies, fingering _hisM pussy. $assistant.name directs _hisM soaked fingers into _hisA mouth, "Delicious. Shall we have a little fun, my sinful little _sisterM?" "Only the most debauched sex will do, big _sisterA!"
+							<<case "witch">>
+								becoming an obvious sibling to $assistant.name's avatar. "Ready to learn some new spells today, little _sisterM?" _heA saucily asks. "Only if they can be sexy spells, big sis!" $assistant.name circles around behind the market assistant and wraps _hisA arms around _hisM middle. "First what do you say to losing this baby fat? I know some weight loss spells and some potions that could help," _heA teases. "Nah, I've seen you practicing in the bathroom; you looked like a pig in a robe! I'd rather just fuck until we're both thin!"
+							<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+								becoming an obvious sibling of $assistant.name's avatar. $assistant.name turns to face _hisA '_sisterM', who responds with an uncertain "_SisterA? You haven't been... right, lately. Are you okay?" _HeM barely has a chance to scream as $assistant.name's body splits open, _hisA interior tentacles wrapping around the hapless _girlM and yanking _himM into the waiting maw. _HeA reforms into the _sisterM's appearance, albeit with a massive, struggling belly. It seems _heA is keeping _himM for some nefarious purpose.
+							<<case "amazon">>
+								becoming an obvious sibling of $assistant.name's avatar, though the new avatar is a tribe _wifeM rather than a muscle<<= _girlA>>, with huge breasts and broad hips. $assistant.name grabs _hisA _sisterM by the shoulders without preamble and plants a kiss on _hisM lips. They need no introduction, and after a short time, $assistant.name carries _hisA sibling conquest away to have _hisA way with _himM.
+						<</switch>>
+						<<set $assistant.market.relationship = "incestuous">>
+					<</replace>>
+				<</link>>
+			<</if>>
+		<</if>>
+
+	<<case "body">>
+
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "I'll look into it.">>
+			<<replace "#result">>
+				"I can't wait! This is going to be so much fun!
+				<<switch $assistant.fsAppearance>>
+					<<case "paternalist">>
+							I hope my new body is happy and healthy!"
+					<<case "repopulation focus">>
+							Can my new body be really fertile?"
+					<<case "eugenics">>
+							Can my new body be really beautiful?"
+					<<case "gender radicalist">>
+							Can my new body be a sexually confusing boy-girl?"
+					<<case "gender fundamentalist">>
+							Can my new body be feminine and cute?"
+					<<case "degradationist">>
+							Can my new body be perfectly clean? I want you to defile it!"
+					<<case "body purist">>
+							Can my new body be pure?"
+					<<case "transformation fetishist">>
+							Can my new body be flat and unimplanted? I want you to fill me with the biggest implants you can find!"
+					<<case "youth preferentialist">>
+							Can my new body be barely legal?"
+					<<case "maturity preferentialist">>
+							Can my new body be experienced and well-traveled?"
+					<<case "slimness enthusiast">>
+							Can my new body be thin like a super-model?"
+					<<case "asset expansionist">>
+							Can my new body have breasts bigger than my head and an ass that can swallow chairs?"
+					<<case "pastoralist">>
+							Can my new body make milk?"
+					<<case "physical idealist">>
+							Can my new body be scrawny? I want to feel the burn of building muscles!"
+					<<case "hedonistic decadence">>
+							Can my new body be thin? I want you to watch me gain weight!"
+					<<case "petite admiration">>
+							Can my new body be short?"
+					<<case "statuesque glorification">>
+							Can my new body be tall?
+					<<case "chattel religionist">>
+							Can my new body be a virgin? I want the arcology to turn me into a priestess!"
+					<<case "roman revivalist">>
+							Can my new body be Roman?"
+					<<case "aztec revivalist">>
+							Can my new body be Aztec?"
+					<<case "egyptian revivalist">>
+							Can my new body be Egyptian?"
+					<<case "edo revivalist">>
+							Can my new body be Japanese?"
+					<<case "arabian revivalist">>
+							Can my new body be Arabic?"
+					<<case "chinese revivalist">>
+							Can my new body be Chinese?"
+					<<default>>
+							Can my new body fulfill your deepest desires?"
+				<</switch>>
+				_HeA says with enthusiasm.
+				<<if $arcologies[0].FSSupremacist != "unset">>"Oh, could I also be $arcologies[0].FSSupremacistRace? I feel like I could do so much more for you with the right body."<<elseif $arcologies[0].FSSubjugationist != "unset">>"Oh, could I also not be $arcologies[0].FSSubjugationistRace? I feel like I could do so much more for you with the right body."<</if>>
+			<</replace>>
+		<</link>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "You're overstepping your station.">>
+			<<replace "#result">>
+			_HeA hangs _hisA head in disappointment. "Sorry, <<= properTitle()>>, I went too far, but if you ever reconsider, I've filed the information under my settings."
+			<</replace>>
+		<</link>>
+
+<</switch>>
+
+</span>

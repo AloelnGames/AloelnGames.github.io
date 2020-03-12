@@ -1,0 +1,59 @@
+:: Walk Past List [nobr]
+
+<<set $nextButton = "Back to Main", $nextLink = "Main", _target = $target>>
+//For testing purposes only, this page lists or can produce all of the "walk past" scenes.//<br>
+
+<br>
+//<span id="walk">No scene has been selected yet.</span>//
+<br>
+
+<h2>Choose target</h2>
+Target: <span id="target">$target</span><br>
+<<link "Lips">>
+	<<set $target = "FLips">>
+	<<goto "Walk Past List">>
+<</link>><br>
+<<link "Boobs">>
+	<<set $target = "FBoobs">>
+	<<goto "Walk Past List">>
+<</link>><br>
+<<link "Butt">>
+	<<set $target = "FButt">>
+	<<goto "Walk Past List">>
+<</link>> |
+<<link "Anus">>
+	<<set $target = "FAnus">>
+	<<goto "Walk Past List">>
+<</link>> |
+<<link "Vagina">>
+	<<set $target = "FVagina">>
+	<<goto "Walk Past List">>
+<</link>> //or ass if they lack one//<br>
+<<link "Dick">>
+	<<set $target = "FDick">>
+	<<goto "Walk Past List">>
+<</link>><br>
+<<link "Rival">>
+	<<set $target = "FRival">>
+	<<goto "Walk Past List">>
+<</link>><br>
+<<link "Relation">>
+	<<set $target = "FRelation">>
+	<<goto "Walk Past List">>
+<</link>><br>
+
+<h2>Walk Past List</h2>
+
+<<for _i = 0; _i < $slaves.length; _i++>>
+	<<set $activeSlave = $slaves[_i]>>
+	<<capture $activeSlave>>
+		<<set _print = "">>
+		<<set _print = walkPast($slaves[_i], "fixed")>>
+		<<if _print>>
+			<<print _print + "<br><br>">>
+		<</if>>
+		<<if $target != _target>>
+			<<set $target = _target>>
+		<</if>>
+	<</capture>>
+<</for>>

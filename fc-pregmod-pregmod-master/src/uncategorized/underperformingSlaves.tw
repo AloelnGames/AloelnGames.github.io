@@ -1,0 +1,81 @@
+:: Underperforming Slaves [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Buy Slaves", $returnTo = "Buy Slaves", $showEncyclopedia = 1>>
+<p>
+	<div>
+		<<= properMaster()>>, while many of your slaves work hard to earn ¤ each week, some succeed more than others.  As a trader in slaves, you may appreciate the opportunity that comes when a particularly valuable slave didn't earn very much last week.  Or perhaps you just want the chance to tweak these problem slaves and train them to be better?  The choice is yours.
+	</div>
+	<div>
+		<<if ($slaveCostFactor > 1.1)>>
+			Since there is a bull market for slaves, @@.green;this is a great time to sell.@@
+		<<elseif ($slaveCostFactor > 1)>>
+			Since the slave market is bullish; @@.green;this is a pretty good time to sell.@@
+		<<elseif ($slaveCostFactor < 0.9)>>
+			Since there is a bear market for slaves, @@.red;this is a poor time to sell.@@
+		<<elseif ($slaveCostFactor < 1)>>
+			Since the slave market is bearish; @@.red;this is a terrible time to sell.@@
+		<<else>>
+			Since the slave market is stable; @@.yellow;prices are average.@@
+		<</if>>
+	</div>
+</p>
+<<run App.UI.tabbar.handlePreSelectedTab($tabChoice.Options)>>
+
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'highSale')" id="tab highSale">Worth much but earning little</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'expensive')" id="tab expensive">Costing vs earning</button>
+
+<div id="highSale" class="tabcontent">
+	<div class="content">
+		<div style="font-style:italic">
+			Take the rough value of a slave and divide it by how much they made overall last week.  This will tell you how many weeks it might take them to earn the same amount you'd get for selling them right now.
+		</div>
+		<<print App.UI.SlaveList.render.listMarkup(
+			getBestSlavesIndices(
+				{
+					part:(slave) => {
+						const ratio = slaveCost(slave) / (slave.lastWeeksCashIncome - getSlaveCost(slave));
+						return ratio > 0 ? ratio : 100000000 + ratio;
+					},
+					count: 7,
+					filter:(slave) => (
+						["be confined in the arcade", "get milked", "whore", "work a glory hole", "work in the brothel", "work in the dairy"].includes(slave.assignment)
+						&& ((slave.weekAcquired + 1) < V.week)
+						&& slave.lastWeeksCashIncome
+					)
+				}
+			),
+			[],
+			App.UI.SlaveList.SlaveInteract.stdInteract,
+			(slave) => $(document.createDocumentFragment()).append(
+				`Worth ${cashFormatColor(slaveCost(slave))} / Nets ${cashFormatColor(slave.lastWeeksCashIncome - getSlaveCost(slave))} a week = ${(Math.trunc(slaveCost(slave) / (slave.lastWeeksCashIncome - getSlaveCost(slave)))) > 0 ? (Math.trunc(slaveCost(slave) / (slave.lastWeeksCashIncome - getSlaveCost(slave)))) : "infinite"} weeks`
+			).get(0)
+		)>>
+	</div>
+</div>
+
+<div id="expensive" class="tabcontent">
+	<div class="content">
+		<div style="font-style:italic">
+			This list looks for moochers by weighing their weekly income against the weekly cost of providing for them.
+		</div>
+		<<print App.UI.SlaveList.render.listMarkup(
+			getBestSlavesIndices(
+				{
+					part:(slave) => (slave.lastWeeksCashIncome - getSlaveCost(slave)),
+					largest: false,
+					count: 7,
+					filter:(slave) => (
+						["be confined in the arcade", "get milked", "whore", "work a glory hole", "work in the brothel", "work in the dairy"].includes(slave.assignment)
+						&& ((slave.weekAcquired + 1) < V.week)
+						&& slave.lastWeeksCashIncome
+					)
+				}
+			),
+			[],
+			App.UI.SlaveList.SlaveInteract.stdInteract,
+			(slave) => $(document.createDocumentFragment()).append(
+				`${cashFormatColor(Math.trunc(slave.lastWeeksCashIncome - getSlaveCost(slave)))} net last week`
+			).get(0)
+		)>>
+	</div>
+</div>

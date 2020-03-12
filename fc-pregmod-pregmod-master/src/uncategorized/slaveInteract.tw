@@ -1,0 +1,675 @@
+:: Slave Interact [nobr]
+
+<<set $nextButton = "Confirm changes", $nextLink = "Main">>
+<<set _SL = $slaves.length, _CL = $canines.length, _HL = $hooved.length, _FL = $felines.length>>
+<<set _i = $slaveIndices[$activeSlave.ID]>>
+<<set $slaves[_i] = $activeSlave>>
+<<setLocalPronouns $slaves[_i]>>
+<<run Enunciate($slaves[_i])>>
+<style>
+.active {
+	background-color: grey;
+}
+</style>
+
+<<run App.UI.tabbar.handlePreSelectedTab($tabChoice.SlaveInteract)>>
+
+
+<<if !assignmentVisible($slaves[_i])>>
+	<<switch $slaves[_i].assignment>>
+	<<case "work in the brothel" "be the Madam">>
+		<<set $nextLink = "Brothel">>
+	<<case "be confined in the arcade">>
+		<<set $nextLink = "Arcade">>
+	<<case "serve in the club" "be the DJ">>
+		<<set $nextLink = "Club">>
+	<<case "work in the dairy" "be the Milkmaid">>
+		<<set $nextLink = "Dairy">>
+	<<case "work as a farmhand" "be the Farmer">>
+		<<set $nextLink = "Farmyard">>
+	<<case "rest in the spa" "be the Attendant">>
+		<<set $nextLink = "Spa">>
+	<<case "work as a nanny" "be the Matron">>
+		<<set $nextLink = "Nursery">>
+	<<case "learn in the schoolroom" "be the Schoolteacher">>
+		<<set $nextLink = "Schoolroom">>
+	<<case "work as a servant" "be the Stewardess">>
+		<<set $nextLink = "Servants' Quarters">>
+	<<case "serve in the master suite" "be your Concubine">>
+		<<set $nextLink = "Master Suite">>
+	<<case "be confined in the cellblock" "be the Wardeness">>
+		<<set $nextLink = "Cellblock">>
+	<<case "get treatment in the clinic" "be the Nurse">>
+		<<set $nextLink = "Clinic">>
+	<<case "live with your Head Girl">>
+		<<set $nextLink = "Head Girl Suite">>
+	<</switch>>
+<</if>>
+
+<<set $encyclopedia = either("Costs Summary", "Disease in the Free Cities", "Drugs and Their Effects", "From Rebellious to Devoted", "Gender", "Independent Slaves", "Modern Anal", "Nymphomania", "Slave Couture")>>
+<<if $slaves[_i].dick > 0>>
+	<<set $showEncyclopedia = 1, $encyclopedia = "Gender">>
+<</if>>
+
+<<set _slavesInLine = App.UI.SlaveInteract.placeInLine($slaves[_i])>>
+
+<<set _desc = `<<set $activeSlave = $slaves[_i]>><<include "Long Slave Description">>`>>
+
+<p align="center">
+	<<if $cheatMode == 1>>
+		<div style="font-style:italic">
+			[[Cheat Edit Slave|MOD_Edit Slave Cheat][$cheater = 1]] |
+			[[Cheat Edit Slave Alternative|MOD_Edit Slave Cheat New][$cheater = 1]]
+		</div>
+	<</if>>
+	<span class="cyan">
+		[←,Q]
+	</span>
+	<span id="prevSlave" style="font-weight:bold">
+		<<link "Prev" "Slave Interact">><<set $slaves[_i] = $activeSlave, $activeSlave = $slaves[_slavesInLine[0]]>><</link>>
+	</span>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<span class='slave-name'>
+		$slaves[_i].slaveName
+	</span>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<span id="nextSlave" style="font-weight:bold">
+		<<link "Next" "Slave Interact">><<set $slaves[_i] = $activeSlave, $activeSlave = $slaves[_slavesInLine[1]]>><</link>>
+	</span>
+	<span class="cyan">
+		[E,→]
+	</span>
+</p>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Description'), App.UI.replace('#LSD', '_desc')" id="tab Description">Description</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Location')" id="tab Location">Location</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Appearance'), App.UI.Wardrobe.refreshAll(getSlave(V.activeSlave.ID))" id="tab Appearance">Appearance</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'PhysicalRegimen')" id="tab PhysicalRegimen">Physical Regimen</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Rules')" id="tab Rules">Rules</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Financial')" id="tab Financial">Financial</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Customize'), App.UI.SlaveInteract.custom(getSlave(V.activeSlave.ID))" id="tab Customize">Customize</button>
+<<if $familyTesting == 1>>
+	<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'FamilyTab'), renderFamilyTree(V.slaves, V.activeSlave.ID)" id="tab FamilyTab">Family</button>
+<</if>>
+
+<div id="artFrame">
+	<<if $seeImages == 1 && $eventDescription != 1>>
+		<<if $imageChoice == 1>>
+			<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($slaves[_i], 3, 0)>></div>
+		<<else>>
+			<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($slaves[_i], 3, 0)>></div>
+		<</if>>
+	<</if>>
+</div>
+
+<div id="Description" class="tabcontent">
+	<div class="content">
+		<<if $seeDetails == 1>>
+			<<set $saleDescription = 0>>
+			<div style="font-style:italic">
+				<<link "Description Options">>
+					<<replace #hideOptionPages>>
+						<<link "(hide)">>
+							<<replace #hideOptionPages>>
+							<</replace>>
+							<<replace #optionPages>>
+								/* Hide */
+							<</replace>>
+						<</link>>
+					<</replace>>
+					<<replace #optionPages>>
+						<<include "Description Options">>
+					<</replace>>
+				<</link>>
+				<span id="hideOptionPages"></span>
+				/*|
+				[[Hide descriptions|Slave Interact][$seeDetails = 0]]*/
+				/*| Desc is now refreshed on tab click, but may need this later for an "all" view.
+				<span style="font-weight:bold">
+					<<link "Update">><<replace "#LSD">><<include "Long Slave Description">><</replace>><</link>>
+				</span>
+				*/
+				<p id="optionPages"></p>
+			</div>
+			<span id="LSD">/*<<include "Long Slave Description">>*/</span>
+		<<else>>
+			<div style="font-style:italic">
+				[[Show descriptions|Slave Interact][$seeDetails = 1]]
+			</div>
+		<</if>>
+	</div>
+</div>
+
+<div id="Location" class="tabcontent">
+	<div class="content">
+		<p>
+			<<if ["be your agent", "live with your agent"].includes($slaves[_i].assignment)>>
+				<span class="note">
+					Recall your agent to modify them.
+				</span>
+			<<else>>
+				Take slave to another room:
+				[[Auto salon|Salon][$activeSlave = $slaves[_i], $degradation = 0,$primaryHairColor = "",$secondaryHairColor = "",$primaryEarColor = "",$secondaryEarColor = "",$primaryTailColor = "",$secondaryTailColor = "",$artificialEyeColor = "",$artificialEyeShape = "",$artificialEyeFill = "",$tattooChoice = "",$piercingLevel = ""]]
+				| [[Body mod studio|Body Modification][$activeSlave = $slaves[_i], $degradation = 0, $tattooChoice = undefined]]
+				| [[Remote surgery|Remote Surgery][$activeSlave = $slaves[_i], $degradation = 0]]
+				<<if $prostheticsUpgrade > 0>>| [[Configure cybernetics|Prosthetics Configuration][$activeSlave = $slaves[_i], $prostheticsConfig = "main"]]<</if>>
+
+				<div id="miniscene"></div>
+				<span id="useSlave"></span>
+				<script>
+					App.UI.SlaveInteract.useSlaveDisplay(getSlave(V.activeSlave.ID));
+				</script>
+
+			<</if>>
+		</p>
+		<p>
+			<<switch $slaves[_i].assignment>>
+				<<case "recover from surgery">>
+					//$He is recovering from surgery this week//
+				<<case "guard you">>
+					//$He is your Bodyguard and is not available for other work//
+				<<case "be the Madam">>
+					//$He is the Madam and is not available for other work//
+				<<case "be the DJ">>
+					//$He is the DJ and is not available for other work//
+				<<case "be the Milkmaid">>
+					//$He is the Milkmaid and is not available for other work//
+				<<case "be the Farmer">>
+					//$He is the Farmer and is not available for other work//
+				<<case "be the Stewardess">>
+					//$He is the Stewardess and is not available for other work//
+				<<case "be your Head Girl">>
+					//$He is your Head Girl and is not available for other work//
+				<<case "recruit girls">>
+					//$He is recruiting slaves and is not available for other work//
+				<<case "be the Nurse">>
+					//$He is the Nurse and is not available for other work//
+				<<case "be the Attendant">>
+					//$He is the Attendant of the spa and is not available for other work//
+				<<case "be the Matron">>
+					//$He is the Matron of the nursery and is not available for other work//
+				<<case "be the Schoolteacher">>
+					//$He is the Schoolteacher and is not available for other work//
+				<<case "be your Concubine">>
+					//$He is your Concubine and is not available for other work//
+				<<case "be the Wardeness">>
+					//$He is the Wardeness and is not available for other work//
+				<<default>>
+
+					/* CAN BE REASSIGNED */
+
+					<span id="assignmentLinks"></span>
+					<script>App.UI.SlaveInteract.assignmentBlock("assignmentLinks", getSlave(V.activeSlave.ID))</script>
+
+					<<set _numFacilities = $brothel+$club+$dairy+$farmyard+$servantsQuarters+$masterSuite+$spa+$nursery+$clinic+$schoolroom+$cellblock+$arcade+$HGSuite>>
+
+					<<if _numFacilities > 0>>
+						Transfer to: <<= App.UI.jobLinks.transfers(-1)>>
+					<</if>> /* closes _numFacilities */
+
+					<div id="fucktoypref"></div>
+					<script>App.UI.SlaveInteract.fucktoyPref(getSlave(V.activeSlave.ID))</script>
+
+			<</switch>> /* END CAN BE REASSIGNED */
+
+			<<if $slaves[_i].assignment == "whore" || $slaves[_i].assignment == "work in the brothel">>
+				<br>Whoring Target: <strong><span id="whoreClass"><<if !$slaves[_i].whoreClass>>auto<<elseif $slaves[_i].whoreClass == 1>>the lower class<<elseif $slaves[_i].whoreClass == 2>>the middle class<<elseif $slaves[_i].whoreClass == 3>>the upper class<<elseif $slaves[_i].whoreClass == 4>>millionaires<<else>>THERE HAS BEEN AN ERROR<</if>></span></strong>. //This is the highest class they are allowed to service, when eligible//
+				<<link "Auto">><<set $slaves[_i].whoreClass = 0>><<replace "#whoreClass">>auto<</replace>><</link>> |
+				<<link "Lower Class">><<set $slaves[_i].whoreClass = 1>><<replace "#whoreClass">>the lower class<</replace>><</link>> |
+				<<link "Middle Class">><<set $slaves[_i].whoreClass = 2>><<replace "#whoreClass">>the middle class<</replace>><</link>> |
+				<<link "Upper Class">><<set $slaves[_i].whoreClass = 3>><<replace "#whoreClass">>the upper class<</replace>><</link>> |
+				<<link "Millionaires">><<set $slaves[_i].whoreClass = 4>><<replace "#whoreClass">>millionaires<</replace>><</link>>
+			<</if>>
+		</p>
+	</div>
+</div>
+
+<div id="Appearance" class="tabcontent">
+	<div class="content">
+		<p>
+			<h3>Appearance</h3>
+
+			<span id="clothes"></span>
+			/*<script>App.UI.Wardrobe.clothes(getSlave(V.activeSlave.ID))</script>*/
+
+			<<if $slaves[_i].fuckdoll == 0>>
+				<span id="collar"></span>
+				/*<script>App.UI.Wardrobe.collar(getSlave(V.activeSlave.ID))</script>*/
+
+				<span id="armAccessory"></span>
+				/*<script>App.UI.Wardrobe.armAccessory(getSlave(V.activeSlave.ID))</script>*/
+
+				<<if hasAnyLegs($slaves[_i])>>
+					<span id="shoes"></span>
+					/*<script>App.UI.Wardrobe.shoes(getSlave(V.activeSlave.ID))</script>*/
+
+					<span id="legAccessory"></span>
+					/*<script>App.UI.Wardrobe.legAccessory(getSlave(V.activeSlave.ID))</script>*/
+				<</if>>
+
+				<span id="bellyAccessory"></span>
+				/*<script>App.UI.Wardrobe.bellyAccessory(getSlave(V.activeSlave.ID))</script>*/
+
+				<span id="buttplug"></span>
+				/*<script>App.UI.Wardrobe.buttplug(getSlave(V.activeSlave.ID))</script>*/
+
+				<<if isItemAccessible("tail") && $slaves[_i].buttplug != "none">>
+					<span id="buttplugAttachment"></span>
+					/*<script>App.UI.Wardrobe.buttplugAttachment(getSlave(V.activeSlave.ID))</script>*/
+				<</if>>
+
+				<<if $slaves[_i].vagina > -1>>
+					<span id="vaginalAccessory"></span>
+					/*<script>App.UI.Wardrobe.vaginalAccessory(getSlave(V.activeSlave.ID))</script>*/
+					<span id="vaginalAttachment"></span>
+					/*<script>App.UI.Wardrobe.vaginalAttachment(getSlave(V.activeSlave.ID))</script>*/
+				<</if>>
+
+				<<if $slaves[_i].dick > 0>>
+					<span id="dickAccessory"></span>
+					/*<script>App.UI.Wardrobe.dickAccessory(getSlave(V.activeSlave.ID))</script>*/
+				<</if>>
+
+				<span id="chastity"></span>
+				/*<script>App.UI.Wardrobe.chastity(getSlave(V.activeSlave.ID))</script>*/
+
+				<h3>Shopping</h3>
+				<span id="shopping"></span>
+				<script>App.UI.Wardrobe.shopping(getSlave(V.activeSlave.ID))</script>
+
+			<</if>> /* CLOSES FUCKDOLL CHECK */
+		</p>
+	</div>
+</div>
+
+<div id="PhysicalRegimen" class="tabcontent">
+	<div class="content">
+		<h3>Physical Regimen</h3>
+		<span id="drugs"></span>
+		<script>App.UI.SlaveInteract.drugs(getSlave(V.activeSlave.ID))</script>
+
+		<span id="curatives"></span>
+		<script>App.UI.SlaveInteract.curatives(getSlave(V.activeSlave.ID))</script>
+
+		<span id="aphrodisiacs"></span>
+		<script>App.UI.SlaveInteract.aphrodisiacs(getSlave(V.activeSlave.ID))</script>
+
+		<span id="fertilityblock"></span>
+		<script>App.UI.SlaveInteract.fertility(getSlave(V.activeSlave.ID))</script>
+
+		<span id="incubator"></span>
+		<script>App.UI.SlaveInteract.incubator(getSlave(V.activeSlave.ID))</script>
+
+		<span id="nursery"></span>
+		<script>App.UI.SlaveInteract.nursery(getSlave(V.activeSlave.ID))</script>
+
+		<<if $propOutcome == 1 && $arcologies[0].FSRestart != "unset">>
+			<<if $slaves[_i].breedingMark == 0 && $slaves[_i].fuckdoll == 0 && $slaves[_i].eggType == "human" && isFertile($slaves[_i]) && $slaves[_i].preg == 0>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;
+				[[Breeder Eligibility Exam|BreedingTest]]
+			<</if>>
+		<</if>>
+
+		<span id="bloating"></span>
+		<script>App.UI.SlaveInteract.bloating(getSlave(V.activeSlave.ID))</script>
+
+		Hormones: <strong><span id="hormones">
+		<<if $slaves[_i].hormones == -2>>intensive male<<elseif $slaves[_i].hormones == -1>>male<<elseif $slaves[_i].hormones == 2>>intensive female<<elseif $slaves[_i].hormones == 1>>female<<else>>none<</if>></span></strong>.
+		<<if $slaves[_i].indentureRestrictions < 2>>
+			<<link "Intensive Female">><<set $slaves[_i].hormones = 2>><<replace "#hormones">>intensive female<</replace>><</link>> |
+		<</if>>
+		<<link "Female">><<set $slaves[_i].hormones = 1>><<replace "#hormones">>female<</replace>><</link>> |
+		<<link "None">><<set $slaves[_i].hormones = 0>><<replace "#hormones">>none<</replace>><</link>> |
+		<<link "Male">><<set $slaves[_i].hormones = -1>><<replace "#hormones">>male<</replace>><</link>> |
+		<<if $slaves[_i].indentureRestrictions < 2>>
+			<<link "Intensive Male">><<set $slaves[_i].hormones = -2>><<replace "#hormones">>intensive male<</replace>><</link>>
+		<</if>>
+
+		<br>Diet: <strong><span id="diet">$slaves[_i].diet</span></strong>.
+		<<link "Healthy">><<set $slaves[_i].diet = "healthy">><<replace "#diet">>$slaves[_i].diet<</replace>><</link>>
+		<<if ($slaves[_i].health.condition < 90 || $slaves[_i].chem >= 10) && ($dietCleanse == 1)>>
+			| <<link "Cleanse">><<set $slaves[_i].diet = "cleansing">><<replace "#diet">>$slaves[_i].diet<</replace>><</link>>
+		<<elseif ($dietCleanse == 1)>>
+			| //$He is already healthy//
+		<</if>>
+		<<if ($slaves[_i].balls > 0) && ($cumProDiet == 1)>>
+			| <<link "Cum production">><<set $slaves[_i].diet = "cum production">><<replace "#diet">>$slaves[_i].diet<</replace>><</link>>
+		<</if>>
+		<<if isFertile($slaves[_i]) && $slaves[_i].preg == 0 && ($dietFertility == 1)>>
+			| <<link "Fertility">><<set $slaves[_i].diet = "fertility">><<replace "#diet">>$slaves[_i].diet<</replace>><</link>>
+		<</if>>
+		<<if ($slaves[_i].weight >= -95)>>
+			| <<link "Lose weight">><<set $slaves[_i].diet = "restricted">><<replace "#diet">>$slaves[_i].diet<</replace>><</link>>
+		<<else>>
+			| //$He is already underweight//
+		<</if>>
+		<<if $slaves[_i].weight <= 200>>
+			| <<link "Fatten">><<set $slaves[_i].diet = "fattening">><<replace "#diet">>$slaves[_i].diet<</replace>><</link>>
+		<<else>>
+			| //$He is already extremely overweight//
+		<</if>>
+		<<if $feeder == 1>>
+			<<if $slaves[_i].fuckdoll == 0 && $slaves[_i].fetish != "mindbroken">>
+				<<if ($slaves[_i].weight > 10 || $slaves[_i].weight < -10)>>
+						|  <<link "Correct weight">><<set $slaves[_i].diet = "corrective">><<replace "#diet">>$slaves[_i].diet<</replace>><</link>>
+				<<else>>
+					//$He is already a healthy weight//
+				<</if>>
+			<</if>>
+			| <<link "Estrogen enriched">><<set $slaves[_i].diet = "XX">><<replace "#diet">>$slaves[_i].diet<</replace>><</link>>
+			| <<link "Testosterone enriched">><<set $slaves[_i].diet = "XY">><<replace "#diet">>$slaves[_i].diet<</replace>><</link>>
+			<<if $dietXXY == 1 && $slaves[_i].balls > 0 && ($slaves[_i].ovaries == 1 || $slaves[_i].mpreg == 1)>>
+				| <<link "Herm hormone blend">><<set $slaves[_i].diet = "XXY">><<replace "#diet">>$slaves[_i].diet<</replace>><</link>>
+			<</if>>
+		<</if>>
+		<<if ($slaves[_i].muscles <= 95) && !isAmputee($slaves[_i])>>
+			| <<link "Build muscle">><<set $slaves[_i].diet = "muscle building">><<replace "#diet">>$slaves[_i].diet<</replace>><</link>>
+		<<elseif !isAmputee($slaves[_i])>>
+			| //$He is maintaining $his enormous musculature//
+		<<else>>
+			| //$He has no limbs and thus can't effectively build muscle//
+		<</if>>
+		<<if ($slaves[_i].muscles > 5 || $slaves[_i].fuckdoll == 0) && canWalk($slaves[_i])>>
+			| <<link "Slim down">><<set $slaves[_i].diet = "slimming">><<replace "#diet">>$slaves[_i].diet<</replace>><</link>>
+		<<elseif !canWalk($slaves[_i])>>
+			| //$He can't move and thus can't trim down//
+		<<elseif $slaves[_i].fuckdoll > 0>>
+			| //$He has no muscles left to lose//
+		<</if>>
+
+		<br>Diet Base: <strong><span id="dietBase"><<if $slaves[_i].dietCum == 2>>cum based<<elseif ($slaves[_i].dietCum == 1) && ($slaves[_i].dietMilk == 0)>>cum added<<elseif ($slaves[_i].dietCum == 1) && ($slaves[_i].dietMilk == 1)>>cum and milk added<<elseif ($slaves[_i].dietMilk == 1) && ($slaves[_i].dietCum == 0)>>milk added<<elseif ($slaves[_i].dietMilk == 2)>>milk based<<elseif ($slaves[_i].dietCum == 0) && ($slaves[_i].dietMilk == 0)>>normal<<else>>THERE HAS BEEN AN ERROR<</if>></span></strong>.
+		<<link "Normal">><<set $slaves[_i].dietCum = 0>><<set $slaves[_i].dietMilk = 0>><<replace "#dietBase">>normal<</replace>><</link>> |
+		<<link "Cum added">><<set $slaves[_i].dietCum = 1>><<set $slaves[_i].dietMilk = 0>><<replace "#dietBase">>cum added<</replace>><</link>> |
+		<<link "Milk added">><<set $slaves[_i].dietCum = 0>><<set $slaves[_i].dietMilk = 1>><<replace "#dietBase">>milk added<</replace>><</link>> |
+		<<link "Cum & milk added">><<set $slaves[_i].dietCum = 1>><<set $slaves[_i].dietMilk = 1>><<replace "#dietBase">>cum & milk added<</replace>><</link>> |
+		<<link "Cum based">><<set $slaves[_i].dietCum = 2>><<set $slaves[_i].dietMilk = 0>><<replace "#dietBase">>cum based<</replace>><</link>> |
+		<<link "Milk based">><<set $slaves[_i].dietCum = 0>><<set $slaves[_i].dietMilk = 2>><<replace "#dietBase">>milk based<</replace>><</link>>
+
+		<<if $arcologies[0].FSHedonisticDecadenceResearch == 1>>
+			<br>Solid Slave Food Access: <strong><span id="snacks"><<if $slaves[_i].onDiet == 0>>Free to stuff $himself.<<else>>On a strict diet.<</if>></span></strong>
+			<<link "No access">><<set $slaves[_i].onDiet = 1>><<replace "#snacks">>On a strict diet.<</replace>><</link>> |
+			<<link "Full access">><<set $slaves[_i].onDiet = 0>><<replace "#snacks">>Free to stuff $himself.<</replace>><</link>>
+		<</if>>
+	</div>
+</div>
+
+<div id="Rules" class="tabcontent">
+	<div class="content">
+		<p>
+			<<if $universalRulesImpregnation == "HG" && $seePreg != 0>>
+				<<if $slaves[_i].HGExclude == 0>>
+					Will be bred by the Head Girl when fertile. <<link "Exempt $him" "Slave Interact">><<set $slaves[_i].HGExclude = 1>><</link>>
+				<<else>>
+					Will not be bred by the Head Girl when fertile. <<link "Include $him" "Slave Interact">><<set $slaves[_i].HGExclude = 0>><</link>>
+				<</if>>
+			<</if>>
+		</p>
+
+		<p>
+			<<if $slaves[_i].useRulesAssistant == 0>>
+				<span class="gray">
+					''Not subject'' to the Rules Assistant.
+				</span>
+				<<link "Include $him" "Slave Interact">>
+					<<set $slaves[_i].useRulesAssistant = 1>>
+				<</link>>
+			<<else>>
+				__Rules Assistant:__ [[Rules Assistant Options|Rules Assistant]]
+
+				<<if (def $slaves[_i].currentRules) && ($slaves[_i].currentRules.length > 0)>>
+					<ul style="margin:0">
+						<<= $defaultRules.filter(x => ruleApplied($slaves[_i], x)).map(x => `<li>Rule "${x.name}" applied</li>`).join(" ") >>
+					</ul>
+				<<else>>
+					|
+				<</if>>
+				<span style="font-style:italic">
+					<<link "Apply rules">>
+						<<run DefaultRules($slaves[_i])>>
+						<<goto "Slave Interact">>
+					<</link>>
+				</span>
+				|
+				<<link "Exempt $him" "Slave Interact">>
+					<<set $slaves[_i].useRulesAssistant = 0>>
+				<</link>>
+			<</if>>
+		</p>
+		<<if $slaves[_i].fuckdoll > 0>>
+			//Rules have little meaning for living sex toys//
+		<<else>>
+			<<set _visibleSlaves = $slaves.filter(s => assignmentVisible(s) && (s.assignment != "be your Head Girl" || $HGSuite != 1) && (s.assignment != "guard you" || $dojo <= 1)),
+				$dormitoryPopulation = _visibleSlaves.filter(s => s.rules.living != "luxurious").length,
+				$roomsPopulation = _visibleSlaves.length - $dormitoryPopulation - _visibleSlaves.filter(s => s.rules.living == "luxurious" && s.relationship >= 4).length * 0.5>>
+
+			Living standard: ''<span id="livingRules">$slaves[_i].rules.living</span>.''
+			<<if setup.facilityCareers.includes($slaves[_i].assignment)>>
+				//$His living conditions are managed by $his assignment.//
+			<<elseif ($slaves[_i].assignment == "be your Head Girl") && ($HGSuite == 1)>>
+				//$He has $his own little luxurious room in the penthouse with everything $he needs to be a proper Head Girl.//
+			<<elseif ($slaves[_i].assignment == "guard you") && ($dojo > 1)>>
+				//$He has a comfortable room in the armory to call $his own.//
+			<<else>>
+				<<link "Spare">><<set $slaves[_i].rules.living = "spare">><<replace "#livingRules">>$slaves[_i].rules.living<</replace>><</link>> |
+				<<link "Normal">><<set $slaves[_i].rules.living = "normal">><<replace "#livingRules">>$slaves[_i].rules.living<</replace>><</link>> |
+				<<if $roomsPopulation <= $rooms-0.5>><<link "Luxurious">><<set $slaves[_i].rules.living = "luxurious">><<replace "#livingRules">>$slaves[_i].rules.living<</replace>><</link>><<else>>//No luxurious rooms available//<</if>>
+			<</if>>
+
+			<br>Typical punishment: ''<span id="standardPunishment">$slaves[_i].rules.punishment</span>.''
+			<<link "Confinement">><<set $slaves[_i].rules.punishment = "confinement">><<replace "#standardPunishment">>$slaves[_i].rules.punishment<</replace>><</link>> |
+			<<link "Whipping">><<set $slaves[_i].rules.punishment = "whipping">><<replace "#standardPunishment">>$slaves[_i].rules.punishment<</replace>><</link>> |
+			<<link "Chastity">><<set $slaves[_i].rules.punishment = "chastity">><<replace "#standardPunishment">>$slaves[_i].rules.punishment<</replace>><</link>> |
+			<<link "Situational">><<set $slaves[_i].rules.punishment = "situational">><<replace "#standardPunishment">>$slaves[_i].rules.punishment<</replace>><</link>>
+			<br>Typical reward: ''<span id="standardReward">$slaves[_i].rules.reward</span>.''
+			<<link "Relaxation">><<set $slaves[_i].rules.reward = "relaxation">><<replace "#standardReward">>$slaves[_i].rules.reward<</replace>><</link>> |
+			<<link "Drugs">><<set $slaves[_i].rules.reward = "drugs">><<replace "#standardReward">>$slaves[_i].rules.reward<</replace>><</link>> |
+			<<link "Orgasm">><<set $slaves[_i].rules.reward = "orgasm">><<replace "#standardReward">>$slaves[_i].rules.reward<</replace>><</link>> |
+			<<link "Situational">><<set $slaves[_i].rules.reward = "situational">><<replace "#standardReward">>$slaves[_i].rules.reward<</replace>><</link>>
+
+			<<if setup.facilityHeads.includes($slaves[_i].assignment)>>
+				<<if $slaves[_i].lactation != 2>>
+					<br>Lactation maintenance for facility heads: ''<span id="lactationRules">$slaves[_i].rules.lactation</span>.''
+					<<link "Left alone">><<set $slaves[_i].rules.lactation = "none">><<replace "#lactationRules">>$slaves[_i].rules.lactation<</replace>><</link>> |
+					<<if $slaves[_i].lactation == 0>>
+						<<link "Induce lactation">><<set $slaves[_i].rules.lactation = "induce">><<replace "#lactationRules">>$slaves[_i].rules.lactation<</replace>><</link>>
+					<<else>>
+						<<link "Maintain lactation">><<set $slaves[_i].rules.lactation = "maintain">><<replace "#lactationRules">>$slaves[_i].rules.lactation<</replace>><</link>>
+					<</if>>
+				<</if>>
+			<</if>>
+
+			<br><br>Non-assignment orgasm rules:
+			<div style="text-indent:2em">
+			Masturbation is ''<span id="relMasturbation"><<if $slaves[_i].rules.release.masturbation === 1>>allowed<<else>>forbidden<</if>></span>.''
+				<<link "Allow">><<set $slaves[_i].rules.release.masturbation = 1>><<replace "#relMasturbation">>allowed<</replace>><</link>> |
+				<<link "Forbid">><<set $slaves[_i].rules.release.masturbation = 0>><<replace "#relMasturbation">>forbidden<</replace>><</link>>
+			</div>
+			<div style="text-indent:2em">
+			Sex with romantic partner is ''<span id="relPartner"><<if $slaves[_i].rules.release.partner === 1>>allowed<<else>>forbidden<</if>></span>.''
+				<<link "Allow">><<set $slaves[_i].rules.release.partner = 1>><<replace "#relPartner">>allowed<</replace>><</link>> |
+				<<link "Forbid">><<set $slaves[_i].rules.release.partner = 0>><<replace "#relPartner">>forbidden<</replace>><</link>>
+			</div>
+			<<if $seeIncest == 1>>
+				<div style="text-indent:2em">
+				Sex with close family is ''<span id="relFamily"><<if $slaves[_i].rules.release.family === 1>>allowed<<else>>forbidden<</if>></span>.''
+					<<link "Allow">><<set $slaves[_i].rules.release.family = 1>><<replace "#relFamily">>allowed<</replace>><</link>> |
+					<<link "Forbid">><<set $slaves[_i].rules.release.family = 0>><<replace "#relFamily">>forbidden<</replace>><</link>>
+				</div>
+			<</if>>
+			<div style="text-indent:2em">
+			Sex with other slaves is ''<span id="relSlaves"><<if $slaves[_i].rules.release.slaves === 1>>allowed<<else>>forbidden<</if>></span>.''
+				<<link "Allow">><<set $slaves[_i].rules.release.slaves = 1>><<replace "#relSlaves">>allowed<</replace>><</link>> |
+				<<link "Forbid">><<set $slaves[_i].rules.release.slaves = 0>><<replace "#relSlaves">>forbidden<</replace>><</link>>
+			</div>
+			<div style="text-indent:2em">
+			Routine sex with <<= properMaster()>> is ''<span id="relMaster"><<if $slaves[_i].rules.release.master === 1>>granted<<else>>denied<</if>></span>.''
+				<<link "Grant">><<set $slaves[_i].rules.release.master = 1>><<replace "#relMaster">>granted<</replace>><</link>> |
+				<<link "Deny">><<set $slaves[_i].rules.release.master = 0>><<replace "#relMaster">>denied<</replace>><</link>>
+			</div>
+		<</if>>
+
+		<<if $slaves[_i].clitPiercing == 3 || $slaves[_i].vaginalAccessory == "smart bullet vibrator">>
+			<div>
+			<<if $slaves[_i].clitPiercing == 3>>
+				<<if $slaves[_i].dick < 1>>
+					$His smart clit piercing <<if $slaves[_i].vaginalAccessory == "smart bullet vibrator">>and smart bullet vibrator are<<else>>is<</if>> set to
+				<<else>>
+					$His smart frenulum piercing <<if $slaves[_i].vaginalAccessory == "smart bullet vibrator">>and smart bullet vibrator are<<else>>is<</if>> set to
+				<</if>>
+			<<else>>
+				$His smart bullet vibe is set to
+			<</if>>
+			<strong><span id="setting">$slaves[_i].clitSetting</span></strong>.
+			<<link "Vanilla">><<set $slaves[_i].clitSetting = "vanilla">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "Oral">><<set $slaves[_i].clitSetting = "oral">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "Anal">><<set $slaves[_i].clitSetting = "anal">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "Boobs">><<set $slaves[_i].clitSetting = "boobs">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "Sub">><<set $slaves[_i].clitSetting = "submissive">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "Dom">><<set $slaves[_i].clitSetting = "dom">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "Humiliation">><<set $slaves[_i].clitSetting = "humiliation">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			<<if $seePreg != 0>>
+				| <<link "Preg">><<set $slaves[_i].clitSetting = "pregnancy">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			<</if>>
+			| <<link "Pain">><<set $slaves[_i].clitSetting = "masochist">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "Sadism">><<set $slaves[_i].clitSetting = "sadist">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "Men">><<set $slaves[_i].clitSetting = "men">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "Anti-men">><<set $slaves[_i].clitSetting = "anti-men">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "Women">><<set $slaves[_i].clitSetting = "women">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "Anti-women">><<set $slaves[_i].clitSetting = "anti-women">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "All sex">><<set $slaves[_i].clitSetting = "all">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			| <<link "No sex">><<set $slaves[_i].clitSetting = "none">><<replace "#setting">>$slaves[_i].clitSetting<</replace>><</link>>
+			</div>
+		<</if>>
+
+		<<if $slaves[_i].voice != 0>>
+			<br>Speech rules: ''<span id="speechRules">$slaves[_i].rules.speech</span>.''
+			<<link "Restrictive">><<set $slaves[_i].rules.speech = "restrictive">><<replace "#speechRules">>$slaves[_i].rules.speech<</replace>><</link>> |
+			<<link "Permissive">><<set $slaves[_i].rules.speech = "permissive">><<replace "#speechRules">>$slaves[_i].rules.speech<</replace>><</link>>
+			<<if $slaves[_i].accent > 0 && $slaves[_i].accent < 4>>| <<link "Accent elimination">><<set $slaves[_i].rules.speech = "accent elimination">><<replace "#speechRules">>$slaves[_i].rules.speech<</replace>><</link>>
+			<<elseif $slaves[_i].accent > 3>>| <<link "Language lessons">><<set $slaves[_i].rules.speech = "language lessons">><<replace "#speechRules">>$slaves[_i].rules.speech<</replace>><</link>>
+			<</if>>
+		<</if>>
+
+		<br>
+		Relationship rules: ''<span id="relationshipRules">$slaves[_i].rules.relationship</span>.''
+		<<link "Restrictive">><<set $slaves[_i].rules.relationship = "restrictive">><<replace "#relationshipRules">>$slaves[_i].rules.relationship<</replace>><</link>> |
+		<<link "Just friends">><<set $slaves[_i].rules.relationship = "just friends">><<replace "#relationshipRules">>$slaves[_i].rules.relationship<</replace>><</link>> |
+		<<link "Permissive">><<set $slaves[_i].rules.relationship = "permissive">><<replace "#relationshipRules">>$slaves[_i].rules.relationship<</replace>><</link>>
+	</div>
+</div>
+
+<div id="Financial" class="tabcontent">
+	<div class="content">
+
+		<<if $studio == 1>>
+			<h3>Media</h3>
+			<<if $slaves[_i].porn.prestige == 3>>
+				//$He is so prestigious in the realm of $slaves[_i].porn.fameType porn that $his fame is self-sustaining.//
+			<<elseif $slaves[_i].porn.feed == 0>>
+				The media hub is not releasing highlights of $his sex life. [[Release|Slave Interact][$slaves[_i].porn.feed = 1]]
+			<<else>>
+				The media hub is releasing highlights of $his sex life <<if $slaves[_i].porn.spending < 500>>to those who can find it<<elseif $slaves[_i].porn.spending < 2500>>on several websites<<elseif $slaves[_i].porn.spending > 5000>>through your old distributor<<else>>on many websites<</if>>.
+				<<if $slaves[_i].porn.spending == 0>>
+					[[Halt|Slave Interact][$slaves[_i].porn.feed = 0, $slaves[_i].porn.focus = "none"]] |
+					[[Publicize|Slave Interact][$slaves[_i].porn.spending += 1000]]
+					//Will cost <<print cashFormat(1000)>> weekly.//
+				<<else>>
+					<<textbox "_newPornSpending" $slaves[_i].porn.spending>> weekly is spent to publicize them. [[Save changes|Slave Interact][$slaves[_i].porn.spending = Number(_newPornSpending) || 0]] |
+					[[Halt|Slave Interact][$slaves[_i].porn.feed = 0, $slaves[_i].porn.spending = 0, $slaves[_i].porn.focus = "none", $PCSlutContacts = 1]] |
+					<<if $slaves[_i].porn.spending < 5000>>
+						[[Increase|Slave Interact][$slaves[_i].porn.spending += 1000]] |
+					<</if>>
+					[[Decrease|Slave Interact][$slaves[_i].porn.spending -= 1000]]
+					<<if $slaves[_i].porn.spending > 5000>><<set _warn = 1>><</if>>
+					<<set $slaves[_i].porn.spending = Number($slaves[_i].porn.spending) || 0>>
+					<<set $slaves[_i].porn.spending = Math.clamp(Math.ceil($slaves[_i].porn.spending/1000)*1000, 0, 5000)>>
+					<<if _warn>><br>//Spending more than <<print cashFormat(5000)>> weekly will have no effect.//<</if>>
+					<<if $PC.career == "escort">>
+						<br>
+						You retain some contacts from your past life in the industry that may be willing to cut you some discounts should you return to it.
+						<<if $PCSlutContacts != 2>>
+							You are not baring your body for all to see.
+							[[Star in porn for a discount|Slave Interact][$PCSlutContacts = 2]]
+						<<else>>
+							You are starring in hardcore porn once more.
+							[[Stop doing porn for a discount|Slave Interact][$PCSlutContacts = 1]]
+						<</if>>
+					<</if>>
+				<</if>>
+
+				<<if $studioFeed == 1>>
+					<br>
+					<<if $slaves[_i].porn.viewerCount < 100>>
+						$He lacks the fame in porn needed to discern what $his feed is getting tagged as.
+					<<else>>
+						<<if $slaves[_i].porn.prestige > 0>>
+							$He is known for $slaves[_i].porn.fameType porn<<if $slaves[_i].porn.prestige > 1>> and viewers have grown to expect it from $him<</if>>.
+						<</if>>
+						<<if $slaves[_i].porn.focus == "none">>
+							You are allowing $his viewers to guide the direction of $his content.
+						<<else>>
+							You are focusing attention on the $slaves[_i].porn.focus aspect of $his content.
+						<</if>>
+						<<= App.Porn.genreChoiceLinks("Slave Interact", $slaves[_i])>> | [[No focus|Slave Interact][$slaves[_i].porn.focus = "none"]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+
+		<h3>Financial</h3>
+		<p>
+			<<SlaveExpenses $slaves[_i]>>
+		</p>
+
+		<p>
+			<<if ($slaveCostFactor > 1)>>
+				<span class="yellow">The slave market is bullish; the price of slaves is high.</span>
+			<<elseif ($slaveCostFactor < 1)>>
+				<span class="yellow">The slave market is bearish; the price of slaves is low.</span>
+			<</if>>
+
+			<<if (_SL > 1)>>
+				<<if $slaves[_i].origin == "You bought $him from a body dump, completely broken." && ($week-$slaves[_i].weekAcquired <= 8)>>
+					//A discarded slave must be kept for at least two months to ensure health before being sold.// |
+				<<elseif $slaves[_i].accent > 3>>
+					//$His lack of language and basic life skills is a red sign to most slave appraisers. $He must not act like a child to be sold without raising suspicion.// |
+				<<else>>
+					<<link "Sell $him" "Sell Slave">><<run cashX(-500, "personalBusiness", $slaves[_i])>><</link>> //Listing $him for sale will cost <<print cashFormat(500)>>// |
+					<<if ($seeAge != 0) && ($slaves[_i].indenture < 1)>>
+						<<link "Retire $him" "SE retirement">><<set $retiree = $slaves[_i].ID, $retired = 1>><</link>> |
+					<</if>>
+				<</if>>
+				<<link "Discard $him" "Discard Confirm">><</link>>
+				<<if $seeExtreme == 1 && $arcologies[0].FSPaternalist == "unset" && $cheatMode>>
+					| <<link "Threaten $his life" "KillSlave">><</link>>
+				<</if>>
+			<<else>>
+				//You cannot sell or discard your last slave.//
+			<</if>>
+
+			| <<link "Export this slave" "Export Slave">><</link>>
+			<<if $cheatMode>>
+				| <<link "Import a slave" "Import Slave">><</link>>
+			<</if>>
+		</p>
+	</div>
+</div>
+
+<div id="Customize" class="tabcontent">
+	<div class="content">
+		<span id="custom"></span>
+		<script>App.UI.SlaveInteract.custom(getSlave(V.activeSlave.ID))</script>
+
+		/*<<include "Add custom descriptors">>*/
+	</div>
+</div>
+
+<div id="FamilyTab" class="tabcontent">
+	<div class="content">
+		<<if $familyTesting == 1>>
+			<p id="family">
+				<div id="familyTree"></div>
+				<span id="familyTreeLink"></span>
+			</p>
+		<</if>>
+	</div>
+</div>

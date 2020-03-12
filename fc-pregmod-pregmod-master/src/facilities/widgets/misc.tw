@@ -1,0 +1,17 @@
+:: FacilityMiscWidgets [nobr widget]
+
+/* Call as removeFacilityWorkers <facilityName> <managerAssignment> <workerAssignment> */
+<<widget "removeFacilityWorkers">>
+	<<set _facility = App.Entity.facilities[$args[0]]>>
+	<<set _count = _facility.hostedSlaves + (_facility.manager && _facility.manager.currentEmployee ? 1 : 0)>>
+	<<set _NewPop = _count+$dormitoryPopulation>>
+	<<if _count > 0>>
+		<<set _passage = passage()>>
+		<<link "Remove all slaves" _passage>>
+			<<run App.Utils.moveFacilityWorkers(_facility, $args[1], $args[2])>>
+		<</link>>
+		<<if _NewPop > $dormitory>>
+			@@.red;Dormitory capacity will be exceeded.@@
+		<</if>>
+	<</if>>
+<</widget>>

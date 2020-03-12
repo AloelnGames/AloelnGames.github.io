@@ -1,0 +1,294 @@
+:: WC [nobr]
+
+<<set _colonelTalkTensionRuction = $SF.FS.Tension !== -1 ? 5 : 0>>
+
+<<if $SF.Gift === 0 && $SF.MercCon.CanAttend === -1 && ($SF.Colonel.Talk + $SF.Colonel.Fun !== 1)>>
+	The Colonel looks down a list on her tablet. "There's some things we can do to help you out, boss.
+	<br>We've had some good prizes turn up, that's made us some extra money we could turn over. | <<link "Request cash" "Firebase">>
+		/*<<set $CashGift = ((Math.ceil((Math.abs($cash)*0.05)*(Math.max(0.99,$SF.Size))))*($arcologies[0].prosperity/100))*_Env>> OLD*/
+		<<set $CashGift = Math.ceil(25000*($SF.Size/10)*_Env),$SF.Gift = 1,$choice = 1>>
+		<<set $CashGift = ($CashGift > 5000 ? $CashGift : 5000)>>
+		<<run cashX($CashGift, "specialForces")>>
+	<</link>>
+	<<if $rep < 20000>>
+		<br>If you want we could throw a quick military parade, get the people feeling extra patriotic. | <<link "Request military parade" "Firebase">>
+			<<set $GoodWords1 += 50*(Math.ceil($SF.Size*0.03*_Env))>>
+			<<set $GoodWords1 = (Number($GoodWords1) ? $GoodWords1 : 500),$SF.Gift = 1>>
+			<<set $choice = 2>>
+			<<run repX($GoodWords1, "specialForces")>>
+		<</link>>
+	<</if>>
+	<<if $arcologies[0].prosperity < $AProsperityCap>>
+		<br>Or we could hit some businesses that rival the ones in $arcologies[0].name with some sabotage. | <<link "Request sabotage" "Firebase">>
+			<<set $GoodWords2 = _EnvProsp+(Math.ceil($SF.Size/100*_Env)),$SF.Gift = 1,$choice = 3>>
+			<<if $arcologies[0].prosperity + $GoodWords2 > $AProsperityCap>>
+				<<set $arcologies[0].prosperity = $AProsperityCap>>
+			<<else>>
+				<<set $arcologies[0].prosperity += $GoodWords2>>
+			<</if>>
+		<</link>>
+	<</if>>
+<<elseif $SF.Gift == 0 && ($SF.MercCon.CanAttend > -1 || ($SF.Colonel.Talk + $SF.Colonel.Fun > 0))>>
+	<br>He looks down a list on his tablet. "<<= properTitle()>>, how can $SF.Lower help you this week?
+	<br> <<= App.SF.Caps()>> can spare some profits from our recent operations. | <<link "Request cash" "Firebase">>
+		<<set $CashGift = 25000*($SF.Size/10)*_Env,$SF.Gift = 1,$choice = 1>>
+		<<set $CashGift = ($CashGift > 5000 ? $CashGift : 5000)>>
+		<<run cashX(Math.ceil($CashGift * 0.8), "specialForces")>>
+	<</link>>
+	<<if $rep < 20000>>
+		<br>We can set some units aside for a ceremonial march through the arcology. | <<link "Request a parade" "Firebase">>
+			<<set $GoodWords1 += 50*(Math.ceil($SF.Size*0.03*_Env))>>
+			<<set $GoodWords1 = (Number($GoodWords1) ? $GoodWords1 : 500),$SF.Gift = 1>>
+			<<set $choice = 2>>
+			<<run repX(Math.ceil($GoodWords1*0.8), "specialForces")>>
+		<</link>>
+	<</if>>
+	<<if $arcologies[0].prosperity < $AProsperityCap>>
+		<br>Or we can target rival businesses for sabotage. | <<link "Request sabotage" "Firebase">>
+			<<set $GoodWords2 = _EnvProsp+(Math.ceil($SF.Size/100*_Env)),$SF.Gift = 1,$choice = 3>>
+			<<if $arcologies[0].prosperity + $GoodWords2 * 0.8 > $AProsperityCap>>
+				<<set $arcologies[0].prosperity = $AProsperityCap>>
+			<<else>>
+				<<set $arcologies[0].prosperity += Math.ceil($GoodWords2*0.8)>>
+			<</if>>
+		<</link>>
+	<</if>>
+<</if>>
+
+<<if $SF.Colonel.Talk === 0 && $SF.Colonel.Fun === 0 && $SF.MercCon.CanAttend === -1>> <span id="result0">
+	<br>"If you need me for anything else, let me know."
+	<<= App.SF.fsIntegration()>>
+	<<if $SF.MercCon.History >= 1>> <br>
+		<<link "Mercenary meetup report">>
+			<<replace "#result0">>
+			<br><br>While at the recent merc meetup, The Colonel made @@.yellowgreen;<<print cashFormat(Math.ceil($SF.MercCon.Income))>>@@ selling generic schematics to her friends, <<print num($SF.MercCon.Menials)>> menial slaves were won in a poker game, and <<print num($SF.MercCon.Mercs)>> mercenaries were persuaded to join $SF.Lower.
+			<br>Total earnings thus far: @@.yellowgreen;<<print cashFormat(Math.ceil($SF.MercCon.Revenue))>>@@ in income, <<print num($SF.MercCon.TotalMenials)>> menial slaves and <<print num($SF.MercCon.TotalMercs)>> mercenaries joined across $SF.MercCon.History meetups.
+			<</replace>>
+		<</link>>
+	<</if>>
+
+	<<if $SF.Colonel.Status >= 25>>
+		<br><<link "Walk with The Colonel on the surface">>
+			<<replace "#result0">>
+			<<set $SF.Colonel.Talk = 1, $SF.Colonel.Status += 2, $SF.FS.Tension -= _colonelTalkTensionRuction>>
+			<br><br>You ask The Colonel if she would like to stretch her legs up on the surface. It doesn't take much effort for her to agree.
+			<<if $PC.skill.warfare >= 100 && $PC.career == "mercenary">>
+				Your mastery of wet work and prior experience in a PMC satisfies The Colonel that between you<<if $Bodyguard != 0>>, $Bodyguard.slaveName,<</if>> and her, there should be little threat to walking around the arcology. Being able to see and interact with the arcology owner directly maintains the false idea that you're just like one of them while also giving them an increased opportunity to try gaining your favor.
+				<<run repX(10, "specialForces")>>
+				<<run cashX(_EnvCash2, "specialForces")>>
+			<<elseif $PC.skill.warfare >= 100>>
+				Your mastery of wet work satisfies The Colonel that you only need two soldiers <<if $Bodyguard != 0>> plus $Bodyguard.slaveName<</if>> to walk safely around the arcology. Being able to see and interact with the arcology owner directly maintains the false idea that you're just like one of them while also giving them an increased opportunity to try gaining your favor.
+				<<run repX(5, "specialForces")>>
+				<<run cashX(_EnvCash3, "specialForces")>>
+			<<elseif $PC.skill.warfare >= 60>>
+				With some expertise in warfare, The Colonel believes <<if $Bodyguard != 0>>with $Bodyguard.slaveName <</if>>you only need a squad of armed soldiers for a walk through the arcology.
+			<<elseif $PC.skill.warfare >= 30>>
+				As you have some skill in warfare, The Colonel believes<<if $Bodyguard != 0>> with $Bodyguard.slaveName<</if>> you only need two full squads of armed soldiers for a walk around the arcology.
+			<<elseif $PC.skill.warfare >= 10>>
+				Your minor skill in warfare convinces The Colonel that <<if $Bodyguard != 0>>in addition to $Bodyguard.slaveName, <</if>>you need two full squads of armed soldiers and an armored car escort for a simple walk around the arcology.
+			<<else>>
+				Your complete lack of combat skill convinces The Colonel that <<if $Bodyguard != 0>>in addition to $Bodyguard.slaveName, <</if>>you need two full squads of armed soldiers, an armored car escort, and a sniper overwatch for a simple walk around the arcology.
+			<</if>>
+
+			<br>As you make your way through the arcology you stop at a
+			<<if $arcologies[0].FSPaternalist != "unset">>
+				paternalist shop, <<if $SF.Colonel.Core == "cruel">>earning a sneer from The Colonel<<else>>helping The Colonel select some luxurious and relaxing slave treatments<</if>>.
+			<<elseif $arcologies[0].FSPastoralist != "unset">>
+				pastoralist shop, helping The Colonel select a more comfortable breast pump.
+			<<else>>
+				shop that catches The Colonel's eye.
+			<</if>>
+			<<if $PC.skill.slaving >= 100 && $PC.career == "slaver">>
+				Your mastery and extensive history of slaving allows you to assist The Colonel greatly. The shop owner is so impressed by your understanding of slavery that she asks you for some advice. Before you leave, you manage to pass on a few tips, helping the business with future customers.
+				<<if $arcologies[0].prosperity < $AProsperityCap>>
+					<<set $arcologies[0].prosperity++>>
+				<</if>>
+			<<elseif $PC.skill.slaving >= 100>>
+				Your mastery and extensive history of slaving allows you to assist The Colonel greatly. The shop owner is so impressed by your understanding of slavery that she asks you for some advice. Before you leave, you manage to pass on a few tips, helping the business with future customers.
+				<<if $arcologies[0].prosperity < $AProsperityCap>>
+					<<set $arcologies[0].prosperity++>>
+				<</if>>
+			<<elseif $PC.skill.slaving >= 60>>
+				Your expertise in slavery allows you to help The Colonel decide what to buy for her main slave.
+			<<elseif $PC.skill.slaving >= 30>>
+				Your moderate skill in slavery makes you somewhat helpful to The Colonel in deciding what to buy for her main slave.
+			<<elseif $PC.skill.slaving >= 10>>
+				Your basic skill level of slavery doesn't allow you to help The Colonel at all.
+			<<elseif $PC.skill.slaving < 10>>
+				Your total lack of slavery skill (which is very unusual and very concerning for an arcology owner) means that you are of little to no help or even a hindrance. The shopkeeper notices your complete ineptitude, and as soon as you've left the rumor mill begins.
+				<<run repX(-20, "PCactions")>>
+			<</if>>
+			<br>Soon the entourage heads back to the HQ of $SF.Lower.
+			<<if random(1,100) > 50>>
+				Along the route you see a homeless citizen with a serious injury begging for help.
+				<<if $PC.skill.medicine >= 100 && $PC.career == "medicine">>
+					Your expertise in surgery ensures that the citizen receives the best care they'll ever experience in their life. They are so grateful that they are more than happy to try and compensate your time. Word quickly spreads of the kindly medically trained arcology owner who took the time to heal a citizen, providing confidence to the rest of the citizens.
+					<<run repX(10, "specialForces")>>
+					<<run cashX(_EnvCash4, "specialForces")>>
+				<<elseif $PC.skill.medicine >= 100>>
+					Your expertise in surgery ensures that the citizen receives the best care they'll ever experience in their life. Word quickly spreads of the kindly arcology owner who took the time to heal a citizen.
+					<<run repX(5, "specialForces")>>
+				<<elseif $PC.skill.medicine >= 60>>
+					Your proficiency in surgery allows you to properly close their wound with minimal trauma to the patient.
+				<<elseif $PC.skill.medicine >= 30>>
+					Your moderate surgical skill ensures that you can close the citizen's wound, though not without likely scarring.
+				<<elseif $PC.skill.medicine >= 10>>
+					Your basic surgical skill in medicine is sufficient only to stabilize the citizen's wounds before medical assistance arrives.
+				<<else>>
+					Your total lack of surgical skill causes the death of the citizen through repeated medical blunders.
+					<<set $arcologies[0].prosperity -= .25>>
+				<</if>>
+			<</if>>
+			<</replace>>
+		<</link>>
+	<</if>>
+
+	<br><<link "Talk in $SF.Lower's HQ">>
+		<<replace "#result0">>
+		<span id="result1">
+			<br><br>What do you want to do with The Colonel in the HQ?
+			<br><<link "Talk">>
+				<<replace "#result1">>
+				<<set $SF.Colonel.Talk = 1, $SF.Colonel.Status += 3, $SF.FS.Tension -= _colonelTalkTensionRuction>>
+				<br><br>You and The Colonel talk over some $PC.refreshment, where she ends up talking about her past. You learn a little more about her.
+				<<switch random(1,6)>>
+				<<case 1>>
+					<<= IncreasePCSkills(['medicine', 'trading', 'slaving'], 1)>>
+				<<case 2>>
+					<<= IncreasePCSkills(['trading', 'slaving', 'engineering'], 1)>>
+				<<case 3>>
+					<<= IncreasePCSkills(['slaving', 'engineering', 'hacking'], 1)>>
+				<<case 4>>
+					<<= IncreasePCSkills(['engineering', 'hacking', 'warfare'], 1)>>
+				<<case 5>>
+					<<= IncreasePCSkills(['hacking', 'warfare', 'medicine'], 1)>>
+				<<case 6>>
+					<<= IncreasePCSkills(['warfare', 'medicine', 'trading'], 1)>>
+				<</switch>>
+				<</replace>>
+			<</link>>
+
+			<br><<link "Learn">>
+				<<replace "#result1">>
+				<<set $SF.Colonel.Talk = 1,$SF.Colonel.Status += 1, $SF.FS.Tension -= _colonelTalkTensionRuction>>
+				<br><br>"Sure boss, I can use a break from all of this," she laughs. The Colonel tells a story about one time when she
+				<<switch random(1,6)>>
+				<<case 1>>
+					used field medicine to save another merc's life, teaching you some medical procedures in the process.
+					<<= IncreasePCSkills('medicine', 5)>>
+				<<case 2>>
+					haggled for necessary gear with a stingy quartermaster, teaching you how to get what you want from traders.
+					<<= IncreasePCSkills('trading', 5)>>
+				<<case 3>>
+					found a load of human chattel in a raid and had to manage them before they could later be unloaded, teaching you how to better care for your slaves.
+					<<= IncreasePCSkills('slaving', 5)>>
+				<<case 4>>
+					was responsible for rebuilding a fort she had seized, teaching you how to better manage construction in your arcology.
+					<<= IncreasePCSkills('engineering', 5)>>
+				<<case 5>>
+					was forced to hack her way out of a trap, teaching you how to better penetrate digital security.
+					<<= IncreasePCSkills('hacking', 5)>>
+				<<case 6>>
+					fought off an entire battalion with only a small squad, teaching you how to think tactically in battle.
+					<<= IncreasePCSkills('warfare', 5)>>
+				<</switch>>
+				<</replace>>
+			<</link>>
+
+			<<if $SF.Colonel.Status >= 45>>
+				<br><<link "Have some fun">>
+					<<replace "#result1">>
+					<span id="result4">
+						<<set $SF.Colonel.Fun = 1,$SF.Colonel.Talk = 1,$SF.Colonel.Status += 3, $SF.FS.Tension -= _colonelTalkTensionRuction>>
+						<br>Where should this fun take place?
+						<<link "Go back" "Firebase">>
+							<<set $SF.Colonel.Fun = 0, $SF.Colonel.Talk = 0,$SF.Colonel.Status -= 3, $SF.FS.Tension += _colonelTalkTensionRuction>>
+						<</link>>
+						<br><<link "In private">>
+							<<replace "#result4">>
+							<span id="result6">
+								<br>Which orifice do you wish to target?
+								<<link "Go back" "Firebase">>
+								<</link>>
+								<br><<link "Pussy">>
+									<<replace "#result6">>
+									<<include "SFColonelSexDec">>
+									<</replace>>
+									<<set $SF.Colonel.Fun += 1>>
+								<</link>>
+								<br><<link "Ass">>
+									<<replace "#result6">>
+									<<include "SFColonelSexDec">>
+									<</replace>>
+									<<set $SF.Colonel.Fun += 1>>
+								<</link>>
+								<br><<link "Both pussy and ass">>
+									<<replace "#result6">>
+									<<include "SFColonelSexDec">>
+									<</replace>>
+									<<set $SF.Colonel.Fun += 2>>
+								<</link>>
+								<br><<link "Mouth">>
+									<<replace "#result6">>
+									<<include "SFColonelSexDec">>
+									<</replace>>
+									<<set $SF.Colonel.Fun += 1>>
+								<</link>>
+								<br><<link "All three holes">>
+									<<replace "#result6">>
+									<<include "SFColonelSexDec">>
+									<</replace>>
+									<<set $SF.Colonel.Fun += 3>>
+								<</link>>
+							</span>
+							<</replace>>
+						<</link>>
+
+						<br><<link "On The Colonel's throne">>
+							<<replace "#result4">>
+							<span id="result6">
+								<br>Which orifice do you wish to target?
+								<<link "Go back" "Firebase">>
+								<</link>>
+								<br><<link "Pussy">>
+									<<replace "#result6">>
+									<<include "SFColonelSexDec">>
+									<</replace>>
+									<<set $SF.Colonel.Fun += 1>>
+								<</link>>
+								<br><<link "Ass">>
+									<<replace "#result6">>
+									<<include "SFColonelSexDec">>
+									<</replace>>
+									<<set $SF.Colonel.Fun += 1>>
+								<</link>>
+								<br><<link "Both pussy and ass">>
+									<<replace "#result6">>
+									<<include "SFColonelSexDec">>
+									<</replace>>
+									<<set $SF.Colonel.Fun += 2>>
+								<</link>>
+								<br><<link "Mouth">>
+									<<replace "#result6">>
+									<<include "SFColonelSexDec">>
+									<</replace>>
+									<<set $SF.Colonel.Fun += 1>>
+								<</link>>
+								<br><<link "All three holes">>
+									<<replace "#result6">>
+									<<include "SFColonelSexDec">>
+									<</replace>>
+									<<set $SF.Colonel.Fun += 3>>
+								<</link>>
+							</span>
+							<</replace>>
+						<</link>>
+					</span>
+					<</replace>>
+				<</link>>
+			<</if>> /*Closes fun*/
+		</span>
+		<</replace>>
+		<</link>> /*Closes talk*/
+	</span>
+<</if>> /*Closes spend time with The Colonel*/

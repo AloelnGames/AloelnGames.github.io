@@ -1,0 +1,913 @@
+:: Costs Report [nobr]
+
+<<set $nextButton = "Back to Main", $nextLink = "Main",_arcologyCosts = 0>>
+<<set _arcologyCosts = 0>>
+<<if $PCSlutContacts == 0>><<set $PCSlutContacts = 1>><</if>>
+/*
+//Your weekly costs are as follows.//
+
+<br><br>
+
+Since you are
+<<if $PC.rules.living == "luxurious">>
+	accustomed to luxury,
+	<<set _ownerExpense = 3>>
+<<elseif $PC.rules.living == "normal">>
+	used to living well,
+	<<set _ownerExpense = 2>>
+<<else>>
+	used to a fairly normal life,
+	<<set _ownerExpense = 1>>
+<</if>>
+your personal living expenses are @@.yellowgreen;<<print cashFormat(Math.trunc(_ownerExpense*(250+(50000/$localEcon))))>>.@@
+<<set _arcologyCosts += Math.trunc(_ownerExpense*(250+(50000/$localEcon)))>>
+
+<<if $arcologies[0].FSRepopulationFocusLaw == 1 && $PC.pregKnown == 1>>
+	<br>Rent promotion for being a pregnant citizen under ''Universal Pregnancy Subsidy:'' @@.yellowgreen;<<print cashFormat(500)>>@@
+	<<set _arcologyCosts += 500>>
+<</if>>
+
+<<if $PC.preg == -1>>
+	<br>Your contraceptives expenses: @@.yellowgreen;<<print cashFormat(25)>>@@
+	<<set _arcologyCosts += 25>>
+<<elseif $PC.fertDrugs == 1>>
+	<br>Your fertility regimen: @@.yellowgreen;<<print cashFormat(50)>>@@
+	<<set _arcologyCosts += 50>>
+<<elseif $PC.preg >= 16>>
+	<br>Increased living expenses due to being pregnant: @@.yellowgreen;<<print cashFormat(100)>>@@
+	<<set _arcologyCosts += 100>>
+<</if>>
+<<if $PC.staminaPills == 1>>
+	<br>Your stamina pills: @@.yellowgreen;<<print cashFormat(50)>>@@
+	<<set _arcologyCosts += 50>>
+<</if>>
+
+<<if $PC.actualAge >= $IsInPrimePC && $PC.actualAge < $IsPastPrimePC>>
+	<<if ($personalAttention == "trading") || ($personalAttention == "warfare") || ($personalAttention == "slaving") || ($personalAttention == "engineering") || ($personalAttention == "medicine") || ($personalAttention == "hacking")>>
+		<br><br>
+		<<set _cost = 10000*$AgeEffectOnTrainerPricingPC,_arcologyCosts += _cost>>
+		<<switch $personalAttention>>
+			<<case trading>>
+				__Trading__
+			<<case warfare>>
+				__Warfare__
+			<<case slaving>>
+				__Slaving__
+			<<case engineering>>
+				__Engineering__
+			<<case medicine>>
+				__Medicine__
+			<<case hacking>>
+				__Hacking__
+		<</switch>>
+		Trainer Fees: @@.yellowgreen;<<print cashFormat(_cost)>>@@
+	<</if>>
+<</if>>
+
+<<if $breederOrphanageTotal > 0>><<set _breederTuition = 50>><<else>><<set _breederTuition = 0>><</if>>
+<<if $citizenOrphanageTotal+$privateOrphanageTotal+$breederOrphanageTotal > 0>>
+	<br> __Orphanage__ fee: @@.yellowgreen;<<print cashFormat($citizenOrphanageTotal*100+$privateOrphanageTotal*500+_breederTuition)>>@@
+	<<set _arcologyCosts += $citizenOrphanageTotal*100+$privateOrphanageTotal*500+_breederTuition>>
+	<<if $citizenOrphanageTotal > 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;Citizen: @@.yellowgreen;<<print cashFormat(100)>>@@ per child. Currently <<print num($citizenOrphanageTotal)>> are being taught, bringing the total to @@.yellowgreen;<<print cashFormat($citizenOrphanageTotal*100)>>.@@
+	<</if>>
+	<<if $privateOrphanageTotal > 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;Private: @@.yellowgreen;<<print cashFormat(500)>>@@ per child. Currently <<print num($privateOrphanageTotal)>> are being taught, bringing the total to @@.yellowgreen;<<print cashFormat($privateOrphanageTotal*500)>>.@@
+	<</if>>
+	<<if $breederOrphanageTotal > 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;Since <<print num($breederOrphanageTotal)>> of your slaves' children are being raised into productive members of society in a society funded school, you pay a flat @@.yellowgreen;<<print cashFormat(50)>>@@ usage fee.
+	<</if>>
+<</if>>
+
+<<if $peacekeepers != 0 && $peacekeepers.undermining != 0>>
+	<br> <<print cashFormat($peacekeepers.undermining)>> to undermine political support for the nearby old world peacekeeping mission.
+	<<set _arcologyCosts += $peacekeepers.undermining>>
+<</if>>
+
+<<if $SF.Toggle && $SF.Active >= 1 && $SF.Subsidy > 0>> <<= App.SF.Count()>>
+	<br>__Financially supporting $SF.Lower until self sufficiency:__ <<print cashFormat(Math.ceil(_SFSubsidy))>>
+	<<set _arcologyCosts += Math.ceil(_SFSubsidy)>>
+<</if>>
+<<if $mercenaries > 0>>
+	<<set _mercCosts = $mercenaries*2000>>
+	<<if $barracks>><<set _mercCosts *= 0.5>><</if>>
+	<<if ($PC.skill.warfare >= 100) || ($PC.career == "arcology owner")>><<set _mercCosts *= 0.5>><</if>>
+	<br>__Mercenary Expenses__: @@.yellowgreen;<<print cashFormat(_mercCosts)>>@@
+	<<if $barracks>><<else>>//@@.red;Increased by the lack of a barracks.@@//<</if>>
+	<<if ($PC.skill.warfare >= 100) || ($PC.career == "arcology owner")>>//Reduced by your @@.springgreen;mercenary contacts.@@//<</if>>
+	<<set _arcologyCosts += _mercCosts>>
+<</if>>
+
+<<if $citizenRetirementMenials == 1>>
+	<br>__Menial Slave Retirement Premiums__:
+	<<if $CitizenRetirement == 1>>
+		<<set _citizenRetirementMenialsCost = $menials * 2>>
+	<<else>>
+		<<set _citizenRetirementMenialsCost = ($menials + $slaves.length) * 2>>
+	<</if>>
+	<<set _arcologyCosts += _citizenRetirementMenialsCost>>
+	@@.yellowgreen;<<print cashFormat(_citizenRetirementMenialsCost)>>@@
+<</if>>
+
+<<if $rations > 0>>
+	<<set _rationsPrice = ($rations*1000)>> /* this number may need tweaking *//*
+	<br>__Rations__:
+	@@.yellowgreen;<<print cashFormat(_rationsPrice)>>@@
+<</if>>
+
+<<if $brothel > 0 || $club > 0 || $arcade > 0 || $dairy > 0 || $farmyard > 0>>
+	<br><br>__Arcology Building Maintenance__:
+	<<if $brothel > 0>>
+		<<set _advertising = 0>>
+		<<if $brothelAdsSpending > 0>>
+			<<set _advertising = $brothelAdsSpending>>
+		<</if>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		Brothel: @@.yellowgreen;<<print cashFormat(($brothel*$facilityCost)+(0.1*$brothelUpgradeDrugs*$brothel*$facilityCost)+_advertising)>>@@
+		<<set _arcologyCosts += ($brothel*$facilityCost)+(0.1*$brothelUpgradeDrugs*$brothel*$facilityCost)+_advertising>>
+	<</if>>
+	<<if $club > 0>>
+		<<set _advertising= 0>>
+		<<if $clubAdsSpending > 0>>
+			<<set _advertising = $clubAdsSpending>>
+		<</if>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		Club: @@.yellowgreen;<<print cashFormat(($club*$facilityCost)+(0.2*$clubUpgradePDAs*$club*$facilityCost)+_advertising)>>@@
+		<<set _arcologyCosts += ($club*$facilityCost)+(0.2*$clubUpgradePDAs*$club*$facilityCost)+_advertising>>
+	<</if>>
+	<<if $arcade > 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		Arcade: @@.yellowgreen;<<print cashFormat((0.5*$arcade*$facilityCost)+(0.2*$arcadeUpgradeInjectors*$arcade*$facilityCost)+(0.2*$arcadeUpgradeCollectors*$arcade*$facilityCost))>>@@
+		<<set _arcologyCosts += (0.5*$arcade*$facilityCost)+(0.2*$arcadeUpgradeInjectors*$arcade*$facilityCost)+(0.2*$arcadeUpgradeCollectors*$arcade*$facilityCost)>>
+	<</if>>
+	<<if $dairy > 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		Dairy: @@.yellowgreen;<<print cashFormat(($dairy*$facilityCost)+(0.2*$dairyFeedersUpgrade*$dairy*$facilityCost)+(0.1*$dairyPregUpgrade*$dairy*$facilityCost))>>@@
+		<<set _arcologyCosts += ($dairy*$facilityCost)+(0.2*$dairyFeedersUpgrade*$dairy*$facilityCost)+(0.1*$dairyPregUpgrade*$dairy*$facilityCost)>>
+		<<if $bioreactorsXY+$bioreactorsXX+$bioreactorsHerm+$bioreactorsBarren > 0>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			Additional maintenance for milking machines upgraded with biological components: @@.yellowgreen;<<print cashFormat(($bioreactorsXY+$bioreactorsXX+$bioreactorsHerm+$bioreactorsBarren)*100)>>@@
+			<<set _arcologyCosts += ($bioreactorsXY+$bioreactorsXX+$bioreactorsHerm+$bioreactorsBarren)*100>>
+		<</if>>
+	<</if>>
+	<<if $farmyard > 0>> /*TODO: this will also need to be expanded */
+		/*<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		Farmyard: @@.yellowgreen;<<print cashFormat($farmyard*$facilityCost)>>@@
+		<<set _arcologyCosts += $farmyard*$facilityCost>>
+	<</if>>
+<</if>>
+
+<<if ($servantsQuarters > 0 && $servantsQuartersUpgradeMonitoring > 0) ||
+$nursery > 0 || $masterSuiteUpgradePregnancy > 0 || $incubator > 0 ||
+$researchLab.level > 0>>
+<br>__Penthouse Facility Maintenance__:
+	<<if ($servantsQuarters > 0) && ($servantsQuartersUpgradeMonitoring > 0)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		Servants' Quarters: @@.yellowgreen;<<print cashFormat((0.2*$servantsQuartersUpgradeMonitoring*$servantsQuarters*$facilityCost))>>@@
+		<<set _arcologyCosts += 0.2*$servantsQuartersUpgradeMonitoring*$servantsQuarters*$facilityCost>>
+	<</if>>
+	<<if $nursery > 0>> /*TODO: this will definitely need to be expanded to take into account the number of children and other factors */
+		/*<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		Nursery: @@.yellowgreen;<<print cashFormat($nursery*$facilityCost)>>@@
+		<<set _arcologyCosts += $nursery*$facilityCost>>
+	<</if>>
+	<<if ($masterSuiteUpgradePregnancy > 0)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		Master Suite: @@.yellowgreen;<<print cashFormat(((500*$masterSuiteUpgradePregnancy) + (1000*$masterSuitePregnancyFertilitySupplements)))>>@@
+		<<set _arcologyCosts += ((500*$masterSuiteUpgradePregnancy) + (1000*$masterSuitePregnancyFertilitySupplements))>>
+	<</if>>
+	<<if $incubator > 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		Incubation Facility: @@.yellowgreen;<<print cashFormat((10*$incubator*$facilityCost)+(0.2*$incubatorUpgradeWeight*$incubator*$facilityCost)+(0.2*$incubatorUpgradeMuscles*$incubator*$facilityCost)+(0.2*$incubatorUpgradeReproduction*$incubator*$facilityCost)+(0.2*$incubatorUpgradeGrowthStims*$incubator*$facilityCost)+(0.5*$incubatorUpgradeSpeed*$incubator*$facilityCost))>>@@
+		<<set _arcologyCosts += (10*$incubator*$facilityCost)+(0.2*$incubatorUpgradeWeight*$incubator*$facilityCost)+(0.2*$incubatorUpgradeMuscles*$incubator*$facilityCost)+(0.2*$incubatorUpgradeReproduction*$incubator*$facilityCost)+(0.2*$incubatorUpgradeGrowthStims*$incubator*$facilityCost)+(0.5*$incubatorUpgradeSpeed*$incubator*$facilityCost)>>
+		<<if $incubatorWeightSetting+$incubatorMusclesSetting+$incubatorReproductionSetting > 0>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;Additional monitoring and maintenance costs for growing children: @@.yellowgreen;<<print cashFormat((($incubatorWeightSetting+$incubatorMusclesSetting+$incubatorReproductionSetting+$incubatorGrowthStimsSetting)*500))>>@@
+			<<set _arcologyCosts += (($incubatorWeightSetting+$incubatorMusclesSetting+$incubatorReproductionSetting+$incubatorGrowthStimsSetting)*500)>>
+		<</if>>
+	<</if>>
+	<<if $researchLab.level > 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		Prosthetic Lab: @@.yellowgreen;<<print cashFormat((100*$researchLab.maxSpace))>>@@
+		<<set _arcologyCosts += 100*$researchLab.maxSpace>>
+		<<if $researchLab.hired != 0>><br>&nbsp;&nbsp;&nbsp;&nbsp;Scientists: @@.yellowgreen;<<print cashFormat((300*$researchLab.hired))>>@@
+		<<set _arcologyCosts += 300*$researchLab.hired>> <</if>>
+		<<if $researchLab.menials != 0>><br>>&nbsp;&nbsp;&nbsp;&nbsp;Menial Slaves: @@.yellowgreen;<<print cashFormat((100*$researchLab.menials))>>@@
+		<<set _arcologyCosts += 100*$researchLab.menials>> <</if>>
+	<</if>>
+<</if>>
+
+/* security expansion */
+/*<<if $secExp > 0>>
+	<br><br>
+	<<if $edictsUpkeep + $SFSupportUpkeep > 0>>
+		__Edicts Upkeep__: @@.yellowgreen;<<print cashFormat($edictsUpkeep + $SFSupportUpkeep)>>@@
+		<<set _arcologyCosts += ($edictsUpkeep + $SFSupportUpkeep)>>
+	<</if>>
+	<<if $propHub != 0 || $secHQ != 0 || $secBarracks != 0 || $riotCenter != 0>>
+		<br>__Security Apparatus Maintenance Costs__:
+		<<if $propHub != 0>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			Propaganda Hub: @@.yellowgreen;<<print cashFormat($propHubUpkeep)>>@@
+			<<set _arcologyCosts += $propHubUpkeep>>
+		<</if>>
+		<<if $secHQ != 0>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			Security Headquarters: @@.yellowgreen;<<print cashFormat(($secHQUpkeep)+(20*$secMenials))>>@@
+			<<set _arcologyCosts += ($secHQUpkeep)+(20*$secMenials)>>
+		<</if>>
+		<<if $secBarracks != 0>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			Barracks: @@.yellowgreen;<<print cashFormat($secBarracksUpkeep)>>@@
+			<<set _arcologyCosts += $secBarracksUpkeep>>
+		<</if>>
+		<<if $riotCenter != 0>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			Riot Control Center: @@.yellowgreen;<<print cashFormat($riotUpkeep)>>@@
+			<<set _arcologyCosts += $riotUpkeep>>
+		<</if>>
+	<</if>>
+
+	<<if $soldierWages == 0>>
+		<<set _soldierMod = 1>>
+	<<elseif $soldierWages == 1>>
+		<<set _soldierMod = 1.5>>
+	<<else>>
+		<<set _soldierMod = 2>>
+	<</if>>
+	<<set _milTotal = 0, _slaveTotal = 0, _mercTotal = 0, _numItems = 0>>
+	<<if $militiaUnits.length > 0>>
+		<br>__Militia Platoons Upkeep__:
+		<<for _i = 0; _i < $militiaUnits.length; _i++>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<i> <<print ordinalSuffix($militiaUnits.length-[_i])>>:</i> @@.yellowgreen;<<print cashFormat($militiaUnits[_i].troops*$soldierUpkeep * _soldierMod)>>@@
+			<<set _milTotal += $militiaUnits[_i].troops*$soldierUpkeep * _soldierMod>>
+			<<set _numItems += 1>>
+		<</for>>
+		<br><br>&nbsp;&nbsp;&nbsp;&nbsp;''Total: @@.yellowgreen;<<print cashFormat(_milTotal)>>@@''
+	<</if>>
+	<<if $slaveUnits.length > 0>>
+		<br>__Slave Platoons Upkeep__:
+		<<for _i = 0; _i < $slaveUnits.length; _i++>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<i> <<print ordinalSuffix($slaveUnits.length-[_i])>>:</i> @@.yellowgreen;<<print cashFormat($slaveUnits[_i].troops*$soldierUpkeep * 0.5 * _soldierMod)>>@@
+			<<set _slaveTotal += $slaveUnits[_i].troops*$soldierUpkeep * 0.5 * _soldierMod>>
+		<</for>>
+		<br><br>&nbsp;&nbsp;&nbsp;&nbsp;''Total: @@.yellowgreen;<<print cashFormat(_slaveTotal)>>@@''
+	<</if>>
+	<<if $mercUnits.length > 0>>
+		<br>__Mercenary Platoons Upkeep__:
+		<<for _i = 0; _i < $mercUnits.length; _i++>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<i> <<print ordinalSuffix($mercUnits.length-[_i])>>:</i> @@.yellowgreen;<<print cashFormat($mercUnits[_i].troops*$soldierUpkeep * 1.5 * _soldierMod)>>@@
+			<<set _mercTotal += $mercUnits[_i].troops*$soldierUpkeep * 1.5 * _soldierMod>>
+		<</for>>
+		<br><br>&nbsp;&nbsp;&nbsp;&nbsp;''Total: @@.yellowgreen;<<print cashFormat(_mercTotal)>>@@''
+		<<if (_milTotal+_slaveTotal+_mercTotal) > 0>>
+			<br>__Total Defense Force Upkeep__: @@.yellowgreen;<<print cashFormat(_milTotal+_slaveTotal+_mercTotal)>>@@
+			<<set _arcologyCosts += (_milTotal+_slaveTotal+_mercTotal)>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $econWeatherDamage && $disasterResponse > 0>>
+	<<set _DRUUpkeep = Math.trunc($disasterResponse * 200000 / $localEcon)>>
+	<br>__Disaster Response Unit Expenses__: @@.yellowgreen;<<print cashFormat(_DRUUpkeep)>>@@
+	<<set _arcologyCosts += _DRUUpkeep>>
+<</if>>
+<<if $antiWeatherFreeze > 0>>
+	<<set _AWFUpkeep = Math.trunc($antiWeatherFreeze * 200000 / $localEcon)>>
+	<br>__Passenger Upgrades Expenses__: @@.yellowgreen;<<print cashFormat(_AWFUpkeep)>>@@
+	<<set _arcologyCosts += _AWFUpkeep>>
+<</if>>
+<<if $FSSpending != 0>>
+	<br>__Society Shaping Expenses__: @@.yellowgreen;<<print cashFormat($FSSpending)>>@@
+	<<set _arcologyCosts += $FSSpending>>
+<</if>>
+<<if $Recruiter != 0>>
+	<br>__Recruiting Expenses__: @@.yellowgreen;<<print cashFormat(250)>>@@
+	<<set _arcologyCosts += 250>>
+<</if>>
+
+<<set _schoolPresent = 0, _schoolSubsidy = 0>>
+<<if ($TSS.schoolPresent > 0)>>
+	<<set _school = "The Slavegirl School">>
+	<<set _schoolPresent = 1>>
+	<<if $TSS.subsidize != 0>>
+		<<set _schoolSubsidy = 1>>
+	<</if>>
+<</if>>
+<<if ($GRI.schoolPresent > 0)>>
+	<<set _school = "Growth Research Institute">>
+	<<set _schoolPresent = 1>>
+	<<if $GRI.subsidize != 0>>
+		<<set _schoolSubsidy = 1>>
+	<</if>>
+<</if>>
+<<if ($SCP.schoolPresent > 0)>>
+	<<set _school = "St. Claver Preparatory">>
+	<<set _schoolPresent = 1>>
+	<<if $SCP.subsidize != 0>>
+		<<set _schoolSubsidy = 1>>
+	<</if>>
+<</if>>
+<<if ($LDE.schoolPresent > 0)>>
+	<<set _school = "L'École des Enculées">>
+	<<set _schoolPresent = 1>>
+	<<if $LDE.subsidize != 0>>
+		<<set _schoolSubsidy = 1>>
+	<</if>>
+<</if>>
+<<if ($TGA.schoolPresent > 0)>>
+	<<set _school = "The Gymnasium-Academy">>
+	<<set _schoolPresent = 1>>
+	<<if $TGA.subsidize != 0>>
+		<<set _schoolSubsidy = 1>>
+	<</if>>
+<</if>>
+<<if ($HA.schoolPresent > 0)>>
+	<<set _school = "The Hippolyta Academy">>
+	<<set _schoolPresent = 1>>
+	<<if $HA.subsidize != 0>>
+		<<set _schoolSubsidy = 1>>
+	<</if>>
+<</if>>
+<<if ($TCR.schoolPresent > 0)>>
+	<<set _school = "The Cattle Ranch">>
+	<<set _schoolPresent = 1>>
+	<<if $TCR.subsidize != 0>>
+		<<set _schoolSubsidy = 1>>
+	<</if>>
+<</if>>
+<<if ($TFS.schoolPresent > 0)>>
+	<<set _school = "The Futanari Sisters">>
+	<<set _schoolPresent = 1>>
+	<<if $TFS.subsidize != 0>>
+		<<set _schoolSubsidy = 1>>
+	<</if>>
+<</if>>
+<<if ($NUL.schoolPresent > 0)>>
+	<<set _school = "Nueva Universidad de Libertad">>
+	<<set _schoolPresent = 1>>
+	<<if $NUL.subsidize != 0>>
+		<<set _schoolSubsidy = 1>>
+	<</if>>
+<</if>>
+
+<<if _schoolPresent > 0>>
+	<<if _school == "Growth Research Institute">>
+		<br>
+		__<<print _school>> Subsidiary Lab Upkeep__: @@.yellowgreen;<<print cashFormat(1000)>>@@
+		<<set _arcologyCosts += 1000>>
+		<<if _schoolSubsidy > 0>>
+			<br>
+			__<<print _school>> Subsidiary Lab Influence__: @@.yellowgreen;<<print cashFormat(1000)>>@@
+		<</if>>
+	<<elseif _school == "The Cattle Ranch">>
+		<br>
+		__<<print _school>> Local Pasture Upkeep__: @@.yellowgreen;<<print cashFormat(1000)>>@@
+		<<set _arcologyCosts += 1000>>
+		<<if _schoolSubsidy > 0>>
+			<br>
+			__<<print _school>> Local Pasture Influence__: @@.yellowgreen;<<print cashFormat(1000)>>@@
+		<</if>>
+	<<elseif _school == "The Futanari Sisters">>
+		<br>
+		__<<print _school>> Community Upkeep__: @@.yellowgreen;<<print cashFormat(1000)>>@@
+		<<set _arcologyCosts += 1000>>
+		<<if _schoolSubsidy > 0>>
+			<br>
+			__<<print _school>> Community Influence__: @@.yellowgreen;<<print cashFormat(1000)>>@@
+		<</if>>
+	<<else>>
+		<br>
+		__<<print _school>> Branch Campus Upkeep__: @@.yellowgreen;<<print cashFormat(1000)>>@@
+		<<set _arcologyCosts += 1000>>
+		<<if _schoolSubsidy > 0>>
+			<br>
+			__<<print _school>> Branch Campus Influence__: @@.yellowgreen;<<print cashFormat(1000)>>@@
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $alwaysSubsidizeGrowth > 0 || $alwaysSubsidizeRep > 0 || $RegularParties > 0>>
+	<br>__Weekly Costs__:
+	<<if $alwaysSubsidizeGrowth > 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;Arcology Growth Subsidy: @@.yellowgreen;<<print cashFormat($policyCost)>>@@
+		<<set _arcologyCosts += $policyCost>>
+	<</if>>
+	<<if $alwaysSubsidizeRep > 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;Self-promotion Budget: @@.yellowgreen;<<print cashFormat($policyCost)>>@@
+		<<set _arcologyCosts += $policyCost>>
+	<</if>>
+	<<if $RegularParties > 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;Social Gatherings: @@.yellowgreen;<<print cashFormat($policyCost)>>@@
+		<<set _arcologyCosts += $policyCost>>
+	<</if>>
+<</if>>
+
+<<if $ProImmigrationCash == 1>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Pro-immigration Promotion Budget: @@.yellowgreen;<<print cashFormat($policyCost)>>@@
+	<<set _arcologyCosts += $policyCost>>
+<</if>>
+<<if $AntiEnslavementCash == 1>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Anti-enslavement Charity Budget: @@.yellowgreen;<<print cashFormat($policyCost)>>@@
+	<<set _arcologyCosts += $policyCost>>
+<</if>>
+
+<<if $CoursingAssociation == 1>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Coursing Association Membership: @@.yellowgreen;<<print cashFormat(1000)>>@@
+	<<set _arcologyCosts += 1000>>
+<</if>>
+
+<br><br>
+
+''Overall Arcology Costs:'' @@.yellowgreen;<<print cashFormat(_arcologyCosts)>>@@
+
+<br><br>
+
+<<set _total = 0>> <<set _SL = $slaves.length>>
+<<for $i = 0; $i < _SL; $i++>>
+	<<set _individualCosts = 0>>
+	''$slaves[$i].slaveName'':
+	<<switch $slaves[$i].assignment>>
+		<<case "be confined in the arcade">>
+			<<set _livingExpense = ($rulesCost*.75)>>
+		<<case "work in the dairy">>
+			<<if $dairyRestraintsSetting >= 2>>
+				<<set _livingExpense = ($rulesCost*.75)>>
+			<<elseif $slaves[$i].rules.living == "normal">>
+				<<set _livingExpense = ($rulesCost*1.5)>>
+			<<elseif $dairyDecoration == "Degradationist">>
+				<<set _livingExpense = ($rulesCost*.9)>>
+			<<else>>
+				<<set _livingExpense = $rulesCost>>
+			<</if>>
+		<<case "work as a farmhand">>
+			<<if $slaves[$i].rules.living == "luxurious">>
+				<<set _livingExpense = ($rulesCost)>>
+			<<elseif $slaves[$i].rules.living == "normal">>
+				<<set _livingExpense = ($rulesCost*2)>>
+			<<else>>
+				<<set _livingExpense = ($rulesCost*.9)>>
+			<</if>>
+		<<case "work in the brothel">>
+			<<if $slaves[$i].rules.living == "normal">>
+				<<set _livingExpense = ($rulesCost*1.5)>>
+			<<else>>
+				<<set _livingExpense = $rulesCost>>
+			<</if>>
+		<<case "serve in the club" "learn in the schoolroom">>
+			<<set _livingExpense = ($rulesCost*1.5)>>
+		<<case "get treatment in the clinic">>
+			<<if $slaves[$i].rules.living == "luxurious">>
+				<<set _livingExpense = ($rulesCost*2)>>
+			<<elseif $slaves[$i].rules.living == "normal">>
+				<<set _livingExpense = ($rulesCost*1.5)>>
+			<<else>>
+				<<set _livingExpense = $rulesCost>>
+			<</if>>
+		<<case "rest in the spa" "work as a nanny">>
+			<<if $slaves[$i].rules.living == "luxurious">>
+				<<set _livingExpense = ($rulesCost*1.75)>>
+			<<elseif $slaves[$i].rules.living == "normal">>
+				<<set _livingExpense = ($rulesCost*1.5)>>
+			<<else>>
+				<<set _livingExpense = $rulesCost>>
+			<</if>>
+		<<case "be a servant">>
+			<<if $slaves[$i].rules.living == "normal">>
+				<<set _livingExpense = ($rulesCost*1.5)>>
+			<<else>>
+				<<if $servantsQuartersDecoration == "Degradationist">>
+					<<set _livingExpense = ($rulesCost*.9)>>
+				<<else>>
+					<<set _livingExpense = $rulesCost>>
+				<</if>>
+			<</if>>
+		<<case "be confined in the cellblock">>
+			<<if $slaves[$i].rules.living == "normal">>
+				<<set _livingExpense = ($rulesCost*1.25)>>
+			<<else>>
+				<<set _livingExpense = ($rulesCost*.9)>>
+			<</if>>
+		<<case "be the Madam" "be the DJ" "be the Nurse" "be the Wardeness" "be the Attendant" "be the Matron" "be the Schoolteacher" "be the Stewardess" "be the Milkmaid" "be the Farmer">>
+			<<set _livingExpense = ($rulesCost*2)>>
+		<<default>>
+			<<if $slaves[$i].rules.living == "luxurious">>
+				<<if $slaves[$i].relationship >= 4>>
+					<<set _livingExpense = ($rulesCost*3)>>
+				<<else>>
+					<<set _livingExpense = ($rulesCost*4)>>
+				<</if>>
+			<<elseif $slaves[$i].rules.living == "normal">>
+				<<set _livingExpense = ($rulesCost*2)>>
+			<<else>>
+				<<set _livingExpense = $rulesCost>>
+			<</if>>
+	<</switch>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Living expenses:</i> @@.yellowgreen;<<print cashFormat(_livingExpense)>>@@
+	<<set _individualCosts += _livingExpense>>
+
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Basic slave food cost:</i> @@.yellowgreen;<<print cashFormat($foodCost*4)>>@@
+	<<set _individualCosts += $foodCost*4>>
+	<<switch $slaves[$i].diet>>
+		<<case "fattening" "muscle building">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Heavy diet:</i> @@.yellowgreen;<<print cashFormat($foodCost)>>@@
+			<<set _individualCosts += $foodCost>>
+		<<case "restricted" "slimming">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Light diet: //reduced by//</i> @@.yellowgreen;<<print cashFormat($foodCost)>>@@
+			<<set _individualCosts -= $foodCost>>
+	<</switch>>
+	<<if $slaves[$i].weight > 130 || $slaves[$i].weight > 50 || $slaves[$i].weight < -50>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Caloric adjustment for</i>
+		<<if $slaves[$i].weight > 130>>
+			<i>heavy weight:</i> @@.yellowgreen;<<print cashFormat($foodCost*2)>>@@
+			<<set _individualCosts += $foodCost*2>>
+		<<elseif $slaves[$i].weight > 50>>
+			<i>high weight:</i> @@.yellowgreen;<<print cashFormat($foodCost)>>@@
+			<<set _individualCosts += $foodCost>>
+		<<elseif $slaves[$i].weight < -50>>
+			<i>light weight:</i> //reduced by// @@.yellowgreen;<<print cashFormat($foodCost)>>@@
+			<<set _individualCosts -= $foodCost>>
+		<</if>>
+	<</if>>
+	<<if ($slaves[$i].geneticQuirks.fertility == 2 && $slaves[$i].geneticQuirks.hyperFertility == 2 && $slaves[$i].preg == 0 && ($slaves[$i].ovaries == 1 || $slaves[$i].mpreg == 1))>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<if $geneticMappingUpgrade >= 1>>
+			<i>Additional dietary supplements due to genetic hyper-fertility:</i> @@.yellowgreen;<<print cashFormat($foodCost/2)>>@@
+		<<else>>
+			<i>Adjustment for unusual deitary deficiencies:</i> @@.yellowgreen;<<print cashFormat($foodCost/2)>>@@
+		<</if>>
+		<<set _individualCosts += $foodCost/2>>
+	<</if>>
+	<<if ($slaves[$i].geneticQuirks.macromastia == 2)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<if $geneticMappingUpgrade >= 1>>
+			<i>Additional dietary supplements due to macromastia:</i> @@.yellowgreen;<<print cashFormat($foodCost/5)>>@@
+		<<else>>
+			<i>Adjustment for unusual deitary deficiencies:</i> @@.yellowgreen;<<print cashFormat($foodCost/5)>>@@
+		<</if>>
+		<<set _individualCosts += $foodCost/5>>
+	<</if>>
+	<<if ($slaves[$i].geneticQuirks.gigantomastia == 2)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<if $geneticMappingUpgrade >= 1>>
+			<i>Additional dietary supplements due to gigantomastia:</i> @@.yellowgreen;<<print cashFormat($foodCost/5)>>@@
+		<<else>>
+			<i>Adjustment for unusual deitary deficiencies:</i> @@.yellowgreen;<<print cashFormat($foodCost/5)>>@@
+		<</if>>
+		<<set _individualCosts += $foodCost/5>>
+	<</if>>
+	<<if ($slaves[$i].geneticQuirks.rearLipedema == 2)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<if $geneticMappingUpgrade >= 1>>
+			<i>Additional dietary supplements due to lipedema:</i> @@.yellowgreen;<<print cashFormat($foodCost/5)>>@@
+		<<else>>
+			<i>Adjustment for unusual deitary deficiencies:</i> @@.yellowgreen;<<print cashFormat($foodCost/5)>>@@
+		<</if>>
+		<<set _individualCosts += $foodCost/5>>
+	<</if>>
+	<<if ($slaves[$i].geneticQuirks.mGain == 2 && $slaves[$i].geneticQuirks.mLoss != 2)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<if $geneticMappingUpgrade >= 1>>
+			<i>Additional dietary supplements due to myotonic hypertrophy:</i> @@.yellowgreen;<<print cashFormat($foodCost/5)>>@@
+		<<else>>
+			<i>Adjustment for unusual deitary deficiencies:</i> @@.yellowgreen;<<print cashFormat($foodCost/5)>>@@
+		<</if>>
+		<<set _individualCosts += $foodCost/5>>
+	<</if>>
+	<<if ($slaves[$i].geneticQuirks.wGain == 2 && $slaves[$i].geneticQuirks.wLoss != 2)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<if $geneticMappingUpgrade >= 1>>
+			<i>Additional dietary supplements due to hyperleptinemia:</i> @@.yellowgreen;<<print cashFormat($foodCost/5)>>@@
+		<<else>>
+			<i>Adjustment for unusual deitary deficiencies:</i> @@.yellowgreen;<<print cashFormat($foodCost/5)>>@@
+		<</if>>
+		<<set _individualCosts += $foodCost/5>>
+	<</if>>
+	<<if $slaves[$i].drugs == "appetite suppressors">>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Food saved via suppressed appetite:</i> //reduced by// @@.yellowgreen;<<print cashFormat($foodCost)>>@@
+		<<set _individualCosts -= $foodCost>>
+	<</if>>
+	<<if $slaves[$i].lactation > 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Food to support
+		<<if $slaves[$i].lactation > 1>>heavy<<else>>natural<</if>> lactation from
+		<<if Math.trunc($slaves[$i].boobs/10000) > 2>>absurd udders<<elseif Math.trunc($slaves[$i].boobs/10000) > 1>>enormous boobs<<else>>reasonable breasts<</if>>:</i>
+		@@.yellowgreen;<<print cashFormat($foodCost*$slaves[$i].lactation*(1+Math.trunc($slaves[$i].boobs/10000)))>>@@
+		<<set _individualCosts += $foodCost*$slaves[$i].lactation*(1+Math.trunc($slaves[$i].boobs/10000))>>
+	<</if>>
+	<<if $slaves[$i].preg > $slaves[$i].pregData.normalBirth/8>>
+		<<if $slaves[$i].assignment == "work in the dairy" && $dairyFeedersSetting > 0>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Extra feeding costs to support pregnancy are covered by dairy feeders.</i>
+		<<elseif ($slaves[$i].assignment == "serve in the master suite" || $slaves[$i].assignment == "be your concubine") && $masterSuiteUpgradePregnancy == 1>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Extra feeding costs to support pregnancy are covered by $masterSuiteName luxuries.</i>
+		<<else>>
+			<<set _pAccMult = 1>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Extra feeding to support <<if $slaves[$i].pregControl == "speed up">>accelerated <<set _pAccMult = 3>><</if>>pregnancy:</i>
+			@@.yellowgreen;<<print cashFormat($foodCost*$slaves[$i].pregType*_pAccMult)>>@@
+			<<set _individualCosts += $foodCost*$slaves[$i].pregType*_pAccMult>>
+			<<if $slaves[$i].pregType >= 10>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Specialized food blend to support multiples:</i>
+				@@.yellowgreen;<<print cashFormat($foodCost*$slaves[$i].pregType*2*_pAccMult)>>@@
+				<<set _individualCosts += $foodCost*$slaves[$i].pregType*_pAccMult>>
+			<<elseif $slaves[$i].pregType >= 30>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Concentrated, quick to digest food blend to support extreme multiples:</i> @@.yellowgreen;<<print cashFormat($foodCost*$slaves[$i].pregType*_pAccMult)>>@@
+				<<set _individualCosts += $foodCost*2*$slaves[$i].pregType*_pAccMult>>
+			<<elseif $slaves[$i].pregType >= 50>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Specialized dietary adjustments and concentrated, quick to digest food required to support absurd multiples:</i> <<print cashFormat($foodCost*$slaves[$i].pregType*3*_pAccMult)>>
+				<<set _individualCosts += $foodCost*$slaves[$i].pregType*3*_pAccMult>>
+			<<elseif $slaves[$i].pregType >= 100>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Specialized dietary requirements and feeding methods to support absurd multiples:</i>
+				@@.yellowgreen;<<print cashFormat($foodCost*$slaves[$i].pregType*5*_pAccMult)>>@@
+				<<set _individualCosts += $foodCost*$slaves[$i].pregType*5*_pAccMult>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<switch $slaves[$i].diet>>
+		<<case "XX" "XY">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Hormone enriched diet:</i>
+			@@.yellowgreen;<<print cashFormat(25)>>@@
+			<<set _individualCosts += 25>>
+		<<case "XXY">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Specialized hermaphrodite diet:</i>
+			@@.yellowgreen;<<print cashFormat(75)>>@@
+			<<set _individualCosts += 75>>
+		<<case "cleansing">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Chemical cleansing diet:</i>
+			@@.yellowgreen;<<print cashFormat(50)>>@@
+			<<set _individualCosts += 50>>
+		<<case "fertility">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Specialized fertility diet:</i>
+			@@.yellowgreen;<<print cashFormat(25)>>@@
+			<<set _individualCosts += 50>>
+	<</switch>>
+	<<if $boobAccessibility != 1>>
+		<<if ($slaves[$i].boobs > 20000)>>
+			<<if ($slaves[$i].assignment != "work in the dairy" || $dairyRestraintsSetting < 2) && ($slaves[$i].assignment != "be confined in the arcade")>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to inconveniently huge boobs:</i>
+				@@.yellowgreen;<<print cashFormat(50)>>@@
+				<<set _individualCosts += 50>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $pregAccessibility != 1>>
+		<<if ($slaves[$i].belly >= 60000)>>
+			<<if ($slaves[$i].assignment != "labor in the production line") && ($slaves[$i].assignment != "work in the dairy" || $dairyRestraintsSetting < 2) && ($slaves[$i].assignment != "be confined in the arcade")>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to an inconveniently huge belly:</i>
+				@@.yellowgreen;<<print cashFormat(100)>>@@
+				<<set _individualCosts += 100>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $dickAccessibility != 1>>
+		<<if ($slaves[$i].dick > 45)>>
+			<<if ($slaves[$i].assignment != "work in the dairy" || $dairyRestraintsSetting < 2) && ($slaves[$i].assignment != "be confined in the arcade")>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to an inconveniently huge penis:</i>
+				@@.yellowgreen;<<print cashFormat(50)>>@@
+				<<set _individualCosts += 50>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $ballsAccessibility != 1>>
+		<<if ($slaves[$i].balls > 90)>>
+			<<if ($slaves[$i].assignment != "work in the dairy" || $dairyRestraintsSetting < 2) && ($slaves[$i].assignment != "be confined in the arcade")>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to inconveniently huge balls:</i>
+				@@.yellowgreen;<<print cashFormat(50)>>@@
+				<<set _individualCosts += 50>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $buttAccessibility != 1>>
+		<<if ($slaves[$i].butt > 15)>>
+			<<if ($slaves[$i].assignment != "work in the dairy" || $dairyRestraintsSetting < 2) && ($slaves[$i].assignment != "be confined in the arcade")>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to an inconveniently huge butt:</i>
+				@@.yellowgreen;<<print cashFormat(50)>>@@
+				<<set _individualCosts += 50>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if !canSee($slaves[$i]) && ($slaves[$i].assignment != "work in the dairy" || $dairyRestraintsSetting < 2) && ($slaves[$i].assignment != "be confined in the arcade")>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to lack of sight:</i>
+		@@.yellowgreen;<<print cashFormat(50)>>@@
+		<<set _individualCosts += 50>>
+	<<elseif $slaves[$i].eyes <= -1 && $slaves[$i].eyewear != "corrective glasses" && $slaves[$i].eyewear != "corrective contacts">>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to poor vision:</i>
+		@@.yellowgreen;<<print cashFormat(25)>>@@
+		<<set _individualCosts += 25>>
+	<<elseif ($slaves[$i].eyewear == "blurring glasses") || ($slaves[$i].eyewear == "blurring contacts")>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to blurred vision:</i>
+		@@.yellowgreen;<<print cashFormat(25)>>@@
+		<<set _individualCosts += 25>>
+	<</if>>
+	<<if !canHear($slaves[$i]) && ($slaves[$i].assignment != "work in the dairy" || $dairyRestraintsSetting < 2) && ($slaves[$i].assignment != "be confined in the arcade")>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to lack of hearing:</i>
+		@@.yellowgreen;<<print cashFormat(20)>>@@
+		<<set _individualCosts += 20>>
+	<<elseif $slaves[$i].hears <= -1 && $slaves[$i].earwear != "hearing aids">>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to poor hearing:</i>
+		@@.yellowgreen;<<print cashFormat(5)>>@@
+		<<set _individualCosts += 5>>
+	<<elseif ($slaves[$i].earwear == "muffling ear plugs")>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to muffled hearing:</i>
+		@@.yellowgreen;<<print cashFormat(5)>>@@
+		<<set _individualCosts += 5>>
+	<</if>>
+	<<if ($slaves[$i].assignment != "work in the dairy" || $dairyRestraintsSetting < 2) && ($slaves[$i].assignment != "be confined in the arcade")>>
+		<<if (!hasAllNaturalLimbs($slaves[$i]))>>
+			<<if (isAmputee($slaves[$i]))>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to limblessness:</i>
+				@@.yellowgreen;<<print cashFormat($rulesCost)>>@@
+				<<set _individualCosts += $rulesCost>>
+			<<else>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to prosthetics:</i>
+				@@.yellowgreen;<<print cashFormat($rulesCost/2)>>@@
+				<<set _individualCosts += $rulesCost/2>>
+			<</if>>
+		<<elseif !canWalk($slaves[$i])>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Increased living expenses due to immobility:</i>
+			@@.yellowgreen;<<print cashFormat($rulesCost)>>@@
+			<<set _individualCosts += $rulesCost>>
+		<</if>>
+	<</if>>
+	<<if $slaves[$i].boobsImplant > 10000>>
+		<<if $slaves[$i].boobsImplantType == "string">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Maintenance cost for oversized string implants:</i>
+			@@.yellowgreen;<<print cashFormat(50)>>@@
+			<<set _individualCosts += 50>>
+		<</if>>
+	<</if>>
+	<<if $slaves[$i].buttImplant > 5>>
+		<<if $slaves[$i].buttImplantType == "string">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Maintenance cost for oversized string implants:</i>
+			@@.yellowgreen;<<print cashFormat(50)>>@@
+			<<set _individualCosts += 50>>
+		<</if>>
+	<</if>>
+	<<if $slaves[$i].preg > $slaves[$i].pregData.minLiveBirth>>
+		<<if $universalRulesBirthing == 1>>
+			<<if ($slaves[$i].assignment != "work in the dairy" || $dairyRestraintsSetting < 2)>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Coverage cost for daily pregnancy scanning:</i>
+				@@.yellowgreen;<<print cashFormat(50)>>@@
+				<<set _individualCosts += 50>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $CitizenRetirement == 1>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Retirement account payments:</i>
+		@@.yellowgreen;<<print cashFormat(250)>>@@
+		<<set _individualCosts += 250>>
+	<</if>>
+	<<if ($slaves[$i].inflation == 3)>>
+		<<switch $slaves[$i].inflationType>>
+		<<case "water">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Costs of specially formulated water for enemas; 2 gallons:</i>
+			@@.yellowgreen;<<print cashFormat(100)>>@@
+			<<set _individualCosts += 100>>
+		<<case "food">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Costs of filler food for slave stuffing; 2 gallons:</i>
+			@@.yellowgreen;<<print cashFormat(($foodCost*4))>>@@
+			<<set _individualCosts += ($foodCost*4)>>
+		<<case "curative" "aphrodisiac" "tightener">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Costs of specially formulated drug mixtures for enemas; 2 gallons:</i>
+			@@.yellowgreen;<<print cashFormat((100+($drugsCost*2)))>>@@
+			<<set _individualCosts += (100+($drugsCost*2))>>
+		<</switch>>
+	<<elseif ($slaves[$i].inflation == 2)>>
+		<<switch $slaves[$i].inflationType>>
+		<<case "water">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Costs of specially formulated water for enemas; 1 gallon:</i>
+			@@.yellowgreen;<<print cashFormat(50)>>@@
+			<<set _individualCosts += 50>>
+		<<case "food">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Costs of filler food for slave stuffing; 1 gallon:</i>
+			@@.yellowgreen;<<print cashFormat(($foodCost*2))>>@@
+			<<set _individualCosts += ($foodCost*4)>>
+		<<case "curative" "aphrodisiac" "tightener">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Costs of specially formulated drug mixtures for enemas; 1 gallon:</i>
+			@@.yellowgreen;<<print cashFormat((50+($drugsCost*2)))>>@@
+			<<set _individualCosts += (50+($drugsCost*2))>>
+		<</switch>>
+	<<elseif ($slaves[$i].inflation == 1)>>
+		<<switch $slaves[$i].inflationType>>
+		<<case "water">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Costs of specially formulated water for enemas; 2 liters:</i>
+			@@.yellowgreen;<<print cashFormat(25)>>@@
+			<<set _individualCosts += 25>>
+		<<case "food">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Costs of filler food for slave stuffing; 2 liters:</i>
+			<<print cashFormat(($foodCost))>>
+			<<set _individualCosts += ($foodCost)>>
+		<<case "curative" "aphrodisiac" "tightener">>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Costs of specially formulated drug mixtures for enemas; 2 liters:</i>
+			@@.yellowgreen;<<print cashFormat((25+($drugsCost*2)))>>@@
+			<<set _individualCosts += (25+($drugsCost*2))>>
+		<</switch>>
+	<</if>>
+	<<switch $slaves[$i].drugs>>
+	<<case "anti-aging cream">>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Anti-aging creams:</i>
+		<<print cashFormat(($drugsCost*10))>>
+		<<set _individualCosts += ($drugsCost*10)>>
+	<<case "female hormone injections" "male hormone injections">>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Hormonal injections:</i>
+		@@.yellowgreen;<<print cashFormat(($drugsCost*5))>>@@
+		<<set _individualCosts += ($drugsCost*5)>>
+	<<case "growth stimulants">>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Growth stimulants:</i>
+		@@.yellowgreen;<<print cashFormat(($drugsCost*5))>>@@
+		<<set _individualCosts += ($drugsCost*5)>>
+	<<case "psychostimulants">>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Mental stimulants:</i>
+		@@.yellowgreen;<<print cashFormat(($drugsCost*5))>>@@
+		<<set _individualCosts += ($drugsCost*5)>>
+	<<case "intensive breast injections" "intensive butt injections" "intensive penis enhancement" "intensive testicle enhancement" "intensive lip injections" "hyper breast injections" "hyper butt injections" "hyper penis enhancement" "hyper testicle enhancement" "hyper lip injections">>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Intensive drugs:</i>
+		@@.yellowgreen;<<print cashFormat($drugsCost*5)>>@@
+		<<set _individualCosts += $drugsCost*5>>
+	<<case "sag-B-gone">>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Questionable infomercial creams:</i>
+		@@.yellowgreen;<<print cashFormat(Math.trunc($drugsCost/10))>>@@
+		<<set _individualCosts += ($drugsCost/10)>>
+	<<case "no drugs" "none">>
+	<<default>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Standard drugs:</i>
+		@@.yellowgreen;<<print cashFormat(($drugsCost*2))>>@@
+		<<set _individualCosts += ($drugsCost*2)>>
+	<</switch>>
+	<<if $slaves[$i].curatives == 1 && !assignmentVisible($slaves[$i])>>
+	<<elseif $slaves[$i].curatives > 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Health drugs:</i>
+		@@.yellowgreen;<<print cashFormat($drugsCost+($slaves[$i].curatives*$drugsCost))>>@@
+		<<set _individualCosts += $drugsCost+($slaves[$i].curatives*$drugsCost)>>
+	<</if>>
+	<<if ($slaves[$i].aphrodisiacs !== 0)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Aphrodisiacs/Anaphrodisiacs:</i>
+		@@.yellowgreen;<<print cashFormat(Math.trunc($drugsCost*Math.abs($slaves[$i].aphrodisiacs)))>>@@
+		<<set _individualCosts += $drugsCost*Math.abs($slaves[$i].aphrodisiacs)>>
+	<</if>>
+	<<if ($slaves[$i].hormones != 0)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Hormones:</i>
+		@@.yellowgreen;<<print cashFormat((Math.trunc($drugsCost*Math.abs($slaves[$i].hormones)*0.5)))>>@@
+		<<set _individualCosts += Math.trunc($drugsCost*Math.abs($slaves[$i].hormones)*0.5)>>
+	<</if>>
+	<<if ($slaves[$i].bodySwap > 0)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>JS-Suppressants:</i>
+		@@.yellowgreen;<<print cashFormat(($drugsCost*10*$slaves[$i].bodySwap))>>@@
+		<<set _individualCosts += Math.trunc($drugsCost*10*$slaves[$i].bodySwap)>>
+	<</if>>
+	<<if ($slaves[$i].preg == -1) && isFertile($slaves[$i])>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Contraceptives:</i>
+		@@.yellowgreen;<<print cashFormat((Math.trunc($drugsCost*0.5)))>>@@
+		<<set _individualCosts += Math.trunc($drugsCost*0.5)>>
+	<</if>>
+	<<if ($studio == 1)>>
+		<<if ($slaves[$i].porn.spending > 0)>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Publicity:</i>
+			@@.yellowgreen;<<print cashFormat($slaves[$i].porn.spending/$PCSlutContacts)>>@@
+			<<set _individualCosts += ($slaves[$i].porn.spending/$PCSlutContacts)>>
+		<</if>>
+	<</if>>
+	<<if (($slaves[$i].assignment == "be your Concubine" ||$slaves[$i].relationship == -3) && $arcologies[0].FSPetiteAdmirationLaw == 1)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>Big & Small Subsidy:</i>
+		@@.yellowgreen;<<print cashFormat(-200)>>@@
+		<<set _individualCosts -= 200>>
+	<</if>>
+	<<set _total += Math.trunc(_individualCosts)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__Total__:
+	@@.yellowgreen;<<print cashFormat(Math.trunc(_individualCosts))>>@@
+	<br>
+<</for>>
+*/
+<<set _total = 0>> <<set _SL = $slaves.length>>
+<<for $i = 0; $i < _SL; $i++>>
+	<<capture $i>>
+	<br style="clear:both"><<if $lineSeparations == 0>><br><<else>><hr style="margin:0"><</if>>
+	[[$slaves[$i].slaveName|Slave Interact][$activeSlave = $slaves[$i]]] will $slaves[$i].assignment.
+	<<SlaveExpenses $slaves[$i]>>
+	<</capture>>
+<</for>>
+/*
+
+
+<br>Overall slave costs: @@.yellowgreen;<<print cashFormat(_total)>>@@
+
+<br><br>
+
+This brings the overall total to ''@@.yellowgreen;<<print cashFormat(_arcologyCosts+_total)>>@@'' before reductions.
+
+<<if $PC.career == "servant">>
+	<br>Using your prior experience, you managed to lower your home's upkeep by @@.green;<<if $personalAttention == "upkeep">><<if $PC.belly >= 5000>>20%<<else>>25%<</if>><<else>>10%<</if>>.@@
+<</if>>
+
+<<if $secExp == 1>> <br>
+	<<if $terrain == "oceanic" || $terrain == "marine">>
+		<<if $docks > 0>>
+			<br>The infrastructure you've built eases the transportation and safe handling of the supplies required by the arcology. @@.green;Upkeep is lowered by <<print $docks * 5>>%.@@
+		<</if>>
+	<<else>>
+		<<if $railway > 0>>
+			<br>The infrastructure you've built eases the transportation and safe handling of the supplies required by the arcology. @@.green;Upkeep is lowered by <<print $railway * 5>>%.@@
+		<</if>>
+	<</if>>
+<</if>>
+*/

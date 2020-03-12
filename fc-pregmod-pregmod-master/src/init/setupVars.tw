@@ -1,0 +1,10 @@
+:: setupVars [widget nobr]
+
+/*
+* This passage is tagged as widget, so it will be loaded whenever any passage is loaded. The global setup object seems to reset itself to {} (empty object): until we figure out why, this is where we set properties for it.
+*/
+<<for _k,_v range App.Data.misc>>
+	<<set setup[_k] = _v>>
+<</for>>
+<<run App.Art.cacheArtData()>>
+<<run App.Corporate.Init()>>

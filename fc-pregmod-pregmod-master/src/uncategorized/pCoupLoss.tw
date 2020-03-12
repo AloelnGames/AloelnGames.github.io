@@ -1,0 +1,65 @@
+:: P coup loss [nobr]
+
+<<if $traitor != 0>>
+	<<set _weeks = $traitorWeeks, _pregWeeks = $traitorWeeks, $traitorWeeks = 0>>
+	<<setLocalPronouns $traitor>>
+
+	<<set WombProgress($traitor, _pregWeeks, _pregWeeks)>> /* In all cases should be done */
+	<<set WombUpdatePregVars($traitor)>>
+	<<if WombBirthReady($traitor, $traitor.pregData.normalBirth) > 0 >> /* normal birth case, partial birthers not supported*/
+		<<set $traitor.preg = -1, $traitor.counter.birthsTotal += WombBirthReady($traitor, $traitor.pregData.normalBirth)>>
+		<<set WombFlush($traitor)>>
+	<<else>>/* still pregnant slave */
+		<<set $traitor.preg = WombMaxPreg($traitor)>> /*most ready fetus is a base*/
+		<<set $traitor.pregWeek = WombMaxPreg($traitor)>> /*most ready fetus is a base*/
+	<</if>>
+	<<run SetBellySize($traitor)>> /*In any case it's useful to do.*/
+<</if>>
+
+You are awakened in the middle of the night by a jolt that shakes the entire arcology, accompanied by a distant boom. It is followed by another, and another, and then the wail of the arcology's alarm systems, and then finally by a faint crackle that grows to a constant chatter of gunfire. Main power goes out, and you claw your way in the darkness to the video feeds, running on emergency backup.
+
+<br><br>
+
+<<if $mercenaries > 0>>Sheets of flame are pouring from your mercenaries' quarters; it seems they were among the first targets for bombs. <</if>>Heavy gunfire is bringing down security drones by the scores. The attackers seem to have figured out where the drone hangars are, and are laying down fire on the exits the drones must use to get into action.
+<<if $traitor != 0 && $traitorType != "hostage">>
+	You can see
+	<<if $traitor.bellyPreg >= 100000>>
+		the staggeringly pregnant
+	<<elseif $traitor.bellyPreg >= 15000>>
+		the heavily pregnant
+	<<elseif $traitor.bellyPreg >= 10000>>
+		the very pregnant
+	<<elseif $traitor.bellyPreg >= 5000>>
+		the pregnant
+	<</if>>
+	$traitor.slaveName on one of the feeds,
+	<<if $traitorType == "agent" || $traitorType == "trapper">>
+		trying to sabotage a stockpile of explosives.
+	<<elseif $traitorType == "horror">>
+		encouraging $his fellow fighters<<if canTalk($traitor)>> with yells<</if>> from the back lines.
+	<<elseif $traitorType == "defiant">>
+		encouraging $his fellow fighters<<if canTalk($traitor)>> with yells<</if>> and spearheading the charge<<if $traitor.bellyPreg >= 15000>> as best $he can<</if>>.
+	<<else>>
+		encouraging $his fellow fighters<<if canTalk($traitor)>> with yells<</if>>, and when that fails, leading them by example<<if $traitor.bellyPreg >= 15000>> as best $he can<</if>>.
+	<</if>>
+<</if>>
+In areas already controlled by your enemies, slaveowners are being summarily shot in the streets. <<if $hackerSupport == 1>>"<<= properTitle()>>," $assistant.name says, "the Daughters of Liberty are attempting a coup. They appear to have smuggled a significant quantity of arms and explosives into the arcology.<<else>>"<<= properTitle()>>," $assistant.name says, "the Daughters of Liberty are attempting a coup. They appear to have smuggled a significant qua — zzzt —" There is nothing more from the computer systems.<</if>>
+
+<br><br>
+
+<<if $traitor != 0>>
+	If this were a movie,
+	<<if $traitorType == "agent" || $traitorType == "hostage" || $traitorType == "trapper">>
+		you'd bleed out in the arms of the sobbing $traitor.slaveName
+	<<else>>
+		$traitor.slaveName would be the one to kill you
+	<</if>>
+	after a desperate struggle in your office. Reality does not have such a refined sense of drama.
+<</if>>
+If the Daughters had any plans to take you alive, they are lost to the exigencies of combat. Your penthouse remains locked down, forcing them to use breaching charges to make an entrance. These prove entirely too effective, and your last impression is of the floor heaving bodily up toward the ceiling.
+
+<br><br>
+
+''GAME OVER''
+
+<<set $ui = "start">>

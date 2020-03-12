@@ -1,0 +1,206 @@
+:: Firebase [nobr]
+<<= App.SF.Count()>>
+<<if $SF.FS.Tension > 100>> <<= App.SF.fsIntegration('BadOutcome')>>
+<<else>>
+ <<set _S=$SF.Squad>>
+	<<if $SF.tour === 0>>
+		<<switch _Env>> <<case 4>>
+				<<set _EnvCash2 = 450,_EnvCash3 = 200,_EnvCash4 = 100,_EnvProsp = 3>>
+			<<case 3>>
+				<<set _EnvCash2 = 500,_EnvCash3 = 250,_EnvCash4 = 150,_EnvProsp = 5>>
+			<<case 2>>
+				<<set _EnvCash2 = 550,_EnvCash3 = 300,_EnvCash4 = 200,_EnvProsp = 7>>
+		<</switch>>
+
+		<<set $nextButton = "Back">>
+		<<if $sideBarOptions.compact > 0>>
+			<<set $nextLink = "Manage Arcology">>
+		<<else>>
+			<<set $nextLink = "Main">>
+		<</if>>
+
+		<<if $cheatMode > 0>> [[Cheat edit|CheatEdit][]] <br> <</if>>
+		The firebase of $arcologies[0].name's <<textbox "$SF.Lower" $SF.Lower "Firebase">> is located in the lower levels, occupying unneeded warehouse space. It is not accessible to the general citizenry, but your personal elevator has express service to it. As you step off, two soldiers in combat armor manning the entry checkpoint tense before recognizing their Marshal and stepping aside with a sharp salute.<br>
+
+		<<if $SF.MercCon.CanAttend === 1>>The Colonel is away at her merc meetup, so <<print App.SF.SFC()>> will assist you.
+		<<else>>
+			You make your way to the operations center. The Colonel is
+			<<if random(1,100) > 25>>glancing between her tablet and the large wallscreen, occasionally taking notes or barking orders.
+			<<elseif random(1,100) > 25>>handling a minor issue.<<else>>examining a table with a map of the surrounding area, planning maneuvers in the event of an attack.<</if>>
+			She notices your entrance and turns her attention to you.
+		<</if>>
+
+		<<if $SF.Colonel.Core === "brazen">>
+			She gives a textbook salute. "<<= properTitle()>>, how can I help you?"
+		<<else>>
+			"Hey boss, what do you need?"
+		<</if>>
+		<<include "Upgrades">>
+		<<print App.SF.Interactions()>>
+		<<include "WC">>
+
+		<<if $SF.MercCon.CanAttend === -2 && ($SF.Colonel.Fun + $SF.Colonel.Talk < 1)>>
+			<br><br>Her expression changes as something jogs her memory. "Before we begin <<if $SF.Colonel.Core == "brazen">><<= properTitle()>><<else>>boss<</if>>, back when I was a merc me and a couple of my old friends would have a meetup every several months. Drinking, fucking, drugs... a little poker. It eventually grew into a whole thing, and now we bring our latest and greatest toys to show off, maybe make some money off selling the schematics. I'd like to continue going, for old times' sake."
+			<br>[[Grant leave|Firebase][$SF.MercCon.CanAttend = 1]]
+			<br>[[Request she remain on base|Firebase][$SF.MercCon.CanAttend = -3]]<br>
+		<<elseif $SF.MercCon.History >= 1 && ((Math.trunc($week/24) === ($week/24)) && $SF.MercCon.CanAttend === -1)>>
+			<br><br>Her expression changes as something jogs her memory. "Before we begin <<if $SF.Colonel.Core == "brazen">><<= properTitle()>><<else>>boss<</if>>, that biannual merc meetup has come around again. You've already gave me leave to attend, but I just wanted to be sure I'm still clear to go."
+			<br>[[Grant leave|Firebase][$SF.MercCon.CanAttend = 1]]
+			<br>[[Request she remain on site|Firebase][$SF.MercCon.CanAttend = -1]]
+		<</if>>
+
+		<<if $SF.UC.Lock < 1>> <br>
+			<<switch $SF.UC.Assign>>
+			<<case 0>>
+				<br>No soldiers are working undercover, which would primarily advance your cultural goals while also slightly boosting your reputation. [[Full time assignment|Firebase][$SF.UC.Lock = 1]]
+				<br>[[Reassign soldiers|Firebase][$SF.UC.Assign = -1]]
+			<<case 1>>
+				<br>A small section of soldiers are working undercover, which will primarily advance your cultural goals while also slightly boosting your reputation. [[Full time assignment|Firebase][$SF.UC.Lock = 1]]
+				<br>[[Reassign soldiers|Firebase][$SF.UC.Assign = -1]]
+			<<case 2>>
+				<br>A large section of soldiers are working undercover, which will primarily advance your cultural goals while also slightly boosting your reputation. [[Full time assignment|Firebase][$SF.UC.Lock = 1]]
+				<br>[[Reassign soldiers|Firebase][$SF.UC.Assign = -1]]
+			<<default>>
+				<br>Would you like to assign soldiers to undercover duty, which will primarily advance your cultural goals while also slightly boosting your reputation?
+				<br>[[Do not assign soldiers to work undercover|Firebase][$SF.UC.Assign = 0]]
+				<br>[[Assign a small section of soldiers to work undercover|Firebase][$SF.UC.Assign = 1]]
+				<br>[[Assign a large section of soldiers to work undercover|Firebase][$SF.UC.Assign = 2]]
+			<</switch>>
+		<<else>>
+			<br> <<if $SF.UC.Assign < 1>>''Zero''<<elseif $SF.UC.Assign < 2>>A ''small'' section<<else>>A ''large'' section<</if>> of the special force is assigned to undercover work, which will primarily advance your cultural goals while also slightly boosting your reputation. [[Re-allocate the units|Firebase][$SF.UC.Lock = 0]]
+		<</if>>
+
+		<<if $SF.Squad.Firebase > 5 && $secExpEnabled > 0 && $SFSupportLevel >= 4 && App.SecExp.battle.maxUnits() === 18 && App.SecExp.battle.deploySpeed() <= 10>>
+			<br><br>[[Provide the security force with their own section.|Firebase][$sectionInFirebase = 1, cashX(forceNeg(Math.ceil((750000*(1.15+($SF.Size/1000))*(1.15+($SF.Squad.Firebase/10)))*_Env)), "capEx")]]
+			@@.red;<<print cashFormat(Math.ceil((750000*(1.15+($SF.Size/1000))*(1.15+($SF.Squad.Firebase/10)))*_Env))>>@@
+		<</if>>
+		<br>[[Tour the firebase|Firebase][$SF.tour = 1]]
+	<<else>> <br> <<set $nextButton = "Return to Operations", $nextLink = "Firebase", $SF.tour=0>>
+		<br>You continue towards the common area, the soldiers you pass, nod respectfully, salute, or bow slightly, as they please. You pass the briefing areas, the officers and sergeants of the force are conferring over planning tables and display screens regarding their upcoming deployments.
+		<br><br><div style="margin-left:2em">The commanders are
+		<<if $SF.Target === "recruit">>
+			viewing lists of potential recruits for $SF.Lower. Mainly mercenaries and old world soldiers who might be receptive to an offer of employment and residence within the arcology, in addition to some citizens of the arcology who wish to have some excitement in their lives.
+		<<elseif $SF.Target === "secure">>
+			reviewing maps of trade routes to the arcology as well as nearby merchant hubs, arranging their future deployments to best protect them and encourage business and trade.
+		<<else>>
+			reviewing maps of settlements and locations reported to have choice concentrations of material loot and potential slave stock, in preparation for their coming raids.
+		<</if>> </div>
+		<div style="margin-left:2em">
+		<<if $SF.ROE === "hold">>
+			There are posted (and very strict) guidelines for the use of force against non-citizen residents, forbidding the use of heavy weapons or indiscriminate fire.
+		<<elseif $SF.ROE === "limited">>
+			There are some guidelines posted regarding the use of force against non-citizens, forbidding general indiscriminate fire.
+		<<else>>
+			Guidelines regarding the use of force are completely absent from the deployment information screens. A note affixed to the screen, probably from a soldier, says: "Pop 'em if you see 'em — better than target practice!" Another one on top of that, from The Colonel, says: "Don't shoot the pretty ones, you fucking morons, or I'll kill you myself. They're worth good money or good for fun — do you idiots really want to have to fuck month-old stock?"
+		<</if>> </div>
+		<div style="margin-left:2em">
+		<<if $SF.Regs === "strict">>
+			On several screens, there are prominent warnings regarding the severe disciplinary procedures that will be taken against soldiers who commit crimes while on deployment.
+		<<elseif $SF.Regs === "some">>
+			On several screens, there are some minor warnings regarding the mild disciplinary procedures that may be taken against soldiers who commit especially severe crimes while on deployment.
+		<<else>>
+			There are no warnings or information regarding disciplinary procedures on any of the screens. Near one of them, a waste basket has been dragged over and a soldier has posted a note above it that says: "For old world Complaints and Warrants."
+		<</if>> </div>
+		<<= App.SF.fsIntegration('OptionsFlavourText',90)>>
+
+		<br>You arrive at the firebase's common area, a nest of bars, pleasure dens, public spaces, and other facilities catering to the soldiers' needs and giving them somewhere to spend their free time, since they do not mingle with your citizens on the higher levels or exit the arcology except on deployment. It is well-occupied by the soldiers not currently tasked with duties, and they respectfully move out of your way as you approach, clearing a path for you to move forward.
+		<<= App.SF.fsIntegration('OptionsFlavourText',50)>>
+		<<= App.SF.fsIntegration('OptionsFlavourText',5)>>
+		<<= App.SF.fsIntegration('OptionsFlavourText',10)>>
+		<br><br><div style="margin-left:2em">
+		The amenities are staffed by menial slaves, captured by the soldiers on their excursions. They are
+		<<if $SF.Depravity <= 0.3 && $SF.Colonel.Core === "kind">>
+			wearing plain jumpsuits and slim identification collars to set them apart from the soldiers, and look resigned but not fearful. The soldiers themselves socialize at the bars, in small groups around tables, and in the gambling parlors. Many of them can be seen entering or leaving the dens occupied by the sexual slaves they have acquired. Laughter from the carousing soldiers can be heard at all times. Small groups of slaves move freely between the plaza and their basic accommodations attached to the firebase.
+		<<elseif $SF.Depravity <= 0.6 && $SF.Colonel.Core === "kind">>
+			topless, wearing only utilitarian pants and leather collars to set them apart from the soldiers, and occasionally shoot fearful looks at the soldiers. The soldiers themselves socialize at the bars, or in large groups around tables, leering at and groping slaves of interest as they pass by. Many of them can be seen entering or leaving the dens occupied by the sexual slaves they have acquired, and often emerge only partially dressed, sometimes pulling half-naked slaves out with them.
+		<<elseif $SF.Depravity <= 0.9>>
+			topless, wearing only utilitarian shorts and steel collars to set them apart from the soldiers, and often shoot fearful looks at the soldiers. The soldiers themselves socialize at the bars, or in large groups around tables, leering at and heavily groping slaves of interest as they pass by. Many of them can be seen entering or leaving the dens occupied by the sexual slaves they have acquired, and often emerge stark naked, sometimes pulling naked slaves out with them for one last servicing in public. A few soldiers stagger around in drunken hazes or drugged-out stupors.
+		<<elseif $SF.Depravity <= 1.2>>
+			topless, wearing only a single undergarment and heavy steel collars to set them apart from the soldiers, and often shoot fearful looks at the soldiers. The soldiers occupy themselves primarily with sex, pulling slaves onto benches and fucking them hard in public. Many soldiers stagger around or lie passed out from drug and alcohol abuse.
+		<<elseif $SF.Depravity >= 1.5 && ($SF.Colonel.Core == "brazen" || $SF.Colonel.Core != "shell shocked")>>
+			naked, and are wearing heavy shock collars to force obedience. Most are wild-eyed with fear or dull-eyed from mental collapse, and many others bear marks of abuse. Few of the slaves are here long-term, the depraved pleasures of the soldiers resulting in enormous turnover and loss of 'damaged' stock. The extreme libations of the soldiers are ever-present. Drunken soldiers stagger around everywhere, beating slaves too slow to get out of their way. Others lie sprawled out on the ground, rendered senseless from heavy drug abuse. Some walk around naked, and hold slaves down on the benches scattered around, raping or sodomizing them with their cocks or their personal strap-ons as they desire. In alcoves, some soldier-lover pairs fuck loudly, moaning in pleasure.
+			<<setNonlocalPronouns $seeDicks>>
+			<<if random(1,100) <= 50>>
+				Off to the side, a group of soldiers brutally gangbang a very young slave _girlU, with one soldier buried balls-deep in _hisU ass, <<if _heU == "she">>another brutally sawing a barbed strap-on in and out of _hisU pussy, and a third<<else>>and another<</if>> with his cock forced deep down _hisU throat. The slave _girlU struggles and gags, desperate for breath or relief.
+			<<elseif random(1,100) > 50>>
+				Off to the side, a group of soldiers cackle amongst themselves as they take turns beating a very young slave _girlU with heavy batons. Sickening crunches can be heard from the screaming slave.
+			<<elseif random(1,100) > 75>>
+				Off to the side, still more soldiers crowd around an above-ground pit built from empty crates, gambling on slave gladiator fights. There's a drunken cheer as one of the fighters, a very young slave _girlU, straddles another one and smashes _hisU face in with a blood-slick ammo crate. As _heU stands, shaking from fear and adrenaline, one of the soldiers laughs and throws a small incendiary grenade at _himU, changing the cheers to curses as the other soldiers jump away from the flaming, screeching slave.
+			<<else>>
+				Screams and cries of pain can be heard echoing around the area as the soldiers have their fun with their property.
+			<</if>>
+		<</if>> </div>
+		<<= App.SF.fsIntegration('OptionsFlavourText',15)>>
+		<<= App.SF.fsIntegration('OptionsFlavourText',20)>>
+		<<= App.SF.fsIntegration('OptionsFlavourText',25)>>
+
+		<br>In the middle of the common area is a pile of supply crates with a pavilion on top — The Colonel's personal throne and open quarters, the result of her preferring to live an extreme lifestyle amongst her soldiers rather than in her empty quarters on the upper levels. It's draped with the 'flag' of $SF.Lower, one of her inventions. Sprawled all around it is an immense quantity of alcohol, hard drugs, clothes, electronic devices, huge amounts of cash, jewels and precious metals looted from the outside world.
+		<br><br><div style="margin-left:2em">
+		<<setNonlocalPronouns $seeDicks>>
+		As you approach, The Colonel
+		<<if random(0,100) <= 50>>
+			raises a hand in greeting and nods. She is sprawled on a couch, wearing only her combat suit tank top and fingerless gloves. She's holding a near-empty bottle of strong liquor in her hand and you can see a naked slave _girlU kneeling on the floor between her legs. The Colonel has her legs wrapped tightly around the _girlU's head, forcing the _girlU to service her if _heU wants to breathe. The Colonel is close to her climax then suddenly tenses her lower body, thus gripping the _girlU even tighter, and throws her head back in ecstasy as she orgasms. She lets out a long breath finally releasing the _girlU, giving _himU a hard smack and shouting at _himU to fuck off.
+			<br><br>
+			The Colonel finishes off her bottle, tossing it over her shoulder then leaning back on the couch and spreading her legs wide. You look down briefly, falling into your habits of inspection. Her pussy is completely devoid of hair with heavy labia in with a very large and hard clit peaking out. Beads of moisture, the result of her excitation, are visible, and you can tell from long experience that she would be tight as a vise. You return your gaze to her face to find her smirking at you. "Like what you see, <<= App.SF.ColonelStatus()>>?" She waves her hand at the plaza around her, "So do they. But you're not here for pussy. You're here to talk business. So, what's up?"
+		<<elseif random(0,100) > 50>>
+			is in no condition initially to greet you. She's naked except for one sock that gives you a very good view of her muscled, taut body while lunging with her feet on the table and the rest on her couch. She is face-down in a drugged-out stupor in the middle of a wide variety of powders and pills. Perhaps sensing your approach, her head suddenly shoots up and looks at you with unfocused, bloodshot eyes. "Sorry, <<= App.SF.ColonelStatus()>>," she slurs, wiping her face and weakly holding up a hand. "Hold on a second, I need something to help me out here. Long fucking night." She struggles to sit on the couch and bending over the table, loudly snorts up some of the white powder on it. "Ahhh, fuck," she says, breathing heavily.
+			<br><br>
+			She shakes her head powerfully now looking at you, her eyes once again alert and piercing. "That's better," she says, leaning back on the couch and giving you another good view of her assets. "So, <<= App.SF.ColonelStatus()>>," she begins, "what brings you down here to our little clubhouse? I trust you're happy with how we've been handling things out there?" You nod. "Excellent", she laughs. "I have to say; it's nice to have a place like this while having some top-end gear and to be able to have fun out there without worrying about anyone coming back on us. Good fucking times." She laughs again. "So — I'm assuming you want something?"
+		<<elseif random(0,100) > 70 && $SF.Depravity >= 1.5 && $SF.Colonel.Core == "cruel">>
+			is relaxing on her couch stark naked, greeting you with a raised hand. Between her tightly clenched legs is a slave _girlU being forced to eat her out. "Hey, <<= App.SF.ColonelStatus()>>, what's —" she breaks off as a flash of pain crosses her features. "Fucking bitch!" she exclaims, pulling her legs away and punching the slave _girlU in the face. She pushes the _girlU to the ground, straddling _himU then begins hitting. You hear one crunch after another as The Colonel's powerful blows shatter the _girlU's face. She hisses from between clenched teeth, each word accompanied by a brutal punch. "How. Many. Fucking. Times. Have. I. Told. You. To. Watch. Your. Fucking. Teeth. On. My. Fucking. Clit!" She leans back, exhaling heavily. Before leaning back down to grip apply pressure onto the _girlU's neck with her powerful hands. Wordlessly, she increases the pressure and soon the _girlU begins to turn blue as _heU struggles to draw breath. Eventually _hisU struggles weaken and then, finally, end.
+			<br><br>
+			The Colonel relaxes her grip then wipes her brow, clearing away the sweat from her exertion. Finally rising from the _girlU's body, relaxing back on the couch and putting her feet back up on the table. "Sorry about that <<= App.SF.ColonelStatus()>>," she says, shrugging. "So many of these bitches we pick up from the outside don't understand that they have to behave." Shaking her head in frustration, "Now I need to find another one. But that's not your problem — you're here to talk business. So, what's up?"
+		<<else>>
+			is topless while reviewing the particulars of her unit on a tablet as you approach. She raises a hand in greeting. "Hey <<= App.SF.ColonelStatus()>>," she says, noticing you looking at her chest. She laughs. "Nice, aren't they? But they're not for you or them." She throws a thumb at the plaza around her. "You're down here for a reason, though. What can I do for you?"
+		<</if>> </div>
+		<<= App.SF.fsIntegration('OptionsFlavourText',40)>>
+		<<= App.SF.fsIntegration('OptionsFlavourText',-1)>>
+		<<= App.SF.fsIntegration('OptionsFlavourText')>>
+		<<if _S.Firebase === 10>>
+			<br>The echo of simulated gun fire and explosions can be heard from the state of the art killhouse.
+			The quite hum of fans keeping the faster and much more efficient custom network operational can be heard throughout the firebase.<br>
+		<</if>>
+
+		<br>__Current facilities status:__
+		<<= App.SF.UnitText('firebase')>> <<= App.SF.fsIntegration('OptionsFlavourText',30)>>
+			<<= App.SF.fsIntegration('OptionsFlavourText',80)>>
+			<<= App.SF.fsIntegration('OptionsFlavourText',85)>>
+		<<= App.SF.UnitText('troop')>>
+		<<= App.SF.UnitText('armory')>> <<= App.SF.fsIntegration('OptionsFlavourText',35)>>
+		<<= App.SF.UnitText('drugs')>> <<= App.SF.fsIntegration('OptionsFlavourText',45)>>
+		<<= App.SF.UnitText('UAV')>> <<= App.SF.fsIntegration('OptionsFlavourText',55)>>
+
+			<<if _G > 0 && _S.Firebase >= 1>> <br><br>''Garage:''
+				<<if _S.AV+_S.TV > 0>> <br>&nbsp;''Vehicles:''
+					<<= App.SF.UnitText('AV')>> <<= App.SF.UnitText('TV')>>
+				<</if>>
+				<<= App.SF.UnitText('PGT')>>
+				<<= App.SF.fsIntegration('OptionsFlavourText',60)>>
+				<<= App.SF.fsIntegration('OptionsFlavourText',65)>>
+		<</if>>
+
+		<<if _S.Firebase >= 4>>
+			<<if _H > 0>> <br><br>''Hangar:''
+				<<if _S.AA+_S.TA > 0>> <br>&nbsp;''Airforce:''
+					<<= App.SF.UnitText('AA')>> <<= App.SF.UnitText('TA')>>
+				<</if>>
+				<<= App.SF.UnitText('SP')>> <<= App.SF.UnitText('GunS')>>
+			<</if>>
+			<<= App.SF.fsIntegration('OptionsFlavourText',70)>>
+			<<= App.SF.fsIntegration('OptionsFlavourText',75)>>
+		<</if>>
+		<<if _T1 && _LB> 0>> <br><br>''Launch Bay:''
+			<<if $SF.Squad.Satellite.lv > 0>> <<= App.SF.UnitText('sat')>>
+				<<if $SF.Squad.Satellite.InOrbit < 1>>
+					<br>&nbsp;&nbsp;&nbsp;[[Launch it into geostationary orbit.|Firebase][$SF.Squad.Satellite.InOrbit = 1]] //You <span class='red'>cannot</span> upgrade the satellite once it has been launched.//
+				<<else>>
+					<br>&nbsp;&nbsp;&nbsp;[[Recall the satellite.|Firebase][$SF.Squad.Satellite.InOrbit = 0]]
+				<</if>>
+			<</if>>
+			<<= App.SF.UnitText('GR')>> <<= App.SF.UnitText('ms')>>
+		<</if>>
+		<<if _NY > 0>> <br><br>''Naval Yard:''
+			<<= App.SF.UnitText('AC')>> <<= App.SF.UnitText('Sub')>> <<= App.SF.UnitText('HAT')>>
+		<</if>>
+	<</if>>
+<</if>>

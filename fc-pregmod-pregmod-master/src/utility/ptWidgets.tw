@@ -1,0 +1,49 @@
+:: PT widgets [widget nobr]
+
+<<widget "InduceFlawAbuseEffects">>
+	<<if $activeSlave.devotion > 20>>
+		$He's @@.mediumorchid;desperately confused@@ by this treatment, since the effect would be ruined if you explained it to $him, and $his @@.gold;trust in you is reduced.@@
+	<<elseif $activeSlave.devotion >= -20>>
+		$He's @@.mediumorchid;confused, depressed@@ and @@.gold;frightened@@ by this treatment, since the effect would be ruined if you explained it to $him.
+	<<else>>
+		$He's @@.mediumorchid;angry@@ and @@.gold;afraid@@ that you would treat $him like this.
+	<</if>>
+	<<if $activeSlave.energy > 10>>
+		$His @@.red;appetite for sex is also reduced.@@
+		<<set $activeSlave.energy -= 2>>
+	<</if>>
+	<<set $activeSlave.devotion -= 5>>
+	<<set $activeSlave.trust -= 5>>
+<</widget>>
+
+<<widget "InduceFlawLenityEffects">>
+	<<if $activeSlave.devotion <= 20>>
+		$He doesn't understand what you intend by this strange treatment, but it does make $him @@.mediumaquamarine;inappropriately trusting.@@
+		<<set $activeSlave.trust += 5>>
+	<</if>>
+<</widget>>
+
+<<widget "BasicTrainingDefaulter">>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<set _pti = $personalAttention.findIndex(function(s) { return s.ID == $activeSlave.ID; })>>
+	<<if ($activeSlave.devotion > 20) && ($activeSlave.behavioralFlaw != "none") && ($activeSlave.behavioralQuirk == "none")>>
+		Since $he's obedient, @@.yellow;$his training assignment has defaulted to softening $his behavioral flaw.@@
+		<<set $personalAttention[_pti].trainingRegimen = "soften her behavioral flaw">>
+	<<elseif ($activeSlave.devotion > 20) && ($activeSlave.sexualQuirk == "none") && !["abusive", "anal addict", "attention whore", "breast growth", "breeder", "cum addict", "malicious", "neglectful", "none", "self hating"].includes($activeSlave.sexualFlaw)>>
+		Since $he's obedient, @@.yellow;$his training assignment has defaulted to softening $his sexual flaw.@@
+		<<set $personalAttention[_pti].trainingRegimen = "soften her sexual flaw">>
+	<<elseif ($activeSlave.devotion > 20) && ($activeSlave.behavioralFlaw != "none") && ($activeSlave.behavioralQuirk != "none")>>
+		Since $he's obedient and already has a behavioral quirk, @@.yellow;$his training assignment has defaulted to removing $his behavioral flaw.@@
+		<<set $personalAttention[_pti].trainingRegimen = "fix her behavioral flaw">>
+	<<elseif ($activeSlave.devotion > 20) && !["abusive", "anal addict", "attention whore", "breast growth", "breeder", "cum addict", "malicious", "neglectful", "none", "self hating"].includes($activeSlave.sexualFlaw)>>
+		Since $he's obedient and already has a sexual quirk, @@.yellow;$his training assignment has defaulted to removing $his sexual flaw.@@
+		<<set $personalAttention[_pti].trainingRegimen = "fix her sexual flaw">>
+	<<elseif ($activeSlave.devotion <= 20) && ($activeSlave.trust >= -20)>>
+		@@.yellow;$His training assignment has defaulted to breaking $his will.@@
+		<<set $personalAttention[_pti].trainingRegimen = "break her will">>
+	<<else>>
+		$He is now fully broken; @@.yellow;$his training assignment has defaulted to fostering devotion.@@
+		<<set $personalAttention[_pti].trainingRegimen = "build her devotion">>
+	<</if>>
+	<<set $activeSlave.training = 0, $slaves[$slaveIndices[$activeSlave.ID]].training = 0>>
+<</widget>>

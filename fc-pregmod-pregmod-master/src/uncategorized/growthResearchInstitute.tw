@@ -1,0 +1,27 @@
+:: Growth Research Institute [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Buy Slaves", $returnTo = "Buy Slaves", $showEncyclopedia = 1, $encyclopedia = "Slave Schools">>
+/* Multi-Purchase Support */
+<<if ndef $newSlaves>><<set $newSlaves = []>><</if>>
+<<if $newSlaves.length > 0>>
+	<<set $nextButton = "Continue", $nextLink = "Bulk Slave Intro", $slaveMarket = "GRI", $returnTo = "Main", $newSlaveIndex = 0>>
+<</if>>
+
+//The Growth Research Institute (GRI) is not primarily a slave school at all, but rather the world leader in female growth hormone development. It operates research centers in the Free Cities to avoid traditional medical research laws. GRI runs several slave schools to raise healthy, unmodified subjects for use in trials. After a year of experimental hormone treatment they are sold. <<if $GRI.schoolUpgrade != 0>><br><br>You have endowed <<if $GRI.schoolUpgrade == 1>>a research focus on advanced curatives; most subjects now leave the GRI at unnatural levels of vitality.<<else>>a research focus on milk production; subjects' breasts are bigger and milkier than ever.<</if>> As a major benefact<<if $PC.title == 0>>rix<<else>>or<</if>> of the institution, you also receive a discount on them.<</if>>//
+
+<br><br>GRI offers a fresh graduate for inspection via video call. The interview takes place in the graduate's bare-metal holding cell. Disturbingly, it is strongly reminiscent of an enclosure for a lab animal, only scaled up to contain a lab animal of human dimensions.
+
+<<= generateMarketSlave("GRI")>>
+<<set _slaveCost = slaveCost($activeSlave)>>
+<<setLocalPronouns $activeSlave>>
+<<if $GRI.schoolSale != 0>>
+	<<set _slaveCost = Math.trunc(_slaveCost*0.5)>>
+<<elseif $GRI.schoolUpgrade != 0>>
+	<<set _slaveCost = Math.trunc(_slaveCost*0.8)>>
+<</if>>
+<<if $slavesSeen > $slaveMarketLimit>><<set _slaveCost += Math.trunc(_slaveCost*(($slavesSeen-$slaveMarketLimit)*0.1))>><</if>>
+
+<br><br>The price is <<print cashFormat(_slaveCost)>>.<<if $slavesSeen > $slaveMarketLimit>> You have cast such a wide net for slaves this week that it is becoming more expensive to find more for sale. Your reputation helps determine your reach within the slave market.<</if>>
+
+<<setLocalPronouns $activeSlave>>
+<<buyingFromSchoolControls $GRI "slave" "slaves">>

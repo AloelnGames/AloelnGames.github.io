@@ -1,0 +1,441 @@
+:: FSuckle [nobr]
+
+<<set $AS = $activeSlave.ID>>
+<<run Enunciate($activeSlave)>>
+<<setLocalPronouns $activeSlave>>
+
+<<set getSlave($AS).counter.mammary++>>
+<<set $mammaryTotal++>>
+<<if $PC.pregMood == 0 || $PC.preg < 28>>
+	<<set _mood = 0>>
+<<elseif $PC.pregMood == 1>>
+	<<set _mood = 1>>
+<<elseif $PC.pregMood == 2>>
+	<<set _mood = 2>>
+<</if>>
+
+/* still needed: breast implant support, nipple piercing support */
+
+You <<if _mood == 2>>demand<<else>>beckon<</if>> <<= getSlave($AS).slaveName>> to
+<<if (!hasAnyLegs(getSlave($AS)))>>
+	have another slave set $him on the floor close to you.
+<<elseif tooBigBreasts(getSlave($AS))>>
+	have another slave help $him heft $his tits so $he can take a seat on the floor close to you.
+<<elseif tooBigBelly(getSlave($AS))>>
+	have another slave help $him heft $his belly so $he can take a seat on the floor close to you.
+<<elseif tooBigButt(getSlave($AS))>>
+	have another slave help $him heft $his ass cheeks so $he can take a seat on the floor close to you.
+<<elseif tooBigDick(getSlave($AS))>>
+	have another slave help $him heft $his cock so $he can take a seat on the floor close to you.
+<<elseif tooBigBalls(getSlave($AS))>>
+	have another slave help $him heft $his balls so $he can take a seat on the floor close to you.
+<<elseif tooFatSlave(getSlave($AS))>>
+	have another slave help $him up so $he can take a seat on the floor close to you.
+<<else>>
+	to take a seat on the floor close to you.
+<</if>>
+
+<<if canWalk(getSlave($AS))>>
+	<<if getSlave($AS).fetish == "mindbroken">>
+		$He complies without a thought.
+	<<elseif getSlave($AS).devotion > 20 && getSlave($AS).trust > 20>>
+		$He complies,
+		<<if _mood == 2>>
+			knowing full well what you want.
+		<<else>>
+			giddy with anticipation of your plans for $him.
+		<</if>>
+	<<elseif getSlave($AS).trust < -20>>
+		$He hurriedly complies,
+		<<if _mood == 2>>
+			fearful of the sudden shift in your demeanor.
+		<<else>>
+			aware of the consequences of disobedience.
+		<</if>>
+	<<elseif getSlave($AS).devotion < -20>>
+		<<if _mood == 2>>
+			$He is shaken by your tone, knowing that disobedience may lead to even worse matters for $him; $he complies without any further hassle.
+		<<else>>
+			$He begrudgingly complies, not understanding your intentions, but knowing worse things await at $his disobedience.
+		<</if>>
+	<<else>>
+		<<if _mood == 2>>
+			$He is a little afraid of your sudden demanding tone, but steels $himself for whatever punishment you wish to mete out to $him.
+		<<else>>
+			Though hesitant, $he complies without question.
+		<</if>>
+	<</if>>
+<<else>>
+	<<if getSlave($AS).fetish == "mindbroken">>
+		$He pays no attention as $he is carefully positioned for your use.
+	<<elseif getSlave($AS).devotion > 20 && getSlave($AS).trust > 20>>
+		Though $he has no agency over this,
+		<<if _mood == 2>>
+			$he is somewhat confused by your sudden aggressive posture.
+		<<else>>
+			$he is visibly giddy with anticipation for your next course of action as $he is helped into position.
+		<</if>>
+	<<elseif getSlave($AS).trust < -20>>
+		<<if _mood == 2>>
+			$He knows better than to struggle as $he is helped into position, though $he dreads what $his pregnant <<= WrittenMaster(getSlave($AS))>> has planned.
+		<<else>>
+			$He knows better than to struggle as $he is helped into position, well aware of the consequences it would bring.
+		<</if>>
+	<<elseif getSlave($AS).devotion < -20>>
+		Though $he is rebellious,
+		<<if _mood == 2>>
+			seeing such a gravid person take such a predatory stance shakes $him and $he becomes more compliant.
+		<<else>>
+			$his inability to move and distaste for falling to the ground kept $him from giving $his help much trouble.
+		<</if>>
+	<<else>>
+		<<if _mood == 2>>
+			Though $he is frightened by your sudden aggressiveness, $he complies with $his helper as $he is positioned.
+		<<else>>
+			Though hesitant, $he complies with $his helper as $he is positioned.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if getSlave($AS).boobs >= 20000>>
+	You <<if _mood == 1>>caress<<else>>take note of<</if>> $his massive udders,
+	<<if _mood == 2>>
+		<<if getSlave($AS).nipples == "puffy">>
+			grabbing a puffy nipple, lifting it up and letting it drop back down with a loud plop and a spurt of milk. They are dripping with excess milk and the flurry of kicks in your middle tells you what you need to do.
+		<<elseif getSlave($AS).nipples == "inverted">>
+			prying an inverted nipple out of one of them before letting it slip back down with a loud plop and a gush of milk. A strong kick tells you that you are to take some of that cream for yourself.
+		<<elseif getSlave($AS).nipples == "fuckable">>
+			using two fingers to pry a nippleslit open before letting it slip shut with a moist plop. A strong kick tells you that something good is hiding in there that you'll need to work out.
+		<<else>>
+			grabbing one by the nipple only to let it drop back down with a loud plop and a spurt of milk. A strong kick tells you that you are to take some of that cream for yourself.
+		<</if>>
+	<<else>>
+		dripping with excess milk and resting on $his legs, the very spot you plan to make your own, but it will take finesse.
+	<</if>>
+	You lift up $his hefty breasts and <<if $PC.belly >= 10000>>gently lower yourself<<else>>lay<</if>> down on $his lap,
+	<<if getSlave($AS).belly >= 30000>>
+		<<if getSlave($AS).bellyPreg > 1000>>
+			getting familiar with $his huge life swollen baby bump and
+		<<else>>
+			getting familiar with $his hugely swollen belly and
+		<</if>>
+	<<elseif getSlave($AS).belly >= 10000>>
+		<<if getSlave($AS).bellyPreg >= 8000>>
+			beside $his baby bump and
+		<<elseif getSlave($AS).bellyImplant >= 8000>>
+			beside the swollen orb that is $his stomach and
+		<<else>>
+			beside the bloated container of <<= getSlave($AS).inflationType>> that is $his middle and
+		<</if>>
+	<<elseif getSlave($AS).belly >= 1000>>
+		<<if getSlave($AS).bellyPreg >= 1000>>
+			beside the life growing within $him and
+		<<elseif getSlave($AS).bellyImplant >= 1000>>
+			beside the curve of $his stomach and
+		<<else>>
+			beside the groaning container of <<= getSlave($AS).inflationType>> within $him and
+		<</if>>
+	<<elseif getSlave($AS).weight > 95>>
+		getting familiar with $his fat belly and
+	<</if>>
+	letting go so that $his tits cover your face and <<if $PC.belly >= 5000>>belly<<else>>torso<</if>> in heavenly softness, $his
+	<<if getSlave($AS).nipples != "fuckable">>
+		<<if getSlave($AS).nipples == "puffy">>
+			exceedingly soft nipple already brushing against your lips, covering your face with excess milk as if begging for you to empty $him.
+		<<elseif getSlave($AS).nipples == "inverted" || getSlave($AS).nipples == "partially inverted">>
+			internally curved nipple providing an inviting hole for you to tease out with your tongue.
+		<<else>>
+			overly exertive nipple already prodding at your mouth, as if begging to be suckled on.
+		<</if>>
+		Though muffled, you
+		<<if _mood == 2>>
+			order $him to deal with <<if $PC.dick != 0>>the erect monster pressing uncomfortably against the underside of your belly<<else>>the needy hole leaking all over your floor<</if>>.
+			<<if getSlave($AS).fetish == "mindbroken">>
+				$He obeys without question and mechanically begins to <<if $PC.dick != 0>>jerk you off<<else>>finger you<</if>>.
+			<<elseif getSlave($AS).devotion >= -20>>
+				This proves unnecessary as, before you finish speaking, $he <<if $PC.dick != 0>>wraps $his fingers around your needy cock<<else>><<if canSmell(getSlave($AS))>>smells<<else>>recognizes<</if>> your arousal<</if>> and begins to apply $his ministrations to take care of you<<if getSlave($AS).nipples == "inverted" || getSlave($AS).nipples == "partially inverted">>, as the sensations to $his nipple add so much more to the already surrounding breastflesh<</if>>. You buck to $his touch, forcing $him to try and steady $his breasts as your baby bump jumps with life.
+			<<elseif getSlave($AS).trust < -20>>
+				$He begins to question your order, but quickly realizes that was a mistake as you grab $his hand and force it to your crotch. Hastily, $he begins to stroke <<if $PC.dick != 0>>your dick<<else>>your pussy<</if>> until reassured that $he is pleasing you from your lusty moans and thrusting. $He does $his best, hoping to not anger you further as $he presses <<if $PC.dick != 0>>the head<<else>>your lower lips<</if>> against $his nearby nipple.
+			<<else>>
+				Though $he furrows $his brow, $he decides it's better to get it over with quickly and in $his hand before $he is pinned in a much more compromising position by your pregnancy. <<= getSlave($AS).slaveName>> begins to <<if $PC.dick != 0>>tug at your penis, pressing the head against $his nearby nipple, hoping this doesn't<<else>>finger your quivering pussy, rubbing $his thumb against your clit, hoping this won't<</if>> take too long.
+			<</if>>
+		<<else>>
+			instruct $him to use $his hand to appease the evident arousal between your legs.
+			<<if getSlave($AS).fetish == "mindbroken">>
+				$He obeys without question and mechanically begins to <<if $PC.dick != 0>>jerk you off<<else>>finger you<</if>>.
+			<<elseif getSlave($AS).devotion >= -20>>
+				This proves unnecessary as, before you finish speaking, $he <<if $PC.dick != 0>>notices your hardening penis<<else>><<if canSmell(getSlave($AS))>>smells<<else>>recognizes<</if>> your arousal<</if>> and begins to apply $his ministrations to take care of you<<if getSlave($AS).nipples == "inverted" || getSlave($AS).nipples == "partially inverted">>, as the sensations to $his nipple add so much more to the already surrounding breastflesh<</if>>. You respond further with a positive "Mmmhmm~", which calms $his worries as $he works on pleasuring you as much as $he can with one hand.
+			<<elseif getSlave($AS).trust < -20>>
+				$He begins to question your order, but quickly realizes <<if $PC.dick != 0>>your penis is at full mast and prodding $his breastflesh<<else>>you're soaking wet and quivering with desire<</if>>. Cautiously, $he begins to stroke <<if $PC.dick != 0>>it<<else>>your pussy<</if>> until reassured that $he is pleasing you with a positive "Mmmhmm~". $He does $his best, hoping to not anger you in any way or make a mistake as $he presses <<if $PC.dick != 0>>the head<<else>>your lower lips<</if>> against $his nearby nipple.
+			<<else>>
+				Though $he furrows $his brow, $he decides it's better to get it over with quickly and in $his hand rather than any other hole or in worse circumstances. <<= getSlave($AS).slaveName>> begins to <<if $PC.dick != 0>>tug at your hardened penis, pressing the head against $his nearby nipple, hoping this doesn't<<else>>finger your quivering pussy, rubbing $his thumb against your clit, hoping this won't<</if>> take too long.
+			<</if>>
+		<</if>>
+	<<else>>
+		exotic nipple brushing across your lips, as if wanting to have your tongue inside it, while $his other nipple
+		<<if _mood == 2>>
+			brushes across your <<if $PC.dick != 0>>penis, just begging to be penetrated. You struggle to shift yourself in such a way to penetrate $his nipple, before finally managing to slip the tip into $him<<else>>clit, as if begging to join in. You struggle to shift yourself to an angle where you could attach your sex to<</if>> $his nippleslit.
+			<<if getSlave($AS).fetish == "mindbroken">>
+				<<if $PC.dick != 0>>$He gasps in surprise as you force yourself all the way into $him and your gravid swell parts $his breasts.<<else>>$He fails to understand your efforts, leaving you humping against $his breast.<</if>>
+			<<elseif getSlave($AS).devotion >= -20>>
+				$He gasps in surprise before understanding what you desire and begins to <<if $PC.dick != 0>>ease $his breast into consuming the rest of your length. $He fails to do so fast enough and you force yourself upwards, your gravid swell parting $his breasts as your cock delves into the depths of $his tits<<else>>jiggle $his breast in an attempt to add to your efforts<</if>>.
+			<<elseif getSlave($AS).trust < -20>>
+				$He begins to question your intent, but quickly realizes your <<if $PC.dick != 0>>penis is entering $his breastpussy by force and the $he'd better get used to it<<else>>pussy is rubbing against $his nippleslit. $He begins to jiggle $his breast in an attempt to add to your efforts<</if>>.
+			<<else>>
+				Though $he furrows $his brow, $he decides it's better to get it over with quickly rather than in worse circumstances. <<= getSlave($AS).slaveName>> <<if $PC.dick != 0>>shudders as the rest of your shaft forces its way into $his breastpussy<<else>>begins to jiggle $his breast in an attempt to get you off<</if>>, hoping this doesn't take too long.
+			<</if>>
+			You breathe in $his scent as you let out a moan, your child<<if $PC.pregType > 1>>ren<</if>> satisfied with the sensations of $his milky depths surrounding your crotch.
+		<<else>>
+			brushes across your hardening <<if $PC.dick != 0>>penis, as if begging to be penetrated. You shift to angle yourself just right before thrusting your hips upwards, inserting the tip of your shaft into<<else>>clit, as if begging to join in. You shift to angle yourself just right before thrusting your hips upwards in an attempt to attach your sex to<</if>> $his nippleslit.
+			<<if getSlave($AS).fetish == "mindbroken">>
+				<<if $PC.dick != 0>>$He gasps in surprise as you push all the way into $him.<<else>>$He fails to understand your efforts, leaving you rubbing yourself against $his breast.<</if>>
+			<<elseif getSlave($AS).devotion >= -20>>
+				$He gasps in surprise before understanding what you desire and begins to <<if $PC.dick != 0>>ease $his breast into consuming the rest of your length<<else>>jiggle $his breast in an attempt to add to your efforts<</if>>.
+			<<elseif getSlave($AS).trust < -20>>
+				$He begins to question your intent, but quickly realizes your <<if $PC.dick != 0>>penis is entering $his breastpussy one way or another and begins to ease it all the way in before you decide to force the matter<<else>>pussy is rubbing against $his nippleslit. $He begins to jiggle $his breast in an attempt to add to your efforts<</if>>.
+			<<else>>
+				Though $he furrows $his brow, $he decides it's better to get it over with quickly rather than in worse circumstances. <<= getSlave($AS).slaveName>> begins to <<if $PC.dick != 0>>ease the rest of your shaft into $his breastpussy<<else>>jiggle $his breast in an attempt to get you off<</if>>, hoping this doesn't take too long.
+			<</if>>
+			You breathe in $his scent as you let out a sigh, content with the sensations of $his milky depths surrounding your crotch.
+		<</if>>
+	<</if>>
+<<elseif getSlave($AS).boobs >= 2000>>
+	You <<if _mood == 1>>caress<<elseif _mood == 2>>hungrily eye<<else>>eye<</if>> $his getSlave($AS).nipples nipples,
+	<<if getSlave($AS).nipples == "puffy">>
+		<<if _mood == 2>>
+			gripping the nipple with your hand and squeezing hard enough to force out a spurt of milk. A flurry of kicks tells you that you are to take one of those swollen and dripping beauties and have a drink.
+		<<else>>
+			swollen and dripping with excess milk and calling on your instincts to suckle on them.
+		<</if>>
+	<<elseif getSlave($AS).nipples == "inverted">>
+		<<if _mood == 2>>
+			poking it with your finger as deep as you can. The inviting hole keeps all the delicious milk locked up, your instincts insisting that you pry out the flavor for yourself. The kicking in your middle settles it, you're taking a drink whether or not $his nipples agree.
+		<<else>>
+			the inviting hole keeping all the delicious milk locked up, your instincts insisting that you pry out the flavor for yourself.
+		<</if>>
+	<<elseif getSlave($AS).nipples == "fuckable">>
+		<<if _mood == 2>>
+			using two fingers to penetrate and spread apart to appreciate the insides. They are dripping with excess milk and resemble a tiny pussy; a series of kicks insist that you have a taste<<if $PC.dick != 0>> and a little stress relief<</if>>.
+		<<else>>
+			dripping with excess milk and resembling a tiny pussy, your instincts doubly insisting that you have a taste.
+		<</if>>
+	<<else>>
+		<<if _mood == 2>>
+			pinching one between your thumb and forefinger with enough force to hurt. Excess milk drips from it as a rather forceful kick from your womb insists that you take your fill; you wouldn't mind a taste yourself.
+		<<else>>
+			dripping with excess milk and calling on your instincts to suckle on them.
+		<</if>>
+	<</if>>
+	Though you plan to sate those innate desires, you also plan to do so with finesse. You <<if $PC.belly >= 10000>>gently lower yourself<<else>>lay<</if>> down on $his lap and
+	<<if getSlave($AS).nipples == "fuckable">>
+		ease your head onto
+	<<else>>
+		rest your head on
+	<</if>>
+	$his thigh,
+	<<if getSlave($AS).belly >= 30000>>
+		<<if getSlave($AS).bellyPreg > 1000>>
+			the huge life swollen orb that is $his middle brushing you and
+		<<else>>
+			the hugely swollen orb that is $his middle brushing you and
+		<</if>>
+	<<elseif getSlave($AS).belly >= 10000>>
+		<<if getSlave($AS).bellyPreg >= 8000>>
+			beside $his baby bump and
+		<<elseif getSlave($AS).bellyImplant >= 8000>>
+			beside the swollen orb that is $his stomach and
+		<<else>>
+			beside the bloated container of <<= getSlave($AS).inflationType>> that is $his middle and
+		<</if>>
+	<<elseif getSlave($AS).belly >= 1000>>
+		<<if getSlave($AS).bellyPreg >= 1000>>
+			beside the life growing within $him and
+		<<elseif getSlave($AS).bellyImplant >= 1000>>
+			beside the curve of $his stomach and
+		<<else>>
+			beside the groaning container of <<= getSlave($AS).inflationType>> within $him and
+		<</if>>
+	<<elseif getSlave($AS).weight > 95>>
+		getting familiar with $his fat belly as
+	<</if>>
+	$his over-productive bosoms drip sweet cream on your face<<if getSlave($AS).nipples == "inverted">>, the milk waiting to be sucked from the tight inverted holes above you<</if>><<if $PC.belly >= 10000>> and your belly brushing the undersides of $his tits<</if>>. You
+	<<if _mood == 2>>
+		order $him to deal with <<if $PC.dick != 0>>the erect monster pressing uncomfortably against the underside of your belly<<else>>the needy hole leaking all over your floor<</if>>.
+	<<else>>
+		<<if _mood == 2>>invite<<else>>instruct<</if>> $him to use $his hand to appease the ever evident arousal between your legs.
+	<</if>>
+	<<if getSlave($AS).fetish == "mindbroken">>
+		$He obeys without question and mechanically begins to <<if $PC.dick != 0>>jerk you off<<else>>finger you<</if>>.
+	<<elseif getSlave($AS).devotion >= -20 || getSlave($AS).trust < -20>>
+		<<if $PC.dick != 0>>Though $he believes it would be better for you to use $his other slew of pleasurable orifices, $he does not question your decision<<else>>$He happily sets to work on your clit<</if>>.
+	<<else>>
+		Though $he furrows $his brow, $he decides it's better to get it over with quickly and in $his hand rather than any other hole or in worse circumstances. <<= getSlave($AS).slaveName>> begins to <<if $PC.dick != 0>>tug at your hardened penis<<else>>stroke your quivering pussy as best as $he can<</if>>, hoping this doesn't take too long.
+	<</if>>
+<</if>>
+
+<<if getSlave($AS).fetish == "mindbroken">>
+	You <<if _mood == 1>>struggle to lean forward and wrap your lips gently around a nipple<<else>>lurch forward and engulf a nipple with your lips<</if>>, causing $him to shudder with arousal as the suction causes milk to gush into your mouth to sate your needs.
+<<elseif getSlave($AS).devotion <= 20 || getSlave($AS).trust < -20>>
+	$He braces $himself as you <<if _mood == 1>>struggle to lean forward and wrap your lips gently around a nipple<<else>>lurch forward and engulf a nipple with your lips<</if>>, cringing as the suction causes milk to gush into your mouth to sate your needs.
+<<else>>
+	You <<if _mood == 1>>struggle to lean forward and wrap your lips gently around a nipple<<else>>lurch forward and engulf a nipple with your lips<</if>>, causing $him to coo with delight<<if _mood == 1>> and support your head<</if>> as the suction causes milk to gush into your mouth to sate your needs.
+<</if>>
+<<if _mood == 2>>
+	Your <<if $PC.pregType > 1>>babies calm<<else>>baby calms<</if>> down as $his cream reaches your system.
+<<elseif _mood == 1>>
+	Your <<if $PC.pregType > 1>>babies kick<<else>>baby kicks<</if>> happily as you hug yourself closer to $him.
+<<else>>
+	You find yourself moaning at the delight of $his cream flowing into you.
+	<<if $PC.preg > 15>> A fluttering sensation in your womb tells you someone else also appreciates the drink.<</if>>
+<</if>>
+
+<<if getSlave($AS).boobs >= 20000>>
+	Such sensations hasten your breath, making you take in more of $his womanly scent. You work with your lips and tongue to
+	<<if getSlave($AS).nipples == "inverted" || getSlave($AS).nipples == "partially inverted">>
+		tease out $his nipple and suckle with newfound gusto,
+	<<elseif getSlave($AS).nipples == "fuckable">>
+		explore the inner chambers of $his breasts and ease out more of $his cream in a lustful frenzy,
+	<<else>>
+		ease out more of $his cream in a lustful frenzy,
+	<</if>>
+	as though the rest of the world did not exist. It might as well not, given how the entirety of your upper body sees and feels nothing but $his mesmerizing mammaries and
+	<<if getSlave($AS).nipples == "puffy">>
+		$his soft nipple in your mouth, while your sex focuses on the soft hand diligently working it. You feverishly suckle on $his nipple as you thrash your tongue, your efforts rewarded with more milk.
+	<<elseif getSlave($AS).nipples == "inverted" || getSlave($AS).nipples == "partially inverted">>
+		$his erect nipple in your mouth, while your sex focuses on the soft hand diligently working it. You feverishly suckle on $his nipple as you thrash your tongue, your efforts rewarded with more milk.
+	<<elseif getSlave($AS).nipples == "fuckable">>
+		your sex feeling nothing but the wet <<if $PC.dick != 0>>insides of $his breast<<else>>lips of $his breastpussy<</if>>. You feverishly thrash your tongue around inside of the bumpy enclosure, with each strong movement sending shivers through $him, forcing gasps, moans and milk out of $him.
+	<<else>>
+		$his milky nipple in your mouth, while your sex focuses on the soft hand diligently working it. You feverishly suckle on $his nipple as you thrash your tongue, your efforts rewarded with more milk.
+	<</if>>
+	You would worry about drowning if it didn't taste good enough for you to suckle ever harder with each spurt.
+<<elseif getSlave($AS).boobs >= 2000>>
+	Such sensations bring your attention further to $his teat; as you
+	<<if getSlave($AS).nipples == "inverted">>
+		tease $his nipple
+	<<elseif getSlave($AS).nipples == "fuckable">>
+		explore the depths of $his inner breast
+	<<else>>
+		roll and prod
+	<</if>>
+	with your tongue, trying to get the most out of $his mammaries, you hasten $his breath and bring $him further pleasure<<if getSlave($AS).nipples == "inverted">> as it slowly hardens and leaves its inverted state<</if>>.
+	<<if getSlave($AS).nipples == "puffy">>
+		You note the texture of $his nipple: soft, more so even than the rest of $his boob. Your constant efforts of sucking and tongueplay are rewarded
+	<<elseif getSlave($AS).nipples == "fuckable">>
+		You feverishly thrash your tongue around in the bumpy enclosure, each strong movement sending shivers through $him, causing $him to gasp and moan, as well as rewarding you
+	<<elseif getSlave($AS).nipples != "inverted">>
+		You take in the texture of $his nipple: hard and bumpy, a stark contrast to the rest of $his boob — an undeniable ocean of softness. Your constant efforts of sucking and tongueplay are rewarded
+	<<else>>
+		Your constant efforts of sucking and tongueplay are rewarded
+	<</if>>
+	with more milk straight from the tap.
+<</if>>
+
+Milk continues to spill into your mouth as you suckle away at the
+<<if getSlave($AS).nipples == "puffy">>
+	softness,
+<<elseif getSlave($AS).nipples == "inverted" || getSlave($AS).nipples == "partially inverted">>
+	erect hardness,
+<<elseif getSlave($AS).nipples == "fuckable">>
+	at the milky slit,
+<<else>>
+	hardness,
+<</if>>
+relishing the delicious treat one could have only received from a mother's bosom; at least, so was the case before modern medicine decided to say something about it. Though it may as well be artificial, the act of breastfeeding continues to appease a fundamental emotional need that is arguably unique to the action.
+<<if _mood == 2>>
+	It gives you undeniable emotional respite despite the mood caused by your pregnancy, even if it will only last as long as you stay with $him.
+<<elseif _mood == 1>>
+	You can only hope $he'll return the favor when you yourself become too heavy with milk.
+<<elseif $PC.preg > 30>>
+	You know that you'll soon have your own child<<if $PC.pregType > 1>>ren<</if>> to share this feeling with and deep down, you hope to enjoy it just as much as $he does.
+<</if>>
+
+<<if getSlave($AS).boobs >= 20000>>
+	<<if getSlave($AS).nipples == "fuckable">>
+		$He
+		<<if $PC.dick != 0>>
+			holds $his breast and jiggles it in an attempt to compliment your thrusts, adding even more sensation alongside your own efforts. With the milk adding lubrication to the sensual hole of $his nipple and the enclosed nature of $his sopping wet breastpussy itself adding suction, it's like you were enveloped inside of a highly advanced cock milking machine, each bump sending thrums of pleasure as your dick brushed against them.
+		<<else>>
+			held $his breast and jiggled it in an attempt to compliment your thrusts, adding more sensation to your own efforts. The milk adding wetness to the sensual hole of $his nipple and the nature of $his sopping wet breastpussy itself adding suction felt like you were being enveloped by a world class pussy pump, each movement adding more suction and wetness than the last.
+		<</if>>
+	<<else>>
+		While you were busy suckling, $he was anything but idle, using $his hand as best as $he could to bring you the most pleasure $he is capable of. Though no lube was applied, $his ministrations were more than enough to take you to the knife's edge of orgasm more than once. In your <<if $PC.dick != 0>>already dazed state<<else>>lust addled haze<</if>>, $his fingers seem to send lightning along your nerves<<if $PC.dick != 0>>; the tips brushing across your shaft to tickle its head make you thrust instinctively. $His tugs, gentle yet firm<<else>>. $His fingertips brush across your labia to tickle your clit, making you buck instinctively. $His strokes, gentle yet decisive<</if>>, have an almost motherly feel to them. Such ministrations cannot help but prepare you to <<if $PC.dick != 0>>shoot your load<<else>>come<</if>> as hard as you can.
+	<</if>>
+<<elseif getSlave($AS).boobs >= 2000>>
+	While you were busy suckling, $he was anything but idle, using $his hand as best as $he could to bring you the most pleasure $he is is capable of. Though no lube was applied, $his ministrations were more than enough to take you to the knife's edge of orgasm more than once. $His hand continues to apply itself to your <<if $PC.dick != 0>>shaft, its fingertips brushing across your shaft to tickle its head and make you thrust instinctively. $His tugs<<else>>sex, $his fingertips seeming to send lightning along your nerves. As $he tickles your clit, you buck instinctively. $His strokes<</if>>, gentle yet firm, have an almost motherly feel to them. Such ministrations cannot help but prepare you to <<if $PC.dick != 0>>shoot your load<<else>>come<</if>> as hard as you can.
+<</if>>
+
+The two of you put so much into seeking pleasure in the act that you both cum at once, $his great gasp coinciding with your <<if $PC.dick != 0>><<if $PC.balls >= 10>>flood<<else>>jet<</if>> of jizz flying<<else>>own jet of pussy juice squirting<</if>>
+<<if getSlave($AS).boobs >= 20000 && getSlave($AS).nipples == "fuckable">>
+	into
+<<else>>
+	onto
+<</if>>
+$his other breast<<if $PC.dick != 0>><<if $PC.balls >= 10>> and backflowing hard from your sheer volume<</if>><</if>>. You release $his nipple with a loud pop and lick your lips in delight.
+<<if getSlave($AS).boobs >= 20000 && getSlave($AS).nipples == "fuckable">>
+	Your <<if $PC.dick != 0>>dick slips out<<else>>pussy separates<</if>> from $his other breast with a delicate pop, followed by lewd dripping noises and the sight of <<if $PC.dick != 0>>semen<<else>>girlcum<</if>> and milk oozing from $his <<if $PC.dick != 0>>newly expanded hole<<else>>nippleslit<</if>>.
+<</if>>
+<<if _mood == 2>>
+	For a moment, $he thought you were finished, but with your hormone fueled libido, $he'll be feeling a lot more than sore nipples but the time you tire of $his touch.
+<<elseif _mood == 1>>
+	You cuddle up against $him, holding close to $him as you snooze off your milky meal.
+	<<if getSlave($AS).fetish == "mindbroken">>
+		$He struggles in discomfort at your pregnancy weight pinning $him down until $he manages to rouse your child<<if $PC.pregType > 1>>ren<</if>> and get you to move.
+	<<elseif getSlave($AS).devotion > 20 && getSlave($AS).trust > 20>>
+		$He holds you close, gently caressing your head and pregnancy as you rest it off.
+	<<elseif getSlave($AS).trust < -20>>
+		$He freezes in fear, unsure of what to do other than let you rest.
+	<<elseif getSlave($AS).devotion < -20>>
+		$He groans at the weight leaning against $him and begrudgingly rests $his arm atop your pregnant bulge.
+		<<if $PC.pregSource == getSlave($AS).ID>>
+			$He takes a moment to appreciate the size of your stomach, knowing $he was the one that seeded you. $He admires $his work with pride.
+		<<else>>
+			$He knows $he has little choice but to put up with it.
+		<</if>>
+	<<else>>
+		Though hesitant, $he carefully rubs the taut dome of your belly as you rest.
+	<</if>>
+<</if>>
+
+<<if getSlave($AS).lactation > 0>>
+	<<set getSlave($AS).lactationDuration = 2>>
+	<<set getSlave($AS).boobs -= getSlave($AS).boobsMilk, getSlave($AS).boobsMilk = 0>>
+<</if>>
+
+Once you <<if _mood == 1>>wake and slowly rise to your feet, you help $him clean up<<else>>are done, you allow $him to clean up<</if>>
+<<switch getSlave($AS).assignment>>
+<<case "work in the brothel">>
+	before returning $his lovely tits to the brothel.
+<<case "serve in the club">>
+	before resuming $his lovely bouncing in the club.
+<<case "work in the dairy">>
+	before returning to the dairy.
+<<case "work as a farmhand">>
+	to avoid tainting the food in $farmyardName.
+<<case "work as a servant">>
+	mostly to keep everything $he has to clean from getting any dirtier.
+<<case "work as a nanny">>
+	before heading back to take care of the children.
+<<case "whore">>
+	before returning to offering $his lovely tits for sale.
+<<case "serve the public">>
+	before returning to offering $his lovely tits for free.
+<<case "rest">>
+	before crawling back into bed.
+<<case "get milked">>
+	before resting until $his tits swell with milk again.
+<<case "be a servant">>
+	since $his chores didn't perform themselves while you enjoyed $him.
+<<case "please you">>
+	before returning to await your next use of $his body, as though nothing had happened.
+<<case "be a subordinate slave">>
+	though it's only a matter of time before another slave decides to play with $his tits.
+<<case "be your Head Girl">>
+	worried that $his charges got up to trouble while $he enjoyed $his <<= WrittenMaster(getSlave($AS))>>'s use.
+<<case "guard you">>
+	so $he can be fresh and ready for more sexual use even as $he guards your person.
+<<case "train slaves">>
+	before $he returns to teaching $his classes.
+<<default>>
+	before $he returns to <<= getSlave($AS).assignment>>.
+<</switch>>

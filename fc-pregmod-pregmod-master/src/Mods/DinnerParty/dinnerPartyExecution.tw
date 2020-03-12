@@ -1,0 +1,594 @@
+:: Dinner Party Execution [nobr]
+
+/% To MOD: insert the following code into the passage PC Name and Title %/
+/% <<if $MOD_DinnerPartyTitleAchievement == 1>><<if $PC.title > 0>><<set $titles.push("Master of the Culinary Arts")>><<else>><<set $titles.push("Mistress of the Culinary Arts")>><</if>><</if>> %/
+
+	<<set $nextButton = "Back to Main", $nextLink = "Main", $returnTo = "Main", $showEncyclopedia = 1, $encyclopedia = "Personal Assistant">>
+
+	<<set _generateEnemies to 0>>
+	<<run cashX(-1000, "event")>>
+	<<set _dinnerRating = 0>>
+
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<div class="imageColumn">
+			<div class="imageRef medImg">
+				<<= SlaveArt($activeSlave, 2, 0)>>
+			</div>
+			<div class="imageRef medImg">
+				<<= SlaveArt($activeSlave, 2, 0)>>
+			</div>
+		</div>
+	<</if>>
+	/* 000-250-006 */
+
+	<<setLocalPronouns $activeSlave>>
+
+	/%Event description%/
+	$activeSlave.slaveName is carried out by four slaves on a huge platter and placed on the dining table.
+	<<if $activeSlave.fetish == "mindbroken">>
+		$His mind is broken. $He does not understand what's about happen, so there is little need to restrain $him.
+	<<elseif $activeSlave.devotion > 90>>
+		$He worships you and considers it an honor to be chosen for sacrifice. There is no need to restrain $him.
+	<<else>>
+		$He understands $he is about to be slaughtered liked an animal. Tears stream down $his face as $he struggles against $his bindings.
+	<</if>>
+	/* This needs to be rewritten. Take into account FS tastes and the fact that the player might not have a dick */
+	$He is lying on $his back with an apple in $his mouth. You lift $his <<if hasBothLegs($activeSlave)>>legs<<else>>waist<</if>> up in the air, exposing $his nethers. You penetrate $him with your <<if $PC.dick !== 0>>throbbing dick<<else>>strap-on<</if>>, fucking $him roughly and cumming quickly. Your guests form a line behind you, and do the same to $his ass. Some of your guests take particular pleasure being rough with $activeSlave.slaveName. They enjoy making $him squeal like a pig, knowing they are about to enjoy $his flesh in a short while. After all of your guests had a turn with the little piggy, $his ass is dripping with cum and a hint of blood. It seems your guests greatly @@.green;enjoy@@ themselves. You stand over $him with a ceremonial dagger,
+	<<run repX(5000, "event")>>
+	<<if $activeSlave.fetish == "mindbroken">>
+		looking into $his dull eyes.
+	<<elseif $activeSlave.devotion > 90>>
+		looking into $his proud eyes.
+	<<else>>
+		looking into $his terrified eyes begging for mercy.
+	<</if>>
+	You give the signal for your slaves to begin the ceremony. The four slaves hold $activeSlave.slaveName down on the platter. A fifth slave starts to give $him oral sex.
+	$activeSlave.slaveName moans with the apple in $his mouth. When $he is on the edge of climax you plunge the ceremonial dagger into $his chest. The pain causes $him to bite down on the apple deeply. Tears mixed with the juices of the apple flow down $his face. With a twist of your hand, you carve out $his beating heart.
+	<<if ($activeSlave.fetish == "mindbroken") || ($activeSlave.devotion > 90)>>
+		Your guests @@.green;applaud@@ your slave's willingness to die for $his <<= WrittenMaster()>>, a credit to your training.
+		<<run repX(2500, "event")>>
+	<<else>>
+		Your guests @@.red;snicker@@ at your inability to provide a willing sacrifice.
+		<<run repX(-100, "event")>>
+	<</if>>
+	Your slaves carry the carcass to the kitchen for cooking preparations. With all the ingredients for the special dishes harvested, the carcass is placed on a spit slowly rotating over an open fire. You mingle with your guests while $activeSlave.slaveName is slowly being cooked.
+	<br><br>
+
+	Your slaves begin to serve the appetizer...
+	<br>
+	/% Dicky Roll %/
+	<<if $activeSlave.dick > 0>>
+		/% the dick is numbered from 0 to 5 %/ /*this isn't a problem at all*/
+		<<set _dishRating = $activeSlave.dick>>
+		/*<img src='resources/spring roll.jpg' style="float:left" />*/
+		''//Dicky Roll//'':
+		<br>
+		$activeSlave.slaveName's penis is wrapped in a spring roll wrapper, deep fried and placed on a plate. Green lettuce decorates the plate along with a side of dipping sauce.
+		<<if $activeSlave.dick >= 5>>
+			The massive length and girth of the penis impressed your guests greatly and have them all salivating at the sight of the dish.
+		<<elseif $activeSlave.dick >= 4>>
+			The large size of the penis impressed your guests and have them salivating at the sight of the dish.
+		<<elseif $activeSlave.dick >= 3>>
+			The regular size of the penis did not impress your guests much. Nevertheless they are looking forward to tasting the delicacy.
+		<<elseif $activeSlave.dick >= 2>>
+			The small size of the penis had your guests disappointed at the size of the dish.
+		<<else>>
+			The tiny size of the penis had your guests laughing at the disappointing dish.
+		<</if>>
+		<<if $activeSlave.balls >= 5>>
+			As you bite into the dick your palate is treated with a rich salty taste at the center of your dicky roll. You smile as you know this is the taste of cum trapped in the shaft of the penis at the moment of death. Your guests also greatly enjoy this exotic taste.
+		<<elseif $activeSlave.balls >= 4>>
+			As you bite into the dick your palate is treated with a distinct salty taste at the center of your dicky roll. You smile as you know this is the taste of cum trapped in the shaft of the penis at the moment of death. Your guests also enjoy this exotic taste.
+			<<set _dishRating -= 0.5>>
+		<<elseif $activeSlave.balls >= 3>>
+			As you bite into the dick your palate is treated with a faint salty taste at the center of your dicky roll. You smile as you know this is the taste of cum trapped in the shaft of the penis at the moment of death. Your guests also enjoy this exotic taste.
+			<<set _dishRating -= 1>>
+		<<elseif $activeSlave.balls >= 2>>
+			As you bite into the dick your palate is treated with a hint of salty taste at the center of your dicky roll. You smile as you know this is the taste of cum trapped in the shaft of the penis at the moment of death. Your guests also enjoy this exotic taste.
+			<<set _dishRating -= 1.5>>
+		<<elseif $activeSlave.balls >= 1>>
+			As you bite into the dick your palate is treated with barely a hint of salty taste at the center of your dicky roll. You smile as you know this is the taste of cum trapped in the shaft of the penis at the moment of death. Your guests also enjoy this exotic taste.
+			<<set _dishRating -= 2>>
+		<<else>>
+			As you bite into the dick you feel as if this dish is missing something. A certain 'je ne sais quoi'.
+			<<set _dishRating -= 2.5>>
+		<</if>>
+		/% Dish rating, could be made into a separate function/passage. The following will be called for every dish %/
+		<<set _dinnerRating += _dishRating>>
+		<<if _dishRating > 5>>
+			<<set _dishRating = 5>>
+		<<elseif _dishRating < 0>>
+			<<set _dishRating = 0>>
+		<</if>>
+		<br><br>
+		This dish earned a score of _dishRating out of 5 stars.
+		<<if _dishRating >= 2>>
+			Your reputation has @@.green;increased.@@
+			<<run repX((_dishRating * 100), "event")>>
+		<<elseif _dishRating >= 0>>
+			Your reputation has @@.red;decreased.@@
+			<<run repX(forceNeg(_dishRating * 20), "event")>>
+		<<else>>
+			Your reputation has @@.red;decreased.@@
+			<<run repX(-100, "event")>>
+		<</if>>
+		<br><br>
+		/% End of Dish rating %/
+	<</if>>
+	/*<br style="clear:both" />*/
+	<br>
+	/% Testy Meat Balls %/
+	<<if $activeSlave.balls > 0>>
+		/*<img src='resources/meat balls.jpg' style="float:left" />*/
+		The next course is ''//Testy Meat Balls//'':
+		<<set _dishRating = $activeSlave.balls>> /* I give up. Each and every dish will need a rework and score redesign. Definitely some crazy potential with FSs to do some interesting things.*/
+		<br>
+		$activeSlave.slaveName's balls are coated in olive oil and sautéed.
+		/% Dish rating, could be made into a separate function/passage. The following will be called for every dish %/
+		<<set _dinnerRating += _dishRating>>
+		<<if _dishRating > 5>>
+			<<set _dishRating = 5>>
+		<<elseif _dishRating < 0>>
+			<<set _dishRating = 0>>
+		<</if>>
+		<br><br>
+		This dish earned a score of _dishRating out of 5 stars.
+		<<if _dishRating >= 2>>
+			Your reputation has @@.green;increased.@@
+			<<run repX((_dishRating * 100), "event")>>
+		<<elseif _dishRating >= 0>>
+			Your reputation has @@.red;decreased.@@
+			<<run repX(forceNeg(_dishRating * 20), "event")>>
+		<<else>>
+			Your reputation has @@.red;decreased.@@
+			<<run repX(-100, "event")>>
+		<</if>>
+		<br><br>
+		/% End of Dish rating %/
+	<</if>>
+	/*<br style="clear:both" />*/
+	<br>
+	/% Camel Toe à l'Orange %/
+	<<if $activeSlave.vagina != -1>>
+		<<set _dishRating = 5>>
+		/*<img src='resources/steak.jpg' style="float:left" />*/
+		The next course is ''//Camel Toe steak//'':
+		<br>
+		$activeSlave.slaveName's pussy is grilled like a steak.
+		<<if $activeSlave.clit >= 2>> /*These would all need to take into account clitoral hoods */
+			$His huge clit sticking out of the camel toe is the cherry on top for this dish.
+		<<elseif $activeSlave.clit >= 1>>
+			$His large clit sticking out of the camel toe makes this dish aesthetically pleasing.
+			<<set _dishRating -= 1.5>>
+		<<else>>
+			$His small clit is hiding inside of the camel toe. It does not add to the scheme of this dish.
+			<<set _dishRating -= 2>>
+		<</if>>
+		<<if $activeSlave.labia >= 2>>
+			$His huge labia taste delicious.
+		<<elseif $activeSlave.labia >= 1>>
+			$His large labia is tasty.
+			<<set _dishRating -= 1.5>>
+		<<else>>
+			$His small labia leave you and your guests wanting more.
+			<<set _dishRating -= 2>>
+		<</if>>
+
+		/% Dish rating, could be made into a separate function/passage. The following will be called for every dish %/
+		<<set _dinnerRating += _dishRating>>
+		<<if _dishRating > 5>>
+			<<set _dishRating = 5>>
+		<<elseif _dishRating < 0>>
+			<<set _dishRating = 0>>
+		<</if>>
+		<br><br>
+		This dish earned a score of _dishRating out of 5 stars.
+		<<if _dishRating >= 2>>
+			Your reputation has @@.green;increased.@@
+			<<run repX((_dishRating * 100), "event")>>
+		<<elseif _dishRating >= 0>>
+			Your reputation has @@.red;decreased.@@
+			<<run repX(forceNeg(_dishRating * 20), "event")>>
+		<<else>>
+			Your reputation has @@.red;decreased.@@
+			<<run repX(-100, "event")>>
+		<</if>>
+		<br><br>
+		/% End of Dish rating %/
+	<</if>>
+	/*<br style="clear:both" />*/
+	<br>
+	/% Bonus dish Baby Veal Ragout %/
+	<<if $activeSlave.preg >= $activeSlave.pregData.normalBirth/4>>
+		<<set _dishRating = 5>>
+		/*<img src='resources/veal ragout.jpg' style="float:left" />*/
+		The next course is a bonus dish ''//Baby Veal Ragout//'':
+		<br>
+		$activeSlave.slaveName was pregnant so $he has a special bonus dish to offer your guests. $His fetus is boiled in a vinegar stock and stewed in butter.
+		<<if $activeSlave.preg >= $activeSlave.pregData.normalBirth/1.6>>
+			Your guests are pleased with the huge size of the dish.
+		<<elseif $activeSlave.preg >= $activeSlave.pregData.normalBirth/2>>
+			Your guests are pleased with the large size of the dish.
+			<<set _dishRating -= 1>>
+		<<elseif $activeSlave.preg >= $activeSlave.pregData.normalBirth/2.66>>
+			Your guests are satisfied with the decent size of the dish.
+			<<set _dishRating -= 2>>
+		<<else>>
+			Your guests are a little disappointed with the small size of the dish.
+			<<set _dishRating -= 3>>
+		<</if>>
+
+		/% Dish Rating %/
+		<<set _dinnerRating += _dishRating>>
+		<br><br>
+		This dish earned a score of _dishRating out of 5 stars.
+		Your reputation has @@.green;increased.@@
+		<<run repX((_dishRating * 100), "event")>>
+		<br><br>
+	<</if>>
+	/*<br style="clear:both" />*/
+	<br>
+	/% Titty Tartare %/
+	<<set _dishRating = 5>>
+	/*<img src='resources/tartare.jpg' style="float:left" />*/
+	The next course is ''//Titty Tartare//'':
+	<br>
+	$activeSlave.slaveName's tits are chopped into tiny cube size pieces mixed with onions, capers and seasoning. It is served raw with an egg yolk on top and a side of French fries.
+	<<if $activeSlave.boobsImplant > 0>>
+		As you and your guests take your first bite of the tartare you immediately spit out the meat. Who would have thought silicone is not edible. You have neglected to remove $his breast implants before serving the titty tartare. The dish is now ruined. Your guests are @@.red;displeased@@ by your lack of attention to detail.
+		<<set _dishRating = 0>>
+		<<run repX(-500, "event")>>
+	<<else>>
+		<<if $activeSlave.boobs >= 4800>>
+			$His monstrous boobs are very tender and juicy. There are also enough servings to keep all of your guests satisfied.
+		<<elseif $activeSlave.boobs >= 2400>>
+			$His massive boobs are tender and juicy. Your guests are satisfied with the generous portions.
+			<<set _dishRating -= 1>>
+		<<elseif $activeSlave.boobs >= 1600>>
+			$His huge boobs are tender. Your guests are satisfied with the portions.
+			<<set _dishRating -= 2>>
+		<<elseif $activeSlave.boobs >= 800>>
+			$His big boobs are tender and tasty. Your guests are satisfied with the portions, but wished for more.
+			<<set _dishRating -= 3>>
+		<<elseif $activeSlave.boobs >= 500>>
+			$His small boobs are tender. Your guests are disappointed with their portions.
+			<<set _dishRating -= 4>>
+		<<else>>
+			$His non-existent boobs leaves your guests disappointed.
+			<<set _dishRating -= 5>>
+		<</if>>
+		<<if $activeSlave.lactation >= 2>>
+			As you and your guests enjoy your tartare, suddenly you hear a loud crunch coming from the guest sitting right next to you. You see blood spewing from his mouth as he spits out his chipped tooth along with a lactation implant. You apologize profusely and pay the man ¤10000 as compensation. The rest of your guests are @@.red;not happy@@ that you serve them drugged meat.
+			<<set _dishRating = 0>>
+			<<run repX(-1000, "event")>>
+			<<run cashX(-10000, "event")>>
+		<<elseif $activeSlave.lactation > 0 >>
+			You detect a hint of creamy taste to your tartare. The clearly lactating breast earns the dish an extra star.
+			<<set _dishRating += 1>>
+		<</if>>
+	<</if>>
+
+	/% Dish rating, could be made into a separate function/passage. The following will be called for every dish %/
+	<<set _dinnerRating += _dishRating>>
+	<<if _dishRating > 5>>
+		<<set _dishRating = 5>>
+	<<elseif _dishRating < 0>>
+		<<set _dishRating = 0>>
+	<</if>>
+	<br><br>
+	This dish earned a score of _dishRating out of 5 stars.
+	<<if _dishRating >= 2>>
+		Your reputation has @@.green;increased.@@
+		<<run repX((_dishRating * 100), "event")>>
+	<<elseif _dishRating >= 0>>
+		Your reputation has @@.red;decreased.@@
+		<<run repX(forceNeg(_dishRating * 20), "event")>>
+	<<else>>
+		Your reputation has @@.red;decreased.@@
+		<<run repX(-100, "event")>>
+	<</if>>
+	<br><br>
+	/% End of Dish rating %/
+	/*<br style="clear:both" />*/
+	<br>
+	/% Roast Long Pig %/
+	/*<img src='resources/roast pig.jpg' style="float:left" />*/
+	Your slaves begin to serve the main course ''//Roast Long Pig//'':
+	<br>
+	$activeSlave.slaveName is carried out with $his carcass roasted to a perfect golden brown color. $He is coated with BBQ sauce and dripping in $his own juices. The apple is still in $his mouth.
+	<<set _dishRating = 5>>
+	<<if $activeSlave.vagina == 0>>
+		$activeSlave.slaveName was a virgin. Eating of maiden meat is thought to be highly prestigious. It earns you an extra star for this dish.
+		<<set _dishRating += 1>>
+	<</if>>
+	<<if $activeSlave.physicalAge >= 60>>
+		$activeSlave.slaveName was old. $His meat is tough and leathery.
+		<<set _dishRating -= 2>>
+	<<elseif $activeSlave.physicalAge >= 40>>
+		$activeSlave.slaveName was middle aged. $His meat is stringy.
+		<<set _dishRating -= 1>>
+	<<elseif $activeSlave.physicalAge >= 20>>
+		$activeSlave.slaveName was young. $His meat is tender.
+	<<else>>
+		$activeSlave.slaveName was very young. $His meat is very tender.
+		<<set _dishRating += 1>>
+	<</if>>
+	<<if $activeSlave.weight > 95>>
+		$activeSlave.slaveName was too fat. It made the dish taste very greasy.
+		<<set _dishRating -= 2>>
+	<<elseif $activeSlave.weight > 30>>
+		$activeSlave.slaveName was fat. It made the dish taste greasy.
+		<<set _dishRating -= 1>>
+	<<elseif $activeSlave.weight > 10>>
+		$activeSlave.slaveName was juicy and yet not greasy. $He is a prime piece of meat.
+		<<set _dishRating += 0.5>>
+	<<elseif $activeSlave.weight >= -10>>
+		$activeSlave.slaveName was lean. $He is a good piece of meat.
+	<<elseif $activeSlave.weight >= -30>>
+		$activeSlave.slaveName was thin. $He does not provide enough meat for you and your guests.
+		<<set _dishRating -= 0.5>>
+	<<elseif $activeSlave.weight >= -95>>
+		$activeSlave.slaveName was too skinny. $He has very little meat on the bones.
+		<<set _dishRating -= 1>>
+	<<else>>
+		$activeSlave.slaveName was emaciated. $He has only bones and skin.
+		<<set _dishRating -= 2>>
+	<</if>>
+	<<if $activeSlave.muscles > 95>>
+		$activeSlave.slaveName has too much muscle and sinew. $His meat is too chewy.
+		<<set _dishRating -= 0.5>>
+	<<elseif $activeSlave.muscles > 50>>
+		$activeSlave.slaveName has strong muscles. It gives $his meat a very tasty texture.
+		<<set _dishRating += 0.5>>
+	<<elseif $activeSlave.muscles > 5>>
+		$activeSlave.slaveName has toned muscles. It gives $his meat a tasty texture.
+	<<else>>
+		$activeSlave.slaveName has no muscles. It gives $his meat a plain texture.
+		<<set _dishRating -= 1>>
+	<</if>>
+	<<if $activeSlave.lipsImplant > 0>>
+		All of sudden one of your guests' face turns red, then purple. It is clear he is choking on something. You leap out of your seat, rush over to him and start the Heimlich maneuver. On your third thrust into his abdominal, a piece of lip implants flies out of his mouth and hits another guest square in the face. You apologize profusely for your carelessness in selecting the meat. The rest of your guests had a great laugh at your @@.red;expense.@@
+		<<set _dishRating -= 5>>
+		<<run repX(-500, "event")>>
+	<</if>>
+	<<if $activeSlave.buttImplant > 0>>
+		All of sudden one of your guests clutches his chest. His face turns pale as a ghost, foaming at the mouth falls over onto the table. You rush over to him, it is clear he is not breathing. You don't know what's wrong with him. It could not have been poison, since any toxins in the food would have been detected by your personal assistant. You order your slave to rush the man to the nearest emergency clinic. You were informed later that he had died from ingesting a silicone butt implant. Your reputation @@.red;suffers@@ greatly due to this incident.
+		<<set _dishRating -= 10>>
+		<<run repX(-5000, "event")>>
+	<</if>>
+
+	/% Dish rating, could be made into a separate function/passage. The following will be called for every dish %/
+	<<set _dinnerRating += _dishRating>>
+	<<if _dishRating > 5>>
+		<<set _dishRating = 5>>
+	<<elseif _dishRating < 0>>
+		<<set _dishRating = 0>>
+	<</if>>
+	<br><br>
+	This dish earned a score of _dishRating out of 5 stars.
+	<<if _dishRating >= 2>>
+		Your reputation has @@.green;increased.@@
+		<<run repX((_dishRating * 100), "event")>>
+	<<elseif _dishRating >= 0>>
+		Your reputation has @@.red;decreased.@@
+		<<run repX(forceNeg(_dishRating * 20), "event")>>
+	<<else>>
+		Your reputation has @@.red;decreased.@@
+		<<run repX(-100, "event")>>
+	<</if>>
+	<br><br>
+	/% End of Dish rating %/
+	/*<br style="clear:both" />*/
+	<br>
+	/% End of Dinner %/
+	/% Total of main dishes each can earn 5 stars total 25, getting 12 stars means a successful evening %/
+	<<if _dinnerRating >= 12>>
+	/% successful evening %/
+		The party is in full swing. Your guests enjoy eating $activeSlave.slaveName and make good use of the slaves you provided for their pleasure.
+		Sounds of an orgy of food drink and sex echoes through your dining hall. Your guests ate, drank and fucked their fill.
+		As the evening draw to a close, there isn't a single morsel of $activeSlave.slaveName left to be found. Some of your slaves show signs of teeth marks on their skin. Perhaps some guests got confused about what's for eating and what's for fucking?
+		The evening was a @@.green;success.@@
+		<<run repX((_dinnerRating * 500), "event")>>
+
+		<<if _dinnerRating >= 20>>
+			<br><br>
+			You have earned the 20 stars required for the title of
+			<<set $MOD_DinnerPartyTitleAchievement 0 1>>
+			<<if $PC.title > 0>>
+				@@.yellow;Master of The Culinary Arts.@@
+			<<else>>
+				@@.yellow;Mistress of The Culinary Arts.@@
+			<</if>>
+
+			<br><br>
+		<</if>>
+	<<else>>
+	/% failed evening %/
+		With most of your dishes earning a poor rating, your guests are @@.red;dissatisfied.@@
+		<<run repX(forceNeg(_dinnerRating * 100), "event")>>
+		They take out their frustrations on your slaves. Your slaves are being fucked roughly and abused. Cries of pain and pleads of mercy echoes through your dining hall. You decide to allow the abuse to continue as you do not want to antagonize your guests further. You watch with a forced smile as your favorite slaves are being slapped, whipped, choked and burned with cigarettes.
+		Some of your unlucky slaves had their health @@.red;reduced.@@
+		All of your slaves @@.mediumorchid;respect you less@@ and @@.gold;fear@@ you more as you place your reputation above their wellbeing.
+		<<for _dpe = 0; _dpe < $slaves.length; _dpe++>>
+			<<if random(0,1) > 0>>
+				<<run healthDamage($slaves[_dpe], 10)>>
+			<</if>>
+			<<set $slaves[_dpe].devotion -= 5>>
+			<<set $slaves[_dpe].trust -= 5>>
+		<</for>>
+
+		/% Head Girl abuse %/
+		<<if ($HeadGirl != 0) && ($activeSlave.assignment != "be your Head Girl")>>
+			<<setLocalPronouns $HeadGirl 2>>
+			<br><br>
+			You notice a group of guests corner your Head Girl. The group consists of some very powerful people. Most of them arcology owners themselves, some of them have more powerful arcologies than yours.
+			$HeadGirl.slaveName tries to slip away, but _he2 was grabbed at the neck by the leader of the pack. He pulls _him2 down to the ground forcefully.
+			$HeadGirl.slaveName knows better than to resist, _he2 is still a slave despite _his2 position as your Head Girl. A slave does not raise their hand against a Master, even one that's not _his2 own. The leader rips off _his2 dress, exposing _his2 bare chest. Your Head Girl is frozen in terror when _he2 is lifted onto the hastily cleared dining hall table by several of the men. _His2 eyes desperately search for you. You are the only one who can stop this. All that's required is a single word from you.
+			$HeadGirl.slaveName's eyes meets yours; the look of relief on _his2 face is soon replaced by the sad realization that you will not intervene.
+			_His2 mouth just barely forms the word "<<= WrittenMaster($HeadGirl)>>" as you shake your head, so _he2 closes _his2 mouth and resigns $himself to _his2 fate.
+			<br>
+			Your Head Girl is placed across the corner of the dining hall table face-down, _his2 arm<<if hasBothArms($HeadGirl)>>s<</if>> and leg<<if hasBothLegs($HeadGirl)>>s<</if>> held down by four men. _He2 finds a hand on _his2 ass, groping roughly, then another hand on the other cheek, roughly parting _his2 globes to get better access.
+			/% Pussy Check %/
+			<<if ($HeadGirl.vagina >= 0) && canDoVaginal($HeadGirl)>>
+				A finger traces along _his2 slit, finding the source of that moisture and pressing its way in. Another finger was added and the hand began to finger fuck _him2 roughly. After a few seconds a third finger was added and then a fourth, stretching _his2 pussy.
+				$HeadGirl.slaveName screams loudly as the entire hand was shoved up _his2 cunt without warning.
+				_His2 pussy has @@.lime;loosened.@@
+				<<set $HeadGirl.vagina += 1>>
+			<</if>>
+			One man moves to the head of $HeadGirl.slaveName and shoved his cock into _his2 mouth, fucking _his2 throat roughly. He buries his cock deep down _his2 throat all the way to his balls.
+			He places both hands around _his2 neck and squeezes with every stroke. Your Head Girl's face turns red and _he2 gags uncontrollably. _His2 eyes roll back as another man shoves his hard cock in _his2 asshole, sodomizing _him2 with no mercy. As your Head Girl makes squeaking noises in pain, several guests pick up forks and jab it at _his2 butt and _his2 back, chanting "More meat... More meat..." and "Squeal, piggy, squeal." You slump over your chair at the head of the table. Gulping down your drink, you suppress the urge to order your security drones to open fire on those men. You know they would never dare to harm your Head Girl, not permanently, at least not anything your remote surgery couldn't fix. It's not as if you haven't done worse to your slaves, but the message is clear; the attack on your Head Girl was meant as disrespect and an insult towards you. Raping your Head Girl is like raping you. You stare at the group of men gang raping your Head Girl at the end of your own dining table, burning their @@.yellow;names and their faces@@ into your memory as they take turns fucking _him2. They make use of _his2 every hole. When they are done, _he2 is left on the floor, battered and bruised, covered in cum and blood from superficial wounds.
+			The leader of the pack pulls out his half erect cock and
+			<<if $seePee == 1>>
+				pees on your Head Girl as a final insult towards you. The poor $girl is so spent that _he2 doesn't even flinch at the urine hitting _his2 face. He finishes showering your Head Girl, then
+			<<else>>
+				ejaculates all over your Head Girl's face, clearly and intentionally aiming for _his2 eyes. The poor $girl is so spent that _he2 doesn't even flinch from this final insult towards you. When he's done, he
+			<</if>>
+			turns towards you and says smilingly:
+			<br><br>
+			//"I must congratulate you//
+			<<if $PC.title > 0>>
+				//sir//,
+			<<else>>
+				//madam//,
+			<</if>>
+			//you trained a fine obedient slave. _He2 certainly understands _his2 position well."// You grit your teeth faking a smile, mentally repeating the old adage: @@.yellow;revenge is dish best served cold.@@ You have made some enemies tonight; you begin to plan a military conquest of them all. You will enjoy storming their arcologies and making them pay for this insult.
+			<br><br>
+			The abuse your Head Girl suffers had @@.red;decreased _his2 health@@ and _he2 is @@.mediumorchid;less devoted@@ to you, as you allowed _him2 to be abused.
+			<br>
+			<<run healthDamage($HeadGirl, 20)>>
+			<<set $HeadGirl.devotion -= 20>>
+			<<set _generateEnemies = 1>>
+		<</if>>
+	<</if>>
+
+	<br><br>
+	/% Clean up and slaves reactions %/
+	When the last of your guests has stumbled drunkenly out your door, your slaves begin the daunting task of cleanup.
+	<<if $familyTesting == 1>>
+		<<for _dpe = 0; _dpe < $slaves.length; _dpe++>>
+			<<setLocalPronouns $slaves[_dpe] 2>>
+			<<if $activeSlave.mother == $slaves[_dpe].ID>>
+				$slaves[_dpe].slaveName is @@.mediumorchid;distraught@@ that you ate _his2 $daughter. _He2 also @@.gold;fears@@ that _he2 will be next.
+				<br><br>
+				<<set $slaves[_dpe].devotion -= 20, $slaves[_dpe].trust -= 20>>
+			<</if>>
+			<<if $activeSlave.father == $slaves[_dpe].ID>>
+				$slaves[_dpe].slaveName is @@.mediumorchid;distraught@@ that you ate _his2 $daughter. _He2 also @@.gold;fears@@ that _he2 will be next.
+				<br><br>
+				<<set $slaves[_dpe].devotion -= 10, $slaves[_dpe].trust -= 10>>
+			<</if>>
+			<<if $activeSlave.ID == $slaves[_dpe].father>>
+				$slaves[_dpe].slaveName is @@.mediumorchid;grieved@@ that you ate _his2 father. _He2 also @@.gold;fears@@ that _he2 will be next.
+				<br><br>
+				<<set $slaves[_dpe].devotion -= 10, $slaves[_dpe].trust -= 10>>
+			<</if>>
+			<<if $activeSlave.ID == $slaves[_dpe].mother>>
+				$slaves[_dpe].slaveName is @@.mediumorchid;grieved@@ that you ate _his2 mother. _He2 also @@.gold;fears@@ that _he2 will be next.
+				<br><br>
+				<<set $slaves[_dpe].devotion -= 20, $slaves[_dpe].trust -= 20>>
+			<</if>>
+			<<switch areSisters($activeSlave, $slaves[_dpe])>>
+			<<case 1>>
+				$slaves[_dpe].slaveName is @@.mediumorchid;devastated@@ that you ate _his2 twin. _He2 also @@.gold;fears@@ that _he2 will be next.
+				<br><br>
+				<<set $slaves[_dpe].devotion -= 30, $slaves[_dpe].trust -= 30>>
+			<<case 2>>
+				$slaves[_dpe].slaveName is @@.mediumorchid;grieved@@ that you ate _his2 $sister. _He2 also @@.gold;fears@@ that _he2 will be next.
+				<br><br>
+				<<set $slaves[_dpe].devotion -= 20, $slaves[_dpe].trust -= 20>>
+			<<case 3>>
+				$slaves[_dpe].slaveName is @@.mediumorchid;disheartened@@ that you ate _his2 half-<<= $sister>>. _He2 also @@.gold;fears@@ that _he2 will be next.
+				<br><br>
+				<<set $slaves[_dpe].devotion -= 10, $slaves[_dpe].trust -= 10>>
+			<</switch>>
+		<</for>>
+	<<else>>
+		<<if $activeSlave.relation != 0>>
+			<<for _dpe = 0; _dpe < $slaves.length; _dpe++>>
+				<<setLocalPronouns $slaves[_dpe]>>
+				<<if ($slaves[_dpe].ID == $activeSlave.relationTarget) && ($slaves[_dpe].fetish != "mindbroken")>>
+					$slaves[_dpe].slaveName is @@.mediumorchid;distraught@@ that you ate _his2 $activeSlave.relation. _He2 also @@.gold;fears@@ that _he2 will be next.
+					<<set $slaves[_dpe].devotion -= 20, $slaves[_dpe].trust -= 20>>
+					<<break>>
+				<</if>>
+			<</for>>
+		<</if>>
+	<</if>>
+	<<if $activeSlave.relationship != 0>>
+		<<for _dpe = 0; _dpe < $slaves.length; _dpe++>>
+			<<setLocalPronouns $slaves[_dpe]>>
+			<<if ($slaves[_dpe].ID == $activeSlave.relationshipTarget) && ($slaves[_dpe].fetish != "mindbroken")>>
+				$slaves[_dpe].slaveName is @@.mediumorchid;distraught@@ that you ate _his2 best source of comfort and companionship in a life of bondage.
+				<<set $slaves[_dpe].devotion -= $slaves[_dpe].relationship*5>>
+				<<set $slaves[_dpe].devotion -= 20>>
+				<<break>>
+			<</if>>
+		<</for>>
+	<</if>>
+	<<if $activeSlave.rivalry != 0>>
+		<<for _dpe = 0; _dpe < $slaves.length; _dpe++>>
+			<<if ($slaves[_dpe].ID == $activeSlave.rivalryTarget) && ($slaves[_dpe].fetish != "mindbroken")>>
+				$slaves[_dpe].slaveName is @@.hotpink;pleased@@ that _he2 won't have to see _his2 rival any more.
+				<<set $slaves[_dpe].devotion += $slaves[_dpe].rivalry*5>>
+				<<break>>
+			<</if>>
+		<</for>>
+	<</if>>
+
+	The slaves who do not already worship you @@.mediumorchid;resent@@ your monstrous appetite and @@.mediumaquamarine;fear@@ a similar fate awaits them.
+	The fat slaves are @@.mediumaquamarine;worried@@ they are being fattened for consumption.
+	<<for _dpe = 0; _dpe < $slaves.length; _dpe++>>
+		<<if ($slaves[_dpe].fetish != "mindbroken") && ($slaves[_dpe].devotion > 20)>>
+			<<set $slaves[_dpe].devotion -= 5>>
+			<<set $slaves[_dpe].trust -= 5>>
+			<<if $slaves[_dpe].diet == "fattening" || $slaves[_dpe].weight > 10>>
+				<<set $slaves[_dpe].trust -= 5>>
+			<</if>>
+		<</if>>
+	<</for>>
+	/*<br style="clear:both" />*/
+	<br>
+
+	<<if isShelterSlave($activeSlave)>>
+		<<set $shelterAbuse += 1>>
+	<</if>>
+
+	<<= removeActiveSlave() >>
+
+/* generate enemies
+<<if _generateEnemies == 1>>
+	<<if ndef $MOD_enemyList>>
+		<<set $MOD_enemyList = []>>
+	<</if>>
+	<<for _i = 0; _i < 6; _i++>>
+		<<set $oneTimeDisableDisability = 1>>
+		<<set $activeSlaveOneTimeMinAge = 38>>
+		<<set $activeSlaveOneTimeMaxAge = 44>>
+		<<set $one_time_age_overrides_pedo_mode = 1>>
+		<<if $seeDicks == 0>>
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+		<<else>>
+			<<set $activeSlave = GenerateNewSlave("XY")>>
+		<</if>>
+		<<set $activeSlave.devotion = -20>>
+		<<set $activeSlave.trust = -2>>
+		<<set $activeSlave.oldDevotion = -20>>
+		<<set $activeSlave.origin = "$He was once an arcology owner like yourself, who made the mistake of insulting you.">>
+		<<set $activeSlave.career = 0>>
+		<<set $activeSlave.prestige = 3>>
+		<<set $activeSlave.prestigeDesc = "You stormed $his arcology, killed $his guards, and enslaved $him in revenge for insulting you at a dinner party.">>
+		<<run setHealth($activeSlave, 20, random(5, 15), 0, 0, 0)>>
+		<<set $activeSlave.dick = 5>>
+		<<set $activeSlave.balls = 5>>
+		<<set $activeSlave.intelligenceImplant = 1>>
+		<<set $MOD_enemy = {leader: 0, numSlave: 0, slaveTotalHP: 0, numDrone: 0, droneTotalHP: 0, numMerc: 0, mercTotalHP: 0, weekCreated: 0, enemyIndex: -1, hostility: 0}>>
+		<<set $MOD_enemy.leader = $activeSlave>>
+		<<set $MOD_enemy.weekCreated = $week>>
+		<<set $MOD_enemy.numSlave = random(Math.trunc($slaves.length * 0.7), Math.trunc($slaves.length * 1.3))>>
+		<<set $MOD_enemy.numDrone = random(25, 75)>>
+		<<set $MOD_enemy.numMerc = random(10, 60)>>
+		<<set $MOD_enemyList.push($MOD_enemy)>>
+	<</for>>
+<</if>>
+*/

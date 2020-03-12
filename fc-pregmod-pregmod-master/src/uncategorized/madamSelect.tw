@@ -1,0 +1,15 @@
+:: Madam Select [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Brothel", $showEncyclopedia = 1, $encyclopedia = "Madam">>
+<<if ($Madam != 0)>>
+	<<set $Madam = getSlave($Madam.ID)>>
+	<<setLocalPronouns $Madam>>
+	<span class='slave-name'><<= SlaveFullName($Madam)>></span> is serving as your Madam.<br><br>$He will manage the brothel.
+<<else>>
+	You have not selected a Madam.
+<</if>>
+
+<br><br>''Appoint a Madam from your devoted slaves:''
+<br><br>[[None|Brothel][removeJob($Madam, "be the Madam")]]
+<br><br>
+<<print App.UI.SlaveList.facilityManagerSelection(App.Entity.facilities.brothel, "Brothel")>>

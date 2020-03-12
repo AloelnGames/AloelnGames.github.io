@@ -1,0 +1,160 @@
+:: Economy Intro [nobr]
+
+<<if $PC.career == "arcology owner" || $saveImported == 1>>
+	<<goto "Takeover Target">>
+<<else>>
+	<p>
+		It is the year 2037, and the past 21 years have not been kind. The world is starting to fall apart. The climate is deteriorating, resources are being exhausted, and there are more people to feed every year. Technology is advancing, but not fast enough to save everyone. <span class="intro question">Exactly how bad is the situation?</span>
+	</p>
+	<p>
+		<<if $baseDifficulty == 1>>
+			<div>
+				<span style="font-weight:Bold">
+					Not truly dire. Not yet.
+				</span>
+				<span class="note">
+					Very Easy
+				</span>
+			</div>
+			<div>
+				[[Harder|Economy Intro][$economy = 125, $baseDifficulty = 2]]
+			</div>
+		<<elseif $baseDifficulty == 2>>
+			<div>
+				<span style="font-weight:Bold">
+					Getting a touch dire.
+				</span>
+				<span class="note">
+					Easy
+				</span>
+			</div>
+			<div>
+				[[Harder|Economy Intro][$economy = 100, $baseDifficulty = 3]] | [[Easier|Economy Intro][$economy = 200, $baseDifficulty = 1]]
+			</div>
+		<<elseif $baseDifficulty == 3>>
+			<div>
+				<span style="font-weight:Bold">
+					Very serious.
+				</span>
+				<span class="note">
+					Default Difficulty
+				</span>
+			</div>
+			<div>
+				[[Harder|Economy Intro][$economy = 80, $baseDifficulty = 4]] | [[Easier|Economy Intro][$economy = 125, $baseDifficulty = 2]]
+			</div>
+		<<elseif $baseDifficulty == 4>>
+			<div>
+				<span style="font-weight:Bold">
+					It won't be pretty.
+				</span>
+				<span class="note">
+					Hard
+				</span>
+			</div>
+			<div>
+				[[Harder|Economy Intro][$economy = 67, $baseDifficulty = 5]] | [[Easier|Economy Intro][$economy = 100, $baseDifficulty = 3]]
+			</div>
+		<<else>>
+			<div>
+				<span style="font-weight:Bold">
+					This is the last dance.
+				</span>
+			</div>
+			<div>
+				<span class="note">
+					Very Hard
+				</span>
+			</div>
+			<div>
+				[[Easier|Economy Intro][$economy = 80, $baseDifficulty = 4]]
+			</div>
+		<</if>>
+	</p>
+
+	/*Economy settings*/
+	<p>
+	<span class="intro question">
+		How fast is it crumbling?
+	</span>
+	<span class="note">
+		Some economic content requires this to be set to harder than vanilla
+	</span>
+	<<if $difficultySwitch == 0>>
+		<div>
+			<span style="font-weight:Bold">
+				Barely noticeable, for now.
+			</span>
+			<span class="note">
+				Vanilla
+			</span>
+		</div>
+		<div>
+			[[Harder|Economy Intro][$econRate = 1, $difficultySwitch = 1]]
+		</div>
+	<<elseif $econRate == 1>>
+		<div>
+			<span style="font-weight:Bold">
+				A slow decline.
+			</span>
+			<span class="note">
+				Easy
+			</span>
+		</div>
+		<div>
+			[[Harder|Economy Intro][$econRate = 2]] | [[Easier|Economy Intro][$difficultySwitch = 0]]
+		</div>
+	<<elseif $econRate == 2>>
+		<div>
+			<span style="font-weight:Bold">
+				It's visibly deteriorating before your eyes.
+			</span>
+			<span class="note">
+				Default Difficulty
+			</span>
+		</div>
+		<div>
+			[[Harder|Economy Intro][$econRate = 4]] | [[Easier|Economy Intro][$econRate = 1]]
+		</div>
+	<<else>>
+		<div>
+			<span style="font-weight:Bold">
+				It's going to hell in a handbasket.
+			</span>
+			<span class="note">
+				Hard
+			</span>
+		</div>
+		<div>
+			[[Easier|Economy Intro][$econRate = 2]]
+		</div>
+	<</if>>
+
+	/* Not functional yet, place $incomeRate = 1 in storyInit when ready for use
+	<div>
+		All the things you need to run your arcology are getting more expensive
+		<<if $incomeMod == 0>>
+			while all forms of income
+			<span style="font-weight:Bold">remain static</span>. [[Easier|Economy Intro][$incomeRate = 1]]
+		<<elseif $incomeMod == 1>>
+			while all forms of income <span style="font-weight:Bold">rise but cannot keep pace</span>. [[Easier|Economy Intro][$incomeRate = 2]] | [[Harder|Economy Intro][$incomeRate = 0]]
+		<<else>>
+			but luckily all forms of income <span style="font-weight:Bold">rise in lockstep</span>. [[Harder|Economy Intro][$incomeRate = 1]]
+		<</if>>
+	</div>
+
+	<div>
+		[[Play with static economy|Economy Intro][$difficultySwitch = 0]]
+	</div>
+	*/
+	</p>
+	<p>
+		[[Next|Trade Intro]]
+	</p>
+	<p>
+		[[Skip Intro|Intro Summary]]
+		<span class="note">
+			This will preclude you from taking over an established arcology.
+		</span>
+	</p>
+<</if>>

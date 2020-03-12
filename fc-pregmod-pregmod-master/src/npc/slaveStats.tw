@@ -1,0 +1,524 @@
+:: Slave Stats [nobr]
+
+
+<style>
+.active {
+	background-color: grey;
+}
+</style>
+
+<<setLocalPronouns $activeSlave>>
+
+<br>Name: $activeSlave.slaveName,
+Surname: $activeSlave.slaveSurname
+<br>Nationality: $activeSlave.nationality
+<br>Cost: $activeSlave.slaveCost
+<br>Week:
+Acquired: $activeSlave.weekAcquired,
+Birth: $activeSlave.birthWeek
+<br>Pronoun: $activeSlave.pronoun
+<br>Career: $activeSlave.career
+<br>Origin: $activeSlave.origin
+<br>ID: $activeSlave.ID
+<br>Prestige: $activeSlave.prestige,
+Desc: $activeSlave.prestigeDesc
+<br>CustomDesc: $activeSlave.custom.desc
+
+<br>Indenture: $activeSlave.indenture,
+Restrictions: $activeSlave.indentureRestrictions
+
+<br>Sentence: $activeSlave.sentence,
+Training: $activeSlave.training
+
+<br>BreedingMark: $activeSlave.breedingMark
+<br>Assignment: $activeSlave.assignment,
+choosesOwn: $activeSlave.choosesOwnAssignment
+
+<br>Title:
+Custom: $activeSlave.custom.title,
+Lisp: $activeSlave.custom.titleLisp,
+Rude: $activeSlave.rudeTitle
+<br>Custom.label: $activeSlave.custom.label
+
+<br><br>Drugs: $activeSlave.drugs,
+Curatives: $activeSlave.curatives,
+Chem: $activeSlave.chem,
+Aphrodisiacs: $activeSlave.aphrodisiacs
+<br>Induce: $activeSlave.induce
+
+<br><br>Rules:
+Current: $activeSlave.currentRules,
+Living: $activeSlave.rules.living,
+Speech: $activeSlave.rules.speech,
+Release: $activeSlave.rules.release
+
+<br>Standard:
+Punishment: $activeSlave.rules.punishment,
+Reward: $activeSlave.rules.reward
+<br>UseRulesAssistant: $activeSlave.useRulesAssistant,
+ChoosesOwnChastity: $activeSlave.choosesOwnChastity
+
+<br><br>Lifetime:
+<br>&nbsp;Cash:
+Expenses: <<= num($activeSlave.lifetimeCashExpenses)>>,
+Income: <<= num($activeSlave.lifetimeCashIncome)>>
+<br>&nbsp;Rep:
+Expenses: <<= num($activeSlave.lifetimeRepExpenses)>>,
+Income: <<= num($activeSlave.lifetimeRepIncome)>>
+<br>LastWeeks:
+<br>&nbsp;CashIncome: <<= num($activeSlave.lastWeeksCashIncome)>>
+<br>&nbsp;Rep:
+Expenses: <<= num($activeSlave.lastWeeksRepExpenses)>>,
+Income: <<= num($activeSlave.lastWeeksRepIncome)>>
+
+<br>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Skills')" id="tab Skills">Skills</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Mental')" id="tab Mental">Mental</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Body')" id="tab Body">Body</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Porn')" id="tab Porn">Porn</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Impants_Piercings_Tattoos')" id="tab Impants_Piercings_Tattoos">Impants, piercings & Tattoos</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Family')" id="tab Family">Family</button>
+<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Misc')" id="tab Misc">Misc</button>
+<br>
+
+<div id="Skills" class="tabcontent">
+	<div class="content">
+			Vaginal: $activeSlave.skill.vaginal,
+			<br>Oral: $activeSlave.skill.oral,
+			<br>Anal: $activeSlave.skill.anal,
+			<br>Whore: $activeSlave.skill.whore
+			<br>Entertainment: $activeSlave.skill.entertainment
+			<br>Combat: $activeSlave.skill.combat
+
+			<br><br>Careers:
+			<br>Entertainer: $activeSlave.skill.entertainer
+			<br>Madam: $activeSlave.skill.madam,
+			Whore: $activeSlave.skill.whore
+
+			<br>Stewardess: $activeSlave.skill.stewardess,
+			Servant: $activeSlave.skill.servant
+
+			<br>HeadGirl: $activeSlave.skill.headGirl
+			<br>Recruiter: $activeSlave.skill.recruiter
+			<br>Bodyguard: $activeSlave.skill.bodyguard
+
+			<br>DJ: $activeSlave.skill.DJ
+			<br>Nurse: $activeSlave.skill.nurse
+			<br>Teacher: $activeSlave.skill.teacher
+			<br>Attendant: $activeSlave.skill.attendant
+			<br>Matron: $activeSlave.skill.matron
+			<br>Milkmaid: $activeSlave.skill.milkmaid
+			<br>Farmer: $activeSlave.skill.farmer
+			<br>Wardeness: $activeSlave.skill.wardeness
+	</div>
+</div>
+
+<div id="Mental" class="tabcontent">
+	<div class="content">
+		Intelligence: $activeSlave.intelligence
+		<br>Attraction:
+		XX: $activeSlave.attrXX,
+		XY: $activeSlave.attrXY
+
+		<br>Fetish:
+		Strength: $activeSlave.fetishStrength,
+		Known: $activeSlave.fetishKnown
+		<br>Behavioral:
+		Flaw: $activeSlave.behavioralFlaw,
+		Quirk: $activeSlave.behavioralQuirk
+		<br>Sexual:
+		Flaw: $activeSlave.sexualFlaw,
+		Quirk: $activeSlave.sexualQuirk
+
+		<br>Energy: $activeSlave.energy
+		<br>Need: $activeSlave.need,
+		Cap: $activeSlave.needCap
+		<br>Addict: $activeSlave.addict
+		<br>Hormones: $activeSlave.hormones,
+		Balance: $activeSlave.hormoneBalance
+		<br>Trust: $activeSlave.trust,
+		Previous: $activeSlave.oldTrust
+		<br>Devotion: $activeSlave.devotion,
+		Previous: $activeSlave.oldDevotion
+	</div>
+</div>
+
+<div id="Body" class="tabcontent">
+	<div class="content">
+		Health: $activeSlave.health.health,
+		Condition: $activeSlave.health.condition,
+		ShortDamage: $activeSlave.health.shortDamage,
+		LongDamage: $activeSlave.health.longDamage,
+		Illness: $activeSlave.health.illness,
+		Tired: $activeSlave.health.tired,
+		MinorInjury: $activeSlave.minorInjury
+
+		<br><br>Markings: $activeSlave.markings
+		<br>Fuckdoll: $activeSlave.fuckdoll
+		<br>ToyHole: $activeSlave.toyHole
+		<br>PLimb: $activeSlave.PLimb
+
+		<br><br>BodySwap: $activeSlave.bodySwap
+		<br>origBodyOwner: $activeSlave.origBodyOwner,
+		ID: $activeSlave.origBodyOwnerID
+
+		<br><br>Age:
+		Actual: $activeSlave.actualAge,
+		Visual: $activeSlave.visualAge,
+		PhysicalAge: $activeSlave.physicalAge,
+		Adjust: $activeSlave.ageAdjust
+		<br>PubertyAge:
+		XX: $activeSlave.pubertyAgeXX,
+		XY: $activeSlave.pubertyAgeXY
+
+		<br><br>Brand:
+		<<for _brandName, _brand range $activeSlave.brand>>
+			_brandName: _brand,
+		<</for>>
+		<br>scar:
+		<<for _scarName, _scar range $activeSlave.scar>>
+			_scarName: _scar,
+		<</for>>
+
+		<br><br>Broodmother:
+		Fetuses: $activeSlave.broodmotherFetuses,
+		CountDown: $activeSlave.broodmotherCountDown
+
+		<br>Diet:
+		Current: $activeSlave.diet,
+		Cum: $activeSlave.dietCum,
+		Milk: $activeSlave.dietMilk
+
+		<br><br>
+		<h2>Upper</h2>
+
+		Hair:
+		Length: $activeSlave.hLength,
+		Style: $activeSlave.hStyle,
+		<br>Color: $activeSlave.hColor,
+		Orig: $activeSlave.origHColor,
+		Override: $activeSlave.override_H_Color
+
+		<br>Pubic Hair:
+		Style: $activeSlave.pubicHStyle,
+		Color: $activeSlave.pubicHColor,
+		Override: $activeSlave.override_Pubic_H_Color
+
+		<br><br>Eyes:
+		<br>Eyes: <<print JSON.stringify($activeSlave.eye)>>
+		<br>Override: $activeSlave.override_Eye_Color
+		<br>eyewear: $activeSlave.eyewear
+
+		<br><br>Ears:
+		Hearing: $activeSlave.hears,
+		Wear: $activeSlave.earwear
+
+		<br><br>Face:
+		<br>Face: $activeSlave.face,
+		Shape: $activeSlave.faceShape
+		<br>Lips: $activeSlave.lips
+		<br>Oral count: $activeSlave.counter.oral
+		<br>Teeth: $activeSlave.teeth
+
+		<br>Voice: $activeSlave.voice
+		<br>Accent: $activeSlave.accent
+		<br>Eyebrow:
+		<br>Fullness: $activeSlave.eyebrowFullness,
+		Color: $activeSlave.eyebrowHColor,
+		Style: $activeSlave.eyebrowHStyle,
+		Override: $activeSlave.override_Brow_H_Color
+		<br>Smells: $activeSlave.smells
+		<br>Tastes: $activeSlave.tastes
+		<br>Makeup: $activeSlave.makeup
+
+		<br>Race: $activeSlave.race,
+		Orig: $activeSlave.origRace,
+		Override: $activeSlave.override_Race
+		<br>Skin: $activeSlave.skin,
+		Orig: $activeSlave.origSkin,
+		Override: $activeSlave.override_Skin
+
+		<br>Haircuts: $activeSlave.haircuts,
+		Bald: $activeSlave.bald
+
+		<br>Collar: $activeSlave.collar
+		<br>Height: $activeSlave.height
+		<br>Clothes: $activeSlave.clothes,
+		ChoosesOwn: $activeSlave.choosesOwnClothes
+
+		<br>Shoulders: $activeSlave.shoulders
+		<br>ArmAccessory: $activeSlave.armAccessory
+		<br>Muscles: $activeSlave.muscles
+		<br>Arms: $activeSlave.arms,
+		<br>UnderArm:
+		HColor: $activeSlave.underArmHColor,
+		Style: $activeSlave.underArmHStyle,
+		Override H Colour: $activeSlave.override_Arm_H_Color
+
+		<br>Nails: $activeSlave.nails
+
+		<br><br>Boobs: $activeSlave.boobs,
+		Implant Type: $activeSlave.boobsImplantType,
+		Implant Volume: $activeSlave.boobsImplant
+		<br>Milk: $activeSlave.boobsMilk,
+		Qunantity: $activeSlave.counter.milk
+		<br>Shape: $activeSlave.boobShape
+		<br>nipples: $activeSlave.nipples,
+		Accessory: $activeSlave.nipplesAccessory
+		<br>Areolae: $activeSlave.areolae
+		Shape: $activeSlave.areolaeShape
+		<br>Lactation: $activeSlave.lactation,
+		Duration: $activeSlave.lactationDuration,
+		Induce: $activeSlave.induceLactation,
+		Adaptation: $activeSlave.lactationAdaptation
+		<br>MammaryCount: $activeSlave.counter.mammary
+		<br>LactationRules: $activeSlave.rules.lactation
+		<br>BreastMesh: $activeSlave.breastMesh
+
+		<br><br>
+		<h2>Lower</h2>
+
+		Weight: $activeSlave.weight
+		<br>Waist: $activeSlave.waist
+		<br>Hips: $activeSlave.hips
+
+		<br><br>Belly: $activeSlave.belly,
+		Preg: $activeSlave.bellyPreg,
+		Fluid: $activeSlave.bellyFluid,
+		Sag: $activeSlave.bellySag,
+		SagPreg: $activeSlave.bellySagPreg,
+		Pain: $activeSlave.bellyPain,
+		Accessory: $activeSlave.bellyAccessory
+		<br>Burst: $activeSlave.burst
+		<br>Inflation: $activeSlave.inflation,
+		Type: $activeSlave.inflationType,
+		Method: $activeSlave.inflationMethod
+		<br>Source:
+		Milk: $activeSlave.milkSource,
+		Cum: $activeSlave.cumSource
+
+		<br><br>Anus: $activeSlave.anus,
+		Area: $activeSlave.analArea,
+		Count: $activeSlave.counter.anal
+		<br>Butt: $activeSlave.butt,
+		Implant Type: $activeSlave.buttImplantType,
+		Implant Volume: $activeSlave.buttImplant,
+		Plug: $activeSlave.buttplug,
+		PlugAttachment: $activeSlave.buttplugAttachment
+		<br>Mpreg: $activeSlave.mpreg
+
+		<br><br>Foreskin: $activeSlave.foreskin,
+		<br>Dick: $activeSlave.dick,
+		Accessory: $activeSlave.dickAccessory
+		<br>Vasectomy: $activeSlave.vasectomy
+		<br>Prostate: $activeSlave.prostate
+		<br>Balls: $activeSlave.balls,
+		Type: $activeSlave.ballType
+		<br>Scrotum: $activeSlave.scrotum
+		<br>Cum released: $activeSlave.counter.cum
+
+		<br><br>Vagina: $activeSlave.vagina,
+		Lube: $activeSlave.vaginaLube,
+		Accessory: $activeSlave.vaginalAccessory,
+		Attachment: $activeSlave.vaginalAttachment,
+		Count: $activeSlave.counter.vaginal
+		<br>EggType: $activeSlave.eggType
+		<br>Ovaries: $activeSlave.ovaries
+		<br>OvaryAge: $activeSlave.ovaryAge
+
+		<br><br>Labia: $activeSlave.labia,
+		<br>Clit: $activeSlave.clit,
+		Setting: $activeSlave.clitSetting
+
+		<br>LeftLeg: $activeSlave.leg.left.type,
+		RightLeg: $activeSlave.leg.right.type
+		Accessory: $activeSlave.legAccessory
+		<br>Heels: $activeSlave.heels
+		<br>Shoes: $activeSlave.shoes
+	</div>
+</div>
+
+<div id="Porn" class="tabcontent">
+	<div class="content">
+		Focus: $activeSlave.porn.focus,
+		Feed: $activeSlave.porn.feed
+		<br>ViewerCount: $activeSlave.porn.viewerCount
+		FameType: $activeSlave.porn.fameType
+		<br>WeeklySpending: $activeSlave.porn.spending
+		<br>Prestige: $activeSlave.porn.prestige
+		PrestigeDesc: $activeSlave.porn.prestigeDesc
+
+		<br><br>
+		<h2>Type</h2>
+		General: $activeSlave.porn.fame.general
+		<br>Fuckdoll: $activeSlave.porn.fame.fuckdoll
+		<br>Rape: $activeSlave.porn.fame.rape,
+		Unflinching: $activeSlave.porn.fame.unflinching
+
+		<br>Preggo: $activeSlave.porn.fame.preggo,
+		Pregnancy: $activeSlave.porn.fame.pregnancy,
+		Breeder: $activeSlave.porn.fame.breeder
+
+		<br>BBW: $activeSlave.porn.fame.BBW,
+		Gainer: $activeSlave.porn.fame.gainer
+		<br>Stud: $activeSlave.porn.fame.stud
+		<br>Loli: $activeSlave.porn.fame.loli
+		<br>DeepThroat: $activeSlave.porn.fame.deepThroat,
+		StruggleFuck: $activeSlave.porn.fame.struggleFuck
+		<br>Painal: $activeSlave.porn.fame.painal
+		<br>Tease: $activeSlave.porn.fame.tease
+		<br>Romantic: $activeSlave.porn.fame.romantic,
+		Caring: $activeSlave.porn.fame.caring
+		<br>Pervert: $activeSlave.porn.fame.pervert
+
+		<br>SizeQueen: $activeSlave.porn.fame.sizeQueen
+
+		<br>CumSlut: $activeSlave.porn.fame.cumSlut,
+		<br>CumAddict: $activeSlave.porn.fame.cumAddict
+		<br>Anal: $activeSlave.porn.fame.anal,
+		AnalAddict: $activeSlave.porn.fame.analAddict
+		<br>AttentionWhore: $activeSlave.porn.fame.attentionWhore
+
+		<br>Abusive: $activeSlave.porn.fame.abusive,
+		Malicious: $activeSlave.porn.fame.malicious,
+		<br>Neglectful: $activeSlave.porn.fame.neglectful,
+		SelfHating: $activeSlave.porn.fame.selfHating
+
+		<br>BreastGrowth: $activeSlave.porn.fame.breastGrowth,
+		Boobs: $activeSlave.porn.fame.boobs
+		<br>Humiliation: $activeSlave.porn.fame.humiliation
+
+		<br>Dom: $activeSlave.porn.fame.dom,
+		Sub: $activeSlave.porn.fame.sub
+		<br>Sadist: $activeSlave.porn.fame.sadist,
+		Masochist: $activeSlave.porn.fame.masochist
+		<br>
+	</div>
+</div>
+
+<div id="Impants_Piercings_Tattoos" class="tabcontent">
+	<div class="content">
+
+		<h2>Implants</h2>
+		Height: $activeSlave.heightImplant
+		<br>Ears: $activeSlave.earImplant
+		<br>Face: $activeSlave.faceImplant
+		<br>Boobs: $activeSlave.boobsImplant
+		<br>Shoulders: $activeSlave.shouldersImplant
+		<br>Belly: $activeSlave.bellyImplant
+		<br>Hips: $activeSlave.hipsImplant
+		<br>Age: $activeSlave.ageImplant
+		<br>Voice: $activeSlave.voiceImplant
+		<br>Lips: $activeSlave.lipsImplant
+		<br>Ova: $activeSlave.ovaImplant
+		<br>Womb: $activeSlave.wombImplant
+		<br>Intelligence: $activeSlave.intelligenceImplant
+		<br>Cervix: $activeSlave.cervixImplant
+		<br>Butt: $activeSlave.buttImplant
+
+		<br><br> <h2>Piercings</h2>
+		Ears: $activeSlave.earPiercing
+		<br>Face: $activeSlave.lipsPiercing
+		<br>Nipples: $activeSlave.nipplesPiercing
+		<br>Areolae: $activeSlave.areolaePiercing
+		<br>Tongue: $activeSlave.tonguePiercing
+		<br>Nose: $activeSlave.nosePiercing
+		<br>Eyebrow: $activeSlave.eyebrowPiercing
+		<br>Corset: $activeSlave.corsetPiercing
+		<br>Navel: $activeSlave.navelPiercing
+		<br>Clit: $activeSlave.clitPiercing
+		<br>Vagina: $activeSlave.vaginaPiercing
+		<br>Dick: $activeSlave.dickPiercing
+		<br>Anus: $activeSlave.anusPiercing
+
+		<br><br> <h2>Tattoos</h2>
+		Custom: $activeSlave.custom.tattoo
+		<br>Shoulders: $activeSlave.shouldersTat
+		<br>Belly: $activeSlave.bellyTat
+		<br>Lips: $activeSlave.lipsTat
+		<br>Back: $activeSlave.backTat
+		<br>Stamp:$activeSlave.stampTat
+		<br>Legs: $activeSlave.legsTat
+		<br>Arms: $activeSlave.armsTat
+		<br>Boobs: $activeSlave.boobsTat
+		<br>Vagina: $activeSlave.vaginaTat
+		<br>Dick: $activeSlave.dickTat
+		<br>Anus: $activeSlave.anusTat
+		<br>Butt: $activeSlave.buttTat
+		<br>Number of abortions: $activeSlave.abortionTat
+	</div>
+</div>
+
+<div id="Family" class="tabcontent">
+	<div class="content">
+		Genes: $activeSlave.genes
+		<br><br>BirthName: $activeSlave.birthName,
+		BirthSurname: $activeSlave.birthSurname
+		<br>Father: $activeSlave.father,
+		Mother: $activeSlave.mother
+		<br>Daughters: $activeSlave.daughters,
+		Sisters: $activeSlave.sisters
+		<br>Fathered: slaves: $activeSlave.counter.slavesFathered,
+		PCChildren: $activeSlave.counter.PCChildrenFathered
+		<br>KnockedUp: slaves: $activeSlave.counter.slavesKnockedUp,
+		<br>PC: $activeSlave.counter.PCKnockedUp
+		<br>labor: $activeSlave.labor,
+		Count: $activeSlave.counter.laborCount
+		<br>Births: $activeSlave.counter.births,
+		Total: $activeSlave.counter.birthsTotal
+		<br>PrematureBirth: $activeSlave.prematureBirth
+
+		<br> <h2>Mods</h2>
+		NCS: $activeSlave.geneMods.NCS,
+		RapidCellGrowth: $activeSlave.geneMods.rapidCellGrowth,
+
+		<br><br> <h2>Relationships</h2>
+		<br>Rules: $activeSlave.rules.relationship
+		<br>Relation: $activeSlave.relation,
+		Target: $activeSlave.relationTarget
+		<br>Relationship: $activeSlave.relationship,
+		Target: $activeSlave.relationshipTarget
+		<br>Rivalry: $activeSlave.rivalry,
+		Target: $activeSlave.rivalryTarget
+		<br>SubTarget: $activeSlave.subTarget
+
+		<br><br>
+		<h2>Genetic Quirks</h2>
+		Gigantism: $activeSlave.geneticQuirks.gigantism,
+		Gigantomastia: $activeSlave.geneticQuirks.gigantomastia
+		<br>Fertility: $activeSlave.geneticQuirks.fertility,
+		Hyper: $activeSlave.geneticQuirks.hyperFertility
+		<br>Superfetation: $activeSlave.geneticQuirks.superfetation
+
+		<br>Dwarfism: $activeSlave.geneticQuirks.dwarfism
+		<br>Pface: $activeSlave.geneticQuirks.pFace
+		<br>Uface: $activeSlave.geneticQuirks.uFace
+		<br>Albinism: $activeSlave.geneticQuirks.albinism
+		<br>RearLipedema: $activeSlave.geneticQuirks.rearLipedema
+		<br>WellHung: $activeSlave.geneticQuirks.wellHung
+		<br>Weight:
+		Gain: $activeSlave.geneticQuirks.wGain,
+		Loss: $activeSlave.geneticQuirks.wLoss
+		<br>Androgyny: $activeSlave.geneticQuirks.androgyny
+
+		<br><br>
+		<h2>Pregmancy</h2>
+		<br>Week: $activeSlave.pregWeek,
+		isPreg: $activeSlave.preg,
+		Source: $activeSlave.pregSource,
+		Type: $activeSlave.pregType,
+		Adaptation: $activeSlave.pregAdaptation
+		<br>Control: $activeSlave.pregControl
+		<br>PeakFertility: $activeSlave.fertPeak
+	</div>
+</div>
+
+<div id="Misc" class="tabcontent">
+	<div class="content">
+		<br>Recruiter: $activeSlave.recruiter
+		<br>Deadliness <<print Deadliness($activeSlave)>>
+		<br>Count: Penetrative: $activeSlave.counter.penetrative,
+		Public: $activeSlave.counter.publicUse
+		<br>pitKills: $activeSlave.counter.pitKills
+	</div>
+</div>

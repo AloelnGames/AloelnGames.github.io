@@ -1,0 +1,31 @@
+:: Trade Intro [nobr]
+
+<p>
+	Most of the Free Cities are run on radically libertarian or even anarcho-capitalist principles. The first Free Cities experimented with indentured servitude, and this rapidly developed into widespread slavery. By now, the Free Cities collectively are a fundamentally slaveowning society and maintain a thriving slave trade that feeds off the terrible conditions in parts of the old world.
+	<span class="intro question">
+		What attitude have the old world countries generally taken towards this trade?
+	</span>
+</p>
+<p>
+	<div>
+		[[They've turned a blind eye, or even been complicit.|Extreme Intro][$internationalTrade = 1]]
+		<span class="note">
+			Slaves from all across the world will appear.
+		</span>
+	</div>
+	<div>
+		[[They've done what little they can to stop it.|Extreme Intro][$internationalTrade = 0]]
+		<span class="note">
+			Almost all slaves will be from the continent where the arcology is located.
+		</span>
+	</div>
+	<div>
+		<<link "Reactions have been mixed.">>
+			<<set $internationalTrade = 0, $customVariety = 1, $customWA = 1>>
+			<<goto "Customize Slave Trade">>
+		<</link>>
+		<span class="note">
+			This will bypass arcology location restrictions, allowing you to adjust the nationalities encountered when buying non-customizable slaves.
+		</span>
+	</div>
+</p>

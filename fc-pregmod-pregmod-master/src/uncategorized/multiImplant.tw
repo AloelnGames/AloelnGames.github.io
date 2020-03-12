@@ -1,0 +1,212 @@
+:: Multiple Organ Implant [nobr]
+
+You head down to your
+<<if $surgeryUpgrade == 1>>
+	heavily upgraded and customized
+<</if>>
+remote surgery and start having the slaves with
+<<if ($completedOrgans.length > 0) && ($adjustProstheticsCompleted > 0)>>
+	organs or prosthetics
+<<elseif ($completedOrgans.length > 1)>>
+	organs
+<<elseif ($adjustProstheticsCompleted > 1)>>
+	prosthetics
+<</if>>
+that are ready be sent down.
+
+<h1>Implant Organs</h1>
+
+<<set _F = App.Medicine.OrganFarm>>
+<<for _i = 0; _i < $slaves.length; _i++>>
+	<<set $activeSlave = $slaves[_i]>>
+	<<set _sortedOrgans = _F.getSortedOrgans($activeSlave)>>
+	<<if _sortedOrgans.length === 0>><<continue>><</if>>
+
+	<h2>$activeSlave.slaveName</h2>
+
+	<<for _k = 0; _k < _sortedOrgans.length; _k++>>
+		<h3><<print _F.Organs[_sortedOrgans[_k]].name>></h3>
+		<<set _actions = _F.Organs[_sortedOrgans[_k]].implantActions>>
+		<<set _manual = false, _success = false, _break = false>>
+		<<for _l = 0; _l < _actions.length; _l++>>
+			<<if !_actions[_l].autoImplant>>
+				<<if _actions[_l].canImplant($activeSlave)>>
+					<<set _manual = true>>
+				<</if>>
+				<<continue>>
+			<</if>>
+			<<if !_actions[_l].canImplant($activeSlave)>>
+				<<set _error = _actions[_l].implantError($activeSlave)>>
+				<<if _error !== "">>
+					@@.red;ERROR: <<print _error>>@@<br>
+				<</if>>
+			<<elseif $activeSlave.health.health - _actions[_l].healthImpact < -75>>
+				Estimated health impact too high, skipping further surgeries.
+				<<set _break = true>>
+				<<break>>
+			<<else>>
+				<<run App.Medicine.OrganFarm.implant($activeSlave, _sortedOrgans[_k], _l)>>
+				<<include "Surgery Degradation">><br><br>
+				<<set _success = true>>
+			<</if>>
+		<</for>>
+		<<if _break>><<break>><</if>>
+		<<if !_success && _manual>>
+			//Cannot implant <<print _F.Organs[_sortedOrgans[_k]].name.toLowerCase()>> automatically, try implanting manually in the remote surgery.//
+		<</if>>
+	<</for>>
+
+	<<set $slaves[_i] = $activeSlave>>
+<</for>>
+
+
+<h1>Implant prosthetics</h1>
+
+/* prosthetics */
+<<for _i = 0; _i < $slaves.length; _i++>>
+	<<set $activeSlave = $slaves[_i]>>
+
+	/* count for estimating health impact */
+	<<set _prostheticCount = $adjustProsthetics.filter(p => p.slaveID == $activeSlave.ID && p.workLeft <= 0).length>>
+
+	/* since we already have count, skip slaves that don't need work */
+	<<if _prostheticCount < 1>>
+		<<continue>>
+	<</if>>
+	/*
+	Ensures that a slave can never die during the execution of this passage.
+	Calculation based on worst case, so when changing worst case change it here too.
+	*/
+	<<if $activeSlave.health.health - (_prostheticCount * 20) < -75>>
+		<br><hr>
+		@@.red;Estimated health impact too great; $activeSlave.slaveName skipped.@@
+		<<continue>>
+	<</if>>
+
+	<<for _k = 0; _k < $adjustProsthetics.length; _k++>>
+		<<set _p = $adjustProsthetics[_k]>>
+		<<if _p.slaveID == $activeSlave.ID && _p.workLeft <= 0>>
+			<<set $adjustProsthetics.splice(_k, 1), _k-->>
+			<<set addProsthetic($activeSlave, _p.id)>>
+			<br><hr>
+			<<switch _p.id>>
+			<<case "ocular">>
+				<<if getBestVision($activeSlave) === 0>>
+					<<run eyeSurgery($activeSlave, "both", "cybernetic"), cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)>>
+					<<set surgeryDamage($activeSlave, 20), $surgeryType = "ocular implant">>
+					<<include "Surgery Degradation">>
+				<<else>>
+					//Since $he has working eyes the <<= setup.prosthetics.ocular.name>> will be put into storage.//
+				<</if>>
+			<<case "cochlear">>
+				<<if $activeSlave.hears != 0>>
+					<<set $activeSlave.earImplant = 1, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave, 20), $surgeryType = "cochlear implant">>
+					<<include "Surgery Degradation">>
+				<<else>>
+					//Since $he has working ears the <<= setup.prosthetics.cochlear.name>> will be put into storage.//
+				<</if>>
+			<<case "electrolarynx">>
+				<<if $activeSlave.voice <= 0>>
+					<<set $activeSlave.electrolarynx = 1, $activeSlave.voice = 2, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave, 20), $surgeryType = "electrolarynx">>
+					<<include "Surgery Degradation">>
+				<<else>>
+					//Since $he has a voice the <<= setup.prosthetics.electrolarynx.name>> will be put into storage.//
+				<</if>>
+			<<case "interfaceP1">>
+				<<if hasAnyNaturalLimbs($activeSlave)>>
+					//Since $he has at least one healthy limb the <<= setup.prosthetics.interfaceP1.name>> will be put into storage.//
+				<<elseif $activeSlave.PLimb == 2>>
+					//Since $he already has <<= addA(setup.prosthetics.interfaceP2.name)>> installed the <<= setup.prosthetics.interfaceP1.name>> will be put into storage.//
+				<<else>>
+					<<set $activeSlave.PLimb = 1, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave, 20), $surgeryType = "PLimb interface1">>
+					<<include "Surgery Degradation">>
+				<</if>>
+			<<case "interfaceP2">>
+				<<if hasAllNaturalLimbs($activeSlave)>>
+					//Since $he has no amputated limbs the <<= setup.prosthetics.interfaceP2.name>> will be put into storage.//
+				<<elseif $activeSlave.PLimb == 1>>
+					<<set $activeSlave.PLimb = 2, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave, 5), $surgeryType = "PLimb interface3">>
+					<<include "Surgery Degradation">>
+				<<else>>
+					<<set $activeSlave.PLimb = 2, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave, 20), $surgeryType = "PLimb interface2">>
+					<<include "Surgery Degradation">>
+				<</if>>
+			<<case "basicL" "sexL" "beautyL" "combatL" "cyberneticL">>
+				<<if $activeSlave.fuckdoll != 0>>
+					//Since a Fuckdoll can't use prosthetic limbs the <<= setup.prosthetics[_p.id].name>> will be put into storage.//
+				<<elseif hasAllNaturalLimbs($activeSlave)>>
+					//Since $he needs an amputated limb to attach prosthetics the <<= setup.prosthetics[_p.id].name>> will be put into storage.//
+				<<elseif $activeSlave.PLimb == 0>>
+					//Since $he must have a prosthetic interface installed to attach prosthetic limbs the <<= setup.prosthetics[_p.id].name>> will be put into storage.//
+				<<else>>
+					<<if _p.id == "basicL">>
+						<<set _state = App.Desc.limbChange().currentLimbs($activeSlave), _change = upgradeLimbs($activeSlave, 2)>>
+						<<if _change>>
+							<<= App.Desc.limbChange().reaction($activeSlave, _state)>>
+						<<else>>
+							//Since $he already has more advanced prosthetic limbs attached the <<= setup.prosthetics.basicL.name>> will be put into storage.//
+						<</if>>
+					<<elseif _p.id == "sexL">>
+						<<set _state = App.Desc.limbChange().currentLimbs($activeSlave), _change = upgradeLimbs($activeSlave, 3)>>
+						<<if _change>>
+							<<= App.Desc.limbChange().reaction($activeSlave, _state)>>
+						<<else>>
+							//Since $he already has advanced prosthetic limbs attached the <<= setup.prosthetics.sexL.name>> will be put into storage.//
+						<</if>>
+					<<elseif _p.id == "beautyL">>
+						<<set _state = App.Desc.limbChange().currentLimbs($activeSlave), _change = upgradeLimbs($activeSlave, 4)>>
+						<<if _change>>
+							<<= App.Desc.limbChange().reaction($activeSlave, _state)>>
+						<<else>>
+							//Since $he already has advanced prosthetic limbs attached the <<= setup.prosthetics.beautyL.name>> will be put into storage.//
+						<</if>>
+					<<elseif _p.id == "combatL">>
+						<<set _state = App.Desc.limbChange().currentLimbs($activeSlave), _change = upgradeLimbs($activeSlave, 5)>>
+						<<if _change>>
+							<<= App.Desc.limbChange().reaction($activeSlave, _state)>>
+						<<else>>
+							//Since $he already has advanced prosthetic limbs attached the <<= setup.prosthetics.combatL.name>> will be put into storage.//
+						<</if>>
+					<<else>>
+						<<if $activeSlave.PLimb == 2>>
+							<<set _state = App.Desc.limbChange().currentLimbs($activeSlave), _change = upgradeLimbs($activeSlave, 2)>>
+							<<if _change>>
+								<<= App.Desc.limbChange().reaction($activeSlave, _state)>>
+							<</if>>
+						<<else>>
+							//Since $he must have <<= addA(setup.prosthetics.interfaceP2.name)>> installed to attach cybernetic limbs the <<= setup.prosthetics.cyberneticL.name>> will be put into storage.//
+						<</if>>
+					<</if>>
+				<</if>>
+			<<case "interfaceTail">>
+				<<set $activeSlave.PTail = 1, $activeSlave.tail = "none", $activeSlave.tailColor = "none", cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave), surgeryDamage($activeSlave, 10), $surgeryType = "tailInterface">>
+				<<include "Surgery Degradation">>
+			<<case "modT" "sexT" "combatT">>
+				<<if $activeSlave.PTail == 0>>
+					//Since $he must have <<= addA(setup.prosthetics.interfaceTail.name)>> installed to attach tails the <<= setup.prosthetics[_p.id].name>> will be put into storage.//
+				<<elseif $activeSlave.tail != "none">>
+					//Since $he currently has a tail attached the <<= setup.prosthetics[_p.id].name>> will be put into storage.//
+				<<elseif _p.id == "modT">>
+					//Since installing <<= addA(setup.prosthetics.modT.name)>> is complicated it can't be automated.//
+					/*Reason: there are different designs player can choose from.*/
+				<<elseif _p.id == "combatT">>
+					<<set $prostheticsConfig = "attachTail", $activeSlave.tail = "combat", $activeSlave.tailColor = "jet black">>
+					<<include "Prosthetics Configuration">>
+				<<elseif _p.id == "sexT">>
+					<<set $prostheticsConfig = "attachTail", $activeSlave.tail = "sex", $activeSlave.tailColor = "pink">>
+					<<include "Prosthetics Configuration">>
+				<</if>>
+			<<default>>
+				//Since there is no automated procedure to implant/attach <<= setup.prosthetics[_p.id].name>> it will be put into storage.//
+			<</switch>>
+			<br>
+		<</if>>
+	<</for>>
+	/* updates the interrogated slave */
+	<<set $slaves[_i] = $activeSlave>>
+<</for>> /* end of the $slaves loop */
+<<set $adjustProstheticsCompleted = 0>>
+
+/* This needs to be down here to over-ride any Surgery Degradation calls */
+<<set $nextButton = "Continue">>
+<<set $nextLink = "Main">>

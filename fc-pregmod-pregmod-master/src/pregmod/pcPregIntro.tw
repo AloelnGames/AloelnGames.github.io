@@ -1,0 +1,58 @@
+:: PC Preg Intro [nobr]
+
+<p>
+	You have a working female reproductive system, and thus, a menstrual cycle. Women already face hardships as slaveowners and arcology owners, and being pregnant, coupled with a strong societal aversion to the dominant being penetrated, leads most pregnant owners to find themselves in dire situations. As an added precaution, since nothing stops an owner from hooking up with another owner, contraceptives are common amongst free women.
+</p>
+
+<p class="intro question">
+	What's your stance on taking contraceptives?
+</p>
+
+<p>
+	You're
+	<<if $PC.preg == -1>>
+		not interested in being a mother.
+		[[Risky|PC Preg Intro][$PC.preg = 0]]
+	<<elseif $PC.preg == 0>>
+		fertile and you know the risks.
+		[[Safe|PC Preg Intro][$PC.preg = -1]] | [[About that...|PC Preg Intro][$PC.preg = 10]]
+	<<elseif $PC.preg > 42>>
+		proudly pregnant with octuplets and they are coming right now.
+		[[Not pregnant|PC Preg Intro][$PC.preg = 0, $PC.pregType = 0, $PC.labor = 0]]
+	<<elseif $PC.preg > 37>>
+		<<print $PC.preg>> weeks pregnant and very close to being due.
+		[[Not pregnant|PC Preg Intro][$PC.preg = 0, $PC.pregType = 0]]
+		| [[Overdid the fertility agents|PC Preg Intro][$PC.preg = 43, $PC.pregType = 8, $PC.labor = 1]]
+	<<else>>
+		already pregnant.
+		[[Fertile|PC Preg Intro][$PC.preg = 0]]
+		| [[Make that very pregnant|PC Preg Intro][$PC.preg = 40]]
+	<</if>>
+	<div class="indent note">
+		Being or becoming pregnant will raise difficulty.
+	</div>
+</p>
+
+<p class="intro question">
+	Hormones can be an interesting thing, but how do they affect you?
+</p>
+
+<p>
+	You're
+	<<if $PC.pregMood == 1>>
+		gentle and motherly when you're hormonal.
+		[[Normal|PC Preg Intro][$PC.pregMood = 0]] | [[Aggressive|PC Preg Intro][$PC.pregMood = 2]]
+	<<elseif $PC.pregMood == 0>>
+		in complete control of yourself.
+		[[Motherly|PC Preg Intro][$PC.pregMood = 1]] | [[Aggressive|PC Preg Intro][$PC.pregMood = 2]]
+	<<else>>
+		aggressive and domineering when you're hormonal.
+		[[Normal|PC Preg Intro][$PC.pregMood = 0]] | [[Motherly|PC Preg Intro][$PC.pregMood = 1]]
+	<</if>>
+	<div class="indent note">
+		Hormone induced moods may alter some sex scenes, as well as change slaves' reactions to you.
+	</div>
+</p>
+<p>
+	[[Confirm player character customization|PC Appearance Intro]]
+</p>

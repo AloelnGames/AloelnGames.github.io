@@ -1,0 +1,446 @@
+:: securityHQ [nobr]
+
+<<if $career == "mercenary" || $career == "gang" || $career == "slaver">>
+	<<set _HistoryDiscount = .5>>
+<<else>>
+	<<set _HistoryDiscount = 1>>
+<</if>>
+
+<<set $nextButton = "Back">>
+<<if $sideBarOptions.compact > 0>>
+	<<set $nextLink = "Manage Arcology">>
+<<else>>
+	<<set $nextLink = "Main">>
+<</if>>
+
+Security Headquarters
+<hr>
+
+The security headquarters stand in front of you. Innumerable screens flood with light the great central room. <<if $secMenials > 0>>Some slaves see you enter and interrupt their work to greet you.<</if>> From here you can build a safe and prosperous arcology.
+<br>
+/* security level. Slaves */
+You have <span id="secHel"> <<print num($secMenials)>> </span> slaves working in the HQ. <<= App.SecExp.Check.reqMenials()>> are required and you have <span id="hel"> <<print num($menials)>> </span> free menial slaves.
+<<if $secMenials < App.SecExp.Check.reqMenials()>>
+	You do not have enough slaves here. You will not receive the full benefit of the installed upgrades.
+<<else>>
+	You have enough slaves to man all security systems.
+<</if>>
+<<run MenialPopCap()>>
+<<set _menialPrice = menialSlaveCost()>>
+<<set _bulkMax = $PopCap-$menials-$fuckdolls-$menialBioreactors>>
+<<if $cash > _menialPrice>>
+	<<if _bulkMax > 0 || $menials+$fuckdolls+$menialBioreactors == 0>>
+		<br>
+		[[Buy|securityHQ][$menials += 1,$menialSupplyFactor -= 1, cashX(-_menialPrice, "menialTransfer")]]
+		<<if $cash > (menialSlaveCost(10))*10>>
+			[[(x10)|securityHQ][$menials += 10,$menialSupplyFactor -= 10, cashX(-(menialSlaveCost(10)*10), "menialTransfer")]]
+		<</if>>
+		<<if $cash > (menialSlaveCost(100))*100>>
+			[[(x100)|securityHQ][$menials += 100,$menialSupplyFactor -= 100, cashX(-(menialSlaveCost(100)*100), "menialTransfer")]]
+		<</if>>
+		<<if $cash > (_menialPrice+1)*2>>
+			<<set _menialBulkPremium = Math.trunc(1 + Math.clamp($cash/_menialPrice,0,_bulkMax)/400)>>
+			<<set _maxMenials = Math.clamp($cash/(_menialPrice+_menialBulkPremium),0,_bulkMax)>>
+			<<set _finalMaxCost = Math.trunc(_maxMenials*(_menialPrice+_menialBulkPremium))>>
+			[[(max)|securityHQ][$menials += Math.trunc(_maxMenials), $menialSupplyFactor -= Math.trunc(_maxMenials), cashX(-_finalMaxCost, "menialTransfer")]]
+		<</if>>
+		//Bulk transactions may require offering a premium. The remaining slaves will be more efficient in dealing with crime.//
+	<</if>>
+<</if>>
+<<if $menials > 0>>
+	<br>Transfer in:
+	<<if $menials >= 5>>
+		<<link "5">>
+			<<set $menials -= 5>>
+			<<set $secMenials += 5>>
+			<<replace "#secHel">><<print $secMenials>><</replace>>
+			<<replace "#hel">><<print $menials>><</replace>>
+			<<if $menials < 5 || $secMenials >= App.SecExp.Check.reqMenials() || $secMenials == 5>>
+				<<goto "securityHQ">>
+			<</if>>
+		<</link>>
+	<</if>>
+	<<if $menials >= 10>>
+		|<<link "10">>
+			<<set $menials -= 10>>
+			<<set $secMenials += 10>>
+			<<replace "#secHel">><<print $secMenials>><</replace>>
+			<<replace "#hel">><<print $menials>><</replace>>
+			<<if $menials < 10 || $secMenials >= App.SecExp.Check.reqMenials() || $secMenials == 10>>
+				<<goto "securityHQ">>
+			<</if>>
+		<</link>>
+	<</if>>
+	<<if $menials >= 100>>
+		|<<link "100">>
+			<<set $menials -= 100>>
+			<<set $secMenials += 100>>
+			<<replace "#secHel">><<print $secMenials>><</replace>>
+			<<replace "#hel">><<print $menials>><</replace>>
+			<<if $menials < 100 || $secMenials >= App.SecExp.Check.reqMenials() || $secMenials == 100>>
+				<<goto "securityHQ">>
+			<</if>>
+		<</link>>
+	<</if>>
+	<<if $menials >= 500>>
+		|<<link "500">>
+			<<set $menials -= 500>>
+			<<set $secMenials += 500>>
+			<<replace "#secHel">><<print $secMenials>><</replace>>
+			<<replace "#hel">><<print $menials>><</replace>>
+			<<if $menials < 500 || $secMenials >= App.SecExp.Check.reqMenials() || $secMenials == 500>>
+				<<goto "securityHQ">>
+			<</if>>
+		<</link>>
+	<</if>>
+	<<if $menials >= 1000>>
+		|<<link "1000">>
+			<<set $menials -= 1000>>
+			<<set $secMenials += 1000>>
+			<<replace "#secHel">><<print $secMenials>><</replace>>
+			<<replace "#hel">><<print $menials>><</replace>>
+			<<if $menials < 1000 || $secMenials >= App.SecExp.Check.reqMenials() || $secMenials == 1000>>
+				<<goto "securityHQ">>
+			<</if>>
+		<</link>>
+	<</if>>
+
+	<<if $secMenials > 0>>
+		<br>Transfer out
+		<<if $secMenials >= 5>>
+			<<link "5">>
+				<<set $menials += 5>>
+				<<set $secMenials -= 5>>
+				<<replace "#secHel">><<print $secMenials>><</replace>>
+				<<replace "#hel">><<print $menials>><</replace>>
+				<<if $secMenials < 5>>
+					<<goto "securityHQ">>
+				<</if>>
+				<<if $secMenials < App.SecExp.Check.reqMenials()>>
+					<<goto "securityHQ">>
+				<</if>>
+			<</link>>
+		<</if>>
+		<<if $secMenials >= 10>>
+			|<<link "10">>
+				<<set $menials += 10>>
+				<<set $secMenials -= 10>>
+				<<replace "#secHel">><<print $secMenials>><</replace>>
+				<<replace "#hel">><<print $menials>><</replace>>
+				<<if $secMenials < 10>>
+					<<goto "securityHQ">>
+				<</if>>
+				<<if $secMenials < App.SecExp.Check.reqMenials()>>
+					<<goto "securityHQ">>
+				<</if>>
+			<</link>>
+		<</if>>
+		<<if $secMenials >= 100>>
+			|<<link "100">>
+				<<set $menials += 100>>
+				<<set $secMenials -= 100>>
+				<<replace "#secHel">><<print $secMenials>><</replace>>
+				<<replace "#hel">><<print $menials>><</replace>>
+				<<if $secMenials < 100>>
+					<<goto "securityHQ">>
+				<</if>>
+				<<if $secMenials < App.SecExp.Check.reqMenials()>>
+					<<goto "securityHQ">>
+				<</if>>
+			<</link>>
+		<</if>>
+		<<if $secMenials >= 500>>
+			|<<link "500">>
+				<<set $menials += 500>>
+				<<set $secMenials -= 500>>
+				<<replace "#secHel">><<print $secMenials>><</replace>>
+				<<replace "#hel">><<print $menials>><</replace>>
+				<<if $secMenials < 500>>
+					<<goto "securityHQ">>
+				<</if>>
+				<<if $secMenials < App.SecExp.Check.reqMenials()>>
+					<<goto "securityHQ">>
+				<</if>>
+			<</link>>
+		<</if>>
+		<<if $secMenials >= 1000>>
+			|<<link "1000">>
+				<<set $menials += 1000>>
+				<<set $secMenials -= 1000>>
+				<<replace "#secHel">><<print $secMenials>><</replace>>
+				<<replace "#hel">><<print $menials>><</replace>>
+				<<if $secMenials < 1000>>
+					<<goto "securityHQ">>
+				<</if>>
+				<<if $secMenials < App.SecExp.Check.reqMenials()>>
+					<<goto "securityHQ">>
+				<</if>>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $secMenials != App.SecExp.Check.reqMenials()>>
+	<br><<link "Match the requirement" "securityHQ">>
+		<<if $menials >= App.SecExp.Check.reqMenials() - $secMenials>>
+			<<set $menials -= App.SecExp.Check.reqMenials() - $secMenials>>
+			<<set $secMenials = App.SecExp.Check.reqMenials()>>
+		<<elseif App.SecExp.Check.reqMenials() < $secMenials>>
+			<<set $menials += $secMenials - App.SecExp.Check.reqMenials()>>
+			<<set $secMenials = App.SecExp.Check.reqMenials()>>
+		<<else>>
+			<<set $secMenials += $menials>>
+			<<set $menials = 0>>
+		<</if>>
+		/*<<replace "#secHel">><<print $secMenials>><</replace>>
+		<<replace "#hel">><<print $menials>><</replace>>
+		<<if $secMenials == App.SecExp.Check.reqMenials()>>
+			<<goto "securityHQ">>
+		<</if>>
+		*/
+	<</link>>
+<</if>>
+
+<br><br>
+
+/* security level and upgrades */
+Your security level (@@.deepskyblue;$SecExp.security.cap@@)
+<<if $SecExp.security.cap <= 20>>
+	is dangerously low.
+<<elseif $SecExp.security.cap <= 40>>
+	is low.
+<<elseif $SecExp.security.cap <= 60>>
+	is decent.
+<<elseif $SecExp.security.cap <= 80>>
+	is good.
+<<else>>
+	is great.
+<</if>>
+Considering the current upgrades the resting level for security is <<print App.SecExp.Check.reqMenials()>>, while the effective maximum level is <<print Math.trunc(App.SecExp.Check.reqMenials() * (Math.clamp($secMenials,0,App.SecExp.Check.reqMenials()) / App.SecExp.Check.reqMenials()))>>.
+
+<br>
+<br>
+
+<<if $secUpgrades.nanoCams == 0>>
+	[[Install a nano-camera system |securityHQ][cashX(-Math.trunc(5000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $secUpgrades.nanoCams = 1]]
+	<br>//Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will raise rest point of security by 10 points, but will require 5 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+<<else>>
+	You have installed all across the arcology closed circuit nano-cameras to keep the arcology under your watchful eye.
+<</if>>
+<br>
+<<if $secUpgrades.cyberBots == 0>>
+	[[Buy cybersecurity algorithms|securityHQ][cashX(-Math.trunc(7500*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $secUpgrades.cyberBots = 1]]
+	<br>//Costs <<print cashFormat(Math.trunc(7500*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will raise rest point of security by 10 points, but will require 5 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+<<else>>
+	You have bought advanced cybersecurity algorithms that will defend your arcology against hack attempts or cyber frauds.
+<</if>>
+<br>
+<<if $SecExp.core.authority > 10000>>
+	<<if $secUpgrades.eyeScan == 0>>
+		[[Install invisible eye scanners|securityHQ][cashX(-Math.trunc(10000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $secUpgrades.eyeScan = 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will raise rest point of security by 15 points, but will require 10 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<else>>
+		You have installed numerous hidden eye scanners that accurately register the movements of everyone inside the arcology.
+	<</if>>
+	<br>
+	<<if $secUpgrades.cryptoAnalyzer == 0>>
+		[[Buy and install crypto analyzers|securityHQ][cashX(-Math.trunc(15000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $secUpgrades.cryptoAnalyzer = 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(15000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will raise rest point of security by 15 points, but will require 10 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<else>>
+		You have bought and employed sophisticated crypto analyzing software to accurately track and archive every financial movement or transaction made inside the walls of your arcology.
+	<</if>>
+<<else>>
+	<br>You lack the authority to access more advanced upgrades.
+<</if>>
+
+<br>
+<br>
+
+/* crime level and upgrades */
+Your crime level (@@.orangered;$SecExp.core.crimeLow@@)
+<<if $SecExp.core.crimeLow <= 20>>
+	is very low.
+<<elseif $SecExp.core.crimeLow <= 40>>
+	is low.
+<<elseif $SecExp.core.crimeLow <= 60>>
+	is average.
+<<elseif $SecExp.core.crimeLow <= 80>>
+	is high.
+<<else>>
+	is extremely high.
+<</if>>
+Considering the current upgrades the maximum level of crime is <<print App.SecExp.Check.crimeCap()>>, while the effective maximum level is <<print Math.trunc(Math.clamp(App.SecExp.Check.crimeCap() + (App.SecExp.Check.crimeCap() - App.SecExp.Check.crimeCap() * ($secMenials / App.SecExp.Check.reqMenials())),0,100))>>.
+
+<br>
+<br>
+
+<<if $crimeUpgrades.advForensic == 0>>
+	[[Install advanced forensic equipment|securityHQ][cashX(-Math.trunc(5000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $crimeUpgrades.advForensic = 1, $PC.skill.hacking += 1]]
+	<br>//Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will bring down the crime level cap by 10 points, but will require 5 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+<<else>>
+	You have installed advanced forensic equipment, able to extract every bit of precious information from any clue.
+<</if>>
+<br>
+<<if $crimeUpgrades.autoArchive == 0>>
+	[[Install auto-curating archiver|securityHQ][cashX(-Math.trunc(7500*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $crimeUpgrades.autoArchive = 1, $PC.skill.hacking += 1]]
+	<br>//Costs <<print cashFormat(Math.trunc(7500*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will bring down the crime level cap by 10 points, but will require 5 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+<<else>>
+	You have installed auto-curating archiver software, which will update in real time your data archives with any new relevant information on criminals residing in your arcology.
+<</if>>
+<br>
+<<if $SecExp.core.authority > 10000>>
+	<<if $crimeUpgrades.autoTrial == 0>>
+		[[Install automated trials software|securityHQ][cashX(-Math.trunc(10000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $crimeUpgrades.autoTrial = 1, $PC.skill.hacking += 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will bring down the crime level cap by 15 points, but will require 10 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<else>>
+		You have installed advanced legal algorithms that allows the handling of legal matters much quicker and much more accurately.
+	<</if>>
+	<br>
+	<<if $crimeUpgrades.worldProfiler == 0>>
+		[[Install worldwide profilers|securityHQ][cashX(-Math.trunc(15000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $crimeUpgrades.worldProfiler = 1, $PC.skill.hacking += 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(15000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will bring down the crime level cap by 15 points, but will require 10 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<else>>
+		You have installed advanced profiler software, which will constantly scour every known data archive on the globe (legally or not) to gather as much information as possible on dangerous criminals.
+	<</if>>
+<<else>>
+	<br>You lack the authority to access more advanced upgrades.
+<</if>>
+
+<br>
+<br>
+
+/* intelligence */
+
+<<if App.SecExp.battle.recon() == 0>>
+	Your reconnaissance capabilities are very limited. Very little information will be available if the arcology is attacked.
+<<elseif App.SecExp.battle.recon() == 1>>
+	You have limited reconnaissance capabilities. You'll have limited intel available in case of an attack.
+<<elseif App.SecExp.battle.recon() == 2>>
+	You have good reconnaissance capabilities. Good, reliable intel will be available if the arcology is attacked.
+<<else>>
+	You have great reconnaissance capabilities. You'll have very accurate information on the enemy if the arcology is attacked.
+<</if>>
+
+<br>
+<br>
+
+<<if $intelUpgrades.sensors == 0>>
+	[[Install perimeter sensors|securityHQ][cashX(-Math.trunc(5000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $intelUpgrades.sensors = 1, $PC.skill.hacking += 1]]
+	<br>//Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will increase recon capabilities, but will require 5 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+<<else>>
+	You have installed perimeter seismic sensors able to detect movement with high accuracy.
+<</if>>
+<br>
+<<if $intelUpgrades.signalIntercept == 0>>
+	[[Create signal interception hub|securityHQ][cashX(-Math.trunc(10000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $intelUpgrades.signalIntercept = 1, $PC.skill.hacking += 1]]
+	<br>//Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will increase recon capabilities, but will require 5 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+<<else>>
+	You have installed advanced signal interception equipment.
+<</if>>
+<br>
+<<if $SecExp.core.authority > 10000>>
+	<<if $intelUpgrades.radar == 0>>
+		[[Install advanced radar equipment|securityHQ][cashX(-Math.trunc(15000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $intelUpgrades.radar = 1, $PC.skill.hacking += 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(15000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will increase recon capabilities, but will require 10 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<else>>
+		You have installed sophisticated radar equipment.
+	<</if>>
+<<else>>
+	<br>You lack the authority to access more advanced upgrades.
+<</if>>
+
+<br>
+<br>
+
+/* readiness */
+
+<<if App.SecExp.battle.deploySpeed() == 1>>
+	You have low readiness. You won't be able to mobilize many troops in time in case of an attack.
+<<elseif App.SecExp.battle.deploySpeed() == 2>>
+	You have decent readiness. You will be able to muster up sufficient forces to handle an average attack.
+<<elseif App.SecExp.battle.deploySpeed() == 3>>
+	You have good readiness. You will be able to mobilize a lot of troops in case of an attack.
+<<else>>
+	You have great readiness. You can mobilize a small army in very little time.
+<</if>>
+
+<br>
+<br>
+
+<<if $readinessUpgrades.pathways == 0>>
+	[[Build specialized pathways in the arcology|securityHQ][cashX(-Math.trunc(5000*$upgradeMultiplierArcology*_HistoryDiscount), "capEx"), $readinessUpgrades.pathways = 1]]
+	<br>//Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology*_HistoryDiscount))>>. Will increase readiness by 1, but will increase upkeep. The remaining slaves will be more efficient in dealing with crime.//
+<<else>>
+	You have built specialized pathways inside the arcology to quickly move troops around the structure.
+<</if>>
+<br>
+<<if $readinessUpgrades.rapidVehicles == 0>>
+	[[Buy rapid armored transport vehicles|securityHQ][cashX(-Math.trunc(7500*$upgradeMultiplierArcology*_HistoryDiscount), "capEx"), $readinessUpgrades.rapidVehicles = 1]]
+	<br>//Costs <<print cashFormat(Math.trunc(7500*$upgradeMultiplierArcology*_HistoryDiscount))>>. Will increase readiness by 2, but will require 5 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+<<else>>
+	You have bought rapid armored transport vehicles able to bring your troops to battle much quicker than before.
+<</if>>
+<br>
+<<if $SecExp.core.authority > 10000>>
+	<<if $readinessUpgrades.rapidPlatforms == 0>>
+		[[Build rapid deployment platforms|securityHQ][cashX(-Math.trunc(10000*$upgradeMultiplierArcology*_HistoryDiscount), "capEx"), $readinessUpgrades.rapidPlatforms = 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology*_HistoryDiscount))>>. Will increase readiness by 2, but will require 5 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<else>>
+		You have built rapid deployment platforms able to equip and deploy units within very limited time windows.
+	<</if>>
+	<br>
+	<<if $readinessUpgrades.earlyWarn == 0>>
+		[[Institute early warning systems|securityHQ][cashX(-Math.trunc(15000*$upgradeMultiplierArcology*_HistoryDiscount), "capEx"), $readinessUpgrades.earlyWarn = 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(15000*$upgradeMultiplierArcology*_HistoryDiscount))>>. Will increase readiness by 2, but will require 10 extra slaves in the headquarters and increases upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<else>>
+		You have created early warning systems that constantly analyze in real time data to determine the likeness of an attack.
+	<</if>>
+<<else>>
+	<br>You lack the authority to access more advanced upgrades.
+<</if>>
+
+<br>
+
+<<if $SecExp.core.authority > 12000>>
+	<br>__Cold Data Storage Facility__:
+	<<if App.SecExp.Check.reqMenials() <= 10>>
+		<br>Personnel cannot be further reduced.
+	<<elseif $secUpgrades.coldstorage > 6>>
+		<br>You have installed a cold storage facility for the Security HQ's archives with a data retention capability of three years.
+	<<elseif $secUpgrades.coldstorage == 6 && $SecExp.core.authority >= 19500 && App.SecExp.Check.reqMenials() > 10>>
+		<br>You have installed a cold storage facility for the Security HQ's archives with a data retention capability of two years.
+		<br>
+		[[Expand the cold storage facility to increase data retention to three years|securityHQ][cashX(-Math.trunc(2400000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $secUpgrades.coldstorage++, $PC.skill.hacking += 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(2400000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will lower the amount of required slaves by a further 10, but will increase upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<elseif $secUpgrades.coldstorage == 5 && $SecExp.core.authority >= 19500 && App.SecExp.Check.reqMenials() > 10>>
+	<br>You have installed a cold storage facility for the Security HQ's archives with a data retention capability of one year.
+		<br>
+		[[Expand the cold storage facility to increase data retention to two years|securityHQ][cashX(-Math.trunc(1200000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $secUpgrades.coldstorage++, $PC.skill.hacking += 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(1200000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will lower the amount of required slaves by a further 10, but will increase upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<elseif $secUpgrades.coldstorage == 4 && $SecExp.core.authority >= 19500 && App.SecExp.Check.reqMenials() > 10>>
+		<br>You have installed a cold storage facility for the Security HQ's archives with a data retention capability of nine months.
+		<br>
+		[[Expand the cold storage facility to increase data retention to one year|securityHQ][cashX(-Math.trunc(900000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $secUpgrades.coldstorage++, $PC.skill.hacking += 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(900000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will lower the amount of required slaves by a further 10, but will increase upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<elseif $secUpgrades.coldstorage == 3 && $SecExp.core.authority > 18000 && App.SecExp.Check.reqMenials() > 10>>
+		<br>You have installed a cold storage facility for the Security HQ's archives with a data retention capability of six months.
+		<br>
+		[[Expand the cold storage facility to increase data retention to nine months|securityHQ][cashX(-Math.trunc(600000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $secUpgrades.coldstorage++, $PC.skill.hacking += 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(600000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will lower the amount of required slaves by a further 10, but will increase upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<elseif $secUpgrades.coldstorage == 2 && $SecExp.core.authority > 16000 && App.SecExp.Check.reqMenials() > 10>>
+		<br>You have installed a cold storage facility for the Security HQ's archives with a data retention capability of three months.
+		<br>
+		[[Expand the cold storage facility to increase data retention to six months|securityHQ][cashX(-Math.trunc(300000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $secUpgrades.coldstorage++, $PC.skill.hacking += 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(300000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will lower the amount of required slaves by a further 10, but will increase upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<elseif $secUpgrades.coldstorage == 1 && $SecExp.core.authority > 14000 && App.SecExp.Check.reqMenials() > 10>>
+		<br>You have installed a cold storage facility for the Security HQ's archives with a data retention capability of one month.
+		<br>
+		[[Expand the cold storage facility to increase data retention to three months|securityHQ][cashX(-Math.trunc(100000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $secUpgrades.coldstorage++, $PC.skill.hacking += 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(100000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will lower the amount of required slaves by a further 10, but will increase upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<<elseif $secUpgrades.coldstorage == 0 && $SecExp.core.authority > 12000 && App.SecExp.Check.reqMenials() > 10>>
+		[[Install a cold storage facility|securityHQ][cashX(-Math.trunc(50000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx"), $secUpgrades.coldstorage++, $PC.skill.hacking += 1]]
+		<br>//Costs <<print cashFormat(Math.trunc(50000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier))>>. Will lower the amount of required slaves by 10, but will increase upkeep. The remaining slaves will be more efficient in dealing with crime.//
+	<</if>>
+<<else>>
+	<br>You lack the authority to access more advanced upgrades.
+<</if>>

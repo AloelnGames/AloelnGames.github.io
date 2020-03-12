@@ -1,0 +1,125 @@
+:: P food crisis [nobr]
+
+/* feel free to move this into a different folder */
+
+<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event">>
+
+<<if ($PC.skill.trading >= 100) || ($PC.career == "capitalist")>>
+	<<set _price = 2500>>
+<<elseif ($PC.skill.trading >= 50) || ($PC.career == "capitalist")>>
+	<<set _price = 5000>>
+<<else>>
+	<<set _price = 10000>>
+<</if>>
+
+<<switch $foodCrisis>>
+<<case 1>>
+
+	The region supplying much of the Free City's food had been battling a famine for quite some time now — between the deteriorating weather and the war raging on — but it had always seemed the situation was improving, and your arcology's citizens never really had to worry about going to bed hungry. Unfortunately, that all changed this week. A firefight had broken out near one of the region's largest farms, and one of the main reserves of food was caught in the crossfire.
+
+	<br><br>
+
+	Supplies steadily began to dwindle, and it wasn't long before the prices of food began to rise as a result. <<if $arcologyUpgrade.hydro == 1>>Even the hydroponics system you had installed earlier could barely put a dent in the needs of your citizens.<</if>> Now, the poorest in your arcology are facing starvation. Seeing no other choice, they turned to you to provide them with sustenance. ''This is a unique opportunity.'' It's unlikely your citizens would ask for your help again, should you choose not to help them.
+
+	<br><br>
+
+	<span id="result">
+	<<link "Provide them with ample rations">>
+		<<replace "#result">>
+		You have enough to go around, so you decide to help the desperate citizens. You have a number of rationing stations set up throughout $arcologies[0].name and announce that each citizen is entitled to four full meals a day, more than enough to sate the hunger of even the most famished of men. Your citizens are @@.green;thrilled@@ to hear that their leader is looking out for them.
+		<<run repX(5000, "event")>>
+		<<set cashX(forceNeg(_price*2), "farmyard")>>
+		<<set $rations = 2>>
+		<</replace>>
+	<</link>>
+	<<if ($PC.skill.trading >= 50) || ($PC.career == "capitalist")>>//This will cost <<print cashFormat(_price*2)>> and some upkeep, @@.springgreen;reduced by your knowledge of trading@@//<<else>>//This will cost <<print cashFormat(_price*2)>> and incur significant upkeep costs//<</if>>
+	<br><<link "Give them enough to survive on">>
+		<<replace "#result">>
+		You have your own problems to deal with, but that doesn't mean you don't look out for your own. You have a number of rationing stations set up throughout $arcologies[0].name and announce that each citizen is entitled to two full meals a day, just enough for your citizens not to starve. Your citizens are @@.green;happy@@ to hear that their leader is looking out for them.
+		<<run repX(2500, "event")>>
+		<<set cashX(forceNeg(_price), "farmyard")>>
+		<<set $rations = 1>>
+		<</replace>>
+	<</link>>
+	<<if ($PC.skill.trading >= 50) || ($PC.career == "capitalist")>>//This will cost <<print cashFormat(_price)>> and some upkeep, @@.springgreen;reduced by your knowledge of trading@@//<<else>>//This will cost <<print cashFormat(_price)>> and incur significant upkeep costs//<</if>>
+	<br><<link "They can figure their problem out on their own">>
+		<<replace "#result">>
+		You have your own problems to deal with, and you simply can't afford to drop everything and solve theirs at the moment. That you can't take care of your arcology's citizen @@.red;reflects poorly on you.@@
+		<<run repX(-500, "event")>>
+		<</replace>>
+	<</link>>
+	</span>
+
+<<case 2>>
+
+	It's been a few weeks since your citizens had approached you asking for aid, and since then, the situation hasn't improved. In fact, it had gotten worse, and food prices have reached a record high. The tension in $arcologies[0].name is palpable, and small riots have broken out more than once over disputes about food. You are not surprised, then, when you receive a visit from some of the "middle class" /* TODO: still not really happy with this */ citizens. They state that they noticed that you have been giving out rations to the poorer citizens, and, now that the situation has become dire, were wondering if you would be willing to do the same for them.
+
+	<br><br>
+
+	<span id="result">
+	<<link "Give them generous rations as well">>
+		<<replace "#result">>
+		You still have more than enough to go around, so you inform the leaders that you have decided you will give them large rations, enough to feed even the hungriest citizen. The leaders are @@.green;very pleased@@ to hear that you are taking care of them as well.
+		<<run repX(5000, "event")>>
+		<<set cashX(forceNeg(_price*2), "farmyard")>>
+		<<set $rations = 4>>
+		<</replace>>
+	<</link>>
+	<<if ($PC.skill.trading >= 50) || ($PC.career == "capitalist")>>//This will cost <<print cashFormat(_price*2)>> and some upkeep, @@.springgreen;reduced by your knowledge of trading@@//<<else>>//This will cost <<print cashFormat(_price*2)>> and incur significant upkeep costs//<</if>>
+	<br><<link "Provide them with enough sustenance to survive on too">>
+		<<replace "#result">>
+		As much as you'd like to provide them with all of the food in the world, it simply is not feasible in your current situation. Therefore, you announce to the leaders that you will provide them only enough rations to live off of. The leaders understand, and are @@.green;pleased@@ to hear that you would provide for them at all.
+		<<run repX(2500, "event")>>
+		<<set cashX(forceNeg(_price), "farmyard")>>
+		<<set $rations = 3>>
+		<</replace>>
+	<</link>>
+	<<if ($PC.skill.trading >= 50) || ($PC.career == "capitalist")>>//This will cost <<print cashFormat(_price)>> and some upkeep, @@.springgreen;reduced by your knowledge of trading@@//<<else>>//This will cost <<print cashFormat(_price)>> and incur significant upkeep costs//<</if>>
+	<br><<link "Change your mind about giving out any rations at all">>
+		<<replace "#result">>
+		Having given the people rations at all was a mistake, you think to yourself. You have a great number of your own problems to deal with, and providing rations to everyone that can't afford food is putting an unnecessary strain on your own situation. With this is mind, you tell the leaders that you simply can't help them at this time, and have decided that you can't help anyone with food at all. The citizens are understandably @@.red;angry@@ that you would go back on your word.
+		<<run repX(-1000, "event")>>
+		<<set $rations = 0>>
+		<</replace>>
+	<</link>>
+	</span>
+
+<<case 3>>
+
+	Another few weeks has passed since your last meeting with your citizens regarding rationing, and things have only deteriorated further since then. It was only a matter of time, then, before the wealthier citizens of $arcologies[0].name paid you a visit one afternoon. While being able to afford food wasn't exactly difficult for them as of yet, they could read the writing on the wall, and knew it would only be a matter of time before the prices of food were so high that even they would be forced to beg for handouts.
+
+	<br><br>
+
+	Seeing the progress you had made since taking control of the arcology, they decided their best course of action was to come to you with a proposition. They would allow you to take full control of the food supply in $arcologies[0].name, and in return you would keep them well-fed. ''This is a unique opportunity.'' If you turn their offer down, the citizens of your arcology will find another way of surviving.
+
+	<span id="result">
+	<br>
+	<br><<link "Set up a food market">>
+		<<replace "#result">>
+		You know that a proposition like this wouldn't have been easy for your citizens to make, and you also know that there is no one better suited to a task like this than you. You announce that you will be setting up a market to buy, sell, and store food in, and that you'll make sure that the citizens will continue to be well-fed. Your citizens are @@.green;glad@@ to hear that you are looking out for their best interests.
+		<<run repX(5000, "event")>>
+		<<set cashX(forceNeg(_price*5), "farmyard")>>
+		<<set $foodMarket = 1>>
+		<<unset $rations>>
+		<</replace>>
+	<</link>>
+	<<if ($PC.skill.trading >= 50) || ($PC.career == "capitalist")>>//This will cost an initial investment of <<print cashFormat(_price*5)>>, @@.springgreen;reduced by your knowledge of trading@@//<<else>>//This will cost an initial investment of <<print cashFormat(_price*5)>>//<</if>>
+	<br><<link "Politely decline their offer, but continue giving them rations">>
+		<<replace "#result">>
+		Things have been going fairly well for you, but not //that// well — setting up an entirely new place to buy, sell, and store food would no doubt be an expensive undertaking. You tell the citizens that while you can't spare the resources to create a new market at the moment, you will honor your past agreement and continue giving them free rations. The people initially seem a bit disappointed that you don't seem to want to expand $arcologies[0].name, but are ultimately @@.green;glad@@ to hear that you'll continue taking care of them.
+		<<run repX(2500, "event")>>
+		<<set cashX(forceNeg(_price), "farmyard")>>
+		<<set $rations = 5>>
+		<</replace>>
+	<</link>>
+	<<if ($PC.skill.trading >= 50) || ($PC.career == "capitalist")>>//This will cost <<print cashFormat(_price)>> and some upkeep, @@.springgreen;reduced by your knowledge of trading@@//<<else>>//This will cost <<print cashFormat(_price)>> and incur significant upkeep costs//<</if>>
+	<br><<link "Turn down their offer and end rationing completely">>
+		<<replace "#result">>
+		While a new place to buy, sell, and store food in $arcologies[0].name would most likely come in quite handy in the future, you ultimately decide that you simply cannot spare the resources required. In fact, giving rations at all was a costly venture, and after not having seen any sort of return-on-investment, you decide that you are unable to continue giving out rations anymore. Your citizens are @@.red;angry@@ at the fact that you seem not to care about them at all, but that's their problem.
+		<<run repX(-1000, "event")>>
+		<<unset $rations>>
+		<</replace>>
+	<</link>>
+	</span>
+
+<</switch>>

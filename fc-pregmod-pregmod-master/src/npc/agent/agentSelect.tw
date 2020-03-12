@@ -1,0 +1,11 @@
+:: Agent Select [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Neighbor Interact", $showEncyclopedia = 1, $encyclopedia = "Agents">>
+''Appoint an Agent from your devoted slaves:''
+
+<<= App.UI.SlaveList.slaveSelectionList(
+		s => (s.fuckdoll === 0 && s.devotion > 20 && s.intelligence + s.intelligenceImplant > 15 && s.intelligenceImplant >= 15 && canWalk(s) && canSee(s) && canHear(s) && canTalk(s) && s.broodmother < 2 && (s.breedingMark !== 1 || State.variables.propOutcome === 0 || State.variables.eugenicsFullControl === 1 || State.variables.arcologies[0].FSRestart === "unset")),
+		(slave, index) => App.UI.DOM.passageLink(SlaveFullName(slave), 'Agent Workaround',
+			() => { variables().i = index; }),
+		s => App.Entity.facilities.arcologyAgent.manager.slaveHasExperience(s)
+	)>>

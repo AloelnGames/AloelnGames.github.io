@@ -1,0 +1,71 @@
+/*
+ * pure CSS tooltip
+ * based on https://codeconvey.com/pure-html5-css-tooltips-using-title-data-attribute/
+ */
+.exampleTooltip, .devotion, .trust, .defiant {
+	position: relative;
+	display: inline;
+}
+
+.exampleTooltip:after, .devotion:after, .trust:after, .defiant:after {
+	display: block;
+	visibility: hidden;
+	position: absolute;
+	font-size: smaller;
+	width: 20em;
+	height: auto;
+	background-color: slategray;
+	color: black;
+	text-decoration: none;
+	font-style: normal;
+	text-align: center;
+	border-radius: 3px;
+	padding: 5px;
+	z-index: 999;
+	bottom: 0;
+	left: 10px;
+}
+
+.exampleTooltip:after {
+	content: "I am a helpful tooltip. We are very rare because we are still in development.";
+}
+
+.devotion:after {
+	content: "Devotion is a measure of a slave's love for you.";
+}
+
+.trust:after {
+	content: "Trust is a measure of a slave's expectations of you and confidence to perform well.";
+}
+
+.defiant:after {
+	content: "Defiant slaves will actively work against you.";
+}
+
+/* makes the arrow */
+.exampleTooltip:before, .devotion:before, .trust:before, .defiant:before {
+	position: absolute;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+	left: 20px;
+	bottom: 0;
+	opacity: 0;
+	content: "";
+	border-style: solid;
+	border-width: 6px 6px 0 6px;
+	border-color: slategray transparent transparent transparent;
+	z-index: 999;
+}
+
+div.tooltipsEnabled .exampleTooltip:hover:after, div.tooltipsEnabled .devotion:hover:after, div.tooltipsEnabled .trust:hover:after, div.tooltipsEnabled .defiant:hover:after {
+	visibility: visible;
+	opacity: 1;
+	bottom: 20px;
+}
+
+div.tooltipsEnabled .exampleTooltip:hover:before, div.tooltipsEnabled .devotion:hover:before, div.tooltipsEnabled .trust:hover:before, div.tooltipsEnabled .defiant:hover:before {
+	visibility: visible;
+	opacity: 1;
+	bottom: 15px;
+}

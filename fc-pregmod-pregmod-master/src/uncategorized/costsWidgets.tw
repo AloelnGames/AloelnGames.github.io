@@ -1,0 +1,145 @@
+:: Cost widgets [nobr widget]
+
+<<widget "SlaveExpenses">>
+	<<set _individualCosts = 0>>
+	<<setLocalPronouns $args[0]>>
+
+	/* Generate the lines of the report */
+	<<for _line range getSlaveCostArray($args[0])>>
+		<div class="indent">
+			<<= _line.text>>: <<=cashFormatColor(_line.value)>>
+		</div>
+	<</for>>
+
+	/* Total expenses */
+	<<set _individualCosts = Math.trunc(getSlaveCost($args[0]))>>
+	<div class="double-indent">
+		__Predicted expense__: @@.red;<<print cashFormat(Math.trunc(_individualCosts))>>@@
+	</div>
+
+	/* Income from last week vs expense gives net, assistant gated */
+	<<if $assistant.power > 0>>
+		<<if $args[0].lastWeeksCashIncome > 0>>
+			<div class="indent">
+				Income: <<print cashFormatColor($args[0].lastWeeksCashIncome)>>
+			</div>
+			<<set _total = (Math.trunc($args[0].lastWeeksCashIncome - _individualCosts))>>
+			<div class="double-indent">
+				__Total__: <<print cashFormatColor(Math.trunc(_total))>>
+			</div>
+		<</if>>
+	<</if>>
+	<<SlaveExpensesExtra $args[0]>>
+<</widget>>
+
+<<widget "SlaveExpensesExtra">>
+	<<setLocalPronouns $args[0]>>
+	/* Background and original cost */
+	<<if $args[0].origin != 0>>
+		<div class="indent">
+			$args[0].origin
+		</div>
+	<</if>>
+	<div class="indent">
+		<<if $args[0].slaveCost < 0>>
+			You bought $him for: @@.red;<<print cashFormat($args[0].slaveCost)>>.@@
+			<<set _Cost = $args[0].slaveCost>>
+		<<elseif $args[0].slaveCost == 0>>
+			You spent nothing to acquire $him.
+			<<set _Cost = $args[0].slaveCost>>
+		<<else>>
+			You have no record of how much <<if $args[0].origin != 0>>this<<else>>$he originally<</if>> cost.
+			<<set _Cost = 0>>
+		<</if>>
+	</div>
+
+	/* Lifetime totals, assistant gated */
+	<<if $assistant.power > 0>>
+		<<set _weeksOwned = $week - $args[0].weekAcquired>>
+		/* Lifetime expense */
+		<div class="indent">
+			<<if $args[0].lifetimeCashExpenses < 0>>
+				In $his <<if _weeksOwned > 0>>_weeksOwned <<if _weeksOwned == 1>>week<<else>>weeks<</if>><<else>>time<</if>> with you, $he has cost @@.red;<<print cashFormat($args[0].lifetimeCashExpenses)>>.@@
+				<<set _Expense = $args[0].lifetimeCashExpenses>>
+			<<else>>
+				You have no record of $him costing you any ¤.
+				<<set _Expense = 0>>
+			<</if>>
+		</div>
+
+		/* Lifetime income */
+		<div class="indent">
+			<<if $args[0].lifetimeCashIncome > 0>>
+				In $his <<if _weeksOwned > 0>>_weeksOwned <<if _weeksOwned == 1>>week<<else>>weeks<</if>><<else>>time<</if>> with you, $he has earned @@.yellowgreen;<<print cashFormat($args[0].lifetimeCashIncome)>>.@@
+				<<set _Income = $args[0].lifetimeCashIncome>>
+			<<else>>
+				You have no record of $him making you any ¤.
+				<<set _Income = 0>>
+			<</if>>
+		</div>
+
+		/* Lifetime total */
+		<div class="indent">
+			Overall,
+			<<if (_Income + _Cost + _Expense) > 0>>
+				you have made @@.yellowgreen;<<print cashFormat(_Income + _Cost + _Expense)>>@@ net from $his labors.
+			<<elseif (_Income + _Cost + _Expense) == 0>>
+				$he is even in cost and income.
+			<<else>>
+				$he has cost you @@.red;<<print cashFormat(_Income + _Cost + _Expense)>>.@@
+			<</if>>
+		</div>
+
+		/* Reputation: */
+		<div>
+			<<if ($args[0].lifetimeRepIncome != 0 || $args[0].lifetimeRepExpenses != 0)>>
+				<<set _repTotal = ($args[0].lifetimeRepIncome + $args[0].lifetimeRepExpenses)>>
+				<<if ($cheatMode == 1 || $debugMode == 1)>>
+					<<if $args[0].lifetimeRepIncome != 0>>
+						<div class="indent">
+							This week $he has
+							<<if $args[0].lastWeeksRepIncome == 0>>
+								had no positive effect on your reputation, but
+							<<else>>
+								improved your reputation by @@.green;<<print num($args[0].lastWeeksRepIncome)>>@@ and
+							<</if>>
+							over $his entire time with you, $he gained @@.green;<<print num($args[0].lifetimeRepIncome)>>.@@
+						</div>
+					<</if>>
+					<<if $args[0].lifetimeRepExpenses != 0>>
+						<div class="indent">
+							This week $he has
+							<<if $args[0].lastWeeksRepExpenses == 0>>
+								had no negative effect on your reputation, but
+							<<else>>
+								lowered your reputation by @@.red;<<print num($args[0].lastWeeksRepExpenses)>>@@ and
+							<</if>>
+							over $his entire time with you, $he cost @@.red;<<print num($args[0].lifetimeRepExpenses)>>.@@
+						</div>
+					<</if>>
+					<div class="indent">
+						Overall then, $he has changed your reputation by
+						<<if _repTotal > 0>>
+							@@.green;<<print num(_repTotal)>>@@
+						<<elseif _repTotal < 0>>
+							@@.red;<<print num(_repTotal)>>@@
+						<<else>>
+							<<print num(_repTotal)>>
+						<</if>>
+					</div>
+				<<else>> /* lowercasedonkey: TODO: I don't like how vague my placeholder is. Probably need to set up some kind of sliding scale to describe how much rep (roughly) she has made or lost. Need to get a sense of common ranges. */
+					<div class="indent">
+						Overall, $he has
+						<<if _repTotal == 0>>
+							had no impact on your reputation.
+						<<elseif _repTotal > 0>>
+							@@.green;increased@@ your reputation.
+						<<elseif _repTotal < 0>>
+							@@.red;decreased@@ your reputation.
+						<</if>>
+					</div>
+				<</if>>
+			<</if>>
+		</div>
+	<</if>>
+<</widget>>

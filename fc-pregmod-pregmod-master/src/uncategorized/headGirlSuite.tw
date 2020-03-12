@@ -1,0 +1,69 @@
+:: Head Girl Suite [nobr]
+
+<<set $nextButton = "Back to Main", $nextLink = "Main", $returnTo = "Head Girl Suite", $showEncyclopedia = 1, $encyclopedia = "Head Girl Suite", _SL = $slaves.length>>
+
+<<if $HGSuiteName != "the Head Girl Suite">>
+	<<set $HGSuiteNameCaps = $HGSuiteName.replace("the ", "The ")>>
+<</if>>
+<<set _i = $slaves.findIndex(function(s) { return s.assignment == "live with your Head Girl"; })>>
+
+<p class="scene-intro">
+</p>
+
+<<if $HeadGirl == 0>>
+	You have no Head Girl appointed to live in $HGSuiteName.
+	<<link "Select Head Girl">><<goto "HG Select">><</link>>
+<<elseif $HGSuiteiIDs.length > 0>>
+	<<setLocalPronouns $HeadGirl>>
+	Your Head Girl $HeadGirl.slaveName has $slaves[_i].slaveName living in $HGSuiteName with $him, as $his servant, assistant, and sexual appliance.
+	<<link "Manage Head Girl">><<goto "HG Select">><</link>>
+<<else>>
+	<<setLocalPronouns $HeadGirl>>
+	Your Head Girl $HeadGirl.slaveName lives alone in $his handsome suite.
+	<<link "Manage Head Girl">><<goto "HG Select">><</link>>
+<</if>>
+
+<<if $HeadGirl != 0>>
+	<div class="note">
+		Any slave assigned to live with your Head Girl will become, for most practical purposes, $his slave.
+	</div>
+	<<if $HGSuiteEquality == 1>>
+		The two slaves living in $HGSuiteName are ''equals,'' and will alternate weeks as Head Girl and Head Girl's bitch. [[Stop|Head Girl Suite][$HGSuiteEquality = 0]]
+	<<else>>
+		The current Head Girl will ''remain Head Girl.''
+		[[Have them alternate|Head Girl Suite][$HGSuiteEquality = 1,$HGSuiteSurgery = 0,$HGSuiteDrugs = 0,$HGSuiteHormones = 0]]
+		<span class="note">
+			This will only take effect if the other slave is an appropriate candidate
+		</span>
+		<div class="choices">
+			<<if $HGSuiteSurgery == 1>>
+				$He is ''allowed'' to use surgical modification on $his slave. [[Disallow|Head Girl Suite][$HGSuiteSurgery = 0]]
+			<<else>>
+				$He is ''not allowed'' to use surgical modification on $his slave. [[Allow|Head Girl Suite][$HGSuiteSurgery = 1]]
+			<</if>>
+		</div>
+		<div class="choices">
+			<<if $HGSuiteDrugs == 1>>
+				$He is ''allowed'' to use growth hormones on $his slave. [[Disallow|Head Girl Suite][$HGSuiteDrugs = 0]]
+			<<else>>
+				$He is ''not allowed'' to use growth hormones on $his slave. [[Allow|Head Girl Suite][$HGSuiteDrugs = 1]]
+			<</if>>
+		</div>
+		<div class="choices">
+			<<if $HGSuiteHormones == 1>>
+				$He is ''allowed'' to customize $his slave with hormone treatments. [[Disallow|Head Girl Suite][$HGSuiteHormones = 0]]
+			<<else>>
+				$He is ''not allowed'' to customize $his slave with hormone treatments. [[Allow|Head Girl Suite][$HGSuiteHormones = 1]]
+			<</if>>
+		</div>
+	<</if>>
+	<p>
+		<<print App.UI.SlaveList.listSJFacilitySlaves(App.Entity.facilities.headGirlSuite)>>
+	</p>
+<</if>>
+<p>
+	Rename $HGSuiteName: <<textbox "$HGSuiteName" $HGSuiteName "Head Girl Suite">>
+	<span class="note">
+		Use a noun or similar short phrase
+	</span>
+</p>

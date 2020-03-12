@@ -1,0 +1,1085 @@
+:: Body Modification [nobr]
+
+<<set $nextButton = "Confirm changes", $nextLink = "AS Dump", $returnTo = "Slave Interact">>
+<<setLocalPronouns $activeSlave>>
+<<run Enunciate($activeSlave)>>
+
+<<set $showEncyclopedia = 1, $encyclopedia = "The Studio">>
+
+<h1>Body Modification Studio</h1>
+
+<div style="padding-bottom:2em">
+<<= SlaveFullName($activeSlave)>> is lying strapped down on the table in your body modification studio. $He is entirely at your mercy.
+
+<<if $brandApplied || $degradation || $scarApplied || $modReaction>>
+	<<if $activeSlave.fuckdoll == 0>>
+		<<if canSee($activeSlave)>>There's a mirror on the ceiling, so $he can see<<else>>$He can't see, so <<if canHear($activeSlave)>>you're careful to describe<<else>>$he must, by $himself, get a feel for<</if>><</if>> $his new appearance.
+	<</if>>
+	<<if $brandApplied>>
+		The smell of burnt flesh hangs in the air. Being branded @@.red;has hurt $his health a little.@@
+		<<run healthDamage($slaves[$i], 10)>>
+		<<unset $brandApplied>>
+	<</if>>
+	<<if $scarApplied>>
+		<<if $scarTarget.local == "entire body">>
+			<<switch $scarDesign.local>>
+				<<case "burn">>
+					Your goal wasn't to make the distinct shape of a brand, but rather to permanently mar the skin with an open flame.
+				<<case "surgical">>
+					<<if $PC.skill.medicine >= 100>>
+						Your medical mastery is perfect, so creating Frankenstein's monster was a deliberate work of art.
+					<<elseif $PC.skill.medicine > 0>>
+						Your medical skills are progressing, and the Frankenstein effect reminds you of your earliest attempts.
+					<<else>>
+						You really slashed away with your knife, but were careful not to allow $him to bleed out.
+					<</if>>
+				<<default>>
+					The best way to apply scarring to the entire body is with a good old fashioned whip. $His body is a mess of crisscrossed lines<<if hasAnyNaturalLimbs($activeSlave)>>, and $his <<if getLimbCount($activeSlave, 1) > 1>>limbs twisted so violently in their restraints that they too have<<else>>only limb twists so violently in its restraints that it too has<</if>> become scarred<</if>>.
+			<</switch>>
+			No matter how you chose to apply it, scarring so much of $his body has @@.red; hurt $his health.@@
+			<<run healthDamage($slaves[$i], 20)>>
+		<<else>>
+			<<if $activeSlave.scar[$scarTarget.local][$scarDesign.local] > 0>>
+				This is not the first time $he was scarred like this.
+			<</if>>
+			<<switch $scarDesign.local>>
+				<<case "whip">>
+					Targeting a single area with a whip is not easy. You set the mood by carefully arranging candles dripping on to a whimpering $activeSlave.slaveName, then got $his attention with a quick <<if canSee($activeSlave)>>wave<<elseif canHear($activeSlave)>>crack<<else>>tap<</if>> of the whip. One by one, you carefully snuffed out the candles, flicking hot wax as you went. After pausing a moment, you prepared to leave your mark.
+					<<if ["penis", "vagina"].includes($scarTarget.local)>>
+						<<if $activeSlave.dick > 4 && $seeDicks>>
+							$His dick was large enough that it was not too difficult to hit,
+						<<elseif $activeSlave.dick > 0 && $seeDicks>>
+							$His dick was a challengingly small target,
+						<<else>>
+							<<if $activeSlave.clit > 0>>
+								$His clit was a difficult target,
+							<<else>>
+								$His clit was an impossibly tiny target,
+							<</if>>
+						<</if>>
+						but the end was never in doubt. The tip connected with $his most intimate place on the first try, and plunged $him into absolute agony.
+					<<else>>
+						The	end was never in doubt. A few strokes of the whip plunged $him into agony $his body will not allow $him to forget.
+					<</if>>
+				<<case "burn">>
+					Your goal wasn't to make the distinct shape of a brand, but rather to permanently mar the $activeSlave.skin skin of $his $scarTarget.local with an open flame.
+				<<case "surgical">>
+					<<if $PC.skill.medicine >= 100>>
+						Your medical mastery is perfect, so creating such a scar was a deliberate act of degradation.
+					<<elseif $PC.skill.medicine > 0>>
+						Your medical skills are progressing, and the sloppy scar reminds you of your earliest attempts.
+					<<else>>
+						You really slashed away at $scarTarget.local with your knife, but were careful not to allow $him to bleed out.
+					<</if>>
+				<<default>>
+					You had no shortage of kinky and medical tools for applying scars. $His $activeSlave.skin $scarTarget.local is bleeding profusely.
+			<</switch>>
+
+			No matter how you chose to apply it, being scarred @@.red; hurt $his health a little.@@
+			<<run healthDamage($slaves[$i], 10)>>
+		<</if>>
+		Afterwards you seal the wounds with a white medical spray. Infection is no risk to $activeSlave.slaveName thanks to your curatives, but in order to form obvious scar tissue you had to keep air out and delay normal healing as long as possible.
+		<<unset $scarApplied>>
+	<</if>>
+	<<if $activeSlave.fetish != "mindbroken" && $activeSlave.fuckdoll == 0>>
+		<<if $degradation > 1>>
+			<<if $degradation > 5>>
+				<<if $activeSlave.devotion <= 50 && $activeSlave.trust < -50>>
+					$He is appalled by the whorish spectacle you have made of $him. $He @@.gold;fears@@ you all the more for this but is so terrified of you it does not affect $his submission.
+					<<set $activeSlave.trust -= 10>>
+				<<elseif $activeSlave.devotion <= 50>>
+					$He is appalled by the whorish spectacle you have made of $him. $He @@.mediumorchid;hates@@ and @@.gold;fears@@ you for this.
+					<<set $activeSlave.devotion -= 10, $activeSlave.trust -= 10>>
+				<<else>>
+					$He is shocked by the whorish spectacle you have made of $him. However, $he is so submissive to your will that $he @@.hotpink;accepts@@ that the slave <<if canSee($activeSlave)>>in the mirror<<else>>$he pictures<</if>> is who $he is now.
+					<<set $activeSlave.devotion += 4>>
+				<</if>>
+				<br><br>
+			<<else>>
+				<<if $activeSlave.devotion < -20 && $activeSlave.trust < 20>>
+					$He is @@.gold;afraid@@ that $he has been permanently altered against $his will, but is also scared of your reaction to any objection and suppresses $his disgust.
+					<<set $activeSlave.trust -= 5>>
+				<<elseif $activeSlave.devotion < -20>>
+					$He is @@.mediumorchid;angry@@ and @@.gold;afraid@@ that $he has been permanently altered against $his will.
+					<<set $activeSlave.devotion -= 5, $activeSlave.trust -= 5>>
+				<<else>>
+					$He is saddened to have been altered against $his will. However, $he realizes that $he is a slave, so $he @@.hotpink;accepts@@ your work.
+					<<set $activeSlave.devotion += 2>>
+				<</if>>
+			<</if>>
+			<<set $degradation = 0>>
+		<</if>>
+		<<if $modReaction>>
+			<<print $modReaction>>
+			<<unset $modReaction>>
+		<</if>>
+	<</if>>
+<</if>>
+
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<<if $imageChoice == 1>>
+		<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 3, 0)>></div>
+	<<else>>
+		<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 3, 0)>></div>
+	<</if>>
+<</if>>
+/* 000-250-006 */
+</div>
+
+/* PIERCINGS */
+
+<<set _piercingCount =($activeSlave.earPiercing + $activeSlave.nosePiercing + $activeSlave.eyebrowPiercing + $activeSlave.lipsPiercing + $activeSlave.tonguePiercing + $activeSlave.nipplesPiercing + $activeSlave.areolaePiercing + $activeSlave.corsetPiercing + $activeSlave.navelPiercing + $activeSlave.clitPiercing + $activeSlave.vaginaPiercing + $activeSlave.dickPiercing + $activeSlave.anusPiercing)>>
+
+/*DESCRIPTIONS */
+
+<h2>Piercings</h2>
+
+<div class="indent">
+<div style="padding-bottom:1em">
+<<if _piercingCount == 0>>
+	$His smooth $activeSlave.skin skin is completely unpierced.
+<</if>>
+<<if $activeSlave.earPiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "ear")>></div><</if>>
+<<if $activeSlave.nosePiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "nose")>></div><</if>>
+<<if $activeSlave.eyebrowPiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "eyebrow")>></div><</if>>
+<<if $activeSlave.lipsPiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "lips")>></div><</if>>
+<<if $activeSlave.tonguePiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "tongue")>></div><</if>>
+<<if $activeSlave.nipplesPiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "nipple")>></div><</if>>
+<<if $activeSlave.areolaePiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "areolae")>></div><</if>>
+<<if $activeSlave.navelPiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "navel")>></div><</if>>
+<<if $activeSlave.corsetPiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "corset")>></div><</if>>
+<<if $activeSlave.clitPiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "clit")>></div><</if>>
+<<if $activeSlave.vaginaPiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "vagina")>></div><</if>>
+<<if $activeSlave.dickPiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "dick")>></div><</if>>
+<<if $activeSlave.anusPiercing > 0 >><div><<= App.Desc.piercing($activeSlave, "anus")>></div><</if>>
+
+<div><<= App.Desc.piercing($activeSlave, "chastity")>></div>
+</div>
+
+/* Apply piercings */
+
+<div>
+Choose piercing style:
+<<if $piercingLevel != 1>>[[Light|Body Modification][$piercingLevel = 1]]<<else>>Light<</if>>
+<<if $piercingLevel != 2>>| [[Heavy|Body Modification][$piercingLevel = 2]]<<else>>| Heavy<</if>>
+<<if $piercingLevel != 3>>| [[Smart|Body Modification][$piercingLevel = 3]]<<else>>| Smart<</if>>
+<<if $piercingLevel != 0>>| [[Remove|Body Modification][$piercingLevel = 0]]<<else>>| Remove<</if>>
+</div>
+
+<div>
+<<if $piercingLevel == 1>>
+	//Lightly// pierce $his:
+
+	<<link "Entire body">>
+		<<set $modReaction = "">>
+		<<if $activeSlave.earPiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "ear", 1)>><</if>>
+		<<if $activeSlave.nosePiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "nose", 1)>><</if>>
+		<<if $activeSlave.eyebrowPiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "eyebrow", 1)>><</if>>
+		<<if $activeSlave.lipsPiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "lips", 1)>><</if>>
+		<<if $activeSlave.tonguePiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "tongue", 1)>><</if>>
+		<<if $activeSlave.nipples != "fuckable">>
+			<<if $activeSlave.nipplesPiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "nipples", 1)>><</if>>
+		<</if>>
+		<<if $activeSlave.areolaePiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "areolae", 1)>><</if>>
+		<<if $activeSlave.corsetPiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "corset", 1)>><</if>>
+		<<if $activeSlave.navelPiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "navel", 1)>><</if>>
+		<<if ($activeSlave.vagina != -1) || ($activeSlave.dick != 0)>>
+			<<if $activeSlave.clitPiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "clit", 1)>><</if>>
+		<</if>>
+		<<if ($activeSlave.vagina != -1)>>
+			<<if $activeSlave.vaginaPiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "vagina", 1)>><</if>>
+		<</if>>
+		<<if ($activeSlave.dick > 0)>>
+			<<if $activeSlave.dickPiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "dick", 1)>><</if>>
+		<</if>>
+		<<if $activeSlave.anusPiercing != 1>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "anus", 1)>><</if>>
+		<<goto "Body Modification">>
+	<</link>>
+
+	<<if $activeSlave.earPiercing != 1>>		| [[Ear|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "ear", 1)]]<</if>>
+	<<if $activeSlave.nosePiercing != 1>>		| [[Nose|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "nose", 1)]]<</if>>
+	<<if $activeSlave.eyebrowPiercing != 1>>	| [[Eyebrow|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "eyebrow", 1)]]<</if>>
+	<<if $activeSlave.lipsPiercing != 1>>		| [[Lips|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "lips", 1)]]<</if>>
+	<<if $activeSlave.tonguePiercing != 1>>	| [[Tongue|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "tongue", 1)]]<</if>>
+	<<if $activeSlave.nipples != "fuckable">>
+		<<if $activeSlave.nipplesPiercing != 1>>	| [[Nipples|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "nipples", 1)]]<</if>>
+	<</if>>
+	<<if $activeSlave.areolaePiercing != 1>>	| [[Areolae|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "areolae", 1)]]<</if>>
+	<<if $activeSlave.corsetPiercing != 1>>	| [[Corset|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "corset", 1)]]<</if>>
+	<<if $activeSlave.navelPiercing != 1>>		| [[Navel|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "navel", 1)]]<</if>>
+	<<if ($activeSlave.vagina != -1) || ($activeSlave.dick != 0)>>
+		<<if $activeSlave.vagina != -1>>
+			<<if $activeSlave.clitPiercing != 1>>	| [[Clit|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "clit", 1)]]<</if>>
+		<<else>>
+			<<if $activeSlave.clitPiercing != 1>>	| [[Dickhead|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "clit", 1)]]<</if>>
+		<</if>>
+	<</if>>
+	<<if ($activeSlave.vagina != -1)>>
+		<<if $activeSlave.vaginaPiercing != 1>> | [[Vagina|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "vagina", 1)]]<</if>>
+	<</if>>
+	<<if ($activeSlave.dick > 0)>>
+		<<if $activeSlave.dickPiercing != 1>>	| [[Dick|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "dick", 1)]]<</if>>
+	<</if>>
+	<<if $activeSlave.anusPiercing != 1>>		| [[Anus|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "anus", 1)]]<</if>>
+<<elseif $piercingLevel == 2>>
+	''Heavily'' pierce $his:
+
+	<<link "Entire body">>
+		<<set $modReaction = "">>
+		<<if $activeSlave.earPiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "ear", 2), $degradation += 1>><</if>>
+		<<if $activeSlave.nosePiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "nose", 2), $degradation += 1>><</if>>
+		<<if $activeSlave.eyebrowPiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "eyebrow", 2), $degradation += 1>><</if>>
+		<<if $activeSlave.lipsPiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "lips", 2), $degradation += 1>><</if>>
+		<<if $activeSlave.tonguePiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "tongue", 2), $degradation += 1>><</if>>
+		<<if $activeSlave.nipples != "fuckable">>
+			<<if $activeSlave.nipplesPiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "nipples", 2), $degradation += 1>><</if>>
+		<</if>>
+		<<if $activeSlave.areolaePiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "areolae", 2), $degradation += 1>><</if>>
+		<<if $activeSlave.corsetPiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "corset", 2), $degradation += 1>><</if>>
+		<<if $activeSlave.navelPiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "navel", 2), $degradation += 1>><</if>>
+		<<if ($activeSlave.vagina != -1) || ($activeSlave.dick != 0)>>
+			<<if $activeSlave.clitPiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "clit", 2), $degradation += 1>><</if>>
+		<</if>>
+		<<if ($activeSlave.vagina != -1)>>
+			<<if $activeSlave.vaginaPiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "vagina", 2), $degradation += 1>><</if>>
+		<</if>>
+		<<if ($activeSlave.dick > 0)>>
+			<<if $activeSlave.dickPiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "dick", 2), $degradation += 1>><</if>>
+		<</if>>
+		<<if $activeSlave.anusPiercing != 2>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "anus", 2), $degradation += 1>><</if>>
+		<<goto "Body Modification">>
+	<</link>>
+
+	<<if $activeSlave.earPiercing != 2>>		| [[Ear|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "ear", 2),$degradation += 1]]<</if>>
+	<<if $activeSlave.nosePiercing != 2>>		| [[Nose|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "nose", 2),$degradation += 1]]<</if>>
+	<<if $activeSlave.eyebrowPiercing != 2>>	| [[Eyebrow|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "eyebrow", 2),$degradation += 1]]<</if>>
+	<<if $activeSlave.lipsPiercing != 2>>		| [[Lips|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "lips", 2),$degradation += 1]]<</if>>
+	<<if $activeSlave.tonguePiercing != 2>>	| [[Tongue|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "tongue", 2),$degradation += 1]]<</if>>
+	<<if $activeSlave.nipples != "fuckable">>
+		<<if $activeSlave.nipplesPiercing != 2>>	| [[Nipples|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "nipples", 2),$degradation += 1]]<</if>>
+	<</if>>
+	<<if $activeSlave.areolaePiercing != 2>>	| [[Areolae|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "areolae", 2),$degradation += 1]]<</if>>
+	<<if $activeSlave.corsetPiercing != 2>>	| [[Corset|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "corset", 2),$degradation += 1]]<</if>>
+	<<if $activeSlave.navelPiercing != 2>>		| [[Navel|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "navel", 2),$degradation += 1]]<</if>>
+	<<if ($activeSlave.vagina != -1) || ($activeSlave.dick != 0)>>
+		<<if $activeSlave.vagina != -1>>
+			<<if $activeSlave.clitPiercing != 2>> | [[Clit|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "clit", 2),$degradation += 1]]<</if>>
+		<<else>>
+			<<if $activeSlave.clitPiercing != 2>> | [[Dickhead|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "clit", 2),$degradation += 1]]<</if>>
+		<</if>>
+	<</if>>
+	<<if ($activeSlave.vagina != -1)>>
+		<<if $activeSlave.vaginaPiercing != 2>> | [[Vagina|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "vagina", 2),$degradation += 1]]<</if>>
+	<</if>>
+	<<if ($activeSlave.dick > 0)>>
+		<<if $activeSlave.dickPiercing != 2>>	| [[Dick|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "dick", 2),$degradation += 1]]<</if>>
+	<</if>>
+	<<if $activeSlave.anusPiercing != 2>>		| [[Anus|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "anus", 2),$degradation += 1]]<</if>>
+<<elseif $piercingLevel == 3>>
+	<<if ($activeSlave.vagina != -1) || ($activeSlave.dick != 0)>>
+		<<if $activeSlave.clitPiercing != 3>>
+			Give $him a [[smart piercing?|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "clit", 3),$activeSlave.clitSetting = "all",$degradation += 1]] //Costs <<print cashFormat($SPcost)>>, unlocks options to mold sexuality//
+		<<else>>
+			$He already has a smart piercing!
+		<</if>>
+	<</if>>
+<<elseif $piercingLevel == 0>>
+	Remove piercings from:
+
+	/* no dick/vagina checks in 'remove' so stealth piercings can be cleaned. Check only for piercings. */
+	<<link "Everywhere">>
+		<<set $modReaction = "">>
+		<<if $activeSlave.earPiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "ear", 0)>><</if>>
+		<<if $activeSlave.nosePiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "nose", 0)>><</if>>
+		<<if $activeSlave.eyebrowPiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "eyebrow", 0)>><</if>>
+		<<if $activeSlave.lipsPiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "lips", 0)>><</if>>
+		<<if $activeSlave.tonguePiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "tongue", 0)>><</if>>
+		<<if $activeSlave.nipplesPiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "nipples", 0)>><</if>>
+		<<if $activeSlave.areolaePiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "areolae", 0)>><</if>>
+		<<if $activeSlave.corsetPiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "corset", 0)>><</if>>
+		<<if $activeSlave.navelPiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "navel", 0)>><</if>>
+		<<if $activeSlave.clitPiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "clit", 0)>><</if>>
+		<<if $activeSlave.vaginaPiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "vagina", 0)>><</if>>
+		<<if $activeSlave.dickPiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "dick", 0)>><</if>>
+		<<if $activeSlave.anusPiercing > 0>><<set $modReaction += App.Medicine.Modification.setPiercing($activeSlave, "anus", 0)>><</if>>
+		<<goto "Body Modification">>
+	<</link>>
+
+	<<if $activeSlave.earPiercing > 0>>		| [[Ear|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "ear", 0)]]<</if>>
+	<<if $activeSlave.nosePiercing > 0>>		| [[Nose|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "nose", 0)]]<</if>>
+	<<if $activeSlave.eyebrowPiercing > 0>>	| [[Eyebrow|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "eyebrow", 0)]]<</if>>
+	<<if $activeSlave.lipsPiercing > 0>>		| [[Lips|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "lips", 0)]]<</if>>
+	<<if $activeSlave.tonguePiercing > 0>>		| [[Tongue|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "tongue", 0)]]<</if>>
+	<<if $activeSlave.nipplesPiercing > 0>>	| [[Nipples|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "nipples", 0)]]<</if>>
+	<<if $activeSlave.areolaePiercing > 0>>	| [[Areolae|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "areolae", 0)]]<</if>>
+	<<if $activeSlave.corsetPiercing > 0>>		| [[Corset|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "corset", 0)]]<</if>>
+	<<if $activeSlave.navelPiercing > 0>>		| [[Navel|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "navel", 0)]]<</if>>
+	<<if $activeSlave.vagina != -1>>
+		<<if $activeSlave.clitPiercing > 0>>	| [[Clit|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "clit", 0)]]<</if>>
+	<<else>>
+		<<if $activeSlave.clitPiercing > 0>>	| [[Dickhead|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "clit", 0)]]<</if>>
+	<</if>>
+	<<if $activeSlave.vaginaPiercing > 0>>		| [[Vagina|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "vagina", 0)]]<</if>>
+	<<if $activeSlave.dickPiercing > 0>>		| [[Dick|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "dick", 0)]]<</if>>
+	<<if $activeSlave.anusPiercing > 0>>		| [[Anus|Body Modification][$modReaction = App.Medicine.Modification.setPiercing($activeSlave, "anus", 0)]]<</if>>
+<</if>>
+</div>
+</div> /* indent */
+
+/* TATTOOS */
+
+<h2>Tattoos</h2>
+<div class="indent">
+<div style="padding-bottom:1em">
+<<if $activeSlave.shouldersTat != 0>><div><<= App.Desc.tattoo($activeSlave, "shoulder")>></div><<set _hasTat = 1>><</if>>
+<<if $activeSlave.lipsTat != 0>><div><<= App.Desc.tattoo($activeSlave, "lips")>></div><<set _hasTat = 1>><</if>>
+<<if $activeSlave.boobsTat != 0>><div><<= App.Desc.tattoo($activeSlave, "breast")>></div><<set _hasTat = 1>><</if>>
+<<if $activeSlave.armsTat != 0 && hasAnyNaturalArms($activeSlave)>><div><<= App.Desc.tattoo($activeSlave, "upper arm")>></div><<set _hasTat = 1>><</if>>
+<<if $activeSlave.backTat != 0>><div><<= App.Desc.tattoo($activeSlave, "back")>></div><<set _hasTat = 1>><</if>>
+<<if $activeSlave.stampTat != 0>><div><<= App.Desc.tattoo($activeSlave, "lower back")>></div><<set _hasTat = 1>><</if>>
+<<if $activeSlave.buttTat != 0>><div><<= App.Desc.tattoo($activeSlave, "buttock")>></div><<set _hasTat = 1>><</if>>
+<<if $activeSlave.vaginaTat != 0>><div><<= App.Desc.tattoo($activeSlave, "vagina")>></div><<set _hasTat = 1>><</if>>
+<<if $activeSlave.dickTat != 0 && $activeSlave.dick > 0>><div><<= App.Desc.tattoo($activeSlave, "dick")>></div><<set _hasTat = 1>><</if>>
+<<if $activeSlave.anusTat != 0>><div><<= App.Desc.tattoo($activeSlave, "anus")>></div><<set _hasTat = 1>><</if>>
+<<if $activeSlave.legsTat != 0 && hasAnyNaturalLegs($activeSlave)>><div><<= App.Desc.tattoo($activeSlave, "thigh")>></div><<set _hasTat = 1>><</if>>
+</div>
+
+<div>
+Choose a tattoo style:
+/* if/else is here so a "highlighted" option is never a link. */
+<<if $tattooChoice != "tribal patterns">>[[Tribal patterns|Body Modification][$tattooChoice = "tribal patterns"]]<<else>>Tribal patterns<</if>>
+<<if $tattooChoice != "flowers">> | [[Flowers|Body Modification][$tattooChoice = "flowers"]]<<else>>| Flowers<</if>>
+<<if $tattooChoice != "counting">> | [[Counting|Body Modification][$tattooChoice = "counting"]]<<else>>| Counting<</if>>
+<<if $tattooChoice != "advertisements">> | [[Advertisements|Body Modification][$tattooChoice = "advertisements"]]<<else>>| Advertisements<</if>>
+<<if $tattooChoice != "rude words">> | [[Rude words|Body Modification][$tattooChoice = "rude words"]]<<else>>| Rude words<</if>>
+<<if $tattooChoice != "degradation">> | [[Degradation|Body Modification][$tattooChoice = "degradation"]]<<else>>| Degradation<</if>>
+<<if $tattooChoice != "Asian art">> | [[Asian art|Body Modification][$tattooChoice = "Asian art"]] <<else>>| Asian art<</if>>
+<<if $tattooChoice != "scenes">> | [[Scenes|Body Modification][$tattooChoice = "scenes"]]<<else>>| Scenes<</if>>
+<<if $tattooChoice != "bovine patterns">> | [[Bovine|Body Modification][$tattooChoice = "bovine patterns"]]<<else>>| Bovine<</if>>
+<<if $tattooChoice != "permanent makeup">> | [[Permanent makeup|Body Modification][$tattooChoice = "permanent makeup"]]<<else>>| Permanent makeup<</if>>
+<<if $tattooChoice != "sacrilege">> | [[Sacrilege|Body Modification][$tattooChoice = "sacrilege"]]<<else>>| Sacrilege<</if>>
+<<if $tattooChoice != "sacrament">> | [[Sacrament|Body Modification][$tattooChoice = "sacrament"]]<<else>>| Sacrament<</if>>
+<<if $tattooChoice != "possessive">> | [[Possessive|Body Modification][$tattooChoice = "possessive"]]<<else>>| Possessive<</if>>
+<<if $tattooChoice != "paternalist">> | [[Paternalist|Body Modification][$tattooChoice = "paternalist"]]<<else>>| Paternalist<</if>>
+
+<<if $activeSlave.anusTat == 0>>
+	<<if $tattooChoice != "bleached">>| [[Bleach|Body Modification][$tattooChoice = "bleached"]]<<else>>| Bleach<</if>>
+<</if>>
+
+<<if _hasTat == 1>>
+	<<if $tattooChoice !== 0>> | //[[Remove a tattoo|Body Modification][$tattooChoice = 0]]//<<else>>| Remove a tattoo<</if>>
+<</if>>
+</div>
+
+<div>
+<<if def $tattooChoice>>
+	<<if $tattooChoice == 0>>
+		Clean the ink off of $him:
+	<<elseif $tattooChoice == "counting">>
+		Add tallies of $his sexual exploits to $him:
+	<<elseif $tattooChoice == "bleached">>
+		Bleach $his:
+	<<else>>
+		Add $tattooChoice to $his:
+	<</if>>
+
+	<<if ($tattooChoice != "bleached") && ($tattooChoice != "permanent makeup")>>
+		<<link "Entire body">>
+			<<set _degradationTemp = 0, $modReaction = "">>
+			<<if $activeSlave.boobsTat != $tattooChoice>>
+				<<set $modReaction += App.Medicine.Modification.setTattoo($activeSlave, "boobs", $tattooChoice)>>
+				<<set _degradationTemp += 1>>
+			<</if>>
+
+			<<if $activeSlave.buttTat != $tattooChoice>>
+				<<set $modReaction += App.Medicine.Modification.setTattoo($activeSlave, "butt", $tattooChoice)>>
+				<<set _degradationTemp += 1>>
+			<</if>>
+
+			<<if $activeSlave.vaginaTat != $tattooChoice>>
+				<<set $modReaction += App.Medicine.Modification.setTattoo($activeSlave, "vagina", $tattooChoice)>>
+				<<set _degradationTemp += 1>>
+			<</if>>
+
+			<<if $activeSlave.dick > 0>>
+				<<if $activeSlave.dickTat != $tattooChoice && $tattooChoice != "scenes">>
+					<<set $modReaction += App.Medicine.Modification.setTattoo($activeSlave, "dick", $tattooChoice)>>
+					<<set _degradationTemp += 1>>
+				<</if>>
+			<</if>>
+
+			<<if $activeSlave.lipsTat != $tattooChoice>>
+				<<if $tattooChoice == "scenes">>
+					<<set $modReaction += App.Medicine.Modification.setTattoo($activeSlave, "lips", "permanent makeup")>>
+				<<else>>
+					<<set $modReaction += App.Medicine.Modification.setTattoo($activeSlave, "lips", $tattooChoice)>>
+				<</if>>
+				<<set _degradationTemp += 1>>
+			<</if>>
+
+			<<if ($tattooChoice == "Asian art" || $tattooChoice == "scenes") && $activeSlave.anusTat == "bleached">>
+				/* leave existing bleached anus alone */
+			<<elseif $activeSlave.anusTat != $tattooChoice>>
+				<<set $modReaction += App.Medicine.Modification.setTattoo($activeSlave, "anus", $tattooChoice)>>
+				<<set _degradationTemp += 1>>
+			<</if>>
+
+			<<if $activeSlave.shouldersTat != $tattooChoice>>
+				<<set $modReaction += App.Medicine.Modification.setTattoo($activeSlave, "shoulders", $tattooChoice)>>
+				<<set _degradationTemp += 1>>
+			<</if>>
+
+			<<if $activeSlave.backTat != $tattooChoice>>
+				<<set $modReaction += App.Medicine.Modification.setTattoo($activeSlave, "back", $tattooChoice)>>
+				<<set _degradationTemp += 1>>
+			<</if>>
+
+			<<if hasAnyNaturalArms($activeSlave)>>
+				<<if $activeSlave.armsTat != $tattooChoice>>
+					<<set $modReaction += App.Medicine.Modification.setTattoo($activeSlave, "arms", $tattooChoice)>>
+					<<set _degradationTemp += 1>>
+				<</if>>
+			<</if>>
+			<<if hasAnyNaturalLegs($activeSlave)>>
+				<<if $activeSlave.legsTat != $tattooChoice>>
+					<<set $modReaction += App.Medicine.Modification.setTattoo($activeSlave, "legs", $tattooChoice)>>
+					<<set _degradationTemp += 1>>
+				<</if>>
+			<</if>>
+
+			<<if $activeSlave.stampTat != $tattooChoice>>
+				<<set $modReaction += App.Medicine.Modification.setTattoo($activeSlave, "stamp", $tattooChoice)>>
+				<<set _degradationTemp += 1>>
+			<</if>>
+
+			<<if !["flowers", "paternalist", "tribal patterns", 0].includes($tattooChoice)>>
+				<<set $degradation += _degradationTemp>>
+			<</if>>
+
+			<<goto "Body Modification">>
+		<</link>>
+	<</if>>
+
+	<<if $tattooChoice == "permanent makeup">>
+		[[Face|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "lips", $tattooChoice)]]
+	<<elseif $tattooChoice == "bleached">>
+		[[Asshole|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "anus", $tattooChoice)]]
+	<<else>>
+		<<if $activeSlave.shouldersTat != $tattooChoice>> | [[Shoulders|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "shoulders", $tattooChoice)]]<</if>>
+		<<if $tattooChoice != "scenes">>
+			<<if $activeSlave.lipsTat != $tattooChoice>> | [[Face|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "lips", $tattooChoice)]]<</if>>
+		<</if>>
+		<<if $activeSlave.boobsTat != $tattooChoice>> | [[Boobs|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "boobs", $tattooChoice)]]<</if>>
+		<<if hasAnyNaturalArms($activeSlave)>>
+			<<if $activeSlave.armsTat != $tattooChoice>> | [[Arms|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "arms", $tattooChoice)]]<</if>>
+		<</if>>
+		<<if $activeSlave.backTat != $tattooChoice>> | [[Upper back|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "back", $tattooChoice)]]<</if>>
+		<<if $activeSlave.stampTat != $tattooChoice>> | [[Lower back|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "stamp", $tattooChoice)]]<</if>>
+		<<if $activeSlave.buttTat != $tattooChoice>> | [[Buttock|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "butt", $tattooChoice)]]<</if>>
+		<<if $activeSlave.vaginaTat != $tattooChoice>> | [[Vagina|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "vagina", $tattooChoice)]]<</if>>
+		<<if $activeSlave.dick > 0 && $tattooChoice != "scenes">>
+			<<if $activeSlave.dickTat != $tattooChoice>> | [[Dick|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "dick", $tattooChoice)]]<</if>>
+		<</if>>
+		<<if ($tattooChoice != "Asian art") && ($tattooChoice != "scenes")>>
+			<<if $activeSlave.anusTat != $tattooChoice>> | [[Anus|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "anus", $tattooChoice)]]<</if>>
+		<</if>>
+		<<if hasAnyNaturalLegs($activeSlave)>>
+			<<if $activeSlave.legsTat != $tattooChoice>> | [[Legs|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "legs", $tattooChoice)]]<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+</div>
+
+<div>
+<<if $activeSlave.belly >= 10000 && $activeSlave.bellyPreg < 450000 && $activeSlave.bellyFluid < 5000>>
+	<<if $activeSlave.bellyTat == 0>>
+		$He has no navel tattoos.
+	<<else>>
+		$His navel is tattooed with $activeSlave.bellyTat.
+	<</if>>
+	<<if $activeSlave.bellyTat == 0>>
+		<div>
+		[[Heart|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "belly", "a heart")]]
+		| [[Star|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "belly", "a star")]]
+		| [[Butterfly|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "belly", "a butterfly")]]
+		</div>
+	<</if>>
+	<<if $activeSlave.bellyTat != 0>>
+		//[[Remove tattoos|Body Modification][$modReaction = App.Medicine.Modification.setTattoo($activeSlave, "belly", 0)]]//
+	<</if>>
+<<elseif $activeSlave.bellyPreg >= 450000>>
+	$His middle is large and taut enough to be a suitable canvas for a navel focused tattoo, but $his brood is too active to permit the needle to do its work.
+<<elseif $activeSlave.bellyFluid >= 10000>>
+	$His middle is large and taut enough to be a suitable canvas for a navel focused tattoo, but the pressure applied to $his stomach will likely force $him to release its contents.
+<<else>>
+	$His middle isn't large enough to be a suitable canvas for a navel focused tattoo.
+<</if>>
+</div>
+
+<div>
+<<if $activeSlave.birthsTat > 0>>
+	<<if $activeSlave.birthsTat > 1>>
+		$He has a series of num($activeSlave.birthsTat) baby-shaped tattoos adorning $his stomach; one for each successful pregnancy<<if $activeSlave.pregKnown == 1>> and a temporary one for $his current pregnancy<</if>>.
+	<<else>>
+		$He has a single baby-shaped tattoo<<if $activeSlave.pregKnown == 1>>, and one temporary one,<</if>> adorning $his stomach.
+	<</if>>
+	//[[Remove tattoos|Body Modification][$activeSlave.birthsTat = -1, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)]]//
+<<elseif $activeSlave.birthsTat == 0>>
+	<<if $activeSlave.pregKnown == 1>>
+		$He has a single baby-shaped temporary tattoo adorning $his stomach.
+		//[[Remove it|Body Modification][$activeSlave.birthsTat = -1]]//
+		<<if $activeSlave.abortionTat > -1>> //This will only remove birth tracking//<</if>>
+	<<else>>
+		$He is scheduled to receive a tattoo each time $he gives birth.
+		//[[Cancel|Body Modification][$activeSlave.birthsTat = -1]]//
+	<</if>>
+<<else>>
+	Have $him receive a tattoo each time $he gives birth.
+	//[[Begin keeping track|Body Modification][$activeSlave.birthsTat = 0]]//
+<</if>>
+</div>
+
+<div>
+<<if $activeSlave.abortionTat > 0>>
+	<<if $activeSlave.abortionTat > 1>>
+		$He has a series of num($activeSlave.abortionTat) crossed out baby-shaped tattoos<<if $activeSlave.pregKnown == 1>>, and one uncrossed one,<</if>> adorning $his stomach.
+	<<else>>
+		$He has a single crossed out baby-shaped tattoo<<if $activeSlave.pregKnown == 1>>, and one uncrossed one,<</if>> adorning $his stomach.
+	<</if>>
+	//[[Remove tattoos|Body Modification][$activeSlave.abortionTat = -1, cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)]]//
+<<elseif $activeSlave.abortionTat == 0>>
+	<<if $activeSlave.pregKnown == 1>>
+		$He has a single baby-shaped temporary tattoo adorning $his stomach.
+		//[[Remove it|Body Modification][$activeSlave.abortionTat = -1]]//
+		<<if $activeSlave.birthsTat > -1>> //This will only remove abortion tracking//<</if>>
+	<<else>>
+		$He is scheduled to receive a tattoo each time $he gets an abortion or miscarries.
+		//[[Cancel|Body Modification][$activeSlave.abortionTat = -1]]//
+	<</if>>
+<<else>>
+	Have $him receive a tattoo for each abortion or miscarriage $he has.
+	//[[Begin keeping track|Body Modification][$activeSlave.abortionTat = 0]]//
+<</if>>
+</div>
+</div>/* indent */
+
+<h3>Custom Tattoos</h3>
+<div class="indent">
+//Use complete sentences, make a description of it//
+<div class="grid-2columns-auto">
+<<if $activeSlave.lipsTat == 0>>
+	<div>Give $him a custom face tattoo:</div>
+	<div><<textbox "$activeSlave.lipsTat" $activeSlave.lipsTat "Slave Interact">></div>
+<</if>>
+
+<<if $activeSlave.shouldersTat == 0>>
+	<div>Give $him a custom shoulder tattoo:</div>
+	<div><<textbox "$activeSlave.shouldersTat" $activeSlave.shouldersTat "Slave Interact">></div>
+<</if>>
+
+<<if $activeSlave.armsTat == 0 && hasAnyNaturalArms($activeSlave)>>
+	<div>Give $him a custom arm tattoo:</div>
+	<div><<textbox "$activeSlave.armsTat" $activeSlave.armsTat "Slave Interact">></div>
+<</if>>
+
+<<if $activeSlave.boobsTat == 0>>
+	<div>Give $him a custom tit tattoo:</div>
+	<div><<textbox "$activeSlave.boobsTat" $activeSlave.boobsTat "Slave Interact">></div>
+<</if>>
+
+<<if $activeSlave.backTat == 0>>
+	<div>Give $him a custom back tattoo:</div>
+	<div><<textbox "$activeSlave.backTat" $activeSlave.backTat "Slave Interact">></div>
+<</if>>
+
+<<if $activeSlave.stampTat == 0>>
+	<div>Give $him a custom tramp stamp (lower back tattoo):</div>
+	<div><<textbox "$activeSlave.stampTat" $activeSlave.stampTat "Slave Interact">></div>
+<</if>>
+
+<<if $activeSlave.buttTat == 0>>
+	<div>Give $him a custom butt tattoo:</div>
+	<div><<textbox "$activeSlave.buttTat" $activeSlave.buttTat "Slave Interact">></div>
+<</if>>
+
+<<if $activeSlave.dickTat == 0 && $activeSlave.dick != 0>>
+	<div>Give $him a custom dick tattoo:</div>
+	<div><<textbox "$activeSlave.dickTat" $activeSlave.dickTat "Slave Interact">></div>
+<</if>>
+
+<<if $activeSlave.vaginaTat == 0>>
+	<div>Give $him a custom pubic tattoo:</div>
+	<div><<textbox "$activeSlave.vaginaTat" $activeSlave.vaginaTat "Slave Interact">></div>
+<</if>>
+
+<<if $activeSlave.anusTat == 0>>
+	<div>Give $him a custom anus tattoo:</div>
+	<div><<textbox "$activeSlave.anusTat" $activeSlave.anusTat "Slave Interact">></div>
+<</if>>
+
+<<if $activeSlave.legsTat == 0 && hasAnyNaturalLegs($activeSlave)>>
+	<div>Give $him a custom leg tattoo:</div>
+	<div><<textbox "$activeSlave.legsTat" $activeSlave.legsTat "Slave Interact">></div>
+<</if>>
+</div> /* grid */
+
+<div>
+<<if ($activeSlave.custom.tattoo == "")>>
+	Give $him a custom tattoo: <<textbox "$activeSlave.custom.tattoo" $activeSlave.custom.tattoo "Slave Interact">>
+<<else>>
+	$He <<if _hasTat == 1>>also<</if>> has a custom tattoo: $activeSlave.custom.tattoo
+	Change it here: <<textbox "$activeSlave.custom.tattoo" $activeSlave.custom.tattoo "Slave Interact">>
+<</if>>
+<<if $activeSlave.custom.tattoo != "">>
+	//[[Remove custom tattoo|Body Modification][$activeSlave.custom.tattoo = "",cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)]]//
+<</if>>
+</div>
+
+</div> /* indent */
+
+/* Branding */
+
+<h2>Branding</h2>
+<div class="indent">
+<div style="padding-bottom:1em">
+<<for _brandName, _brand range $activeSlave.brand>>
+	<div>
+	$His _brandName is marked with _brand<<if _brand == $brandDesign.official>>, your [[official brand|Universal Rules]]<</if>>:
+	<<capture _brandName>>
+		<<link "Remove Brand">>
+			<<set $brandApplied = 0>>
+			<<run delete $activeSlave.brand[_brandName]>>
+			<<run cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)>>
+			<<set $degradation -= 10>>
+			<<goto "Body Modification">>
+		<</link>>
+	<</capture>>
+	</div>
+<</for>>
+<<if (jQuery.isEmptyObject($activeSlave.brand))>>
+	<div>
+	$His skin is unmarked.
+	</div>
+<</if>>
+
+<<if !(Object.values($activeSlave.brand).includes($brandDesign.official))>>
+	<div>
+	$He lacks your [[official brand|Universal Rules]], "$brandDesign.official."
+	</div>
+<</if>>
+</div>
+
+<div>
+Use ''$brandDesign.local'' or choose another brand:
+[[Your slaving emblem|Body Modification][$brandDesign.local = "your personal symbol"]]
+| [[Your initials|Body Modification][$brandDesign.local = "your initials"]]
+</div>
+<div class="double-indent">
+<div>
+[[SLUT|Body Modification][$brandDesign.local = "SLUT"]]
+| [[WHORE|Body Modification][$brandDesign.local = "WHORE"]]
+| [[SLAVE|Body Modification][$brandDesign.local = "SLAVE"]]
+| [[COW|Body Modification][$brandDesign.local = "COW"]]
+| [[MEAT|Body Modification][$brandDesign.local = "MEAT"]]
+| [[CUMDUMP|Body Modification][$brandDesign.local = "CUMDUMP"]]
+| [[LOVER|Body Modification][$brandDesign.local = "LOVER"]]
+</div>
+<div>
+[[Pussy symbol|Body Modification][$brandDesign.local = "a pussy symbol"]]
+| [[Anus symbol|Body Modification][$brandDesign.local = "an anus symbol"]]
+| [[Penis symbol|Body Modification][$brandDesign.local = "a penis symbol"]]
+</div>
+<div>
+[[Lady|Body Modification][$brandDesign.local = "a lady silhouette"]]
+| [[Princess|Body Modification][$brandDesign.local = "a princess silhouette"]]
+| [[Queen|Body Modification][$brandDesign.local = "a queen silhouette"]]
+| [[Angel|Body Modification][$brandDesign.local = "an angel silhouette"]]
+| [[Devil|Body Modification][$brandDesign.local = "a devil silhouette"]]
+<<if ($arcologies[0].FSSupremacist != "unset") && ($activeSlave.race != $arcologies[0].FSSupremacistRace)>>
+	| //FS// [[Racial Slur|Body Modification][$brandDesign.local = "a racial slur"]]
+<</if>>
+<<if ($arcologies[0].FSSubjugationist != "unset") && ($activeSlave.race == $arcologies[0].FSSubjugationistRace)>>
+	| //FS// [[Racial Slur|Body Modification][$brandDesign.local = "a racial slur"]]
+<</if>>
+<<if ($arcologies[0].FSIntellectualDependency != "unset")>>
+	| //FS// [[Scores|Body Modification][$brandDesign.local = "how much sex $he needs per day"]]
+<</if>>
+<<if ($arcologies[0].FSSlaveProfessionalism != "unset")>>
+	| //FS// [[Scores|Body Modification][$brandDesign.local = "$his average slave aptitude test scores"]]
+<</if>>
+<<if ($arcologies[0].FSRepopulationFocus != "unset")>>
+	| //FS// [[Birth Count|Body Modification][$brandDesign.local = "the number of children $he has birthed"]]
+<</if>>
+<<if ($arcologies[0].FSGenderRadicalist != "unset") || ($arcologies[0].FSGenderFundamentalist != "unset")>>
+	| //FS// [[Gender Symbol|Body Modification][$brandDesign.local = "a gender symbol"]]
+<</if>>
+<<if ($arcologies[0].FSPaternalist != "unset")>>
+	| //FS// [[Personal Symbol|Body Modification][$brandDesign.local = "$his own personal symbol"]]
+<</if>>
+<<if ($arcologies[0].FSDegradationist != "unset")>>
+	| //FS// [[Chain Symbol|Body Modification][$brandDesign.local = "a chain symbol"]]
+<</if>>
+<<if ($arcologies[0].FSBodyPurist != "unset")>>
+	| //FS// [[Vitruvian Man|Body Modification][$brandDesign.local = "a Vitruvian man"]]
+<</if>>
+<<if ($arcologies[0].FSTransformationFetishist != "unset")>>
+	| //FS// [[Scalpel|Body Modification][$brandDesign.local = "a scalpel"]]
+<</if>>
+<<if ($arcologies[0].FSYouthPreferentialist != "unset")>>
+	| //FS// [[Virginity Status|Body Modification][$brandDesign.local = "$his virginity status"]]
+<</if>>
+<<if ($arcologies[0].FSMaturityPreferentialist != "unset")>>
+	| //FS// [[Sexual Skill Info|Body Modification][$brandDesign.local = "$his sexual skills"]]
+<</if>>
+<<if ($arcologies[0].FSPetiteAdmiration != "unset") || ($arcologies[0].FSStatuesqueGlorification != "unset")>>
+	| //FS// [[Current height|Body Modification][$brandDesign.local = "$his current height"]]
+<</if>>
+<<if ($arcologies[0].FSSlimnessEnthusiast != "unset")>>
+	| //FS// [[Breast Floor|Body Modification][$brandDesign.local = "$his absolute minimum breast size"]]
+<</if>>
+<<if ($arcologies[0].FSAssetExpansionist != "unset")>>
+	| //FS// [[Breast Ceiling|Body Modification][$brandDesign.local = "$his absolute maximum breast size"]]
+<</if>>
+<<if ($arcologies[0].FSHedonisticDecadence != "unset")>>
+	| //FS// [[Weight Record|Body Modification][$brandDesign.local = "$his highest weigh-in"]]
+<</if>>
+<<if ($arcologies[0].FSHedonisticDecadence != "unset") && $PC.refreshmentType == 2>>
+	| //FS// [[Favorite Food|Body Modification][$brandDesign.local = "a big helping of "+$PC.refreshment]]
+<</if>>
+<<if ($arcologies[0].FSPastoralist != "unset")>>
+	| //FS// [[Product Quality|Body Modification][$brandDesign.local = "$his body product quality"]]
+<</if>>
+<<if ($arcologies[0].FSPhysicalIdealist != "unset")>>
+	| //FS// [[Deadlift Info|Body Modification][$brandDesign.local = "$his deadlift record"]]
+<</if>>
+<<if ($arcologies[0].FSChattelReligionist != "unset")>>
+	| //FS// [[Religious Symbol|Body Modification][$brandDesign.local = "a religious symbol"]]
+<</if>>
+<<if ($arcologies[0].FSRomanRevivalist != "unset")>>
+	| //FS// [[Republican Crest|Body Modification][$brandDesign.local = "the crest of your Republic"]]
+<</if>>
+<<if ($arcologies[0].FSAztecRevivalist != "unset")>>
+	| //FS// [[Seven Serpents|Body Modification][$brandDesign.local = "the symbol of the Aztec gods"]]
+<</if>>
+<<if ($arcologies[0].FSEgyptianRevivalist != "unset")>>
+	| //FS// [[Dynastic Sigil|Body Modification][$brandDesign.local = "the sigil of your Dynasty"]]
+<</if>>
+<<if ($arcologies[0].FSEdoRevivalist != "unset")>>
+	| //FS// [[Mon|Body Modification][$brandDesign.local = "the Shogunate's mon"]]
+<</if>>
+<<if ($arcologies[0].FSArabianRevivalist != "unset")>>
+	| //FS// [[Caliphate Symbol|Body Modification][$brandDesign.local = "a symbol of the Caliphate"]]
+<</if>>
+<<if ($arcologies[0].FSChineseRevivalist != "unset")>>
+	| //FS// [[Imperial Seal|Body Modification][$brandDesign.local = "your Imperial Seal"]]
+<</if>>
+</div>
+</div> /* double indent */
+
+<div>
+Or design your own: <<textbox "$brandDesign.local" $brandDesign.local "Body Modification">>
+</div>
+
+<div>
+Choose a site for branding:
+/* Sorted head to toe */
+/* Head */
+<<if $activeSlave.earShape != "none">>[[Ears|Body Modification][$brandTarget.local = "ear"]]<</if>>
+| [[Cheeks|Body Modification][$brandTarget.local = "cheek"]]
+| [[Neck|Body Modification][$brandTarget.local = "neck"]]
+
+/* Torso */
+| [[Chest|Body Modification][$brandTarget.local = "chest"]]
+| [[Breasts|Body Modification][$brandTarget.local = "breast"]]
+| [[Back|Body Modification][$brandTarget.local = "back"]]
+| [[Lower Back|Body Modification][$brandTarget.local = "lower back"]]
+| [[Belly|Body Modification][$brandTarget.local = "belly"]]
+| [[Pubic Mound|Body Modification][$brandTarget.local = "pubic mound"]]
+<<if $activeSlave.dick > 0>>
+	| [[Penis|Body Modification][$brandTarget.local = "penis"]]
+<</if>>
+<<if $activeSlave.balls > 0 && $activeSlave.scrotum > 0>>
+	| [[Testicles|Body Modification][$brandTarget.local = "testicle"]]
+<</if>>
+
+/* Arms*/
+| [[Shoulders|Body Modification][$brandTarget.local = "shoulder"]]
+<<if hasAnyNaturalArms($activeSlave)>>
+	| [[Arm, upper|Body Modification][$brandTarget.local = "upper arm"]]
+	| [[Arm, lower|Body Modification][$brandTarget.local = "lower arm"]]
+	| [[Wrists|Body Modification][$brandTarget.local = "wrist"]]
+	| [[Hands|Body Modification][$brandTarget.local = "hand"]]
+<</if>>
+
+/* Legs */
+| [[Buttocks|Body Modification][$brandTarget.local = "buttock"]]
+<<if hasAnyNaturalLegs($activeSlave)>>
+	| [[Thighs|Body Modification][$brandTarget.local = "thigh"]]
+	| [[Calves|Body Modification][$brandTarget.local = "calf"]]
+	| [[Ankles|Body Modification][$brandTarget.local = "ankle"]]
+	| [[Feet|Body Modification][$brandTarget.local = "foot"]]
+<</if>>
+</div>
+
+/* Branding expansion contributed by Anon1888 */
+
+<div>
+Or a custom site: <<textbox "$brandTarget.local" $brandTarget.local "Body Modification">>
+</div>
+
+<div>
+<<if ["ankle", "breast", "buttock", "calf", "cheek", "ear", "foot", "hand", "lower arm", "shoulder", "testicle", "thigh", "upper arm", "wrist"].includes($brandTarget.local)>>
+	<<set _leftTarget = ("left " + $brandTarget.local)>>
+	<<set _rightTarget = ("right " + $brandTarget.local)>>
+	<<if $activeSlave.brand[_leftTarget]>>
+		$His _leftTarget is already marked with <<print $activeSlave.brand[_leftTarget]>>.
+	<</if>>
+	<<if $activeSlave.brand[_rightTarget]>>
+		$His _rightTarget is already marked with <<print $activeSlave.brand[_rightTarget]>>.
+	<</if>>
+	Brand $him now with ''$brandDesign.local'' on the
+
+	<<if !(["upper arm", "lower arm", "wrist", "hand"].includes($brandTarget.local) && getLeftArmID($activeSlave) !== 1) && !(["tigh", "calf", "ankle", "foot"].includes($brandTarget.local) && getLeftLegID($activeSlave) !== 1)>>
+		<<set _left = 1>> /* make next checks easier */
+		<<link "left">>
+			<<set $brandApplied = 1>>
+			<<set $activeSlave.brand[_leftTarget] = $brandDesign.local>>
+			<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+			<<set $degradation += 10>>
+			<<goto "Body Modification">>
+		<</link>>
+	<</if>>
+	<<if !(["upper arm", "lower arm", "wrist", "hand"].includes($brandTarget.local) && getRightArmID($activeSlave) !== 1) && !(["tigh", "calf", "ankle", "foot"].includes($brandTarget.local) && getRightLegID($activeSlave) !== 1)>>
+		<<set _right = 1>> /* make next checks easier */
+	<</if>>
+	<<if _left && _right>>
+		$brandTarget.local, or the
+	<</if>>
+	<<if _right>>
+		<<link "right">>
+			<<set $brandApplied = 1>>
+			<<set $activeSlave.brand[_rightTarget] = $brandDesign.local>>
+			<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+			<<set $degradation += 10>>
+			<<goto "Body Modification">>
+		<</link>>
+	<</if>><<if !_left || !_right>> $brandTarget.local<</if>>?
+
+	//Branding will slightly reduce $his beauty but may slowly increase your reputation.//
+<<else>>
+	<<if $activeSlave.brand[$brandTarget.local] === $brandDesign.local>>
+		$He already has $brandDesign.local on $his $brandTarget.local.
+	<<else>>
+		<<link "Brand">>
+			<<set $brandApplied = 1>>
+			<<set $activeSlave.brand[$brandTarget.local] = $brandDesign.local>>
+			<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+			<<set $degradation += 10>>
+			<<goto "Body Modification">>
+		<</link>>
+		with $brandDesign.local on the $brandTarget.local<<if $activeSlave.brand[$brandTarget.local]>>, covering the "<<print $activeSlave.brand[$brandTarget.local]>>" that is already there?<<else>>.<</if>> //Branding will slightly reduce $his beauty but may slowly increase your reputation.//
+	<</if>>
+<</if>>
+</div>
+
+<<if $activeSlave.breedingMark == 1 && ($propOutcome == 0 || $eugenicsFullControl == 1 || $arcologies[0].FSRestart == "unset")>>
+	<div>
+	$He has an intricate tattoo on $his lower belly that suggests $he was made to be bred. [[Remove it|Body Modification][$activeSlave.breedingMark = 0]]
+	</div>
+<</if>>
+
+</div> /* indent */
+
+/* Scars */
+
+<h2>Scars</h2>
+<div class="indent">
+<div style="padding-bottom:1em">
+<<for _scarName, _scar range $activeSlave.scar>>
+	<div>
+	$His _scarName is marked with <<= App.Desc.expandScarString($activeSlave, _scarName)>>:
+	<<capture _scarName>>
+		<<link "Remove Scar">>
+			<<set $scarApplied = 0>>
+			<<run delete $activeSlave.scar[_scarName]>>
+			<<run cashX(forceNeg($surgeryCost), "slaveSurgery", $activeSlave)>>
+			<<set $degradation -= 10>>
+			<<goto "Body Modification">>
+		<</link>>
+	<</capture>>
+	</div>
+<</for>>
+<<if (jQuery.isEmptyObject($activeSlave.scar))>>
+	<div>
+	$His skin is not scarred.
+	</div>
+<</if>>
+</div>
+
+<div>
+Use ''$scarDesign.local'' or choose another scar:
+
+[[Whip|Body Modification][$scarDesign.local = "whip"]]
+| [[Burns|Body Modification][$scarDesign.local = "burn"]]
+| [[Surgical|Body Modification][$scarDesign.local = "surgical"]]
+| [[Menacing|Body Modification][$scarDesign.local = "menacing"]]
+| [[Exotic|Body Modification][$scarDesign.local = "exotic"]]
+/* Other common scars might be battle scars or c-Section but it makes little sense to include them here */
+</div>
+
+<div>
+Or design your own: <<textbox "$scarDesign.local" $scarDesign.local "Body Modification">>
+</div>
+
+<div>
+Choose a site for scaring:
+
+<<if ["menacing", "exotic"].includes($scarDesign.local)>>
+	[[Cheeks|Body Modification][$scarTarget.local = "cheek"]]
+<<else>>
+	/* Sorted head to toe */
+
+	[[Entire body|Body Modification][$scarTarget.local = "entire body"]]
+
+	/* Head */
+	<<if $activeSlave.earShape != "none">>
+		| [[Ears|Body Modification][$scarTarget.local = "ear"]]
+	<</if>>
+	| [[Cheeks|Body Modification][$scarTarget.local = "cheek"]]
+	| [[Neck|Body Modification][$scarTarget.local = "neck"]]
+
+	/* Torso */
+	| [[Chest|Body Modification][$scarTarget.local = "chest"]]
+	| [[Breasts|Body Modification][$scarTarget.local = "breast"]]
+	| [[Back|Body Modification][$scarTarget.local = "back"]]
+	| [[Lower Back|Body Modification][$scarTarget.local = "lower back"]]
+	| [[Belly|Body Modification][$scarTarget.local = "belly"]]
+	| [[Pubic Mound|Body Modification][$scarTarget.local = "pubic mound"]]
+	<<if $activeSlave.dick > 0>>
+		| [[Penis|Body Modification][$scarTarget.local = "penis"]]
+	<</if>>
+	<<if $activeSlave.balls > 0 && $activeSlave.scrotum > 0>>
+		| [[Testicles|Body Modification][$scarTarget.local = "testicle"]]
+	<</if>>
+
+	/* Arms*/
+	| [[Shoulders|Body Modification][$scarTarget.local = "shoulder"]]
+	<<if hasAnyNaturalArms($activeSlave)>>
+		| [[Arm, upper|Body Modification][$scarTarget.local = "upper arm"]]
+		| [[Arm, lower|Body Modification][$scarTarget.local = "lower arm"]]
+		| [[Wrists|Body Modification][$scarTarget.local = "wrist"]]
+		| [[Hands|Body Modification][$scarTarget.local = "hand"]]
+	<</if>>
+
+	/* Legs */
+	| [[Buttocks|Body Modification][$scarTarget.local = "buttock"]]
+	<<if hasAnyNaturalLegs($activeSlave)>>
+		| [[Thighs|Body Modification][$scarTarget.local = "thigh"]]
+		| [[Calves|Body Modification][$scarTarget.local = "calf"]]
+		| [[Ankles|Body Modification][$scarTarget.local = "ankle"]]
+		| [[Feet|Body Modification][$scarTarget.local = "foot"]]
+	<</if>>
+<</if>>
+</div>
+
+<div>
+Or a custom site: <<textbox "$scarTarget.local" $scarTarget.local "Body Modification">>
+</div>
+
+/* Correct some "bad" choices" */
+<<if ["menacing", "exotic"].includes($scarDesign.local)>>
+	<<if $scarTarget.local != "cheek">>
+		<<set $scarTarget.local = "cheek">>
+	<</if>>
+<</if>>
+
+<div>
+<<if ["ankle", "breast", "buttock", "calf", "cheek", "ear", "foot", "hand", "lower arm", "shoulder", "testicle", "thigh", "upper arm", "wrist"].includes($scarTarget.local)>>
+	<<set _leftTarget = ("left " + $scarTarget.local)>>
+	<<set _rightTarget = ("right " + $scarTarget.local)>>
+	<<if $activeSlave.scar[_leftTarget]>>
+		$His _leftTarget is already marked with <<= App.Desc.expandScarString($activeSlave, _leftTarget)>>.
+	<</if>>
+	<<if $activeSlave.scar[_rightTarget]>>
+		$His _rightTarget is already marked with <<= App.Desc.expandScarString($activeSlave, _rightTarget)>>.
+	<</if>>
+	Scar $him now with ''$scarDesign.local'' on the
+	<<set _left = 0, _right = 0>> /* overwrite brand */
+
+	<<if !(["upper arm", "lower arm", "wrist", "hand"].includes($scarTarget.local) && getLeftArmID($activeSlave) !== 1) && !(["tigh", "calf", "ankle", "foot"].includes($scarTarget.local) && getLeftLegID($activeSlave) !== 1)>>
+		<<set _left = 1>> /* make next checks easier */
+		<<link "left">>
+			<<set $scarTarget.local = _leftTarget>>
+			<<set $scarApplied = 1>>
+			<<run App.Medicine.Modification.addScar($activeSlave, _leftTarget, $scarDesign.local)>>
+			<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+			<<set $degradation += 10>>
+			<<goto "Body Modification">>
+		<</link>>
+	<</if>>
+	<<if !(["upper arm", "lower arm", "wrist", "hand"].includes($scarTarget.local) && getRightArmID($activeSlave) !== 1) && !(["tigh", "calf", "ankle", "foot"].includes($scarTarget.local) && getRightLegID($activeSlave) !== 1)>>
+		<<set _right = 1>> /* make next checks easier */
+	<</if>>
+	<<if _left && _right>>
+		$scarTarget.local, or the
+	<</if>>
+	<<if _right>>
+		<<link "right">>
+			<<set $scarTarget.local = _rightTarget>>
+			<<set $scarApplied = 1>>
+			<<run App.Medicine.Modification.addScar($activeSlave, _rightTarget, $scarDesign.local)>>
+			<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+			<<set $degradation += 10>>
+			<<goto "Body Modification">>
+		<</link>>
+	<</if>><<if !_left || !_right>> $scarTarget.local<</if>>?
+<<else>>
+	<<if $activeSlave.scar.hasOwnProperty($scarTarget.local)>>
+		<<if $activeSlave.scar[$scarTarget.local][$scarDesign.local]>>
+			$He already has $scarDesign.local scars on $his $scarTarget.local. You can make it worse.
+		<<else>> /* check how much scarring is on this part */
+			<<set _scarTotalValue = (Object.values($activeSlave.scar[$scarTarget.local])).reduce((a, b) => a + b, 0)>>
+			<<if _scarTotalValue>>
+				That would be a new kind of scar to add to the growing collection on $his $scarTarget.local. Life can always be worse for a slave.
+			<</if>>
+		<</if>>
+	<</if>>
+	<<link "Scar">>
+		<<if $scarTarget.local === "entire body" && $scarDesign.local.includes("whip")>>
+			/* Special case for whipping scene, producecs two kinds of scars */
+			<<run App.Medicine.Modification.addScourged($activeSlave)>>
+		<<else>>
+			/* Normal entire body scarring */
+			<<if $scarTarget.local === "entire body">>
+				<<set _scarArray = ["left breast", "right breast", "back", "lower back", "left buttock", "right buttock"]>>
+				<<if getLeftArmID($activeSlave) === 0>>
+					<<set _scarArray.push("left upper arm")>>
+				<</if>>
+				<<if getRightArmID($activeSlave) === 0>>
+					<<set _scarArray.push("right upper arm")>>
+				<</if>>
+				<<if getLeftLegID($activeSlave) === 0>>
+					<<set _scarArray.push("left tigh")>>
+				<</if>>
+				<<if getRightLegID($activeSlave) === 0>>
+					<<set _scarArray.push("right tigh")>>
+				<</if>>
+			/* Single scar */
+			<<else>>
+				<<set _scarArray = [$scarTarget.local]>>
+			<</if>>
+			<<for _i to 0; _i < _scarArray.length; _i++>>
+				<<run App.Medicine.Modification.addScar($activeSlave, _scarArray[_i], $scarDesign.local)>>
+				<<set $degradation += 10>>
+			<</for>>
+		<</if>>
+		<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+		<<set $scarApplied = 1>>
+		<<set $degradation += 10>>
+		<<goto "Body Modification">>
+	<</link>>
+	with $scarDesign.local on the $scarTarget.local<<if $activeSlave.scar[$scarTarget.local]>>, adding to the scars that are already there?<<else>>.<</if>>
+<</if>>
+</div>
+</div> /* indent */

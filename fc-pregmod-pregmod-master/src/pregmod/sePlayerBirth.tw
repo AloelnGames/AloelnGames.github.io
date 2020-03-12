@@ -1,0 +1,575 @@
+﻿:: SE Player Birth [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Scheduled Event">>
+
+<<set _gaveBirth = 0, _PCDegree = 0, _pregTypeDecrecement = WombReserveCount($PC, "incubator"), _pregTypeDecrecementNursery = WombReserveCount($PC, "incubator")>>
+
+/*
+PC.pregSource documentation
+0 - unknown
+-1 - Player - self-impreg
+-2 - citizen
+-3 - former Master
+-4 - male arc owner
+-5 - client
+-6 - Societal Elite
+-7 - designer baby
+-9 - Futanari Sister
+*/
+
+/* expand me with new variables to behave like slave birth */
+<<if $PC.counter.birthsTotal == 0>>
+	<<set _badBirth = 30+($PC.pregType*4)>>
+<<else>>
+	<<set _badBirth = 10>>
+<</if>>
+<<set _wounded = 0>>
+<<set $PC.curBabies = WombBirth($PC, 35)>>
+<<set _curBabies = $PC.curBabies.length>>
+<<set _stilBirth = $PC.womb.length>>
+<<if _curBabies == 1>>
+	<<if $PC.curBabies[0].genetics.gender == "XX">>
+		<<set _gender = "XX">>
+	<<else>>
+		<<set _gender = "XY">>
+	<</if>>
+<</if>>
+
+/* Difference in code below:
+ * _curBabies - count of live babies after birth
+ * $PC.pregType = all babies in PC.
+ * I assume that dead fetuses do not count to reputation, etc., and PC manages to hide them. This mainly for future possibilities, or early birth triggers.
+ * PC will not support partial birth - even if she happens to be pregnant at different stages at once, undeveloped babies will be dead as result.
+ * _stilBirth currently not used - it's just for future improvements. */
+<<set $PC.preg = 0, $PC.pregKnown = 0, $PC.labor = 0, $PC.counter.birthsTotal += _curBabies>>
+
+/* setting the tallies for each type of child born */
+<<set _others = 0, _self = 0, _citizens = 0, _oldMaster = 0, _arcOwner = 0, _clients = 0, _elite = 0, _lab = 0, _futaS = 0, _slavesLength = 0, _babies = []>>
+<<for _spb = 0; _spb < $PC.curBabies.length; _spb++>>
+	<<if $PC.curBabies[_spb].fatherID == 0>>
+		<<set _others++>>
+		<<set _babies.push("some guy")>>
+	<<elseif $PC.curBabies[_spb].fatherID == -1>>
+		<<set _self++>>
+		<<set _babies.push("your own")>>
+	<<elseif $PC.curBabies[_spb].fatherID == -2>>
+		<<set _citizens++>>
+		<<set _babies.push("an arcology citizen")>>
+	<<elseif $PC.curBabies[_spb].fatherID == -3>>
+		<<set _oldMaster++>>
+		<<set _babies.push("your Master")>>
+	<<elseif $PC.curBabies[_spb].fatherID == -4>>
+		<<set _arcOwner++>>
+		<<set _babies.push("another arcology owner")>>
+	<<elseif $PC.curBabies[_spb].fatherID == -5>>
+		<<set _clients++>>
+		<<set _babies.push("your client")>>
+	<<elseif $PC.curBabies[_spb].fatherID == -6>>
+		<<set _elite++>>
+		<<set _babies.push("the Societal Elite")>>
+	<<elseif $PC.curBabies[_spb].fatherID == -7>>
+		<<set _lab++>>
+		<<set _babies.push("designer")>>
+	<<elseif $PC.curBabies[_spb].fatherID == -9>>
+		<<set _futaS++>>
+		<<set _babies.push("a Futanari Sister")>>
+	<<else>>
+		<<set _babyDaddy = $slaveIndices[$PC.curBabies[_spb].fatherID]>>
+		<<if def _babyDaddy>>
+			<<set _slavesLength++>>
+			<<set _babies.push(String($slaves[_babyDaddy].slaveName))>>
+		<<else>>
+			<<set _others++>>
+			<<set _babies.push("some guy")>>
+		<</if>>
+	<</if>>
+<</for>>
+<<set _babiesReduced = removeDuplicates(_babies)>>
+
+<<if (_elite > 0 || _self > 0) && $arcologies[0].FSRestart != "unset">> /* for simplicity's sake, not going to allow other embryos to be added during an elite pregnancy */
+	Since you are heavily pregnant with <<if (_elite + _self >= 2)>>children<<else>>a child<</if>> of the Societal Elite, you are quickly taken to the finest clinic the arcology has to offer. After a quick sedation, you awake to find your belly no longer round with child; that, and a note stating your next breeding partner and a notice that <<print cashFormat(50000)>> has been added to your account. The Societal Elite are @@.green;very pleased@@ at their new addition to the ranks. You just wish you could have seen your <<if _curBabies == 1>>little <<if _gender == "XX">>girl<<else>>boy<</if>> before they took <<if _gender == "XX">>her<<else>>him<</if>><<else>>babies before they took them<</if>> away to be raised into <<if _curBabies > 1>>proper members<<else>>a proper member<</if>> of the future world.
+	<<set $PC.counter.birthElite += _elite>>
+	<<if $PC.ovaryAge >= 47 && $playerAging == 2>>
+		You are getting too old to have children; you feel like <<if _curBabies > 1>>they<<else>>this<</if>> may be your last.
+		<<set $PC.preg = -2>>
+	<</if>>
+<<else>>
+While sitting at your desk planning your day, @@.lime;your water breaks,@@ thoroughly soaking your crotch and the slave servicing it. You <<if $PC.belly >= 60000>>struggle to<</if>> pull your laboring body to its feet, notify $assistant.name that it's time, and begin heading towards
+<<if $masterSuite != 0 && $masterSuiteUpgradePregnancy == 1>>
+	$masterSuiteName, since you had it redesigned to accommodate pregnant slaves. You should be able to give birth in both luxury and privacy there.
+<<elseif $clinic != 0>>
+	$clinicName; everything you'll need to give birth can be found there. Although you don't know how much privacy you'll be able to get there.
+<<elseif $masterSuite != 0>>
+	$masterSuiteName, since you'd like to be as comfortable as possible for the upcoming birth. You should be able to give birth in relative privacy there.
+<<else>>
+	your bed, since you'd like to be as comfortable as possible for the upcoming birth. You should be able to give birth in complete privacy there.
+<</if>>
+<br><br>
+<<if $PC.belly < 100000>>
+	<<if $Concubine != 0>><<set _concubinePresent = 1>><<setLocalPronouns $Concubine 2>><</if>>
+	After what feels like a <<if $showInches == 2>>mile<<else>>kilometer<</if>> run, you finally waddle into your destination finding
+	<<if $Nurse != 0>>
+		<<setLocalPronouns $Nurse>>
+		@@.pink;$Nurse.slaveName@@ waiting for you with everything $he needs to be a capable midwife to you.<<if _concubinePresent == 1>> @@.pink;$Concubine.slaveName@@ <<if hasAnyArms($Concubine)>>wraps _his2 arm<<if hasBothArms($Concubine)>>s<</if>> around<<else>>leans into<</if>> you from behind, letting you know _he2'll be here to comfort you while you labor.<</if>>
+	<<elseif $Bodyguard != 0>>
+		<<setLocalPronouns $Bodyguard>>
+		@@.pink;$Bodyguard.slaveName@@ waiting for you. Ever since $he realized $he was protecting for <<if $PC.pregType > 1>>many<<else>>two<</if>>, $he made sure to hone $his skills as a midwife to make sure $he could protect you and your unborn child<<if $PC.pregType > 1>>ren<</if>> from any dangers.<<if _concubinePresent == 1>> @@.pink;$Concubine.slaveName@@ <<if hasAnyArms($Concubine)>>wraps _his2 arm<<if hasBothArms($Concubine)>>s<</if>> around<<else>>leans into<</if>> you from behind, letting you know _he2'll be here to comfort you while you labor.<</if>>
+	<<elseif $HeadGirl != 0>>
+		<<setLocalPronouns $HeadGirl>>
+		@@.pink;$HeadGirl.slaveName@@ is waiting for you. $He promises to do everything $he can to help you.<<if _concubinePresent == 1>> @@.pink;$Concubine.slaveName@@ <<if hasAnyArms($Concubine)>>wraps _his2 arm<<if hasBothArms($Concubine)>>s<</if>> around<<else>>leans into<</if>> you from behind, letting you know _he2'll be here to comfort you while you labor.<</if>>
+	<<elseif _concubinePresent == 1>>
+		@@.pink;$Concubine.slaveName@@ is waiting for you. _He2 believes, if anything, that _he2 could at least comfort you while you give birth.
+	<<else>>
+		it quite empty. At least $assistant.name knows where you are should anything go wrong.
+	<</if>>
+<<else>>
+	<<if $Concubine != 0>><<setLocalPronouns $Concubine 2>><<if !canWalk($Concubine)>><<set _concubinePresent = 2>><<else>><<set _concubinePresent = 1>><</if>><</if>>
+	You barely make it half-way down the hall before you feel the first of your many children drop into position at the entrance to your birth canal. You try to keep going, but as it forces its way through your pelvis, spreading it wider, you're forced to the ground. Fortunately the penthouse is littered with supply rooms and closets, so you drag your laboring body into the nearest one instead. Fortunately, $assistant.name discretely directs
+	<<if $Nurse != 0>>
+		<<setLocalPronouns $Nurse>>
+		@@.pink;$Nurse.slaveName@@ to you with everything $he'll need to deliver your child<<if $PC.pregType > 1>>ren<</if>>.<<if _concubinePresent == 1>> @@.pink;$Concubine.slaveName@@ bursts in after $him and circles around behind you before <<if hasAnyArms($Concubine)>>wrapping _his2 arm<<if hasBothArms($Concubine)>>s<</if>> around<<else>>nuzzling against<</if>> your contraction wracked middle. _He2'll be here to comfort you while you labor.<</if>>
+	<<elseif $Bodyguard != 0>>
+		<<setLocalPronouns $Bodyguard>>
+		@@.pink;$Bodyguard.slaveName@@ to your location. Ever since $he realized $he was protecting for not only you, but the lives you bear too, $he made sure to hone $his skills as a midwife to make sure $he could protect you and your unborn child<<if $PC.pregType > 1>>ren<</if>> from any dangers. $He apologizes profusely for not being there when you needed $him most; $he wanted to make sure everything was ready for your arrival.<<if _concubinePresent == 1>> @@.pink;$Concubine.slaveName@@ bursts in after $him and circles around behind you before <<if hasAnyArms($Concubine)>>wrapping _his2 arm<<if hasBothArms($Concubine)>>s<</if>> around<<else>>nuzzling against<</if>> your contraction wracked middle. _He2'll be here to comfort you while you labor.<</if>>
+	<<elseif $HeadGirl != 0>>
+		<<setLocalPronouns $HeadGirl>>
+		@@.pink;$HeadGirl.slaveName@@ to your location. $He promises to do everything $he can to help you.<<if _concubinePresent == 1>> @@.pink;$Concubine.slaveName@@ bursts in after $him and circles around behind you before <<if hasAnyArms($Concubine)>>wrapping _his2 arm<<if hasBothArms($Concubine)>>s<</if>> around<<else>>nuzzling against<</if>> your contraction wracked middle. _He2'll be here to comfort you while you labor.<</if>>
+	<<elseif _concubinePresent == 1>>
+		@@.pink;$Concubine.slaveName@@ to your location. _He2 believes, if anything, that _he2 could at least comfort you while you give birth.
+	<<else>>
+		a camera on the room you crawled into. At least $assistant.name knows where you are should anything go wrong.
+	<</if>>
+<</if>>
+<br><br>
+You arrange yourself to give birth, relaxing until your body urges you to begin bearing down and pushing your child into the world.<<if _concubinePresent == 1>>$Concubine.slaveName settles in beside you, one hand soothing your contraction wracked middle and the other <<if $PC.dick != 0>>stroking your hardening dick<<else>>teasing your stiffening clit<</if>>.<</if>>
+<<if _badBirth > random(1,100)>> /* shits going wrong */
+	<<if $Nurse != 0>>
+		<<setLocalPronouns $Nurse>>
+		You keep pushing and pushing, but your child is not coming out.<<if _concubinePresent == 1>> $Concubine.slaveName shifts to massaging your gravid middle<<if canTalk($Concubine)>>, while whispering words of encouragement into your ear<</if>>. Until $Nurse.slaveName shoos _him2 away so $he can take over and get this baby out of you.<</if>> $Nurse.slaveName was prepared for this possibility, adjusts your position and timings, and before long is holding your @@.lime;new baby <<if _gender == "XX">>girl<<else>>boy<</if>>@@ in $his arms.
+		<<if $PC.pregType >= 8>>
+			But you're far from done; your taut dome of a belly still houses another <<print num($PC.pregType - 1)>> infants. You moan as the next child begins its descent; you'll be at this for awhile. If $Nurse.slaveName weren't here, you and your children would likely have perished.
+		<<elseif $PC.pregType >= 4>>
+			But you aren't close to done; your taut dome of a belly still houses another <<print num($PC.pregType - 1)>> infants. You moan as the next child begins its descent; you'll be at this for awhile. If $Nurse.slaveName weren't here, you and your children would likely have perished.
+		<<elseif $PC.pregType == 3>>
+			But you aren't done; your swollen belly still houses another pair of infants. You moan as the next child begins its descent; if $Nurse.slaveName weren't here, you and your children would likely have perished.
+		<<elseif $PC.pregType == 2>>
+			But you aren't done; your rounded belly still houses another infant. You moan as they begin their decent; if $Nurse.slaveName weren't here, you and your children would likely have perished.
+		<</if>>
+	<<elseif $Bodyguard != 0>>
+		<<setLocalPronouns $Bodyguard>>
+		You keep pushing and pushing, but your child is not coming out.<<if _concubinePresent == 1>> $Concubine.slaveName shifts to massaging your gravid middle<<if canTalk($Concubine)>>, while whispering words of encouragement into your ear<</if>>. _He2 begins to worry as _his2 lover weakens in front of _him2. $Bodyguard.slaveName quickly pulls _him2 away from you, fearing the worst.<</if>> $Bodyguard.slaveName read about this possibility and tries everything $he can to coax your child out. As time passes, $he notices your consciousness begin to fade as exhaustion kicks in. Fearing for your lives, and desperate to save you, $he draws $his sword from its sheath, hands unsteady from what $he is about to do. Carefully, $he slits your lower abdomen, allowing your baby-<<if $PC.pregType < 3>>filled<<elseif $PC.pregType < 5>>stuffed<<elseif $PC.pregType < 8>>packed<<else>>bursting<</if>> womb to pop out through the incision. Doing $his best, $he cuts open your uterus, pulls your child<<if $PC.pregType > 1>>ren<</if>> from you and severs the umbilical cord<<if $PC.pregType > 1>>s all at once<</if>>.
+		<br><br>
+		You awake some time later in the remote surgery, your stomach extremely sore; you quickly realize you're no longer round with child. As you try to rise, $Bodyguard.slaveName stops you; $he hefts you into a bridal carry and takes you to a recovery room, before gently placing you into a warm bed, tucking you in, and hurrying out of the room. Before you can call out, $he returns carrying
+		<<if _curBabies == 1>>
+			@@.lime;your baby <<if _gender == "XX">>girl<<else>>boy<</if>>@@
+		<<elseif _curBabies < 6>>
+			@@.lime;your newborn <<print pregNumberName(_curBabies, 2)>>@@
+		<<else>>
+			a big bassinet containing @@.lime;your newborn <<print pregNumberName(_curBabies, 2)>>@@
+		<</if>>
+		in $his arms.
+		<<set _wounded = 1>>
+	<<elseif $HeadGirl != 0>>
+		<<setLocalPronouns $HeadGirl>>
+		You keep pushing and pushing, but your child is not coming out.
+		<<if _concubinePresent == 1>>
+			$Concubine.slaveName shifts to massaging your gravid middle<<if canTalk($Concubine)>>, while whispering words of encouragement into your ear<</if>>. _He2 begins to worry as _his2 lover weakens in front of _him2. $HeadGirl.slaveName quickly pulls _him2 to <<if hasBothLegs($Concubine)>>_his2 feet<<else>>upright<</if>> and orders _him2 to help $him carry you to the remote surgery<<if !canWalk($Concubine)>>; in $his rush, $he completely forgot <<if tooBigBreasts($Concubine)>>$Concubine.slaveName's breasts have _him2 pinned to the bed<<elseif tooBigBelly($Concubine)>>$Concubine.slaveName's pregnancy renders _him2 immobile<<elseif tooBigDick($Concubine)>>$Concubine.slaveName can't walk with a dick that big<<elseif tooBigButt($Concubine)>>$Concubine.slaveName's butt pins _him2 to the bed<<elseif tooBigBalls($Concubine)>>$Concubine.slaveName's balls act as a giant anchor<<elseif tooFatSlave($Concubine)>>$Concubine.slaveName is so fat, the bed is _his2 home now<<else>>$Concubine.slaveName can't walk<</if>><</if>>.
+		<<else>>
+			$HeadGirl.slaveName notices your distress and carries you to the remote surgery<<if $PC.pregType >= 8>>, a daunting task given your extreme gravidity<</if>>.
+		<</if>>
+		<br><br>
+		You awake some time later in a recovery room<<if _concubinePresent > 0>>, $Concubine.slaveName beside you<</if>>, your stomach extremely sore; a quick glance at the prominent scar tells you everything you need to know. Seeing you're awake, $HeadGirl.slaveName catches your attention. In $his arms
+		<<if _curBabies == 1>>
+			is @@.lime;your baby <<if _gender == "XX">>girl<<else>>boy<</if>>,@@ <<if $HeadGirl.lactation > 0>>happily nursing from $his breast,<</if>>
+		<<else>>
+			are @@.lime;your newborn <<print pregNumberName(_curBabies, 2)>>,@@ <<if $HeadGirl.lactation > 0>>happily nursing from $his breasts,<</if>>
+		<</if>>
+		alive and well.
+		<<set _wounded = 1>>
+	<<elseif _concubinePresent == 1>>
+		You keep pushing and pushing, but your child is not coming out. <<if canWalk($Concubine)>>In a panic, $Concubine.slaveName carries you to the remote surgery<<else>>The last thing you remember as you fade is $Concubine.slaveName's look of panic<</if>>.
+		<br><br>
+		You awake some time later in a recovery room, your stomach extremely sore; a quick glance at the prominent scar tells you everything you need to know. A content sigh comes from beside you; $Concubine.slaveName is snuggled next to you, snoozing with
+		<<if _curBabies == 1>>
+			@@.lime;your baby <<if _gender == "XX">>girl<<else>>boy<</if>>@@ in _his2 arms.<<if $Concubine.lactation > 0>> Your child has managed to free one of $Concubine.slaveName's breasts and is eagerly suckling from its milky nipple.<</if>>
+		<<else>>
+			@@.lime;your newborn <<print pregNumberName(_curBabies, 2)>>@@ in _his2 arms.<<if $Concubine.lactation > 0>> Your children have managed to free $Concubine.slaveName's breasts and are eagerly suckling from their milky nipples.<</if>>
+		<</if>>
+		<<if !canWalk($Concubine)>>
+			<<if tooBigBreasts($Concubine)>>
+				You don't know how _he2 managed to get you here when _his2 breasts prevent _him2 from walking<<if $PC.pregType >= 8>>, especially with how heavy your pregnancy was<</if>>, but you give the pair a gentle caress as thanks.
+			<<elseif tooBigBelly($Concubine)>>
+				You don't know how _he2 managed to get you here when _he2's so gravid _he2 can't walk<<if $PC.pregType >= 8>>, especially with how heavy your pregnancy was<</if>>, but you give the taut dome a gentle caress as thanks.
+			<<elseif tooBigDick($Concubine)>>
+				You don't know how _he2 managed to get you here when _his2 dick prevents _him2 from walking<<if $PC.pregType >= 8>>, especially with how heavy your pregnancy was<</if>>, but you give the serpent a gentle caress as thanks.
+			<<elseif tooBigButt($Concubine)>>
+				You don't know how _he2 managed to get you here when _his2 ass prevent _him2 from walking<<if $PC.pregType >= 8>>, especially with how heavy your pregnancy was<</if>>, but you give the jiggling giant a gentle caress as thanks.
+			<<elseif tooBigBalls($Concubine)>>
+				You don't know how _he2 managed to get you here when _his2 balls prevent _him2 from walking<<if $PC.pregType >= 8>>, especially with how heavy your pregnancy was<</if>>, but you give the pair a gentle caress as thanks. _He2 returns the kindness with a shudder and a large wet spot forming over _his2 crotch.
+			<<elseif tooFatSlave($Concubine)>>
+				You don't know how _he2 managed to get you here when _he2's so fat _he2 can't walk<<if $PC.pregType >= 8>>, especially with how heavy your pregnancy was<</if>>, but you give _his2 soft body a gentle caress as thanks.
+			<<elseif !hasAnyLegs($Concubine)>>
+				You don't know how _he2 managed to get you here when _he2 has no legs to walk on<<if $PC.pregType >= 8>>, especially with how heavy your pregnancy was<</if>>, but you give _his2 stumps a gentle caress as thanks.
+			<<else>>
+				You don't know how _he2 managed to get you here, since _he2 can't walk<<if $PC.pregType >= 8>>, especially with how heavy your pregnancy was<</if>>, but you're thankful either way.
+			<</if>>
+		<</if>>
+		<<set _wounded = 1>>
+	<<else>>
+		You keep pushing and pushing, but your child is not coming out. @@.red;Something is wrong,@@ but you keep persisting.
+		<<set _gaveBirth = 1>>
+		<<set $gameover = "birth complications", $nextButton = "Have to keep trying!", $nextLink = "Gameover">>
+	<</if>>
+<<else>>
+	<<if $Nurse != 0>>
+		<<setLocalPronouns $Nurse>>
+		Under $Nurse.slaveName's guidance, childbirth is a breeze for you.
+		<<if $PC.pregType == 1>>
+			<<if _concubinePresent == 1>> Or it would have been, had $Concubine.slaveName not driven you to an intense orgasm right as your child entered the world.<<if $PC.balls >= 9>> An orgasm that resulted in $Concubine.slaveName, $Nurse.slaveName, and your newborn getting sprayed with cum.<</if>><</if>> $Nurse.slaveName cuts the cord, swaddles your child, and hands you @@.lime;your new baby <<if _gender == "XX">>girl<<else>>boy<</if>>.@@
+		<<else>>
+			<<if _concubinePresent == 1>>
+				Or it would have been, had $Concubine.slaveName not driven you to an intense orgasm right as your first child entered the world.<<if $PC.balls >= 9>> An orgasm that resulted in $Concubine.slaveName, $Nurse.slaveName, and your newborn getting sprayed with cum.<</if>> But it isn't over: before you've even had a chance to come down from your climax, the next infant slips into your birth canal<<if $PC.pregType >= 3>>, followed closely by the <<if $PC.pregType == 3>>last<<else>>next<</if>>,<</if>> and immediately pushes you back over the edge. In minutes, after <<print num(_curBabies)>> children and <<print num(_curBabies)>> intense orgasms, you're barely conscious. $Concubine.slaveName slides in behind you to snuggle with you as you return to your senses.
+			<<else>>
+				With one out, you realize
+				<<if $PC.pregType >= 6>>
+					you still have <<print num($PC.pregType - 1)>> more to go.
+				<<elseif $PC.pregType == 5>>
+					your taut dome of a belly still houses four more.
+				<<elseif $PC.pregType == 4>>
+					your swollen belly still houses three more.
+				<<elseif $PC.pregType == 3>>
+					your swollen belly still houses another pair.
+				<<elseif $PC.pregType == 2>>
+					your rounded belly still houses another.
+				<</if>>
+				You moan as
+				<<if $PC.pregType >= 3>>
+					the next child begins its
+				<<else>>
+					they begin their
+				<</if>>
+				descent; you'll be at this for awhile. With $Nurse.slaveName around, you aren't worried at all.
+			<</if>>
+			$Nurse.slaveName cuts the cords, swaddles your children, and hands you @@.lime;your new <<print pregNumberName(_curBabies, 2)>>.@@
+		<</if>>
+	<<elseif $Bodyguard != 0>>
+		<<setLocalPronouns $Bodyguard>>
+		With $Bodyguard.slaveName watching over you, you feel safe enough to let your guard down and focus on giving birth. Once you are relaxed, you feel your child begin to inch down your birth canal. Before long you've completed the job without any trouble.
+		<<if $PC.pregType == 1>>
+			<<if _concubinePresent == 1>>
+				Or it would have, had $Concubine.slaveName not driven you to an intense orgasm right as your child entered the world.<<if $PC.balls >= 9>> An orgasm that resulted in $Concubine.slaveName, $Bodyguard.slaveName, and your newborn getting sprayed with cum.<</if>>
+			<</if>>
+			$Bodyguard.slaveName cuts the cord with $his blade, and hands you @@.lime;your new baby <<if _gender == "XX">>girl<<else>>boy<</if>>.@@
+		<<else>>
+			<<if _concubinePresent == 1>>
+				Or you would have, had $Concubine.slaveName not driven you to an intense orgasm right as your child entered the world.<<if $PC.balls >= 9>> An orgasm that resulted in $Concubine.slaveName, $Bodyguard.slaveName, and your newborn getting sprayed with cum.<</if>> But it isn't over; before you've even had a chance to come down from your climax, the next infant slips into your birth canal<<if $PC.pregType >= 3>>, followed closely by the <<if $PC.pregType == 3>>last<<else>>next<</if>>,<</if>> and immediately pushes you back over the edge. In minutes, after <<print num(_curBabies)>> children and <<print num(_curBabies)>> intense orgasms, you're barely conscious, nearly panicking $Bodyguard.slaveName. $Concubine.slaveName slides in behind you to snuggle with you as you return to your senses.
+			<<else>>
+				With one out, you realize
+				<<if $PC.pregType >= 6>>
+					you still have <<print num($PC.pregType - 1)>> more to go.
+				<<elseif $PC.pregType == 5>>
+					your taut dome of a belly still houses four more.
+				<<elseif $PC.pregType == 4>>
+					your swollen belly still houses three more.
+				<<elseif $PC.pregType == 3>>
+					your swollen belly still houses another pair.
+				<<elseif $PC.pregType == 2>>
+					your rounded belly still houses another.
+				<</if>>
+				You moan as
+				<<if $PC.pregType >= 3>>
+					the next child begins its
+				<<else>>
+					they begin their
+				<</if>>
+				descent; you'll be at this for awhile. With $Bodyguard.slaveName around, you feel completely safe.
+			<</if>>
+			$Bodyguard.slaveName cuts the cords with $his blade, and hands you @@.lime;your new <<print pregNumberName(_curBabies, 2)>>.@@
+		<</if>>
+	<<elseif $HeadGirl != 0>>
+		With $HeadGirl.slaveName waiting with everything you need, childbirth goes by without a hitch.
+		<<if $PC.pregType == 1>>
+			<<if _concubinePresent == 1>> Or it would have been, had $Concubine.slaveName not driven you to an intense orgasm right as your child entered the world.<<if $PC.balls >= 9>> An orgasm that resulted in $Concubine.slaveName, $HeadGirl.slaveName, and your newborn getting sprayed with cum.<</if>><</if>> $HeadGirl.slaveName cuts the cord, swaddles your child, and hands you @@.lime;your new baby <<if _gender == "XX">>girl<<else>>boy<</if>>.@@
+		<<else>>
+			<<if _concubinePresent == 1>>
+				Or it would have been, had $Concubine.slaveName not driven you to an intense orgasm right as your first child entered the world.<<if $PC.balls >= 9>> An orgasm that resulted in $Concubine.slaveName, $HeadGirl.slaveName, and your newborn getting sprayed with cum.<</if>> But it isn't over: before you've even had a chance to come down from your climax, the next infant slips into your birth canal<<if $PC.pregType >= 3>>, followed closely by the <<if $PC.pregType == 3>>last<<else>>next<</if>>,<</if>> and immediately pushes you back over the edge. In minutes, after <<print num(_curBabies)>> children and <<print num(_curBabies)>> intense orgasms, you're barely conscious. $Concubine.slaveName slides in behind you to snuggle with you as you return to your senses.
+			<<else>>
+				With one out, you realize
+				<<if $PC.pregType >= 6>>
+					you still have <<print num($PC.pregType - 1)>> more to go.
+				<<elseif $PC.pregType == 5>>
+					your taut dome of a belly still houses four more.
+				<<elseif $PC.pregType == 4>>
+					your swollen belly still houses three more.
+				<<elseif $PC.pregType == 3>>
+					your swollen belly still houses another pair.
+				<<elseif $PC.pregType == 2>>
+					your rounded belly still houses another.
+				<</if>>
+				You moan as
+				<<if $PC.pregType >= 3>>
+					the next child begins its
+				<<else>>
+					they begin their
+				<</if>>
+				descent; you'll be at this for awhile. With $HeadGirl.slaveName around, you know everything is under control.
+			<</if>>
+			$HeadGirl.slaveName cuts the cords, swaddles your children, and hands you @@.lime;your new <<print pregNumberName(_curBabies, 2)>>.@@
+		<</if>>
+	<<elseif _concubinePresent == 1>>
+		$Concubine.slaveName alternates between calming your nerves and driving your to orgasm. It works fairly well, as your child rapidly enters the world alongside a particularly powerful climax. You reach down and draw @@.lime;your new baby <<if _gender == "XX">>girl<<else>>boy<</if>>@@ into your arms, while $Concubine.slaveName shifts to eagerly "clean" your crotch with _his2 tongue.<<if $PC.pregType > 1>> _His2 over-stimulation of you quickly has _him2 licking the crowning head of your second child. _He2 diligently works you over until all of your children are born, making sure you are thoroughly exhausted; both from the birth and from _his2 ministrations.<<if canPenetrate($Concubine) && canImpreg($PC, $Concubine)>> $Concubine.slaveName <<if canSee($Concubine)>>eyes<<else>>faces<</if>> your spread pussy hungrily as _his2 erection bobs with anticipation. But you're too tired right now and _he2 realizes it.<</if>> _He2 helps gather your child<<if $PC.pregType > 1>>ren<</if>> to<<if $Concubine.lactation > 0>> _his2 and <</if>> your breasts with the hope that you'll reward _him2 when you recover.<</if>>
+	<<else>>
+		You keep pushing and pushing, your child slowly working its way from your body. With the last of your strength, you bear down, freeing your child from your body at last. Panting, you gather @@.lime;your new baby <<if _gender == "XX">>girl<<else>>boy<</if>>@@ <<if $PC.pregType > 1>>as another contraction ushers your next child into your birth canal<<else>>and drift off into a much deserved rest<</if>>.
+		<<if $PC.pregType >= 2>>
+			You struggle to pass the second baby<<if $PC.pregType >= 3>>, knowing full well a third will quickly follow suit<<if $PC.pregType >= 4>> and a fourth after that<</if>><</if>>.
+			<<if $PC.pregType >= 5>>
+				You dread the challenge that will be the fifth one<<if $PC.pregType >= 6>> and worry for your health over the sixth<</if>>.
+			<</if>>
+			<<if $PC.pregType >= 7>>
+				You are nearly delirious by the time
+				<<if $PC.pregType >= 8>>
+					it comes to the final <<print num($PC.pregType - 6)>>; your efforts to push them out are falling flat. You're just too tired. With one final push, you feel the first crown then exit your ruined pussy; the second <<if $PC.pregType >= 9>>and the rest follow<<else>>follows<</if>> closely, finally allowing you relief.
+				<<else>>
+					they are all born; you still look pregnant. It dawns on you as your cervix stretches wide; you forgot one.
+				<</if>>
+			<</if>>
+			You are <<if $PC.pregType >= 6>>thoroughly <</if>>exhausted by the time you've pushed out your <<print pregNumberName(_curBabies, 2)>>,
+			<<if $PC.pregType >= 8>>
+				unable to even
+			<<else>>
+				barely able to
+			<</if>>
+			gather them to your chest. Fortunately, $assistant.name calls several devoted slaves to your aid; you're helped to your bed and left to connect with your children.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if _gaveBirth == 0>>
+
+	<<set $PC.counter.birthOther += _others, $PC.counter.birthSelf += _self, $PC.counter.birthCitizen += _citizens, $PC.counter.birthMaster += _oldMaster, $PC.counter.birthArcOwner += _arcOwner, $PC.counter.birthClient += _clients, $PC.counter.birthElite += _elite, $PC.counter.birthLab += _lab, $PC.counter.birthDegenerate += _slavesLength>>
+
+	<<if _curBabies == 1>>
+		<<set _p = 0>>
+		<<if $PC.curBabies[_p].genetics.race == $PC.origRace>>
+			<<set _PCDegree++>>
+		<</if>>
+		<<if $PC.curBabies[_p].genetics.hColor == $PC.hColor>>
+			<<set _PCDegree++>>
+		<</if>>
+		<<if $PC.curBabies[_p].genetics.skin == $PC.skin>>
+			<<set _PCDegree++>>
+		<</if>>
+		<<if $PC.curBabies[_p].genetics.eyeColor == $PC.eye.origColor>>
+			<<set _PCDegree++>>
+		<</if>>
+
+		Your little <<if _gender == "XX">>girl<<else>>boy<</if>>
+		<<if $PC.pregSource == -1>>
+			looks exactly like you, in fact, the resemblance seems uncanny. Since <<if _gender == "XX">>she<<else>>he<</if>> has the exact same genetics as you, <<if _gender == "XX">>she<<else>>he<</if>>'ll likely look almost identical to you when <<if _gender == "XX">>she<<else>>he<</if>>'s your age.
+		<<elseif _PCDegree == 4>>
+			looks just like you; <<if _gender == "XX">>she<<else>>he<</if>> will likely grow up to closely resemble yourself.
+		<<elseif $PC.curBabies[_p].genetics.eyeColor == $PC.eye.origColor>>
+			has your lovely $PC.eye.origColor eyes.
+		<<elseif _PCDegree > 0>>
+			looks a little like you, enough that <<if _gender == "XX">>she<<else>>he<</if>>'ll be recognizable as yours.
+		<<else>>
+			looks nothing like you; it's hard to believe <<if _gender == "XX">>she's your daughter<<else>>he's you son<</if>>
+		<</if>>
+
+		<<if $PC.curBabies[0].reserve === "incubator">>
+			@@.pink;You set <<if _gender == "XX">>her<<else>>him<</if>> aside for incubation.@@
+			<<set $activeChild = generateChild($PC, $PC.curBabies[0], 1)>>
+			<<include "Incubator Workaround">>
+		<<elseif $PC.curBabies[0].reserve === "nursery">>
+			@@.pink;You set <<if _gender == "XX">>her<<else>>him<</if>> aside for incubation.@@
+			<<set $activeChild = generateChild($PC, $PC.curBabies[0])>>
+			<<include "Nursery Workaround">>
+		<</if>>
+		<<set $PC.curBabies.shift()>>
+
+	<<elseif _curBabies > 1>>
+
+		<<for _p = 0; _p < _curBabies; _p++>>
+
+			<<set _PCDegree = 0>>
+			<<if $PC.curBabies[0].genetics.race == $PC.origRace>>
+				<<set _PCDegree++>>
+			<</if>>
+			<<if $PC.curBabies[_p].genetics.hColor == $PC.hColor>>
+				<<set _PCDegree++>>
+			<</if>>
+			<<if $PC.curBabies[_p].genetics.skin == $PC.skin>>
+				<<set _PCDegree++>>
+			<</if>>
+			<<if $PC.curBabies[_p].genetics.eyeColor == $PC.eye.origColor>>
+				<<set _PCDegree++>>
+			<</if>>
+
+			<<if _p == 0>>Your first<<else>>The next<</if>> little <<if $PC.curBabies[_p].genetics.gender == "XX">>girl<<else>>boy<</if>>
+			<<if _identicalChildGen == 1>>
+				looks exactly like the previous; they're identical twins.
+			<<elseif $PC.pregSource == -1>>
+				looks exactly like you<<if _p == 0>>, in fact, the resemblance seems uncanny. Since <<if $PC.curBabies[_p].genetics.gender == "XX">>she<<else>>he<</if>> has the exact same genetics as you, <<if $PC.curBabies[_p].genetics.gender == "XX">>she<<else>>he<</if>>'ll likely look almost identical to you when <<if $PC.curBabies[_p].genetics.gender == "XX">>she<<else>>he<</if>>'s your age<</if>>. Every one of your children look this way; it's kind of hard to tell them apart.
+			<<elseif _PCDegree == 4>>
+				looks just like you; <<if $PC.curBabies[_p].genetics.gender == "XX">>she<<else>>he<</if>> will likely grow up to closely resemble yourself.
+			<<elseif $PC.curBabies[_p].genetics.eyeColor == $PC.eye.origColor>>
+				has your lovely $PC.eye.origColor eyes.
+			<<elseif _PCDegree > 0>>
+				looks a little like you, enough that <<if $PC.curBabies[_p].genetics.gender == "XX">>she<<else>>he<</if>>'ll be recognizable as yours.
+			<<else>>
+				looks nothing like you; it's hard to believe <<if $PC.curBabies[_p].genetics.gender == "XX">>she's your daughter<<else>>he's your son<</if>>
+			<</if>>
+			<<if $PC.curBabies[_p].reserve == "incubator">>
+				@@.pink;You set <<if $PC.curBabies[_p].genetics.gender == "XX">>her<<else>>him<</if>> aside for incubation.@@
+				<<set $activeChild = generateChild($PC, $PC.curBabies[_p], 1)>>
+				<<include "Incubator Workaround">>
+				<<run $PC.curBabies.splice($PC.curBabies[_p], 1)>>
+				<<set _p--, _curBabies-->>
+			<<elseif $PC.curBabies[_p].reserve == "nursery">>
+				@@.pink;You set <<if $PC.curBabies[_p].genetics.gender == "XX">>her<<else>>him<</if>> aside to be raised in the penthouse.@@
+				<<set $activeChild = generateChild($PC, $PC.curBabies[_p])>>
+				<<include "Nursery Workaround">>
+				<<run $PC.curBabies.splice($PC.curBabies[_p], 1)>>
+				<<set _p--, _curBabies-->>
+			<</if>>
+		<</for>>
+
+		All in all, you've bought a healthy group of
+		<<if _babiesReduced.length > 2>>
+			<<for _spb = 0; _spb < _babiesReduced.length; _spb++>>
+				<<if _spb < _babiesReduced.length-1>>
+					_babiesReduced[_spb],
+				<<else>>
+					and _babiesReduced[_spb]'s
+				<</if>>
+			<</for>>
+		<<elseif _babiesReduced.length > 1>>
+			_babiesReduced[0] and _babiesReduced[1]'s
+		<<else>>
+			_babiesReduced[0]'s
+		<</if>>
+		babies into the world.
+
+	<</if>>
+
+
+	<<if $PC.pregSource > 0 && _curBabies > 0>>
+		<<set _pb = findFather($PC.pregSource)>>
+		<<if def _pb>>
+			<<if $arcologies[0].FSRestartDecoration == 100 && $eugenicsFullControl != 1>>
+				Word spreads fast through your peers that you gave birth to <<if _curBabies > 1>>low class infants<<else>>a low class child<</if>> @@.red;utterly devastating your standing among the Elite.@@
+				<<set $failedElite += 200>>
+			<<elseif $arcologies[0].FSChattelReligionistLaw == 1>>
+				Rumors spread that The Prophet gave birth to a slave's child<<if _curBabies > 1>>ren<</if>>.
+				<<if $arcologies[0].FSSupremacist != "unset">>
+					<<if _pb.race != $arcologies[0].FSSupremacistRace>>
+						Word is that your child<<if _curBabies > 1>>ren were<<else>> was<</if>> not $arcologies[0].FSSupremacistRace. As The Prophet saw fit to bear such a child, society views it as a sign to @@.red;reject $arcologies[0].FSSupremacistRace supremacy.@@
+						<<set $arcologies[0].FSSupremacist -= 120>>
+					<</if>>
+				<</if>>
+				<<if $arcologies[0].FSSubjugationist != "unset">>
+					<<if _pb.race == $arcologies[0].FSSubjugationistRace>>
+						In addition, The Prophet's womb bore <<if _curBabies == 1>>a <</if>>$arcologies[0].FSSubjugationistRace child<<if _curBabies > 1>>ren<</if>>, surely a sign to @@.red;reject $arcologies[0].FSSubjugationistRace subjugation.@@
+						<<set $arcologies[0].FSSubjugationist -= 120>>
+					<</if>>
+				<</if>>
+			<<else>>
+				Rumors spread that your child<<if _curBabies > 1>>ren were<<else>> was<</if>> fathered by a slave, @@.red;harming your lasting reputation.@@
+				<<set $PC.degeneracy += 20>>
+				<<if $arcologies[0].FSSupremacist != "unset">>
+					<<if _pb.race != $arcologies[0].FSSupremacistRace>>
+						Furthermore, word is that your child<<if _curBabies > 1>>ren were<<else>> was<</if>> not $arcologies[0].FSSupremacistRace, @@.red;further hurting your lasting reputation.@@
+						<<set $PC.degeneracy += 10>>
+					<</if>>
+				<</if>>
+				<<if $arcologies[0].FSSubjugationist != "unset">>
+					<<if _pb.race == $arcologies[0].FSSubjugationistRace>>
+						In addition, there is a nasty rumor that you gave birth to <<if _curBabies == 1>>a <</if>>$arcologies[0].FSSubjugationistRace child<<if _curBabies > 1>>ren<</if>>, @@.red;devastating your lasting reputation.@@
+						<<set $PC.degeneracy += 50>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	/* -------------------- Now curBabies counts live, birthed babies who haven't been placed in the incubator. */
+	<<set _curBabies = $PC.curBabies.length>>
+
+	<<if _curBabies > 0>>
+		<br><br>
+		Now you are faced with a decision of what to do with your <<if _pregTypeDecrecement > 0>>remaining<<else>>new<</if>> child<<if _curBabies > 1>>ren<</if>>. You're far too busy to keep <<if _curBabies > 1>>them<<else>>it<</if>> yourself, but you could @@.orange;send them to a boarding school to be raised until they are of age to serve as your heir.@@ Other options include sending them to @@.orange;become a slave at a slave orphanage,@@ sending them to @@.orange;a citizen school,@@ to be brought up coequal with the arcology's other young people, or sending them to be @@.orange;raised privately,@@ with expert care and tutoring.
+		<<if $arcologies[0].FSRepopulationFocus > 40>>
+			Of course, there are also the @@.orange;breeding schools,@@ where your
+			<<if _curBabies == 1>>
+				<<if _gender == "XX">>
+					daughter will be taught the joys of motherhood up until she is around <<if $minimumSlaveAge > $fertilityAge>>$minimumSlaveAge<<else>>$fertilityAge<</if>> years old, when she will be impregnated with her first child.
+				<<else>>
+					son will be taught it is his duty to fuck every slavegirl he sees without a baby bump pregnant.
+				<</if>>
+			<<else>>
+				<<if _gender == "XX">>
+					daughters will be taught the joys of motherhood up until they are around <<if $minimumSlaveAge > $fertilityAge>>$minimumSlaveAge<<else>>$fertilityAge<</if>> years old, when they will be impregnated for the first time.<<if _curBabies > 1>> They say multiples run in families, so your daughters should blossom into quite the fertile breeders.<</if>>
+				<<else>>
+					sons will be taught it is their duty to fuck every slavegirl they see without a baby bump pregnant.
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $Cash4Babies == 1>>
+			<<set _seed = random(1,10)>>
+			Alternatively, since it is @@.orange;legal to sell slave babies,@@ your child should be worth quite a pretty ¤ at auction.
+		<</if>>
+		<<if (($eliteFail > 0 || $eugenicsFullControl > 0) && $PC.pregSource == -1) || $PC.pregSource == -6>>
+			The Societal Elite should look forward @@.orange;to raising them.@@
+		<</if>>
+		<<if $PC.pregSource == -9>>
+			The Futanari Sisters would happily @@.orange;take them in.@@
+		<</if>>
+		<br><br>
+		<span id="choice">What will it be?
+		<br>
+		<<link "Boarding School">><<replace "#choice">><<print "You have decided to send them away to be raised in your stead.">><</replace>><</link>> |
+		<<link "Slave Orphanage">><<replace "#choice">><<print "You have decided to send them to a slave orphanage to be raised to $minimumSlaveAge and sold. Perhaps you'll even see them again, though you are unlikely to recognize them if you do.">><</replace>><<set $slaveOrphanageTotal += _curBabies>><</link>> |
+		<<link "Citizen School">><<replace "#choice">><<print "You have decided to send them to a citizen school to become a future citizen. Perhaps you'll even see them again, though you are unlikely to recognize them if you do.">><</replace>><<set $citizenOrphanageTotal += _curBabies>><</link>> |
+		<<link "Privately Raised">><<replace "#choice">><<print "You have decided to send them to be privately raised. Perhaps you'll even see them again, though it's unlikely that there will be any connection between you. At least you'll know they've been properly reared.">><</replace>><<set $privateOrphanageTotal += _curBabies>><</link>>
+		<<if $arcologies[0].FSRepopulationFocus > 40>>
+			| <<link "Breeding School">><<replace "#choice">><<print "You have decided to send them to be raised into a proper breeder. Perhaps you'll even see them again, though it's unlikely you'll recognize them with their reproduction focused body.">><</replace>><<set $breederOrphanageTotal += _curBabies>><</link>>
+		<</if>>
+		<<if $Cash4Babies == 1>>
+			| <<link "Auction Them">><<replace "#choice">><<print "You send the child<<if _curBabies > 1>>ren<</if>> to be sold at auction amongst other prestigious slaves. The winning bid for your offspring came in at @@.yellowgreen;<<print cashFormat(1000*_seed*_curBabies)>>.@@">><</replace>><<run cashX((1000*_seed*_curBabies), "babyTransfer")>><</link>>
+		<</if>>
+		<<if (($eliteFail > 0 || $eugenicsFullControl > 0) && $PC.pregSource == -1) || $PC.pregSource == -6>>
+			| <<link "Societal Elite">><<replace "#choice">><<print "You have decided to gift them to the Societal Elite to be raised as <<if _curBabies > 1>>proper members<<else>>a proper member<</if>> of the future world.">><</replace>><</link>>
+		<</if>>
+		<<if $PC.pregSource == -9>>
+			| <<link "Futanari Sisters">><<replace "#choice">><<print "You have decided to gift them to the Futanari Sisters to be raised to join them. They are more than happy to cover all the expenses for the gift you gave them — especially after they gave you a gift in return.">><</replace>><</link>>
+		<</if>>
+		</span>
+	<</if>>
+
+	<<if $PC.ovaryAge >= 47 && $playerAging == 2>>
+		<br>
+		You are getting too old to have children; you feel like this may be your last.
+		<<set $PC.preg = -2>>
+	<</if>>
+
+	<<if _wounded == 1>>
+		Things didn't quite go as planned, leaving you @@.red;weak and wounded.@@ You'll need a couple weeks to recover from the ordeal before you're back on your feet.
+		<<run healthDamage($PC, 40)>>
+	<</if>>
+
+<</if>> /*closes gaveBirth*/
+<</if>> /*closes SE*/
+
+/* belly sag is a thing now, USE IT! */
+<<set _badBirth = 0, WombFlush($PC)>>
+<<if $PC.geneticQuirks.fertility+$PC.geneticQuirks.hyperFertility >= 4>>
+	<<set $PC.pregWeek = -2>>
+<<elseif $PC.geneticQuirks.hyperFertility == 2>>
+	<<set $PC.pregWeek = -3>>
+<<else>>
+	<<set $PC.pregWeek = -4>>
+<</if>>
+<<set $PC.belly = getPregBellySize($PC)>>
+<<set $reservedChildren = FetusGlobalReserveCount("incubator")>>
+<<set $reservedChildrenNursery = FetusGlobalReserveCount("nursery")>>
+<<run delete $PC.curBabies>>

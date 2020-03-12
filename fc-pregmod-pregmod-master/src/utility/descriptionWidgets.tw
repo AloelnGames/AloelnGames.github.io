@@ -1,0 +1,202 @@
+:: description widgets [widget nobr]
+
+<<widget "FlowerDesc">>
+
+<<if $activeSlave.dick > 0 && $activeSlave.balls == 0>>
+	a white orchid, its black stamen stiffly erect.
+<<elseif $activeSlave.dick > 0>>
+	a morning glory, light around its edges with a puckered pink center.
+<<elseif $activeSlave.addict > 5>>
+	a large poppy, its pod glistening with black opiate juice.
+<<elseif $activeSlave.vagina == 0>>
+	a white lily, pure and unspoiled.
+<<elseif $activeSlave.pregType > 3 && $activeSlave.pregKnown == 1>>
+	a pink lotus, beautiful and fertile.
+<<elseif $activeSlave.energy > 95>>
+	a flamboyant tiger lily.
+<<elseif $activeSlave.actualAge > 40>>
+	an elegant, mature orchid.
+<<elseif $activeSlave.actualAge < 20>>
+	an innocent little peony.
+<<elseif $activeSlave.boobs > 2000>>
+	a huge round sunflower.
+<<else>>
+	a nice red rose.
+<</if>>
+
+<</widget>>
+
+
+<<widget "ImageDesc">>
+
+<<if $activeSlave.dick > 0 && $activeSlave.balls == 0>>
+	sodomy.
+<<elseif $activeSlave.dick > 0>>
+	stiff pricks.
+<<elseif $activeSlave.skill.oral >= 100>>
+	oral sex.
+<<elseif $activeSlave.boobs > 1000>>
+	boobs.
+<<elseif $activeSlave.vagina == -1>>
+	sodomy.
+<<else>>
+	pussies.
+<</if>>
+
+<</widget>>
+
+
+<<widget "InscripDesc">>
+	<<print App.Desc.inscrip($activeSlave)>>
+<</widget>>
+
+<<widget "geneticQuirkAssessment">>
+
+<<if $geneticMappingUpgrade >= 1>>
+	<<if $activeSlave.geneticQuirks.albinism == 2>>
+		$He is an albino.
+	<<elseif $activeSlave.geneticQuirks.albinism == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of the albinism gene.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.dwarfism == 2 && $activeSlave.geneticQuirks.gigantism == 2>>
+		$He has both dwarfism and gigantism.
+	<<elseif $activeSlave.geneticQuirks.dwarfism == 2>>
+		$He has dwarfism.
+	<<elseif $activeSlave.geneticQuirks.gigantism == 2>>
+		$He has gigantism.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.dwarfism == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of the dwarfism gene.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.gigantism == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of the gigantism gene.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.heterochromia == 2>>
+		$He carries a gene that allows $his eyes to be two different colors.
+	<<elseif $activeSlave.geneticQuirks.heterochromia == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of the heterochromia gene.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.androgyny == 2>>
+		$He has a hormonal condition resulting in androgyny.
+	<<elseif $activeSlave.geneticQuirks.androgyny == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of a gene that result in androgyny.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.pFace == 2>>
+		$He has an exceedingly rare trait associated with perfect facial beauty.
+		<<if $activeSlave.geneticQuirks.uFace == 2>>
+			Oddly enough, $he also possesses a conflicting trait for raw ugliness; the two average each other out.
+		<</if>>
+	<<elseif $activeSlave.geneticQuirks.uFace == 2>>
+		$He has an exceedingly rare trait associated with some of the ugliest mugs in history.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.pFace == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of a combination of traits that can result in perfect facial beauty.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.uFace == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of a combination of traits that can result in raw ugliness.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.fertility == 2 && $activeSlave.geneticQuirks.hyperFertility == 2>>
+		$He has a unique genetic condition resulting in inhumanly high
+		<<if $activeSlave.ovaries == 1 || $activeSlave.mpreg == 1>>
+			fertility; risky intercourse will result in multiple pregnancy.
+		<<else>>
+			fertility.
+		<</if>>
+	<<elseif $activeSlave.geneticQuirks.hyperFertility == 2>>
+		$He prone to extreme
+		<<if $activeSlave.ovaries == 1 || $activeSlave.mpreg == 1>>
+			fertility and will likely undergo multiple pregnancy.
+		<<else>>
+			fertility.
+		<</if>>
+	<<elseif $activeSlave.geneticQuirks.fertility == 2>>
+		$He is naturally
+		<<if $activeSlave.ovaries == 1 || $activeSlave.mpreg == 1>>
+			fertile and prone to having twins.
+		<<else>>
+			fertile.
+		<</if>>
+	<</if>>
+	<<if $activeSlave.geneticQuirks.hyperFertility == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of a genetic condition resulting in hyper-fertility.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.fertility == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of a genetic condition resulting in increased fertility.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.superfetation == 2>>
+		<<if isFertile($activeSlave)>>
+			$He posses a rare genetic flaw that causes pregnancy to not block ovulation. $He is fully capable of getting pregnant while already pregnant.
+		<<else>>
+			$He posses a rare genetic flaw that causes pregnancy to not block ovulation; not that it matters when $he can't get pregnant.
+		<</if>>
+	<<elseif $activeSlave.geneticQuirks.superfetation == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of a genetic flaw that causes superfetation.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.macromastia == 2 && $activeSlave.geneticQuirks.gigantomastia == 2>>
+		$He has an abnormal strain of gigantomastia and will experience constant excessive breast growth.
+	<<elseif $activeSlave.geneticQuirks.gigantomastia >= 2>>
+		$He has
+		<<if $activeSlave.geneticQuirks.gigantomastia == 3>>
+			dormant gigantomastia. Hormonal effects may cause it to become active.
+		<<else>>
+			gigantomastia and will experience excessive breast growth.
+		<</if>>
+	<<elseif $activeSlave.geneticQuirks.macromastia >= 2>>
+		$He has
+		<<if $activeSlave.geneticQuirks.macromastia == 3>>
+			dormant macromastia. Hormonal effects may cause it to become active.
+		<<else>>
+			macromastia and will experience excess development of breast tissue.
+		<</if>>
+	<</if>>
+	<<if $activeSlave.geneticQuirks.gigantomastia == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of a genetic flaw that causes gigantomastia.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.macromastia == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of a genetic flaw that causes macromastia.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.wellHung == 2>>
+		<<if $activeSlave.physicalAge <= 16 && $activeSlave.hormoneBalance < 100 && $activeSlave.dick > 0>>
+			$He is likely to experience an inordinate amount of penile growth during $his physical development.
+		<<elseif $activeSlave.dick > 0>>
+			$He is predisposed to having an enormous dick, though it is unlikely to naturally grow any larger than it currently is.
+		<<else>>
+			$He is predisposed to having an enormous dick, or would, if $he had one.
+		<</if>>
+	<<elseif $activeSlave.geneticQuirks.wellHung == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of a gene that causes enhanced penile development.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.rearLipedema == 2>>
+		$His body uncontrollably builds fat on $his rear resulting in constant growth.
+	<<elseif $activeSlave.geneticQuirks.rearLipedema == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a carrier of a genetic flaw that causes lipedema.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.wGain == 2 && $activeSlave.geneticQuirks.wLoss == 2>>
+		$He has irregular leptin production and will undergo shifts in weight.
+	<<elseif $activeSlave.geneticQuirks.wGain == 2>>
+		$He has hyperleptinemia and will easily gain weight.
+	<<elseif $activeSlave.geneticQuirks.wLoss == 2>>
+		$He has hypoleptinemia and will easily lose weight.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.wGain == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a hyperleptinemia carrier.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.wLoss == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a hypoleptinemia carrier.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.mGain == 2 && $activeSlave.geneticQuirks.mLoss == 2>>
+		$He has severe genetic flaw resulting in easily replaced, rapidly lost muscle mass.
+	<<elseif $activeSlave.geneticQuirks.mGain == 2>>
+		$He has myotonic hypertrophy and will easily gain muscle mass.
+	<<elseif $activeSlave.geneticQuirks.mLoss == 2>>
+		$He has myotonic dystrophy and will rapidly lose muscle mass.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.mGain == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a myotonic hypertrophy carrier.
+	<</if>>
+	<<if $activeSlave.geneticQuirks.mLoss == 1 && $geneticMappingUpgrade >= 2>>
+		$He is a myotonic dystrophy carrier.
+	<</if>>
+<</if>>
+
+<</widget>>

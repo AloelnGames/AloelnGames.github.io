@@ -1,0 +1,935 @@
+:: Prestigious Slave [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Buy Slaves", $returnTo = "Buy Slaves">>
+<<set $showEncyclopedia = 1, $encyclopedia = "Slave Schools">>
+
+You check to see if any especially prestigious slaves are on auction. <<if $prestigeAuctioned == 1>>There are none available right now, but there probably will be next week.<<else>>
+
+<<set $prestigeAuctioned = 1>>
+
+<<set _choice = (function() {
+	const options = [
+		"porn star",
+		"trophy wife",
+		"sports star",
+		"young model",
+		"albino",
+		"old-timer",
+		"b-list actress",
+		"politician",
+		"princess",
+		"arcology",
+		"streamer",
+	];
+	const dickOptions = [
+		"d herm",
+		"d young herm",
+		"d pornstar",
+		"d trophy husband",
+		"d sports star",
+		"d young model",
+		"d albino",
+		"d old-timer",
+		"d b-list actress",
+		"d politician",
+		"d princess",
+		"d arcology",
+		"d streamer",
+	];
+	return jsEither(Math.random()*100 < V.seeDicks ? dickOptions : options);
+})()>>
+
+<<switch _choice>>
+<<case "porn star">>
+	<<set $activeSlaveOneTimeMinAge = Math.min(24, $minimumSlaveAge + 6)>>
+	<<set $activeSlaveOneTimeMaxAge = 40>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He was once a noted adult film star, and was sold into slavery by $his unscrupulous managers.">>
+	<<set $activeSlave.career = "a porn star">>
+	<<set $activeSlave.boobsImplant += random(4,6)*200>>
+	<<set $activeSlave.boobs += $activeSlave.boobsImplant>>
+	<<set $activeSlave.boobsImplantType = "string">>
+	<<set $activeSlave.nipples = either("cute", "huge", "puffy")>>
+	<<set $activeSlave.areolae = 1>>
+	<<set $activeSlave.butt += 1>>
+	<<set $activeSlave.buttImplant += 1>>
+	<<set $activeSlave.buttImplantType = "normal">>
+	<<set $activeSlave.lips += 10>>
+	<<set $activeSlave.lipsImplant += 10>>
+	<<set $activeSlave.face = Math.clamp($activeSlave.face+20,-100,100)>>
+	<<set $activeSlave.faceImplant += 20>>
+	<<set $activeSlave.faceShape = "sensual">>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave)>>
+	<<set $activeSlave.anus = 2>>
+	<<set $activeSlave.vagina = 2>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.clitPiercing = 1>>
+	<<set $activeSlave.tonguePiercing = 1>>
+	<<set $activeSlave.nipplesPiercing = 1>>
+	<<set $activeSlave.nosePiercing = 1>>
+	<<set $activeSlave.earPiercing = 1>>
+	<<set $activeSlave.skill.vaginal = 100>>
+	<<set $activeSlave.skill.oral = 100>>
+	<<set $activeSlave.skill.anal = 100>>
+	<<set $activeSlave.skill.whoring = 15>>
+	<<set $activeSlave.skill.entertainment = 100>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.behavioralFlaw = either("anorexic", "arrogant", "bitchy")>>
+	<<set $activeSlave.fetish = "none">>
+	<<set $activeSlave.fetishKnown = 1>>
+	<<set $activeSlave.custom.desc = "$He has seen and done almost everything sexually possible, on camera.">>
+
+<<case "trophy wife">>
+	<<set $activeSlaveOneTimeMinAge = Math.min(19, Math.max($fertilityAge, $minimumSlaveAge) + 1)>>
+	<<set $activeSlaveOneTimeMaxAge = 22>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He was once the young trophy $wife of a powerful man in the old world, but he sold $him into slavery in revenge for $his infidelity.">>
+	<<set $activeSlave.career = "a trophy wife">>
+	<<set $activeSlave.boobsImplant += random(1,3)*200>>
+	<<set $activeSlave.boobs += $activeSlave.boobsImplant>>
+	<<set $activeSlave.boobsImplantType = "normal">>
+	<<set $activeSlave.butt += 1>>
+	<<set $activeSlave.buttImplant += 1>>
+	<<set $activeSlave.buttImplantType = "normal">>
+	<<set $activeSlave.lips += 10>>
+	<<set $activeSlave.lipsImplant += 10>>
+	<<set $activeSlave.face = Math.clamp($activeSlave.face+20,-100,100)>>
+	<<set $activeSlave.faceImplant += 20>>
+	<<set $activeSlave.faceShape = "sensual">>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(60, 80), 0, 0, 0)>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.vagina = 1>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.clitPiercing = 1>>
+	<<set $activeSlave.nipplesPiercing = 1>>
+	<<set $activeSlave.earPiercing = 1>>
+	<<set $activeSlave.skill.vaginal = 35>>
+	<<set $activeSlave.skill.oral = 35>>
+	<<set $activeSlave.skill.anal = 15>>
+	<<set $activeSlave.skill.whoring = 35>>
+	<<set $activeSlave.skill.entertainment = 15>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.behavioralFlaw = either("anorexic", "arrogant", "bitchy")>>
+	<<set $activeSlave.fetish = "none">>
+	<<set $activeSlave.fetishKnown = 1>>
+	<<set $activeSlave.custom.tattoo = "$His ex-husband's name is prettily tattooed on $his left arm, but a black line has been subsequently tattooed across it.">>
+
+<<case "sports star">>
+	<<set $activeSlaveOneTimeMinAge = 21>>
+	<<set $activeSlaveOneTimeMaxAge = 25>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He was once expected to become a major sports star, but flamed out due to injury and was recently enslaved due to debt.">>
+	<<set $activeSlave.career = "an athlete">>
+	<<set $activeSlave.intelligence = random(-90,-20)>>
+	<<set $activeSlave.intelligenceImplant = 0>>
+	<<set $activeSlave.muscles = 50>>
+	<<set $activeSlave.heels = 1>>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(80, 90), 0, jsRandom(5, 10), 0, jsRandom(10, 30))>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.vagina = 1>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.earPiercing = 1>>
+	<<set $activeSlave.eyebrowPiercing = random(0,1)>>
+	<<set $activeSlave.nosePiercing = random(0,1)>>
+	<<set $activeSlave.navelPiercing = random(0,1)>>
+	<<set $activeSlave.skill.vaginal = 15>>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.skill.entertainment = 0>>
+	<<set $activeSlave.skill.combat = 1>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.sexualFlaw = either("hates anal", "hates oral", "hates penetration")>>
+	<<set $activeSlave.behavioralFlaw = "arrogant">>
+	<<set $activeSlave.custom.desc = "$He's not particularly bright, and enjoys solving problems with physical force.">>
+
+<<case "young model">>
+	<<set $activeSlaveOneTimeMaxAge = 21>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He was once a rising young model, but apparently someone decided to take a shortcut in cashing in on $his great beauty.">>
+	<<set $activeSlave.career = "a model">>
+	<<set $activeSlave.boobs = random(2,4)*100>>
+	<<set $activeSlave.butt = random(1,3)>>
+	<<set $activeSlave.lips = random(15,25)>>
+	<<set $activeSlave.face = 55>>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(-20, 20), 0, 0, 0, jsRandom(10, 30))>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.vagina = 1>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.earPiercing = 1>>
+	<<set $activeSlave.skill.vaginal = 15>>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 15>>
+	<<set $activeSlave.skill.entertainment = 35>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.behavioralFlaw = either("anorexic", "arrogant")>>
+	<<set $activeSlave.custom.desc = "$He moves with the practiced grace of someone who unconsciously still pictures $himself on the runway.">>
+
+<<case "albino">>
+	<<set $activeSlaveOneTimeMaxAge = 18>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He is a natural albino, and was quickly enslaved due to the great demand for physically unusual specimens.">>
+	<<set $activeSlave.geneticQuirks.albinism = 2>>
+	<<set $activeSlave.albinismOverride = {skin: "pure white", eyeColor: "pale grey", hColor: "white"}>>
+	<<run applyGeneticColor($activeSlave)>>
+	<<set $activeSlave.career = "a slave">>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run eyeSurgery($activeSlave, "both", "blur"), setHealth($activeSlave, jsRandom(40, 60), 0, 0, 0, jsRandom(10, 30))>>
+	<<set $activeSlave.custom.desc = "$His eyes are unsettling; though $his irises are a pale grey color, in some lights the whole eye takes on a red cast.">>
+
+<<case "old-timer">>
+	<<set $activeSlaveOneTimeMinAge = ($minimumSlaveAge + 15)>>
+	<<set $activeSlaveOneTimeMaxAge = 35>>
+	<<set $one_time_age_overrides_pedo_mode = 1>> /% 15 years a slave. %/
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 2>>
+	<<set $activeSlave.prestigeDesc = "$He is one of the longest legally-enslaved persons in the world, having been a slave for 15 years. $He has spent almost all that time working as a slave prostitute, and has been heavily modified to keep $him productive.">>
+	<<set $activeSlave.career = "a slave">>
+	<<set $activeSlave.boobsImplant += random(10,15)*200>>
+	<<set $activeSlave.boobs += $activeSlave.boobsImplant>>
+	<<set $activeSlave.boobsImplantType = "fillable">>
+	<<set $activeSlave.nipples = either("cute", "huge", "puffy")>>
+	<<set $activeSlave.areolae = 2>>
+	<<set $activeSlave.butt += 4>>
+	<<set $activeSlave.buttImplant += 4>>
+	<<set $activeSlave.buttImplantType = "fillable">>
+	<<set $activeSlave.lips = random(75,85)>>
+	<<set $activeSlave.lipsImplant = 3>>
+	<<set $activeSlave.face = 55>>
+	<<set $activeSlave.faceImplant = 40>>
+	<<set $activeSlave.faceShape = "exotic">>
+	<<set $activeSlave.devotion = random(25,45)>>
+	<<set $activeSlave.trust = random(0,15)>>
+	<<run setHealth($activeSlave, jsRandom(20, 40), 0, jsRandom(0, 5), 0, jsRandom(10, 30))>>
+	<<set $activeSlave.anus = 3>>
+	<<set $activeSlave.vagina = 3>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.clitPiercing = 2>>
+	<<set $activeSlave.tonguePiercing = 2>>
+	<<set $activeSlave.nipplesPiercing = 2>>
+	<<set $activeSlave.nosePiercing = 2>>
+	<<set $activeSlave.lipsPiercing = 2>>
+	<<set $activeSlave.vaginaPiercing = 2>>
+	<<set $activeSlave.anusPiercing = 2>>
+	<<set $activeSlave.navelPiercing = 2>>
+	<<set $activeSlave.eyebrowPiercing = 2>>
+	<<set $activeSlave.earPiercing = 2>>
+	<<set $activeSlave.skill.vaginal = 100>>
+	<<set $activeSlave.skill.oral = 100>>
+	<<set $activeSlave.skill.anal = 100>>
+	<<set $activeSlave.skill.whoring = 100>>
+	<<set $activeSlave.skill.entertainment = 0>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.sexualFlaw = "none">>
+	<<set $activeSlave.behavioralFlaw = "none">>
+	<<set $activeSlave.energy = 100>>
+	<<set $activeSlave.fetish = "none">>
+	<<set $activeSlave.fetishKnown = 1>>
+	<<set $activeSlave.custom.desc = "$He has almost no inhibitions left at all.">>
+	<<set $activeSlave.custom.tattoo = "'50,000 Served!' is tattooed across $his back.">>
+	<<set $activeSlave.counter.publicUse += 1000>>
+
+<<case "b-list actress">>
+	<<set $activeSlaveOneTimeMinAge = 24>>
+	<<set $activeSlaveOneTimeMaxAge = 28>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 2>>
+	<<set $activeSlave.prestigeDesc = "$He was once a B-list actress, but fell on hard times and drug addiction and was recently enslaved due to debt.">>
+	<<set $activeSlave.career = "an actress">>
+	<<set $activeSlave.boobs += 200>>
+	<<set $activeSlave.boobsImplant += 200>>
+	<<set $activeSlave.boobsImplantType = "normal">>
+	<<set $activeSlave.butt += 1>>
+	<<set $activeSlave.buttImplant += 1>>
+	<<set $activeSlave.buttImplantType = "normal">>
+	<<set $activeSlave.lips += 10>>
+	<<set $activeSlave.lipsImplant += 10>>
+	<<set $activeSlave.face = 55>>
+	<<set $activeSlave.faceImplant += 20>>
+	<<set $activeSlave.faceShape = "cute">>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(-70, -40), undefined, undefined, 0, jsRandom(30, 80))>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.vagina = 1>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.earPiercing = 1>>
+	<<set $activeSlave.skill.vaginal = 15>>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.anal = 15>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.skill.entertainment = 100>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.addict = 20>>
+	<<set $activeSlave.sexualFlaw = either("hates anal", "hates oral", "hates penetration")>>
+	<<set $activeSlave.behavioralFlaw = either("anorexic", "arrogant", "bitchy", "odd")>>
+	<<set $activeSlave.custom.desc = "$He sometimes forgets $himself and acts as though $he were still a coming celebrity.">>
+
+<<case "politician">>
+	<<set $activeSlaveOneTimeMinAge = 38>>
+	<<set $activeSlaveOneTimeMaxAge = 42>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 2>>
+	<<set $activeSlave.prestigeDesc = "$He was once a rising old world politician, but was forced to flee from the increasingly dangerous politics common in a stressed world, and was subsequently enslaved.">>
+	<<set $activeSlave.career = "a politician">>
+	<<set $activeSlave.boobs += 100>>
+	<<set $activeSlave.butt += 1>>
+	<<set $activeSlave.face = Math.clamp($activeSlave.face+20,-100,100)>>
+	<<set $activeSlave.faceImplant += 20>>
+	<<set $activeSlave.faceShape = "normal">>
+	<<set $activeSlave.height += 10>>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(-45, -25), 0, 0, 0, jsRandom(30, 70))>>
+	<<set $activeSlave.anus = 0>>
+	<<set $activeSlave.vagina = 1>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.skill.vaginal = 15>>
+	<<set $activeSlave.skill.oral = 0>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.skill.entertainment = 35>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.behavioralFlaw = either("arrogant", "bitchy")>>
+	<<set $activeSlave.custom.tattoo = "A small tattoo of the crest of an old world sorority is visible on $his left shoulder blade.">>
+	<<set $activeSlave.custom.desc = "$His face is still recognizable as that which once graced a million campaign posters.">>
+
+<<case "princess">>
+	<<set $activeSlaveOneTimeMaxAge = 18>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 3>>
+	<<set $activeSlave.prestigeDesc = "$He was born a $daughter of royalty, but $his family was overthrown when $he was still young. $He is a graduate cum laude of the world's most renowned slave school.">>
+	<<set $activeSlave.career = "a slave">>
+	<<set $activeSlave.boobs += 100>>
+	<<set $activeSlave.butt += 1>>
+	<<set $activeSlave.lips += 10>>
+	<<set $activeSlave.face = Math.clamp($activeSlave.face+20,-100,100)>>
+	<<set $activeSlave.height += 10>>
+	<<set $activeSlave.devotion = random(75,90)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, 100, 0, 0, 0, jsRandom(0, 20))>>
+	<<set $activeSlave.anus = 0>>
+	<<set $activeSlave.vagina = 0>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.skill.vaginal = 0>>
+	<<set $activeSlave.skill.oral = 100>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 15>>
+	<<set $activeSlave.skill.entertainment = 35>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.sexualFlaw = "none">>
+	<<set $activeSlave.behavioralFlaw = "none">>
+	<<set $activeSlave.custom.tattoo = "$His family crest is tattooed on $his cheek.">>
+	<<set $activeSlave.custom.desc = "$His recognizable face marks $him as a descendant of an overthrown royal family.">>
+
+<<case "arcology">>
+	<<set $activeSlaveOneTimeMinAge = 28>>
+	<<set $activeSlaveOneTimeMaxAge = 42>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 3>>
+	<<set $activeSlave.prestigeDesc = "$He was once an arcology owner like you, but lost a Free Cities power struggle and was enslaved. An object lesson in the need to stay vigilant.">>
+	<<set $activeSlave.career = "an arcology owner">>
+	<<set $activeSlave.boobsImplant += random(20,40)*200>>
+	<<set $activeSlave.boobs += $activeSlave.boobsImplant>>
+	<<set $activeSlave.boobsImplantType = "advanced fillable">>
+	<<set $activeSlave.boobs += 1000>>
+	<<set $activeSlave.nipples = either("cute", "huge", "puffy")>>
+	<<set $activeSlave.areolae = 2>>
+	<<set $activeSlave.buttImplant += random(6,8)>>
+	<<set $activeSlave.butt += $activeSlave.buttImplant>>
+	<<set $activeSlave.buttImplantType = "advanced fillable">>
+	<<set $activeSlave.heels = 1>>
+	<<set $activeSlave.voice = 0>>
+	<<set $activeSlave.lips = random(75,85)>>
+	<<set $activeSlave.lipsImplant = 3>>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(-70, -60), undefined, undefined, undefined, jsRandom(40, 90))>>
+	<<set $activeSlave.anus = 3>>
+	<<set $activeSlave.vagina = 3>>
+	<<set $activeSlave.weight = -20>>
+	<<set $activeSlave.nipplesPiercing = 2>>
+	<<set $activeSlave.clitPiercing = 2>>
+	<<set $activeSlave.vaginaPiercing = 2>>
+	<<set $activeSlave.dickPiercing = 2>>
+	<<set $activeSlave.anusPiercing = 2>>
+	<<set $activeSlave.lipsPiercing = 2>>
+	<<set $activeSlave.tonguePiercing = 2>>
+	<<set $activeSlave.earPiercing = 2>>
+	<<set $activeSlave.nosePiercing = 2>>
+	<<set $activeSlave.eyebrowPiercing = 2>>
+	<<set $activeSlave.navelPiercing = 2>>
+	<<set $activeSlave.boobsTat = "rude words">>
+	<<set $activeSlave.buttTat = "rude words">>
+	<<set $activeSlave.vaginaTat = "rude words">>
+	<<set $activeSlave.dickTat = "rude words">>
+	<<set $activeSlave.lipsTat = "rude words">>
+	<<set $activeSlave.anusTat = "rude words">>
+	<<set $activeSlave.shouldersTat = "rude words">>
+	<<set $activeSlave.armsTat = "rude words">>
+	<<set $activeSlave.legsTat = "rude words">>
+	<<set $activeSlave.stampTat = "rude words">>
+	<<set $activeSlave.skill.vaginal = 15>>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.anal = 15>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.skill.entertainment = 0>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.hStyle = "shaved">>
+	<<set $activeSlave.hLength = 0>>
+	<<set $activeSlave.behavioralFlaw = either("odd")>>
+	<<set $activeSlave.custom.desc = "$His back is covered in a fine network of hairline scars, as though $he's been repeatedly flogged bloody, healed with curatives, and then flogged again.">>
+	<<set $activeSlave.custom.tattoo = "'ARCOLOGY OWNER' is tattooed across $his forehead.">>
+
+<<case "streamer">>
+	<<set $activeSlaveOneTimeMaxAge = 28>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He was once a popular creator on a live streaming service, but donations dropped off after getting caught up in some controversy.">>
+	<<set $activeSlave.career = "a camgirl">>
+	<<set $activeSlave.boobs = random(1,4)*100>>
+	<<set $activeSlave.butt = random(1,3)>>
+	<<set $activeSlave.lips = random(15,25)>>
+	<<set $activeSlave.face = 55>>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(-45, -25), 0, 0, 0, jsRandom(30, 70))>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.vagina = 1>>
+	<<set $activeSlave.weight = 20>>
+	<<set $activeSlave.earPiercing = 1>>
+	<<set $activeSlave.skill.vaginal = 15>>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.anal = 1>>
+	<<set $activeSlave.skill.whoring = 5>>
+	<<set $activeSlave.skill.entertainment = 70>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.behavioralFlaw = either("arrogant", "bitchy", "odd")>>
+	<<set $activeSlave.custom.desc = "$He is very comfortable in front of a camera and in public performances, having spent a long time entertaining $his viewers.">>
+
+<<case "d herm">>
+	<<set $activeSlaveOneTimeMinAge = 24>>
+	<<set $activeSlaveOneTimeMaxAge = 40>>
+	<<set $one_time_age_overrides_pedo_mode = 1>> /% Enslaved as an adult. %/
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He is a natural-born hermaphrodite. $He was enslaved as an adult and subjected to treatment to upgrade both $his halves to full functionality.">>
+	<<set $activeSlave.devotion = random(-45,-25)>>
+	<<set $activeSlave.trust = random(-90,-75)>>
+	<<run setHealth($activeSlave, jsRandom(-40, -30), undefined, undefined, 0, jsRandom(30, 70))>>
+	<<set $activeSlave.chem = 100>>
+	<<set $activeSlave.anus = random(1,2)>>
+	<<set $activeSlave.dick = random(1,2)>>
+	<<if $activeSlave.dick > 0>><<set $activeSlave.foreskin = $activeSlave.dick>><</if>>
+	<<set $activeSlave.prostate = 1>>
+	<<set $activeSlave.vagina = 1>>
+	<<set $activeSlave.ovaries = 1>>
+	<<set $activeSlave.preg = 0>>
+	<<set $activeSlave.balls = random(1,2)>>
+	<<if $activeSlave.balls > 0>><<set $activeSlave.scrotum = $activeSlave.balls>><</if>>
+	<<set $activeSlave.weight = random(-80,-20)>>
+	<<set $activeSlave.attrXX = random(30,50)>>
+	<<set $activeSlave.attrXY = random(30,50)>>
+	<<set $activeSlave.energy = random(5,20)>>
+	<<set $activeSlave.skill.vaginal = 0>>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.anal = 15>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.skill.entertainment = 0>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.custom.desc = "$He has had a very difficult time adjusting to $his unusual biology.">>
+
+<<case "d young herm">>
+	<<set $activeSlaveOneTimeMaxAge = 19>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He is a natural-born hermaphrodite. $He received treatment to ensure both $his halves would be fully functional from an early age.">>
+	<<set $activeSlave.career = "a slave">>
+	<<set $activeSlave.devotion = random(25,45)>>
+	<<set $activeSlave.trust = random(25,45)>>
+	<<run setHealth($activeSlave, jsRandom(0, 20), 0, 0, 0, jsRandom(20, 60))>>
+	<<set $activeSlave.chem = 200>>
+	<<set $activeSlave.boobs += 100*random(2,4)>>
+	<<set $activeSlave.butt += random(1,2)>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.dick = random(4,6)>>
+	<<set $activeSlave.prostate = 1>>
+	<<if $activeSlave.dick > 0>><<set $activeSlave.foreskin = $activeSlave.dick>><</if>>
+	<<set $activeSlave.balls = random(4,6)>>
+	<<if $activeSlave.balls > 0>><<set $activeSlave.scrotum = $activeSlave.balls>><</if>>
+	<<set $activeSlave.weight = random(20,80)>>
+	<<set $activeSlave.attrXX = random(80,100)>>
+	<<set $activeSlave.attrXY = random(80,100)>>
+	<<set $activeSlave.energy = random(60,90)>>
+	<<set $activeSlave.skill.vaginal = 0>>
+	<<set $activeSlave.skill.oral = 0>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.skill.entertainment = 15>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.sexualFlaw = "none">>
+	<<set $activeSlave.behavioralFlaw = "none">>
+	<<set $activeSlave.sexualQuirk = either("caring", "perverted", "romantic", "tease")>>
+	<<set $activeSlave.behavioralQuirk = either("adores men", "adores women", "advocate", "confident", "cutting", "funny")>>
+	<<set $activeSlave.custom.desc = "$He is very comfortable with $his unusual biology.">>
+
+<<case "d pornstar">>
+	<<set $activeSlaveOneTimeMinAge = 24>>
+	<<set $activeSlaveOneTimeMaxAge = 40>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He was once a noted adult film star, and was sold into slavery by $his unscrupulous managers.">>
+	<<set $activeSlave.career = "a porn star">>
+	<<set $activeSlave.boobsImplant += random(4,6)*200>>
+	<<set $activeSlave.boobs += $activeSlave.boobsImplant>>
+	<<set $activeSlave.boobsImplantType = "fillable">>
+	<<set $activeSlave.nipples = either("cute", "huge", "puffy")>>
+	<<set $activeSlave.areolae = 1>>
+	<<set $activeSlave.butt += 1>>
+	<<set $activeSlave.buttImplant += 1>>
+	<<set $activeSlave.buttImplantType = "normal">>
+	<<set $activeSlave.lips += 10>>
+	<<set $activeSlave.lipsImplant += 10>>
+	<<set $activeSlave.face = Math.clamp($activeSlave.face+20,-100,100)>>
+	<<set $activeSlave.faceImplant += 20>>
+	<<set $activeSlave.faceShape = "androgynous">>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, undefined, undefined, undefined, undefined, jsRandom(30, 70))>>
+	<<set $activeSlave.anus = 3>>
+	<<set $activeSlave.dick = 5>>
+	<<if $activeSlave.foreskin > 0>><<set $activeSlave.foreskin = $activeSlave.dick>><</if>>
+	<<set $activeSlave.balls = 5>>
+	<<if $activeSlave.balls > 0>><<set $activeSlave.scrotum = $activeSlave.balls>><</if>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.clitPiercing = 1>>
+	<<set $activeSlave.tonguePiercing = 1>>
+	<<set $activeSlave.nipplesPiercing = 1>>
+	<<set $activeSlave.nosePiercing = 1>>
+	<<set $activeSlave.earPiercing = 1>>
+	<<set $activeSlave.skill.oral = 100>>
+	<<set $activeSlave.skill.anal = 100>>
+	<<set $activeSlave.skill.whoring = 15>>
+	<<set $activeSlave.skill.entertainment = 100>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.behavioralFlaw = either("anorexic", "arrogant", "bitchy")>>
+	<<set $activeSlave.fetish = "none">>
+	<<set $activeSlave.fetishKnown = 1>>
+	<<set $activeSlave.custom.desc = "$He has seen and done almost everything sexually possible, on camera.">>
+
+<<case "d trophy husband">>
+	<<set $activeSlaveOneTimeMinAge = 19>>
+	<<set $activeSlaveOneTimeMaxAge = 22>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He was once the young trophy husband of a powerful woman in the old world, but she sold $him into slavery in revenge for $his infidelities.">>
+	<<set $activeSlave.career = "a trophy spouse">>
+	<<set $activeSlave.face = Math.clamp($activeSlave.face+20,-100,100)>>
+	<<set $activeSlave.faceImplant += 20>>
+	<<set $activeSlave.faceShape = "cute">>
+	<<set $activeSlave.muscles = random(20,100)>>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(60, 80), 0, 0, 0, jsRandom(10, 30))>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.clitPiercing = 1>>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 15>>
+	<<set $activeSlave.skill.entertainment = 15>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.behavioralFlaw = either("arrogant", "bitchy")>>
+	<<set $activeSlave.fetish = "none">>
+	<<set $activeSlave.fetishKnown = 1>>
+	<<set $activeSlave.custom.tattoo = "$His ex-wife's name is prettily tattooed on $his left arm, but a black line has been subsequently tattooed across it.">>
+
+<<case "d sports star">>
+	<<set $activeSlaveOneTimeMinAge = 21>>
+	<<set $activeSlaveOneTimeMaxAge = 25>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He was once expected to become a major sports star, but flamed out due to injury and was recently enslaved due to debt.">>
+	<<set $activeSlave.career = "an athlete">>
+	<<set $activeSlave.intelligence = random(-90,-20)>>
+	<<set $activeSlave.intelligenceImplant = 0>>
+	<<set $activeSlave.muscles = 50>>
+	<<set $activeSlave.heels = 1>>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(80, 90), 0, jsRandom(5, 10), 0, jsRandom(20, 50))>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.dick = random(3,5)>>
+	<<if $activeSlave.dick > 0>><<set $activeSlave.foreskin = $activeSlave.dick>><</if>>
+	<<set $activeSlave.balls = random(3,5)>>
+	<<if $activeSlave.balls > 0>><<set $activeSlave.scrotum = $activeSlave.balls>><</if>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.skill.entertainment = 0>>
+	<<set $activeSlave.skill.combat = 1>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.sexualFlaw = either("hates anal", "hates oral", "hates penetration")>>
+	<<set $activeSlave.behavioralFlaw = "arrogant">>
+	<<set $activeSlave.custom.desc = "$He's not particularly bright, and enjoys solving problems with physical force.">>
+
+<<case "d young model">>
+	<<set $activeSlaveOneTimeMaxAge = 21>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He was once a rising young model, but apparently someone decided to take a shortcut in cashing in on $his great beauty.">>
+	<<set $activeSlave.career = "a model">>
+	<<set $activeSlave.boobs = random(1,3)*100>>
+	<<set $activeSlave.butt = random(1,2)>>
+	<<set $activeSlave.muscles = 20>>
+	<<set $activeSlave.lips = random(15,25)>>
+	<<set $activeSlave.face = 55>>
+	<<set $activeSlave.faceImplant = 20*random(1,2)>>
+	<<set $activeSlave.faceShape = "androgynous">>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(-20, 20), 0, 0, 0, jsRandom(10, 30))>>
+	<<set $activeSlave.anus = 2>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.earPiercing = 1>>
+	<<set $activeSlave.skill.oral = 100>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 15>>
+	<<set $activeSlave.skill.entertainment = 35>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.sexualFlaw = either("hates women")>>
+	<<set $activeSlave.behavioralFlaw = either("anorexic", "arrogant")>>
+	<<set $activeSlave.custom.desc = "$He moves with the practiced grace of someone who unconsciously still pictures $himself on the runway.">>
+
+<<case "d albino">>
+	<<set $activeSlaveOneTimeMaxAge = 18>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He is a natural albino, and was quickly enslaved due to the great demand for physically unusual specimens.">>
+	<<set $activeSlave.geneticQuirks.albinism = 2>>
+	<<set $activeSlave.albinismOverride = {skin: "pure white", eyeColor: "pale grey", hColor: "white"}>>
+	<<run applyGeneticColor($activeSlave)>>
+	<<set $activeSlave.career = "a slave">>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run eyeSurgery($activeSlave, "both", "blur"), setHealth($activeSlave, jsRandom(40, 60), 0, 0, 0, jsRandom(10, 30))>>
+	<<set $activeSlave.custom.desc = "$His eyes are unsettling; though $his irises are a pale grey color, in some lights the whole eye takes on a red cast.">>
+
+<<case "d old-timer">>
+	<<set $activeSlaveOneTimeMinAge = ($minimumSlaveAge + 15)>>
+	<<set $activeSlaveOneTimeMaxAge = 35>>
+	<<set $one_time_age_overrides_pedo_mode = 1>> /% 15 years a slave. %/
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 2>>
+	<<set $activeSlave.prestigeDesc = "$He is one of the longest legally-enslaved persons in the world, having been a slave for 15 years. $He has spent almost all that time working as a slave prostitute, and has been heavily modified to keep $him productive.">>
+	<<set $activeSlave.career = "a prostitute">>
+	<<set $activeSlave.boobsImplant += random(10,15)*200>>
+	<<set $activeSlave.boobs += $activeSlave.boobsImplant>>
+	<<set $activeSlave.boobsImplantType = "advanced fillable">>
+	<<set $activeSlave.nipples = either("cute", "huge", "puffy")>>
+	<<set $activeSlave.areolae = 2>>
+	<<set $activeSlave.butt += 4>>
+	<<set $activeSlave.buttImplant += 4>>
+	<<set $activeSlave.buttImplantType = "fillable">>
+	<<set $activeSlave.lips = random(25,55)>>
+	<<set $activeSlave.lipsImplant = 2>>
+	<<set $activeSlave.face = 55>>
+	<<set $activeSlave.faceImplant = 40>>
+	<<set $activeSlave.faceShape = "exotic">>
+	<<set $activeSlave.devotion = random(25,45)>>
+	<<set $activeSlave.trust = random(0,15)>>
+	<<run setHealth($activeSlave, jsRandom(20, 40), undefined, jsRandom(5, 10), undefined, jsRandom(30, 70))>>
+	<<set $activeSlave.anus = 3>>
+	<<set $activeSlave.dick = 1>>
+	<<if $activeSlave.foreskin > 0>><<set $activeSlave.foreskin = $activeSlave.dick>><</if>>
+	<<if $activeSlave.balls > 0>><<set $activeSlave.scrotum = $activeSlave.balls>><</if>>
+	<<set $activeSlave.balls = 0>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.clitPiercing = 2>>
+	<<set $activeSlave.tonguePiercing = 2>>
+	<<set $activeSlave.nipplesPiercing = 2>>
+	<<set $activeSlave.nosePiercing = 2>>
+	<<set $activeSlave.lipsPiercing = 2>>
+	<<set $activeSlave.vaginaPiercing = 2>>
+	<<set $activeSlave.anusPiercing = 2>>
+	<<set $activeSlave.navelPiercing = 2>>
+	<<set $activeSlave.eyebrowPiercing = 2>>
+	<<set $activeSlave.earPiercing = 2>>
+	<<set $activeSlave.skill.oral = 100>>
+	<<set $activeSlave.skill.anal = 100>>
+	<<set $activeSlave.skill.whoring = 100>>
+	<<set $activeSlave.skill.entertainment = 0>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.sexualFlaw = "none">>
+	<<set $activeSlave.behavioralFlaw = "none">>
+	<<set $activeSlave.energy = 100>>
+	<<set $activeSlave.fetish = "none">>
+	<<set $activeSlave.fetishKnown = 1>>
+	<<set $activeSlave.custom.desc = "$He has almost no inhibitions left at all.">>
+	<<set $activeSlave.custom.tattoo = "'50,000 Served!' is tattooed across $his back.">>
+	<<set $activeSlave.counter.publicUse += 1000>>
+
+<<case "d b-list actress">>
+	<<set $activeSlaveOneTimeMinAge = 24>>
+	<<set $activeSlaveOneTimeMaxAge = 28>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 2>>
+	<<set $activeSlave.prestigeDesc = "$He was once a B-list actress, but fell on hard times and drug addiction and was recently enslaved due to debt.">>
+	<<set $activeSlave.career = "an actress">>
+	<<set $activeSlave.boobs += 200>>
+	<<set $activeSlave.boobsImplant += 200>>
+	<<set $activeSlave.boobsImplantType = "normal">>
+	<<set $activeSlave.butt += 1>>
+	<<set $activeSlave.buttImplant += 1>>
+	<<set $activeSlave.buttImplantType = "normal">>
+	<<set $activeSlave.lips += 10>>
+	<<set $activeSlave.lipsImplant += 10>>
+	<<set $activeSlave.face = 55>>
+	<<set $activeSlave.faceImplant += 20>>
+	<<set $activeSlave.faceShape = "cute">>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(-80, -40), 0, 0, 0, jsRandom(30, 70))>>
+	<<set $activeSlave.anus = 1>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.earPiercing = 1>>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.anal = 15>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.skill.entertainment = 100>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.addict = 20>>
+	<<set $activeSlave.sexualFlaw = either("hates anal", "hates oral", "hates penetration")>>
+	<<set $activeSlave.behavioralFlaw = either("anorexic", "arrogant", "bitchy", "odd")>>
+	<<set $activeSlave.custom.desc = "$He sometimes forgets $himself and acts as though $he were still a coming celebrity.">>
+
+<<case "d politician">>
+	<<set $activeSlaveOneTimeMinAge = 38>>
+	<<set $activeSlaveOneTimeMaxAge = 42>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 2>>
+	<<set $activeSlave.prestigeDesc = "$He was once a rising old world politician, but was forced to flee from the increasingly dangerous politics common in a stressed world, and was subsequently enslaved.">>
+	<<set $activeSlave.career = "a politician">>
+	<<set $activeSlave.muscles = random(10,50)>>
+	<<set $activeSlave.height = random(160,200)>>
+	<<set $activeSlave.face = Math.clamp($activeSlave.face+20,-100,100)>>
+	<<set $activeSlave.faceImplant += 20>>
+	<<set $activeSlave.faceShape = "masculine">>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(60, 80), 0, 0, 0, jsRandom(30, 70))>>
+	<<set $activeSlave.anus = 0>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.skill.oral = 0>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.skill.entertainment = 35>>
+	<<set $activeSlave.behavioralFlaw = either("arrogant", "bitchy")>>
+	<<set $activeSlave.custom.tattoo = "A small tattoo of the crest of an old world fraternity is visible on $his left shoulder blade.">>
+	<<set $activeSlave.custom.desc = "$His face is still recognizable as that which once graced a million campaign posters.">>
+
+<<case "d princess">>
+	<<set $activeSlaveOneTimeMaxAge = 18>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 3>>
+	<<set $activeSlave.prestigeDesc = "$He was born a child of royalty, but $his family was overthrown when $he was still young. $He is a graduate cum laude of the world's most renowned slave school.">>
+	<<set $activeSlave.career = "a slave">>
+	<<set $activeSlave.boobs += 100>>
+	<<set $activeSlave.butt += 1>>
+	<<set $activeSlave.lips += 10>>
+	<<set $activeSlave.face = Math.clamp($activeSlave.face+20,-100,100)>>
+	<<set $activeSlave.height += 10>>
+	<<set $activeSlave.devotion = random(75,85)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, 100, 0, 0, 0, jsRandom(0, 20))>>
+	<<set $activeSlave.anus = 0>>
+	<<set $activeSlave.dick = 2>>
+	<<if $activeSlave.foreskin > 0>><<set $activeSlave.foreskin = $activeSlave.dick>><</if>>
+	<<set $activeSlave.balls = 1>>
+	<<if $activeSlave.balls > 0>><<set $activeSlave.scrotum = $activeSlave.balls>><</if>>
+	<<set $activeSlave.weight = 0>>
+	<<set $activeSlave.skill.vaginal = 0>>
+	<<set $activeSlave.skill.oral = 100>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 15>>
+	<<set $activeSlave.skill.entertainment = 35>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.sexualFlaw = "none">>
+	<<set $activeSlave.behavioralFlaw = "none">>
+	<<set $activeSlave.custom.tattoo = "$His family crest is tattooed on $his cheek.">>
+	<<set $activeSlave.custom.desc = "$His recognizable face marks $him as a descendant of an overthrown royal family.">>
+
+<<case "d arcology">>
+	<<set $activeSlaveOneTimeMinAge = 28>>
+	<<set $activeSlaveOneTimeMaxAge = 42>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 3>>
+	<<set $activeSlave.prestigeDesc = "$He was once an arcology owner like you, but lost a Free Cities power struggle and was enslaved. An object lesson in the need to stay vigilant.">>
+	<<set $activeSlave.career = "an arcology owner">>
+	<<set $activeSlave.muscles = random(10,50)>>
+	<<set $activeSlave.heels = 1>>
+	<<set $activeSlave.voice = 0>>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(-80, -60), undefined, undefined, undefined, jsRandom(40, 90))>>
+	<<set $activeSlave.anus = 3>>
+	<<set $activeSlave.weight = -20>>
+	<<set $activeSlave.nipplesPiercing = 2>>
+	<<set $activeSlave.clitPiercing = 2>>
+	<<set $activeSlave.vaginaPiercing = 2>>
+	<<set $activeSlave.dickPiercing = 2>>
+	<<set $activeSlave.anusPiercing = 2>>
+	<<set $activeSlave.lipsPiercing = 2>>
+	<<set $activeSlave.tonguePiercing = 2>>
+	<<set $activeSlave.earPiercing = 2>>
+	<<set $activeSlave.nosePiercing = 2>>
+	<<set $activeSlave.eyebrowPiercing = 2>>
+	<<set $activeSlave.navelPiercing = 2>>
+	<<set $activeSlave.boobsTat = "rude words">>
+	<<set $activeSlave.buttTat = "rude words">>
+	<<set $activeSlave.vaginaTat = "rude words">>
+	<<set $activeSlave.dickTat = "rude words">>
+	<<set $activeSlave.lipsTat = "rude words">>
+	<<set $activeSlave.anusTat = "rude words">>
+	<<set $activeSlave.shouldersTat = "rude words">>
+	<<set $activeSlave.armsTat = "rude words">>
+	<<set $activeSlave.legsTat = "rude words">>
+	<<set $activeSlave.stampTat = "rude words">>
+	<<set $activeSlave.skill.oral = 15>>
+	<<set $activeSlave.skill.anal = 15>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.skill.entertainment = 0>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.hStyle = "shaved">>
+	<<set $activeSlave.hLength = 0>>
+	<<set $activeSlave.behavioralFlaw = either("odd")>>
+	<<set $activeSlave.custom.desc = "$His back is covered in a fine network of hairline scars, as though $he's been repeatedly flogged bloody, healed with curatives, and then flogged again.">>
+	<<set $activeSlave.custom.tattoo = "'ARCOLOGY OWNER' is tattooed across $his forehead.">>
+
+<<case "d streamer">>
+	<<set $activeSlaveOneTimeMaxAge = 28>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.origin = "You bought $him at auction.">>
+	<<set $activeSlave.prestige = 1>>
+	<<set $activeSlave.prestigeDesc = "$He was once a popular creator on a live streaming service, but donations dropped off after getting caught up in some controversy.">>
+	<<set $activeSlave.career = "a camgirl">>
+	<<set $activeSlave.boobs = random(1,3)*100>>
+	<<set $activeSlave.butt = random(1,2)>>
+	<<set $activeSlave.muscles = random(0, 20)>>
+	<<set $activeSlave.lips = random(15,25)>>
+	<<set $activeSlave.face = random(20,55)>>
+	<<set $activeSlave.faceShape = either("androgynous", "masculine")>>
+	<<set $activeSlave.devotion = random(-90,-80)>>
+	<<set $activeSlave.trust = random(-45,-25)>>
+	<<run setHealth($activeSlave, jsRandom(-45, -25), 0, 0, 0, jsRandom(20, 60))>>
+	<<set $activeSlave.anus = 2>>
+	<<set $activeSlave.weight = 20>>
+	<<set $activeSlave.earPiercing = 1>>
+	<<set $activeSlave.skill.oral = 30>>
+	<<set $activeSlave.skill.anal = 1>>
+	<<set $activeSlave.skill.whoring = 5>>
+	<<set $activeSlave.skill.entertainment = 70>>
+	<<set $activeSlave.pubicHStyle = "waxed">>
+	<<set $activeSlave.underArmHStyle = "waxed">>
+	<<set $activeSlave.behavioralFlaw = either("arrogant", "bitchy", "odd")>>
+	<<set $activeSlave.custom.desc = "$He is very comfortable in front of a camera and in public performances, having spent a long time entertaining $his viewers.">>
+
+<</switch>>
+
+<<set _slaveCost = slaveCost($activeSlave)>>
+
+<br><br>It will take <<print cashFormat(_slaveCost)>> to win the auction.
+
+<br>
+<<if $cash >= _slaveCost>>
+	[[Place that bid|New Slave Intro][cashX(forceNeg(_slaveCost), "slaveTransfer", $activeSlave),$nextButton = "Continue",$nextLink = "AS Dump",$returnTo = "Main"]]
+<<else>>
+	//You lack the necessary funds to place a winning bid.//
+<</if>>
+
+<<set $saleDescription = 1>>
+<br><br><<include "Long Slave Description">>
+
+<</if>>

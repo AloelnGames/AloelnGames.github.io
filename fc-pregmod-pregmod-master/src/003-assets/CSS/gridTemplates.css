@@ -1,0 +1,39 @@
+/* general use */
+div.grid-2columns-auto {
+	display: grid;
+	grid-template-columns: max-content auto;
+}
+
+/* specific uses */
+
+/* limb selector in limbs.js */
+div.limb-selector {
+	display: grid;
+	grid-template-columns: 200px 100px 100px 100px 100px;
+}
+
+div.limb-selector div.full {
+	grid-column-start: 1;
+	grid-column-end: 6;
+	text-align: center;
+}
+
+/* prostheticConfig.tw */
+div.eyeContainer {
+	display: grid;
+	grid-template-columns: 80px 50px 70px 50px;
+}
+
+div.buyProsthetics {
+	display: grid;
+	grid-template-columns: 300px 140px 150px 150px;
+}
+div.buyProsthetics div.full {
+	grid-column-start: 2;
+	grid-column-end: 5;
+}
+div.buyProsthetics div.research {
+	grid-column-start: 3;
+	grid-column-end: 5;
+	text-align: center;
+}

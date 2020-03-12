@@ -1,0 +1,1289 @@
+:: PT Workaround [nobr]
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+<<set _ptwi = $personalAttention.findIndex(function(s) { return s.ID == $activeSlave.ID; })>>
+<<setLocalPronouns $activeSlave>>
+<<setPlayerPronouns>>
+<<if $personalAttention[_ptwi].trainingRegimen == "look after her">>
+	''You care for''
+<<else>>
+	''You train''
+<</if>>
+<span class='slave-name'>$activeSlave.slaveName</span> when $he isn't otherwise occupied.
+
+<<set $activeSlave.training = Math.clamp($activeSlave.training, 0, 100), _currentSlaveValue = $activeSlave.training < 100 ? 0.2 : 0.5>>
+<<set $activeSlave.training += 80-($activeSlave.intelligence+$activeSlave.intelligenceImplant)/5+(($activeSlave.devotion+$activeSlave.trust)/10)>>
+<<if ($PC.skill.slaving >= 100) && $personalAttention.length == 1>> /* negate bonus when splitting focus among slaves */
+	<<set $activeSlave.training += 20>>
+<</if>>
+
+<<switch $personalAttention[_ptwi].trainingRegimen>>
+<<case "build her devotion">>
+	<<set $activeSlave.devotion += 6>>
+	<<if ($activeSlave.fetishKnown == 1) && ($activeSlave.fetishStrength > 60) && ($activeSlave.fetish == "submissive")>>
+		Since $activeSlave.slaveName is a submissive, you @@.hotpink;build $his devotion to you@@ by indulging $his need to be dominated. Already smiling to $himself, $he changes into bondage gear that <<if canSee($activeSlave)>>blinds $him<<else>>covers $his face<</if>><<if hasAnyArms($activeSlave)>>, forces $his arm<<if hasBothArms($activeSlave)>>s<</if>> behind $his back<</if>>, <<if $activeSlave.vagina <= 0 && $activeSlave.anus <= 0>>and <</if>>forces $him to present $his breasts uncomfortably<<if $activeSlave.vagina > 0 || $activeSlave.anus > 0>>, and forces a painfully large dildo up $his <<if $activeSlave.vagina > 0>>vagina<<if $activeSlave.anus > 0>> and anus<</if>><<elseif $activeSlave.anus > 0>>anus<</if>><</if>>. Thus attired, $he is forced to serve you in whatever petty ways occur to you. $He holds your tablet for you on $his upthrust ass as you work, holds a thin beverage glass for you in $his upturned mouth when you eat, and lies still so you can use $his tits as a pillow whenever you recline. $He loves it.
+	<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetishStrength > 60) && ($activeSlave.fetish == "cumslut") && ($PC.dick != 0)>>
+		Since $activeSlave.slaveName has an unusual taste for oral sex and cum, you @@.hotpink;build $his devotion to you@@ by indulging $him. You allow $him to spend $his free time following you around. $He is permitted to act as your private cum receptacle. If you use another slave, you usually pull out and give $his smiling face a facial. When you come inside another slave instead, $activeSlave.slaveName is allowed to get your cum anyway, regardless of whether that requires the other slave to spit it into $his mouth or $activeSlave.slaveName to suck it out of the other slave's vagina or rectum. Either way, $he rubs $his stomach happily after $he's swallowed it down.
+		<<set $activeSlave.counter.oral += 20, $oralTotal += 20>>
+	<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetishStrength > 60) && ($activeSlave.fetish == "boobs")>>
+		Since $activeSlave.slaveName has an unusual taste for having $his tits fondled, you @@.hotpink;build $his devotion to you@@ by indulging $him. You keep $him near you as a sort of living stress ball. Whenever you have a free hand, whether you're conducting business or buttfucking another slave, you reach over and play with $him. $He sometimes masturbates while you massage $his breasts and <<if $activeSlave.nipples == "fuckable">>finger<<else>>pinch<</if>> $his nipples, but often $he doesn't even need to.
+		<<set $activeSlave.counter.mammary += 20, $mammaryTotal += 20>>
+	<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetishStrength > 60) && ($activeSlave.fetish == "pregnancy")>>
+		Since $activeSlave.slaveName has an unusual taste for big pregnant bellies, you @@.hotpink;build $his devotion to you@@ by indulging $him. You <<if isItemAccessible("a small empathy belly") && $activeSlave.belly < 1500 && $activeSlave.weight < 130>>strap an enormous sympathy belly onto $him and <<elseif $activeSlave.belly < 1500>>strap a pillow around $his middle, give $him an oversized shirt and <</if>>keep $him near you as a sort of living stress ball. Whenever you have a free hand, whether you're conducting business or buttfucking another slave, you reach over and rub $his dome of a belly for luck. Occasionally you pay more attention to $him, making sure to fondle $his rounded middle as you feel up $his motherly body. $He sometimes masturbates when you aren't groping $him, enjoying $his gravid figure, but often $he doesn't even need to.
+	<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetishStrength > 60) && ($activeSlave.fetish == "humiliation") && ((canDoVaginal($activeSlave) && $activeSlave.vagina > 0) || (canDoAnal($activeSlave) && $activeSlave.anus > 0))>>
+		Since $activeSlave.slaveName has an unusual sexuality, you @@.hotpink;build $his devotion to you@@ by indulging $his perversions. Since $he's an absolute slut for humiliation, you let $him whore around inside the special camera room whenever possible. When you're going out and feel like putting on a show, you bring $him on a leash and fuck $him in public. $He comes harder than ever when you push $his naked body up against the wall of a crowded public arcology elevator and molest $him.
+		<<set $activeSlave.counter.oral += 4, $oralTotal += 4>>
+		<<= VCheck.Both(4, 2)>>
+	<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetishStrength > 60) && ($activeSlave.fetish == "humiliation")>>
+		Since $activeSlave.slaveName has an unusual sexuality, you @@.hotpink;build $his devotion to you@@ by indulging $his perversions. Since $he's an absolute slut for humiliation, you let $him whore around inside the special camera room whenever possible. When you're going out and feel like putting on a show, you
+		<<if (hasBothLegs($activeSlave))>>
+			bring $him on a leash and have $him service you in public. $He comes harder than ever when you push $him down on $his knees in a crowded public arcology elevator and facefuck $him while $he
+		<<else>>
+			carry $him out and have $him service you in public. $He comes harder than ever when you push $his face to your <<if $PC.dick != 0>>dick<<else>>pussy<</if>> in a crowded public arcology elevator and facefuck $him while $he
+		<</if>>
+		<<if (hasAnyArms($activeSlave))>>
+			masturbates fervently.
+		<<else>>
+			tries $his hardest to masturbate.
+		<</if>>
+		<<set $activeSlave.counter.oral += 8, $oralTotal += 8>>
+	<<elseif ($activeSlave.anus == 3) && ($activeSlave.vagina == 3) && $activeSlave.geneMods.rapidCellGrowth != 1>>
+		$activeSlave.slaveName is a stretched-out, well-traveled slut. Some like their holes loose, but most prefer cunts and butts that don't make sloppy noises when fucked. So, you spend some quality care time with $him, carefully massaging $his abused holes with oils and lotions. $He comes, of course, but $his pussy and asshole do benefit from the treatment. You allow $him to service you with $his mouth to avoid spoiling your work right away. Afterward, $he <<if hasAnyArms($activeSlave)>>@@.hotpink;hugs you and gives you a kiss@@<<else>>@@.hotpink;gives you a kiss and tries to hug you,@@ but without arms, all $he manages is a sort of nuzzle<</if>>.
+		<<set $activeSlave.vagina--, $activeSlave.anus--,
+		$activeSlave.counter.oral += 5, $oralTotal += 5>>
+	<<elseif $activeSlave.vagina == 0>>
+		$activeSlave.slaveName's accustomed to the slave life, so the experience is almost novel for $him and $he is @@.hotpink;touched by the affection.@@ $He isn't used to being kissed, teased and massaged. $He's almost disappointed when it becomes clear that you don't mean to take $his virginity. You gently stimulate $his <<if $activeSlave.dick>>dick<<elseif $activeSlave.clit>>clit<<else>>nipples<</if>> while $he sucks you off, bringing $him to a moaning climax as you cum in $his mouth.
+		<<set $activeSlave.counter.oral += 5, $oralTotal += 5>>
+	<<elseif ($activeSlave.anus == 0) && ($activeSlave.vagina < 0)>>
+		You haven't decided to take $activeSlave.slaveName's anus yet, so you let $him suck you off and play with $himself while $he does. You stroke $his hair, play with $his tits, and generally pamper $him while $he orally services you. $He's accustomed to the slave life, so the experience of affection is novel for $him and $he is @@.hotpink;touched by the affection.@@ $He isn't used to being kissed, teased and massaged. $He's almost disappointed when it becomes clear that you don't mean to take $his virgin hole.
+		<<set $activeSlave.counter.oral += 5, $oralTotal += 5>>
+	<<elseif ($activeSlave.anus == 0) && ($activeSlave.vagina > 0) && canDoVaginal($activeSlave)>>
+		You fuck $activeSlave.slaveName, of course, but you do it slowly and lovingly, and keep well clear of $his still-virgin asshole in the process. $He's accustomed to the slave life, so the experience is almost novel for $him and $he is affectingly @@.hotpink;touched by the affection.@@ $He isn't used to being kissed, teased and massaged before $he takes cock. Slaves are usually used without regard to their orgasm, so $he's also surprised and gratified when you make meticulous efforts to delay your own orgasm so it can coincide with $his own. $He's a puddle on the sheets under your hands.
+		<<set $activeSlave.counter.oral += 4, $oralTotal += 4>>
+		<<= VCheck.Vaginal(4)>>
+	<<elseif $activeSlave.anus == 0>>
+		$activeSlave.slaveName's accustomed to the slave life, so the experience is almost novel for $him and $he is @@.hotpink;touched by the affection.@@ $He isn't used to being kissed, teased and massaged. $He's almost disappointed when it becomes clear that you don't mean to take $his anal virginity. You gently stimulate $his <<if $activeSlave.dick>>dick<<elseif $activeSlave.clit>>clit<<else>>nipples<</if>> while $he sucks you off, bringing $him to a moaning climax as you cum in $his mouth.
+		<<set $activeSlave.counter.oral += 5, $oralTotal += 5>>
+	<<else>>
+		You fuck $activeSlave.slaveName, of course, but you do it slowly and lovingly. $He's accustomed to the slave life, so the experience is almost novel for $him and $he is affectingly @@.hotpink;touched by the affection.@@ $He isn't used to being kissed, teased and massaged before $he takes cock. Slaves are usually used without regard to their orgasm, so $he's also surprised and gratified when you make meticulous efforts to delay your own orgasm so it can coincide with $his own. $He's a puddle on the sheets under your hands.
+		<<set $activeSlave.counter.oral += 4, $oralTotal += 4>>
+		<<if $activeSlave.vagina == 0>>
+			<<= VCheck.Vaginal(4)>>
+		<<else>>
+			<<= VCheck.Both(4, 2)>>
+		<</if>>
+	<</if>>
+	<<if ($PC.skill.slaving >= 100)>>
+		Your @@.springgreen;slave training experience@@ allows you to @@.hotpink;bend $him to your will@@ more quickly without provoking resistance.
+		<<set $activeSlave.devotion += 1>>
+	<</if>>
+	<<if ($activeSlave.trust > 10)>>
+		Spending time with you @@.mediumaquamarine;builds $his trust in $his <<= WrittenMaster($activeSlave)>>.@@
+		<<set $activeSlave.trust += 4>>
+	<<else>>
+		Spending time with you @@.mediumaquamarine;reduces $his fear towards you.@@
+		<<set $activeSlave.trust += 6>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', 0.2)>>
+	<<set $activeSlave.training = 0>>
+
+<<case "look after her">>
+	<<if $activeSlave.relationship == -3 && $activeSlave.fetish == "mindbroken">>
+		Since $activeSlave.slaveName is your $wife and not all there, you keep $him under a watchful eye to make sure no harm comes to the broken $girl. $He almost seems in better spirits under your care, not that it will matter in an hour or two.
+		<<if def $activeSlave.kindness>>
+			<<set $activeSlave.kindness++>>
+		<<else>>
+			<<set $activeSlave.kindness = 1>>
+		<</if>>
+	<</if>>
+	<<if ($activeSlave.health.condition < 100)>>
+		Your close and expert attention improves $his health in a way drug treatment or mere medical intervention cannot. @@.green;$His health has improved.@@
+		<<run improveCondition($activeSlave, 10)>>
+	<</if>>
+	<<if ($activeSlave.health.tired > 10)>>
+		You watch over $him as $he sleeps, assuring @@.green;a proper night's rest.@@
+		<<set $activeSlave.health.tired = Math.clamp($activeSlave.health.tired-10, 0, 1000)>>
+	<</if>>
+	<<if (($activeSlave.anus >= 3) || ($activeSlave.vagina >= 3)) && $activeSlave.geneMods.rapidCellGrowth != 1>>
+		$activeSlave.slaveName is a veteran sex slave and has seen hard use. Tightening up a slave is difficult, but with close supervision and attention it can be done. You and your other slaves carefully apply injections, creams, and massage, and $his other work is carefully managed to reduce wear and tear.
+		<<if ($activeSlave.anus >= 3) && (random(1,100) > 50)>>
+			@@.orange;$His anus has recovered and is now merely loose.@@
+			<<set $activeSlave.anus-->>
+		<<elseif ($activeSlave.anus >= 3)>>
+			$His distended anus does not improve this week.
+		<</if>>
+		<<if ($activeSlave.vagina >= 3) && (random(1,100) > 50)>>
+			@@.orange;$His pussy has tightened.@@
+			<<set $activeSlave.vagina-->>
+		<<elseif ($activeSlave.vagina >= 3)>>
+			$His loose pussy does not recover this week.
+		<</if>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', 0.1)>>
+	<<set $activeSlave.training = 0>>
+
+<<case "soften her behavioral flaw">>
+	<<if ($activeSlave.behavioralFlaw == "none")>>
+		$activeSlave.slaveName got over $his behavioral flaw without you;
+		@@.yellow;$his training assignment has defaulted to
+		<<if ["abusive", "anal addict", "attention whore", "breast growth", "breeder", "cum addict", "malicious", "neglectful", "none", "self hating"].includes($activeSlave.sexualFlaw)>>
+			<<if ($activeSlave.devotion <= 20) && ($activeSlave.trust >= -20)>>
+				breaking $his will.
+				<<set $personalAttention[_ptwi].trainingRegimen = "break her will">>
+			<<else>>
+				fostering devotion.
+				<<set $personalAttention[_ptwi].trainingRegimen = "build her devotion">>
+			<</if>>
+		<<else>>
+			softening $his sexual flaw.
+			<<set $personalAttention[_ptwi].trainingRegimen = "soften her sexual flaw">>
+		<</if>>
+		@@
+	<<else>>
+		<<if ($activeSlave.behavioralFlaw == "arrogant")>>
+			$activeSlave.slaveName thinks $he's better than everyone else. $He has some basis for a high opinion of $himself; otherwise you wouldn't be bothering with $him. You do your best to maintain $his belief that $he has something special to offer while training $him to offer it to you without objection.
+		<<elseif ($activeSlave.behavioralFlaw == "bitchy")>>
+			$activeSlave.slaveName always has a cutting remark ready. Some of them are actually pretty good, and you'd prefer to keep $his cutting wit intact. You strike a careful balance with $him, punishing the wrong remark at the wrong time, but rewarding appropriately biting comments.
+		<<elseif ($activeSlave.behavioralFlaw == "odd")>>
+			$activeSlave.slaveName is odd. $He's usually annoying, but on occasion $his oddities can produce great comic relief. You strike a careful balance with $him, punishing $him when $he irritates you, but allowing and even rewarding harmless little idiosyncrasies.
+		<<elseif ($activeSlave.behavioralFlaw == "hates men")>>
+			$activeSlave.slaveName does not like men. $He desperately needs social contact, though, so you encourage $him to rely on women to address $his emotional needs. This is easy, since
+			<<if $PC.vagina != -1>>
+				you've got a pussy yourself.
+			<<else>>
+				there are several readily available.
+			<</if>>
+		<<elseif ($activeSlave.behavioralFlaw == "hates women")>>
+			$activeSlave.slaveName does not like girls. $He desperately needs social contact, though, so you encourage $him to rely on men to address $his emotional needs. This is easy, since
+			<<if $PC.dick == 0>>
+				there are several readily available.
+			<<else>>
+				you've got a cock yourself.
+			<</if>>
+		<<elseif ($activeSlave.behavioralFlaw == "anorexic")>>
+			$activeSlave.slaveName suffers from anorexia. You work with $him patiently, applying the very best in modern therapy for this troubling condition. It's usually a product of poor self esteem, and you do your best to build $hers up without diminishing $his submission to you.
+		<<elseif ($activeSlave.behavioralFlaw == "gluttonous")>>
+			$activeSlave.slaveName's diet is already closely controlled, but the impulse to overeat is strong in $him and like most gluttons $he manages to be quite cunning. You take a hard line with $him, and do your best to replace $his addiction to the endorphin release of eating with an addiction to the endorphin release of exercise.
+		<<elseif ($activeSlave.behavioralFlaw == "liberated")>>
+			$activeSlave.slaveName can express a decent argument for why it's wrong to use $him as a sex slave. With a combination of rote training, discussion, and reinforcement, you do your best to turn this into a sincere belief in the moral rightness of slavery.
+		<<elseif ($activeSlave.behavioralFlaw == "devout")>>
+			$activeSlave.slaveName remains devoted to an old world faith that serves $him as a reservoir of mental resilience. Like all such beliefs, $hers has certain sexual elements; you amuse yourself by forcing $him to break them, and rewarding $him generously when $he does.
+		<</if>>
+		<<if $activeSlave.training < 100>>
+			You make progress, but $he's the same at the end of the week.
+		<<else>>
+			<<set $activeSlave.training = 0>>
+			By the end of the week, @@.green;you resolve $his flaw into something special.@@ @@.hotpink;$His obedience has increased.@@
+			<<run SoftenBehavioralFlaw($activeSlave)>>
+			<<set $activeSlave.devotion += 4>>
+		<</if>>
+		<<if $activeSlave.fetishKnown != 1>>
+			<<if ($activeSlave.fetish == "submissive")>>
+				$He really takes to your close attention; @@.pink;$he's a natural submissive!@@
+				<<set ($activeSlave.fetishKnown = 1)>>
+			<<elseif ($activeSlave.fetish == "cumslut")>>
+				While you're giving $him personal attention, you discover by chance that @@.pink;$he has an oral fixation!@@
+				<<set ($activeSlave.fetishKnown = 1)>>
+			<<elseif ($activeSlave.fetish == "masochist")>>
+				While you're giving $him personal correction, you discover by chance that @@.pink;$he likes pain!@@
+				<<set ($activeSlave.fetishKnown = 1)>>
+			<<elseif ($activeSlave.fetish == "humiliation")>>
+				While you're giving $him personal attention in public, you discover by chance that @@.pink;$he likes humiliation!@@
+				<<set ($activeSlave.fetishKnown = 1)>>
+			<</if>>
+		<</if>>
+		<<if ($activeSlave.behavioralFlaw == "none")>>
+			With $his behavioral flaw softened,
+			@@.yellow;$his training assignment has defaulted to
+			<<if ($activeSlave.sexualFlaw == "none")>>
+				<<if ($activeSlave.devotion <= 20) && ($activeSlave.trust >= -20)>>
+				breaking $his will.
+				<<set $personalAttention[_ptwi].trainingRegimen = "break her will">>
+				<<else>>
+				fostering devotion.
+				<<set $personalAttention[_ptwi].trainingRegimen = "build her devotion">>
+				<</if>>
+			<<else>>
+				softening $his sexual flaw.
+				<<set $personalAttention[_ptwi].trainingRegimen = "soften her sexual flaw">>
+			<</if>>
+			@@
+		<</if>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+
+<<case "soften her sexual flaw">>
+	<<if ($activeSlave.sexualFlaw == "none")>>
+		$activeSlave.slaveName got over $his sexual flaw without you,
+		@@.yellow;$his training assignment has defaulted to
+		<<if ($activeSlave.behavioralFlaw == "none")>>
+			<<if ($activeSlave.devotion <= 20) && ($activeSlave.trust >= -20)>>
+				breaking $his will.
+				<<set $personalAttention[_ptwi].trainingRegimen = "break her will">>
+			<<else>>
+				fostering devotion.
+				<<set $personalAttention[_ptwi].trainingRegimen = "build her devotion">>
+			<</if>>
+		<<else>>
+			softening $his behavioral flaw.
+			<<set $personalAttention[_ptwi].trainingRegimen = "soften her behavioral flaw">>
+		<</if>>
+		@@
+	<<else>>
+		$activeSlave.slaveName
+		<<switch $activeSlave.sexualFlaw>>
+		<<case "hates oral">>
+			has a powerful gag reflex. Though it would be simpler to train $him out of it, you do your best to train $him to safely take a rough facefuck without losing the fun aspects of forcing a slave to swallow a phallus, like the struggles, the gagging, and the tears.
+			<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+		<<case "hates anal">>
+			does not like it up the butt. Though it would be simpler to train $him out of it, you do your best to train $him to safely take a rough buttfuck without losing the fun aspects of anal rape, like the struggles, the whining, and the tears.
+			<<if canDoAnal($activeSlave)>>
+				<<= VCheck.Anal(10)>>
+			<<else>>
+				The inability to actually penetrate $his ass hinders your efforts, however.
+				<<set $activeSlave.training -= 20>> /* more difficult training */
+			<</if>>
+		<<case "hates penetration">>
+			<<if ($activeSlave.vagina > -1) && canDoVaginal($activeSlave)>>
+				does not like sex. Though it would be simpler to train $him out of it, you do your best to train $him to safely take a hard pounding without losing the fun aspects of forced sex, like the struggles, the whining, and the tears.
+				<<= VCheck.Vaginal(10)>>
+			<<elseif canDoAnal($activeSlave)>>
+				does not like it up the butt. Though it would be simpler to train $him out of it, you do your best to train $him to safely take a rough buttfuck without losing the fun aspects of anal rape, like the struggles, the whining, and the tears.
+				<<= VCheck.Anal(10)>>
+			<<else>>
+				does not dicks in $his mouth. Though it would be simpler to train $him out of it, you do your best to train $him to safely take a rough facefuck without losing the fun aspects of forcing a slave to swallow a phallus, like the struggles, the gagging, and the tears.
+				<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+			<</if>>
+		<<case "apathetic">>
+			doesn't put out much effort when having sex. You do your best to redirect this apathy into caring for $his partners; since $he obviously doesn't think much of $himself, $he can spare the effort.
+			<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+		<<case "crude">>
+			does not pay enough attention to standards when having sex, leading to crude comments and unsexy noises. To remedy this, you have $him give you oral regularly: a sacrifice, but you make sacrifices for your slaves' improvement. Oral sex can be difficult to make elegant, but you work with $him to make it as pretty as possible, even when you require $him to apply $his mouth to some of the less common erogenous zones. You do your best to retain $his sexual openness while making $him more sexually presentable.
+			<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+		<<case "judgemental">>
+			has a bad habit of being sexually judgemental, belittling anyone who doesn't live up to $his pretensions of standards. You do your best to train $him to perform regardless of $his partners' endowments, aiming for a delicate balance that will allow $him to get off with anyone while permitting $him to retain and even build on $his appetite for big dicks. You permit $him to achieve release only when $he's done well with <<if $PC.dick != 0>>your thick cock<<else>>a fat dildo<</if>>
+			<<if $activeSlave.vagina > 0 && canDoVaginal($activeSlave)>>
+				lodged up $his cunt.
+				<<= VCheck.Vaginal(10)>>
+			<<elseif $activeSlave.anus > 0 && canDoAnal($activeSlave)>>
+				lodged up $his butt.
+				<<= VCheck.Anal(10)>>
+			<<else>>
+				down $his throat.
+				<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+			<</if>>
+		<<case "shamefast">>
+			is shamefast. You do your best to train $him out of this, but carefully retain the essential core of embarrassment, aiming for a slave that can use $his body to titillate the viewer and then offer an authentic blush at $himself.
+			<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+		<<case "idealistic">>
+			still sees sex in a naïve light, hoping to be romanced, teased to arousal, and asked permission. Training $him directly out of this would shatter the poor $girl's world, so you work with $him carefully, doing your best to keep sex special for $him.
+		<<case "repressed">>
+			is repressed. You strike a delicate balance with $him, doing your best to train $him to fuck as a sex slave should, but trying to retain the rush of doing the forbidden that makes $him flush, shiver, and moan.
+			<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+		<<case "abusive" "anal addict" "attention whore" "breast growth" "breeder" "cum addict" "malicious" "neglectful" "self hating">>
+			has a paraphilia. Typical methods will have no effect on this kind of flaw.
+			<<set $activeSlave.training = 0>>
+			@@.yellow;$His training assignment has defaulted to
+			<<if ($activeSlave.devotion <= 20) && ($activeSlave.trust >= -20)>>
+				breaking $his will.
+				<<set $personalAttention[_ptwi].trainingRegimen = "break her will">>
+			<<else>>
+				fostering devotion.
+				<<set $personalAttention[_ptwi].trainingRegimen = "build her devotion">>
+			<</if>>@@
+		<<default>>
+			has something. You should probably report this as nobody knows what is currently happening. $His flaw was supposed to be $activeSlave.sexualFlaw.
+		<</switch>>
+		<<if $activeSlave.training < 100>>
+			You make progress, but $he's the same at the end of the week.
+		<<else>>
+			<<set $activeSlave.training = 0>>
+			By the end of the week, @@.green;you resolve $his flaw into something special.@@ @@.hotpink;$His obedience has increased.@@
+			<<run SoftenSexualFlaw($activeSlave)>>
+			<<set $activeSlave.devotion += 4>>
+		<</if>>
+		<<if $activeSlave.fetishKnown != 1>>
+			<<if ($activeSlave.fetish == "submissive")>>
+				$He really takes to your close attention; @@.pink;$he's a natural submissive!@@
+				<<set ($activeSlave.fetishKnown = 1)>>
+			<<elseif ($activeSlave.fetish == "cumslut")>>
+				While you're giving $him personal attention, you discover by chance that @@.pink;$he has an oral fixation!@@
+				<<set ($activeSlave.fetishKnown = 1)>>
+			<<elseif ($activeSlave.fetish == "masochist")>>
+				While you're giving $him personal correction, you discover by chance that @@.pink;$he likes pain!@@
+				<<set ($activeSlave.fetishKnown = 1)>>
+			<<elseif ($activeSlave.fetish == "humiliation")>>
+				While you're giving $him personal attention in public, you discover by chance that @@.pink;$he likes humiliation!@@
+				<<set ($activeSlave.fetishKnown = 1)>>
+			<</if>>
+		<</if>>
+		<<if ($activeSlave.sexualFlaw == "none")>>
+			With $his sexual flaw softened,
+			@@.yellow;$his training assignment has defaulted to
+			<<if ($activeSlave.behavioralFlaw == "none")>>
+				<<if ($activeSlave.devotion <= 20) && ($activeSlave.trust >= -20)>>
+				breaking $his will.
+				<<set $personalAttention[_ptwi].trainingRegimen = "break her will">>
+				<<else>>
+				fostering devotion.
+				<<set $personalAttention[_ptwi].trainingRegimen = "build her devotion">>
+				<</if>>
+			<<else>>
+				softening $his behavioral flaw.
+				<<set $personalAttention[_ptwi].trainingRegimen = "soften her behavioral flaw">>
+			<</if>>
+			@@
+		<</if>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+
+<<case "learn skills">>
+	<<set _trainingEfficiency = 10+Math.trunc($activeSlave.devotion/30)+Math.floor($activeSlave.intelligence/32)>>
+	<<if $PC.career == "escort">>
+		You are well-versed in sexual techniques and how to employ them, giving you an edge in teaching $him.
+		<<set _trainingEfficiency += 10>>
+	<</if>>
+	<<if $activeSlave.vagina >= 0>>
+		<<if !canDoVaginal($activeSlave) && $activeSlave.vagina == 0>>
+			<<set _vaginalTrainingEfficiency = Math.trunc(_trainingEfficiency/4)>>
+		<<elseif $activeSlave.vagina == 0 || !canDoVaginal($activeSlave)>>
+			<<set _vaginalTrainingEfficiency = Math.trunc(_trainingEfficiency/2)>>
+		<</if>>
+	<</if>>
+	<<if !canDoAnal($activeSlave) && $activeSlave.anus == 0>>
+		<<set _analTrainingEfficiency = Math.trunc(_trainingEfficiency/4)>>
+	<<elseif $activeSlave.anus == 0 || !canDoAnal($activeSlave)>>
+		<<set _analTrainingEfficiency = Math.trunc(_trainingEfficiency/2)>>
+	<</if>>
+	<<if $activeSlave.devotion > 50>>
+		$He's devoted to you, making sexual training much easier.
+	<<elseif $activeSlave.devotion > 20>>
+		$He's accepted $his place as a sex slave, making sexual training easier.
+	<<elseif $activeSlave.devotion < -20>>
+		$He's unhappy being a sex slave, making sexual training harder.
+	<</if>>
+	<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant > 15>>
+		$His intelligence allows $him to absorb $his lessons quickly.
+	<<elseif $activeSlave.intelligence+$activeSlave.intelligenceImplant < -15>>
+		$His stupidity makes $him absorb $his lessons slowly.
+	<</if>>
+	<<if $activeSlave.skill.oral <= 10>>
+		Since $he's orally unskilled, you start with $his mouth. $He <<if $PC.dick != 0>>sucks your dick<<else>>eats you out<</if>>, of course, but $his training is more creative than just that. You give $him <<if canTaste($activeSlave)>>delicious<<else>>sugary<</if>> hard candies to suck and feed $him phallic fruits and vegetables that $he must deepthroat before $he can eat. As $his skill improves, $he wears a gag with an inward-facing dildo, which is swapped out for a bigger size every so often. You only let $him orgasm when $he's sucking, and before long $he's associating giving someone oral pleasure with experiencing pleasure $himself. @@.lime;$His oral skills have improved.@@
+		<<= SkillIncrease.Oral($activeSlave, _trainingEfficiency)>>
+	<<elseif $activeSlave.skill.vaginal <= 10 && $activeSlave.vagina > 0 && canDoVaginal($activeSlave)>>
+		Since $he's vaginally unskilled, and not a virgin, you start with $his pussy. @@.lime;$His vaginal skills have improved.@@
+		<<= SkillIncrease.Vaginal($activeSlave, _trainingEfficiency)>>
+	<<elseif $activeSlave.skill.anal <= 10 && $activeSlave.anus > 0 && canDoAnal($activeSlave)>>
+		Since $he's anally unskilled, and not an anal virgin, you start with $his ass. @@.lime;$His anal skills have improved.@@
+		<<= SkillIncrease.Anal($activeSlave, _trainingEfficiency)>>
+	<<elseif $activeSlave.skill.oral <= 30>>
+		Since $he's sexually experienced, you work with $him on the finer points of oral sex. @@.lime;$His oral skills have improved.@@
+		<<= SkillIncrease.Oral($activeSlave, _trainingEfficiency)>>
+	<<elseif ($activeSlave.skill.vaginal <= 30) && ($activeSlave.vagina > 0) && canDoVaginal($activeSlave)>>
+		Since $he's sexually experienced, you work with $him on the finer points of penetrative sex. $He can already fuck pretty well, but $his muscular control could be improved. $He works $his Kegel muscles all week, using fingers, dildos, and your <<if $PC.dick == 0>>strap-on<<else>>cock<</if>> as training tools. $He becomes expert enough that $he is able to make you cum without any thrusting at all by you or any riding by $him; $he just flexes $his muscles enough to <<if $PC.dick == 0>>grind the fake phallus back against your cunt<<else>>stimulate you<</if>>. @@.lime;$His vaginal skills have improved.@@
+		<<= SkillIncrease.Vaginal($activeSlave, _trainingEfficiency)>>
+	<<elseif ($activeSlave.skill.anal <= 30) && ($activeSlave.anus > 0) && canDoAnal($activeSlave)>>
+		Since $he's anally experienced, you work with $him on the finer points of penetrative sex. $He can already take it up $his ass, but $his muscular control could be improved. $He works $his Kegel muscles and anal sphincter all week, using fingers, dildos, and your <<if $PC.dick == 0>>strap-on<<else>>cock<</if>> as training tools. $He becomes expert enough that $he is able to make you cum without any thrusting at all by you or any riding by $him; $he just flexes $his muscles enough to <<if $PC.dick == 0>>squeeze the fake phallus<<else>>stimulate you<</if>>. @@.lime;$His anal skills have improved.@@
+		<<= SkillIncrease.Anal($activeSlave, _trainingEfficiency)>>
+	<<elseif $activeSlave.skill.vaginal <= 10 && $activeSlave.vagina >= 0>>
+		Since $he's vaginally unskilled,
+		<<if $activeSlave.vagina == 0 && !canDoVaginal($activeSlave)>>
+			in chastity, and a virgin,
+		<<elseif ($activeSlave.vagina == 0)>>
+			and a virgin,
+		<<else>>
+			and in chastity,
+		<</if>>
+		you explain the basics of sex to $him. @@.lime;$His vaginal skills have improved.@@
+		<<= SkillIncrease.Vaginal($activeSlave, _vaginalTrainingEfficiency)>>
+	<<elseif $activeSlave.skill.anal <= 10>>
+		Since $he's anally unskilled,
+		<<if $activeSlave.anus == 0 && !canDoAnal($activeSlave)>>
+			an anal virgin, and in chastity,
+		<<elseif ($activeSlave.anus == 0)>>
+			and an anal virgin,
+		<<else>>
+			and in anal chastity,
+		<</if>>
+		you explain the basics of anal sex to $him. @@.lime;$His anal skills have improved.@@
+		<<= SkillIncrease.Anal($activeSlave, _analTrainingEfficiency)>>
+	<<elseif $activeSlave.skill.oral < 100>>
+		$He is already a skilled oral whore, but $his skills can be polished further. You train $him in the basics of <<if $seePee == 1>>urine play, <</if>>massage, pet play, needle play, and many other niche skills. You also expand $his oral endurance, enabling $him to deepthroat for extended periods. @@.lime;$His oral skills have improved.@@
+		<<= SkillIncrease.Oral($activeSlave, _trainingEfficiency)>>
+	<<elseif ($activeSlave.skill.vaginal < 100) && ($activeSlave.vagina > 0) && canDoVaginal($activeSlave)>>
+		$He is already a skilled pussy slut, but $his skills can be polished further. You train $him in the basics of <<if $seePee == 1>>urine play, <</if>>massage, pet play, needle play, and many other niche skills. You also work with $him to develop a personal regimen of vaginal muscle exercises. This will enable $him to squeeze and massage dicks with $his practiced vaginal walls. @@.lime;$His vaginal skills have improved.@@
+		<<= SkillIncrease.Vaginal($activeSlave, _trainingEfficiency)>>
+	<<elseif ($activeSlave.skill.anal < 100) && ($activeSlave.anus > 0) && canDoAnal($activeSlave)>>
+		$He is already a skilled anal bitch, but $his skills can be polished further. You train $him in the basics of <<if $seePee == 1>>urine play, <</if>>massage, pet play, needle play, and many other niche skills. You also expand $his knowledge of sexual positions. $He learns to balance $himself on tiptoe for the challenge of standing anal sex without support. @@.lime;$His sexual skills have improved.@@
+		<<= SkillIncrease.Anal($activeSlave, _trainingEfficiency)>>
+	<<elseif $activeSlave.skill.whoring <= 10>>
+		Since $he's dangerously naïve about selling sex, you teach $him the basics of self protection and business. @@.lime;$His prostitution skills have improved.@@
+		<<= SkillIncrease.Whore($activeSlave, _trainingEfficiency)>>
+	<<elseif $activeSlave.skill.entertainment <= 10>>
+		Since $he's rough and unskilled at entertainment, you teach $him the basics of polite conversation, music, and dance. @@.lime;$His entertainment skills have improved.@@
+		<<= SkillIncrease.Entertain($activeSlave, _trainingEfficiency)>>
+	<<elseif $activeSlave.skill.whoring <= 30>>
+		Since $he has only basic entertainment skills, you teach $him to steer clients to more lucrative sex acts. @@.lime;$His prostitution skills have improved.@@
+		<<= SkillIncrease.Whore($activeSlave, _trainingEfficiency)>>
+	<<elseif $activeSlave.skill.entertainment <= 30>>
+		Since $he has only basic entertainment skills, you teach $him more about poise and Free Cities etiquette. @@.lime;$His entertainment skills have improved.@@
+		<<= SkillIncrease.Entertain($activeSlave, _trainingEfficiency)>>
+	<<elseif $activeSlave.skill.whoring <= 60 && $PC.career == "escort">>
+		$He is already a skilled whore, so you teach $him some of your personal tricks to squeezing every last drop from a patron. @@.lime;$His prostitution skills have improved.@@
+		<<= SkillIncrease.Whore($activeSlave, _trainingEfficiency)>>
+	<<elseif $activeSlave.skill.entertainment <= 60 && $PC.career == "escort">>
+		$He is already skilled at luring in partners, so you teach $him some of your sexual persuasion techniques. @@.lime;$His entertainment skills have improved.@@
+		<<= SkillIncrease.Entertain($activeSlave, _trainingEfficiency)>>
+	<<elseif $activeSlave.skill.vaginal <= 30 && $activeSlave.vagina >= 0>>
+		Since $he has only rudimentary vaginal skills,
+		<<if $activeSlave.vagina == 0 && !canDoVaginal($activeSlave)>>
+			is in chastity, and a virgin on top of that,
+		<<elseif ($activeSlave.vagina == 0)>>
+			and still a virgin,
+		<<else>>
+			and is in chastity,
+		<</if>>
+		you spend time teaching $him sexual positions and how to someday use $his pussy to its potential. You have $him work $his Kegel muscles all week to prepare $him for the future. @@.lime;$His vaginal skills have improved,@@ but it's a slow process without practical experience. 
+		<<= SkillIncrease.Vaginal($activeSlave, _vaginalTrainingEfficiency)>>
+	<<elseif $activeSlave.skill.anal <= 30>>
+		Since $he has only rudimentary anal skills,
+		<<if $activeSlave.anus == 0 && !canDoAnal($activeSlave)>>
+			is an anal virgin, and is in chastity to top it off,
+		<<elseif ($activeSlave.anus == 0)>>
+			and is an anal virgin,
+		<<else>>
+			and is in anal chastity,
+		<</if>>
+		you spend time teaching $him sexual positions and how to someday use $his asshole to its potential. You have $him work $his Kegel  muscles and anal sphincter all week to prepare $him for the future. @@.lime;$His anal skills have improved,@@ but it's a slow process without practical experience. 
+		<<= SkillIncrease.Anal($activeSlave, _analTrainingEfficiency)>>
+	<<elseif $activeSlave.skill.vaginal < 100 && $activeSlave.vagina >= 0>>
+		$He already a skilled pussy slut,
+		<<if $activeSlave.vagina == 0 && !canDoVaginal($activeSlave)>>
+			despite $his chastity and virginity,
+		<<elseif ($activeSlave.vagina == 0)>>
+			despite still being a virgin,
+		<<else>>
+			despite $his chastity,
+		<</if>>
+		but lacks practical experience. You train $him in the basics of <<if $seePee == 1>>urine play, <</if>>massage, pet play, needle play, and many other niche skills. You also work with $him to develop a personal regimen of vaginal muscle exercises. This will enable $him to squeeze and massage dicks with $his practiced vaginal walls. You spend time expanding $his knowledge of sexual positions. @@.lime;$His vaginal skills have improved,@@ but it's a slow process without proper training. 
+		<<= SkillIncrease.Vaginal($activeSlave, _vaginalTrainingEfficiency)>>
+	<<elseif $activeSlave.skill.anal < 100>>
+		$He already a skilled anal bitch,
+		<<if $activeSlave.anus == 0 && !canDoAnal($activeSlave)>>
+			despite $his anus chastity and virginity,
+		<<elseif ($activeSlave.anus == 0)>>
+			despite still being an anal virgin,
+		<<else>>
+			despite $his anal chastity,
+		<</if>>
+		but lacks practical experience. You train $him in the basics of <<if $seePee == 1>>urine play, <</if>>massage, pet play, needle play, and many other niche skills. You also expand $his knowledge of sexual positions. $He learns to balance $himself on tiptoe for the challenge of standing anal sex without support. @@.lime;$His anal skills have improved,@@ but it's a slow process without proper training. 
+		<<= SkillIncrease.Anal($activeSlave, _analTrainingEfficiency)>>
+	<<else>>
+		$He's learned everything you can teach, and is now a masterful
+		<<if ($activeSlave.skill.vaginal >= 100)>>
+			slut;
+		<<elseif ($activeSlave.vagina == 0)>>
+			virgin slut;
+		<<elseif $activeSlave.dick == 0 && $activeSlave.scrotum == 0 && $activeSlave.vagina == -1>>
+			null slave;
+		<<elseif ($activeSlave.dick> 0) && ($activeSlave.balls == 0)>>
+			gelded bitch;
+		<<elseif $activeSlave.dick > 0 && $activeSlave.boobs > 300 && $activeSlave.vagina == -1>>
+			shemale slut;
+		<<elseif ($activeSlave.chastityVagina)>>
+			slut, notwithstanding $his chastity belt;
+		<<else>>
+			slave;
+		<</if>>
+		@@.yellow;$his assignment has defaulted to fostering devotion.@@
+		<<set $personalAttention[_ptwi].trainingRegimen = "build her devotion">>
+	<</if>>
+	<<= IncreasePCSkills('slaving', 0.01)>>
+	<<set $activeSlave.training = 0>>
+
+<<case "break her will">>
+	<<set $activeSlave.devotion -= 4>>
+	<<if ($activeSlave.trust > 2)>>
+		<<set $activeSlave.trust -= 15>>
+	<<else>>
+		<<set $activeSlave.trust -= 10>>
+	<</if>>
+	<<if ($activeSlave.devotion < -80)>>
+		You bind $him securely to a special chair in your office<<if !canDoAnal($activeSlave) || ($activeSlave.vagina > -1 && !canDoVaginal($activeSlave))>> with $his holes exposed and vulnerable<</if>>. Yours is a busy week, with a lot of business interviews, so whenever the interviewee has pleased you, you offer him or her the use of the poor slave's body on the way out. The chair is specially designed so that the seat, back and armrests can rotate vertically relative to the ground, so $his body can be spun to make any of $his available holes convenient. Fortunately, it also has a pan beneath it to stop the generous stream of ejaculate and lubricant that drips from $him from besmirching the floor. $He can't help but @@.gold;become used to the abuse@@ despite $his @@.mediumorchid;resentment.@@
+		<<= VCheck.Both(10, 5)>>
+	<<elseif ($activeSlave.devotion < -60) && ($activeSlave.anus != 0)>>
+		$activeSlave.slaveName is really wild and stern measures must be taken. So, $he is<<if !canDoAnal($activeSlave) || ($activeSlave.vagina > -1 && !canDoVaginal($activeSlave))>> stripped of $his protective chastity and<</if>> forced, struggling and screaming, into a latex suit that completely blinds, deafens, and immobilizes $him. So attired, the only places where $he can feel any sensations at all other than endless latex darkness are $his <<if ($activeSlave.dick != 0) && ($activeSlave.vagina != -1)>>pussy, and cock<<elseif ($activeSlave.dick != 0)>>cock<<else>>pussy<</if>> and backdoor. For $him, time becomes a featureless, torturous boredom broken only by occasional rape. Eventually, $he becomes so @@.mediumorchid;desperate@@ for something, anything, to break the monotony that $he begins to look forward to the next time a phallus will @@.gold;force@@ its way into $him.
+		<<= VCheck.Both(6, 3)>>
+	<<elseif ($activeSlave.devotion < -50) && ($activeSlave.hStyle != "shaved") && (random(1,100) > 90)>>
+		$activeSlave.slaveName needs to be taken down a peg. Fortunately, you know just the thing. You bring $him into a bathroom, place a chair in the tub, and tie $him securely to the chair. $He isn't too perturbed — $he probably expects a facefuck under running water or something like that — but $he begins to cry when $he <<if canHear($activeSlave)>>hears you switch on<<elseif canSee($activeSlave)>>sees you pull out<<else>>feels the cool touch of<</if>> an electric shaver. $He luxuriates in $his hair, flaunting it every chance $he gets; it's something of value in a bleak slave world and $he sobs as you shave it off $him. Afterward, $he sniffles and @@.gold;looks at you in fear@@ and @@.mediumorchid;unhappiness@@ when you rub $his newly bald scalp. Of course, there's always the body modification studio if you ever feel like $he's earned $his hair back.
+		<<set $activeSlave.hStyle = "shaved", $activeSlave.hLength = 0>>
+	<<elseif canDoAnal($activeSlave) && (random(1,100) < 10)>>
+		Sometimes, there's no need to be clever. The first indication $he gets that you've decided to train $him this week is when $he wakes suddenly in the middle of the night to the burning sensation of a <<if $PC.dick != 0>>cock<<else>>strap-on<</if>> being shoved up $his ass. Not knowing what is happening, $he struggles, but since $he was already lying in $his bed you just lie on top of $him and press $his wriggling body into the sheets as you assrape $him. For the rest of the week, $he finds $himself grabbed and fucked. $He can't help but @@.gold;become used to the abuse@@ despite $his @@.mediumorchid;resentment.@@
+		<<= VCheck.Anal(6)>>
+	<<elseif canDoVaginal($activeSlave) && (random(1,100) < 10)>>
+		Sometimes, there's no need to be clever. The first indication $he gets that you've decided to train $him this week is when $he wakes suddenly in the middle of the night to the filling sensation of a <<if $PC.dick != 0>>cock<<else>>strap-on<</if>> being shoved up into $his pussy. Not knowing what is happening, $he struggles, but since $he was already lying in $his bed you just lie on top of $him and press $his wriggling body into the sheets as you rape $him. For the rest of the week, $he finds $himself grabbed and fucked. $He can't help but @@.gold;become used to the abuse@@ despite $his @@.mediumorchid;resentment.@@
+		<<= VCheck.Vaginal(6)>>
+	<<else>>
+		$activeSlave.slaveName violently resists you whenever $he can. This cannot be permitted, so after a particularly severe bout of physical resistance, you decide to employ an old method of breaking a mind without damaging a body. You secure $him to a board and gently wash $his face with a wet cloth. $He spits in defiance, only to be surprised when you lower the board so that $his feet are higher than $his head. You tie the cloth around $his face. A thin stream of water onto the cloth produces all the feeling and none of the reality of a slow death by drowning. Waterboarding isn't much use for extracting information, but it works well for @@.gold;slavebreaking.@@
+	<</if>>
+	<<if ($PC.skill.slaving >= 100)>>
+		Your @@.springgreen;slavebreaking experience@@ allows you to apply @@.gold;exquisitely calibrated@@ mental pressure.
+		<<set $activeSlave.trust -= 2>>
+	<</if>>
+	<<if ($activeSlave.trust < -20) && ($activeSlave.fetishKnown == 0)>>
+		$He is now fully broken; @@.yellow;$his training assignment has defaulted to exploring $his sexuality.@@
+		<<set $personalAttention[_ptwi].trainingRegimen = "explore her sexuality">>
+		<<= IncreasePCSkills('slaving', 0.5)>>
+	<<elseif ($activeSlave.trust < -20)>>
+		$He is now fully broken; @@.yellow;$his training assignment has defaulted to fostering devotion.@@
+		<<set $personalAttention[_ptwi].trainingRegimen = "build her devotion">>
+		<<= IncreasePCSkills('slaving', 0.5)>>
+	<<elseif ($activeSlave.devotion > 20) && ($activeSlave.fetishKnown == 0)>>
+		$He is now obedient and attentive; @@.yellow;$his training assignment has defaulted to exploring $his sexuality.@@
+		<<set $personalAttention[_ptwi].trainingRegimen = "explore her sexuality">>
+		<<= IncreasePCSkills('slaving', 0.5)>>
+	<<elseif ($activeSlave.devotion > 20)>>
+		$He is now obedient and attentive; @@.yellow;$his training assignment has defaulted to fostering devotion.@@
+		<<set $personalAttention[_ptwi].trainingRegimen = "build her devotion">>
+		<<= IncreasePCSkills('slaving', 0.5)>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', 0.2)>>
+	<<set $activeSlave.training = 0>>
+
+<<case "harshly break her will">>
+	<<set $activeSlave.devotion -= 5, $activeSlave.trust -= 10>>
+	<<run healthDamage($activeSlave, 1)>>
+	<<if ($activeSlave.fetish == "mindbroken")>>
+		<<set $activeSlave.minorInjury = either("black eye", "bruise", "split lip")>>
+		$activeSlave.slaveName's mind is broken. $He is a boring slave to torture, though $his body will still occasionally react to intense pain. No matter what you try, nothing really reaches $his destroyed soul. The agonies do @@.red;affect $his health, leaving $him with a $activeSlave.minorInjury.@@
+	<<elseif ($activeSlave.devotion < -90)>>
+		<<set $activeSlave.minorInjury = either("black eye", "bruise", "split lip")>>
+		Old traditions should not be forgotten. The scourge is the oldest slavebreaking tool known to man, and to slave <<= $girl>>s who do not properly obey _womenP. For the whole week, whenever $activeSlave.slaveName disobeys you or whenever the whim strikes, you bind $him securely and flog $him without mercy. You use a soft leather appliance and apply medical care afterward, so there will be no permanent scarring, but @@.red;$his health is affected and the beatings leave $him with a $activeSlave.minorInjury.@@ $He is subjected to @@.mediumorchid;immense mental pressure@@ @@.gold;in favor of obedience.@@
+	<<elseif ($activeSlave.devotion < -50) && canDoAnal($activeSlave)>>
+		<<set $activeSlave.minorInjury = either("black eye", "bruise", "split lip")>>
+		$activeSlave.slaveName is willing to physically defend $himself against sexual abuse. Training $him out of this rebelliousness is a nice sexual change of pace. For the entire week, whenever $he commits some minor sin, you fight $him into a state of physical submission and then sodomize $him. This usually requires an extended beating to render $him quiescent, followed by holding $him down so that $his struggles do not dislodge your <<if $PC.dick != 0>>cock<<else>>strap-on<</if>> from $his delightfully spasming butthole. $He is subjected to @@.mediumorchid;immense mental pressure@@ @@.gold;in favor of obedience,@@ but the extreme stress @@.red;affects $his health, leaving $him with a $activeSlave.minorInjury.@@
+		<<= VCheck.Anal(6)>>
+	<<elseif ($activeSlave.scrotum > 0)>>
+		<<set $activeSlave.minorInjury = either("black eye", "bruise", "split lip")>>
+		$activeSlave.slaveName has indefensible, obvious targets for harsh breaking. Whenever $he falls short in the smallest way, you bind $him in such a way that $his <<if $activeSlave.dick>>cock and <</if>>balls are dangling defenseless, and $he cannot move to avoid blows. You then indulge your inventiveness, applying clips, weights, and simple beatings to $his <<if $activeSlave.dick>>member and <</if>>sack, while beating the rest of $him thoroughly. $He is subjected to @@.mediumorchid;immense mental pressure@@ @@.gold;in favor of obedience,@@ but the beatings @@.red;affect $his health, leaving $him with a $activeSlave.minorInjury.@@
+	<<elseif ($activeSlave.dick > 0)>>
+		<<set $activeSlave.minorInjury = either("black eye", "bruise", "split lip")>>
+		$activeSlave.slaveName has an indefensible, obvious target for harsh breaking. Whenever $he falls short in the smallest way, you bind $him in such a way that $his cock is dangling defenseless, and $he cannot move to avoid blows. You then indulge your inventiveness, applying clips, weights, and simple beatings to $his member, while beating the rest of $him thoroughly. $He is subjected to @@.mediumorchid;immense mental pressure@@ @@.gold;in favor of obedience,@@ but the beatings @@.red;affect $his health, leaving $him with a $activeSlave.minorInjury.@@
+	<<elseif ($activeSlave.clit > 0)>>
+		<<set $activeSlave.minorInjury = either("black eye", "bruise", "split lip")>>
+		$activeSlave.slaveName has an indefensible, obvious target for harsh breaking. Whenever $he falls short in the smallest way, you bind $him in such a way that $his unusually large clit is visible and defenseless, and $he cannot move to avoid blows. You then indulge your inventiveness, applying clips, weights, and simple slaps to $his womanhood, while beating the rest of $him thoroughly. $He is subjected to @@.mediumorchid;immense mental pressure@@ @@.gold;in favor of obedience,@@ but the beatings @@.red;affect $his health, leaving $him with a $activeSlave.minorInjury.@@
+	<<elseif ($activeSlave.nipples == "huge")>>
+		<<set $activeSlave.minorInjury = either("black eye", "bruise", "split lip")>>
+		$activeSlave.slaveName's nipples beg for punishment. Whenever $he falls short in the smallest way, you bind $him in such a way that breasts dangle, $his nipples are free and at your mercy, and $he can only move enough to cause $his boobs to sway erotically when $he flinches with pain. You then indulge your inventiveness, applying clips, weights, and simple abuse to $his nipples, while beating the rest of $him thoroughly. $He is subjected to @@.mediumorchid;immense mental pressure@@ @@.gold;in favor of obedience,@@ but the beatings @@.red;affect $his health, leaving $him with a $activeSlave.minorInjury.@@
+	<<elseif ($activeSlave.anus > 0) && canDoAnal($activeSlave)>>
+		You bind $activeSlave.slaveName with the head of an uncomfortably large dildo just inside $his anus. The setup offers $him a choice: $he can either stand and have only tip up $his butt, or $he can take $his weight off $his legs, and take a massive phallus up the ass. You keep $him like this for hours on end. At the start $he tries to stand all the time. Then, $he tries to rest on it for short periods, but realizes that this up and down motion really just leads to $him assraping $himself. Finally, $he becomes so tired and apathetic that $he accepts having a dildo up the ass, and sits down. $He is subjected to @@.mediumorchid;immense mental pressure@@ @@.gold;in favor of obedience,@@ but the extreme stress @@.red;affects $his health.@@
+	<<else>>
+		<<set $activeSlave.minorInjury = either("black eye", "bruise", "split lip")>>
+		The first time you force $activeSlave.slaveName to please you this week, $he could be forgiven for thinking sexual abuse is to be $his sentence. By the end of the week $he remembers only fearing rape as a pleasant dream. This change is due to your program of roughly using $him whenever $he shows any sign of sleeping. You reward $him with a short doze now and then, but $he is slowly reduced to a nearly insensible state of agonizing fatigue. $He is subjected to @@.mediumorchid;immense mental pressure@@ @@.gold;in favor of obedience,@@ but the extreme stress and rough treatment @@.red;affect $his health and leave $him with a $activeSlave.minorInjury.@@
+	<</if>>
+	<<if ($activeSlave.fetish != "mindbroken")>>
+		<<set _seed = random(1,100)>>
+		<<if (_seed > 90)>>
+			This abuse has shattered $his already-fragile self; @@.red;$his mind has been broken.@@
+			<<set $activeSlave.fetish = "mindbroken", $activeSlave.sexualFlaw = "none", $activeSlave.behavioralFlaw = "none">>
+		<<elseif (_seed > 80) && ($activeSlave.behavioralFlaw != "hates men") && ($activeSlave.behavioralFlaw != "hates women")>>
+			This abuse has associated
+			<<if ($PC.dick != 0)>>
+				cocks and masculinity with pain in $his mind; @@.red;$he now instinctively hates men.@@
+				<<set $activeSlave.behavioralFlaw = "hates men">>
+			<<else>>
+				pussies and femininity with pain in $his mind; @@.red;$he now instinctively hates women.@@
+				<<set $activeSlave.behavioralFlaw = "hates women">>
+			<</if>>
+		<<elseif (_seed > 70) && ($activeSlave.sexualFlaw != "odd")>>
+			This abuse has changed $him a bit; @@.red;$he has begun to act strangely.@@
+			<<set $activeSlave.behavioralFlaw = "odd">>
+		<</if>>
+	<</if>>
+	A week of agony
+	<<if ($activeSlave.trust > 20)>>
+		@@.gold;reduces $his trust@@ in you.
+		<<set $activeSlave.trust -= 10>>
+	<<else>>
+		@@.gold;encourages $his fear@@ of you.
+		<<set $activeSlave.trust -= 10>>
+	<</if>>
+	<<if $PC.skill.slaving >= 100>>
+		Your @@.springgreen;slave-breaking experience@@ allows you to apply @@.gold;exquisite agony@@ without any increase in damage.
+		<<set $activeSlave.trust -= 5>>
+	<</if>>
+	<<if ($activeSlave.trust < -20)>>
+		$He is now fully broken; @@.yellow;$his training assignment has defaulted to fostering devotion.@@
+		<<set $personalAttention[_ptwi].trainingRegimen = "build her devotion">>
+		<<= IncreasePCSkills('slaving', 1)>>
+	<<elseif ($activeSlave.devotion > 20)>>
+		$He is now obedient and attentive; @@.yellow;$his training assignment has defaulted to fostering devotion.@@
+		<<set $personalAttention[_ptwi].trainingRegimen = "build her devotion">>
+		<<= IncreasePCSkills('slaving', 1)>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', 0.4)>>
+	<<set $activeSlave.training = 0>>
+
+<<case "fix her behavioral flaw">>
+	<<if ($activeSlave.behavioralFlaw == "arrogant")>>
+		$activeSlave.slaveName seems to think $he's better than everyone else. Naturally, as $his owner you have the means to correct this sad misapprehension. As you train $him during the week, you ensure that $he submits to anyone and everyone. $He is rarely permitted to enjoy sex under your tutelage, but is instead required to use $his mouth and hands to get others off. $He cleans, washes, and serves.
+		<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+	<<elseif ($activeSlave.behavioralFlaw == "bitchy")>>
+		$activeSlave.slaveName always has a cutting remark ready. The more obedient $he's feeling, the more $he directs them at people other than $his <<= WrittenMaster($activeSlave)>>, but it's still a serious problem. When you train $him this week, you keep a sharp ear on $him. Whenever $he bitches out, you require $him to promptly offer the target of $his pissiness the use of $his mouth. $He'll either shut $his mouth or have it roughly filled.
+		<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+	<<elseif ($activeSlave.behavioralFlaw == "odd")>>
+		$activeSlave.slaveName is odd. $He behaves strangely, speaking randomly at times and doing things for no apparent reason. In earlier times this might have been considered 'adorable' or 'unique,' but in a slave it's just annoying. You punish $him severely whenever $he fails to do or say the right thing for the right reasons.
+	<<elseif ($activeSlave.behavioralFlaw == "hates men")>>
+		$activeSlave.slaveName does not like spending time around men. This is of course a huge obstacle to $him performing $his duties well. Breaking $him of this is an unusually difficult task,
+		<<if $PC.dick != 0>>
+			so you approach it subtly. You simply require $him to spend as much time as possible around you, eating, sleeping, and going about normal business. $He already understood what you were to your slaves, sexually; $he now is accustomed to who you are when your cock isn't pounding a nice hole.
+		<<else>>
+			all the more so since you cannot use yourself as a teaching tool. Fortunately, there are any number of men coming and going as you do business, and it's trivial to force $him to rely on them for social contact.
+		<</if>>
+		<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+	<<elseif ($activeSlave.behavioralFlaw == "hates women")>>
+		$activeSlave.slaveName does not like spending time around girls. This is of course a huge obstacle to $him performing $his duties well. Breaking $him of this is an unusually difficult task,
+		<<if $PC.dick != 0>>
+			all the more so since you cannot use your penis-equipped self as a teaching tool. Fortunately, there are any number of girls around, and it's trivial to force $him to rely on them for social contact.
+		<<else>>
+			so you approach it subtly. You simply require $him to spend as much time as possible around you, eating, sleeping, and going about normal business. $He already understood what you were to your slaves, sexually; $he now is accustomed to who you are when you're not fucking.
+		<</if>>
+		<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+	<<elseif ($activeSlave.behavioralFlaw == "anorexic")>>
+		$activeSlave.slaveName has an unreasonable, psychologically based belief that $he is too fat. This is a serious enough condition in the clinical sense that the usual routine of punishment will not affect it. Instead, you apply a regime of positive reinforcement: $he is given attention and approval for $his curves when they grow.
+	<<elseif ($activeSlave.behavioralFlaw == "gluttonous")>>
+		$activeSlave.slaveName's diet is already closely controlled, but the impulse to overeat is strong in $him and like most gluttons $he manages to be quite cunning. You watch $him closely and administer harsh punishment to associate overeating with pain in $his mind.
+	<<elseif ($activeSlave.behavioralFlaw == "liberated")>>
+		$activeSlave.slaveName has not yet accepted that $his world has changed. You could wait for the weight of circumstances to bear it home to $him, but you accelerated the process by giving $him as many trivial orders as possible. $He is required to receive orders to perform the most humiliatingly obvious of tasks.
+	<<elseif ($activeSlave.behavioralFlaw == "devout")>>
+		$activeSlave.slaveName remains devoted to an old world faith that serves $him as a reservoir of mental resilience. You carefully select pressure points to break $him of this by forcing $him to violate $his faith's purity codes, constantly. $He is forced to eat, dress, and fuck in ways that convince $him that $he must either condemn $himself as an irredeemable sinner, or abandon $his beliefs.
+	<</if>>
+	<<set $activeSlave.training += 40>> /* fixing is easier than softening */
+	<<if $activeSlave.training < 100>>
+		You make progress, but $he's the same at the end of the week.
+	<<else>>
+		<<set $activeSlave.training = 0>>
+		By the end of the week, @@.green;you break $him of $his bad habits.@@ @@.hotpink;$His obedience has increased.@@
+		<<set $activeSlave.behavioralFlaw = "none", $activeSlave.devotion += 4>>
+	<</if>>
+	<<if $activeSlave.fetishKnown != 1>>
+		<<if ($activeSlave.fetish == "submissive")>>
+			$He really takes to your close attention; @@.pink;$he's a natural submissive!@@
+			<<set ($activeSlave.fetishKnown = 1)>>
+		<<elseif ($activeSlave.fetish == "cumslut")>>
+			While you're giving $his personal attention, you discover by chance that @@.pink;$he has an oral fixation!@@
+			<<set ($activeSlave.fetishKnown = 1)>>
+		<<elseif ($activeSlave.fetish == "masochist")>>
+			While you're giving $his personal correction, you discover by chance that @@.pink;$he likes pain!@@
+			<<set ($activeSlave.fetishKnown = 1)>>
+		<<elseif ($activeSlave.fetish == "humiliation")>>
+			While you're giving $his personal attention in public, you discover by chance that @@.pink;$he likes humiliation!@@
+			<<set ($activeSlave.fetishKnown = 1)>>
+		<</if>>
+	<</if>>
+	<<if ($activeSlave.behavioralFlaw == "none")>>
+		With $his behavioral flaw trained out,
+		<<if ($activeSlave.sexualFlaw == "none")>>
+			<<if ($activeSlave.devotion <= 20) && ($activeSlave.trust >= -20)>>
+				@@.yellow;$his training assignment has defaulted to breaking $his will.@@
+				<<set $personalAttention[_ptwi].trainingRegimen = "break her will">>
+			<<else>>
+				@@.yellow;$his training assignment has defaulted to fostering devotion.@@
+				<<set $personalAttention[_ptwi].trainingRegimen = "build her devotion">>
+			<</if>>
+		<<else>>
+			@@.yellow;$his training assignment has defaulted to addressing $his sexual flaw.@@
+			<<set $personalAttention[_ptwi].trainingRegimen = "fix her sexual flaw">>
+		<</if>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+
+<<case "fix her sexual flaw">>
+	<<switch $activeSlave.sexualFlaw>>
+	<<case "hates oral">>
+		$activeSlave.slaveName has a powerful gag reflex. As a result, it's pretty unpleasant to receive oral sex from $him, no matter how hard $he tries. You apply various inventive techniques for addressing this, all of which involve requiring $him to repeatedly deepthroat some object or other.
+		<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+	<<case "hates anal">>
+		<<if canDoAnal($activeSlave)>>
+			$activeSlave.slaveName does not like it up the butt. $He views $his rectum as a dirty place that should not be involved in sex. Naturally, this is an unacceptable view for a Free Cities sex slave to hold. The best way to address this foolishness is by long practice, so you take every opportunity to stick things up $his behind, and when you bore of that, you require $him to assfuck $himself with a dildo instead.
+			<<= VCheck.Anal(10)>>
+		<<else>>
+			$activeSlave.slaveName does not like it up the butt. $He views $his rectum as a dirty place that should not be involved in sex. Naturally, this is an unacceptable view for a Free Cities sex slave to hold. The best way to address this foolishness is by long practice, so you take every opportunity to toy with $his rear. The inability to actually penetrate $his ass hinders your efforts, however.
+			<<set $activeSlave.training -= 20>> /* more difficult training */
+		<</if>>
+	<<case "hates penetration">>
+		<<if ($activeSlave.vagina > -1)>>
+			$activeSlave.slaveName does not like sex. In earlier times, it was accepted and understood that some, particularly some women, had a low sex drive. No Free Cities sex slave is allowed to engage in such foolishness. It's a hard flaw to fix, and for now you substitute obedience for honest enjoyment, and just get $him used to strong stimulation without putting anything in $him.
+		<<elseif canDoAnal($activeSlave)>>
+			$activeSlave.slaveName does not like it up the butt. $He views $his rectum as a dirty place that should not be involved in sex. Naturally, this is an unacceptable view for a Free Cities slut to hold. The best way to address this foolishness is by long practice, so you take every opportunity to stick things up $his behind, and when you bore of that, you require $him to assfuck $himself instead.
+			<<= VCheck.Anal(10)>>
+		<<else>>
+			$activeSlave.slaveName does not like it up the butt. $He views $his rectum as a dirty place that should not be involved in sex. Naturally, this is an unacceptable view for a Free Cities slut to hold. It's a hard flaw to fix when you can't introduce $his anus to things, but for now you substitute obedience for honest enjoyment, and just get $him used to strong stimulation without putting anything in $him.
+		<</if>>
+	<<case "apathetic">>
+		You are well practiced at forcing slaves to get you off or suffer punishment. To address $activeSlave.slaveName's sexual apathy, you adapt the method by requiring $him to work $his mouth under your desk while you do business. $He does all the work, start to finish, and $he does it well if $he wants to avoid pain.
+		<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+	<<case "crude">>
+		$activeSlave.slaveName does not pay enough attention to standards when having sex, leading to crude comments and unsexy noises. To remedy this, you have $him give you oral regularly: a sacrifice, but you make sacrifices for your slaves' improvement. Oral sex can be difficult to make elegant, but you work with $him to make it as pretty as possible, and spank $him cruelly when $he fails.
+		<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+	<<case "judgemental">>
+		$activeSlave.slaveName has a bad habit of being sexually judgemental, belittling anyone who doesn't live up to $his pretensions of standards. To $his regret, $he frequently implies that $he prefers partners with big dicks: regret, because whenever $he's caught doing this, you have $him brought to you and <<if $PC.dick != 0>>apply your big dick<<else>>apply a big dildo<</if>>
+		<<if ($activeSlave.anus > 0) && canDoAnal($activeSlave)>>
+			to $his anus without mercy.
+			<<= VCheck.Anal(10)>>
+		<<else>>
+			to $his gagging throat.
+			<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+		<</if>>
+	<<case "shamefast">>
+		Fortunately, shamefastness is a simple problem to break. Whenever you feel the inclination, you strip $activeSlave.slaveName naked, drag $him out into whatever public space catches your fancy, and force $him to <<if $PC.dick != 0>>suck your dick<<else>>eat you out<</if>>. To make sure $he's really working over $his shame despite having $his face buried against you, you force $him to spread $his buttocks to show off $his asshole while $he <<if $PC.dick != 0>>sucks<<else>>licks you<</if>>.
+		<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+	<<case "idealistic">>
+		$activeSlave.slaveName still sees sex in a naïve light, hoping to be romanced, teased to arousal, and asked permission. This might be an annoyingly ignorant outlook if it wasn't so amusing to break. By the tenth time you slap $his $activeSlave.skin face at the slightest hesitation to <<if $PC.dick != 0>>suck your cock<<else>>eat your pussy<</if>>, $his illusions are guttering low.
+		<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+	<<case "repressed">>
+		$activeSlave.slaveName's innocence and hesitations about sex are unlikely to survive much longer, but you decide to hurry the process along by making $him <<if $PC.dick != 0>>eat dick<<else>>eat your pussy<</if>> while masturbating. $He's repressed enough that masturbation is still a partial punishment for $him, but $he usually gets $himself off anyway, shaking with release and sobbing with crushed illusions.
+		<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+	<<case "cum addict">>
+		$activeSlave.slaveName is utterly addicted to cum. You keep $him in your office whenever you can, and subject $him to a strict sexual diet of
+		<<if canDoVaginal($activeSlave)>>sex,<<elseif canDoAnal($activeSlave)>>buttsex,<<else>>breast play,<</if>>
+		no oral allowed, no matter how much $he begs to be permitted to <<if $PC.dick != 0>>suck you off<<else>>eat you out<</if>>.
+		<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><</if>>
+	<<case "anal addict">>
+		$activeSlave.slaveName is utterly addicted to buttsex. You keep $him in your office whenever you can, and subject $him to a strict sexual diet of
+		<<if canDoVaginal($activeSlave)>>vanilla sex,<<else>>oral and manual intercourse,<</if>>
+		no anal allowed, no matter how much $he begs you to stick something, anything, up $his ass.
+		<<if ($activeSlave.vagina > -1) && canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<else>><<set $activeSlave.counter.oral += 10, $oralTotal += 10>><</if>>
+	<<case "attention whore">>
+		$activeSlave.slaveName is an obnoxious attention whore. You keep $him in your office and make love to $him whenever you can, but only whenever you're alone in the office. You even instruct $assistant.name not to bother you while the slave is receiving $his therapy.
+		<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><</if>>
+	<<case "breast growth">>
+		$activeSlave.slaveName is completely devoted to $his own tits. You keep $him in your office whenever you can, <<if canDoVaginal($activeSlave)>>fucking $him<<elseif canDoAnal($activeSlave)>>fucking $his ass<<else>>fucking $his face<</if>>
+		in positions that offer $his boobs no stimulation at all. When you're not broadening $his sexual horizons, $he's restrained to keep $him from touching $his own nipples, despite piteous begging.
+		<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><</if>>
+	<<case "abusive" "malicious">>
+		$activeSlave.slaveName seems to have forgotten that $he's your bitch, so you remind $him. You keep $him in your office whenever $he's not otherwise occupied, and hold $him down and fuck $him whenever you feel like it. It's been a long time since $he was on the bottom this regularly.
+		<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><</if>>
+	<<case "self hating">>
+		$activeSlave.slaveName hates $himself much more than is normal for a well trained sex slave, to the point where $he actively seeks out unhealthy and destructive assignments. You build up $his sexual self esteem with a steady diet of
+		<<if canDoVaginal($activeSlave)>>missionary lovemaking,<<elseif canDoAnal($activeSlave)>>gentle anal loving,<<else>>gentle oral sex,<</if>>
+		and make sure to praise $him and keep $his spirits up as much as you can.
+		<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><</if>>
+	<<case "neglectful">>
+		$activeSlave.slaveName has given up on $his own sexual pleasure to an extent, focusing only on getting others off. You keep $him in your office and play with $him regularly, making a game of getting $him off as often as possible. You're careful to use other slaves for your own pleasure.
+		<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><</if>>
+	<<case "breeder">>
+		$activeSlave.slaveName has become so sexually obsessed with pregnancy that impregnation holds less interest for $him than being pregnant.
+		<<if $activeSlave.pregKnown == 1>>
+			Since $he's pregnant, getting $him out of this perversion is more difficult than just fucking $him.
+		<<elseif !canDoAnal($activeSlave)>>
+			Fortunately, all slaves have a convenient hole in which they can be fucked without even the slightest danger of pregnancy.
+			Since $his ass is off-limits, you address the situation by fucking $his throat, and making sure $he enjoys it, too.
+			<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+		<<elseif $activeSlave.mpreg == 1>>
+			Fortunately, all slaves have a convenient hole in which they can be fucked without even the slightest danger of pregnancy, which, in $his case, is not $his fertile ass.
+			So, you address the situation by fucking $his throat, and making sure $he enjoys it, too.
+			<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+		<<else>>
+			Fortunately, all slaves have a convenient hole in which they can be fucked without even the slightest danger of pregnancy.
+			So, you address the situation by fucking $him up the ass, and making sure $he gets off to it, too.
+			<<= VCheck.Anal(10)>>
+		<</if>>
+	<</switch>>
+	<<set $activeSlave.training += 40>> /* fixing is easier than softening */
+	<<if $activeSlave.training < 100>>
+		You make progress, but $he's the same at the end of the week.
+	<<else>>
+		<<set $activeSlave.training = 0>>
+		By the end of the week, @@.green;you break $him of $his bad habits.@@ @@.hotpink;$His obedience has increased.@@
+		<<set $activeSlave.sexualFlaw = "none", $activeSlave.devotion += 4>>
+	<</if>>
+	<<if $activeSlave.fetishKnown != 1>>
+		<<if ($activeSlave.fetish == "submissive")>>
+			$He really takes to your close attention; @@.pink;$he's a natural submissive!@@
+			<<set ($activeSlave.fetishKnown = 1)>>
+		<<elseif ($activeSlave.fetish == "cumslut")>>
+			While you're giving $him personal attention, you discover by chance that @@.pink;$he has an oral fixation!@@
+			<<set ($activeSlave.fetishKnown = 1)>>
+		<<elseif ($activeSlave.fetish == "masochist")>>
+			While you're giving $him personal correction, you discover by chance that @@.pink;$he likes pain!@@
+			<<set ($activeSlave.fetishKnown = 1)>>
+		<<elseif ($activeSlave.fetish == "humiliation")>>
+			While you're giving $him personal attention in public, you discover by chance that @@.pink;$he likes humiliation!@@
+			<<set ($activeSlave.fetishKnown = 1)>>
+		<</if>>
+	<</if>>
+	<<if ($activeSlave.sexualFlaw == "none")>>
+		With $his sexual flaw trained out,
+		@@.yellow;$his training assignment has defaulted to
+		<<if ($activeSlave.behavioralFlaw == "none")>>
+			<<if ($activeSlave.devotion <= 20) && ($activeSlave.trust >= -20)>>
+				breaking $his will.
+				<<set $personalAttention[_ptwi].trainingRegimen = "break her will">>
+			<<else>>
+				fostering devotion.
+				<<set $personalAttention[_ptwi].trainingRegimen = "build her devotion">>
+			<</if>>
+		<<else>>
+			addressing $his behavioral flaw.
+			<<set $personalAttention[_ptwi].trainingRegimen = "fix her behavioral flaw">>
+		<</if>>
+		@@
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+
+<<case "explore her sexuality">>
+	<<set $activeSlave.attrKnown = 1>>
+	You set about investigating $his sexuality.
+	<<if ($activeSlave.devotion < -20) && ($activeSlave.trust >= -20)>>
+		$He's so resistant that you have to fill $him with psychoactive drugs and restrain $him painfully in order to learn anything. This abuse @@.mediumorchid;increases $his hatred.@@
+		<<set $activeSlave.devotion -= 5>>
+	<<elseif $activeSlave.devotion <= 20>>
+		You anticipate that $he won't be sufficiently compliant with some of the extreme practices you mean to investigate, so you give $him a hearty dose of aphrodisiacs and place $him in bondage gear. $He isn't happy, but soon $he's too horny to care.
+	<<else>>
+		$He's obedient enough that there is no trouble with any of the sexual kinks you subject $him to. Some $he likes more than others, but when $he's not enjoying $himself, $he grits $his teeth and concentrates on obeying you.
+	<</if>>
+	You start off by making $him view a medley of pornography while $assistant.name monitors $him for arousal. It seems $he is
+	<<if $activeSlave.attrXY <= 5>>
+		@@.red;disgusted by men@@
+	<<elseif $activeSlave.attrXY <= 15>>
+		@@.red;turned off by men@@
+	<<elseif $activeSlave.attrXY <= 35>>
+		@@.red;not attracted to men@@
+	<<elseif $activeSlave.attrXY <= 65>>
+		indifferent to men,
+	<<elseif $activeSlave.attrXY <= 85>>
+		@@.green;attracted to men@@
+	<<elseif $activeSlave.attrXY <= 95>>
+		@@.green;aroused by men@@
+	<<else>>
+		@@.green;passionate about men@@
+	<</if>>
+	and
+	<<if $activeSlave.attrXX <= 5>>
+		@@.red;disgusted by women.@@
+	<<elseif $activeSlave.attrXX <= 15>>
+		@@.red;turned off by women.@@
+	<<elseif $activeSlave.attrXX <= 35>>
+		@@.red;not attracted to women.@@
+	<<elseif $activeSlave.attrXX <= 65>>
+		indifferent to women.
+	<<elseif $activeSlave.attrXX <= 85>>
+		@@.green;attracted to women.@@
+	<<elseif $activeSlave.attrXX <= 95>>
+		@@.green;aroused by women.@@
+	<<else>>
+		@@.green;passionate about women.@@
+	<</if>>
+	<<if $activeSlave.fetishKnown != 1>>
+	<<set $activeSlave.fetishKnown = 1>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;You then give $him a good exploratory fondle. You play with $his nipples and each of $his holes and gauge $his reaction.
+	<<if $activeSlave.fetish == "boobs">>
+		You've barely touched $his nipples before $he moans. After some experimentation, it becomes clear that $his nipples might as well be a pair of slightly less sensitive <<if $activeSlave.nipples == "fuckable">>pussies<<else>>clits<</if>>. Finding $his mammary fixation with you has @@.hotpink;increased $his devotion to you.@@
+		<<set $activeSlave.devotion += 4>>
+	<<elseif $activeSlave.fetish == "buttslut">>
+		<<if $activeSlave.vagina >= 0>>When you move from fingering $his pussy to $his asshole,<<else>>When you move from fondling $his mouth to $his asshole,<</if>> you've barely touched $his butt before $he comes explosively. After some experimentation, it becomes clear that $his g-spot might as well be located up $his ass. Finding $his anal fixation with you has @@.hotpink;increased $his devotion to you.@@
+		<<set $activeSlave.devotion += 4>>
+	<<elseif $activeSlave.energy > 95>>
+		$He shows no real reaction when you move your fingers from hole to hole, because $he seems to react with arousal to fingers in any of them.
+	<<else>>
+		Nothing unusual happens.
+	<</if>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Next, you demand extreme submission from $him. You make $him change into bondage gear that blinds $him, restricts $his movement, forces $him to present $his breasts uncomfortably, and holds vibrators against $him. Thus attired, $he is forced to serve you in whatever petty ways occur to you.
+	<<if $activeSlave.fetish == "submissive">>
+		During the first hour of this treatment, $he cums hard against the vibrators. $He's a natural submissive! Discovering this about $himself under your hands has @@.hotpink;increased $his devotion to you.@@
+		<<set $activeSlave.devotion += 4>>
+	<<elseif $activeSlave.energy > 95>>
+		$He complies, showing the same enthusiasm for this as for other sex.
+	<<else>>
+		$He complies, but $he's not a natural submissive.
+	<</if>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Before you let $him out of the extreme bondage, you rain a series of light blows across $his nipples and buttocks.
+	<<if $activeSlave.fetish == "masochist">>
+		$He almost orgasms at the stinging pain. $He's a masochist! This discovery has @@.hotpink;increased $his devotion to you.@@
+		<<set $activeSlave.devotion += 4>>
+	<<elseif $activeSlave.energy > 95>>
+		$He enjoys the pain play, but $he seems to enjoy everything you try.
+	<<else>>
+		$He struggles and tries to avoid the blows.
+	<</if>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;The next day, $he continues to accompany you. Whenever cum is involved in your day's affairs in any way, you require $him to clean it up with $his mouth.
+	<<if $activeSlave.fetish == "cumslut">>
+		$He enjoys this treatment. $He's a cumslut! Discovering this about $himself under your hands has @@.hotpink;increased $his devotion to you.@@
+		<<set $activeSlave.devotion += 4>>
+	<<elseif $activeSlave.energy > 95>>
+		$He enjoys using $his mouth, but no more than other kinds of sexual activity.
+	<<else>>
+		If $he had any special regard for cum, you'd know it, and $he doesn't.
+	<</if>>
+	<<setNonlocalPronouns 0>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;You carefully watch $his reaction as you let $him spend a short time relaxing with a pregnant slave.
+	<<if $activeSlave.fetish == "pregnancy">>
+		$He's fascinated. $He fetishizes fertility! Discovering this with you has @@.hotpink;increased $his devotion to you.@@
+		<<set $activeSlave.devotion += 4>>
+	<<elseif $activeSlave.energy > 95>>
+		$He spends most of the rest ogling the pregnant slave's boobs.
+	<<else>>
+		$He simply enjoys the rest.
+	<</if>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;You restrain the pregnant slave and administer a brief beating across _hisU bare buttocks, ensuring that you cause enough pain to produce a few tears, a bit of begging, and some struggling.
+	<<if $activeSlave.fetish == "sadist">>
+		$He's almost painfully aroused. $He's titillated by the idea of causing pain! Discovering this about $himself under your direction has @@.hotpink;increased $his devotion to you.@@
+		<<set $activeSlave.devotion += 4>>
+	<<elseif $activeSlave.energy > 95>>
+		$He enjoys watching the poor pregnant slave wriggle, but $he's watching _hisU butt rather than the beating.
+	<<else>>
+		$He's a bit disturbed by the <<if canSee($activeSlave)>>sight<<elseif canHear($activeSlave)>>sound<<else>>idea<</if>> of you punishing the pregnant _girlU.
+	<</if>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Before letting the poor pregnant slave go, you require $activeSlave.slaveName to add a blindfold to the restraints.
+	<<if $activeSlave.fetish == "dom">>
+		$He seems to really enjoy blindfolding the poor _girlU, reassuring _himU as $he does. $He's a natural sexual top! Discovering this about $himself under your direction has @@.hotpink;increased $his devotion to you.@@
+		<<set $activeSlave.devotion += 4>>
+	<<elseif $activeSlave.energy > 95>>
+		$He enjoys getting closer to the slave, mostly so $he can give _hisU pregnant pussy a thorough grope.
+	<<else>>
+		$He just follows orders.
+	<</if>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;Lastly, you place $him in a special room in your penthouse filled with live video equipment. They get to see $him groped, deepthroated, facialed, teased, and tortured.
+	<<if $activeSlave.fetish == "humiliation">>
+		The more viewers $he gets, the harder $he comes. $He's a slut for humiliation! Discovering this about $himself under your hands has @@.hotpink;increased $his devotion to you.@@
+		<<set $activeSlave.devotion += 4>>
+	<<elseif $activeSlave.energy > 95>>
+		$He enjoys showing off sexually, but focuses on the sex first. $He got off on everything, and is clearly a nympho. Discovering this about $himself under your hands has @@.hotpink;greatly increased $his devotion to you.@@
+		<<set $activeSlave.devotion += 9>>
+	<<else>>
+		$He gets through it, but $he doesn't seem to enjoy <<if canSee($activeSlave)>>seeing $his audience on the screen<<elseif canHear($activeSlave)>>hearing $his jeering audience on the screen<<else>>the feeling of being watched<</if>>.
+	<</if>>
+	<<else>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;You already know that $he
+		<<switch $activeSlave.fetish>>
+		<<case "buttslut" "cumslut" "dom" "masochist" "sadist" "submissive">>
+			is a @@.coral;$activeSlave.fetish,@@
+		<<case "mindbroken">>
+			is @@.red;mindbroken,@@
+		<<case "boobs" "humiliation" "pregnancy">>
+			loves @@.coral;$activeSlave.fetish,@@
+		<<default>>
+			lacks a fetish,
+		<</switch>>
+		so your investigation is complete.
+	<</if>>
+	<<BasicTrainingDefaulter>>
+	<<= IncreasePCSkills('slaving', 0.1)>>
+
+<<case "induce arrogance">>
+	Since you've decided to incite $him to arrogance, you praise $him effusively, and give orders that others are to do so as well. Other slaves are punished for things $he's allowed to get away with.
+	<<InduceFlawLenityEffects>>
+	<<if $activeSlave.training < 100>>
+		$He isn't seriously affected; you'll have to be more subtle next week.
+	<<else>>
+		<<set $activeSlave.training = 0>>
+		$He begins to think $himself special, and is now @@.red;arrogant.@@
+		<<set $activeSlave.behavioralFlaw = "arrogant">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce bitchiness">>
+	Since you've decided to induce $him to bitchiness, you keep $him in your office and induce $him to criticize other slaves, rewarding $him when $he's especially catty.
+	<<InduceFlawLenityEffects>>
+	<<if $activeSlave.training < 100>>
+		$He goes along, but remains cautious and will need more practice.
+	<<else>>
+		$He starts making @@.red;bitchy@@ remarks without being prompted.
+		<<set $activeSlave.behavioralFlaw = "bitchy">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce odd behavior">>
+	Since you've decided to abuse $him into odd behavior, you target $him for a campaign of surprise sex. You constantly ambush $him, shove $him onto the ground, and fuck $him. Sometimes $he wakes up from bad dreams to find you penetrating $him.
+	<<InduceFlawAbuseEffects>>
+	<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><<else>><<set $activeSlave.counter.oral += 10, $oralTotal += 10>><</if>>
+	<<if $activeSlave.training < 100>>
+		$He does $his best to tolerate the abuse.
+	<<else>>
+		$He starts @@.red;behaving oddly,@@ jumping at noises and mumbling to $himself.
+		<<set $activeSlave.behavioralFlaw = "odd">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce hatred of men">>
+	In order to make $him hate men, you sometimes simply <<if $PC.dick != 0>>stick your dick in $him without asking<<else>>stuff a strap-on inside $him without asking<</if>>, and sometimes force shockingly juvenile pranks on $him. $He is regularly smacked in the face with floppy dildos.
+	<<InduceFlawAbuseEffects>>
+	<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><<else>><<set $activeSlave.counter.oral += 10, $oralTotal += 10>><</if>>
+	<<if $activeSlave.training < 100>>
+		$He focuses more on you than on the masculine aspects of this. You'll need to be more subtle next week.
+	<<else>>
+		You notice $him starting to @@.red;shoot hateful glances@@ at any men $he sees.
+		<<set $activeSlave.behavioralFlaw = "hates men">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce hatred of women">>
+	In order to make $him hate women, you keep $him in your office when $he's not otherwise occupied, and <<if $PC.vagina == -1>>make $him eat other slaves out<<else>>sit on $his face<</if>> until $he's thoroughly sick of pussy.
+	<<InduceFlawAbuseEffects>>
+	<<if $activeSlave.training < 100>>
+		$He focuses more on you than on the feminine aspects of this. You'll need to be more subtle next week.
+	<<else>>
+		You notice $him starting to @@.red;shoot hateful glances@@ at any vaginas $he sees.
+		<<set $activeSlave.behavioralFlaw = "hates women">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce gluttony">>
+	Inducing gluttony is harder than inducing anorexia; you force $him to orgasm when $he's eating, and praise $him effusively when $he gains weight. You also provide $him with ample rations for stress eating.
+	<<set $activeSlave.training -= 20>> /* more difficult training */
+	<<if $activeSlave.training < 100>>
+		$He eats when ordered, but isn't deeply affected. $He'll need more practice being a pig.
+	<<else>>
+		You notice $him starting to @@.red;enjoy eating@@ for its own sake, even when $he's not hungry.
+		<<set $activeSlave.behavioralFlaw = "gluttonous">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce anorexia">>
+	You criticize $him cruelly whenever $he eats, and praise thinner slaves to $his face at every opportunity.
+	<<InduceFlawAbuseEffects>>
+	<<if $activeSlave.training < 100>>
+		$He continues consuming $his rations when ordered, and will need further training.
+	<<else>>
+		$He begins to @@.red;eat only when repeatedly ordered to.@@
+		<<set $activeSlave.behavioralFlaw = "anorexic">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce religious devotion">>
+	You direct a campaign of abuse and threats at $him, and surreptitiously ensure that a little religious text from $his home country finds its way into a hiding place in $his living area.
+	<<InduceFlawAbuseEffects>>
+	<<if $activeSlave.training < 100>>
+		$He keeps $his head down and shows no sign of religious introspection, at least this week.
+	<<else>>
+		$He begins to read it when $he thinks $he's alone, and @@.red;talks to God@@ when $he thinks only He is listening.
+		<<set $activeSlave.behavioralFlaw = "devout">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce liberation">>
+	You direct a campaign of abuse and threats at $him, making sure to threaten $him with the absolute worst of slavery in your arcology. You also arrange for $him to witness other citizen's slaves in situations that aren't much fun.
+	<<InduceFlawAbuseEffects>>
+	<<if $activeSlave.training < 100>>
+		$He does $his best to endure the abuse, unknowingly condemning $himself to more.
+	<<else>>
+		A deep @@.red;anger about slavery@@ builds within $him.
+		<<set $activeSlave.behavioralFlaw = "liberated">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce hatred of oral">>
+	Since you've decided to force $him to dislike oral sex, you're forced to use a complicated and refined slave breaking technique: constantly raping $his face.
+	<<InduceFlawAbuseEffects>>
+	<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+	<<if $activeSlave.training < 100>>
+		$He does $his best to comply with the oral abuse, unknowingly condemning $himself to more.
+	<<else>>
+		After gagging enough, $he finally starts to @@.red;hate oral.@@
+		<<set $activeSlave.sexualFlaw = "hates oral">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce hatred of anal">>
+	Since you've decided to force $him to dislike anal sex, you're forced to use a complicated and refined slave breaking technique: constantly raping $his ass.
+	<<if !canDoAnal($activeSlave)>>Every time you catch $him with $his chastity off, you're there to penetrate $his rectum<</if>>.
+	<<InduceFlawAbuseEffects>>
+	<<= VCheck.Anal(10)>>
+	<<if $activeSlave.training < 100>>
+		$He does $his best to comply with your abuse of $his butthole, unknowingly condemning $himself to more assrape.
+	<<else>>
+		After feeling $his poor sphincter grow sorer and sorer, $he starts to @@.red;hate anal.@@
+		<<set $activeSlave.sexualFlaw = "hates anal">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce hatred of penetration">>
+	Since you've decided to force $him to dislike penetration, you're forced to use a complicated and refined slave breaking technique: constantly raping $him.
+	<<InduceFlawAbuseEffects>>
+	<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><<else>><<set $activeSlave.counter.oral += 10, $oralTotal += 10>><</if>>
+	<<if $activeSlave.training < 100>>
+		$He does $his best to comply with your abuse, unknowingly condemning $himself to more of it.
+	<<else>>
+		After feeling $his poor holes grow sorer and sorer, $he starts to @@.red;hate getting fucked.@@
+		<<set $activeSlave.sexualFlaw = "hates penetration">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce shame">>
+	Since you've decided to force shame on $him, you keep $him in your office whenever $he's not otherwise occupied, and heap derision on $him at every opportunity, even inviting visitors to join you in chats about how unattractive and worthless $he is.
+	<<InduceFlawAbuseEffects>>
+	<<if $activeSlave.training < 100>>
+		$He does $his best to keep $his chin up, unknowingly condemning $himself to more of this abuse.
+	<<else>>
+		$He wants nothing more than to hide in corner and cry, and is now @@.red;shamefast.@@
+		<<set $activeSlave.sexualFlaw = "shamefast">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce sexual idealism">>
+	Since you've decided to induce $him to sexual idealism, you keep $him in your office, and when the two of you are all alone, gossip with $him about other slaves and even citizens. You do your best to encourage $him to believe absurdities.
+	<<InduceFlawLenityEffects>>
+	<<if $activeSlave.training < 100>>
+		$He doesn't know what to make of this; you'll have to keep at it.
+	<<else>>
+		$He follows along, and is now @@.red;sexually idealistic.@@
+		<<set $activeSlave.sexualFlaw = "idealistic">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce sexual repression">>
+	Since you've decided to force sexual repression on $him, you keep $him in your office whenever $he's not otherwise occupied. You use the monitoring systems to reveal $his sexual arousal whenever it appears, and castigate and punish $him for it.
+	<<InduceFlawAbuseEffects>>
+	<<if $activeSlave.training < 100>>
+		$He does $his best to keep $his chin up, unknowingly condemning $himself to more of this abuse.
+	<<else>>
+		$He desperately tries to avoid even thinking about subjects that get $him punished, and is now @@.red;sexually repressed.@@
+		<<set $activeSlave.sexualFlaw = "repressed">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce sexual apathy">>
+	Since you've decided to force sexual apathy on $him, you keep $him in your office whenever $he's not otherwise occupied. You use $him regularly, and punish $him whenever $he shows any sign of enjoyment.
+	<<InduceFlawAbuseEffects>>
+	<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><<else>><<set $activeSlave.counter.oral += 10, $oralTotal += 10>><</if>>
+	<<if $activeSlave.training < 100>>
+		$He continues to experience arousal when fucked, and will need more of this treatment.
+	<<else>>
+		$He desperately tries to avoid arousal, and is now @@.red;sexually apathetic.@@
+		<<set $activeSlave.sexualFlaw = "apathetic">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce crudity">>
+	Since you've decided to force sexual crudeness on $him, you keep $him in your office whenever $he's not otherwise occupied, and degrade $him cruelly. You relax the normal cleanliness rules, and require $him to leave $his used holes as they are until $he's too disgusting to fuck.
+	<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><<else>><<set $activeSlave.counter.oral += 10, $oralTotal += 10>><</if>>
+	<<InduceFlawAbuseEffects>>
+	<<if $activeSlave.training < 100>>
+		$He does $his best to tolerate the unclean feelings, condemning $himself to more of this.
+	<<else>>
+		$He slowly stops caring, and is now @@.red;sexually crude.@@
+		<<set $activeSlave.sexualFlaw = "crude">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce judgement">>
+	Since you've decided to make $him sexually judgemental, you keep $him in your office and fuck $him, <<if $PC.dick != 0>>praising $him whenever $he takes your big dick well<<else>>using a huge strap-on on $him and praising $him when $he takes it like a good $girl<</if>>. You also judge others' endowments in $his presence.
+	<<InduceFlawLenityEffects>>
+	<<if $activeSlave.training < 100>>
+		$He writes this off as bravado, and will need more training.
+	<<else>>
+		$He starts to consider $himself reserved for special sexual treatment, and is now @@.red;sexually judgemental.@@
+		<<set $activeSlave.sexualFlaw = "judgemental">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce cum addiction">>
+	The cumslut is quite pleased when you order $him to stay in your office whenever $he can for use as one of your personal oral toys. You carefully limit $his orgasms to when <<if $PC.dick != 0>>you're blowing your load down $his throat<<else>>$he's swallowing your pussyjuice<</if>>, and make $his oral adventures predictably regular.
+	<<set $activeSlave.counter.oral += 10, $oralTotal += 10>>
+	<<if $activeSlave.training < 100>>
+		$He enjoys giving you lots of oral, but will need more training to develop psychological addiction to it.
+	<<else>>
+		$He begins to develop a psychological @@.yellow;addiction to cum.@@
+		<<set $activeSlave.sexualFlaw = "cum addict">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce anal addiction">>
+	The buttslut is quite pleased when you order $him to stay in your office<<if !canDoAnal($activeSlave)>>and remove $his chastity<</if>> whenever $he can for use as one of your personal anal toys. You make $his anal orgasms predictably regular, doing your best to inculcate reliance on them.
+	<<= VCheck.Anal(10)>>
+	<<if $activeSlave.training < 100>>
+		$He enjoys all the anal attention, but will need more training to develop psychological addiction to buttsex.
+	<<else>>
+		$He begins to develop a psychological @@.yellow;addiction to anal sex.@@
+		<<set $activeSlave.sexualFlaw = "anal addict">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce attention whoring">>
+	The humiliation slut is quite pleased when you order $him to stay in your office whenever $he can, and fucking $him whenever other slaves are present. You do your best to focus $his attention on how the others react to the spectacle.
+	<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><<else>><<set $activeSlave.counter.oral += 10, $oralTotal += 10>><</if>>
+	<<if $activeSlave.training < 100>>
+		$He enjoys all the humiliation, but will need more training to become a true attention whore.
+	<<else>>
+		$He becomes a @@.yellow;true attention whore,@@ caring more about the spectators than the sex.
+		<<set $activeSlave.sexualFlaw = "attention whore">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce breast growth obsession">>
+	You inspect $his breasts multiple times a day, and praise $him effusively when they grow at all. You treat it as though it were something $he could control personally.
+	<<if $activeSlave.training < 100>>
+		$He enjoys your attention to $his favorite part of $himself, but doesn't truly internalize your focus on their growth.
+	<<else>>
+		$He begins to believe you despite $himself, and becomes @@.yellow;obsessed with breast growth.@@
+		<<set $activeSlave.sexualFlaw = "breast growth">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce abusiveness">>
+	The dom is gratified when you order $him to stay in your office whenever $he can to fuck any slave you feel like throwing $his way. You do your best to limit $his menu items to reluctant or even rebellious slaves, and praise $him when $he forces $himself on them.
+	<<set $activeSlave.counter.penetrative += 20, $penetrativeTotal += 20>>
+	<<if $activeSlave.training < 100>>
+		$He has fun, but $he continues to enjoy getting off more than getting to use bitches. $He'll need more practice.
+	<<else>>
+		$He becomes @@.yellow;sexually abusive,@@ looking over each slave that comes into your office in the hope they'll resist.
+		<<set $activeSlave.sexualFlaw = "abusive">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce maliciousness">>
+	The sadist is gratified when you order $him to stay in your office whenever $he can to have $his way with any slave you feel like throwing $his way. You do your best to limit $his menu items to rebellious slaves, and praise $him when $his sadism makes $him an effective punishment tool.
+	<<set $activeSlave.counter.penetrative += 20, $penetrativeTotal += 20>>
+	<<if $activeSlave.training < 100>>
+		$He enjoys $himself, but still betrays occasional concern when slaves are really broken by what $he does to them. $He'll need more practice.
+	<<else>>
+		$He becomes @@.yellow;sexually malicious,@@ going so far as to lick tears off $his victims' faces.
+		<<set $activeSlave.sexualFlaw = "malicious">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce self hatred">>
+	You order the masochist to stay in your office whenever $he's not working or resting. You fuck $him cruelly, going beyond the pain $he enjoys into harsh degradation. And every time you use $him, you make sure to tell $him how useless $he is.
+	<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><<else>><<set $activeSlave.counter.oral += 10, $oralTotal += 10>><</if>>
+	<<if $activeSlave.training < 100>>
+		$He gets off on the pain, but $his sense of self isn't seriously affected this week.
+	<<else>>
+		$He becomes @@.yellow;sexually self hating,@@ and tearfully begs to you do worse to $him, no matter how bad it gets.
+		<<set $activeSlave.sexualFlaw = "self hating">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce sexual self neglect">>
+	You order the sub to stay in your office whenever $he's not working or resting, and use $his body for your pleasure. The instant you climax, you go back to your work or to another slave, treating $him like a piece of used tissue.
+	<<if canDoVaginal($activeSlave)>><<= VCheck.Vaginal(10)>><<elseif canDoAnal($activeSlave)>><<= VCheck.Anal(10)>><<else>><<set $activeSlave.counter.oral += 10, $oralTotal += 10>><</if>>
+	<<if $activeSlave.training < 100>>
+		$He accepts $his utterly submissive role, but $his sense of self isn't seriously affected this week.
+	<<else>>
+		$He becomes @@.yellow;sexually self neglectful,@@ and loses all expectation that those who use $him will address $his pleasure at all.
+		<<set $activeSlave.sexualFlaw = "neglectful">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<<case "induce breeding obsession">>
+	You order the pregnant slut to stay in your office whenever $he's not working or resting.
+	<<if $activeSlave.pregKnown == 0>>Since $he's not pregnant, you keep $him rigged up with an enormous sympathy belly when $he's there.<</if>> Rather than fucking $him, you praise $his pregnancy effusively, and only allow $him to get off when you're doing so.
+	<<if $activeSlave.training < 100>>
+		$He enjoys $himself, but mostly because of the pleasure. $He'll need more training.
+	<<else>>
+		$He develops an @@.yellow;obsession with breeding,@@ and begins to stroke $his belly in a disturbingly masturbatory way.
+		<<set $activeSlave.sexualFlaw = "breeder">>
+		<<BasicTrainingDefaulter>>
+	<</if>>
+	<<= IncreasePCSkills('slaving', _currentSlaveValue)>>
+<</switch>>
+<<set $PC.skill.slaving = Math.clamp($PC.skill.slaving, -100, 100)>>
+
+<<if $activeSlave.ID == $slaves[$i].ID>>
+	<<set $slaves[$i] = $activeSlave>>
+<<else>>
+	<<set _I = $slaveIndices[$activeSlave.ID]>>
+	<<if def _I>>
+		<<set $slaves[_I] = $activeSlave>>
+	<</if>>
+<</if>>

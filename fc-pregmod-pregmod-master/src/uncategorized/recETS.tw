@@ -1,0 +1,1850 @@
+:: RecETS [nobr]
+
+<<if Array.isArray($RecETSevent)>>
+	<<set $activeSlave = $eventSlave>>
+	<<if $cheatMode == 1>>
+		<<set $nextButton = "Back", $nextLink = "Nonrandom Event", $returnTo = "Nonrandom Event">> /* if user just clicks spacebar */
+		<div font-weight="bold">
+			A random two slave recruitment event would have been selected from the following:
+		</div>
+		<<for _i = 0; _i < $RecETSevent.length; _i++>>
+			<div>
+				<<print "[[$RecETSevent[_i]|RecETS][$RecETSevent = $RecETSevent[" + _i + "]]]">>
+			</div>
+		<</for>>
+		<<if $debugMode == 1>>
+			<div>
+				For debug purposes, the following scenes would not have been selected but can be chosen.
+			</div>
+			<<set _allEvents = [
+				"addict mother daughter",
+				"posh mother daughter",
+				"incest mother son",
+				"incest father daughter",
+				"incest brother sister",
+				"incest sister sister",
+				"incest brother brother",
+				"incest twin sister",
+				"incest twin brother",
+				"incest twins mixed",
+				"incest mother daughter",
+				"incest father son",
+				"mismatched pair",
+				"matched pair",
+				"identical pair",
+				"identical herm pair",
+				"desperate broodmother"
+			]>>
+			<<for _i = 0; _i < _allEvents.length; _i++>>
+				<<if !$RecETSevent.includes(_allEvents[_i])>>
+					<div>
+						<<print "[[_allEvents[_i]|RecETS][$RecETSevent = _allEvents[" + _i + "]]]">>
+					</div>
+				<</if>>
+			<</for>>
+		<</if>>
+
+		<p>
+			[[Go Back to Random Nonindividual Event|Random Nonindividual Event][$eventSlave = 0]]
+		</p>
+	<<else>>
+		<<set $RecETSevent = $RecETSevent.random()>>
+		<<goto "RecETS">>
+	<</if>>
+<<else>>
+
+<<set $nextButton = "Continue", $nextLink = "RIE Eligibility Check", $showEncyclopedia = 1, $encyclopedia = "Enslaving People">>
+
+/* Set variables needed for scenes; create slave objects. No text. */
+<span id="setup">
+	/* Set up primary slave */
+	<<switch $RecETSevent>>
+		<<case "addict mother daughter">>
+			<<set _ContractCost = 1000>>
+			<<set $activeSlaveOneTimeMinAge = ($fertilityAge + $minimumSlaveAge)>>
+			<<set $activeSlaveOneTimeMaxAge = 40>>
+			<<set $one_time_age_overrides_pedo_mode = 1>> /* Old enough to have a daughter who can be a slave. */
+			<<set $oneTimeDisableDisability = 1>>
+			<<if $arcologies[0].FSSupremacistLawME == 1>>
+				<<set $fixedRace = $arcologies[0].FSSupremacistRace>>
+			<<elseif $arcologies[0].FSSubjugationistLawME == 1>>
+				<<set _races = setup.filterRacesLowercase.filter(race => race !== $arcologies[0].FSSubjugationistRace)>>
+				<<set $fixedRace = _races.random()>>
+			<</if>>
+
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+			<<set $activeSlave.origin = "$He sold $himself into slavery to escape addiction debts.">>
+			<<set $activeSlave.career = setup.uneducatedCareers.random()>>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.addict = 8>>
+			<<set $activeSlave.boobs += 100>>
+			<<set $activeSlave.face = -15>>
+			<<set $activeSlave.butt += 1>>
+			<<if $activeSlave.vagina > -1>><<set $activeSlave.vagina += 1>><</if>>
+			<<set $activeSlave.anus += 1>>
+			<<run setHealth($activeSlave, jsRandom(-60, 20), Math.max(normalRandInt(5, 3), 0), Math.max(normalRandInt(5, 3), 0))>>
+			<<set $activeSlave.pubicHStyle = "waxed">>
+			<<set $activeSlave.underArmHStyle = "waxed">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "mother">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.counter.birthsTotal += 1>>
+			<<set _slaveCost = slaveCost($activeSlave)>>
+			<<set _slaveCost -= 1000>>
+		<<case "posh mother daughter">>
+			<<set _ContractCost = 1500>>
+			<<set $activeSlaveOneTimeMinAge = ($fertilityAge + $minimumSlaveAge)>>
+			<<set $activeSlaveOneTimeMaxAge = 40>>
+			<<set $one_time_age_overrides_pedo_mode = 1>> /* Old enough to have a daughter who can be a slave. */
+			<<set $oneTimeDisableDisability = 1>>
+			<<if $arcologies[0].FSSupremacistLawME == 1>>
+				<<set $fixedRace = $arcologies[0].FSSupremacistRace>>
+			<<elseif $arcologies[0].FSSubjugationistLawME == 1>>
+				<<set _races = setup.filterRacesLowercase.filter(race => race !== $arcologies[0].FSSubjugationistRace)>>
+				<<set $fixedRace = _races.random()>>
+			<</if>>
+
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+			<<set $activeSlave.origin = "$He was enslaved after you called in $his business debts.">>
+			<<set $activeSlave.career = "a business owner">>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.vagina = 2>>
+			<<set $activeSlave.preg = -2>>
+			<<set $activeSlave.ovaries = 1>>
+			<<set $activeSlave.counter.birthsTotal += 1>>
+			<<set $activeSlave.face = 15>>
+			<<set $activeSlave.skill.vaginal = 15>>
+			<<set $activeSlave.anus = 0>>
+			<<set $activeSlave.boobs += 400>>
+			<<set $activeSlave.boobsImplant = 400>>
+			<<set $activeSlave.boobsImplantType = "normal">>
+			<<set $activeSlave.butt += 1>>
+			<<set $activeSlave.buttImplant = 1>>
+			<<set $activeSlave.buttImplantType = "normal">>
+			<<set $activeSlave.clothes = "nice business attire">>
+			<<run setHealth($activeSlave, jsRandom(20, 40), 0, 0, 0)>>
+			<<set $activeSlave.pubicHStyle = "neat">>
+			<<set $activeSlave.underArmHStyle = "shaved">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "mother">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set _slaveCost = slaveCost($activeSlave)>>
+			<<set _slaveCost -= 1500>>
+		<<case "incest mother son">>
+			<<set _ContractCost = 10000>>
+			<<set $activeSlaveOneTimeMinAge = Math.max($fertilityAge+20, $potencyAge+20, $minimumSlaveAge+20)>>
+			<<set $activeSlaveOneTimeMaxAge = 40>>
+			<<set $one_time_age_overrides_pedo_mode = 1>> /* Old enough to have a son who can knock $him up. */
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+			<<set $activeSlave.origin = "$He offered to become your slave to protect $his incestuous relationship.">>
+			<<set $activeSlave.career = "a housewife">>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.vagina = 2>>
+			<<set $activeSlave.preg = 31>>
+			<<set $activeSlave.pregType = 1>>
+			<<set $activeSlave.pregSource = $activeSlave.ID + 1000>>
+			<<set $activeSlave.pregKnown = 1>>
+			<<set $activeSlave.pregWeek = $activeSlave.preg>>
+			<<set $activeSlave.belly = 8000>>
+			<<set $activeSlave.bellyPreg = 8000>>
+			<<set $activeSlave.ovaries = 1>>
+			<<set $activeSlave.counter.birthsTotal += 1>>
+			<<set $activeSlave.face = 15>>
+			<<set $activeSlave.skill.vaginal = 35>>
+			<<set $activeSlave.anus = 1>>
+			<<set $activeSlave.boobs += 600>>
+			<<set $activeSlave.lactation = 1>>
+			<<set $activeSlave.lactationDuration = 2>>
+			<<set $activeSlave.boobsImplant = 0>>
+			<<set $activeSlave.boobsImplantType = "none">>
+			<<set $activeSlave.butt += 2>>
+			<<set $activeSlave.buttImplant = 0>>
+			<<set $activeSlave.buttImplantType = "none">>
+			<<set $activeSlave.clothes = "conservative clothing">>
+			<<run setHealth($activeSlave, jsRandom(20, 40), 0, 0, 0)>>
+			<<set $activeSlave.pubicHStyle = "bushy">>
+			<<set $activeSlave.behavioralQuirk = "sinful">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "mother">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+			/* _slaveCost not needed, no option to sell */
+		<<case "incest father daughter">>
+			<<set _ContractCost = 10000>>
+			<<set $activeSlaveOneTimeMinAge = Math.max($potencyAge+20, $fertilityAge+20, $minimumSlaveAge+20)>>
+			<<set $activeSlaveOneTimeMaxAge = 40>>
+			<<set $one_time_age_overrides_pedo_mode = 1>> /* Old enough to have a daughter to knock up. */
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XY")>>
+			<<set $activeSlave.origin = "$He offered to become your slave to protect $his incestuous relationship.">>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.dick = 4>>
+			<<set $activeSlave.balls = 3>>
+			<<set $activeSlave.scrotum = 3>>
+			<<set $activeSlave.face = 15>>
+			<<set $activeSlave.faceShape = "masculine">>
+			<<set $activeSlave.clothes = "conservative clothing">>
+			<<run setHealth($activeSlave, jsRandom(20, 40), 0, 0, 0)>>
+			<<set $activeSlave.behavioralQuirk = "sinful">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "mother">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+			/* _slaveCost not needed, no option to sell */
+		<<case "incest brother sister">>
+			<<set _ContractCost = 10000>>
+			<<set $activeSlaveOneTimeMinAge = Math.max($fertilityAge+2, $potencyAge+2, $minimumSlaveAge+2)>>
+			<<set $activeSlaveOneTimeMaxAge = 20>>
+			<<set $one_time_age_overrides_pedo_mode = 1>>
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+			<<set $activeSlave.origin = "$He offered to become your slave to protect $his incestuous relationship.">>
+			<<set $activeSlave.career = "a dropout">>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.vagina = 1>>
+			<<set $activeSlave.preg = 31>>
+			<<set $activeSlave.pregType = 1>>
+			<<set $activeSlave.pregSource = $activeSlave.ID + 1000>>
+			<<set $activeSlave.pregKnown = 1>>
+			<<set $activeSlave.pregWeek = $activeSlave.preg>>
+			<<set $activeSlave.belly = 8000>>
+			<<set $activeSlave.bellyPreg = 8000>>
+			<<set $activeSlave.ovaries = 1>>
+			<<set $activeSlave.face = random(15,40)>>
+			<<set $activeSlave.skill.vaginal = 15>>
+			<<set $activeSlave.anus = 1>>
+			<<set $activeSlave.lactation = 1>>
+			<<set $activeSlave.lactationDuration = 2>>
+			<<set $activeSlave.clothes = "cutoffs and a t-shirt">>
+			<<run setHealth($activeSlave, jsRandom(20, 40), 0, 0, 0)>>
+			<<set $activeSlave.pubicHStyle = "in a strip">>
+			<<set $activeSlave.behavioralQuirk = "sinful">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.father = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+			/* _slaveCost not needed, no option to sell */
+		<<case "incest sister sister">>
+			<<set _ContractCost = 10000>>
+			<<set $activeSlaveOneTimeMinAge = Math.max($fertilityAge+2, $minimumSlaveAge+2)>>
+			<<set $activeSlaveOneTimeMaxAge = 20>>
+			<<set $one_time_age_overrides_pedo_mode = 1>>
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+			<<set $activeSlave.origin = "$He offered to become your slave to protect $his incestuous relationship.">>
+			<<set $activeSlave.career = "a dropout">>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.ovaries = 1>>
+			<<set $activeSlave.face = random(15,40)>>
+			<<set $activeSlave.attrXX = 80>>
+			<<set $activeSlave.skill.vaginal = 15>>
+			<<set $activeSlave.clothes = "cutoffs and a t-shirt">>
+			<<run setHealth($activeSlave, jsRandom(20, 40), 0, 0, 0)>>
+			<<set $activeSlave.pubicHStyle = "in a strip">>
+			<<set $activeSlave.behavioralQuirk = "sinful">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.father = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+			/* _slaveCost not needed, no option to sell */
+		<<case "incest brother brother">>
+			<<set _ContractCost = 10000>>
+			<<set $activeSlaveOneTimeMinAge = Math.max($potencyAge+2, $minimumSlaveAge+2)>>
+			<<set $activeSlaveOneTimeMaxAge = 20>>
+			<<set $one_time_age_overrides_pedo_mode = 1>>
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XY")>>
+			<<set $activeSlave.origin = "$He offered to become your slave to protect $his incestuous relationship.">>
+			<<set $activeSlave.career = "a dropout">>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.face = random(15,40)>>
+			<<set $activeSlave.clothes = "conservative clothing">>
+			<<run setHealth($activeSlave, jsRandom(20, 40), 0, 0, 0)>>
+			<<set $activeSlave.attrXY = 80>>
+			<<set $activeSlave.pubicHStyle = "bushy">>
+			<<set $activeSlave.behavioralQuirk = "sinful">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.father = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+			/* _slaveCost not needed, no option to sell */
+		<<case "incest twin sister">>
+			<<set _ContractCost = 10000>>
+			<<set $activeSlaveOneTimeMinAge = Math.max($fertilityAge, $minimumSlaveAge)>>
+			<<set $activeSlaveOneTimeMaxAge = 20>>
+			<<set $one_time_age_overrides_pedo_mode = 1>>
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+			<<set $activeSlave.origin = "$He offered to become your slave to protect $his incestuous relationship.">>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.face = random(15,40)>>
+			<<set $activeSlave.attrXX = 80>>
+			<<set $activeSlave.skill.vaginal = 15>>
+			<<set $activeSlave.clothes = "cutoffs and a t-shirt">>
+			<<run setHealth($activeSlave, jsRandom(20, 40), 0, 0, 0)>>
+			<<set $activeSlave.pubicHStyle = "in a strip">>
+			<<set $activeSlave.behavioralQuirk = "sinful">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.father = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+			/* _slaveCost not needed, no option to sell */
+		<<case "incest twin brother">>
+			<<set _ContractCost = 10000>>
+			<<set $activeSlaveOneTimeMinAge = Math.max($potencyAge, $minimumSlaveAge)>>
+			<<set $activeSlaveOneTimeMaxAge = 20>>
+			<<set $one_time_age_overrides_pedo_mode = 1>>
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XY")>>
+			<<set $activeSlave.origin = "$He offered to become your slave to protect $his incestuous relationship.">>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.face = random(15,40)>>
+			<<set $activeSlave.clothes = "conservative clothing">>
+			<<run setHealth($activeSlave, jsRandom(20, 40), 0, 0, 0)>>
+			<<set $activeSlave.attrXY = 80>>
+			<<set $activeSlave.pubicHStyle = "bushy">>
+			<<set $activeSlave.behavioralQuirk = "sinful">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.father = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+		<<case "incest twins mixed">>
+			<<set _ContractCost = 10000>>
+			<<set $activeSlaveOneTimeMinAge = Math.max($fertilityAge, $minimumSlaveAge)>>
+			<<set $activeSlaveOneTimeMaxAge = 20>>
+			<<set $one_time_age_overrides_pedo_mode = 1>>
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+			<<set $activeSlave.vagina = 1>>
+			<<set $activeSlave.origin = "$He offered to become your slave to protect $his incestuous relationship.">>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.face = random(15,40)>>
+			<<set $activeSlave.attrXX = 80>>
+			<<set $activeSlave.skill.vaginal = 15>>
+			<<set $activeSlave.clothes = "cutoffs and a t-shirt">>
+			<<run setHealth($activeSlave, jsRandom(20, 40), 0, 0, 0)>>
+			<<set $activeSlave.pubicHStyle = "in a strip">>
+			<<set $activeSlave.behavioralQuirk = "sinful">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.father = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+			/* _slaveCost not needed, no option to sell */
+		<<case "incest mother daughter">>
+			<<set _ContractCost = 10000>>
+			<<set $activeSlaveOneTimeMinAge = Math.max($fertilityAge+20, $minimumSlaveAge+20)>>
+			<<set $activeSlaveOneTimeMaxAge = 40>>
+			<<set $one_time_age_overrides_pedo_mode = 1>> /* Old enough to have a daughter. */
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+			<<set $activeSlave.origin = "$He offered to become your slave to protect $his incestuous relationship.">>
+			<<set $activeSlave.career = "a housewife">>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.vagina = 2>>
+			<<set $activeSlave.ovaries = 1>>
+			<<set $activeSlave.counter.birthsTotal += 1>>
+			<<set $activeSlave.face = random(15,60)>>
+			<<set $activeSlave.skill.vaginal = 35>>
+			<<set $activeSlave.anus = 1>>
+			<<set $activeSlave.boobs += 600>>
+			<<set $activeSlave.lactation = 1>>
+			<<set $activeSlave.lactationDuration = 2>>
+			<<set $activeSlave.boobsImplant = 0>>
+			<<set $activeSlave.boobsImplantType = "none">>
+			<<set $activeSlave.butt += 2>>
+			<<set $activeSlave.buttImplant = 0>>
+			<<set $activeSlave.buttImplantType = "none">>
+			<<set $activeSlave.clothes = "conservative clothing">>
+			<<run setHealth($activeSlave, jsRandom(20, 40), 0, 0, 0)>>
+			<<set $activeSlave.pubicHStyle = "bushy">>
+			<<set $activeSlave.behavioralQuirk = "sinful">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "mother">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+			/* _slaveCost not needed, no option to sell */
+		<<case "incest father son">>
+			<<set _ContractCost = 10000>>
+			<<set $activeSlaveOneTimeMinAge = Math.max($potencyAge+20, $minimumSlaveAge+20)>>
+			<<set $activeSlaveOneTimeMaxAge = 40>>
+			<<set $one_time_age_overrides_pedo_mode = 1>> /* Old enough to have a son. */
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XY")>>
+			<<set $activeSlave.origin = "$He offered to become your slave to protect $his incestuous relationship.">>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.dick = 4>>
+			<<set $activeSlave.balls = 3>>
+			<<set $activeSlave.scrotum = 3>>
+			<<set $activeSlave.face = random(15,50)>>
+			<<set $activeSlave.faceShape = "masculine">>
+			<<set $activeSlave.clothes = "conservative clothing">>
+			<<run setHealth($activeSlave, jsRandom(20, 40), 0, 0, 0)>>
+			<<set $activeSlave.behavioralQuirk = "sinful">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "mother">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+			/* _slaveCost not needed, no option to sell */
+		<<case "mismatched pair">>
+			<<set _ContractCost = 1500>>
+			<<set $activeSlaveOneTimeMinAge = $minimumSlaveAge>>
+			<<set $activeSlaveOneTimeMaxAge = 21>>
+			<<set $oneTimeDisableDisability = 1>>
+			<<if $arcologies[0].FSSupremacistLawME == 1>>
+				<<set $fixedRace = $arcologies[0].FSSupremacistRace>>
+			<<elseif $arcologies[0].FSSubjugationistLawME == 1>>
+				<<set _races = setup.filterRacesLowercase.filter(race => race !== $arcologies[0].FSSubjugationistRace)>>
+				<<set $fixedRace = _races.random()>>
+			<</if>>
+
+			<<set $activeSlave = GenerateNewSlave("XY")>>
+			<<set $activeSlave.origin = "$He was sold into slavery by $his older sister.">>
+			<<set $activeSlave.career = "a prostitute">>
+			<<set $activeSlave.devotion = random(-15,15)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<run setHealth($activeSlave, jsRandom(0, 20))>>
+			<<set $activeSlave.anus = 1>>
+			<<set $activeSlave.vagina = -1>>
+			<<set $activeSlave.dick = 1>>
+			<<if $activeSlave.foreskin > 0>><<set $activeSlave.foreskin = $activeSlave.dick>><</if>>
+			<<if $activeSlave.balls > 0>><<set $activeSlave.scrotum = $activeSlave.balls>><</if>>
+			<<set $activeSlave.clit = 0>>
+			<<set $activeSlave.balls = 1>>
+			<<set $activeSlave.face = 15>>
+			<<set $activeSlave.weight = 0>>
+			<<set $activeSlave.skill.vaginal = 0>>
+			<<set $activeSlave.skill.oral = 15>>
+			<<set $activeSlave.skill.anal = 15>>
+			<<set $activeSlave.boobs = 600>>
+			<<set $activeSlave.boobsImplant = 400>>
+			<<set $activeSlave.boobsImplantType = "normal">>
+			<<set $activeSlave.butt = either(1, 2)>>
+			<<set $activeSlave.preg = -2>>
+			<<set $activeSlave.birthWeek = 0>>
+			<<set $activeSlave.sexualFlaw = "hates anal">>
+			<<set $activeSlave.hStyle = "in twin tails">>
+			<<set $activeSlave.pubicHStyle = "waxed">>
+			<<set $activeSlave.underArmHStyle = "waxed">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.father = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.rivalry = 3>>
+			<<set $activeSlave.rivalryTarget = $activeSlave.ID + 1000>>
+			<<set _slaveCost = slaveCost($activeSlave)>>
+			<<set _slaveCost -= 1500>>
+		<<case "matched pair">>
+			/* _ContractCost not needed, no option to sell */
+			<<set $activeSlaveOneTimeMinAge = 12>>
+			<<set $activeSlaveOneTimeMaxAge = 21>>
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+			<<set $activeSlave.origin = "$He was brought up in a radical slave school to match $his twin.">>
+			<<set $activeSlave.career = "a slave">>
+			<<set $activeSlave.devotion = random(25,45)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<run setHealth($activeSlave, jsRandom(0, 20))>>
+			<<set $activeSlave.anus = 1>>
+			<<set $activeSlave.vagina = -1>>
+			<<set $activeSlave.dick = 1>>
+			<<if $activeSlave.foreskin > 0>><<set $activeSlave.foreskin = $activeSlave.dick>><</if>>
+			<<if $activeSlave.balls > 0>><<set $activeSlave.scrotum = $activeSlave.balls>><</if>>
+			<<set $activeSlave.balls = 1>>
+			<<set $activeSlave.ovaries = 0>>
+			<<set $activeSlave.clit = 0>>
+			<<set $activeSlave.weight = 0>>
+			<<set $activeSlave.face = 15>>
+			<<set $activeSlave.skill.vaginal = 0>>
+			<<set $activeSlave.skill.oral = 15>>
+			<<set $activeSlave.skill.anal = 15>>
+			<<set $activeSlave.boobs = either(500,600)>>
+			<<set $activeSlave.boobsImplant = 400>>
+			<<set $activeSlave.boobsImplantType = "normal">>
+			<<set $activeSlave.butt = either(2, 3)>>
+			<<set $activeSlave.buttImplant = 1>>
+			<<set $activeSlave.buttImplantType = "normal">>
+			<<set $activeSlave.preg = -3>>
+			<<set $activeSlave.hStyle = "in twin tails">>
+			<<set $activeSlave.pubicHStyle = "waxed">>
+			<<set $activeSlave.underArmHStyle = "waxed">>
+			<<set $activeSlave.sexualFlaw = "none">>
+			<<set $activeSlave.behavioralFlaw = "none">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.father = $missingParentID>>
+				<<set $activeSlave.canRecruit = 0>>
+				<<set $missingParentID-->>
+			<<else>>
+				<<set $activeSlave.relation = "twin">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relation = "twin">>
+			<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<<set $activeSlave.relationship = 2>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+			<<set _slaveCost = slaveCost($activeSlave)>>
+			<<set _ContractCost = _slaveCost>>
+		<<case "identical pair">>
+			<<set $activeSlaveOneTimeMinAge = $minimumSlaveAge>>
+			<<set $activeSlaveOneTimeMaxAge = 21>>
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+			<<set $activeSlave.origin = "$He was brought up in a radical slave school to match $his twin.">>
+			<<set $activeSlave.career = "a slave">>
+			<<set $activeSlave.devotion = random(25,45)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<run setHealth($activeSlave, jsRandom(0, 20))>>
+			<<set $activeSlave.anus = 1>>
+			<<set $activeSlave.dick = 0>>
+			<<set $activeSlave.foreskin = 0>>
+			<<set $activeSlave.balls = 0>>
+			<<set $activeSlave.scrotum = 0>>
+			<<set $activeSlave.clit = 2>>
+			<<set $activeSlave.vagina = 1>>
+			<<set $activeSlave.weight = 0>>
+			<<set $activeSlave.face = 15>>
+			<<set $activeSlave.faceShape = "cute">>
+			<<set $activeSlave.attrXX = 80>>
+			<<if $activeSlave.physicalAge >= 12>>
+				<<set $activeSlave.teeth = "normal">>
+			<</if>>
+			<<set $activeSlave.skill.vaginal = 15>>
+			<<set $activeSlave.skill.oral = 15>>
+			<<set $activeSlave.skill.anal = 15>>
+			<<if $activeSlave.physicalAge >= random(13,17)>>
+				<<set $activeSlave.boobs = either(500,600)>>
+				<<set $activeSlave.boobsImplant = 0>>
+				<<set $activeSlave.boobsImplantType = "none">>
+				<<set $activeSlave.butt = either(2, 3)>>
+				<<set $activeSlave.buttImplant = 0>>
+				<<set $activeSlave.buttImplantType = "none">>
+			<</if>>
+			<<set $activeSlave.preg = -1>>
+			<<set $activeSlave.hStyle = "in twin tails">>
+			<<set $activeSlave.pubicHStyle = "waxed">>
+			<<set $activeSlave.sexualQuirk = "none">>
+			<<set $activeSlave.behavioralQuirk = "none">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.father = $missingParentID>>
+				<<set $activeSlave.canRecruit = 0>>
+				<<set $missingParentID-->>
+			<<else>>
+				<<set $activeSlave.relation = "twin">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 2>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+			<<set _slaveCost = slaveCost($activeSlave)>>
+			<<set _ContractCost = _slaveCost>>
+		<<case "identical herm pair">>
+			<<set $activeSlaveOneTimeMinAge = $fertilityAge>>
+			<<set $activeSlaveOneTimeMaxAge = 21>>
+			<<set $one_time_age_overrides_pedo_mode = 1>>
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+			<<set $activeSlave.origin = "$He was brought up in a radical slave school to match $his twin.">>
+			<<set $activeSlave.career = "a slave">>
+			<<set $activeSlave.devotion = random(25,45)>>
+			<<set $activeSlave.trust = random(-15,15)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<run setHealth($activeSlave, jsRandom(0, 20))>>
+			<<set $activeSlave.anus = 1>>
+			<<set $activeSlave.dick = 5>>
+			<<set $activeSlave.foreskin = 4>>
+			<<set $activeSlave.balls = 6>>
+			<<set $activeSlave.scrotum = 3>>
+			<<set $activeSlave.clit = 0>>
+			<<set $activeSlave.vagina = 2>>
+			<<set $activeSlave.weight = 0>>
+			<<set $activeSlave.face = 15>>
+			<<set $activeSlave.faceShape = "cute">>
+			<<if $activeSlave.physicalAge >= 12>>
+				<<set $activeSlave.teeth = "normal">>
+			<</if>>
+			<<set $activeSlave.skill.vaginal = 15>>
+			<<set $activeSlave.skill.oral = 15>>
+			<<set $activeSlave.skill.anal = 15>>
+			<<if $activeSlave.physicalAge >= random(13,17)>>
+				<<set $activeSlave.boobs = either(500,600)>>
+				<<set $activeSlave.boobsImplant = 0>>
+				<<set $activeSlave.boobsImplantType = "none">>
+				<<set $activeSlave.butt = either(2, 3)>>
+				<<set $activeSlave.buttImplant = 0>>
+				<<set $activeSlave.buttImplantType = "none">>
+			<</if>>
+			<<set $activeSlave.preg = 30>>
+			<<set $activeSlave.pregType = 2>>
+			<<set $activeSlave.pregSource = $activeSlave.ID + 1000>>
+			<<set $activeSlave.pregKnown = 1>>
+			<<set $activeSlave.pregWeek = $activeSlave.preg>>
+			<<set $activeSlave.belly = 14000>>
+			<<set $activeSlave.bellyPreg = 14000>>
+			<<set $activeSlave.pubertyXX = 1>>
+			<<set $activeSlave.pubertyXY = 1>>
+			<<set $activeSlave.hStyle = "in twin tails">>
+			<<set $activeSlave.pubicHStyle = "waxed">>
+			<<set $activeSlave.fetish = "pregnancy">>
+			<<set $activeSlave.fetishStrength = 100>>
+			<<set $activeSlave.sexualQuirk = "perverted">>
+			<<set $activeSlave.behavioralQuirk = "none">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $missingParentID>>
+				<<set $missingParentID-->>
+				<<set $activeSlave.father = $missingParentID>>
+				<<set $activeSlave.canRecruit = 0>>
+				<<set $missingParentID-->>
+			<<else>>
+				<<set $activeSlave.relation = "twin">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 4>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID + 1000>>
+			<<set _slaveCost = slaveCost($activeSlave)>>
+			<<set _ContractCost = _slaveCost>>
+		<<case "desperate broodmother">>
+			<<set _ContractCost = 1000>>
+			<<set $activeSlaveOneTimeMinAge = ($fertilityAge + 3)>>
+			<<if $pedo_mode == 1>>
+				<<set $activeSlaveOneTimeMaxAge = 18>>
+			<<else>>
+				<<set $activeSlaveOneTimeMaxAge = 24>>
+			<</if>>
+			<<set $one_time_age_overrides_pedo_mode = 1>>
+			<<set $oneTimeDisableDisability = 1>>
+
+			<<set $activeSlave = GenerateNewSlave("XX")>>
+			<<set $activeSlave.origin = "$He begged to be enslaved in a desperate attempt to provide for $his many children.">>
+			<<set $activeSlave.career = "homeless">>
+			<<run setHealth($activeSlave, jsRandom(-45, -30), -1, -1, -1, 80)>>
+			<<set $activeSlave.devotion = random(35,45)>>
+			<<set $activeSlave.trust = random(15,25)>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.preg = 41>>
+			<<set $activeSlave.pregType = random(25,29)>>
+			<<set $activeSlave.pregKnown = 1>>
+			<<set $activeSlave.pregWeek = $activeSlave.preg>>
+			<<run SetBellySize($activeSlave)>>
+			<<set $activeSlave.pregAdaptation = 600>>
+			<<set $activeSlave.labor = 1>>
+			<<set $activeSlave.ovaries = 1>>
+			<<set $activeSlave.counter.birthsTotal = 5>>
+			<<set $activeSlave.face = 15>>
+			<<set $activeSlave.vagina = 4>>
+			<<set $activeSlave.skill.vaginal = 45>>
+			<<set $activeSlave.skill.whoring = 20>>
+			<<set $activeSlave.skill.anal = 10>>
+			<<set $activeSlave.anus = 1>>
+			<<set $activeSlave.weight = random(-80,-50)>>
+			<<set $activeSlave.muscles = 0>>
+			<<set $activeSlave.underArmHStyle = "bushy">>
+			<<set $activeSlave.pubicHStyle = "bushy">>
+			<<set $activeSlave.boobs = 1600>>
+			<<set $activeSlave.boobShape = "saggy">>
+			<<set $activeSlave.nipples = "huge">>
+			<<set $activeSlave.lactation = 1>>
+			<<set $activeSlave.lactationDuration = 2>>
+			<<set $activeSlave.lactationAdaptation = 30>>
+			<<set $activeSlave.hips = 2>>
+			<<set $activeSlave.vaginaLube = 1>>
+			<<set $activeSlave.butt += 3>>
+			<<set $activeSlave.sexualQuirk = "caring">>
+			<<set $activeSlave.bellySag = 20>>
+			<<set $activeSlave.bellySagPreg = 20>>
+			<<set $activeSlave.pubertyXX = 1>>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.canRecruit = 0>>
+			<<else>>
+				<<set $activeSlave.relation = "mother">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID + 1000>>
+			<</if>>
+			<<set _slaveCost = slaveCost($activeSlave)>>
+			<<set _slaveCost -= 1500>>
+	<</switch>>
+
+	/* Set up related slave */
+	<<set $relative = clone($activeSlave)>>
+
+	<<switch $RecETSevent>>
+		<<case "addict mother daughter">>
+			<<set $activeSlave.origin = "You tricked $his mother into selling $him into slavery to clear addiction debts.">>
+			<<set $activeSlave.career = setup.uneducatedCareers.random()>>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.devotion += 10>>
+			<<set $activeSlave.trust += 10>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.boobs -= 100>>
+			<<set $activeSlave.butt -= 1>>
+			<<if $activeSlave.vagina > -1>><<set $activeSlave.vagina = 1>><</if>>
+			<<set $activeSlave.anus = 1>>
+			<<set $activeSlaveOneTimeMaxAge = Math.min(22, Math.max($minimumSlaveAge, $activeSlave.actualAge - 11))>>
+			<<set $activeSlaveOneTimeMinAge = Math.min(Math.max(15, $minimumSlaveAge), $activeSlaveOneTimeMaxAge)>>
+			<<if $pedo_mode == 1>><<set $activeSlaveOneTimeMinAge = $minimumSlaveAge>><</if>>
+			<<set $activeSlave.actualAge = random($activeSlaveOneTimeMinAge, $activeSlaveOneTimeMaxAge)>>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $activeSlave.ID - 1000>>
+			<<else>>
+				<<set $activeSlave.relation = "daughter">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.counter.birthsTotal = 0>>
+			<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+			<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+			<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+			<<if $activeSlave.physicalAge < 6>>
+				<<set $activeSlave.teeth = "baby">>
+			<<elseif $activeSlave.physicalAge < 12>>
+				<<set $activeSlave.teeth = "mixed">>
+			<</if>>
+		<<case "posh mother daughter">>
+			<<set $activeSlave.origin = "You acquired $him along with $his mother when the family business failed.">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.devotion -= 25>>
+			<<set $activeSlave.trust -= 10>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.boobs -= 400>>
+			<<set $activeSlave.boobsImplant = 0>>
+			<<set $activeSlave.boobsImplantType = "none">>
+			<<set $activeSlave.butt -= 1>>
+			<<set $activeSlave.vagina = 1>>
+			<<set $activeSlave.anus = 0>>
+			<<set $activeSlave.skill.vaginal = 0>>
+			<<set $activeSlaveOneTimeMaxAge = Math.max($minimumSlaveAge,Math.min(19, ($activeSlave.actualAge - Math.min(11, $fertilityAge))))>>
+			<<set $activeSlaveOneTimeMinAge = Math.min(18, $activeSlaveOneTimeMaxAge)>>
+			<<if $pedo_mode == 1>><<set $activeSlaveOneTimeMinAge = $minimumSlaveAge>><</if>>
+			<<set $activeSlave.actualAge = random($activeSlaveOneTimeMinAge, $activeSlaveOneTimeMaxAge)>>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $activeSlave.ID - 1000>>
+			<<else>>
+				<<set $activeSlave.relation = "daughter">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.counter.birthsTotal = 0>>
+			<<set $activeSlave.preg = 0>>
+			<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+			<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+			<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+			<<if $activeSlave.physicalAge < 6>>
+				<<set $activeSlave.teeth = "baby">>
+			<<elseif $activeSlave.physicalAge < 12>>
+				<<set $activeSlave.teeth = "mixed">>
+			<</if>>
+		<<case "incest mother son">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.career = "a student">>
+			<<set $activeSlave.actualAge -= 18>>
+			<<if $activeSlave.actualAge > 20>>
+				<<if $potencyAge >= $minimumSlaveAge>>
+					<<set $activeSlave.actualAge = random($potencyAge, 20)>>
+				<<else>>
+					<<set $activeSlave.actualAge = random($minimumSlaveAge, 20)>>
+				<</if>>
+			<</if>>
+			<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+			<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+			<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+			<<set $activeSlave.genes = "XY">>
+			<<= resyncSlaveHight($activeSlave)>>
+			<<set $activeSlave.vagina = -1>>
+			<<set $activeSlave.pubertyXX = 0>>
+			<<set $activeSlave.pubertyXY = 1>>
+			<<set WombFlush($activeSlave)>>
+			<<run SetBellySize($activeSlave)>>
+			<<set $activeSlave.dick = 2>>
+			<<set $activeSlave.foreskin = 3>>
+			<<set $activeSlave.ovaries = 0>>
+			<<set $activeSlave.balls = 2>>
+			<<set $activeSlave.scrotum = 2>>
+			<<set $activeSlave.prostate = 1>>
+			<<set $activeSlave.clit = 0>>
+			<<set $activeSlave.skill.vaginal = 0>>
+			<<set $activeSlave.faceShape = "cute">>
+			<<set $activeSlave.boobs = 0>>
+			<<set $activeSlave.counter.birthsTotal = 0>>
+			<<set $activeSlave.lactation = 0>>
+			<<set $activeSlave.lactationDuration = 0>>
+			<<set $activeSlave.anus = 0>>
+			<<set $activeSlave.butt -= 2>>
+			<<set $activeSlave.behavioralQuirk = "none">>
+			<<set $activeSlave.sexualQuirk = "perverted">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $activeSlave.ID - 1000>>
+			<<else>>
+				<<set $activeSlave.relation = "daughter">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+			<<if $activeSlave.physicalAge < 6>>
+				<<set $activeSlave.teeth = "baby">>
+			<<elseif $activeSlave.physicalAge < 12>>
+				<<set $activeSlave.teeth = "mixed">>
+			<</if>>
+		<<case "incest father daughter">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.career = "a student">>
+			<<set $activeSlave.actualAge -= 18>>
+			<<if $activeSlave.actualAge > 20>>
+				<<if $potencyAge >= $minimumSlaveAge>>
+					<<set $activeSlave.actualAge = random($potencyAge, 20)>>
+				<<else>>
+					<<set $activeSlave.actualAge = random($minimumSlaveAge, 20)>>
+				<</if>>
+			<</if>>
+			<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+			<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+			<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+			<<set $activeSlave.genes = "XX">>
+			<<= resyncSlaveHight($activeSlave)>>
+			<<set $activeSlave.pubertyXX = 1>>
+			<<set $activeSlave.pubertyXY = 0>>
+			<<set $activeSlave.vagina = 3>>
+			<<set $activeSlave.preg = 30>>
+			<<set $activeSlave.dick = 0>>
+			<<set $activeSlave.ovaries = 1>>
+			<<set $activeSlave.balls = 0>>
+			<<set $activeSlave.scrotum = 0>>
+			<<set $activeSlave.clit = 1>>
+			<<set $activeSlave.prostate = 0>>
+			<<set $activeSlave.voice = 2>>
+			<<set $activeSlave.skill.vaginal = 50>>
+			<<set $activeSlave.boobs = (random(3,6)*100)>>
+			<<set $activeSlave.pregType = 1>>
+			<<set $activeSlave.pregKnown = 1>>
+			<<set $activeSlave.pregWeek = $activeSlave.preg>>
+			<<set $activeSlave.pregSource = $activeSlave.ID - 1000>>
+			<<run SetBellySize($activeSlave)>>
+			<<set $activeSlave.faceShape = "cute">>
+			<<set $activeSlave.behavioralQuirk = "none">>
+			<<set $activeSlave.sexualQuirk = "perverted">>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.father = $activeSlave.ID - 1000>>
+			<<else>>
+				<<set $activeSlave.relation = "daughter">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+			<<if $activeSlave.physicalAge < 6>>
+				<<set $activeSlave.teeth = "baby">>
+			<<elseif $activeSlave.physicalAge < 12>>
+				<<set $activeSlave.teeth = "mixed">>
+			<</if>>
+		<<case "incest brother sister">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.actualAge -= 2>>
+			<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+			<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+			<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+			<<set $activeSlave.genes = "XY">>
+			<<= resyncSlaveHight($activeSlave)>>
+			<<set $activeSlave.vagina = -1>>
+			<<set $activeSlave.pubertyXX = 0>>
+			<<set $activeSlave.pubertyXY = 1>>
+			<<set WombFlush($activeSlave)>>
+			<<run SetBellySize($activeSlave)>>
+			<<set $activeSlave.dick = 2>>
+			<<set $activeSlave.foreskin = 2>>
+			<<set $activeSlave.ovaries = 0>>
+			<<set $activeSlave.balls = 2>>
+			<<set $activeSlave.scrotum = 2>>
+			<<set $activeSlave.prostate = 1>>
+			<<set $activeSlave.clit = 0>>
+			<<set $activeSlave.skill.vaginal = 0>>
+			<<set $activeSlave.faceShape = "masculine">>
+			<<set $activeSlave.boobs = 0>>
+			<<set $activeSlave.lactation = 0>>
+			<<set $activeSlave.lactationDuration = 0>>
+			<<set $activeSlave.anus = 0>>
+			<<set $activeSlave.pubicHStyle = "bushy">>
+			<<set $activeSlave.behavioralQuirk = "none">>
+			<<set $activeSlave.sexualQuirk = "perverted">>
+			<<set $activeSlave.clothes = "conservative clothing">>
+			<<if $familyTesting == 1>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+			<<if $activeSlave.physicalAge < 6>>
+				<<set $activeSlave.teeth = "baby">>
+			<<elseif $activeSlave.physicalAge < 12>>
+				<<set $activeSlave.teeth = "mixed">>
+			<</if>>
+		<<case "incest sister sister">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.actualAge -= 2>>
+			<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+			<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+			<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+			<<= resyncSlaveHight($activeSlave)>>
+			<<set $activeSlave.pubicHStyle = "shaved">>
+			<<if $familyTesting == 1>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+		<<case "incest brother brother">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.actualAge -= 2>>
+			<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+			<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+			<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+			<<set $activeSlave.height += random(-5,5)>>
+			<<set $activeSlave.pubicHStyle = "shaved">>
+			<<set $activeSlave.dick += 2>>
+			<<set $activeSlave.balls += 2>>
+			<<set $activeSlave.scrotum = $activeSlave.balls>>
+			<<if $activeSlave.foreskin>>
+				<<set $activeSlave.foreskin = $activeSlave.dick>>
+			<</if>>
+			<<if $familyTesting == 1>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+			<<if $activeSlave.physicalAge < 6>>
+				<<set $activeSlave.teeth = "baby">>
+			<<elseif $activeSlave.physicalAge < 12>>
+				<<set $activeSlave.teeth = "mixed">>
+			<</if>>
+		<<case "incest twin sister">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.height += random(-5,5)>>
+			<<if $familyTesting == 1>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+		<<case "incest twin brother">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.height += random(-5,5)>>
+			<<if $familyTesting == 1>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+		<<case "incest twins mixed">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.genes = "XY">>
+			<<set $activeSlave.height += random(-5,5)>>
+			<<set $activeSlave.vagina = -1>>
+			<<set $activeSlave.pubertyXX = 0>>
+			<<set $activeSlave.pubertyXY = 1>>
+			<<set $activeSlave.dick = 2>>
+			<<set $activeSlave.foreskin = 2>>
+			<<set $activeSlave.ovaries = 0>>
+			<<set $activeSlave.balls = 2>>
+			<<set $activeSlave.scrotum = 2>>
+			<<set $activeSlave.prostate = 1>>
+			<<set $activeSlave.clit = 0>>
+			<<set $activeSlave.skill.vaginal = 0>>
+			<<set $activeSlave.faceShape = "masculine">>
+			<<set $activeSlave.boobs = 0>>
+			<<set $activeSlave.lactation = 0>>
+			<<set $activeSlave.lactationDuration = 0>>
+			<<set $activeSlave.anus = 0>>
+			<<set $activeSlave.pubicHStyle = "bushy">>
+			<<set $activeSlave.behavioralQuirk = "none">>
+			<<set $activeSlave.sexualQuirk = "perverted">>
+			<<set $activeSlave.clothes = "conservative clothing">>
+			<<if $familyTesting == 1>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+		<<case "incest mother daughter">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.career = "a student">>
+			<<set $activeSlave.actualAge -= 18>>
+			<<if $activeSlave.actualAge > 20>>
+				<<if $potencyAge >= $minimumSlaveAge>>
+					<<set $activeSlave.actualAge = random($potencyAge, 20)>>
+				<<else>>
+					<<set $activeSlave.actualAge = random($minimumSlaveAge, 20)>>
+				<</if>>
+			<</if>>
+			<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+			<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+			<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+			<<= resyncSlaveHight($activeSlave)>>
+			<<set $activeSlave.vagina = 0>>
+			<<if $activeSlave.actualAge < $fertilityAge>>
+				<<set $activeSlave.pubertyXX = 0>>
+			<</if>>
+			<<set $activeSlave.vagina = 0>>
+			<<set $activeSlave.counter.birthsTotal = 0>>
+			<<set $activeSlave.skill.vaginal = 15>>
+			<<set $activeSlave.anus = 0>>
+			<<set $activeSlave.boobs -= 300>>
+			<<set $activeSlave.lactation = 0>>
+			<<set $activeSlave.lactationDuration = 0>>
+			<<set $activeSlave.boobsImplant = 0>>
+			<<set $activeSlave.boobsImplantType = "none">>
+			<<set $activeSlave.butt -= 2>>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $activeSlave.ID - 1000>>
+			<<else>>
+				<<set $activeSlave.relation = "daughter">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+			<<if $activeSlave.physicalAge < 6>>
+				<<set $activeSlave.teeth = "baby">>
+			<<elseif $activeSlave.physicalAge < 12>>
+				<<set $activeSlave.teeth = "mixed">>
+			<</if>>
+		<<case "incest father son">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.career = "a student">>
+			<<set $activeSlave.actualAge -= 18>>
+			<<if $activeSlave.actualAge > 20>>
+				<<if $potencyAge >= $minimumSlaveAge>>
+					<<set $activeSlave.actualAge = random($potencyAge, 20)>>
+				<<else>>
+					<<set $activeSlave.actualAge = random($minimumSlaveAge, 20)>>
+				<</if>>
+			<</if>>
+			<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+			<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+			<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+			<<= resyncSlaveHight($activeSlave)>>
+			<<set $activeSlave.vagina = -1>>
+			<<if $activeSlave.actualAge < $potencyAge>>
+				<<set $activeSlave.pubertyXY = 0>>
+			<</if>>
+			<<set $activeSlave.dick -= 2>>
+			<<set $activeSlave.balls -= 1>>
+			<<set $activeSlave.scrotum -= 1>>
+			<<if $familyTesting == 1>>
+				<<set $activeSlave.mother = $activeSlave.ID - 1000>>
+			<<else>>
+				<<set $activeSlave.relation = "daughter">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 3>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+			<<if $activeSlave.physicalAge < 6>>
+				<<set $activeSlave.teeth = "baby">>
+			<<elseif $activeSlave.physicalAge < 12>>
+				<<set $activeSlave.teeth = "mixed">>
+			<</if>>
+		<<case "mismatched pair">>
+			<<set $activeSlave.origin = "You acquired $him along with $his sissy sister due to $his inexperience as a madam.">>
+			<<set $activeSlave.career = "a pimp">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.devotion -= 50>>
+			<<set $activeSlave.trust -= 10>>
+			<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+			<<set $activeSlave.anus = 0>>
+			<<set $activeSlave.vagina = 1>>
+			<<set $activeSlave.preg = -1>>
+			<<set $activeSlave.dick = 0>>
+			<<set $activeSlave.scrotum = 0>>
+			<<set $activeSlave.ovaries = 1>>
+			<<set $activeSlave.balls = 0>>
+			<<set $activeSlave.skill.vaginal = 0>>
+			<<set $activeSlave.skill.oral = 0>>
+			<<set $activeSlave.skill.anal = 0>>
+			<<set $activeSlave.behavioralFlaw = "arrogant">>
+			<<set $activeSlave.sexualFlaw = "hates penetration">>
+			<<set $activeSlave.boobs = either(400, 500)>>
+			<<set $activeSlave.boobsImplant = 0>>
+			<<set $activeSlave.boobsImplantType = "none">>
+			<<set $activeSlave.butt = either(2, 3)>>
+			<<if $activeSlave.actualAge < 12>>
+				<<set $activeSlave.actualAge = 16>>
+			<<else>>
+				<<set $activeSlave.actualAge += 4>>
+			<</if>>
+			<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+			<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+			<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+			<<if $familyTesting == 1>>
+			<<else>>
+				<<set $activeSlave.relation = "sister">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.rivalry = 3>>
+			<<set $activeSlave.rivalryTarget = $activeSlave.ID - 1000>>
+		<<case "matched pair">>
+			<<set $activeSlave.slaveName = $activeSlave.birthName>>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set $activeSlave.vagina = 1>>
+			<<set $activeSlave.preg = -1>>
+			<<set $activeSlave.dick = 0>>
+			<<set $activeSlave.scrotum = 0>>
+			<<set $activeSlave.clit = 2>>
+			<<set $activeSlave.ovaries = 1>>
+			<<set $activeSlave.balls = 0>>
+			<<set $activeSlave.skill.vaginal = 15>>
+			<<set $activeSlave.boobsImplant = 0>>
+			<<set $activeSlave.boobsImplantType = "none">>
+			<<set $activeSlave.buttImplant = 0>>
+			<<set $activeSlave.buttImplantType = "none">>
+			<<if $familyTesting == 1>>
+			<<else>>
+				<<set $activeSlave.relation = "twin">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 2>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+		<<case "identical pair">>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<if $familyTesting == 1>>
+			<<else>>
+				<<set $activeSlave.relation = "twin">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 2>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+		<<case "identical herm pair">>
+			<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+			<<set WombFlush($activeSlave)>>
+			<<set $activeSlave.preg = 30>>
+			<<set $activeSlave.pregType = 2>>
+			<<set $activeSlave.pregSource = $activeSlave.ID - 1000>>
+			<<set $activeSlave.pregKnown = 1>>
+			<<set $activeSlave.pregWeek = $activeSlave.preg>>
+			<<set $activeSlave.belly = 14000>>
+			<<set $activeSlave.bellyPreg = 14000>>
+			<<if $familyTesting == 1>>
+			<<else>>
+				<<set $activeSlave.relation = "twin">>
+				<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+			<</if>>
+			<<set $activeSlave.relationship = 4>>
+			<<set $activeSlave.relationshipTarget = $activeSlave.ID - 1000>>
+		<<case "desperate broodmother">>
+			<<if random(1,100) < $seeDicks>> /*boy*/
+				<<set $activeSlave.origin = "$His mother offered $him to you as an incentive to take them in.">>
+				<<set $activeSlave.slaveName = $activeSlave.birthName>>
+				<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+				<<run setHealth($activeSlave, jsRandom(10, 20))>>
+				<<set $activeSlave.devotion -= 5>>
+				<<set $activeSlave.trust -= 5>>
+				<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+				<<set $activeSlave.genes = "XY">>
+				<<set $activeSlave.pregAdaptation = 10>>
+				<<set WombFlush($activeSlave)>>
+				<<run SetBellySize($activeSlave)>>
+				<<set $activeSlave.labor = 0>>
+				<<set $activeSlave.ovaries = 0>>
+				<<set $activeSlave.counter.birthsTotal = 0>>
+				<<set $activeSlave.anus = 0>>
+				<<set $activeSlave.skill.vaginal = 0>>
+				<<set $activeSlave.skill.whoring = 0>>
+				<<set $activeSlave.skill.anal = 0>>
+				<<set $activeSlave.weight = random(-80,-50)>>
+				<<set $activeSlave.muscles = 0>>
+				<<set $activeSlave.underArmHStyle = "bushy">>
+				<<set $activeSlave.pubicHStyle = "bushy">>
+				<<set $activeSlave.boobs = 0>>
+				<<set $activeSlave.boobShape = "perky">>
+				<<set $activeSlave.nipples = "tiny">>
+				<<set $activeSlave.lactation = 0>>
+				<<set $activeSlave.lactationDuration = 0>>
+				<<set $activeSlave.lactationAdaptation = 0>>
+				<<set $activeSlave.hips = -2>>
+				<<set $activeSlave.shoulders = -2>>
+				<<set $activeSlave.waist = 0>>
+				<<set $activeSlave.vaginaLube = 0>>
+				<<set $activeSlave.butt = 0>>
+				<<set $activeSlave.fetish = "none">>
+				<<set $activeSlave.fetishStrength = 0>>
+				<<set $activeSlave.sexualFlaw = "none">>
+				<<set $activeSlave.sexualQuirk = "none">>
+				<<set $activeSlave.bellySag = 0>>
+				<<set $activeSlave.bellySagPreg = 0>>
+				<<set $activeSlave.pubertyXX = 0>>
+				<<set $activeSlave.dick = 1>>
+				<<set $activeSlave.foreskin = 1>>
+				<<set $activeSlave.balls = 2>>
+				<<set $activeSlave.scrotum = 3>>
+				<<set $activeSlave.prostate = 1>>
+				<<set $activeSlave.actualAge = 3>>
+				<<if $familyTesting == 1>>
+					<<set $activeSlave.mother = $activeSlave.ID - 1000>>
+				<<else>>
+					<<set $activeSlave.relation = "daughter">>
+					<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+				<</if>>
+				<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+				<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+				<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+				<<if $activeSlave.physicalAge < 6>>
+					<<set $activeSlave.teeth = "baby">>
+				<<elseif $activeSlave.physicalAge < 12>>
+					<<set $activeSlave.teeth = "mixed">>
+				<</if>>
+			<<else>> /*girl*/
+				<<set $activeSlave.origin = "$His mother offered $him to you as an incentive to take them in.">>
+				<<set $activeSlave.slaveName = $activeSlave.birthName>>
+				<<set $activeSlave.ID = $activeSlave.ID + 1000>>
+				<<run setHealth($activeSlave, jsRandom(10, 20))>>
+				<<set $activeSlave.devotion -= 5>>
+				<<set $activeSlave.trust -= 5>>
+				<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+				<<set $activeSlave.labor = 0>>
+				<<set $activeSlave.counter.birthsTotal = 0>>
+				<<set $activeSlave.anus = 0>>
+				<<set $activeSlave.skill.vaginal = 0>>
+				<<set $activeSlave.skill.whoring = 0>>
+				<<set $activeSlave.skill.anal = 0>>
+				<<set $activeSlave.weight = random(-80,-50)>>
+				<<set $activeSlave.muscles = 0>>
+				<<set $activeSlave.underArmHStyle = "bushy">>
+				<<set $activeSlave.pubicHStyle = "bushy">>
+				<<set $activeSlave.boobs = 0>>
+				<<set $activeSlave.boobShape = "perky">>
+				<<set $activeSlave.nipples = "tiny">>
+				<<set $activeSlave.lactation = 0>>
+				<<set $activeSlave.lactationDuration = 0>>
+				<<set $activeSlave.lactationAdaptation = 0>>
+				<<set $activeSlave.hips = -2>>
+				<<set $activeSlave.shoulders = -2>>
+				<<set $activeSlave.waist = 0>>
+				<<set $activeSlave.vaginaLube = 0>>
+				<<set $activeSlave.butt = 0>>
+				<<set $activeSlave.fetish = "none">>
+				<<set $activeSlave.fetishStrength = 0>>
+				<<set $activeSlave.sexualFlaw = "none">>
+				<<set $activeSlave.sexualQuirk = "none">>
+				<<set $activeSlave.bellySag = 0>>
+				<<set $activeSlave.bellySagPreg = 0>>
+				<<set $activeSlave.pubertyXX = 0>>
+				<<set $activeSlave.vagina = 0>>
+				<<set $activeSlave.pregKnown = 0>>
+				<<set $activeSlave.pregAdaptation = 10>>
+				<<set WombFlush($activeSlave)>>
+				<<if $fertilityAge <= 3>>
+					<<set $activeSlave.pubertyXX = 1>>
+					<<set $activeSlave.preg = 6>>
+					<<set $activeSlave.pregType = 1>>
+					<<set $activeSlave.pregKnown = 1>>
+					<<set $activeSlave.vagina = 1>>
+				<</if>>
+				<<set $activeSlave.pregWeek = $activeSlave.preg>>
+				<<run SetBellySize($activeSlave)>>
+				<<set $activeSlave.actualAge = 3>>
+				<<if $familyTesting == 1>>
+					<<set $activeSlave.mother = $activeSlave.ID - 1000>>
+				<<else>>
+					<<set $activeSlave.relation = "daughter">>
+					<<set $activeSlave.relationTarget = $activeSlave.ID - 1000>>
+				<</if>>
+				<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+				<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+				<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+				<<if $activeSlave.physicalAge < 6>>
+					<<set $activeSlave.teeth = "baby">>
+				<<elseif $activeSlave.physicalAge < 12>>
+					<<set $activeSlave.teeth = "mixed">>
+				<</if>>
+			<</if>>
+	<</switch>>
+
+	<<run generatePronouns($activeSlave)>>
+
+	<<set $relative2 = clone($activeSlave)>>
+	<<set $activeSlave = clone($relative)>>
+
+	<<if $relative.slaveSurname>>
+		<<set _familyName = $relative.slaveSurname>>
+	<</if>>
+	<<set _familyBirthSurname = $relative.birthSurname>>
+	<<run nationalityToName($relative2)>>
+	<<if _familyName>>
+		<<set $relative2.slaveSurname = _familyName>>
+	<</if>>
+	<<set $relative2.birthSurname = _familyBirthSurname>>
+
+	/* set first slave pregnancy stats */
+	<<switch $RecETSevent>>
+		<<case "incest mother son" "incest brother sister" "identical herm pair">>
+			<<set _name1 = $relative2.slaveName>>
+			<<if _familyName>>
+				<<set _name1 += " " + $relative2.slaveSurname>>
+			<</if>>
+			<<run WombChangeGene($relative, "fatherName", _name1)>>
+			<<set _name2 = $relative.slaveName>>
+			<<if _familyName>>
+				<<set _name2 += " " + $relative.slaveSurname>>
+			<</if>>
+			<<run WombChangeGene($relative, "motherName", _name2)>>
+	<</switch>>
+
+	/* set second slave pregnancy stats */
+	<<switch $RecETSevent>>
+		<<case "incest father daughter" "identical herm pair">>
+			<<set _name1 = $relative.slaveName>>
+			<<if _familyName>>
+				<<set _name1 += " " + $relative.slaveSurname>>
+			<</if>>
+			<<run WombChangeGene($relative2, "fatherName", _name1)>>
+			<<set _name2 = $relative2.slaveName>>
+			<<if _familyName>>
+				<<set _name2 += " " + $relative2.slaveSurname>>
+			<</if>>
+			<<run WombChangeGene($relative2, "motherName", _name2)>>
+	<</switch>>
+
+	<<setLocalPronouns $relative>>
+	<<setLocalPronouns $relative2 2>>
+	<<setAssistantPronouns>>
+</span>
+
+<span id="mainbody">
+	/* Scene intro */
+	<span id="intro">
+		/* So many messages */
+			<<switch $RecETSevent>>
+				<<case
+					"incest mother son"
+					"incest father daughter"
+					"incest brother sister"
+					"incest sister sister"
+					"incest brother brother"
+					"incest twin sister"
+					"incest twin brother"
+					"incest twins mixed"
+					"incest mother daughter"
+					"incest father son"
+					"desperate broodmother">>
+					<p>
+						You receive so many messages, as a noted titan of the new Free Cities world, that $assistant.name has to be quite draconian in culling them. _HeA lets only the most important through to you. One category of message that always gets through regardless of content, though, is requests for voluntary enslavement. As the new world takes shape, they've become less rare than they once were.
+					</p>
+				<<case "matched pair" "identical pair" "identical herm pair">>
+					<p>
+						A pair of young slaves is going door to door offering themselves for sale on behalf of their owner. It's rare to see a slave obedient enough to be entrusted with their own sale, and the price alone suggests there's something interesting, so you let them up.
+						<<if $RecETSevent === "identical herm pair">>
+							They stand in front of your desk, an arm around the other, and wait for instructions. They appear to be twins, and are dressed identically: they're wearing very skimpy miniskirts, which fail to conceal their semi erect cocks at all, bikini tops so brief that their areolae are clearly visible around the scrap of cloth over each nipple, and nothing over their huge pregnant bellies.
+						<<else>>
+							They stand in front of your desk and wait for instructions. They appear to be twins, and are dressed identically: they're wearing very skimpy miniskirts and bikini tops so brief that their areolae are clearly visible around the scrap of cloth over each nipple.
+						<</if>>
+						You instruct them to tell you about themselves.
+					</p>
+			<</switch>>
+
+		<<switch $RecETSevent>>
+			<<case "addict mother daughter">>
+				<p>
+					A matronly $woman comes to your penthouse in tears. It seems $he is a tenant of yours, and has fallen deeply into debt as a result of aphrodisiac addiction. $He offers to sell $himself into slavery if you will pay off $his debts. $He is strangely eager about this, and after some probing it becomes apparent that $he is living with $his _daughter2 and wants to avoid having $his _daughter2 involved in this debt.
+				</p>
+			<<case "posh mother daughter">>
+				<p>
+					An older $woman comes to see you representing $his family business. $He's pretty enough, but extremely unpleasant to deal with. $He pushes hard for a deal that strongly favors $him, and is not above leaning over your desk to give you an eyeful of probably-enhanced cleavage behind $his business attire. As you argue, a discreet alert appears on your desk: $his family business is actually on the verge of bankruptcy. With a press of your thumb you could acquire enough of $his debts to be able to enslave $him. And what's more, $his _daughter2 just came of age and became a partner in the business. _He2's in play, too. Based on the desk report, _he2's likely to be a spoiled little bitch.
+				</p>
+			<<case "incest mother son">>
+				<p>
+					This call is coming from a public kiosk, which is usually an indication that the person on the other end is a transient individual who has decided to take slavery over homelessness. In this case, however, the story is more unusual — the callers seem stressed, but otherwise normal. They haltingly and quietly explain that they are a mother and _daughter2 who had to flee their home after $his husband found out the child in $his rounded middle was not his, but his _daughter2's. They feel that life in an arcology together, even as slaves, would be better than their new life on the streets.
+				</p>
+			<<case "incest father daughter">>
+				<p>
+					This call is coming from a public kiosk, which is usually an indication that the person on the other end is a transient individual who has decided to take slavery over homelessness. In this case, however, the story is more unusual — the callers seem stressed, but otherwise normal. They haltingly and quietly explain that they are a father and _daughter2 who had to flee their home after $his wife found out $he was having sex with their _daughter2. _His2 gravid middle is testament to that. They feel that life in an arcology together, even as slaves, would be better than their current life on the streets.
+				</p>
+			<<case "incest brother sister">>
+				<p>
+					This call is coming from a public kiosk, which is usually an indication that the person on the other end is a transient individual who has decided to take slavery over homelessness. In this case, however, the story is more unusual — the callers seem stressed, but otherwise normal. They haltingly and quietly explain that they are a _sister2 and $sister who had to flee their home after their parents found out they were having sex with each other. $His gravid middle is testament to that. They feel that life in an arcology together, even as slaves, would be better than their current life on the streets.
+				</p>
+			<<case "incest sister sister">>
+				<p>
+					This call is coming from a public kiosk, which is usually an indication that the person on the other end is a transient individual who has decided to take slavery over homelessness. In this case, however, the story is more unusual — the callers seem stressed, but otherwise normal. They haltingly and quietly explain that they are two <<= $sister>>s who had to flee their home after their parents found out they were having sex with each other. They feel that life in an arcology together, even as slaves, would be better than their current life on the streets.
+				</p>
+			<<case "incest brother brother">>
+				<p>
+					This call is coming from a public kiosk, which is usually an indication that the person on the other end is a transient individual who has decided to take slavery over homelessness. In this case, however, the story is more unusual — the callers seem stressed, but otherwise normal. They haltingly and quietly explain that they are two <<= $sister>>s who had to flee their home after their parents found out they were having sex with each other. They feel that life in an arcology together, even as slaves, would be better than their current life on the streets.
+				</p>
+			<<case "incest twin sister">>
+				<p>
+					This call is coming from a public kiosk, which is usually an indication that the person on the other end is a transient individual who has decided to take slavery over homelessness. In this case, however, the story is more unusual — the callers seem stressed, but otherwise normal. They haltingly and quietly explain that they are twin <<= $sister>>s who had to flee their home after their parents found out they were having sex with each other. They feel that life in an arcology together, even as slaves, would be better than their current life on the streets.
+				</p>
+			<<case "incest twin brother">>
+				<p>
+					This call is coming from a public kiosk, which is usually an indication that the person on the other end is a transient individual who has decided to take slavery over homelessness. In this case, however, the story is more unusual — the callers seem stressed, but otherwise normal. They haltingly and quietly explain that they are twin <<= $sister>>s who had to flee their home after their parents found out they were having sex with each other. They feel that life in an arcology together, even as slaves, would be better than their current life on the streets.
+				</p>
+			<<case "incest twins mixed">>
+				<p>
+					This call is coming from a public kiosk, which is usually an indication that the person on the other end is a transient individual who has decided to take slavery over homelessness. In this case, however, the story is more unusual — the callers seem stressed, but otherwise normal. They haltingly and quietly explain that they are twins who had to flee their home after their parents found out they were having sex with each other. They feel that life in an arcology together, even as slaves, would be better than their current life on the streets.
+				</p>
+			<<case "incest mother daughter">>
+				<p>
+					This call is coming from a public kiosk, which is usually an indication that the person on the other end is a transient individual who has decided to take slavery over homelessness. In this case, however, the story is more unusual — the callers seem stressed, but otherwise normal. They haltingly and quietly explain that they are a mother and _daughter2 who had to flee their home after $his husband found out $he was having sex with their _daughter2. They feel that life in an arcology together, even as slaves, would be better than their current life on the streets.
+				</p>
+			<<case "incest father son">>
+				<p>
+					This call is coming from a public kiosk, which is usually an indication that the person on the other end is a transient individual who has decided to take slavery over homelessness. In this case, however, the story is more unusual — the callers seem stressed, but otherwise normal. They haltingly and quietly explain that they are a father and _daughter2 who had to flee their home after $his wife found out $he was having sex with their _daughter2. They feel that life in an arcology together, even as slaves, would be better than their current life on the streets.
+				</p>
+			<<case "mismatched pair">>
+				<<setLocalPronouns $HeadGirl 3>>
+				<p>
+					Your Head Girl comes to see you. _He3 flags a slave posted for sale on your desk. The posting seems completely unimpressive — just a bitch barely past $his <<= ordinalSuffix($activeSlave.actualAge)>> birthday with basic implants and a pathetic little dick — until _he3 points out that the person posting $him for sale is $his _sister2. $His slightly older, naturally female _sister2. Who, to go by the pictures, the younger sibling has desperately been trying to mold $himself to look more like.
+				</p>
+				<p>
+					<<run Enunciate ($HeadGirl)>>
+					"It won't <<sh>>ow on the de<<s>>k yet, but rumor i<<s>> the little cunt'<<s>> gotten them both in bad debt, <<Master>>. You could grab them both cheap."
+				</p>
+				<p>
+					You bring up a video feed of the one-room apartment they share. A man, clearly a client, is sitting on the bed while the sissy rides him. $He's facing away from the john, so $he isn't trying to hide the fact that $he isn't happy selling $his anus for money. The older _sister2 is naked, but _he2's trying to act as a pimp of sorts rather than helping fuck. _He2 alternately poses and preens for the john and nonverbally scolds the wincing sissy when he's not paying attention. After the customer finishes, the sissy heads to the toilet to clean $himself, and $his older _sister2 whispers to the john that the sissy's for sale. The john laughs at _him2 and excuses himself.
+				</p>
+			<<case "matched pair">>
+				<p>
+					<<run Enunciate ($relative2)>>
+					One of them speaks up. "We're twin<<s>>, <<if $PC.title != 0>><<s>>ir<<else>>ma'am<</if>>. Fraternal twin<<s>>. We have been given hormone treatment<<s>> and <<s>>urgery to match one another more clo<<s>>ely, e<<x>><<c>>ept for one detail." They lift their skirts; the speaker has a hormone-atrophied cock, while $his _sister2 has a pussy, along with a large clit that almost matches $his sibling's member in size. "We've al<<s>>o been trained ever <<s>>in<<c>>e we turned $minimumSlaveAge to be completely obedient, <<if $PC.title != 0>><<s>>ir<<else>>ma'am<</if>>, in everything, and <<s>>e<<x>>ually profi<<c>>ient."
+				</p>
+			<<case "identical pair">>
+				<p>
+					<<run Enunciate ($relative)>>
+					One of them speaks up. "We're twin<<s>>, <<if $PC.title != 0>><<s>>ir<<else>>ma'am<</if>>. Identical twin<<s>>. We've al<<s>>o been trained <<if ($activeSlave.actualAge > $minimumSlaveAge)>>ever <<s>>in<<c>>e we turned $minimumSlaveAge<</if>> to be completely obedient, <<if $PC.title != 0>><<s>>ir<<else>>ma'am<</if>>, in everything, and <<s>>e<<x>>ually profi<<c>>ient."
+				</p>
+			<<case "identical herm pair">>
+				<p>
+					They pull themselves together, bringing their gravid middles in tight contact with one another.
+					<<run Enunciate ($relative)>>
+					One of them speaks up. "We're twin<<s>>, <<if $PC.title != 0>><<s>>ir<<else>>ma'am<</if>>. Identical twin<<s>>. We've al<<s>>o been trained <<if ($activeSlave.actualAge > $minimumSlaveAge)>>ever <<s>>in<<c>>e we turned $minimumSlaveAge<</if>> to be completely obedient, <<if $PC.title != 0>><<s>>ir<<else>>ma'am<</if>>, in everything, and <<s>>e<<x>>ually profi<<c>>ient."
+
+					<<run Enunciate ($relative2)>>
+					The other blurts out. "But we kinda got too into each other, in more way<<s>> than one!" _He2 winks.
+				</p>
+			<<case "desperate broodmother">>
+				<p>
+					<<run Enunciate ($relative)>>
+					This call is coming from a public kiosk, which is usually an indication that the person on the other end is a transient individual who has decided to take slavery over homelessness. You aren't far off; the caller is a <<if $activeSlave.actualAge >= 18>>young $woman<<elseif $activeSlave.actualAge >= 13>>teen<<else>>$loli<</if>> desperate for work, carrying a young child on $his shoulder, quadruplets on $his back and a large sack against $his middle, while looking absolutely exhausted. "Plea<<s>>e, would you happen to have any work for a de<<s>>perate mother? I need to eat, and my babie<<s>> are <<s>>tarting to go hungry... I tried whoring, but I got pregnant again..." $He struggles back to allow you to see $his full body. The object you thought were $his possessions is, in fact, $his massively distended stomach. "I'm having <<s>>o many and I don't know what to do anymore... I can't care for thi<<s>> many... Anything you can do for meeEEEEEE!" $He groans as an intense contraction hits $him. "Oh god! Not now! Not like thi<<s>>! I'm not ready... Plea<<s>>e, I'm giving birth right now... Forget work, I'll be your <<s>>lave if you can help me..." $He begs, tears streaming down $his face as $he struggles to hold back the child threatening to slide into $his birth canal.<<if $minimumSlaveAge <= 3>> "Plea<<s>>e... My elde<<s>>t is of age here... Help me and they'll be your<<s>> too! You'll help mommy, right <<s>>weetie?" The toddler nods to $him, unlikely to understand exactly what is going on.<</if>>
+				</p>
+			<<default>>
+				<div class="error">
+					ERROR: bad recETS event $RecETSevent
+				</div>
+		<</switch>>
+
+		/* Extra price flavor */
+		<<switch $RecETSevent>>
+			<<case "matched pair">>
+				"We co<<s>>t <<print cashFormat(_ContractCost)>>, <<if $PC.title != 0>><<s>>ir<<else>>ma'am<</if>>."
+			<<case "identical pair">>
+				"We co<<s>>t <<print cashFormat(_ContractCost)>>, <<if $PC.title != 0>><<s>>ir<<else>>ma'am<</if>>."
+			<<case "identical herm pair">>
+				<<run Enunciate ($relative)>>
+				"We co<<s>>t <<print cashFormat(_ContractCost)>>, <<if $PC.title != 0>><<s>>ir<<else>>ma'am<</if>>."
+		<</switch>>
+
+		/* The price */
+		<p class="detail">
+			<<switch $RecETSevent>>
+				<<case "addict mother daughter">>
+					Enslaving $him will cost <<print cashFormat(_ContractCost)>>. Alternatively, you could sell your rights to $him. Including costs, this will bring in <<print cashFormat(_slaveCost - _ContractCost)>>. As a third option, for <<print cashFormat((_ContractCost*2))>> you could manipulate $him to bind both mother and _daughter2, but you wouldn't be able to examine the _daughter2 first.
+				<<case "posh mother daughter">>
+					Enslaving the mother will cost <<print cashFormat(_ContractCost)>>. Alternatively, you could sell your rights to $him. Including costs, this will bring in <<print cashFormat(_slaveCost - _ContractCost)>>. As a third option, for <<print cashFormat((_ContractCost*2))>> you could enslave both mother and _daughter2, but you wouldn't be able to examine the _daughter2 first.
+				<<case "incest mother son" "incest father daughter" "incest brother sister" "incest sister sister" "incest brother brother" "incest twin sister" "incest twin brother" "incest twins mixed" "incest mother daughter" "incest father son">>
+					It would cost <<print cashFormat(_ContractCost*2)>> to enslave the two of them.
+				<<case "mismatched pair">>
+					Enslaving the younger, sissy $sister will cost <<print cashFormat(_ContractCost)>>. Alternatively, you could sell your rights to $him. Including costs, this will bring in <<print cashFormat(_slaveCost - _ContractCost)>>. As a third option, for <<print cashFormat((_ContractCost*2))>> you could enslave both <<if $sister == _sister2>>$sister<<else>>sibling<</if>>s, but you wouldn't be able to examine the older one first. _He2'll likely be very rebellious and sexually unskilled.
+				<<case "matched pair">>
+					$His _sister2 is identical except that _he2 is naturally female and lacks implants, having reached that size the normal way.
+				<<case "identical pair">>
+					$His _sister2 is identical.
+				<<case "identical herm pair">>
+					$His _sister2 is identical.
+				<<case "desperate broodmother">>
+					Enslaving $him will cost <<print cashFormat(_ContractCost)>>.<<if $minimumSlaveAge <= 3>> Alternatively, for <<print cashFormat((_ContractCost*2))>> you could enslave both mother and $his eldest child, the rest being sent to the slave orphanages, but you can't tell its gender from the call. You can expect a good value, though.<</if>>
+				<<default>>
+					<div class="error" font-style="normal">
+						ERROR: bad recETS event $RecETSevent
+					</div>
+			<</switch>>
+		</p>
+
+
+		<p>
+			<<set $saleDescription = 1>><<include "Long Slave Description">><<set $saleDescription = 0>>
+		</p>
+	</span>
+
+	<span id="result">
+		/* Enslave one... */
+		<<if $cash >= _ContractCost>>
+			/* ...and keep */
+			<<switch $RecETSevent>>
+				<<case "addict mother daughter">>
+					<<link "Accept $his proposal and enslave $him">>
+						<<set $activeSlave.relation = 0>>
+						<<set $activeSlave.relationTarget = 0>>
+							<<set $activeSlave.counter.oral += 1>>
+							<<set $oralTotal += 1>>
+						<<run newSlave($activeSlave)>>
+						<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+						<<replace "#result">>
+							Despite $himself, $he sobs with relief when you agree. $He offers to <<if $PC.dick != 0>>suck you off<<if $PC.vagina != -1>> and <</if>><</if>><<if $PC.vagina != -1>>eat you out<</if>> while you complete the necessary legalities, so you work away with a <<if $PC.dick != 0>>pair of motherly lips wrapped around your dick<<else>>motherly tongue pleasuring your clit<</if>> as $he pumps away eagerly under the desk. $He's definitely on aphrodisiacs. $He masturbates while $he sucks.
+						<</replace>>
+					<</link>>
+				<<case "posh mother daughter">>
+					<<link "Enslave the mother">>
+						<<set $activeSlave.relation = 0>>
+						<<set $activeSlave.relationTarget = 0>>
+						<<run newSlave($activeSlave)>>
+						<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+						<<replace "#result">>
+							You press your thumb down on your desk interface and then tell $him to read the display, strip, and show you $his body. $He knits $his brow in confusion and begins to curse at you but reads anyway. Comprehension dawns on $him and $he stares you in the eye for a long moment — and then drops $his gaze. $He knows the Free Cities well enough to understand. $He stands and sadly strips off $his blouse and slacks. Following orders, $he rotates slowly for you. Then, $he bends over facing away from you and spreads $his buttocks to display $his holes. Unsurprisingly, $he's got a well-used pussy but has clearly never taken it up the ass. That will change.
+						<</replace>>
+					<</link>>
+				<<case "mismatched pair">>
+					<<link "Enslave the sissy slut">>
+						<<set $activeSlave.mother = 0>>
+						<<set $activeSlave.father = 0>>
+						<<set $activeSlave.relation = 0>>
+						<<set $activeSlave.relationTarget = 0>>
+						<<set $activeSlave.rivalry = 0>>
+						<<set $activeSlave.rivalryTarget = 0>>
+						<<run newSlave($activeSlave)>>
+						<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+						<<replace "#result">>
+							The poor sissy isn't happy to become a slave, but $he's clearly relieved to be away from $his _sister2. The bitch isn't likely to have an easy time; the sale didn't clear _him2 from debt. $activeSlave.slaveName describes $his basic sexual experience, which includes a lot of sucking and anal whoring. Without further ado $he moves from practical sexual slavery at the hands of $his _sister2 to actual sexual slavery.
+						<</replace>>
+					<</link>>
+				<<case "desperate broodmother">>
+					<<link "Enslave the mother">>
+						<<set $activeSlave.relation = 0>>
+						<<set $activeSlave.relationTarget = 0>>
+						<<run newSlave($activeSlave)>>
+						<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+						<<replace "#result">>
+							You have the needy $girl immediately bought to your penthouse where you help $his laboring body into an available bed for inspection. $He asks where $his children were taken, to which you reply somewhere they can be raised properly. They'll be taken care of and won't have to grow up on the streets, plus they were sucking the life out of $him. $He's a little depressed at the news, but understands your reasons. You take the opportunity to give $him a good look over; $he is really dilated! Apart from that, between all the births and dicks, $his vagina is rather worn out, though $he seems to understand how to use it. $His anus has also seen use, but not nearly as much.
+						<</replace>>
+					<</link>>
+				<<case "identical herm pair" "identical pair" "incest brother brother" "incest brother sister" "incest father daughter" "incest father son" "incest mother daughter" "incest mother son" "incest sister sister" "incest twin brother" "incest twin sister" "incest twins mixed" "matched pair">>
+				<<default>>
+					<div class="error">
+						ERROR: bad recETS event $RecETSevent
+					</div>
+			<</switch>>
+
+			/* ...and resell */
+			<<switch $RecETSevent>>
+				<<case "addict mother daughter" "mismatched pair" "posh mother daughter">>
+					<div>
+						<<link "Sell $him immediately">>
+							<<run cashX((_slaveCost - _ContractCost), "slaveTransfer", $activeSlave)>>
+							<<replace "#result">>
+							$activeSlave.slaveName accepts being resold without much fuss. $He's merely exchanged one unknown owner for another. For all $he knows $his new buyer will be less abusive than you would have been. $He would be less complacent if $he knew who $his buyers are; $he'll be immured in an arcade within the hour.
+							<</replace>>
+						<</link>>
+						<span class="detail">
+							This will bring in <<print cashFormat(_slaveCost - _ContractCost)>>
+						</span>
+					</div>
+				<<case "desperate broodmother" "identical herm pair" "identical pair" "incest brother brother" "incest brother sister" "incest father daughter" "incest father son" "incest mother daughter" "incest mother son" "incest sister sister" "incest twin brother" "incest twin sister" "incest twins mixed" "matched pair">>
+				<<default>>
+					<div class="error">
+						ERROR: bad recETS event $RecETSevent
+					</div>
+			<</switch>>
+		<<else>>
+			<div class="detail">
+				You lack the necessary funds to enslave $him.
+			</div>
+		<</if>>
+
+		/* Enslave both */
+		<<if $cash >= (_ContractCost*2)>>
+			<<switch $RecETSevent>>
+				<<case "addict mother daughter" "desperate broodmother" "mismatched pair" "posh mother daughter">>
+					<<switch $RecETSevent>>
+						<<case "addict mother daughter" "posh mother daughter">>
+							<<link "Manipulate $him to enslave both mother and _daughter2">>
+								<<run newSlave($relative)>>
+								<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $relative)>>
+								<<run newSlave($relative2)>>
+								<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $relative2)>>
+								<<replace "#result">>
+									<<switch $RecETSevent>>
+										<<case "addict mother daughter">>
+											<<set $relative.devotion -= 50>>
+											<p>
+												Despite $himself, $he sobs with relief when you agree. $He offers to <<if $PC.dick != 0>>suck you off<<else>>eat you out<</if>> while you complete the necessary legalities, but instead you idly place a big dose of aphrodisiac on your desk and tell $him to wait quietly. After ten minutes of careful manipulation, $he's signed away both $his own freedom and $his _daughter2's without realizing it, in return for the drug. $He's masturbating furiously on a chair when $his _daughter2 arrives. $He immediately realizes what's happened and $his eyes fill with all-consuming hatred, but $he can't stop rubbing.
+											</p>
+											<p>
+												Unsurprisingly the _daughter2 is an addict too, and before long _he2's given _his2 signature and is sitting on a different chair on a strong dose of aphrodisiacs. <<if $activeSlave.dick > 0>>Mother and _daughter2 crank it desperately,<<else>>Mother and _daughter2 schlick themselves desperately,<</if>> sobbing in despair as you hurry to complete the nastily complex paperwork. This is going to be fun.
+											</p>
+										<<case "posh mother daughter">>
+											<<set $relative.devotion -= 25>>
+											<p>
+												You press your thumb down on your desk interface and then tell $him to read the display, strip, and show you $his body. $He knits $his brow in confusion and begins to curse at you but reads anyway. Comprehension dawns on $him and $he stares you in the eye for a long moment — and then drops to <<if hasBothLegs($activeSlave)>>$his knees<<else>>the floor<</if>> and begins to beg for $his _daughter2's freedom. $He knows the Free Cities well enough to be unsurprised when you ignore $him completely. $He stands and sadly strips off $his blouse and slacks. Following orders, $he rotates slowly for you. Then, $he bends over facing away from you and spreads $his buttocks to display $his holes. Unsurprisingly, $he's got a well-used pussy but has clearly never taken it up the ass. That will change.
+											</p>
+											<p>
+												$His _daughter2 walks in angrily demanding to know why you called _him2 here. _He2 sees _his2 mother kneeling naked next to you, hears the hiss-click of the door closing and locking behind _him2, and makes the connection far too late to run. _He2 begins to scream at both you and _his2 mother at the top of _his2 lungs, and manages to keep up an impressive volume until you get _him2 gagged. _His2 mother does not move to interfere as you strip and bind $his _daughter2's struggling body.
+											</p>
+									<</switch>>
+								<</replace>>
+							<</link>>
+						<<case "mismatched pair">>
+							<<link "Enslave both">>
+								<<run newSlave($relative)>>
+								<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $relative)>>
+								<<run newSlave($relative2)>>
+								<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $relative2)>>
+								<<replace "#result">>
+									<p>
+										The poor sissy isn't happy to become a slave, but $he's clearly relieved to be away from $his _sister2. The bitch isn't likely to have an easy time; the sale didn't clear _him2 from debt. $activeSlave.slaveName describes $his basic sexual experience, which includes a lot of sucking and anal whoring. Without further ado $he moves from practical sexual slavery at the hands of $his _sister2 to actual sexual slavery.
+									</p>
+									<p>
+										$His <<= _sister2>>-pimp walks in angrily demanding to know why you called _him2 here. _He2 sees _his2 sissy $sister kneeling naked next to you, hears the hiss-click of the door closing and locking behind _him2, and makes the connection far too late to run. _He2 begins to scream at both you and _his2 $sister at the top of _his2 lungs, and manages to keep up an impressive volume until you get _him2 gagged. _His2 $sister does not move to interfere as you strip and bind _his2 struggling body. In fact, as you get the gag in place, $he begins to laugh an unstable, cracking laugh that degenerates into sobbing.
+									</p>
+								<</replace>>
+							<</link>>
+						<<case "desperate broodmother">>
+							<<if $minimumSlaveAge <= 3>>
+								<<link "Accept $his offer">>
+									<<run newSlave($relative)>>
+									<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $relative)>>
+									<<run newSlave($relative2)>>
+									<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $relative2)>>
+									<<replace "#result">>
+										<p>
+											You have the needy $girl immediately bought to your penthouse where you help $his laboring body into an available bed for inspection. $He asks where $his other babies were taken, to which you reply somewhere they can be raised properly. They'll be taken care of and won't have to grow up on the streets, plus they were sucking the life out of $him. $He's a little depressed at the news, but understands your reasons. You take the opportunity to give $him a good look over; $he is really dilated! Apart from that, between all the births and dicks, $his vagina is rather worn out, though $he seems to understand how to use it. $His anus has also seen use, but not nearly as much.
+										</p>
+										<p>
+											You turn to the child clutching $his mother's grotesque belly. _He2 is in better shape than _his2 mother and tries to hide behind $his belly when you look at _him2. _He2'll be broken into a good little _girl2 for you soon enough.
+											<<if $relative2.preg > 0>>
+												You notice _his2 belly is slightly distended. It could be hunger, but upon closer inspection, you realize _his2 hymen has been torn. _He2's likely been servicing men alongside _his2 mother and has a bun in the oven too.
+											<</if>>
+										</p>
+									<</replace>>
+								<</link>>
+							<</if>>
+						<<default>>
+							<div class="error">
+								ERROR: bad recETS event $RecETSevent <<print "[[Go back to previous passage '" + previous() +"'][previous()]]">>
+							</div>
+					<</switch>>
+				<<case "identical herm pair" "identical pair" "incest brother brother" "incest brother sister" "incest father daughter" "incest father son" "incest mother daughter" "incest mother son" "incest sister sister" "incest twin brother" "incest twin sister" "incest twins mixed" "matched pair">>
+						<<switch $RecETSevent>>
+							<<case "identical herm pair" "identical pair" "matched pair">>
+								<<link "Buy them both">>
+									<<run newSlave($relative)>>
+									<<run newSlave($relative2)>>
+									<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $relative)>>
+									<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $relative2)>>
+									<<replace #result>>
+										<p>
+											<<switch $RecETSevent>>
+												<<case "identical herm pair">>
+													They giggle and kiss each other rather passionately, their miniskirts becoming pinned against their pregnancies by their stiffening pricks. They're very well trained but not very disciplined, though their pervertedness will be fun.
+													"You know we each are carrying the other'<<s>> twin<<s>>, right?"
+												<<case "identical pair">>
+													They giggle and kiss each other rather sexually, pressing their nearly identical bodies closely together. They're clearly very well trained.
+												<<case "matched pair">>
+													They giggle and kiss each other rather sexually, pressing their nearly identical bodies closely together so their hips and shapely buttocks hide any sign of their difference. They're clearly very well trained.
+											<</switch>>
+										</p>
+									<</replace>>
+								<</link>>
+							<<case "incest brother brother" "incest brother sister" "incest father daughter" "incest father son" "incest mother daughter" "incest mother son" "incest sister sister" "incest twin brother" "incest twin sister" "incest twins mixed">>
+								<<link "Buy them both">>
+									<<replace #mainbody>>
+										<<switch $RecETSevent>>
+											<<case "incest brother brother">>
+												They hug each other tightly as the older $sister slips a hand down the younger's pants. They ought to be an interesting addition to your penthouse.
+											<<case "incest brother sister">>
+												They cheer happily and hug each other tightly. They ought to be an interesting addition to your penthouse.
+											<<case "incest father daughter">>
+												The _daughter2 cheers happily and hugs _his2 relieved father. $He leans in and kisses _him2 deeply. They ought to be an interesting addition to your penthouse.
+											<<case "incest father son">>
+												The father hugs $his _daughter2 tight and slips a hand down _his2 pants. They ought to be an interesting addition to your penthouse.
+											<<case "incest mother daughter">>
+												The _daughter2 cheers happily and hugs _his2 relieved mother. $He leans in and kisses _him2 deeply. They ought to be an interesting addition to your penthouse.
+											<<case "incest mother son">>
+												The _daughter2 cheers happily and hugs _his2 relieved mother. $He leans in and kisses _him2 deeply. They ought to be an interesting addition to your penthouse.
+											<<case "incest sister sister">>
+												They cheer happily and hug each other tightly. They ought to be an interesting addition to your penthouse.
+											<<case "incest twin brother">>
+												They hug each other tightly as they slip a hand down the other's pants. They ought to be an interesting addition to your penthouse.
+											<<case "incest twin sister">>
+												They cheer happily and hug each other tightly. They ought to be an interesting addition to your penthouse.
+											<<case "incest twins mixed">>
+												They cheer happily and hug each other tightly. They ought to be an interesting addition to your penthouse.
+										<</switch>>
+										<<switch $RecETSevent>>
+											<<case "incest brother sister" "incest mother son">>
+												<<run newSlave($relative2)>>
+												<<run newSlave($relative)>>
+											<<default>>
+												<<run newSlave($relative)>>
+												<<run newSlave($relative2)>>
+										<</switch>>
+										<<include "newSlaveIncestSex">>
+									<</replace>>
+									<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $relative)>>
+									<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $relative2)>>
+								<</link>>
+							<<default>>
+								<div class="error">
+									ERROR: bad recETS event $RecETSevent <<print "[[Go back to previous passage '" + previous() +"'][previous()]]">>
+								</div>
+						<</switch>>
+				<<default>>
+					<div class="error">
+						ERROR: bad recETS event $RecETSevent <<print "[[Go back to previous passage '" + previous() +"'][previous()]]">>
+					</div>
+			<</switch>>
+		<<else>>
+			<div class="detail">
+				You lack the necessary funds to enslave them both.
+			</div>
+		<</if>>
+
+		<<if $cheatMode == 1>>
+			<p>
+				DEBUG:
+				<span class="indent">
+					[[Go back to Nonrandom Event|Nonrandom Event][$activeSlave = 0, $eventSlave = 0]]
+				</span>
+			</p>
+		<</if>>
+	</span>
+</span>
+
+<</if>> /* CLOSES EVENT SELECTION */

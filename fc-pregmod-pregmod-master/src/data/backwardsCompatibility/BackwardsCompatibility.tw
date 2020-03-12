@@ -1,0 +1,55 @@
+:: Backwards Compatibility [nobr]
+
+/* no-usedOnce disabling checking for only used once instances in this file */
+<<set $nextButton = "Continue", $nextLink = "Main", $returnTo = "Main">>
+
+<<run App.Update.setNonexistantProperties(V, App.Data.defaultGameStateVariables)>>
+
+/* resetOnNGPlus contains half of the variables we need, but we use it politely here instead of forcing it so it fills in holes instead of overwriting data */
+<<run App.Update.setNonexistantProperties(V, App.Data.resetOnNGPlus)>>
+
+<div>
+	<<= App.Update.oldVersions()>>
+</div>
+
+<div>
+	<<= App.Update.globalVariables()>>
+</div>
+
+<div>
+	<<= App.Update.slaveVariables()>>
+</div>
+
+<div>
+	<<= App.Update.slaveRecords()>>
+</div>
+
+<div>
+	<<= App.Update.specialSlaveRecords()>>
+</div>
+
+<div>
+	<<= App.Update.HeroSlavesCleanup()>>
+	<<run $heroSlaves.forEach(function(s) {if (s.pregType > 0 && Array.isArray(s.womb)) delete s.womb;})>>
+	<<set $activeSlave = BaseSlave()>>
+	<<set $baseHeroSlave = clone($activeSlave)>>
+</div>
+
+<div>
+	<<= App.Update.RAassistantData()>>
+</div>
+
+/* Sec Exp */
+<div>
+	<<= App.SecExp.Check.general()>>
+	<<if $secExpEnabled == 1>>
+		<br> <<include "SecExpBackwardCompatibility">>
+	<</if>>
+</div>
+<div>
+	<<= App.Update.autoshred()>>
+</div>
+/* leave this at the bottom of BC */
+<div>
+	<<= App.Update.cleanUp()>>
+</div>

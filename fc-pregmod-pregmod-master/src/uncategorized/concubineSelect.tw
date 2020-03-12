@@ -1,0 +1,15 @@
+:: Concubine Select [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Master Suite", $showEncyclopedia = 1, $encyclopedia = "Concubine">>
+<<if ($Concubine != 0)>>
+	<<set $Concubine = getSlave($Concubine.ID)>>
+	<<setLocalPronouns $Concubine>>
+	<span class='slave-name'><<= SlaveFullName($Concubine)>></span> is serving as your Concubine.<br><br>$He will take the lead in seeing to your pleasure.
+<<else>>
+	You have not selected a Concubine.
+<</if>>
+
+<br><br>''Appoint a Concubine from your devoted slaves:''
+<br><br>[[None|Master Suite][removeJob($Concubine, "be your Concubine")]]
+<br><br>
+<<print App.UI.SlaveList.facilityManagerSelection(App.Entity.facilities.masterSuite, "Master Suite")>>

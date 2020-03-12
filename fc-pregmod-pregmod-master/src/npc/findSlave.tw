@@ -1,0 +1,32 @@
+:: Find Slave [nobr]
+
+<<set $nextButton = "Back to Main", $nextLink = "Main", $showEncyclopedia = 0>>
+
+After spending a minute trying to remember some details about one of your slaves, you sit down behind your desk and tell $assistant.name that you need to locate a particular slave's records.<br><br>
+
+"Certainly, <<= properMaster()>>. What can you tell me about them?"<br><br>
+
+"They're called something like:
+<<textbox "_nameSearch" "" autofocus>>
+<<link "Locate">>
+	<<script>>$('#slaveList').empty().append(App.FindSlave.searchByName(State.temporary.nameSearch));<</script>>
+<</link>>
+<br>//(Enter a fragment of their nickname, name, surname, birth name, or birth surname)//<br><br>
+
+"In the past, they were:
+<<textbox "_backgroundSearch" "">>
+<<link "Locate">>
+	<<script>>$('#slaveList').empty().append(App.FindSlave.searchByBackground(State.temporary.backgroundSearch));<</script>>
+<</link>>
+<br>//(Enter a fragment of their origin or past job, for example, "shelter" or "lawyer")//<br><br>
+
+"Their data should meet this condition:
+<<textbox "_dataSearch" "">>
+<<link "Locate">>
+	<<script>>$('#slaveList').empty().append(App.FindSlave.searchByExpression(State.temporary.dataSearch));<</script>>
+<</link>>
+<br>//(Enter a conditional expression which evaluates to true for the slave you want to find, such as "slave.physicalAge >= 18 && slave.physicalAge < 21")//<br><br>
+
+<span id="slaveList">
+	/* results list gets populated here by jQuery */
+</span>

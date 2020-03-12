@@ -1,0 +1,497 @@
+:: RE boomerang [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "RIE Eligibility Check", $returnTo = "RIE Eligibility Check", $showEncyclopedia = 1, $encyclopedia = "Enslaving People">>
+
+<<set $activeSlave = $boomerangSlave, _weeks = $boomerangWeeks, _pregWeeks = $boomerangWeeks, $boomerangWeeks = 0, _buyer = $boomerangBuyer, $boomerangBuyer = 0>>
+
+<<run Enunciate($activeSlave)>>
+<<run SetBellySize($activeSlave)>>
+<<setLocalPronouns $activeSlave>>
+<<setAssistantPronouns>>
+
+Your work is interrupted by $assistant.name with an alert from the entrance to the penthouse.
+<<if $assistant>>
+	"<<= properTitle()>>," _heA says, "you're going to want to see this." _HeA
+<<else>>
+	_HeA's got the incident flagged as not fitting into any of the usual categories of disturbance, and requests your attention. _HeA
+<</if>>
+brings up the relevant feeds. There's a naked body crumpled pathetically against one wall of the entryway, beneath the communications panel. It's <<= SlaveFullName($activeSlave)>>, whom you sold _weeks weeks ago. $He's looking up into one of the cameras plaintively.
+"Plea<<s>>e take me back," $he whispers, not wanting to draw the attention of passersby, and knowing that $his faint words will be picked up and amplified for you.
+
+<<set $activeSlave.collar = "none", $activeSlave.choosesOwnClothes = 0, $activeSlave.clothes = "no clothing", $activeSlave.buttplug = "none", $activeSlave.vaginalAccessory = "none", $activeSlave.dickAccessory = "none", $activeSlave.chastityAnus = 0, $activeSlave.chastityPenis = 0, $activeSlave.chastityVagina = 0>>
+<<run setHealth($activeSlave, jsRandom(-40, -25), $activeSlave.health.shortDamage + jsRandom(0, 10), $activeSlave.health.longDamage + jsRandom(0, 10))>>
+
+/* ------------------ pregnancy setup start here----------------- */
+
+<<set WombProgress($activeSlave, _pregWeeks, _pregWeeks)>> /* In all cases should be done */
+<<set WombUpdatePregVars($activeSlave)>>
+<<if $activeSlave.broodmother > 0>> /* Broodmother implant is assumed as removed.*/
+	<<set $activeSlave.preg = -1, $activeSlave.counter.birthsTotal += WombBirthReady($activeSlave, 37), $activeSlave.broodmother == 0, $activeSlave.broodmotherFetuses = 0>>
+	<<set WombFlush($activeSlave)>>
+<<elseif WombBirthReady($activeSlave, $activeSlave.pregData.normalBirth) > 0 >> /* normal birth case, partial birthers not supported*/
+	<<set $activeSlave.preg = -1, $activeSlave.counter.birthsTotal += WombBirthReady($activeSlave, $activeSlave.pregData.normalBirth)>>
+	<<set WombFlush($activeSlave)>>
+<<else>>/* still pregnant slave */
+	<<set $activeSlave.preg = WombMaxPreg($activeSlave)>> /*most ready fetus is a base*/
+	<<set $activeSlave.pregWeek = WombMaxPreg($activeSlave)>> /*most ready fetus is a base*/
+<</if>>
+<<run SetBellySize($activeSlave)>> /*In any case it's useful to do.*/
+
+/* ------------------ pregnancy setup end here-----------------
+	As no broodmother cases in code below, it's no need to setup every case of impregnation through new system. Backup mechanic will do it for normal pregnancies.
+*/
+
+<<if ($activeSlave.hStyle != "shaved" && $activeSlave.bald != 1)>>
+	<<if ($activeSlave.hLength < 150)>>
+		<<set $activeSlave.hLength += _weeks>>
+	<</if>>
+<</if>>
+<<if $seeAge != 0>>
+	<<for _weeks > 0>>
+		<<set $activeSlave.birthWeek++>>
+		<<if $activeSlave.birthWeek >= 52>>
+			<<set $activeSlave.birthWeek = 0>>
+			<<if $seeAge == 1>>
+				<<set $activeSlave.physicalAge += 1, $activeSlave.actualAge += 1, $activeSlave.visualAge += 1>>
+				<<set $activeSlave.ovaryAge += either(.8, .9, .9, 1, 1, 1, 1.1)>>
+				<<if $activeSlave.physicalAge <= 18 && $loliGrow > 0>>
+					<<run physicalDevelopment($activeSlave)>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<set _weeks-->>
+	<</for>>
+<</if>>
+
+<<switch _buyer>>
+<<case "buttbreaker">>
+	"All my Ma<<s>>ter care<<s>> about i<<s>> raping my a<<ss>> until I <<s>>cream. I can't get u<<s>>ed to it. I'm loo<<s>>e and ruined, but he ju<<s>>t u<<s>>e<<s>> a dildo big enough to hurt me." $He's sitting over on one buttock, and shifts uncomfortably.
+	<<set $activeSlave.anus = 4>>
+	<<set $activeSlave.sexualFlaw = "hates anal">>
+<<case "cow trainer" "D hucow" "D milky herm" "factory farm" "free range" "pastoralist arcology">>
+	<<switch _buyer>>
+	<<case "free range">>
+		"The ni<<c>>e free range dairy you <<s>>old me to failed, and a horrible factory farm bought everyone. It'<<s>> horrible." The
+	<<case "pastoralist arcology">>
+		"After they fini<<sh>>ed <<sh>>owing me off, they ju<<s>>t hooked me up to a milking ma<<ch>>ine and forgot about me." You sold $him to a Pastoralist arcology as a prize heifer; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation. The
+	<<case "D hucow">>
+		"My new owner got bored of me a<<s>> a human cow, and he wa<<s>> in debt, <<s>>o he re<<s>>old me to a dairy. A horrible dairy." The
+	<<case "cow trainer">>
+		"On<<c>>e the trainer was <<s>>ati<<s>>fied with my tit<<s>>, he re<<s>>old me to a dairy. A horrible dairy." The
+	<<case "D milky herm">>
+		"I got re<<s>>old me to a dairy. A horrible dairy. They <<s>>aid I'm valuable becau<<s>>e I give two kind<<s>> of milk." The
+	<<default>>
+		You sold $him to a factory farm, and the
+	<</switch>>
+	effects of living there have changed $his body greatly. It's surprising $he managed to make it up here at all. "Plea<<s>>e," $he begs. "I d-don't want to <<s>>pend the r-re<<s>>t of my life being raped by a ma<<ch>>ine."
+	<<if hasAnyNaturalLegs($activeSlave)>>$He shifts uncomfortably on $his <<if !hasBothLegs($activeSlave)>>foot<<else>>feet<</if>>. The soles of the feet are a convenient place to beat a whore, since it's agonizingly painful, doesn't bruise badly, and won't inconvenience a slave that spends all $his time kneeling or lying down.<</if>>
+	<<set $activeSlave.anus = 4>>
+	<<set $activeSlave.lactation = 2, $activeSlave.lactationDuration = 2, $activeSlave.lactationAdaptation = 100>>
+	<<set $activeSlave.boobs = Math.clamp($activeSlave.boobs+2000+50*random(-20,20),0,10000)>>
+	<<set $activeSlave.boobShape = "saggy">>
+	<<if $seePreg != 0>><<if $activeSlave.ovaries>><<set $activeSlave.preg = random(5,_pregWeeks-1), $activeSlave.pregType = random(2,4), $activeSlave.vagina = 4, $activeSlave.pregWeek = $activeSlave.preg, $activeSlave.pregKnown = 1, SetBellySize($activeSlave)>><</if>><</if>>
+	<<if $activeSlave.balls>>
+		<<set $activeSlave.balls = Math.clamp($activeSlave.balls+random(1,2),0,10)>>
+		<<if $activeSlave.dick>><<set $activeSlave.dick = Math.clamp($activeSlave.dick+random(1,2),0,10)>><</if>>
+	<</if>>
+	<<set $activeSlave.intelligence = Math.clamp($activeSlave.intelligence-50,-100,100)>>
+<<case "preg fetishist" "volume breeder">>
+	<<switch _buyer>>
+	<<case "preg fetishist">>
+		"My ni<<c>>e Ma<<s>>ter had a d-debt. And he had to <<s>>ell me t-to a volume breeder. I wa<<s>> pregnant when I got there b-but they <<s>>-<<s>>tarted o-over." $He swallows.
+	<<default>>
+		$He tearfully describes life at a volume breeder like the one you sold $him to.
+	<</switch>>
+	"They ran an IV line into me and then put me in a cage with a male <<s>>lave who raped me for a week. Then they <<s>>witched me into a <<s>>maller cage and forgot about me. I can feel my belly <<s>>welling. It'<<s>> horrible."
+	<<set $activeSlave.preg = _pregWeeks-1, $activeSlave.vagina = 4, $activeSlave.pregWeek = $activeSlave.preg, $activeSlave.pregKnown = 1>>
+	<<if $seeHyperPreg == 1>>
+		<<set $activeSlave.pregType = random(10,40)>>
+	<<else>>
+		<<set $activeSlave.pregType = 5>>
+	<</if>>
+	<<run SetBellySize($activeSlave)>>
+<<case "porn studio">>
+	"They're crazy. At fir<<s>>t it wa<<s>> all the <<s>>ame, ju<<s>>t make more <<s>>mut and reap the atten<<t>>ion, but <<s>>oon they <<s>>tarted wanting me to do more and more e<<x>>treme <<sh>>it." $He gags at the thought. "While they were running a train on me, I <<if canHear($activeSlave)>>overheard them talking<<elseif canSee($activeSlave)>>caught a glimp<<s>>e of <<s>>ome memo between the bo<<ss>>e<<s>><<else>>felt the word<<s>> one of them wrote on my <<s>>kin<</if>>... <<s>>aying they wanted to end my career in an 'unforgettable e<<x>>perien<<c>>e', and given what they'd been having me do, I ran." You suspected the porn studio you sold $him to would try to spice up $his content to attract more views, but you never bothered to think of how far they would take it.
+	<<set $activeSlave.anus = 4>>
+	<<if $activeSlave.vagina > -1 && $activeSlave.vagina < 4>>
+		<<set $activeSlave.vagina = 4>>
+	<</if>>
+	<<run actX($activeSlave, "publicUse", 500)>>
+<<case "obsessed fan">>
+	"It wa<<s>> really ni<<c>>e, at fir<<s>>t," $he sniffles, "and I'm a little <<s>>ad it had to end the way it d-did." You sold $him to a die-hard fan who offered up a rather large sum of money for ownership of $him. "He took out too big of a loan and when they came to collect, he let me loo<<s>>e and told me to run, run far away. I d-didn't know where el<<s>>e to g-go." $He breaks down in tears.
+	<<if $seePreg != 0 && canGetPregnant($activeSlave)>>
+		"In the <<sh>>ort time we <<s>>pent together, he left me a gift..." $He runs a hand across $his stomach. "While I wouldn't <<s>>ay I wa<<s>> in love with him, I feel like I have to keep them <<s>>afe for what he did. I can't even think of where I'd have ended up if they had taken me."
+		<<if $activeSlave.mpreg == 1 && $activeSlave.anus == 0>>
+			<<set $activeSlave.anus = 1>>
+		<<elseif $activeSlave.ovaries == 1 && $activeSlave.vagina == 0>>
+			<<set $activeSlave.vagina = 1>>
+		<</if>>
+		<<set $activeSlave.preg = random(5,_pregWeeks-1), $activeSlave.pregType = random(2,4), $activeSlave.pregWeek = $activeSlave.preg, $activeSlave.pregKnown = 1, $activeSlave.pregSource = -2, SetBellySize($activeSlave)>>
+	<</if>>
+<<case "pain fetishist">>
+	"They whip me. A-actually," $he sniffles, "I'm glad when they whip me b-becau<<s>>e e-everything el<<s>>e they d-do is w-wor<<s>>e. The only break I get i-i<<s>> when I'm hurt bad and th-they have to f-fi<<x>> me." After all, you did sell $him into a life as a pain slave.
+	<<set $activeSlave.behavioralFlaw = "odd", $activeSlave.sexualFlaw = "apathetic">>
+	<<run setHealth($activeSlave, jsRandom(-50, -30), $activeSlave.health.shortDamage + normalRandInt(20, 4), $activeSlave.health.longDamage + normalRandInt(15, 3))>>
+<<case "sadism fetishist">>
+	"I-it'<<s>> t-too much." $He shudders. You sold $him to a sadist who planned to use $him to abuse other slaves. "I c-can't d-do it anymore. I u<<s>>ed to fanta<<s>>i<<z>>e about d-doing h-horrible thing<<s>>, but, but, the <<s>>creaming." $He squeezes $his eyes shut. "If I don't do it I'll h-have it d-done t-to me."
+	<<set $activeSlave.behavioralFlaw = "odd", $activeSlave.sexualFlaw = "apathetic">>
+	<<set $activeSlave.fetish = "none", $activeSlave.fetishStrength = 0>>
+<<case "dom fetishist">>
+	"I," $he mutters, and then loses $his way. "I lo<<s>>t," $he grates out after a while. "I wa<<s>> <<s>>uppo<<s>>ed to be the Head Girl after you <<s>>old me. But a new girl came, and, and <<sh>>e'<<s>> the Head Girl now." $He looks down. "It should have been me."
+	<<set $activeSlave.behavioralFlaw = "hates women">>
+<<case "sub fetishist">>
+	"I thought I'd be happy to be a <<s>>ub forever." You sold $him to a determined dom, extreme even by Free Cities standards. "But, but, I haven't, um, had a break <<s>>in<<c>>e I left. I never talk. I never, well, I never do anything. I ju<<s>>t obey." $He looks down. "I'm going in<<s>>ane."
+	<<set $activeSlave.behavioralFlaw = "odd", $activeSlave.sexualFlaw = "apathetic">>
+	<<set $activeSlave.fetish = "none", $activeSlave.fetishStrength = 0>>
+<<case "supremacist arcology">>
+	"It wa<<s>> horrible." You sold $him to a Supremacist arcology; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation. "The thing<<s>> they made me do to other girl<<s>> ju<<s>>t because of who they were." $He swallows. "I tried not to. And they puni<<sh>>ed me."
+	<<set $activeSlave.behavioralFlaw = "odd", $activeSlave.sexualFlaw = "hates men">>
+<<case "subjugationist arcology">>
+	"They were breeding me with idiot<<s>>." You sold $him to a Subjugationist arcology; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation. "I d-don't want thi<<s>> pregnan<<c>>y."
+	<<set $activeSlave.preg = _pregWeeks-1, $activeSlave.pregType = random(2,4), $activeSlave.pregWeek = $activeSlave.preg, $activeSlave.pregKnown = 1>>
+	<<run SetBellySize($activeSlave)>>
+	<<run WombFatherRace($activeSlave, $activeSlave.race)>>
+<<case "gender radicalist arcology">>
+	"They <<if $activeSlave.balls>> cut my ball<<s>> off and then<</if>> j-ju<<s>>t kind of t-turned me loo<<s>>e in the corridor<<s>>," $he moans. You sold $him to a Gender Radicalist arcology. "Naked, <<s>>o everyone could u<<s>>e my a<<ss>>. Plea<<s>>e, I don't want to be an entire arcology'<<s>> bitch."
+	<<set $activeSlave.balls = 0>>
+	<<if $activeSlave.dick>><<set $activeSlave.dick = Math.clamp($activeSlave.dick-random(1,2),0,10)>><</if>>
+<<case "gender fundamentalist arcology">>
+	"It wa<<s>> horrible." You sold $him to a Gender Fundamentalist arcology; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation. "I'm, I'm, not an idiot. At lea<<s>>t, not ju<<s>>t becau<<s>>e I'm a girl."
+	<<set $activeSlave.behavioralFlaw = "odd", $activeSlave.sexualFlaw = "hates men">>
+<<case "paternalist arcology">>
+	"It wa<<s>> horrible." You sold $him to a Paternalist arcology, but $he explains the apparent contradiction. "The arcology got a new owner." $He shudders. "I gue<<ss>> the ni<<c>>e one wa<<s>> weak, and, and the new one i<<s>> changing thing<<s>>. There'<<s>> cage<<s>>, and <<s>>pike<<s>>, and whip<<s>>, and rape." It's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation.
+	<<set $activeSlave.behavioralFlaw = "odd", $activeSlave.sexualFlaw = "hates men">>
+<<case "degradationist arcology">>
+	"It wa<<s>> horrible." You sold $him to a Degradationist arcology; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation.
+	<<if $activeSlave.ovaries>>
+		<<set $activeSlave.ovaries = 0, WombFlush($activeSlave), $activeSlave.vagina = 4>>
+		<<run SetBellySize($activeSlave)>>
+		"They f-fi<<x>>ed me, t-to '<<s>>ave on maintenan<<c>>e of my cunt,'
+	<<elseif $activeSlave.balls>>
+		<<set $activeSlave.balls = 0, $activeSlave.anus = 4>>
+		"They c-cut my b-ball<<s>> off, to 'keep me do<<c>>ile,'
+	<<else>>
+		<<set $activeSlave.anus = 4>>
+		"They whipped me,
+	<</if>>
+	and then u<<s>>ed me to <<s>>ati<<s>>fy labor menial<<s>>. Ten an hour."
+	<<set $activeSlave.behavioralFlaw = "odd", $activeSlave.sexualFlaw = "hates men">>
+<<case "slimness enthusiast arcology">>
+	"It wa<<s>> horrible." You sold $him to a pleasant Slimness Enthusiast arcology, but somehow $he's acquired grotesque implants. "The arcology got a new owner." $He shudders. "I gue<<ss>> the ni<<c>>e one wa<<s>> weak, and, and the new one i<<s>> changing thing<<s>>. <<Sh>>-<<sh>>e l-like<<s>> t-to ruin the <<s>>lim one<<s>>." It's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation.
+	<<set $activeSlave.boobsImplant = 200*random(2,4), $activeSlave.boobs += $activeSlave.boobsImplant, $activeSlave.boobsImplantType = "normal">>
+	<<set $activeSlave.buttImplant = random(2,4), $activeSlave.butt = Math.clamp($activeSlave.butt+$activeSlave.buttImplant,0,10), $activeSlave.buttImplantType = "normal">>
+	<<set $activeSlave.lipsImplant = 10*random(1,3), $activeSlave.lips = Math.clamp($activeSlave.lips+$activeSlave.lipsImplant,0,100)>>
+<<case "asset expansionist arcology">>
+	"It wa<<s>> horrible." You sold $him to an Asset Expansionist arcology; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation.
+	<<if $activeSlave.hips > 0>>
+		<<set $activeSlave.butt = Math.clamp($activeSlave.butt+random(2,4),0,10)>>
+		"They <<s>>aid, <<s>>in<<c>>e I've got broad hip<<s>>, I'd be a 'butt<<s>>lave'." The meaning is obvious; $his ass has grown unbelievably.
+	<<else>>
+		<<set $activeSlave.boobs = Math.clamp($activeSlave.boobs+50*random(20,40),0,10000)>>
+		"They <<s>>aid they'd <<s>>tart with my boob<<s>>." It's true; they've grown unbelievably.
+	<</if>>
+	$He shivers. "The <<s>>ide effect<<s>> are terrible. I can't <<s>>leep. I can barely eat. They had to feed me with a tube."
+	<<set $activeSlave.behavioralFlaw = "anorexic">>
+<<case "transformation fetishist arcology">>
+	"It wa<<s>> horrible." You sold $him to a Transformation Fetishist arcology; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation. "They were giving me new boob implant<<s>> every two week<<s>>. I ran away before another <<s>>et. I c-couldn't take any more <<s>>-<<s>>urgery."
+	<<set $activeSlave.boobsImplant = 200*random(9,12), $activeSlave.boobs += $activeSlave.boobsImplant, $activeSlave.boobsImplantType = "normal">>
+<<case "physical idealist arcology">>
+	"It wa<<s>> horrible." You sold $him to a Physical Idealist arcology; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation. "It should have been called a <<S>>teroid Enthu<<s>>ia<<s>>t arcology." $He shivers. "The <<s>>ide effect<<s>> are terrible. I can't <<s>>leep. I can barely eat. They had to feed me with a tube."
+	<<set $activeSlave.muscles = 100, $activeSlave.weight = random(-85,-75)>>
+	<<set $activeSlave.behavioralFlaw = "anorexic">>
+<<case "chattel religionist arcology">>
+	"It wa<<s>> horrible." You sold $him to a Chattel Religionist arcology; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation. "There were, um, cult<<s>> there, along with the Faith. They were going to devote me to <<s>>omething called <<Sh>>e Who Thir<<s>>t<<s>>. Nobody ever hear<<s>> of girl<<s>> after that."
+	<<set $activeSlave.behavioralFlaw = "odd", $activeSlave.sexualFlaw = "crude", $activeSlave.behavioralQuirk = "devout">>
+<<case "roman revivalist arcology">>
+	"It wa<<s>> horrible." You sold $him to a Roman Revivalist arcology; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation. "I had to kill a girl," $he adds in a small voice. "In the arena." Then, even more quietly: "I had to kill, um, girl<<s>>. I, I can't. Couldn't. Not again."
+	<<set $activeSlave.behavioralFlaw = "odd", $activeSlave.sexualFlaw = "crude", $activeSlave.skill.combat = 1>>
+<<case "aztec revivalist arcology">>
+	"It wa<<s>> horrible." You sold $him to an Aztec Revivalist arcology; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation. "They told me by blood would feed the <<S>>un." $He shudders. "I, they, um, do that to hundred<<s>> of girl<<s>>. I had to help."
+	<<set $activeSlave.behavioralFlaw = "odd", $activeSlave.sexualFlaw = "apathetic">>
+<<case "egyptian revivalist arcology">>
+	"It wa<<s>> horrible." You sold $him to an Egyptian Revivalist arcology; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation. "My new owner wa<<s>> old, and he wa<<s>> really into <<s>>ome of the tomb <<s>>tuff. If he died, I'd have been buried with him."
+<<case "body purist arcology">>
+	"It wa<<s>> horrible." You sold $him to a pleasant Body Purist arcology, but somehow $he's acquired grotesque implants. "The arcology got a new owner." $He shudders. "I gue<<ss>> the ni<<c>>e one wa<<s>> weak, and, and the new one i<<s>> changing thing<<s>>. <<Sh>>-<<sh>>e l-like<<s>> t-to ruin the pure one<<s>>." It's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation.
+	<<set $activeSlave.boobsImplant = 200*random(2,4), $activeSlave.boobs += $activeSlave.boobsImplant, $activeSlave.boobsImplantType = "normal">>
+	<<set $activeSlave.buttImplant = random(2,4), $activeSlave.butt = Math.clamp($activeSlave.butt+$activeSlave.buttImplant,0,10), $activeSlave.buttImplantType = "normal">>
+	<<set $activeSlave.lipsImplant = 10*random(1,3), $activeSlave.lips = Math.clamp($activeSlave.lips+$activeSlave.lipsImplant,0,100)>>
+<<case "D milf staffing" "trainer staffing">>
+	<<setNonlocalPronouns $seeDicks>>
+	"I'm a good <<s>>lave trainer, ju<<s>>t like you <<s>>old me to be. Too good." $His eyes look hollow. "I can't get what I'm doing to the<<s>>e <<= _girlU>><<s>> out of my head. Every young _girlU I meet, I get to know _himU and under<<s>>tand _himU. And then I break _himU down and turn _himU into a brainle<<ss>> little fuckpuppet." $He swallows. "I can't. Not anymore."
+	<<set $activeSlave.fetish = "dom", $activeSlave.fetishStrength = 100>>
+	<<set $activeSlave.behavioralFlaw = "arrogant", $activeSlave.sexualFlaw = "crude">>
+<<case "teaching trainer">>
+	"I'm ju<<s>>t a mannequin now," $he <<say>>s hollowly. $His buyer planned to use $him as a teaching tool. "There'<<s>> nothing. No joy, no fun. Ju<<s>>t the <<s>>ame thing, over, and over. In<<s>>ide me."
+	<<set $activeSlave.fetish = "submissive", $activeSlave.fetishStrength = 100>>
+	<<set $activeSlave.behavioralFlaw = "hates penetration", $activeSlave.sexualFlaw = "apathetic">>
+<<case "implanting trainer">>
+	"I d-don't want to be c-cut again," $he <<say>>s hollowly. $His buyer planned to use $him as a surgical teaching tool. "E-every time I'm healed, they implant me again. B-bigger."
+	<<set $activeSlave.boobsImplant = 200*random(8,12), $activeSlave.boobs += $activeSlave.boobsImplant, $activeSlave.boobsImplantType = "advanced fillable">>
+	<<set $activeSlave.buttImplant = random(2,4), $activeSlave.butt = Math.clamp($activeSlave.butt+$activeSlave.buttImplant,0,10), $activeSlave.buttImplantType = "normal">>
+	<<set $activeSlave.lipsImplant = 10*random(1,3), $activeSlave.lips = Math.clamp($activeSlave.lips+$activeSlave.lipsImplant,0,100)>>
+<<case "purifying trainer">>
+	"It w-wa<<s>>n't like I thought it would be," $he <<say>>s. "The trainer you <<s>>old me to took out my implant<<s>>. B-but then they <<s>>aid my boob<<s>> had to be rebuilt, only with drug<<s>> thi<<s>> time." $He shivers. "The <<s>>ide effect<<s>> are terrible. I can't <<s>>leep. I can barely eat. They had to feed me with a tube."
+	<<set $activeSlave.boobs -= $activeSlave.boobsImplant, $activeSlave.boobsImplant = 0, $activeSlave.boobsImplantType = "none">>
+	<<set $activeSlave.butt -= $activeSlave.buttImplant, $activeSlave.buttImplant = 0, $activeSlave.buttImplantType = "none">>
+	<<set $activeSlave.lips -= $activeSlave.lipsImplant, $activeSlave.lipsImplant = 0>>
+	<<set $activeSlave.boobs = Math.clamp($activeSlave.boobs+50*random(20,40),0,10000)>>
+<<case "D startled the witch">>
+	You sold $him to a buyer interested in $him because of $his sharp teeth, among other things. "It wa<<s>> horrible," $he whispers. Then $he gags, dry heaves, and vomits slightly. $He wipes $his mouth with the back of $his hand, staring upward vacantly. "Horrible."
+	<<set $activeSlave.behavioralFlaw = "odd", $activeSlave.sexualFlaw = "crude">>
+<<case "slimming trainer">>
+	"It'<<s>> horrible." You sold $him to a trainer who specializes in slimming slaves down, and if anything, they seem to have gone too far. $He's emaciated. "I'm h-hungry all the time, and when I'm not p-perfect, I d-don't get to eat at all."
+	<<set $activeSlave.boobs = Math.clamp($activeSlave.boobs-50*random(5,10),0,10000)>>
+	<<set $activeSlave.butt = Math.clamp($activeSlave.butt-random(1,2),0,10)>>
+	<<set $activeSlave.waist = Math.clamp($activeSlave.waist-random(20,50),-100,100)>>
+	<<set $activeSlave.weight = -100>>
+<<case "broadening trainer" "D cannibal" "hedonistic decadence arcology">>
+	<<switch _buyer>>
+	<<case "D cannibal">>
+		"M-my new owner i<<s>> going t-to do <<s>>omething horrible to me. H-he keep<<s>> me in a tiny cage and f-feed<<s>> me, and I have to <<s>>tay <<s>>till and eat or I'll <<s>>poil the meat." You did sell $him to a citizen widely rumored to be a cannibal. $He whispers, "I'm going to die."
+	<<case "hedonistic decadence arcology">>
+		You sold $him to a Hedonistic arcology; it's nothing short of incredible that $he managed to get back here. $He must have sold and traded $himself without hesitation. "It'<<s>> horrible." You sold $him to an arcology that loves fattening slaves up, and if anything, they seem to have gone too far too fast. $He's bloated, and $his stomach is distended. "T-they beat me if I ever <<s>>topped eating, and they fed my butt too. I'm gro<<ss>> and ugly. Even when they mounted me, they'd <<s>>till <<sh>>ove food down my throat."
+	<<default>>
+		"It'<<s>> horrible." You sold $him to a trainer who specializes in fattening slaves up, and if anything, they seem to have gone too far. $He's bloated, and $his stomach is distended. "T-they beat me if I ever <<s>>top eating, and they feed my butt too. I'm gro<<ss>> and ugly."
+	<</switch>>
+	<<set $activeSlave.boobs = Math.clamp($activeSlave.boobs+50*random(5,10),0,10000)>>
+	<<set $activeSlave.butt = Math.clamp($activeSlave.butt+random(1,2),0,10)>>
+	<<set $activeSlave.waist = Math.clamp($activeSlave.waist-random(20,50),-100,100)>>
+	<<set $activeSlave.weight = Math.clamp($activeSlave.weight+random(50,100),-100,200)>>
+<<case "clipping trainer">>
+	"All I do i<<s>> <<s>>uck dick<<s>> and get fucked in the butt." You sold $him to a trainer who specializes in clipping and improving overly masculine slaves, and $he's definitely more feminine, if bitterly unhappy. "They're going to <<s>>ell me to a bitch brothel <<s>>oon, I know it. Plea<<s>>e, nobody'<<s>> even <<s>>aid anything to me other than '<<s>>uck my cock' or 'bend over bitch' in week<<s>>."
+	<<set $activeSlave.boobsImplant = 200*random(2,4), $activeSlave.boobs += $activeSlave.boobsImplant, $activeSlave.boobsImplantType = "normal">>
+	<<set $activeSlave.buttImplant = random(1,2), $activeSlave.butt = Math.clamp($activeSlave.butt+$activeSlave.buttImplant,0,10), $activeSlave.buttImplantType = "normal">>
+	<<set $activeSlave.lipsImplant = 10*random(1,2), $activeSlave.lips = Math.clamp($activeSlave.lips+$activeSlave.lipsImplant,0,100)>>
+	<<set $activeSlave.waist = Math.clamp($activeSlave.waist+random(20,50),-100,100)>>
+	<<set $activeSlave.balls = 0, $activeSlave.scrotum = 0, $activeSlave.dick = Math.clamp($activeSlave.dick-random(1,2),0,10)>>
+	<<set $activeSlave.behavioralFlaw = "hates men", $activeSlave.sexualFlaw = "hates anal">>
+	<<if $activeSlave.faceShape == "masculine">><<set $activeSlave.faceShape = "androgynous">><</if>>
+<<case "reassignment trainer">>
+	"I m-mi<<ss>> my dick." You sold $him to a trainer who specializes in gender reassignment, and $he's definitely more feminine, if bitterly unhappy. "P-plea<<s>>e, even if you won't f-fi<<x>> me, plea<<s>>e take me back. I'll b-be a <<s>>e<<x>> <<s>>lave, I ju<<s>>t don't want to be a woman."
+	<<set $activeSlave.boobsImplant = 200*random(2,4), $activeSlave.boobs += $activeSlave.boobsImplant, $activeSlave.boobsImplantType = "normal">>
+	<<set $activeSlave.buttImplant = random(1,2), $activeSlave.butt = Math.clamp($activeSlave.butt+$activeSlave.buttImplant,0,10), $activeSlave.buttImplantType = "normal">>
+	<<set $activeSlave.lipsImplant = 10*random(1,2), $activeSlave.lips = Math.clamp($activeSlave.lips+$activeSlave.lipsImplant,0,100)>>
+	<<set $activeSlave.waist = Math.clamp($activeSlave.waist+random(20,50),-100,100)>>
+	<<set $activeSlave.balls = 0, $activeSlave.scrotum = 0, $activeSlave.dick = 0, $activeSlave.vagina = 3>>
+	<<set $activeSlave.behavioralFlaw = "hates men", $activeSlave.sexualFlaw = "hates penetration">>
+	<<if $activeSlave.faceShape == "masculine">><<set $activeSlave.faceShape = "androgynous">><</if>>
+<<case "arcade">>
+	"Take me back, or kill me," $he <<say>>s. You sold $him to an arcade, and it's surprising $he managed to make it up here at all. "Plea<<s>>e," $he begs. "I will do literally anything. I c-can feel my<<s>>elf going c-cra<<z>>y. I'd rather die."
+	<<set $activeSlave.anus = 4>>
+	<<if $activeSlave.vagina != -1>><<set $activeSlave.vagina = 4>><</if>>
+	<<set $activeSlave.intelligence = Math.clamp($activeSlave.intelligence-50,-100,100)>>
+	<<set $activeSlave.behavioralFlaw = "odd", $activeSlave.sexualFlaw = "apathetic">>
+<<case "harvester">>
+	"I'm ju<<s>>t kept in a pen unle<<ss>> they're d-doing <<s>>urgery on me." It's not surprising; you did sell $him to an organ farm. What's unexpected is that $he's still alive. They must be removing the less essential parts gradually. "I'm going to die," $he <<say>>s hollowly. "Ne<<x>>t <<s>>urgery, I won't wake up."
+	<<set $activeSlave.balls = 0, $activeSlave.ovaries = 0, $activeSlave.preg = -2, WombFlush($activeSlave)>>
+	<<run SetBellySize($activeSlave)>>
+	<<set $activeSlave.behavioralFlaw = "hates men", $activeSlave.sexualFlaw = "crude">>
+<<case "D butt bury">>
+	"My kind butt loving Ma<<s>>ter had to <<s>>ell me, and the brothel who bought me u<<s>>e<<s>> my behind a<<s>> an adverti<<s>>ement." $He shifts uncomfortably. "I can barely feel my anu<<s>>."
+	<<set $activeSlave.anus = 4>>
+	<<set $activeSlave.behavioralFlaw = "hates men", $activeSlave.sexualFlaw = "hates anal">>
+<<case "D shorty breeder">>
+	"My kind Ma<<s>>ter had to <<s>>ell me, and the brothel who bought me got rid of hi<<s>>, um, they got rid of my pregnan<<c>>y, and now I'm ju<<s>>t a short <<s>>lut."
+	<<set $activeSlave.behavioralFlaw = "hates men", $activeSlave.sexualFlaw = "crude">>
+<<case "fuckdoll">>
+	$His appearance is surprising; you sold $him to a dealer who planned to encase $him in a Fuckdoll suit and thereby transform $him into a living sex toy. Apparently they decided to extract a bit of fun out of $him first. "I've b-been chained up in their b-bathroom ever <<s>>in<<c>>e you <<s>>old me," $he <<say>>s hollowly. "They're g-getting bored of me."
+	<<set $activeSlave.behavioralFlaw = "hates men", $activeSlave.sexualFlaw = "hates penetration">>
+<<case "stuffer chef">>
+	"They fini<<sh>>ed." $His appearance is not that surprising; you sold $him to a chef who enjoyed stuffing $his face till $he was bloated. Apparently he sold $him off after $he got too fat for his stuffings to show. "He <<s>>tretched my belly out <<s>>o much and when I got <<s>>o fat he couldn't <<s>>ee a differen<<c>>e with hi<<s>> fea<<s>>t<<s>>, he got rid of me." $He <<if hasAnyArms($activeSlave)>>lowers $his arm<<if hasBothArms($activeSlave)>>s<</if>><<else>>straightens $his back<</if>>, allowing $his grotesquely sagging belly to hang free. "I'm gro<<ss>>. I'm fat, <<s>>aggy, and gro<<ss>>."
+	<<set $activeSlave.boobs = Math.clamp($activeSlave.boobs+50*random(5,10),0,10000)>>
+	<<set $activeSlave.butt = Math.clamp($activeSlave.butt+random(1,2),0,10)>>
+	<<set $activeSlave.waist = Math.clamp($activeSlave.waist-random(20,50),-100,100)>>
+	<<set $activeSlave.weight = Math.clamp($activeSlave.weight+random(50,100),-100,200)>>
+	<<set $activeSlave.bellySag = 80>>
+	<<set $activeSlave.behavioralFlaw = "anorexic">>
+<<case "concert hall">>
+	You sold $him to a local concert venue to help relieve the stage crew's stress. "All of the roadie<<s>>, from out of town, from other arcologie<<s>>, treat like <<s>>ome <<s>>ort of punching bag, or, or like a <<s>>ide of meat. I ju<<s>>t can't go b-back there, anymore."
+	<<if $activeSlave.vagina > -1>>
+		<<set $activeSlave.vagina = 3>>
+	<</if>>
+	<<set $activeSlave.anus = 3>>
+	<<if $seePreg != 0>><<if $activeSlave.ovaries>><<set $activeSlave.preg = random(5,_pregWeeks-1), $activeSlave.pregType = random(1,2), $activeSlave.pregSource = either(-2,0), $activeSlave.pregWeek = $activeSlave.preg, $activeSlave.pregKnown = 1, SetBellySize($activeSlave)>><</if>><</if>>
+<<case "etiquette coach">>
+	"The etiquette t-trainer I wa<<s>> <<s>>old to wa<<s>> an e<<x>>cellent teacher indeed," $he <<say>>s with a grimace, "H-however, I find that he had <<s>>ome rather old-f-fa<<sh>>ioned view<<s>> on educational method<<s>>, to be quite b-blunt." You look $him over; $he has numerous caning marks all over $his body, and appears to have been starved.
+	<<set $activeSlave.weight = random(-80, -70)>>
+	<<run setHealth($activeSlave, jsRandom(-60, -40), $activeSlave.health.shortDamage + normalRandInt(10, 3), $activeSlave.health.longDamage + normalRandInt(10, 3))>>
+	<<set $activeSlave.behavioralFlaw = "odd">>
+	<<set $activeSlave.sexualFlaw = either("idealistic", "repressed", "self hating", "shamefast")>>
+<<case "sex double">>
+	You sold $him to a film studio to act as a double for a famous actress where $he was used for a sex scene. "They didn't <<s>>top after the <<sh>>oot. They just kept fucking me and fucking me until they ju<<s>>t to<<ss>>ed me a<<s>>ide, <<s>>in<<c>>e that bitch
+	<<if $seePreg != 0 && $activeSlave.ovaries == 1 && ($activeSlave.preg == 0 || $activeSlave.preg == -1) && $activeSlave.bellyImplant < 0>>
+		'i<<s>>n't a bloated whore like you'. Like I even had a choi<<c>>e in getting pregnant."
+	<<else>>
+		'i<<s>>n't a blown out whore like you'."
+	<</if>>
+	<<set $activeSlave.vagina = 3>>
+	<<set $activeSlave.anus = 3>>
+	<<if $seePreg != 0>><<if $activeSlave.ovaries>><<set $activeSlave.preg = random(5,_pregWeeks-1), $activeSlave.pregType = 1, $activeSlave.pregSource = 0, $activeSlave.pregWeek = $activeSlave.preg, $activeSlave.pregKnown = 1, SetBellySize($activeSlave)>><</if>><</if>>
+<<case "monster movie">>
+	You sold $him to a film studio to act as a double for a famous actress where $he was used installed with a massive fake pregnancy for the ending. "It'<<s>> too big... Can't breath right... Wa<<s>> going to be <<s>>old... <<S>>in<<c>>e I wa<<s>> a di<<s>>po<<s>>able prop... I'd rather be your prop." $He returns to wheezing against the solid mass bulging from $his middle.
+	<<set $activeSlave.health = random(-70, -60)>>
+	<<if $seeHyperPreg != 1>>
+		<<set $activeSlave.bellyImplant = 120000, $activeSlave.belly = 120000>>
+	<<else>>
+		<<set $activeSlave.bellyImplant = 300000, $activeSlave.belly = 300000>>
+	<</if>>
+<<default>>
+	<<switch _buyer>>
+	<<case "housekeeper">>
+		"My kind Ma<<s>>ter pa<<ss>>ed away, and hi<<s>> heir <<s>>old me
+	<<case "nice brothel">>
+		"The ni<<c>>e brothel you <<s>>old me to failed, and their girl<<s>> went
+	<<case "virgin trader">>
+		"After I couldn't pa<<ss>> a<<s>> a virgin any more, they <<s>>old me
+	<<case "D virgin asspussy">>
+		"My new owner loved my a<<ss>>pu<<ss>>y becau<<s>>e my front hole wa<<s>> virgin. B-but i-it got b-broken by a<<cc>>id-dent, I <<s>>wear, and then he <<s>>old me
+	<<default>>
+		"Plea<<s>>e. I've been re<<s>>old
+	<</switch>>
+	to a <<sh>>-<<sh>>itty brothel on the lower level<<s>>. It'<<s>> h-horrible there. I live in a tiny little room, and the only people I ever <<s>>ee ju<<s>>t fuck me and leave. N-nobody ever t-talk<<s>> to me. And they beat me."
+	<<if hasAnyNaturalLegs($activeSlave)>>$He shifts uncomfortably on $his <<if !hasBothLegs($activeSlave)>>foot<<else>>feet<</if>>. The soles of the feet are a convenient place to beat a whore, since it's agonizingly painful, doesn't bruise badly, and won't inconvenience a slave that spends all $his time kneeling or lying down.<</if>>
+	<<set $activeSlave.anus = 3>>
+	<<if $activeSlave.vagina > -1>><<set $activeSlave.vagina = 3>><</if>>
+	<<set $activeSlave.sexualFlaw = either("hates anal", "hates oral", "hates penetration")>>
+<</switch>>
+
+<br><br>
+It isn't obvious how $he managed to escape, though no doubt you could review the arcology surveillance logs and find out. For right now, though, the question is what to do with $him.
+<<if $activeSlave.trust > 95>>
+	"Plea<<s>>e," $he sobs, breaking down at last. "I th-thought I w-wa<<s>> a g-good $girl. T-take me b-back and I'll p-pretend I n-never left. I'll d-do anything you a<<s>>k. I'll worship the ground you walk on. Plea<<s>>e."
+	<<set $activeSlave.devotion = 100>>
+<<elseif $activeSlave.intelligence+$activeSlave.intelligenceImplant < -15>>
+	"Plea<<s>>e," $he sobs, breaking down at last. "I d-don't know where el<<s>>e to go." That much you believe; $he's an idiot.
+<<else>>
+	"I know I'll be caught," $he sobs, breaking down at last. "I know you'd f-find me. <<S>>o I came here. Plea<<s>>e." $He's right about that much. This is literally the only chance $he has of getting away from $his current owners.
+<</if>>
+
+<<set _ContractCost = 5000>>
+<<set _slaveCost = slaveCost($activeSlave)>>
+<<set _slaveCost -= _ContractCost>>
+
+<br><br>
+
+<<set $saleDescription = 1, $applyLaw = 0>><<include "Long Slave Description">>
+
+<br><br>
+
+<span id="result">
+<<link "Return $him">>
+	<<run repX(Math.trunc(_slaveCost/2), "event", $activeSlave)>>
+	<<replace "#result">>
+		$activeSlave.slaveName keeps waiting, but the doors to the penthouse never open. When $his owners arrive a few minutes later to collect $him, $he cries harder, but does not resist. $His weeping has the peculiar ring of utter hopelessness as they restrain $him and drag $him off. A few minutes after that, you receive a businesslike note @@.green;expressing gratitude@@ for your assistance in this matter.
+		<<set $boomerangStats = 0>>
+	<</replace>>
+<</link>>
+<<if $cash >= _ContractCost>>
+<br><<link "Obfuscate $his appearance and re-enslave $him">>
+	<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+	<<if $familyTesting == 1>>
+		<<if $boomerangStats.PCpregSource > 0 && $PC.preg > 0 && $PC.pregSource == 0>>
+			<<set $PC.pregSource = $activeSlave.ID>>
+		<</if>>
+		<<if $boomerangStats.PCmother > 0>>
+			<<set $PC.mother = $activeSlave.ID>>
+		<</if>>
+		<<if $boomerangStats.PCfather > 0>>
+			<<set $PC.father = $activeSlave.ID>>
+		<</if>>
+		<<for _reb = 0; _reb < $slaves.length; _reb++>>
+			<<if $boomerangStats.boomerangMother.includes($slaves[_reb].ID)>>
+				<<set $slaves[_reb].mother = $activeSlave.ID>>
+			<</if>>
+			<<if $boomerangStats.boomerangFather.includes($slaves[_reb].ID)>>
+				<<set $slaves[_reb].father = $activeSlave.ID>>
+			<</if>>
+			<<if $boomerangStats.boomerangPregSources.includes($slaves[_reb].ID) && $slaves[_reb].preg > 0 && $slaves[_reb].pregSource == 0>>
+				<<set $slaves[_reb].pregSource = $activeSlave.ID>>
+			<</if>>
+		<</for>>
+		<<if $incubator > 0>>
+			<<for _reb = 0; _reb < $tanks.length; _reb++>>
+				<<if $boomerangStats.boomerangMotherTank.includes($tanks[_reb].ID)>>
+					<<set $tanks[_reb].mother = $activeSlave.ID>>
+				<</if>>
+				<<if $boomerangStats.boomerangFatherTank.includes($tanks[_reb].ID)>>
+					<<set $tanks[_reb].father = $activeSlave.ID>>
+				<</if>>
+			<</for>>
+		<</if>>
+		<<if $nursery > 0>>
+			<<for _reb = 0; _reb < $cribs.length; _reb++>>
+				<<if $boomerangStats.boomerangMotherTank.includes($cribs[_reb].ID)>>
+					<<set $cribs[_reb].mother = $activeSlave.ID>>
+				<</if>>
+				<<if $boomerangStats.boomerangFatherTank.includes($cribs[_reb].ID)>>
+					<<set $cribs[_reb].father = $activeSlave.ID>>
+				<</if>>
+			<</for>>
+		<</if>>
+	<<else>>
+		<<if $boomerangStats.boomerangRelation > 0>>
+			<<set _reb = $slaveIndices[$boomerangStats.boomerangRelation]>>
+			<<if def _reb>>
+				<<if $activeSlave.relation == "mother">>
+					<<set $slaves[_reb].relation = "daughter">>
+				<<elseif $activeSlave.relation == "daughter">>
+					<<set $slaves[_reb].relation = "mother">>
+				<<else>>
+					<<set $slaves[_reb].relation = $activeSlave.relation>>
+				<</if>>
+				<<set $slaves[_reb].relationshipTarget = $activeSlave.ID>>
+			<<else>>
+				<<set $activeSlave.relation = 0, $activeSlave.relationTarget = 0>>
+			<</if>>
+		<</if>>
+		<<if $boomerangStats.boomerangPregSources.length > 0>>
+			<<for _reb = 0; _reb < $slaves.length; _reb++>>
+				<<if $boomerangStats.boomerangPregSources.includes($slaves[_reb].ID) && $slaves[_reb].preg > 0 && $slaves[_reb].pregSource == 0>>
+					<<set $slaves[_reb].pregSource = $activeSlave.ID>>
+				<</if>>
+			<</for>>
+		<</if>>
+	<</if>>
+	<<if $boomerangStats.boomerangRelationship > 0>>
+		<<set _reb = $slaveIndices[$boomerangStats.boomerangRelationship]>>
+		<<if def _reb>>
+			<<set $slaves[_reb].relationship = $activeSlave.relationship, $slaves[_reb].relationshipTarget = $activeSlave.ID>>
+		<<else>>
+			<<set $activeSlave.relationship = 0, $activeSlave.relationshipTarget = 0>>
+		<</if>>
+	<</if>>
+	<<if $boomerangStats.boomerangRivalry > 0>>
+		<<set _reb = $slaveIndices[$boomerangStats.boomerangRivalry]>>
+		<<if def _reb>>
+			<<set $slaves[_reb].rivalry = $activeSlave.rivalry, $slaves[_reb].rivalryTarget = $activeSlave.ID>>
+		<<else>>
+			<<set $activeSlave.rivalry = 0, $activeSlave.rivalryTarget = 0>>
+		<</if>>
+	<</if>>
+	<<if $boomerangStats.boomerangBody > 0>>
+		<<set _reb = $slaveIndices[$boomerangStats.boomerangBody]>>
+		<<if def _reb>>
+			<<set $slaves[_reb].origBodyOwnerID = $activeSlave.ID>>
+		<</if>>
+	<</if>>
+	<<for _reb = 0; _reb < $slaves.length; _reb++>>
+		<<run WombChangeID($slaves[_reb], $activeSlave.missingParentTag, $activeSlave.ID)>>
+		<<run WombChangeGeneID($slaves[_reb], $activeSlave.missingParentTag, $activeSlave.ID)>>
+	<</for>>
+	<<set $boomerangStats = 0>>
+	<<replace "#result">>
+		The penthouse opens, and $activeSlave.slaveName stumbles inside, sobbing $his thanks. $He's immediately conducted to the autosurgery for some quick cosmetic surgery, while you and $assistant.name do the necessary work to falsify the arcology records and conceal $his origins. Even so, it would probably be wise to keep $him off public assignments for a while. In no time at all, $he's standing in front of your desk like any other new slave. $He waits obediently, knowing that it's in $his best interests not to mention anything out of the ordinary.
+	<<include "New Slave Intro">>
+	<</replace>>
+<</link>> //This will cost <<print cashFormat(_ContractCost)>>.//
+<br><<link "Sell $him immediately">>
+	<<run cashX(_slaveCost, "slaveTransfer")>>
+	<<replace "#result">>
+		The penthouse opens, and $activeSlave.slaveName stumbles inside, sobbing $his thanks. $He's immediately conducted to the autosurgery for some quick cosmetic surgery, while you and $assistant.name do the necessary work to falsify the arcology records and conceal $his origins. Before $he's even out from under anesthesia, $he's bundled off into one of the hundreds of slave shipments that move between arcologies every day. This time $he'll be sold far enough away that no matter how much of an escape artist $he is, you won't be seeing any more of $him. $He can whine elsewhere.
+		<<set $boomerangStats = 0>>
+	<</replace>>
+<</link>> //This will bring in <<print cashFormat(_slaveCost)>>.//
+<<else>>
+	//You lack the necessary funds to enslave $him.//
+<</if>>
+</span>

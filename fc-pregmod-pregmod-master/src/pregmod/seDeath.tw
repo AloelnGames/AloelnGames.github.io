@@ -1,0 +1,37 @@
+:: SE Death [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Scheduled Event">>
+
+<<set _killedSlaves = []>>
+<<for _slave range $slaves>>
+	<<switch _slave.death.toLowerCase()>>
+		<<case "old">>
+			<<DeathOldAge _slave>>
+			<br><br><hr style="margin:0"><br>
+			<<set _killedSlaves.push(_slave)>>
+		<<case "od">>
+			<<DeathOverdose _slave>>
+			<br><br><hr style="margin:0"><br>
+			<<set _killedSlaves.push(_slave)>>
+		<<case "health">>
+			<<DeathUnhealthy _slave>>
+			<br><br><hr style="margin:0"><br>
+			<<set _killedSlaves.push(_slave)>>
+		<<case "burst">>
+			<<DeathPregnancyBurst _slave>>
+			<br><br><hr style="margin:0"><br>
+			<<set _killedSlaves.push(_slave)>>
+	<</switch>>
+<</for>>
+<<if _killedSlaves.length == 0>>
+	/* if something beats this to the slaves, this should kick the player along instead of leaving them at a blank screen */
+	<<set $slaveDeath = 0>>
+	<<goto "Scheduled Event">>
+<</if>>
+<<for _slave range _killedSlaves>>
+	<<set $activeSlave = _slave>>
+	<<= removeActiveSlave() >>
+<</for>>
+<<unset _killedSlaves>>
+
+<<set $slaveDeath = 0>>

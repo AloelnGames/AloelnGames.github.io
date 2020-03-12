@@ -1,0 +1,30 @@
+:: FSlaveSlaveDick [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Slave Interact", $slaverapistx = 0>>
+
+//Select a slave that will ride $activeSlave.slaveName.//
+
+<br><br>
+
+__Select an eligible slave:__
+
+<br>
+
+<<set _eligibles = $slaves.filter((s) => (s.ID != $activeSlave.ID) && isSlaveAvailable(s) && canDoVaginal(s) && canWalk(s) /* amp-amp scene is not written */)>>
+<<for _i = 0; _i < _eligibles.length; _i++>>
+	<<set _name = SlaveFullName(_eligibles[_i])>>
+	<br><<print "[[_name|FSlaveSlaveDick Consummate][$slaverapistx = _eligibles[" + _i + "]]]">>
+	<<if _eligibles[_i].custom.label>> (@@.yellow;''<<print _eligibles[_i].custom.label>>''@@)<</if>>
+	<<if (canImpreg(_eligibles[_i], $activeSlave))>>
+		@@.green;Fertile@@
+	<</if>>
+	<<if $familyTesting == 1 && totalRelatives($activeSlave) > 0>>
+		<<set _relTerm = relativeTerm($activeSlave, _eligibles[_i])>>
+		<<if _relTerm != null>>
+			@@.lightgreen;<<= capFirstChar(_relTerm)>>@@
+		<</if>>
+	<</if>> /* closes extended family mode */
+<</for>>
+<<if (_eligibles.length === 0)>>
+	<br>//You have no slaves capable of this act.//
+<</if>>

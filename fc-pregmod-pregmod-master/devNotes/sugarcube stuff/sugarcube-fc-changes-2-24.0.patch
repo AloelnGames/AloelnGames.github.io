@@ -1,0 +1,66 @@
+diff -r cd5d732c8669 src/lib/jquery-plugins.js
+--- a/src/lib/jquery-plugins.js	Fri Mar 09 07:43:39 2018 -0600
++++ b/src/lib/jquery-plugins.js	Fri Jan 25 18:37:15 2019 +0100
+@@ -37,6 +37,10 @@
+		return function () {
+			const $this = jQuery(this);
+
++			const dataPassage = $this.attr('data-passage');
++			const initialDataPassage = window && window.SugarCube && window.SugarCube.State && window.SugarCube.State.passage;
++			const savedYOffset = window.pageYOffset;
++
+			// Toggle "aria-pressed" status, if the attribute exists.
+			if ($this.is('[aria-pressed]')) {
+				$this.attr('aria-pressed', $this.attr('aria-pressed') === 'true' ? 'false' : 'true');
+@@ -44,6 +48,11 @@
+
+			// Call the true handler.
+			fn.apply(this, arguments);
++
++			const doJump = function(){ window.scrollTo(0, savedYOffset); }
++			if ( dataPassage && (window.lastDataPassageLink === dataPassage || initialDataPassage === dataPassage))
++				doJump();
++			window.lastDataPassageLink = dataPassage;
+		};
+	}
+
+diff -r cd5d732c8669 src/lib/simplestore/adapters/webstorage.js
+--- a/src/lib/simplestore/adapters/webstorage.js	Fri Mar 09 07:43:39 2018 -0600
++++ b/src/lib/simplestore/adapters/webstorage.js	Fri Jan 25 18:37:15 2019 +0100
+@@ -192,11 +192,11 @@
+		}
+
+		static _serialize(obj) {
+-			return LZString.compressToUTF16(JSON.stringify(obj));
++			return JSON.stringify(obj);
+		}
+
+		static _deserialize(str) {
+-			return JSON.parse(LZString.decompressFromUTF16(str));
++			return JSON.parse((!str || str[0] == "{") ? str : LZString.decompressFromUTF16(str));
+		}
+	}
+
+diff -r cd5d732c8669 src/state.js
+--- a/src/state.js	Fri Mar 09 07:43:39 2018 -0600
++++ b/src/state.js	Fri Jan 25 18:37:15 2019 +0100
+@@ -104,7 +104,7 @@
+		}
+
+		if (_expired.length > 0) {
+-			stateObj.expired = [..._expired];
++			stateObj.expired = [];
+		}
+
+		if (_prng !== null) {
+diff -r cd5d732c8669 src/ui.js
+--- a/src/ui.js	Fri Mar 09 07:43:39 2018 -0600
++++ b/src/ui.js	Fri Jan 25 18:37:15 2019 +0100
+@@ -337,6 +337,7 @@
+				if (saves.slots[i]) {
+					// Add the load button.
+					$tdLoad.append(
++						createButton('save', 'ui-close', L10n.get('savesLabelSave'), i, Save.slots.save),
+						createButton('load', 'ui-close', L10n.get('savesLabelLoad'), i, slot => {
+							jQuery(document).one(':dialogclose', () => Save.slots.load(slot));
+						})

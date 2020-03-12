@@ -1,0 +1,3346 @@
+:: P rivalry actions [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event", $rivalryDuration += 1>>
+
+<<if $hostageAnnounced == 1>>
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<<if $imageChoice == 1>>
+			<div class="imageRef medImg"><<= SlaveArt($hostage, 2, 0)>></div>
+		<<else>>
+			<div class="imageRef medImg"><<= SlaveArt($hostage, 2, 0)>></div>
+		<</if>>
+	<</if>>
+	/* 000-250-006 */
+
+	<<setLocalPronouns $hostage>>
+	<<run Enunciate($hostage)>>
+<</if>>
+
+<<setAssistantPronouns>>
+<<setNonlocalPronouns $seeDicks>>
+
+Your inter-arcology war with the arcology owner behind the Daughters of Liberty has dragged on for $rivalryDuration week<<if $rivalryDuration > 1>>s<</if>>. The tone of your arcology is a bit more somber than usual. You have enhanced security in place, and the populace has caught the mood.
+
+<<if $hostageAnnounced == 1>>
+<<if $rivalryDuration >= 30>>The latest message from your rival is a live communication.<<else>>The latest message from your rival recently arrived, showing <<= SlaveFullName($hostage)>><</if>>
+<<if $rivalryDuration == 1>>
+	<<switch $rivalryFS>>
+	<<case "Racial Subjugationism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.behavioralFlaw = "arrogant">>
+		<<set $hostage.sexualFlaw = "shamefast">>
+		bound and offered to a pair of $arcologies[0].FSSubjugationistRace girls.
+	<<case "Racial Supremacism">>
+		<<set $hostage.trust += 5>>
+		<<set $hostage.devotion += 5>>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		<<set $hostage.counter.mammary += 50>>
+		<<set $hostage.behavioralFlaw = "odd">>
+		<<set $hostage.sexualFlaw = "repressed">>
+		being registered as a piece of <<print $arcologies[0].FSSupremacistRace>> meat, fit only to be abused.
+	<<case "Repopulation Focus">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 5>>
+		<<set $hostage.counter.vaginal += 5>>
+		<<set $hostage.counter.anal += 5>>
+		<<set $hostage.counter.mammary += 5>>
+		<<set $hostage.behavioralQuirk = "adores men">>
+		<<set $hostage.sexualQuirk = "caring">>
+		being operated on to remove $his fertility.
+	<<case "Eugenics">>
+		<<if $seeHyperPreg != 1>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.preg = 4>>
+			<<set $hostage.pregType = 8>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = $rivalryDuration>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+			<<set $hostage.vagina = 2>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<set $hostage.behavioralFlaw = "odd">>
+			<<set $hostage.sexualFlaw = "hates penetration">>
+			undergoing a fertility screening, the video ends with the positive results.
+		<<else>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.preg = 4>>
+			<<set $hostage.pregType = 40>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = $rivalryDuration>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+			<<set $hostage.vagina = 2>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<set $hostage.behavioralFlaw = "odd">>
+			<<set $hostage.sexualFlaw = "hates penetration">>
+			undergoing a fertility screening, the video ends with the positive results.
+		<</if>>
+	<<case "Gender Radicalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.behavioralFlaw = "arrogant">>
+		<<set $hostage.sexualFlaw = "idealistic">>
+		<<set $hostage.fetish = "none">>
+		having measurements taken for $his new station in life.
+	<<case "Gender Fundamentalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.behavioralFlaw = "hates men">>
+		<<set $hostage.sexualFlaw = "hates anal">>
+		begging for $his anal virginity to not be taken.
+	<<case "Paternalism">>
+		<<set $hostage.trust += 5>>
+		<<set $hostage.devotion += 5>>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		<<set $hostage.counter.mammary += 50>>
+		<<set $hostage.earPiercing = 1>>
+		<<set $hostage.nosePiercing = 1>>
+		<<set $hostage.nipplesPiercing = 0>>
+		<<set $hostage.lipsPiercing = 0>>
+		<<set $hostage.vaginaPiercing = 0>>
+		<<set $hostage.anusPiercing = 0>>
+		<<set $hostage.clitPiercing = 0>>
+		<<set $hostage.eyebrowPiercing = 0>>
+		<<set $hostage.navelPiercing = 0>>
+		<<set $hostage.corsetPiercing = 0>>
+		<<set $hostage.areolaePiercing = 0>>
+		<<set $hostage.tonguePiercing = 0>>
+		<<set $hostage.boobsTat = 0>>
+		<<set $hostage.buttTat = 0>>
+		<<set $hostage.vaginaTat = 0>>
+		<<set $hostage.lipsTat = 0>>
+		<<set $hostage.anusTat = 0>>
+		<<set $hostage.shouldersTat = 0>>
+		<<set $hostage.backTat = 0>>
+		<<set $hostage.armsTat = 0>>
+		<<set $hostage.legsTat = 0>>
+		<<set $hostage.stampTat = "degradation">>
+		<<set $hostage.behavioralFlaw = "odd">>
+		<<set $hostage.sexualFlaw = "apathetic">>
+		crying as $his nose and ears are pierced and the first of many tattoos inked into $his flesh.
+	<<case "Degradationism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.behavioralFlaw = "liberated">>
+		<<set $hostage.sexualFlaw = "idealistic">>
+		being shown to $his luxurious new room, complete with heart-shaped love bed.
+	<<case "Body Purism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.boobs += 2000>>
+		<<set $hostage.boobsImplant += 2000>>
+		<<set $hostage.boobsImplantType = "advanced fillable">>
+		<<set $hostage.behavioralFlaw = "anorexic">>
+		<<set $hostage.sexualFlaw = "shamefast">>
+		struggling against $his restraints on the operating table as a pair of 2000cc implants are forced into $his chest.
+	<<case "Transformation Fetishism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.behavioralFlaw = "anorexic">>
+		<<set $hostage.sexualFlaw = "shamefast">>
+		being carefully checked for any implants.
+	<<case "Youth Preferentialism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 1>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.counter.anal += 1>>
+		<<set $hostage.behavioralFlaw = "bitchy">>
+		<<set $hostage.sexualFlaw = "idealistic">>
+		bound and offered to an older woman.
+	<<case "Maturity Preferentialism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 1>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.counter.anal += 1>>
+		<<set $hostage.behavioralFlaw = "bitchy">>
+		<<set $hostage.sexualFlaw = "idealistic">>
+		bound and offered to a young woman.
+	<<case "Slimness Enthusiasm">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.boobs += 1500>>
+		<<set $hostage.butt = 4>>
+		<<set $hostage.behavioralFlaw = "anorexic">>
+		<<set $hostage.sexualFlaw = "crude">>
+		screaming as $he watches $his breasts swell from the intense amount of A-HGH being pumped into them.
+	<<case "Asset Expansionism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.behavioralFlaw = "bitchy">>
+		<<set $hostage.sexualFlaw = "shamefast">>
+		being weighed and measured to document $his trim body.
+	<<case "Physical IdealismOLD">>
+		<<set $hostage.lactation = 2>>
+		<<set $hostage.lactationDuration = 2>>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.boobs += 1000>>
+		<<set $hostage.weight = 0>>
+		<<set $hostage.butt = 4>>
+		<<set $hostage.behavioralFlaw = "anorexic">>
+		<<set $hostage.sexualFlaw = "shamefast">>
+		standing in front of a mirror sobbing as droplets of milk form on $his $hostage.nipples nipples, courtesy of $his newly implanted lactation drugs.
+	<<case "Pastoralism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.muscles = 0>>
+		<<set $hostage.behavioralFlaw = "gluttonous">>
+		<<set $hostage.sexualFlaw = "shamefast">>
+		being weighed and measured to determine the best way to replace $his fat with muscle.
+	<<case "Physical Idealism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.boobs = 400>>
+		<<set $hostage.weight = 10>>
+		<<set $hostage.counter.vaginal += 28>>
+		<<set $hostage.vagina = 2>>
+		<<set $hostage.butt = 2>>
+		<<set $hostage.behavioralFlaw = "anorexic">>
+		<<set $hostage.sexualFlaw = "hates penetration">>
+		struggling with a feeding tube down $his throat, $his belly heavily bloated with fattening slave food, $his body already looking a little soft. $He is being forcibly fucked, $his taut middle jiggling slightly with each thrust; 28 tallies are already drawn over $his pussy.
+	<<case "Hedonistic Decadence">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.muscles = 0>>
+		<<set $hostage.behavioralFlaw = "gluttonous">>
+		<<set $hostage.sexualFlaw = "shamefast">>
+		being weighed and measured to determine the best way to replace $his fat with muscle.
+	<<case "Chattel Religionism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.behavioralFlaw = "arrogant">>
+		<<set $hostage.sexualFlaw = "repressed">>
+		bound and being introduced to $his new lifestyle.
+	<<case "Multiculturalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.counter.mammary += 10>>
+		<<set $hostage.behavioralFlaw = "liberated">>
+		<<set $hostage.sexualFlaw = "repressed">>
+		being inducted into $his new religion.
+	<<case "Intellectual Dependency">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.behavioralFlaw = "bitchy">>
+		<<set $hostage.sexualFlaw = "apathetic">>
+		bound and being introduced to $his new curriculum.
+	<<case "Slave Professionalism">>
+		<<set $hostage.trust += 5>>
+		<<set $hostage.devotion += 5>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.energy += 5>>
+		<<set $hostage.addict += 2>>
+		<<set $hostage.hLength += 7>>
+		<<set $hostage.behavioralFlaw = "arrogant">>
+		<<set $hostage.sexualFlaw = "repressed">>
+		bound and being read the details of the drugs that will be correcting $his body and mind.
+	<<case "Petite Admiration">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 1>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.counter.anal += 1>>
+		<<set $hostage.behavioralFlaw = "liberated">>
+		<<set $hostage.sexualFlaw = "idealistic">>
+		bound and offered to a towering woman.
+	<<case "Statuesque Glorification">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 1>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.counter.anal += 1>>
+		<<set $hostage.behavioralFlaw = "liberated">>
+		<<set $hostage.sexualFlaw = "judgemental">>
+		tied down and offered to a tiny woman.
+	<<default>>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.behavioralFlaw = "arrogant">>
+		<<set $hostage.sexualFlaw = "repressed">>
+		bound and being introduced to $his new lifestyle.
+	<</switch>>
+<<elseif $rivalryDuration == 6>>
+	<<switch $rivalryFS>>
+	<<case "Racial Subjugationism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.fetish = "submissive">>
+		<<set $hostage.fetishStrength = 10>>
+		no longer trying to escape from the $arcologies[0].FSSubjugationistRace girls.
+	<<case "Racial Supremacism">>
+		<<set $hostage.trust += 5>>
+		<<set $hostage.devotion += 5>>
+		<<if $hostage.vagina < 2>>
+			<<set $hostage.vagina = 2>>
+		<</if>>
+		<<if $hostage.anus < 2>>
+			<<set $hostage.anus = 2>>
+		<</if>>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		<<set $hostage.counter.mammary += 50>>
+		<<set $hostage.fetish = "masochist">>
+		<<set $hostage.fetishStrength = 10>>
+		beginning to lose hope in ever being something more than just a piece of <<print $arcologies[0].FSSupremacistRace>> meat.
+	<<case "Repopulation Focus">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 5>>
+		<<set $hostage.counter.vaginal += 5>>
+		<<set $hostage.counter.anal += 5>>
+		<<set $hostage.counter.mammary += 5>>
+		beginning to come to terms with $his lack of fertility.
+	<<case "Eugenics">>
+		<<if $seeHyperPreg != 1>>
+			groping $his rounded tummy, blushing thoroughly as $he explores $his new curve.
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.preg = 11>>
+			<<set $hostage.pregType = 8>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = $rivalryDuration>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<set $hostage.fetish = "pregnancy">>
+			<<set $hostage.fetishStrength = 10>>
+		<<else>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.preg = 11>>
+			<<set $hostage.pregType = 40>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = $rivalryDuration>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+			<<set $hostage.boobs += 100>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<set $hostage.fetish = "pregnancy">>
+			<<set $hostage.fetishStrength = 10>>
+			groping $his massively distended belly, blushing thoroughly as $he explores $his new curve.
+		<</if>>
+	<<case "Gender Radicalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetish = "submissive">>
+		<<set $hostage.fetishStrength = 10>>
+		trying on new clothes while $he thinks no-one is watching.
+	<<case "Gender Fundamentalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.anus = 2>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.fetish = "buttslut">>
+		<<set $hostage.fetishStrength = 10>>
+		questioning why getting buttfucked is starting to feel so good.
+	<<case "Paternalism">>
+		<<set $hostage.trust += 5>>
+		<<set $hostage.devotion += 5>>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		<<set $hostage.counter.mammary += 50>>
+		<<set $hostage.heels = 1>>
+		<<set $hostage.earPiercing = 1>>
+		<<set $hostage.nosePiercing = 1>>
+		<<set $hostage.nipplesPiercing = 1>>
+		<<set $hostage.lipsPiercing = 1>>
+		<<set $hostage.vaginaPiercing = 0>>
+		<<set $hostage.anusPiercing = 0>>
+		<<set $hostage.clitPiercing = 1>>
+		<<set $hostage.eyebrowPiercing = 0>>
+		<<set $hostage.navelPiercing = 1>>
+		<<set $hostage.corsetPiercing = 0>>
+		<<set $hostage.areolaePiercing = 0>>
+		<<set $hostage.tonguePiercing = 1>>
+		<<set $hostage.boobsTat = "degradation">>
+		<<set $hostage.backTat = "degradation">>
+		<<set $hostage.stampTat = "degradation">>
+		<<set $hostage.fetish = "masochist">>
+		<<set $hostage.fetishStrength = 10>>
+		<<run App.Medicine.Modification.addScar($hostage, "left ankle", "surgical", 2)>>
+		<<run App.Medicine.Modification.addScar($hostage, "right ankle", "surgical", 2)>>
+		<<run App.Medicine.Modification.addScar($hostage, "left calf", "surgical", 2)>>
+		<<run App.Medicine.Modification.addScar($hostage, "right calf", "surgical", 2)>>
+		undergoing surgery to sever the tendons in $his heels.
+	<<case "Degradationism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetish = "submissive">>
+		<<set $hostage.fetishStrength = 10>>
+		questioning if being $his owner's plaything is what $he really wants.
+	<<case "Body Purism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.boobs += 2000>>
+		<<set $hostage.boobsImplant += 2000>>
+		<<if $hostage.boobsImplant > 10000>>
+			<<set $hostage.boobsImplantType = "hyper fillable">>
+		<</if>>
+		<<set $hostage.fetish = "boobs">>
+		<<set $hostage.fetishStrength = 10>>
+		blushing as $he attempts to get dressed with $his massive <<print $hostage.boobs>>cc fake tits getting in the way.
+	<<case "Transformation Fetishism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetish = "submissive">>
+		<<set $hostage.fetishStrength = 10>>
+		blushing as $he recollects all the compliments $his pure body has received so far.
+	<<case "Youth Preferentialism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 5>>
+		<<set $hostage.counter.vaginal += 5>>
+		<<set $hostage.counter.anal += 5>>
+		<<set $hostage.fetish = "submissive">>
+		<<set $hostage.fetishStrength = 10>>
+		blushing as $he thinks about being dominated by that MILF.
+	<<case "Maturity Preferentialism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 5>>
+		<<set $hostage.counter.vaginal += 5>>
+		<<set $hostage.counter.anal += 5>>
+		<<set $hostage.fetish = "dom">>
+		<<set $hostage.fetishStrength = 10>>
+		blushing as $he thinks about possibly dominating $his energetic harasser.
+	<<case "Slimness Enthusiasm">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 0>>
+		<<set $hostage.boobs += 1500>>
+		<<set $hostage.butt = 5>>
+		<<set $hostage.fetish = "boobs">>
+		<<set $hostage.fetishStrength = 10>>
+		blushing as $he attempts to get dressed with $his massive <<print $hostage.boobs>>cc tits getting in the way.
+	<<case "Asset Expansionism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		blushing as $he recollects all the compliments $his slim body has received so far.
+	<<case "Pastoralism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 50>>
+		<<set $hostage.muscles = 25>>
+		<<set $hostage.boobs = 1000>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetish = "dom">>
+		<<set $hostage.fetishStrength = 10>>
+		crashing into $his bed, exhausted from all $his exercise. As $he massages $his sore body, $he can't help gasp at the weight $he has lost.
+	<<case "Cummunism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 20>>
+		<<set $hostage.boobs += 1000>>
+		<<set $hostage.fetish = "boobs">>
+		<<set $hostage.fetishStrength = 10>>
+		groaning as $he lowers $his growing body onto $his cot. $He shoves a massive <<print $hostage.boobs>>cc milky breast aside so $he can massage $his hugely distended belly. $He moans in pain under the massive amount of high-caloric fluid within $his gut.
+	<<case "Physical Idealism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 50>>
+		<<set $hostage.boobs = 800>>
+		<<set $hostage.butt = 4>>
+		<<set $hostage.counter.vaginal += 28>>
+		<<set $hostage.vagina = 3>>
+		<<set $hostage.behavioralFlaw = "anorexic">>
+		<<set $hostage.sexualFlaw = "hates penetration">>
+		groaning as $his taut belly is measured and $his weight is taken; 140 tallies adorn $his lower belly. "88 kilos, a good start, but nowhere near the end. Now about that fetish of yours..." $He responds with a meek
+		<<if $seePreg != 0>>
+			<<set $hostageFetish = either("boobs", "buttslut", "cumslut", "dom", "humiliation", "masochist", "pregnancy", "sadist", "submissive")>>
+		<<else>>
+			<<set $hostageFetish = either("boobs", "buttslut", "cumslut", "dom", "humiliation", "masochist", "sadist", "submissive")>>
+		<</if>>
+		<<switch $hostageFetish>>
+		<<case "submissive">>
+			"I like getting dominated..."
+			<<set $hostage.fetish = "submissive">>
+			<<set $hostage.fetishStrength = 10>>
+		<<case "cumslut">>
+			"I like getting cummed on..."
+			<<set $hostage.fetish = "cumslut">>
+			<<set $hostage.fetishStrength = 10>>
+		<<case "humiliation">>
+			"I like being humiliated..."
+			<<set $hostage.fetish = "humiliation">>
+			<<set $hostage.fetishStrength = 10>>
+		<<case "buttslut">>
+			"I like getting assfucked..."
+			<<set $hostage.fetish = "buttslut">>
+			<<set $hostage.fetishStrength = 10>>
+		<<case "boobs">>
+			"I like big breasts..."
+			<<set $hostage.fetish = "boobs">>
+			<<set $hostage.fetishStrength = 10>>
+		<<case "sadist">>
+			"I like hurting people..."
+			<<set $hostage.fetish = "sadist">>
+			<<set $hostage.fetishStrength = 10>>
+		<<case "masochist">>
+			"I like getting beaten..."
+			<<set $hostage.fetish = "masochist">>
+			<<set $hostage.fetishStrength = 10>>
+		<<case "dom">>
+			"I like getting my way..."
+			<<set $hostage.fetish = "dom">>
+			<<set $hostage.fetishStrength = 10>>
+		<<case "pregnancy">>
+			"I want to get pregnant..."
+			<<set $hostage.fetish = "pregnancy">>
+			<<set $hostage.fetishStrength = 10>>
+		<</switch>>
+		"No need to be shy about it! We'll make sure to
+		<<switch $hostageFetish>>
+		<<case "submissive">>
+			get a big strong man to teach you your place right away."
+		<<case "cumslut">>
+			have plenty of cum ready for you."
+		<<case "humiliation">>
+			broadcast your life to the world."
+		<<case "buttslut">>
+			give your ass plenty of attention."
+		<<case "boobs">>
+			get a big pair of fillable implants in you right away."
+			<<set $hostage.boobs += 1000>>
+			<<set $hostage.boobsImplant += 1000>>
+			<<set $hostage.boobsImplantType = "fillable">>
+		<<case "sadist">>
+			have a sissy little bitch in reach for you to torment as you please."
+		<<case "masochist">>
+			get a big strong man to teach you your place right away."
+		<<case "dom">>
+			have a sissy little bitch to do whatever you please."
+		<<case "pregnancy">>
+			take you off your birth control, won't be long after that."
+			<<set $hostage.preg = 1>>
+			<<set $hostage.pregType = setPregType($hostage)>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, 1)>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = 1>>
+			<<run SetBellySize($hostage)>>
+		<</switch>>
+	<<case "Hedonistic Decadence">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 50>>
+		<<set $hostage.muscles = 25>>
+		<<set $hostage.boobs = 1000>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetish = "dom">>
+		<<set $hostage.fetishStrength = 10>>
+		crashing into $his bed, exhausted from all $his exercise. As $he massages $his sore body, $he can't help gasp at the weight $he has lost.
+	<<case "Chattel Religionism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetish = "submissive">>
+		<<set $hostage.fetishStrength = 10>>
+		questioning why $he is yearning to be a part of this society.
+	<<case "Multiculturalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.counter.mammary += 10>>
+		<<set $hostage.fetish = "dom">>
+		<<set $hostage.fetishStrength = 10>>
+		studying $his scriptures with the hope that $he can do something to help you.
+	<<case "Intellectual Dependency">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant+1, 0, 30)>>
+		<<set $hostage.skill.oral = Math.clamp($hostage.skill.oral+5, 0, 100)>>
+		<<set $hostage.skill.entertainment = Math.clamp($hostage.skill.entertainment+5, 0, 100)>>
+		<<set $hostage.skill.anal = Math.clamp($hostage.skill.anal+5, 0, 100)>>
+		<<set $hostage.skill.vaginal = Math.clamp($hostage.skill.vaginal+5, 0, 100)>>
+		<<set $hostage.skill.whoring = Math.clamp($hostage.skill.whoring+5, 0, 100)>>
+		<<set $hostage.fetish = "submissive">>
+		<<set $hostage.fetishStrength = 10>>
+		reading a book on styling oneself.
+	<<case "Slave Professionalism">>
+		<<set $hostage.trust += 5>>
+		<<set $hostage.devotion += 5>>
+		<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant-5, 0, 30)>>
+		<<set $hostage.counter.oral += 30>>
+		<<set $hostage.counter.vaginal += 30>>
+		<<set $hostage.counter.anal += 30>>
+		<<set $hostage.vagina = 3>>
+		<<set $hostage.anus = 3>>
+		<<set $hostage.energy += 5>>
+		<<set $hostage.addict += 2>>
+		<<set $hostage.hLength += 7>>
+		<<set $hostage.fetish = "humiliation">>
+		<<set $hostage.fetishStrength = 10>>
+		uncontrollably masturbating as $he struggles to stay coherent. "I need it... I can't <<s>>top... Need more..." $He orgasms in full view of the camera and passes out.
+	<<case "Petite Admiration">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 5>>
+		<<set $hostage.counter.anal += 5>>
+		<<set $hostage.fetish = "submissive">>
+		<<set $hostage.fetishStrength = 10>>
+		blushing as $he thinks about being picked up, pinned against a wall and dominated by that giant.
+	<<case "Statuesque Glorification">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 3>>
+		<<set $hostage.counter.vaginal += 7>>
+		<<set $hostage.counter.anal += 7>>
+		<<set $hostage.fetish = "dom">>
+		<<set $hostage.fetishStrength = 10>>
+		blushing as $he thinks about possibly dominating $his minuscule harasser.
+	<<default>>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetish = "submissive">>
+		<<set $hostage.fetishStrength = 10>>
+		questioning why $he is yearning to be a part of this society.
+	<</switch>>
+<<elseif $rivalryDuration == 11>>
+	<<switch $rivalryFS>>
+	<<case "Racial Subjugationism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 20>>
+		<<set $hostage.counter.vaginal += 20>>
+		<<set $hostage.counter.anal += 20>>
+		<<set $hostage.fetishStrength = 65>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "confident">>
+		<<set $hostage.sexualQuirk = "perverted">>
+		calling $his $arcologies[0].FSSubjugationistRace girls for some release.
+	<<case "Racial Supremacism">>
+		<<set $hostage.trust += 5>>
+		<<set $hostage.devotion += 5>>
+		<<if $hostage.preg < 1 && $seePreg != 0>>
+			<<set $hostage.preg = 12>>
+			<<set $hostage.pregType = 1>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = 12>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+		<</if>>
+		<<if $hostage.vagina < 3>>
+			<<set $hostage.vagina = 3>>
+		<</if>>
+		<<if $hostage.anus < 3>>
+			<<set $hostage.anus = 3>>
+		<</if>>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		<<set $hostage.counter.mammary += 50>>
+		<<set $hostage.fetishStrength = 65>>
+		<<set $hostage.behavioralQuirk = "none">>
+		<<set $hostage.behavioralFlaw = "odd">>
+		<<set $hostage.sexualFlaw = "apathetic">>
+		<<run App.Medicine.Modification.addScourged($hostage)>>
+		<<run App.Medicine.Modification.addScar($hostage, "anus", "generic")>>
+		<<run App.Medicine.Modification.addScar($hostage, "vagina", "generic")>>
+		collapsing into $his rancid cot, hands on $his <<if $seePreg != 0>>rounded middle<<else>>empty belly<</if>>, sobbing in terror.
+	<<case "Repopulation Focus">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 5>>
+		<<set $hostage.counter.vaginal += 5>>
+		<<set $hostage.counter.anal += 5>>
+		<<set $hostage.counter.mammary += 5>>
+		<<set $hostage.behavioralFlaw = "hates men">>
+		<<set $hostage.sexualFlaw = "hates penetration">>
+		realizing that $he doesn't need to bear children to be happy in life.
+	<<case "Eugenics">>
+		<<if $seeHyperPreg != 1>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.preg = 21>>
+			<<set $hostage.pregType = 8>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = $rivalryDuration>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+			<<set $hostage.vagina = 3>>
+			<<set $hostage.boobs += 100>>
+			<<set $hostage.lactation = 1>>
+			<<set $hostage.lactationDuration = 2>>
+			<<set $hostage.counter.oral += 100>>
+			<<set $hostage.counter.vaginal += 100>>
+			<<set $hostage.counter.anal += 100>>
+			<<set $hostage.counter.mammary += 100>>
+			<<set $hostage.behavioralFlaw = "none">>
+			<<set $hostage.sexualFlaw = "none">>
+			<<set $hostage.behavioralQuirk = "adores men">>
+			<<set $hostage.sexualQuirk = "caring">>
+			<<set $hostage.fetishStrength = 65>>
+			realizing that being pregnant is possibly the best thing in life, as $he cradles $his growing belly.
+		<<else>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.preg = 21>>
+			<<set $hostage.pregType = 40>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = $rivalryDuration>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+			<<set $hostage.vagina = 3>>
+			<<set $hostage.boobs += 300>>
+			<<set $hostage.lactation = 1>>
+			<<set $hostage.lactationDuration = 2>>
+			<<set $hostage.counter.oral += 100>>
+			<<set $hostage.counter.vaginal += 100>>
+			<<set $hostage.counter.anal += 100>>
+			<<set $hostage.counter.mammary += 100>>
+			<<set $hostage.behavioralFlaw = "none">>
+			<<set $hostage.sexualFlaw = "none">>
+			<<set $hostage.behavioralQuirk = "adores men">>
+			<<set $hostage.sexualQuirk = "caring">>
+			<<set $hostage.fetishStrength = 65>>
+			realizing that being pregnant is possibly the best thing in life, as $he attempts to cradle $his enormous belly.
+		<</if>>
+	<<case "Gender Radicalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetishStrength = 65>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "insecure">>
+		<<set $hostage.sexualQuirk = "romantic">>
+		realizing that a woman's place is next to the powerful, not being powerful.
+	<<case "Gender Fundamentalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.anus = 3>>
+		<<set $hostage.counter.anal += 10>>
+		<<if $seeDicks != 0>>
+			<<set $hostage.dick = 1>>
+		<</if>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "adores men">>
+		<<set $hostage.sexualQuirk = "size queen">>
+		<<set $hostage.fetishStrength = 65>>
+		realizing that nothing feels better than a huge dick up $his ass.<<if $seeDicks != 0>> Well, except maybe touching $his new penis while taking it in the ass.<</if>>
+	<<case "Paternalism">>
+		<<set $hostage.trust += 5>>
+		<<set $hostage.devotion += 5>>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		<<set $hostage.counter.mammary += 50>>
+		<<set $hostage.voice = 0>>
+		<<set $hostage.earPiercing = 2>>
+		<<set $hostage.nosePiercing = 2>>
+		<<set $hostage.nipplesPiercing = 1>>
+		<<set $hostage.lipsPiercing = 1>>
+		<<set $hostage.vaginaPiercing = 1>>
+		<<set $hostage.anusPiercing = 0>>
+		<<set $hostage.clitPiercing = 1>>
+		<<set $hostage.eyebrowPiercing = 1>>
+		<<set $hostage.navelPiercing = 2>>
+		<<set $hostage.corsetPiercing = 0>>
+		<<set $hostage.areolaePiercing = 1>>
+		<<set $hostage.tonguePiercing = 1>>
+		<<set $hostage.buttTat = "degradation">>
+		<<set $hostage.vaginaTat = "degradation">>
+		<<set $hostage.shouldersTat = "degradation">>
+		<<set $hostage.armsTat = "degradation">>
+		<<set $hostage.legsTat = "degradation">>
+		<<run App.Medicine.Modification.addScar($hostage, "anus", "generic")>>
+		<<run App.Medicine.Modification.addScar($hostage, "vagina", "generic")>>
+		<<set $hostage.fetishStrength = 65>>
+		<<run App.Medicine.Modification.addScar($hostage, "neck", "surgical", 2)>>
+		screaming as $his throat is prepared for surgery, knowing this will be the last sound $he ever vocalizes.
+	<<case "Degradationism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "advocate">>
+		<<set $hostage.sexualQuirk = "romantic">>
+		<<set $hostage.fetishStrength = 65>>
+		waiting on $his love-bed for $his owner to come and take $him to heaven.
+	<<case "Body Purism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.boobs += 2000>>
+		<<set $hostage.boobsImplant += 2000>>
+		<<if $hostage.boobsImplant > 10000>>
+			<<set $hostage.boobsImplantType = "hyper fillable">>
+		<</if>>
+		<<set $hostage.butt = 7>>
+		<<set $hostage.buttImplant = 4>>
+		<<set $hostage.buttImplantType = "fillable">>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "insecure">>
+		<<set $hostage.sexualFlaw = "crude">>
+		<<set $hostage.fetishStrength = 65>>
+		getting off the surgical table and immediately falling to the floor under the weight of $his immense <<print $hostage.boobs>>cc implants. $He quickly calls out, not for help, but for a dick in $him to celebrate this occasion.
+	<<case "Transformation Fetishism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "fitness">>
+		<<set $hostage.sexualQuirk = "romantic">>
+		<<set $hostage.fetishStrength = 65>>
+		realizing that $his pure body really is gorgeous.
+	<<case "Youth Preferentialism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "adores women">>
+		<<set $hostage.sexualQuirk = "romantic">>
+		<<set $hostage.fetishStrength = 65>>
+		beginning to fall in love with $his loving mother figure.
+	<<case "Maturity Preferentialism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "adores women">>
+		<<set $hostage.sexualQuirk = "romantic">>
+		<<set $hostage.fetishStrength = 65>>
+		beginning to fall in love with $his energetic friend.
+	<<case "Slimness Enthusiasm">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 20>>
+		<<set $hostage.boobs += 1500>>
+		<<set $hostage.butt = 6>>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralFlaw = "gluttonous">>
+		<<set $hostage.sexualQuirk = "size queen">>
+		getting out of bed and immediately falling to the floor under the weight of $his immense <<print $hostage.boobs>>cc breasts. $He quickly calls out, not for help, but for a dick in $him to celebrate this occasion.
+	<<case "Asset Expansionism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "fitness">>
+		<<set $hostage.sexualQuirk = "tease">>
+		realizing that a thin female figure is gorgeous.
+	<<case "Pastoralism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 20>>
+		<<set $hostage.muscles = 50>>
+		<<set $hostage.boobs = 700>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "fitness">>
+		<<set $hostage.sexualQuirk = "romantic">>
+		<<set $hostage.fetishStrength = 65>>
+		stepping onto a scale and gawking out how much weight $he has lost. $He flexes, giggling to $himself, before picking up a weight.
+	<<case "Cummunism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 50>>
+		<<set $hostage.boobs += 1000>>
+		<<set $hostage.butt = 5>>
+		<<set $hostage.fetishStrength = 65>>
+		<<set $hostage.behavioralFlaw = "gluttonous">>
+		<<set $hostage.sexualFlaw = "crude">>
+		getting out of bed and immediately falling to the floor under the weight of $his immense <<print $hostage.boobs>>cc breasts. As $his meaty body jiggles and a veritable flood of milk escapes $his breasts; $he calls out, not for help, but for a dick in $him to celebrate this occasion.
+	<<case "Physical Idealism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 75>>
+		<<set $hostage.boobs += 100>>
+		<<set $hostage.butt = 5>>
+		<<set $hostage.fetishStrength = 65>>
+		<<set $hostage.behavioralFlaw = "gluttonous">>
+		<<set $hostage.sexualFlaw = "crude">>
+		<<set $hostage.counter.vaginal += 35>>
+		<<set $hostage.vagina = 3>>
+		giggling and flirting while $his body is measured and $his weight is taken; 280 tallies adorn $his soft belly. "108 kilos, getting there. Oh don't make that face, there's plenty of food left."
+		<<switch $hostageFetish>>
+		<<case "cumslut">>
+			<<set $hostage.counter.oral += 70>>
+		<<case "buttslut">>
+			<<set $hostage.counter.anal += 21>>
+			<<set $hostage.anus = 3>>
+		<<case "boobs">>
+			<<set $hostage.boobs += 100>>
+			<<set $hostage.boobsImplant += 100>>
+			<<if $hostage.boobsImplant > 2000>>
+				<<set $hostage.boobsImplantType = "advanced fillable">>
+			<</if>>
+		<<case "pregnancy">>
+			<<set $hostage.preg++>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = $hostage.preg>>
+			<<run SetBellySize($hostage)>>
+		<</switch>>
+	<<case "Hedonistic Decadence">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 20>>
+		<<set $hostage.muscles = 50>>
+		<<set $hostage.boobs = 700>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "fitness">>
+		<<set $hostage.sexualQuirk = "romantic">>
+		<<set $hostage.fetishStrength = 65>>
+		stepping onto a scale and gawking out how much weight $he has lost. $He flexes, giggling to $himself, before picking up a weight.
+	<<case "Chattel Religionism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetishStrength = 65>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "cutting">>
+		<<set $hostage.sexualQuirk = "unflinching">>
+		eagerly getting ready to spend some time in the city.
+	<<case "Multiculturalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 25>>
+		<<set $hostage.counter.vaginal += 25>>
+		<<set $hostage.counter.anal += 25>>
+		<<set $hostage.counter.mammary += 25>>
+		<<set $hostage.fetishStrength = 65>>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralFlaw = "devout">>
+		<<set $hostage.sexualQuirk = "caring">>
+		practicing reciting $his prayers from memory, the notion that $he can save your arcology still strong.
+	<<case "Intellectual Dependency">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant+2, 0, 30)>>
+		<<set $hostage.skill.oral = Math.clamp($hostage.skill.oral+5, 0, 100)>>
+		<<set $hostage.skill.entertainment = Math.clamp($hostage.skill.entertainment+5, 0, 100)>>
+		<<set $hostage.skill.anal = Math.clamp($hostage.skill.anal+5, 0, 100)>>
+		<<set $hostage.skill.vaginal = Math.clamp($hostage.skill.vaginal+5, 0, 100)>>
+		<<set $hostage.skill.whoring = Math.clamp($hostage.skill.whoring+5, 0, 100)>>
+		<<set $hostage.fetishStrength = 65>>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "cutting">>
+		<<set $hostage.sexualQuirk = "caring">>
+		diligently reading the Kama Sutra and taking notes.
+	<<case "Slave Professionalism">>
+		<<set $hostage.trust += 5>>
+		<<set $hostage.devotion += 5>>
+		<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant-5, 0, 30)>>
+		<<set $hostage.intelligence = Math.clamp($hostage.intelligence-10, -100, 100)>>
+		<<set $hostage.skill.oral = 0>>
+		<<set $hostage.skill.entertainment = 0>>
+		<<set $hostage.skill.anal = 0>>
+		<<set $hostage.skill.vaginal = 0>>
+		<<set $hostage.skill.whoring = 0>>
+		<<set $hostage.skill.combat = 0>>
+		<<set $hostage.makeup = 4>>
+		<<set $hostage.nails = 5>>
+		<<set $hostage.shoes = "heels">>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		<<set $hostage.vagina = 3>>
+		<<set $hostage.anus = 3>>
+		<<set $hostage.energy += 5>>
+		<<set $hostage.addict += 2>>
+		<<set $hostage.hLength += 7>>
+		<<set $hostage.fetishStrength = 65>>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "confident">>
+		<<set $hostage.sexualQuirk = "perverted">>
+		struggling to solve a puzzle to gain access to the extra large dildo cupboard.
+	<<case "Petite Admiration">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 15>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "advocate">>
+		<<set $hostage.sexualQuirk = "romantic">>
+		<<set $hostage.fetishStrength = 65>>
+		beginning to fall in love with $his big friend.
+	<<case "Statuesque Glorification">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 5>>
+		<<set $hostage.counter.vaginal += 15>>
+		<<set $hostage.counter.anal += 15>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "advocate">>
+		<<set $hostage.sexualQuirk = "caring">>
+		<<set $hostage.fetishStrength = 65>>
+		beginning to fall in love with $his little friend.
+	<<default>>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetishStrength = 65>>
+		<<set $hostage.behavioralFlaw = "none">>
+		<<set $hostage.sexualFlaw = "none">>
+		<<set $hostage.behavioralQuirk = "confident">>
+		<<set $hostage.sexualQuirk = "caring">>
+		eagerly getting ready to spend some time in the city.
+	<</switch>>
+<<elseif $rivalryDuration == 16>>
+	<<switch $rivalryFS>>
+	<<case "Racial Subjugationism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 40>>
+		<<set $hostage.counter.vaginal += 40>>
+		<<set $hostage.counter.anal += 20>>
+		<<set $hostage.fetishStrength = 100>>
+		approaching and pulling $his $arcologies[0].FSSubjugationistRace girlfriends into a pre-sex embrace, a look of wild joy on $his face.
+	<<case "Racial Supremacism">>
+		<<set $hostage.trust += 5>>
+		<<set $hostage.devotion += 5>>
+		<<if $hostage.preg < 20 && $seePreg != 0>>
+			<<set $hostage.preg = 25>>
+			<<set $hostage.pregType = 1>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = $hostage.preg>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+		<</if>>
+		<<if $hostage.vagina < 4>>
+			<<set $hostage.vagina = 4>>
+		<</if>>
+		<<if $hostage.anus < 4>>
+			<<set $hostage.anus = 4>>
+		<</if>>
+		<<set $hostage.sexualFlaw = "self hating">>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		<<set $hostage.counter.mammary += 50>>
+		<<set $hostage.fetishStrength = 100>>
+		/* Make scars worse: */
+		<<run App.Medicine.Modification.addScourged($hostage)>>
+		collapsing into $his rancid cot and curling into the fetal position<<if $seePreg != 0>> around $his pregnant belly<</if>>. $He's audibly begging for someone, anyone, to save $him.
+	<<case "Repopulation Focus">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 5>>
+		<<set $hostage.counter.vaginal += 5>>
+		<<set $hostage.counter.anal += 5>>
+		<<set $hostage.counter.mammary += 5>>
+		convincing a fellow slave to give up _hisU fertility.
+	<<case "Eugenics">>
+		<<if $seeHyperPreg != 1>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.preg = 31>>
+			<<set $hostage.pregType = 8>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = $rivalryDuration>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+			<<set $hostage.vagina = 4>>
+			<<set $hostage.boobs += 100>>
+			<<set $hostage.lactation = 1>>
+			<<set $hostage.lactationDuration = 2>>
+			<<set $hostage.counter.oral += 100>>
+			<<set $hostage.counter.vaginal += 100>>
+			<<set $hostage.counter.anal += 100>>
+			<<set $hostage.counter.mammary += 100>>
+			<<set $hostage.fetishStrength = 100>>
+			<<set $hostage.sexualFlaw = "breeder">>
+			resting in $his bed with $his master's head against $his full-term belly. $He appears to be genuinely happy.
+		<<else>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.preg = 31>>
+			<<set $hostage.pregType = 40>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = $rivalryDuration>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+			<<set $hostage.vagina = 4>>
+			<<set $hostage.boobs += 400>>
+			<<set $hostage.lactation = 1>>
+			<<set $hostage.lactationDuration = 2>>
+			<<set $hostage.counter.oral += 100>>
+			<<set $hostage.counter.vaginal += 100>>
+			<<set $hostage.counter.anal += 100>>
+			<<set $hostage.counter.mammary += 100>>
+			<<set $hostage.fetishStrength = 100>>
+			<<set $hostage.sexualFlaw = "breeder">>
+			<<set $hostage.bellySag = 2, $hostage.bellySagPreg = 2>>
+			orgasming lewdly from the obscene movements happening within $his straining womb. $He looks like $he wants this to never end.
+		<</if>>
+	<<case "Gender Radicalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetishStrength = 100>>
+		embracing $his owner with quite the look of devotion on $his face.
+	<<case "Gender Fundamentalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.anus = 4>>
+		<<set $hostage.counter.anal += 10>>
+		<<if $seeDicks != 0>>
+			<<set $hostage.dick = 3>>
+			<<set $hostage.balls = 2>>
+			<<set $hostage.scrotum = 1>>
+		<</if>>
+		<<set $hostage.fetishStrength = 100>>
+		<<set $hostage.sexualFlaw = "anal addict">>
+		convincing a fellow slave that butt sex is best sex. $He turns around and shows off the enormous dildo shoved up $his ass.
+	<<case "Paternalism">>
+		<<set $hostage.trust += 5>>
+		<<set $hostage.devotion += 5>>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		<<set $hostage.counter.mammary += 50>>
+		<<run eyeSurgery($hostage, "both", "blind")>>
+		<<set $hostage.earPiercing = 2>>
+		<<set $hostage.nosePiercing = 2>>
+		<<set $hostage.nipplesPiercing = 2>>
+		<<set $hostage.lipsPiercing = 1>>
+		<<set $hostage.vaginaPiercing = 1>>
+		<<set $hostage.anusPiercing = 1>>
+		<<set $hostage.clitPiercing = 1>>
+		<<set $hostage.eyebrowPiercing = 2>>
+		<<set $hostage.navelPiercing = 2>>
+		<<set $hostage.corsetPiercing = 1>>
+		<<set $hostage.areolaePiercing = 1>>
+		<<set $hostage.tonguePiercing = 2>>
+		<<set $hostage.lipsTat = "degradation">>
+		<<set $hostage.anusTat = "degradation">>
+		<<set _seed = random(1,100)>>
+		<<if _seed < 40>>
+			<<run App.Medicine.Modification.addScar($hostage, "left breast", "burn", 2)>>
+		<<elseif _seed < 80>>
+			<<run App.Medicine.Modification.addScar($hostage, "right breast", "burn", 2)>>
+		<<else>>
+			<<run App.Medicine.Modification.addScar($hostage, "left breast", "burn", 2)>>
+			<<run App.Medicine.Modification.addScar($hostage, "right breast", "burn", 2)>>
+			<<run App.Medicine.Modification.addScar($hostage, "belly", "burn", 2)>>
+		<</if>>
+		/* Next scene will mention nasty surgical arm scars, but immediately amputate, so adding them here. */
+		<<run App.Medicine.Modification.addScar($hostage, "left upper arm", "surgical", 2)>>
+		<<run App.Medicine.Modification.addScar($hostage, "right upper arm", "surgical", 2)>>
+		<<run App.Medicine.Modification.addScar($hostage, "left thigh", "surgical", 2)>>
+		<<run App.Medicine.Modification.addScar($hostage, "right thigh", "surgical", 2)>>
+		<<set $hostage.fetishStrength = 100>>
+		strapped to an operating table, eyes wide with terror, as a pair of syringes approach them.
+	<<case "Degradationism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetishStrength = 100>>
+		cheerfully talking about the future with $his owner. The video ends on $him asking for an <<if $seePreg != 0>>impregnation<<else>>elaborate<</if>> ceremony when they get married.
+	<<case "Body Purism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.boobs += 2000>>
+		<<set $hostage.boobsImplant += 2000>>
+		<<if $hostage.boobsImplant > 10000>>
+			<<set $hostage.boobsImplantType = "hyper fillable">>
+		<</if>>
+		<<set $hostage.fetishStrength = 100>>
+		<<set $hostage.sexualFlaw = "breast growth">>
+		getting $his taut <<print $hostage.boobs>>cc tits massaged by a pair of flat slaves. $He is rambling on about how much happier $he is with $his massive implants than when $he was flat like them.
+	<<case "Transformation Fetishism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetishStrength = 100>>
+		publicly showing off $his pure and flawless body, a look of complete joy on $his face.
+	<<case "Youth Preferentialism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.fetishStrength = 100>>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		blushing happily as $his MILF lover discusses their future marriage.
+	<<case "Maturity Preferentialism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.fetishStrength = 100>>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		blushing happily as $he discusses $his future marriage to $his young lover.
+	<<case "Slimness Enthusiasm">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 50>>
+		<<set $hostage.boobs += 1500>>
+		<<set $hostage.butt = 7>>
+		<<set $hostage.fetishStrength = 100>>
+		<<set $hostage.sexualFlaw = "breast growth">>
+		getting $his immobilizing <<print $hostage.boobs>>cc breasts massaged by a pair of flat slaves. $He is rambling on about how much happier $he is with $his massive tits and ass than when $he was flat like them.
+	<<case "Asset Expansionism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		publicly showing off $his thin, sleek body, a look of complete joy on $his face.
+	<<case "Pastoralism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 0>>
+		<<set $hostage.muscles = 75>>
+		<<set $hostage.boobs = 400>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetishStrength = 100>>
+		bench pressing a rather large dumbbell in a strong<<= $woman>> contest. $He is overjoyed when $he places first.
+	<<case "Cummunism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 100>>
+		<<set $hostage.boobs += 100>>
+		<<set $hostage.butt = 6>>
+		<<set $hostage.fetishStrength = 100>>
+		<<set $hostage.sexualFlaw = "breast growth">>
+		getting $his immobilizing <<print $hostage.boobs>>cc breasts, massive ass, and cow-like body massaged by a trio of slim slaves. $He is rambling on about how much happier $he is with $his massive assets than when $he was thin like them.
+	<<case "Physical Idealism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 100>>
+		<<set $hostage.boobs += 100>>
+		<<set $hostage.butt = 6>>
+		<<set $hostage.fetishStrength = 100>>
+		<<set $hostage.counter.vaginal += 40>>
+		<<set $hostage.vagina = 4>>
+		giggling and flirting as $his flabby body is groped and fondled while $his weight is taken; $his stomach is so large you can't make out how many tallies adorn it any longer. "128 kilos, pretty big now, aren't we?"
+		<<switch $hostageFetish>>
+		<<case "cumslut">>
+			<<set $hostage.counter.oral += 70>>
+		<<case "buttslut">>
+			<<set $hostage.counter.anal += 35>>
+			<<set $hostage.anus = 3>>
+		<<case "boobs">>
+			<<set $hostage.boobs += 100>>
+			<<set $hostage.boobsImplant += 100>>
+			<<if $hostage.boobsImplant > 2000>>
+				<<set $hostage.boobsImplantType = "advanced fillable">>
+			<</if>>
+		<<case "pregnancy">>
+			<<set $hostage.preg++>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek++>>
+			<<run SetBellySize($hostage)>>
+		<</switch>>
+	<<case "Hedonistic Decadence">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.weight = 0>>
+		<<set $hostage.muscles = 75>>
+		<<set $hostage.boobs = 400>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetishStrength = 100>>
+		bench pressing a rather large dumbbell in a strong<<= $woman>> contest. $He is overjoyed when $he places first.
+	<<case "Chattel Religionism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetishStrength = 100>>
+		chatting with a group of fresh slaves, explaining how nice it is to live in this arcology.
+	<<case "Multiculturalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		<<set $hostage.counter.mammary += 50>>
+		<<set $hostage.fetishStrength = 100>>
+		<<set $hostage.sexualFlaw = "neglectful">>
+		finishing a sermon how to achieve happiness. $He smiles at the camera and says it's not too late to convert.
+	<<case "Intellectual Dependency">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant+2, 0, 30)>>
+		<<set $hostage.skill.oral = Math.clamp($hostage.skill.oral+5, 0, 100)>>
+		<<set $hostage.skill.entertainment = Math.clamp($hostage.skill.entertainment+5, 0, 100)>>
+		<<set $hostage.skill.anal = Math.clamp($hostage.skill.anal+5, 0, 100)>>
+		<<set $hostage.skill.vaginal = Math.clamp($hostage.skill.vaginal+5, 0, 100)>>
+		<<set $hostage.skill.whoring = Math.clamp($hostage.skill.whoring+5, 0, 100)>>
+		<<set $hostage.fetishStrength = 100>>
+		giving a lesson to a group of fresh slaves on what is expected of them in this arcology.
+	<<case "Slave Professionalism">>
+		<<set $hostage.trust += 5>>
+		<<set $hostage.devotion += 5>>
+		<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant-5, 0, 30)>>
+		<<set $hostage.intelligence = Math.clamp($hostage.intelligence-10, -100, 100)>>
+		<<set $hostage.counter.oral += 70>>
+		<<set $hostage.counter.vaginal += 40>>
+		<<set $hostage.counter.anal += 30>>
+		<<set $hostage.energy += 5>>
+		<<set $hostage.addict += 2>>
+		<<set $hostage.fetishStrength = 100>>
+		<<set $hostage.tonguePiercing = 1>>
+		<<set $hostage.stampTat = "'Princess' is tattooed over $his rear.">>
+		<<set $hostage.hLength += 7>>
+		<<set $hostage.lips = Math.clamp($hostage.lips+5, 0, 100)>>
+		giggling and chatting with a group of fellow bimbos as they try to entice a quick fuck from passersby.
+		<<if $seePreg != 0>>
+			<<set $hostage.preg = 8>>
+			<<set $hostage.pregType = 1>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = 8>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+			A very pregnant slut pokes at the curve of $his belly and declares $him preggo, to which $he waves it off as "obviou<<s>>ly having <<s>>ucked too much dick".
+		<</if>>
+	<<case "Petite Admiration">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.fetishStrength = 100>>
+		<<set $hostage.counter.oral += 15>>
+		<<set $hostage.counter.vaginal += 7>>
+		<<set $hostage.counter.anal += 7>>
+		blushing happily as $his giant lover discusses their future marriage.
+	<<case "Statuesque Glorification">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.fetishStrength = 100>>
+		<<set $hostage.counter.oral += 7>>
+		<<set $hostage.counter.vaginal += 15>>
+		<<set $hostage.counter.anal += 15>>
+		blushing happily as $he discusses $his future marriage to $his little lover.
+	<<default>>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.vaginal += 1>>
+		<<set $hostage.fetishStrength = 100>>
+		chatting with a group of fresh slaves, explaining how nice it is to live in this arcology.
+	<</switch>>
+<<elseif $rivalryDuration == 21>>
+	<<switch $rivalryFS>>
+	<<case "Racial Subjugationism">>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		giving an interview. $He gushes over how great $arcologies[0].FSSubjugationistRace people are and how terrible it is that some people believe them barely human.
+	<<case "Racial Supremacism">>
+		<<if $hostage.preg < 35 && $seePreg != 0>>
+			<<set $hostage.preg = 32>>
+			<<set $hostage.pregType = 1>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = $hostage.preg>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+		<</if>>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		<<set $hostage.counter.mammary += 50>>
+		<<set $hostage.lactation = 1>>
+		<<set $hostage.lactationDuration = 2>>
+		<<set $hostage.fetish = "mindbroken">>
+		<<set $hostage.fetishStrength = 10>>
+		/* Make scars worse: */
+		<<run App.Medicine.Modification.addScourged($hostage)>>
+		<<run App.Medicine.Modification.addScar($hostage, "left cheek", "generic", 3)>>
+		<<run App.Medicine.Modification.addScar($hostage, "right cheek", "generic", 3)>>
+		<<run App.Medicine.Modification.addScar($hostage, "left lower arm", "generic", 2)>>
+		<<run App.Medicine.Modification.addScar($hostage, "right lower arm", "generic", 3)>>
+		with a pair of slavers threatening <<if $seePreg != 0>>$his pregnancy<<else>>$him<</if>>. $He keeps blocking the blows, again and again, until $he can barely stay upright. With a final, brutal kick to the head, $he falls to the floor, unmoving. Several seconds later, $he struggles upright, a blank expression across $his bloodied face.
+	<<case "Repopulation Focus">>
+		<<set $hostage.counter.oral += 5>>
+		<<set $hostage.counter.vaginal += 5>>
+		<<set $hostage.counter.anal += 5>>
+		<<set $hostage.counter.mammary += 5>>
+		giving an interview. $He gushes over how important it is for only the best of society to reproduce, and how it is an atrocity that some people bring so many wasted lives into being.
+	<<case "Eugenics">>
+		<<if $seeHyperPreg != 1>>
+			<<set $hostage.preg = 1>>
+			<<set $hostage.pregType = 8>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = 1>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+			<<set $hostage.vagina = 5>>
+			<<if $hostage.counter.births < 1>>
+				<<set $hostage.counter.births = 1>>
+				<<set $hostage.counter.birthsTotal += 1>>
+			<</if>>
+			<<set $hostage.counter.oral += 100>>
+			<<set $hostage.counter.vaginal += 100>>
+			<<set $hostage.counter.anal += 100>>
+			<<set $hostage.counter.mammary += 100>>
+			<<set $hostage.bellySag = 2, $hostage.bellySagPreg = 2>>
+		<<else>>
+			<<set $hostage.preg = 1>>
+			<<set $hostage.pregType = 40>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = 1>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+			<<set $hostage.vagina = 5>>
+			<<if $hostage.counter.births < 50>>
+				<<set $hostage.counter.births = 20>>
+				<<set $hostage.counter.birthsTotal += 20>>
+			<</if>>
+			<<set $hostage.counter.oral += 100>>
+			<<set $hostage.counter.vaginal += 100>>
+			<<set $hostage.counter.anal += 100>>
+			<<set $hostage.counter.mammary += 100>>
+			<<set $hostage.bellySag = 5, $hostage.bellySagPreg = 5>>
+		<</if>>
+		giving an interview. $He gushes over how important it is for women to conceive and carry as many children as they can, as well as how terrible it is that some people strip away a woman's most important purpose. Before $he can continue, $his water breaks and $he drops to the floor. You close the video in disgust of what's coming.
+	<<case "Gender Radicalism">>
+		<<set $hostage.counter.vaginal += 1>>
+		<<if $seePreg != 0>>
+			<<set $hostage.preg = 8>>
+			<<set $hostage.pregType = 1>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = 8>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+		<</if>>
+		giving an interview. $He gushes over how great it feels knowing that someone is always watching out for $his safety and health as a traditional $woman, as well as how terrible it is that some people want to blur the lines between the genders.
+	<<case "Gender Fundamentalism">>
+		<<set $hostage.counter.anal += 10>>
+		<<if $seeDicks != 0>>
+			<<set $hostage.dick = 4>>
+			<<set $hostage.balls = 4>>
+			<<set $hostage.scrotum = 2>>
+		<</if>>
+		giving an interview. $He gushes over how great it feels being fucked in the rear and how $he never has to worry about pregnancy that way. $He carries on about how terrible it is that some people want to deny people this great sensation.
+	<<case "Paternalism">>
+		<<set $hostage.trust -= 5>>
+		<<set $hostage.devotion -= 5>>
+		<<set $hostage.counter.oral += 50>>
+		<<set $hostage.counter.vaginal += 50>>
+		<<set $hostage.counter.anal += 50>>
+		<<set $hostage.counter.mammary += 50>>
+		<<run removeLimbs($hostage, "all")>>
+		<<set $hostage.earPiercing = 2>>
+		<<set $hostage.nosePiercing = 2>>
+		<<set $hostage.nipplesPiercing = 2>>
+		<<set $hostage.lipsPiercing = 2>>
+		<<set $hostage.vaginaPiercing = 2>>
+		<<set $hostage.anusPiercing = 2>>
+		<<set $hostage.clitPiercing = 2>>
+		<<set $hostage.eyebrowPiercing = 2>>
+		<<set $hostage.navelPiercing = 2>>
+		<<set $hostage.corsetPiercing = 1>>
+		<<set $hostage.areolaePiercing = 1>>
+		<<set $hostage.tonguePiercing = 2>>
+		<<set $hostage.fetish = "mindbroken">>
+		<<set $hostage.fetishStrength = 10>>
+		<<set _seed = random(1,100)>>
+		<<if _seed < 40>>
+			<<run App.Medicine.Modification.addScar($hostage, "anus", "burn", 2)>>
+		<<elseif _seed < 80>>
+			<<run App.Medicine.Modification.addScar($hostage, "vagina", "burn", 2)>>
+		<<else>>
+			<<run App.Medicine.Modification.addScar($hostage, "anus", "burn", 2)>>
+			<<run App.Medicine.Modification.addScar($hostage, "vagina", "burn", 2)>>
+			<<run App.Medicine.Modification.addScar($hostage, "left cheek", "burn", 2)>>
+		<</if>>
+		strapped to an operating table, with surgical marks on $his bare arms and legs. $His face contorts into absolute horror as $he hears the running saw lowering towards $his right arm. As it makes contact, $his mouth opens wide in a silent scream, ceasing only once $his arm is severed completely. As it comes into contact with $his other arm, $his silent screams stop completely, $his mind having completely shattered. You end the video early, disgusted by what you just saw.
+	<<case "Degradationism">>
+		<<set $hostage.counter.vaginal += 1>>
+		<<if $seePreg != 0>>
+			<<set $hostage.preg = 14>>
+			<<set $hostage.pregType = 1>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek = 14>>
+			<<set WombImpregnate($hostage, $hostage.pregType, 0, $hostage.preg)>>
+			<<run SetBellySize($hostage)>>
+		<</if>>
+		and $his owner at the altar during their wedding.
+		<<if $seePreg != 0>>
+			It seems $he couldn't wait, since $his belly already shows signs of an early pregnancy.
+		<</if>>
+	<<case "Body Purism">>
+		<<set $hostage.boobs = 50000>>
+		<<set $hostage.boobsImplant = 45000>>
+		<<set $hostage.boobsImplantType = "hyper fillable">>
+		giving an interview. $He gushes over how great it feels being more silicone than $girl and how terrible it is that some people want to deny girls this pleasure.
+	<<case "Transformation Fetishism">>
+		<<set $hostage.counter.vaginal += 1>>
+		giving an interview. $He gushes over how great it feels being implant free and how terrible some people are to force inhumane implants into their slaves.
+	<<case "Youth Preferentialism">>
+		<<set $hostage.counter.oral += 20>>
+		<<set $hostage.counter.vaginal += 20>>
+		<<set $hostage.counter.anal += 20>>
+		giving an interview alongside $his older wife. $He gushes over how great it feels being in love and how, if some people had their way, $he'd have never gotten to experience this bliss.
+	<<case "Maturity Preferentialism">>
+		<<set $hostage.counter.oral += 20>>
+		<<set $hostage.counter.vaginal += 20>>
+		<<set $hostage.counter.anal += 20>>
+		giving an interview alongside $his young wife. $He gushes over how great it feels being in love and how, if some people had their way, $he'd have never gotten to experience this bliss.
+	<<case "Slimness Enthusiasm">>
+		<<set $hostage.boobs = 50000>>
+		<<set $hostage.weight = 100>>
+		<<set $hostage.butt = 9>>
+		giving an interview. $He gushes over how great it feels being more breast than $girl and how terrible it is that some people want to keep girls anorexic toothpicks.
+	<<case "Asset Expansionism">>
+		<<set $hostage.counter.vaginal += 1>>
+		giving an interview. $He gushes over how great it feels being more thin and fit and how terrible it is that some people want to keep girls nothing more than bloated cows.
+	<<case "Pastoralism">>
+		<<set $hostage.muscles = 100>>
+		<<set $hostage.counter.vaginal += 1>>
+		giving an interview. $He gushes over how great it feels being a chiseled goddess and how terrible it is that some people want to keep girls as obese<<if $seePreg != 0>>, pregnant,<</if>> milky cows.
+	<<case "Cummunism">>
+		<<set $hostage.boobs = 24300>>
+		<<set $hostage.weight = 100>>
+		giving an interview. $He gushes over how great it feels being so soft and how happy $he is to be feeding $his people. $He continues with how terrible it is that some people want slaves to be hard and sinewy instead of being motherly providers.
+	<<case "Physical Idealism">>
+		<<set $hostage.weight = 150>>
+		<<set $hostage.boobs += 100>>
+		<<set $hostage.butt = 6>>
+		<<set $hostage.fetishStrength = 100>>
+		<<set $hostage.counter.vaginal += 60>>
+		<<set $hostage.vagina = 5>>
+		moaning as $he shoves food into $his mouth with one hand and fondles $his lover's body with the other. "My apologies. I don't have $his weight for you this week. You see, $he broke the scale when $he stepped on it. Well, I suppose that tells you plenty. Though I have another surprise for you! <<= SlaveFullName($hostage)>>, would you like to tell 'em yourself?" $He shouts, spewing crumbs everywhere,
+		<<switch $hostageFetish>>
+		<<case "submissive">>
+			"I haven't orgasmed all week, but I've made sure to bring every one of my lovers to climax! That's what I love most, seeing the look of satisfaction on their faces as they blow their loads deep into me!"
+			<<set $hostage.sexualFlaw = "neglectful">>
+		<<case "cumslut">>
+			"I suck dicks all day and have cum mixed in with my many meals but it still isn't enough! If I could, I'd drink cum till I burst!"
+			<<set $hostage.counter.oral += 70>>
+			<<set $hostage.sexualFlaw = "cum addict">>
+		<<case "humiliation">>
+			"I love taking part in orgies and being the center of attention! You can't possible know what it feels like to pleasure fifteen guys at once!"
+			<<set $hostage.sexualFlaw = "attention whore">>
+		<<case "buttslut">>
+			"I love it up the butt! I get assfucked all day long and when I don't have a dick in my rear, I have the biggest dildo we've got rammed up it!"
+			<<set $hostage.counter.anal += 45>>
+			<<set $hostage.anus = 4>>
+			<<set $hostage.sexualFlaw = "anal addict">>
+		<<case "boobs">>
+			"I love my big boobs and get off watching them get bigger!"
+			<<set $hostage.boobs += 100>>
+			<<set $hostage.boobsImplant += 100>>
+			<<if $hostage.boobsImplant > 2000>>
+				<<set $hostage.boobsImplantType = "advanced fillable">>
+			<</if>>
+			<<set $hostage.sexualFlaw = "breast growth">>
+		<<case "sadist">>
+			"Nothing turns me on more than crushing my lovers' nuts! That or maybe whipping or cutting them... Or anything that makes them bleed..."
+			<<set $hostage.sexualFlaw = "malicious">>
+		<<case "masochist">>
+			"I love just stuffing my face with the fattiest foods around! I'm going to have a heart attack and I can't wait since I am such a disgusting slut and I deserve this!"
+			<<set $hostage.sexualFlaw = "self hating">>
+		<<case "dom">>
+			"Nothing turns me on more than forcing new slaves to service me! I love their reactions as they struggle against me!"
+			<<set $hostage.sexualFlaw = "abusive">>
+		<<case "pregnancy">>
+			"I'm preggers you know! $hostage.preg weeks along now and you know what? I always want to be pregnant! Always!"
+			<<set $hostage.preg++>>
+			<<set $hostage.pregKnown = 1>>
+			<<set $hostage.pregWeek++>>
+			<<run SetBellySize($hostage)>>
+			<<set $hostage.sexualFlaw = "breeder">>
+		<</switch>>
+	<<case "Hedonistic Decadence">>
+		<<set $hostage.muscles = 100>>
+		<<set $hostage.counter.vaginal += 1>>
+		giving an interview. $He gushes over how great it feels being a chiseled goddess and how terrible it is that some people want to keep girls obese, slovenly wastes of flesh.
+	<<case "Chattel Religionism">>
+		<<set $hostage.counter.vaginal += 1>>
+		giving an interview. $He gushes over how great it is to experience all manners of class and culture, both physically and spiritually.
+	<<case "Multiculturalism">>
+		<<set $hostage.counter.oral += 100>>
+		<<set $hostage.counter.vaginal += 100>>
+		<<set $hostage.counter.anal += 100>>
+		<<set $hostage.counter.mammary += 100>>
+		giving a public sermon. $He declares that if it would save the nonbelievers, $he would gladly take every one of their dicks into $his body; at once, if $he were able to.
+	<<case "Intellectual Dependency">>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 10>>
+		<<set $hostage.counter.anal += 10>>
+		<<set $hostage.intelligenceImplant = 30>>
+		<<set $hostage.skill.oral = 100>>
+		<<set $hostage.skill.entertainment = 100>>
+		<<set $hostage.skill.anal = 100>>
+		<<set $hostage.skill.vaginal = 100>>
+		<<set $hostage.skill.whoring = 100>>
+		sealing a business deal for $his owner. Buy the end of the meeting, the client is thoroughly exhausted from $his skill 'negotiations' and eager to listen to the terms entrusted to $him.
+	<<case "Slave Professionalism">>
+		<<set $hostage.intelligenceImplant = 0>>
+		<<set $hostage.intelligence = -100>>
+		<<set $hostage.counter.oral += 100>>
+		<<set $hostage.counter.vaginal += 100>>
+		<<set $hostage.counter.anal += 100>>
+		<<set $hostage.energy = 100>>
+		<<set $hostage.lips = Math.clamp($hostage.lips+5, 0, 100)>>
+		<<if $hostage.preg > 0>>
+			<<set $hostage.preg++>>
+			<<set $hostage.pregWeek++>>
+			<<run SetBellySize($hostage)>>
+		<</if>>
+		<<set $hostage.sexualFlaw = "attention whore">>
+		<<set $hostage.hLength += 7>>
+		<<set $hostage.career = "a bimbo">>
+		taking part in a giant orgy. Several attempts are made to get $his attention, but $his body is ruled by $his libido and $he is deaf to the world. The video is several hours long.
+	<<case "Petite Admiration">>
+		<<set $hostage.counter.oral += 40>>
+		<<set $hostage.counter.vaginal += 20>>
+		<<set $hostage.counter.anal += 20>>
+		giving an interview alongside $his twice $his size wife. $He gushes over how great it feels being in love and how, if some people had their way, $he'd have never gotten to experience this bliss.
+	<<case "Statuesque Glorification">>
+		<<set $hostage.counter.oral += 10>>
+		<<set $hostage.counter.vaginal += 30>>
+		<<set $hostage.counter.anal += 30>>
+		giving an interview alongside $his half $his size wife. $He gushes over how great it feels being in love and how, if some people had their way, $he'd have never gotten to experience this bliss.
+	<<default>>
+		<<set $hostage.counter.vaginal += 1>>
+		giving an interview. $He gushes over how great it is to experience all manners of class and culture, both physically and spiritually.
+	<</switch>>
+<<elseif $rivalryDuration >= 30>>
+	<<set $hostageAnnounced = 0>>
+	<<switch $rivalryFS>>
+	<<case "Racial Subjugationism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him and $his lovers someplace far away. Someplace you'll never find them. Bet tha"-You end the call.
+	<<case "Racial Supremacism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, the poor bitch died <<if $seePreg != 0>>trying to give birth to $his baby<<else>>from having too much 'fun' with $his clients<</if>>. We had lots of room in the clinic too, but slaves like $him aren't worth the expenses, you know? I should find some more people you knew, keep our little game goi"-You end the call.
+	<<case "Repopulation Focus">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him far away. Someplace you'll never find $him. Bet tha"-You end the call.
+	<<case "Eugenics">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him far away. Someplace you'll never find $him. Bet tha"-You end the call.
+	<<case "Gender Radicalism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him far away. I'll miss $him, of course, but there is no way I'd let you have $him. Bet that piss"-You end the call.
+	<<case "Gender Fundamentalism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, $he took a dick a little too big for $his ass and ruined $his sphincter. $He's off, someplace far away, recovering. But I'll never tell you where, bet that piss"-You end the call.
+	<<case "Paternalism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, $he got kicked around just a little too much. We had lots of fun with $him, before $he broke of course... Say, do you have anyone else you love, or even were familiar with? I should acquire them, keep our little game goi"-You end the call.
+	<<case "Degradationism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him far away. I'll miss $him, of course, but there is no way I'd let you have $him. I'll keep $him saf"-You end the call.
+	<<case "Body Purism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, apparently implants can be too big. $His breasts literally popped, couldn't save $him though. Definitely going to miss playing with those balloons. I should hunt down more people you knew, keep our little game goi"-You end the call.
+	<<case "Transformation Fetishism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him far away. Someplace you'll never find $him. Bet tha"-You end the call.
+	<<case "Youth Preferentialism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him and $his lover someplace far away. Someplace you'll never find them. Bet tha"-You end the call.
+	<<case "Maturity Preferentialism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him and $his lover someplace far away. Someplace you'll never find them. Bet tha"-You end the call.
+	<<case "Slimness Enthusiasm">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, apparently those growth drugs have quite the side effects. Pretty much had cancer everywhere. Definitely going to miss playing with those milkbags, though. I should hunt down more people you knew, keep our little game goi"-You end the call.
+	<<case "Asset Expansionism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him far away. Someplace you'll never find $him. Bet tha"-You end the call.
+	<<case "Pastoralism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him far away. I'll miss $him, of course, but there is no way I'd let you have $him. Bet that piss"-You end the call.
+	<<case "Physical Idealism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, apparently being that fat isn't good for your heart, who knew? Definitely going to miss playing with those folds; $he jiggled so much when I fucked $him. I should hunt down more people you knew, fatten them up, keep our little game goi"-You end the call.
+	<<case "Hedonistic Decadence">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him far away. I'll miss $him, of course, but there is no way I'd let you have $him. Bet that piss"-You end the call.
+	<<case "Chattel Religionism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him far away. Someplace you'll never find $him. Bet tha"-You end the call.
+	<<case "Multiculturalism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, $he decided to martyr $himself for your arcology's salvation. Got fucked till $his body gave out. Of course I enjoyed $him in $his final moments, and don't worry, $he died smiling. I should hunt down more people you knew, keep our little game goi"-You end the call.
+	<<case "Intellectual Dependency">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, $he ran the math and determined that the odds of me keeping $him through this were too low and that $he should go into hiding until it's safe to come back. $He's a well trained $girl now, so I trust $him, and even if I did lose this war, it'd still be worth taking $his advice just to deny you your prize. Bet tha"-You end the call.
+	<<case "Slave Professionalism">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, bitch was so dumb $he couldn't understand the warning signs, rushed down some slick stairs for a fuck and broke $his neck. $He was fun, no denying that. Died the way $he lived, thinking of sucking cock. Not unlike you, act"-You end the call.
+	<<case "Petite Admiration">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him and $his lover someplace far away. Someplace you'll never find them. Bet tha"-You end the call.
+	<<case "Statuesque Glorification">>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him and $his lover someplace far away. Someplace you'll never find them. Bet tha"-You end the call.
+	<<default>>
+		"Looking for <<= SlaveFullName($hostage)>>? Too bad, I couldn't bear to think of you ever getting your rotten little hands on $him, so I sent $him far away. Someplace you'll never find $him. Bet tha"-You end the call.
+	<</switch>>
+<<else>>
+	<<set _hostageAction = []>>
+	<<switch $rivalryFS>>
+	<<case "Racial Subjugationism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 10>>
+			<<set $hostage.counter.vaginal += 10>>
+			<<set $hostage.counter.anal += 10>>
+			<<set _hostageAction.push("struggling to escape the grasp of a pair of $arcologies[0].FSSubjugationistRace girls.")>>
+			<<set _hostageAction.push("struggling to avoid giving an $arcologies[0].FSSubjugationistRace girl oral.")>>
+			<<set _hostageAction.push("screaming as $he gets fucked by an $arcologies[0].FSSubjugationistRace girl.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 10>>
+			<<set $hostage.counter.vaginal += 10>>
+			<<set $hostage.counter.anal += 10>>
+			<<set _hostageAction.push("crying gently while a pair of $arcologies[0].FSSubjugationistRace girls fondle $him.")>>
+			<<set _hostageAction.push("reluctantly giving an $arcologies[0].FSSubjugationistRace girl oral.")>>
+			<<set _hostageAction.push("crying as $he gets fucked by an $arcologies[0].FSSubjugationistRace girl.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 20>>
+			<<set $hostage.counter.vaginal += 20>>
+			<<set $hostage.counter.anal += 20>>
+			<<set _hostageAction.push("fooling around with a pair of $arcologies[0].FSSubjugationistRace girls.")>>
+			<<set _hostageAction.push("giving an $arcologies[0].FSSubjugationistRace girl oral.")>>
+			<<set _hostageAction.push("panting as $he gets fucked by an $arcologies[0].FSSubjugationistRace girl.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 40>>
+			<<set $hostage.counter.vaginal += 40>>
+			<<set $hostage.counter.anal += 20>>
+			<<set _hostageAction.push("having a threesome with a pair of $arcologies[0].FSSubjugationistRace girls.")>>
+			<<set _hostageAction.push("eagerly giving an $arcologies[0].FSSubjugationistRace girl oral.")>>
+			<<set _hostageAction.push("moaning as $he gets fucked by an $arcologies[0].FSSubjugationistRace girl.")>>
+		<<else>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set _hostageAction.push("making love to $his favorite two $arcologies[0].FSSubjugationistRace girls.")>>
+			<<set _hostageAction.push("enthusiastically giving an $arcologies[0].FSSubjugationistRace girl oral.")>>
+			<<set _hostageAction.push("enthusiastically wiggling $his rear as $he gets fucked by an $arcologies[0].FSSubjugationistRace girl.")>>
+		<</if>>
+	<<case "Racial Supremacism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust += 5>>
+			<<set $hostage.devotion += 5>>
+			<<set $hostage.weight -= 5>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<set _hostageAction.push("desperately struggling in a stockade, alongside several other $arcologies[0].FSSupremacistRace slaves, while a man tries to get it in $him.")>>
+			<<set _hostageAction.push("struggling against $his bindings in a line of $arcologies[0].FSSupremacist slaves, having $his bruised holes checked.")>>
+			<<set _hostageAction.push("weeping as a dispassionate slave assayer goes down a line of $arcologies[0].FSSupremacist slaves, reciting prices.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust += 5>>
+			<<set $hostage.devotion += 5>>
+			<<set $hostage.weight -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<set _hostageAction.push("meekly taking it in the cunt by a man while bound in a stockade alongside several other $arcologies[0].FSSupremacistRace girls.")>>
+			<<set _hostageAction.push("tied up with a defeated look in a line of $arcologies[0].FSSupremacist slaves, having $his stretched holes checked.")>>
+			<<set _hostageAction.push("crying as a dispassionate slave assayer goes down a line of $arcologies[0].FSSupremacist slaves, reciting prices.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust += 5>>
+			<<set $hostage.devotion += 5>>
+			<<set $hostage.weight -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<if $seePreg != 0>>
+				<<set _hostageAction.push("moaning slightly as a man pounds $his pussy. $His belly has a notable roundness to it, most likely the spawn of a non-<<print $arcologies[0].FSSupremacistRace>> man.")>>
+				<<set _hostageAction.push("tied up with a downtrodden look in a line of $arcologies[0].FSSupremacist slaves, having $his new pregnancy examined.")>>
+			<<else>>
+				<<set _hostageAction.push("moaning slightly as a man pounds $his pussy.")>>
+				<<set _hostageAction.push("tied up with a downtrodden look in a line of $arcologies[0].FSSupremacist slaves, having $his overworked holes examined.")>>
+			<</if>>
+			<<set _hostageAction.push("silently staring at $his feet as a dispassionate slave assayer goes down a line of $arcologies[0].FSSupremacist slaves, reciting prices.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust += 5>>
+			<<set $hostage.devotion += 5>>
+			<<set $hostage.weight -= 5>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<if $seePreg != 0>>
+				<<set _hostageAction.push("barely caring as a non-<<= $arcologies[0].FSSupremacistRace>> man pounds $his pregnant pussy. $His belly is noticeably distended by a non-<<= $arcologies[0].FSSupremacistRace>> baby.")>>
+				<<set _hostageAction.push("nearly comatose in a line of $arcologies[0].FSSupremacist slaves, having $his pregnancy and destroyed holes examined")>>
+			<<else>>
+				<<set _hostageAction.push("barely caring as a non-<<= $arcologies[0].FSSupremacistRace>> man pounds $his overused holes.")>>
+				<<set _hostageAction.push("nearly comatose in a line of $arcologies[0].FSSupremacist slaves, having $his destroyed holes examined")>>
+			<</if>>
+			<<set _hostageAction.push("standing silently as a dispassionate slave assayer goes down a line of $arcologies[0].FSSupremacist slaves, reciting prices.")>>
+		<<else>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<if $seePreg != 0>>
+				<<set _hostageAction.push("blankly getting pounded by several non-<<print $arcologies[0].FSSupremacistRace>> men as they fondle $his breasts, butt, and full-term pregnancy.")>>
+				<<set _hostageAction.push("blankly standing in a line of $arcologies[0].FSSupremacist slaves, having $his advanced pregnancy and broken holes examined.")>>
+			<<else>>
+				<<set _hostageAction.push("blankly getting pounded by several non-<<print $arcologies[0].FSSupremacistRace>> men as they fondle $his breasts and butt.")>>
+				<<set _hostageAction.push("blankly standing in a line of $arcologies[0].FSSupremacist slaves, having $his broken holes examined.")>>
+			<</if>>
+			<<set _hostageAction.push("blankly standing in place as a dispassionate slave assayer goes down a line of $arcologies[0].FSSupremacist slaves, reciting prices.")>>
+		<</if>>
+	<<case "Repopulation Focus">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 5>>
+			<<set $hostage.counter.vaginal += 5>>
+			<<set $hostage.counter.anal += 5>>
+			<<set $hostage.counter.mammary += 5>>
+			<<set _hostageAction.push("desperately trying to avoid reading the reports on pregnancy in your arcology.")>>
+			<<set _hostageAction.push("crying while gently rubbing $his infertile stomach.")>>
+			<<set _hostageAction.push("sobbing as an autosurgery reads out the details of $his infertility.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 5>>
+			<<set $hostage.counter.vaginal += 5>>
+			<<set $hostage.counter.anal += 5>>
+			<<set $hostage.counter.mammary += 5>>
+			<<set _hostageAction.push("carefully reading the reports on pregnancy in your arcology.")>>
+			<<set _hostageAction.push("staring at $his midriff, contemplating why someone would take $his fertility away.")>>
+			<<set _hostageAction.push("pondering the health benefits being given to $him.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 5>>
+			<<set $hostage.counter.vaginal += 5>>
+			<<set $hostage.counter.anal += 5>>
+			<<set $hostage.counter.mammary += 5>>
+			<<set _hostageAction.push("gently crying while reading the reports on pregnancy in your arcology.")>>
+			<<set _hostageAction.push("relaxing, knowing $he will never deal with menstruation again.")>>
+			<<set _hostageAction.push("accepting that $his body will never be ruined by pregnancy.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 5>>
+			<<set $hostage.counter.vaginal += 5>>
+			<<set $hostage.counter.anal += 5>>
+			<<set $hostage.counter.mammary += 5>>
+			<<set _hostageAction.push("praying for the well-being of the pregnant women in your arcology.")>>
+			<<set _hostageAction.push("playing with $his owner without worry, seeing as $he can't get pregnant.")>>
+			<<set _hostageAction.push("happy that $his body will never be ruined by pregnancy.")>>
+		<<else>>
+			<<set $hostage.counter.oral += 5>>
+			<<set $hostage.counter.vaginal += 5>>
+			<<set $hostage.counter.anal += 5>>
+			<<set $hostage.counter.mammary += 5>>
+			<<set _hostageAction.push("actively reading a report to crowd about the dangers of pregnancy, using your arcology as an example.")>>
+			<<set _hostageAction.push("running $his fingers across $his tight belly with a smile, knowing it will never be ruined.")>>
+			<<set _hostageAction.push("celebrating that $his body will never be ruined by a child.")>>
+		<</if>>
+	<<case "Eugenics">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<if $seeHyperPreg != 1>>
+				<<set _hostageAction.push("weeping in $his restraints as a crowd of a dozen criminals line up to fuck $his fertile womb pregnant.")>>
+				<<set _hostageAction.push("crying at the results of a pregnancy test.")>>
+				<<set _hostageAction.push("sobbing as $he tries to coax the cum out of $his womb.")>>
+			<<else>>
+				<<set _hostageAction.push("weeping in $his restraints as a crowd of a dozen criminals line up to fuck $his fertile womb pregnant.")>>
+				<<set _hostageAction.push("weeping at the results of a pregnancy test.")>>
+				<<set _hostageAction.push("sobbing as $he tries to coax the cum out of $his womb.")>>
+			<</if>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<if $seeHyperPreg != 1>>
+				<<set _hostageAction.push("reluctantly fucking a man while he rubs $his swollen belly.")>>
+				<<set _hostageAction.push("cringing at a report of the number of babies $he is carrying.")>>
+				<<set _hostageAction.push("crying as $he cradles $his unwelcome pregnancy.")>>
+			<<else>>
+				<<set _hostageAction.push("reluctantly orgasming as $he is taken doggystyle, $his full pregnancy brushing the floor under $him.")>>
+				<<set _hostageAction.push("cringing at a report of the obscene number of babies stretching $his womb.")>>
+				<<set _hostageAction.push("crying as $he cradles $his full-sized pregnancy.")>>
+			<</if>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.boobs += 50>>
+			<<set $hostage.lactation = 1>>
+			<<set $hostage.lactationDuration = 2>>
+			<<set $hostage.counter.oral += 100>>
+			<<set $hostage.counter.vaginal += 100>>
+			<<set $hostage.counter.anal += 100>>
+			<<set $hostage.counter.mammary += 100>>
+			<<if $seeHyperPreg != 1>>
+				<<set _hostageAction.push("moaning gently as $he rides a man, cowgirl style, as he rubs $his pregnant belly.")>>
+				<<set _hostageAction.push("smilingly slightly at an ultrasound of $his womb.")>>
+				<<set _hostageAction.push("doing yoga to prepare $his body for childbirth.")>>
+			<<else>>
+				<<set _hostageAction.push("moaning gently as $he rides a man completely obscured by $his enormous pregnancy.")>>
+				<<set _hostageAction.push("smilingly slightly seeing $his many babies via ultrasound.")>>
+				<<set _hostageAction.push("doing yoga with helpers to prepare $his bloated body for mass childbirth.")>>
+			<</if>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.boobs += 50>>
+			<<set $hostage.lactation = 1>>
+			<<set $hostage.lactationDuration = 2>>
+			<<set $hostage.counter.oral += 100>>
+			<<set $hostage.counter.vaginal += 100>>
+			<<set $hostage.counter.anal += 100>>
+			<<set $hostage.counter.mammary += 100>>
+			<<if $seeHyperPreg != 1>>
+				<<set _hostageAction.push("enthusiastically taking part in an orgy centered around $his huge pregnant belly.")>>
+				<<set _hostageAction.push("happily letting $his owner fawn over $his big belly.")>>
+				<<set _hostageAction.push("gleefully rubbing $his big pregnant belly with oils to prevent stretch marks.")>>
+			<<else>>
+				<<set _hostageAction.push("getting brutally fucked over $his own gigantic pregnant belly and loving every moment of it.")>>
+				<<set _hostageAction.push("happily letting $his owner fawn over $his immense belly and giggling with every kick $his many children make in response.")>>
+				<<set _hostageAction.push("giggling as several slaves slather $his belly with creams to prevent stretch marks.")>>
+			<</if>>
+		<<else>>
+			<<set $hostage.boobs += 50>>
+			<<set $hostage.lactation = 1>>
+			<<set $hostage.lactationDuration = 2>>
+			<<set $hostage.counter.oral += 100>>
+			<<set $hostage.counter.vaginal += 100>>
+			<<set $hostage.counter.anal += 100>>
+			<<set $hostage.counter.mammary += 100>>
+			<<if $seeHyperPreg != 1>>
+				<<set _hostageAction.push("happily rubbing $his cum filled belly, eager for $his next pregnancy to take.")>>
+				<<set _hostageAction.push("eagerly checking a pregnancy test before dropping it sadly.")>>
+				<<set _hostageAction.push("injecting cum into $his vagina, hoping to get pregnant again sooner.")>>
+			<<else>>
+				<<set _hostageAction.push("happily rubbing $his bloated belly, eager for $his new pregnancy to get bigger.")>>
+				<<set _hostageAction.push("eagerly researching ways $he can always be pregnant.")>>
+				<<set _hostageAction.push("begging $his master to get $him even more pregnant this time.")>>
+			<</if>>
+		<</if>>
+	<<case "Gender Radicalism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set _hostageAction.push("being dragged along by $his owner on their rounds around their arcology.")>>
+			<<set _hostageAction.push("being forced into a pretty dress as to not embarrass $his owner, though $his tantrum will do just that.")>>
+			<<set _hostageAction.push("viciously slapping $his owner's hand away.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("reluctantly following $his owner along on their rounds around their arcology.")>>
+			<<set _hostageAction.push("reluctantly allowing $himself to be dressed to present a good appearance alongside $his owner.")>>
+			<<set _hostageAction.push("reluctantly holding $his owner's hand.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set $hostage.fetishStrength = 65>>
+			<<set _hostageAction.push("politely accompanying $his owner on their rounds around their arcology.")>>
+			<<set _hostageAction.push("allowing $himself to be dressed to present a good appearance alongside $his owner.")>>
+			<<set _hostageAction.push("holding $his owner's hand.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("happily accompanying $his owner on their rounds around their arcology.")>>
+			<<set _hostageAction.push("happily allowing $himself to be dressed to present a good appearance alongside $his owner.")>>
+			<<set _hostageAction.push("happily holding $his owner's hand.")>>
+		<<else>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<if $seePreg != 0>>
+				<<set _hostageAction.push("happily accompanying $his owner on their rounds around their arcology, $his hand resting on $his gently rounded stomach.")>>
+				<<set _hostageAction.push("carefully getting $himself dressed to present a good appearance alongside $his owner, paying special attention to $his swollen midriff.")>>
+				<<set _hostageAction.push("")>>
+			<<else>>
+				<<set _hostageAction.push("happily accompanying $his owner on their rounds around their arcology, his arm around $his waist.")>>
+				<<set _hostageAction.push("carefully getting $himself dressed to present a good appearance alongside $his owner.")>>
+				<<set _hostageAction.push("happy with $his owner's arm around $him.")>>
+			<</if>>
+		<</if>>
+	<<case "Gender Fundamentalism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.anal += 10>>
+			<<set _hostageAction.push("struggling not to orgasm to the dick up $his ass.")>>
+			<<set _hostageAction.push("screaming in terror as a hot shaft slips into $his rectum.")>>
+			<<set _hostageAction.push("crying in the shower as $he attempts to soothe $his throbbing rectum.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.anal += 10>>
+			<<set _hostageAction.push("reluctantly pleasuring a man with $his ass.")>>
+			<<set _hostageAction.push("groaning in discomfort as yet another dick slides into $his ass.")>>
+			<<set _hostageAction.push("groaning in the shower as $he soothes $his sore ass.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.anal += 10>>
+			<<if $seeDicks != 0>>
+				<<set _hostageAction.push("enjoying a hard anal pounding, $his tiny new penis swinging from the thrusts.")>>
+				<<set _hostageAction.push("letting off a moan as a penis slides into $his asspussy, $his tiny new penis trying to get hard.")>>
+				<<set _hostageAction.push("cleaning $his rear while fondling $his asspussy, $his other hand teasing $his new tiny penis.")>>
+			<<else>>
+				<<set _hostageAction.push("enjoying a hard anal pounding.")>>
+				<<set _hostageAction.push("letting off a moan as a penis slides into $his asspussy.")>>
+				<<set _hostageAction.push("cleaning $his rear while fondling $his asspussy.")>>
+			<</if>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.anal += 10>>
+			<<if $seeDicks != 0>>
+				<<set _hostageAction.push("orgasming immodestly to a hard anal pounding, $his erect penis cumming across $his belly.")>>
+				<<set _hostageAction.push("moaning lewdly as a huge dick slides up $his asspussy, $his erect penis bumping into $his belly.")>>
+				<<set _hostageAction.push("seeing how many fingers $he can fit into $his ass as $he showers, while teasing $his erect dick with the other hand.")>>
+			<<else>>
+				<<set _hostageAction.push("orgasming immodestly to a hard anal pounding.")>>
+				<<set _hostageAction.push("moaning lewdly as a huge dick slides up $his asspussy.")>>
+				<<set _hostageAction.push("seeing how many fingers $he can fit into $his ass as $he showers.")>>
+			<</if>>
+		<<else>>
+			<<set $hostage.counter.anal += 10>>
+			<<if $seeDicks != 0>>
+				<<set _hostageAction.push("happily taking two dicks at once in $his blown out anus, while stroking $his rock hard cock.")>>
+				<<set _hostageAction.push("getting assfucked, $his rock-hard cock dribbling precum everywhere. $He gasps with delight as $he feels a second hot shaft slide inside $his asspussy next to the first.")>>
+				<<set _hostageAction.push("fisting $his own ass in the shower, and jacking off to the prostrate stimulation. $He gasps with delight as an orgasm wracks $his body.")>>
+			<<else>>
+				<<set _hostageAction.push("happily taking two dicks at once in $his blown out anus.")>>
+				<<set _hostageAction.push("getting assfucked. $He gasps with delight as $he feels a second hot shaft slide inside $his asspussy next to the first.")>>
+				<<set _hostageAction.push("fisting $his own ass in the shower. $He gasps with delight as an orgasm wracks $his body.")>>
+			<</if>>
+		<</if>>
+	<<case "Paternalism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust += 5>>
+			<<set $hostage.devotion += 5>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<if $seePee == 1>>
+				<<set _hostageAction.push("weeping on the floor as a crowd of citizens urinate on $him.")>>
+			<<else>>
+				<<set _hostageAction.push("weeping on the floor as a crowd of citizens masturbate onto $him.")>>
+			<</if>>
+			<<set _hostageAction.push("screaming as $he has the soles of $his feet whipped.")>>
+			<<set _hostageAction.push("tearfully begging someone not to cut $him.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust += 5>>
+			<<set $hostage.devotion += 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<if $seePee == 1>>
+				<<set _hostageAction.push("trying $his best not to break down as a crowd of citizens urinate on $him.")>>
+			<<else>>
+				<<set _hostageAction.push("trying $his best not to break down as a crowd of citizens jack off onto $him.")>>
+			<</if>>
+			<<set _hostageAction.push("crying out as $his back is lashed.")>>
+			<<set _hostageAction.push("tearfully crying on the ground after someone tripped $him and stole $his heels for the sole purpose of denying $him the ability to walk.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust += 5>>
+			<<set $hostage.devotion += 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<if $seePee == 1>>
+				<<set _hostageAction.push("meekly accepting $his golden shower.")>>
+			<<else>>
+				<<set _hostageAction.push("meekly accepting $his bukkake.")>>
+			<</if>>
+			<<set _hostageAction.push("sobbing as $he is mercilessly beaten.")>>
+			<<set _hostageAction.push("panicking as $he attempts to mime a plea to not get cut by $his aggressor.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust += 5>>
+			<<set $hostage.devotion += 5>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<if $seePee == 1>>
+				<<set _hostageAction.push("laying there, indifferent to the citizens urinating on $him.")>>
+			<<else>>
+				<<set _hostageAction.push("laying there, indifferent to the citizens ejaculating on $him.")>>
+			<</if>>
+			<<set _hostageAction.push("softly crying as $he is kicked around.")>>
+			<<set _hostageAction.push("crying muffled sobs as someone snatches $his earnings from under $his blinded eyes.")>>
+		<<else>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<set _hostageAction.push("completely broken, indifferent to the citizens abusing $his body.")>>
+			<<set _hostageAction.push("barely showing signs of life as $his ruined body is kicked around the floor.")>>
+			<<set _hostageAction.push("getting shoved onto a shelf with dozens of other limbless, broken slaves.")>>
+		<</if>>
+	<<case "Degradationism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set _hostageAction.push("refusing to be touched by $his owner.")>>
+			<<set _hostageAction.push("refusing to even look at $his owner.")>>
+			<<set _hostageAction.push("getting mad when asked about $his sexual exploits.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("reluctantly allowing $his owner to play with $his body.")>>
+			<<set _hostageAction.push("gingerly looking at $his owner as they approach.")>>
+			<<set _hostageAction.push("blushing and avoiding the question when asked about $his sexual exploits.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("making love with $his owner.")>>
+			<<set _hostageAction.push("curiously watching $his owner as they approach.")>>
+			<<set _hostageAction.push("blurting it out and burying $his face in $his hands when asked about $his sexual exploits with $his owner.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("happily making love to $his owner.")>>
+			<<set _hostageAction.push("eagerly watching $his owner as they approach.")>>
+			<<set _hostageAction.push("giggling with another slave over their sexual exploits with their owners.")>>
+		<<else>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<if $seePreg == 1>>
+				<<set _hostageAction.push("happily making love to $his owner. $His belly has a noticeable roundness to it.")>>
+				<<set _hostageAction.push("biting $his lip with nervous anticipation as $his owner approaches where $he's standing, $his hands cupping $his rounded middle.")>>
+				<<set _hostageAction.push("gossiping with another slave over their sexual exploits with their owners, all the while cradling $his growing pregnancy with pride.")>>
+			<<else>>
+				<<set _hostageAction.push("trying $his hardest to conceive a child with $his owner.")>>
+				<<set _hostageAction.push("biting $his lip with nervous anticipation as $his owner approaches where $he's standing.")>>
+				<<set _hostageAction.push("gossiping with another slave over how they conceived their child with their owner.")>>
+			<</if>>
+		<</if>>
+	<<case "Body Purism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.boobs += 2000>>
+			<<set $hostage.boobsImplant += 2000>>
+			<<if $hostage.boobsImplant > 10000>>
+				<<set $hostage.boobsImplantType = "hyper fillable">>
+			<</if>>
+			<<set _hostageAction.push("trying desperately to stand despite $his massive <<print $hostage.boobs>>cc fake tits.")>>
+			<<set _hostageAction.push("crying while trying to get comfortable with $his <<print $hostage.boobs>>cc fake tits.")>>
+			<<set _hostageAction.push("sobbing as an autosurgery reads out how much $his <<print $hostage.boobs>>cc implants can be expanded this week.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.boobs += 1000>>
+			<<set $hostage.boobsImplant += 1000>>
+			<<if $hostage.boobsImplant > 10000>>
+				<<set $hostage.boobsImplantType = "hyper fillable">>
+			<</if>>
+			<<set _hostageAction.push("reluctantly exploring $his new massive <<print $hostage.boobs>>cc implants.")>>
+			<<set _hostageAction.push("reluctantly exploring new resting positions due to $his <<print $hostage.boobs>>cc implants.")>>
+			<<set _hostageAction.push("crying as an autosurgery reads out how much $his <<print $hostage.boobs>>cc implants can be expanded this week.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.boobs += 1000>>
+			<<set $hostage.boobsImplant += 1000>>
+			<<if $hostage.boobsImplant > 10000>>
+				<<set $hostage.boobsImplantType = "hyper fillable">>
+			<</if>>
+			<<set _hostageAction.push("happily playing with $his truly immense <<print $hostage.boobs>>cc breast implants and huge butt implants.")>>
+			<<set _hostageAction.push("happily resting $his head on $his <<print $hostage.boobs>>cc breast implants.")>>
+			<<set _hostageAction.push("blushing as an autosurgery reads out how much $his <<print $hostage.boobs>>cc implants can be expanded this week.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.boobs += 1000>>
+			<<set $hostage.boobsImplant += 1000>>
+			<<if $hostage.boobsImplant > 10000>>
+				<<set $hostage.boobsImplantType = "hyper fillable">>
+			<</if>>
+			<<set _hostageAction.push("happily getting titfucked against $his anchoring <<print $hostage.boobs>>cc fake tits.")>>
+			<<set _hostageAction.push("contently resting against $his <<print $hostage.boobs>>cc fake tits.")>>
+			<<set _hostageAction.push("getting excited as an autosurgery reads out how much $his <<print $hostage.boobs>>cc implants can be expanded this week.")>>
+		<<else>>
+			<<set _hostageAction.push("resting on $his monstrous <<print $hostage.boobs>>cc fake tits, whining about not being allowed larger implants.")>>
+			<<set _hostageAction.push("resting atop $his monstrous <<print $hostage.boobs>>cc fake tits, daydreaming about being even bigger.")>>
+			<<set _hostageAction.push("throwing a fit that $his <<print $hostage.boobs>>cc fake tits are too big to expand further.")>>
+			<<set _hostageAction.push("throwing a fit that $his <<print $hostage.boobs>>cc fake tits stick out too far to allow $him to squeeze into the surgery suite.")>>
+		<</if>>
+	<<case "Transformation Fetishism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set _hostageAction.push("attempting to refute a report on surgical side effects in your arcology.")>>
+			<<set _hostageAction.push("refusing to believe pictures of surgeries performed in your arcology are real.")>>
+			<<set _hostageAction.push("wondering why these maniacs care if $his body is unaltered or not.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("refusing to believe a report on surgical side effects in your arcology.")>>
+			<<set _hostageAction.push("gaping in surprise at pictures of surgeries performed in your arcology.")>>
+			<<set _hostageAction.push("admiring how natural $his body truly is.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("gasping at a report on surgical side effects in your arcology.")>>
+			<<set _hostageAction.push("gasping in horror at pictures of surgeries performed in your arcology.")>>
+			<<set _hostageAction.push("beginning to understand how beautiful $his pure body is.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("crying over a report on surgical side effects in your arcology.")>>
+			<<set _hostageAction.push("crying in terror at pictures of surgeries performed in your arcology.")>>
+			<<set _hostageAction.push("admiring how pure $his body is in the mirror.")>>
+		<<else>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("making a public speech over surgical side effects in your arcology.")>>
+			<<set _hostageAction.push("genuinely thanking $his owner for keeping $his body pure and beautiful.")>>
+			<<set _hostageAction.push("admiring $his pure body from every angle $he can.")>>
+		<</if>>
+	<<case "Youth Preferentialism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 1>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set $hostage.counter.anal += 1>>
+			<<set _hostageAction.push("struggling to escape the grasp of a motherly woman.")>>
+			<<set _hostageAction.push("hiding from $his MILF partner, sobbing quietly.")>>
+			<<set _hostageAction.push("struggling to escape being mothered by $his older partner.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 5>>
+			<<set $hostage.counter.vaginal += 5>>
+			<<set $hostage.counter.anal += 5>>
+			<<set _hostageAction.push("crying gently while a motherly woman fondles $him.")>>
+			<<set _hostageAction.push("cringing as $he massages $his MILF partner's back.")>>
+			<<set _hostageAction.push("cautiously tasting $his MILF partner's milk.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 10>>
+			<<set $hostage.counter.vaginal += 10>>
+			<<set $hostage.counter.anal += 10>>
+			<<set _hostageAction.push("resting in the arms of $his MILF friend.")>>
+			<<set _hostageAction.push("carefully giving $his MILF lover a back massage.")>>
+			<<set _hostageAction.push("carefully suckling $his MILF friend's nipple.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 10>>
+			<<set $hostage.counter.vaginal += 10>>
+			<<set $hostage.counter.anal += 10>>
+			<<set _hostageAction.push("happily being cradled by $his MILF lover.")>>
+			<<set _hostageAction.push("happily giving $his MILF lover a foot massage before bed.")>>
+			<<set _hostageAction.push("happily suckling $his MILF lover's motherly tits.")>>
+		<<else>>
+			<<set $hostage.counter.oral += 20>>
+			<<set $hostage.counter.vaginal += 20>>
+			<<set $hostage.counter.anal += 20>>
+			<<set _hostageAction.push("resting intertwined with $his favorite MILF in the world.")>>
+			<<set _hostageAction.push("energetically giving $his MILF lover a full body massage before bed.")>>
+			<<set _hostageAction.push("happily suckling $his MILF lover's motherly tits while fondling $his lover's crotch.")>>
+		<</if>>
+	<<case "Maturity Preferentialism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 1>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set $hostage.counter.anal += 1>>
+			<<set _hostageAction.push("struggling to escape the grasp of an energetic young _womanU.")>>
+			<<set _hostageAction.push("shouting profanity at $his young partner.")>>
+			<<set _hostageAction.push("rebuking $his young partner's advances.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 5>>
+			<<set $hostage.counter.vaginal += 5>>
+			<<set $hostage.counter.anal += 5>>
+			<<set _hostageAction.push("crying gently while a young woman eagerly fondles $him.")>>
+			<<set _hostageAction.push("shying away from $his young partner.")>>
+			<<set _hostageAction.push("curiously fondling $his young partner's dick.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 10>>
+			<<set $hostage.counter.vaginal += 10>>
+			<<set $hostage.counter.anal += 10>>
+			<<set _hostageAction.push("trying to catch a break as $his young friend begs to have some more fun.")>>
+			<<set _hostageAction.push("resting alongside $his young friend.")>>
+			<<set _hostageAction.push("cautiously rubbing $his energetic young friend's cock.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 10>>
+			<<set $hostage.counter.vaginal += 10>>
+			<<set $hostage.counter.anal += 10>>
+			<<set _hostageAction.push("kissing $his young lover.")>>
+			<<set _hostageAction.push("talking about things with $his young lover.")>>
+			<<set _hostageAction.push("giving $his energetic young lover a handjob.")>>
+		<<else>>
+			<<set $hostage.counter.oral += 20>>
+			<<set $hostage.counter.vaginal += 20>>
+			<<set $hostage.counter.anal += 20>>
+			<<set _hostageAction.push("basking in the afterglow, intertwined with $his favorite youth.")>>
+			<<set _hostageAction.push("whispering something sexy into $his young lover's ear.")>>
+			<<set _hostageAction.push("giving $his energetic young lover a handjob while deeply kissing _himU.")>>
+		<</if>>
+	<<case "Slimness Enthusiasm">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.boobs += 1500>>
+			<<set _hostageAction.push("trying desperately to stand despite $his massive <<print $hostage.boobs>>cc tits.")>>
+			<<set _hostageAction.push("crying over $his swollen breasts and butt.")>>
+			<<set _hostageAction.push("weeping as the breast injections swell $his breasts to <<print $hostage.boobs>>ccs.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.boobs += 1000>>
+			<<set _hostageAction.push("reluctantly exploring $his new massive <<print $hostage.boobs>>cc tits, bigger bottom, and softer body.")>>
+			<<set _hostageAction.push("cringing as $he feels $his huge soft tits and ass.")>>
+			<<set _hostageAction.push("cringing as the breast injections swell $his breasts to <<print $hostage.boobs>>ccs along with $his butt.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.boobs += 1000>>
+			<<set _hostageAction.push("happily playing with $his truly immense <<print $hostage.boobs>>cc breasts and huge butt.")>>
+			<<set _hostageAction.push("giggling as $he gropes $his soft body.")>>
+			<<set _hostageAction.push("smiling as the breast injections swell $his breasts to <<print $hostage.boobs>>ccs. $He runs $his hand across $his huge butt and softening body.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.boobs += 1000>>
+			<<set _hostageAction.push("happily getting titfucked in $his immobilizing <<print $hostage.boobs>>cc tits.")>>
+			<<set _hostageAction.push("happily massaging $his super soft body and huge assets.")>>
+			<<set _hostageAction.push("practically orgasming as the breast injections swell $his breasts to <<print $hostage.boobs>>ccs. $He sinks $his hands into $his enormous butt and sot belly.")>>
+		<<else>>
+			<<set _hostageAction.push("resting atop $his monstrous <<print $hostage.boobs>>cc tits, whining about not being allowed to have $his assets swollen more.")>>
+			<<set _hostageAction.push("resting in $his own mountainous softness.")>>
+			<<set _hostageAction.push("shouting at a plastic surgeon to make $his <<print $hostage.boobs>>cc tits even larger.")>>
+			<<set _hostageAction.push("attempting to maneuver around $his <<print $hostage.boobs>>cc tits to reach a drug cabinet for more injections.")>>
+		<</if>>
+	<<case "Asset Expansionism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set _hostageAction.push("attempting to refute a report on drug side effects in your arcology.")>>
+			<<set _hostageAction.push("refusing to believe pictures of excessively expanded slaves in your arcology are real.")>>
+			<<set _hostageAction.push("refusing to show off $his natural body.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("refusing to believe a report on drug side effects in your arcology.")>>
+			<<set _hostageAction.push("gasping in surprise at pictures of excessively expanded slaves in your arcology.")>>
+			<<set _hostageAction.push("reluctantly doing a series of stretching exercises to show off $his natural body.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("gasping at a report on drug side effects in your arcology.")>>
+			<<set _hostageAction.push("gasping in horror at pictures of excessively expanded slaves in your arcology.")>>
+			<<set _hostageAction.push("doing a series of stretching exercises to show off $his natural body.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("crying over a report on drug side effects in your arcology.")>>
+			<<set _hostageAction.push("crying in terror at pictures of excessively expanded slaves in your arcology.")>>
+			<<set _hostageAction.push("happily doing a series of stretching exercises to show off $his natural body.")>>
+		<<else>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("making a public speech over drug side effects in your arcology.")>>
+			<<set _hostageAction.push("genuinely thanking $his owner for keeping $him healthy and from becoming nothing more than a bloated pair of tits and ass.")>>
+			<<set _hostageAction.push("showing off $his completely natural body with pride before an audience of civilians.")>>
+		<</if>>
+	<<case "Pastoralism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight -= 5>>
+			<<set $hostage.muscles += 5>>
+			<<set _hostageAction.push("angrily jogging on a treadmill, $his fat body and big tits jiggling constantly.")>>
+			<<set _hostageAction.push("trying to catch $his breath and stop $his fat body from sweating.")>>
+			<<set _hostageAction.push("struggling to run $his overweight body around a track.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight -= 5>>
+			<<set $hostage.muscles += 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("reluctantly doing sit-ups, $his plush body struggling to manage.")>>
+			<<set _hostageAction.push("checking $himself out in the mirror, gawking at how much weight $he's lost.")>>
+			<<set _hostageAction.push("attempting to run a lap around the track despite $his overweight body.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight -= 5>>
+			<<set $hostage.muscles += 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("lifting weights, $his soft body barely hiding $his bulging muscles.")>>
+			<<set _hostageAction.push("pinching $his remaining flab and making a disgusted face.")>>
+			<<set _hostageAction.push("running laps around the track to burn off $his excess bodyfat.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight -= 5>>
+			<<set $hostage.muscles += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("eagerly pumping iron using $his lean and powerful body.")>>
+			<<set _hostageAction.push("massaging body oil into $his abs and checking $himself out in a mirror.")>>
+			<<set _hostageAction.push("eagerly running laps around a track, showing off $his thin and fit body.")>>
+		<<else>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("performing an impressive clean and jerk, and then giving $his owner a high five.")>>
+			<<set _hostageAction.push("massaging body oil into $his abs and posing in front of the mirror. $He is proud to have gone from a fat cow to a ripped goddess.")>>
+			<<set _hostageAction.push("running laps around a track, competing with other eagerly competitive slaves to be the best.")>>
+		<</if>>
+	<<case "Cummunism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.boobs += 1000>>
+			<<set $hostage.lactation = 2>>
+			<<set $hostage.lactationDuration = 2>>
+			<<set _hostageAction.push("trying desperately to extract the milk from $his massive <<print $hostage.boobs>>cc tits. $He appears to have gained some weight.")>>
+			<<set _hostageAction.push("sobbing as $he massages $his sore <<print $hostage.boobs>>cc udders.")>>
+			<<set _hostageAction.push("sobbing as the milkers drain $his <<print $hostage.boobs>>cc udders.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.boobs += 1000>>
+			<<set $hostage.lactation = 2>>
+			<<set $hostage.lactationDuration = 2>>
+			<<set _hostageAction.push("reluctantly asking for $his massive <<print $hostage.boobs>>cc tits to be milked. $He's certainly getting soft.")>>
+			<<set _hostageAction.push("crying as rubs $his uncomfortably massive <<print $hostage.boobs>>cc udders and softening belly.")>>
+			<<set _hostageAction.push("sighing as the milkers drain $his big <<print $hostage.boobs>>cc udders while $he massages $his softening belly.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.boobs += 1000>>
+			<<set $hostage.lactation = 2>>
+			<<set $hostage.lactationDuration = 2>>
+			<<set _hostageAction.push("happily asking for $his truly immense <<print $hostage.boobs>>cc breasts to be milked. $His body has become notably plush.")>>
+			<<set _hostageAction.push("humming as $he soothes $his truly immense sore <<print $hostage.boobs>>cc udders. $He lets off a content sigh as $he jiggles $his soft belly.")>>
+			<<set _hostageAction.push("sighing with relief as the milkers drain $his huge <<print $hostage.boobs>>cc udders while $he massages $his jiggly belly.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.boobs += 1000>>
+			<<set $hostage.lactation = 2>>
+			<<set $hostage.lactationDuration = 2>>
+			<<set _hostageAction.push("begging for $his immobilizing <<print $hostage.boobs>>cc tits to be drained. $He has become quite fat.")>>
+			<<set _hostageAction.push("happily playing with $his <<print $hostage.boobs>>cc udders. $He squirms and giggles as $his entire body jiggles in response.")>>
+			<<set _hostageAction.push("happily humming as the milkers drain $his giant <<print $hostage.boobs>>cc udders while $he plays with $his fat belly and breasts.")>>
+		<<else>>
+			<<set $hostage.lactation = 2>>
+			<<set $hostage.lactationDuration = 2>>
+			<<set _hostageAction.push("resting atop $his monstrous <<print $hostage.boobs>>cc tits, whining about not being allowed to have $his assets swollen more and that $he has to squeeze $his milk out $himself.")>>
+			<<set _hostageAction.push("moans lewdly as a pair of slaves massage $his <<print $hostage.boobs>>cc udders, and as a third appears from under $his heavy body.")>>
+			<<set _hostageAction.push("moaning loudly as the milkers drain $his massive <<print $hostage.boobs>>cc udders.")>>
+		<</if>>
+	<<case "Physical Idealism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.boobs += 50>>
+			<<set $hostage.counter.vaginal += 28>>
+			<<set _hostageAction.push("trying desperately to vomit up all the food forced into $his bloated stomach while being thwarted by a specialized gag. $He appears to have gained some weight.")>>
+			<<set _hostageAction.push("sobbing as $he is forcibly raped and broken in.")>>
+			<<set _hostageAction.push("sobbing as $he is forced is experience all manner of perversion in an effort to reveal $his fetishes.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.boobs += 100>>
+			<<set $hostage.counter.vaginal += 28>>
+			<<switch $hostageFetish>>
+			<<case "cumslut">>
+				<<set $hostage.counter.oral += 70>>
+			<<case "buttslut">>
+				<<set $hostage.counter.anal += 21>>
+				<<set $hostage.anus = 3>>
+			<<case "boobs">>
+				<<set $hostage.boobs += 100>>
+				<<set $hostage.boobsImplant += 100>>
+				<<if $hostage.boobsImplant > 2000>>
+					<<set $hostage.boobsImplantType = "advanced fillable">>
+				<</if>>
+			<<case "pregnancy">>
+				<<set $hostage.preg++>>
+				<<set $hostage.pregKnown = 1>>
+				<<set $hostage.pregWeek++>>
+				<<run SetBellySize($hostage)>>
+			<</switch>>
+			<<set _hostageAction.push("relaxing in $his comfy bed carefully exploring $his food stuffed belly and its unique curvature. $He's certainly getting soft.")>>
+			<<set _hostageAction.push("crying as $he rubs the uncomfortable bulge of $his overfilled stomach and soft belly as yet another guy fucks $his loosening cunt.")>>
+			<<switch $hostageFetish>>
+			<<case "submissive">>
+				<<set _hostageAction.push("struggling to hold back $his joy as $he is forced to eat out another slave.")>>
+			<<case "cumslut">>
+				<<set _hostageAction.push("struggling to hold back $his joy as a hot load spurts across $his face.")>>
+			<<case "humiliation">>
+				<<set _hostageAction.push("struggling to hold back $his joy as $he is paraded, naked, through the arcology.")>>
+			<<case "buttslut">>
+				<<set _hostageAction.push("struggling to hold back $his joy as $his ass is roughly fucked.")>>
+			<<case "boobs">>
+				<<set _hostageAction.push("struggling to hold back $his joy as $he checks out $his new <<print $hostage.boobsImplant>>cc implants.")>>
+			<<case "sadist">>
+				<<set _hostageAction.push("struggling to hold back $his joy as $he is encouraged to beat a slave that spilled a cup of food on the clean floor.")>>
+			<<case "masochist">>
+				<<set _hostageAction.push("struggling to hold back $his joy as $his nipples are cruelly pinched and twisted.")>>
+			<<case "dom">>
+				<<set _hostageAction.push("struggling to hold back $his joy as $he is told to order a waiting slave to do whatever $he wants.")>>
+			<<case "pregnancy">>
+				<<set _hostageAction.push("struggling to hold back $his joy as another huge load shoots into $his fertile womb.")>>
+			<</switch>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.boobs += 100>>
+			<<set $hostage.counter.vaginal += 35>>
+			<<switch $hostageFetish>>
+			<<case "cumslut">>
+				<<set $hostage.counter.oral += 70>>
+			<<case "buttslut">>
+				<<set $hostage.counter.anal += 35>>
+				<<set $hostage.anus = 3>>
+			<<case "boobs">>
+				<<set $hostage.boobs += 100>>
+				<<set $hostage.boobsImplant += 100>>
+				<<if $hostage.boobsImplant > 2000>>
+					<<set $hostage.boobsImplantType = "advanced fillable">>
+				<</if>>
+			<<case "pregnancy">>
+				<<set $hostage.preg++>>
+				<<set $hostage.pregKnown = 1>>
+				<<set $hostage.pregWeek++>>
+				<<run SetBellySize($hostage)>>
+			<</switch>>
+			<<set _hostageAction.push("relaxing in $his comfy bed sucking on $his feeding tube. One hand is fondling $his plush body while the other is teasing $his clit. $His body has become notably plush, made even more obvious when an orgasm sends ripples through $his soft flesh.")>>
+			<<set _hostageAction.push("humming as $he soothes $his full belly as $he enjoys a good fucking.")>>
+			<<switch $hostageFetish>>
+			<<case "submissive">>
+				<<set _hostageAction.push("begging $his master-slave to permit $him to service _hisU dick.")>>
+			<<case "cumslut">>
+				<<set _hostageAction.push("happily sucking a dick aand swallowing every last drop of cum.")>>
+			<<case "humiliation">>
+				<<set _hostageAction.push("walking alongside $his master in a figure-revealing pair of tight pants and a tube top. The pair of vibrators on $his nipples and the huge dildo in $his cunt are obvious through the taut material.")>>
+			<<case "buttslut">>
+				<<set _hostageAction.push("happily taking a huge dick in $his ass while wishing it was even bigger.")>>
+			<<case "boobs">>
+				<<set _hostageAction.push("happily teasing a dick between $his new <<print $hostage.boobsImplant>>cc implants.")>>
+			<<case "sadist">>
+				<<set _hostageAction.push("happily tormenting a sissy slave's limp dick as $he rails _himU with a strap-on.")>>
+			<<case "masochist">>
+				<<set _hostageAction.push("struggling to smile while being strangled during sex.")>>
+			<<case "dom">>
+				<<set _hostageAction.push("forcing $his sissy slave to feed $him $his favorite foods while hoping _heU makes a mistake so _heU may be punished.")>>
+			<<case "pregnancy">>
+				<<set _hostageAction.push("humming softly as $he caresses $his early pregnancy.")>>
+			<</switch>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.boobs += 100>>
+			<<set $hostage.counter.vaginal += 40>>
+			<<switch $hostageFetish>>
+			<<case "cumslut">>
+				<<set $hostage.counter.oral += 70>>
+			<<case "buttslut">>
+				<<set $hostage.counter.anal += 35>>
+				<<set $hostage.anus = 4>>
+			<<case "boobs">>
+				<<set $hostage.boobs += 100>>
+				<<set $hostage.boobsImplant += 100>>
+				<<if $hostage.boobsImplant > 2000>>
+					<<set $hostage.boobsImplantType = "advanced fillable">>
+				<</if>>
+			<<case "pregnancy">>
+				<<set $hostage.preg++>>
+				<<set $hostage.pregKnown = 1>>
+				<<set $hostage.pregWeek++>>
+				<<run SetBellySize($hostage)>>
+			<</switch>>
+			<<set _hostageAction.push("relaxing in $his comfy bed surrounded by mountains of molded slave food. $He is eagerly shoving handfuls of the fattening treats into $his mouth while simultaneously begging for someone to fill $his neglected pussy. $He has become quite fat; $his body jiggles with every motion.")>>
+			<<set _hostageAction.push("happily stuffing $his face as another guy fucks $his fat body.")>>
+			<<switch $hostageFetish>>
+			<<case "submissive">>
+				<<set _hostageAction.push("desperately begging for $his master-slave to tear $him out of $his clothes and rape $him on the spot.")>>
+			<<case "cumslut">>
+				<<set _hostageAction.push("desperately begging for the owner of the dick being waved in $his face to shower $him with cum.")>>
+			<<case "humiliation">>
+				<<set _hostageAction.push("standing on a balcony fully nude shouting at passersby to ogle $him, desperate for stronger forms of humiliation.")>>
+			<<case "buttslut">>
+				<<set _hostageAction.push("begging for more cocks in $his ass as the two men already penetrating it struggle to not get too intimate with each other.")>>
+			<<case "boobs">>
+				<<set _hostageAction.push("groping $his already huge <<print $hostage.boobsImplant>>cc breasts and begging for them to be even bigger.")>>
+			<<case "sadist">>
+				<<set _hostageAction.push("cumming hard as the slave mounting $him writhes in pain at _hisU torment.")>>
+			<<case "masochist">>
+				<<set _hostageAction.push("cumming hard as $he is beaten during sex.")>>
+			<<case "dom">>
+				<<set _hostageAction.push("sitting on a slave that displeased $him and forcing the struggling _girlU to eat $him out.")>>
+			<<case "pregnancy">>
+				<<set _hostageAction.push("puffing out $his already large belly pretending to be even more pregnant than $he already is.")>>
+			<</switch>>
+		<<else>>
+			<<set $hostage.weight += 5>>
+			<<set $hostage.boobs += 100>>
+			<<set $hostage.counter.vaginal += 60>>
+			<<switch $hostageFetish>>
+			<<case "cumslut">>
+				<<set $hostage.counter.oral += 70>>
+			<<case "buttslut">>
+				<<set $hostage.counter.anal += 45>>
+			<<case "boobs">>
+				<<set $hostage.boobs += 100>>
+				<<set $hostage.boobsImplant += 100>>
+				<<if $hostage.boobsImplant > 2000>>
+					<<set $hostage.boobsImplantType = "advanced fillable">>
+				<</if>>
+			<<case "pregnancy">>
+				<<set $hostage.preg++>>
+				<<set $hostage.pregKnown = 1>>
+				<<set $hostage.pregWeek++>>
+				<<run SetBellySize($hostage)>>
+			<</switch>>
+			<<set _hostageAction.push("relaxing in $his comfy bed surrounded by mountains of molded slave food. $He is greedily shoving handfuls of the fattening treats into $his mouth as fast as $he can. $He has grown enormously fat and $his belly is jiggling oddly. When $he repositions $himself, you catch sight of a quartet of large vibrating dildos crammed into $his stretched cunt.")>>
+			<<switch $hostageFetish>>
+			<<case "submissive">>
+				<<set _hostageAction.push("greedily stuffing $his face with slave food as a pair of guys double team $his ruined pussy.")>>
+				<<set _hostageAction.push("going out of $his way to bring $his partner to orgasm with no interest in $his own.")>>
+			<<case "cumslut">>
+				<<set _hostageAction.push("greedily stuffing $his face with slave food as a pair of guys double team $his ruined pussy. Several more encircle $him, ready to shower $him with cum the moment $he climaxes.")>>
+				<<set _hostageAction.push("greedily sucking cocks, desperate to fill $himself with cum.")>>
+			<<case "humiliation">>
+				<<set _hostageAction.push("greedily stuffing $his face with slave food as a pair of guys double team $his ruined pussy.")>>
+				<<set _hostageAction.push("in the center of a gangbang $he started in the middle of one of the arcology's shopping malls.")>>
+			<<case "buttslut">>
+				<<set _hostageAction.push("greedily stuffing $his face with slave food as a pair of guys double team $his ruined pussy. Another struggles to support $his weight as he plows $his gaping anus.")>>
+				<<set _hostageAction.push("desperately trying to shove a fifth dildo into $his asshole and becoming distraught when it doesn't fit.")>>
+			<<case "boobs">>
+				<<set _hostageAction.push("greedily stuffing $his face with slave food as a pair of guys double team $his ruined pussy. $He takes time between bites to hungrily fondle $his <<print $hostage.boobs>>cc tits.")>>
+				<<set _hostageAction.push("crying with joy after $his breasts ruined a shirt $he was just able to fit into that morning.")>>
+			<<case "sadist">>
+				<<set _hostageAction.push("greedily stuffing $his face with slave food as a pair of guys double team $his ruined pussy.")>>
+				<<set _hostageAction.push("laughing maniacally as $he beats a slave viciously as $he rides _himU. $He keeps going even after the poor _girlU's dick breaks from penetrating $him at a bad angle.")>>
+			<<case "masochist">>
+				<<set _hostageAction.push("greedily stuffing $his face with slave food as a pair of guys double team $his ruined pussy.")>>
+				<<set _hostageAction.push("going out of $his way to find the most undesirable men in the arcology to offer $himself to.")>>
+			<<case "dom">>
+				<<set _hostageAction.push("greedily stuffing $his face with slave food as a pair of guys double team $his ruined pussy.")>>
+				<<set _hostageAction.push("mercilessly beating the unfortunate slave servicing $him as punishment for knocking over $his tray of snacks.")>>
+			<<case "pregnancy">>
+				<<set _hostageAction.push("greedily stuffing $his face with slave food as a pair of guys double team $his ruined pussy. $He takes time between bites to hungrily fondle $his pregnancy.")>>
+				<<set _hostageAction.push("deliriously crying for $his current lover to pump more children into $his pregnant womb.")>>
+			<</switch>>
+		<</if>>
+	<<case "Hedonistic Decadence">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight -= 5>>
+			<<set $hostage.muscles += 5>>
+			<<set _hostageAction.push("angrily jogging on a treadmill, $his fat body and big tits jiggling constantly.")>>
+			<<set _hostageAction.push("trying to catch $his breath and stop $his fat body from sweating.")>>
+			<<set _hostageAction.push("struggling to run $his overweight body around a track.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight -= 5>>
+			<<set $hostage.muscles += 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("reluctantly doing sit-ups, $his plush body struggling to manage.")>>
+			<<set _hostageAction.push("checking $himself out in the mirror, gawking at how much weight $he's lost.")>>
+			<<set _hostageAction.push("attempting to run a lap around the track despite $his overweight body.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight -= 5>>
+			<<set $hostage.muscles += 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("lifting weights, $his soft body barely hiding $his bulging muscles.")>>
+			<<set _hostageAction.push("pinching $his remaining flab and making a disgusted face.")>>
+			<<set _hostageAction.push("running laps around the track to burn off $his excess bodyfat.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.weight -= 5>>
+			<<set $hostage.muscles += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("eagerly pumping iron using $his lean and powerful body.")>>
+			<<set _hostageAction.push("massaging body oil into $his abs and checking $himself out in a mirror.")>>
+			<<set _hostageAction.push("eagerly running laps around a track, showing off $his thin and fit body.")>>
+		<<else>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("performing an impressive clean and jerk, and then giving $his owner a high five.")>>
+			<<set _hostageAction.push("massaging body oil into $his abs and posing in front of the mirror. $He is proud to have gone from a fat cow to a ripped goddess.")>>
+			<<set _hostageAction.push("running laps around a track, competing with other eagerly competitive slaves to be the best.")>>
+		<</if>>
+	<<case "Chattel Religionism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set _hostageAction.push("attempting to refute a report on what's expected of slaves as part of your new religion.")>>
+			<<set _hostageAction.push("refusing to believe a video of a religious service in your arcology is real.")>>
+			<<set _hostageAction.push("refusing to socialize with other slaves.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("refusing to believe a report on what's expected of slaves as part of your new religion.")>>
+			<<set _hostageAction.push("questioning the validity of a video of a religious service in your arcology.")>>
+			<<set _hostageAction.push("reluctantly spending time in $his arcology's cosmopolitan public spaces.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("gasping at a report on what's expected of slaves as part of your new religion.")>>
+			<<set _hostageAction.push("gasping at the absurdity of a video of a religious service in your arcology.")>>
+			<<set _hostageAction.push("cautiously chatting with a group of slaves in $his arcology's cosmopolitan public spaces.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("crying over a report on what's expected of slaves as part of your new religion.")>>
+			<<set _hostageAction.push("shaking $his head in incomprehension at video of a religious service in your arcology.")>>
+			<<set _hostageAction.push("happily chatting with a group of slaves in $his arcology's cosmopolitan public spaces.")>>
+		<<else>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("making a public speech on the horrors of your new religion.")>>
+			<<set _hostageAction.push("laughing at the ridiculousness of a video of a religious service in your arcology.")>>
+			<<set _hostageAction.push("chatting with a group of slaves and feeling right at home in $his arcology's cosmopolitan public spaces.")>>
+		<</if>>
+	<<case "Multiculturalism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set _hostageAction.push("refusing the tenets of $his new religion.")>>
+			<<set _hostageAction.push("refusing to pray for your arcology's salvation.")>>
+			<<set _hostageAction.push("freaking out as several men approach $him for sex.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 10>>
+			<<set $hostage.counter.vaginal += 10>>
+			<<set $hostage.counter.anal += 10>>
+			<<set $hostage.counter.mammary += 10>>
+			<<set _hostageAction.push("reluctantly following the tenets of $his new religion.")>>
+			<<set _hostageAction.push("questioning why $he is made to pray for your arcology's salvation.")>>
+			<<set _hostageAction.push("crying as $he is forced to service three dicks at once.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 25>>
+			<<set $hostage.counter.vaginal += 25>>
+			<<set $hostage.counter.anal += 25>>
+			<<set $hostage.counter.mammary += 25>>
+			<<set _hostageAction.push("praying for the souls of the citizens and slaves of your arcology.")>>
+			<<set _hostageAction.push("trying to pray for your arcology's salvation.")>>
+			<<set _hostageAction.push("attempting to please the three dicks in $him as quickly as possible.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.counter.mammary += 50>>
+			<<set _hostageAction.push("crying over the souls of the citizens and slaves of your arcology.")>>
+			<<set _hostageAction.push("steadily praying for your arcology's salvation.")>>
+			<<set _hostageAction.push("enjoying belonging to a religion so intent to fill $him with dicks.")>>
+		<<else>>
+			<<set $hostage.counter.oral += 100>>
+			<<set $hostage.counter.vaginal += 100>>
+			<<set $hostage.counter.anal += 100>>
+			<<set $hostage.counter.mammary += 100>>
+			<<set _hostageAction.push("imploring the public to pray for the salvation of the citizens and slaves of your arcology.")>>
+			<<set _hostageAction.push("desperately praying for the salvation of your arcology.")>>
+			<<set _hostageAction.push("having a religious experience with as many dicks $his body can fit inside itself.")>>
+		<</if>>
+	<<case "Intellectual Dependency">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set _hostageAction.push("refusing to pay attention to $his lessons.")>>
+			<<set _hostageAction.push("refusing to act like a proper $girl.")>>
+			<<set _hostageAction.push("forced into remedial training after threatening $his owner's reputation.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 10>>
+			<<set $hostage.counter.vaginal += 10>>
+			<<set $hostage.counter.anal += 10>>
+			<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant+1, 0, 30)>>
+			<<set $hostage.skill.oral = Math.clamp($hostage.skill.oral+5, 0, 100)>>
+			<<set $hostage.skill.entertainment = Math.clamp($hostage.skill.entertainment+5, 0, 100)>>
+			<<set $hostage.skill.anal = Math.clamp($hostage.skill.anal+5, 0, 100)>>
+			<<set $hostage.skill.vaginal = Math.clamp($hostage.skill.vaginal+5, 0, 100)>>
+			<<set $hostage.skill.whoring = Math.clamp($hostage.skill.whoring+5, 0, 100)>>
+			<<set _hostageAction.push("crying silently while being positioned to properly please $his partner.")>>
+			<<set _hostageAction.push("reluctantly balancing a book on $his head to perfect $his posture.")>>
+			<<set _hostageAction.push("reluctantly practicing enunciation to not risk angering $his owner.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 10>>
+			<<set $hostage.counter.vaginal += 10>>
+			<<set $hostage.counter.anal += 10>>
+			<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant+2, 0, 30)>>
+			<<set $hostage.skill.oral = Math.clamp($hostage.skill.oral+5, 0, 100)>>
+			<<set $hostage.skill.entertainment = Math.clamp($hostage.skill.entertainment+5, 0, 100)>>
+			<<set $hostage.skill.anal = Math.clamp($hostage.skill.anal+5, 0, 100)>>
+			<<set $hostage.skill.vaginal = Math.clamp($hostage.skill.vaginal+5, 0, 100)>>
+			<<set $hostage.skill.whoring = Math.clamp($hostage.skill.whoring+5, 0, 100)>>
+			<<set _hostageAction.push("attempting to pass an exam on sexual satisfaction.")>>
+			<<set _hostageAction.push("trying to show no reaction as $he is felt up by $his owner's client.")>>
+			<<set _hostageAction.push("attempting to please $his owner's friends and not be a failure.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 10>>
+			<<set $hostage.counter.vaginal += 10>>
+			<<set $hostage.counter.anal += 10>>
+			<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant+2, 0, 30)>>
+			<<set $hostage.skill.oral = Math.clamp($hostage.skill.oral+5, 0, 100)>>
+			<<set $hostage.skill.entertainment = Math.clamp($hostage.skill.entertainment+5, 0, 100)>>
+			<<set $hostage.skill.anal = Math.clamp($hostage.skill.anal+5, 0, 100)>>
+			<<set $hostage.skill.vaginal = Math.clamp($hostage.skill.vaginal+5, 0, 100)>>
+			<<set $hostage.skill.whoring = Math.clamp($hostage.skill.whoring+5, 0, 100)>>
+			<<set _hostageAction.push("demonstrating proper technique in drawing out a powerful ejaculation.")>>
+			<<set _hostageAction.push("elegantly luring in a client for $his owner.")>>
+			<<set _hostageAction.push("giving a blowjob to $his owner's client during business negotiations.")>>
+		<<else>>
+			<<set $hostage.counter.oral += 10>>
+			<<set $hostage.counter.vaginal += 10>>
+			<<set $hostage.counter.anal += 10>>
+			<<set _hostageAction.push("diligently showcasing a series of advanced sexual positions to a group of fresh <<= _girlU>>s.")>>
+			<<set _hostageAction.push("acting with refined grace even as a strand of cum splashes across $his face.")>>
+			<<set _hostageAction.push("holding perfectly still as $his owner and a client eat sushi off $his nude body. Even as they amuse themselves with $his vulnerable clit and nipples, $he shows no reaction.")>>
+		<</if>>
+	<<case "Slave Professionalism">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust += 5>>
+			<<set $hostage.devotion += 5>>
+			<<set $hostage.counter.vaginal += 10>>
+			<<set $hostage.energy += 5>>
+			<<set $hostage.addict += 2>>
+			<<set $hostage.hLength += 7>>
+			<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant-5, 0, 30)>>
+			<<set $hostage.intelligence = Math.clamp($hostage.intelligence-5, -100, 100)>>
+			<<set _hostageAction.push("sobbing as $he struggles to not masturbate after a large hit of aphrodisiacs.")>>
+			<<set _hostageAction.push("holding $his head and struggling to recite $his favorite poem.")>>
+			<<set _hostageAction.push("refusing to put on the makeup presented to $him.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust += 5>>
+			<<set $hostage.devotion += 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant-5, 0, 30)>>
+			<<set $hostage.intelligence = Math.clamp($hostage.intelligence-5, -100, 100)>>
+			<<set $hostage.counter.oral += 30>>
+			<<set $hostage.counter.vaginal += 30>>
+			<<set $hostage.counter.anal += 30>>
+			<<set $hostage.energy += 5>>
+			<<set $hostage.addict += 2>>
+			<<set $hostage.hLength += 7>>
+			<<set _hostageAction.push("crying as $he rides a dick to orgasm.")>>
+			<<set _hostageAction.push("trying not to lose the memories of $his life before being captured.")>>
+			<<set _hostageAction.push("hesitantly trying on clothes and admiring $his figure in the mirror.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust += 5>>
+			<<set $hostage.devotion += 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant-5, 0, 30)>>
+			<<set $hostage.intelligence = Math.clamp($hostage.intelligence-10, -100, 100)>>
+			<<set $hostage.counter.oral += 50>>
+			<<set $hostage.counter.vaginal += 50>>
+			<<set $hostage.counter.anal += 50>>
+			<<set $hostage.energy += 5>>
+			<<set $hostage.addict += 2>>
+			<<set $hostage.hLength += 7>>
+			<<set _hostageAction.push("being presented with a selection of amusements and instead opting for the one between _hisU legs.")>>
+			<<set _hostageAction.push("walking around with $his breasts bouncing out of $his top and $his short skirt revealing $his lack of panties.")>>
+			<<set _hostageAction.push("admiring $himself in the mirror.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust += 5>>
+			<<set $hostage.devotion += 5>>
+			<<set $hostage.intelligenceImplant = Math.clamp($hostage.intelligenceImplant-5, 0, 30)>>
+			<<set $hostage.intelligence = Math.clamp($hostage.intelligence-10, -100, 100)>>
+			<<set $hostage.counter.oral += 70>>
+			<<set $hostage.counter.vaginal += 40>>
+			<<set $hostage.counter.anal += 30>>
+			<<set $hostage.energy += 5>>
+			<<set $hostage.addict += 2>>
+			<<set $hostage.hLength += 7>>
+			<<set $hostage.lips = Math.clamp($hostage.lips+5, 0, 100)>>
+			<<if $seePreg != 0>>
+				<<set $hostage.preg++>>
+				<<set $hostage.pregWeek++>>
+				<<run SetBellySize($hostage)>>
+			<</if>>
+			<<set _hostageAction.push("sloppily sucking a dick while taking it in both $his ass and pussy.")>>
+			<<set _hostageAction.push("struggling to fasten $his top before giving up and going without it.")>>
+			<<if $seePreg != 0>>
+				<<set _hostageAction.push("attempting to suck in $his ever growing pregnancy.")>>
+			<</if>>
+			<<set _hostageAction.push("pursing $his swollen lips at $his own reflection.")>>
+		<<else>>
+			<<set $hostage.counter.oral += 70>>
+			<<set $hostage.counter.vaginal += 40>>
+			<<set $hostage.counter.anal += 30>>
+			<<set $hostage.hLength += 7>>
+			<<set $hostage.lips = Math.clamp($hostage.lips+5, 0, 100)>>
+			<<if $seePreg != 0>>
+				<<set $hostage.preg++>>
+				<<set $hostage.pregWeek++>>
+				<<run SetBellySize($hostage)>>
+			<</if>>
+			<<set _hostageAction.push("taking as many dicks as $he can think of: one in the mouth, two in <<if $hostage.vagina > -1>>each<<else>>$his<</if>> hole, and another in each hand.")>>
+			<<set _hostageAction.push("pushing on a sliding door, begging to be let out.")>>
+			<<set _hostageAction.push("checking out $his reflection in a window, blissfully unaware of the show $he is giving to street below.")>>
+		<</if>>
+	<<case "Petite Admiration">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 1>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set $hostage.counter.anal += 1>>
+			<<set _hostageAction.push("struggling in vain as $he is carried around by $his towering partner.")>>
+			<<set _hostageAction.push("crammed under a bed to escape $his much larger partner.")>>
+			<<set _hostageAction.push("struggling to pull $his head away from $his much larger parnter's crotch.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 7>>
+			<<set $hostage.counter.vaginal += 3>>
+			<<set $hostage.counter.anal += 3>>
+			<<set _hostageAction.push("crying to $himself in the arms of $his towering partner as $he is carried around one of the arcology's public spaces.")>>
+			<<set _hostageAction.push("cringing as $his much larger partner sits $him in _hisU lap and paws at $him.")>>
+			<<set _hostageAction.push("crying gently as $his much larger partner forces $his face to _hisU crotch.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 15>>
+			<<set $hostage.counter.vaginal += 7>>
+			<<set $hostage.counter.anal += 7>>
+			<<set _hostageAction.push("calmly letting $his towering partner carry $him around one of the arcology's public spaces.")>>
+			<<set _hostageAction.push("carefully sitting in $his much larger partner's lap and letting _himU fondle $his body.")>>
+			<<set _hostageAction.push("carefully putting $his mouth to use on $his much larger partner's crotch.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 15>>
+			<<set $hostage.counter.vaginal += 7>>
+			<<set $hostage.counter.anal += 7>>
+			<<set _hostageAction.push("happily letting $his towering partner carry $him around one of the arcology's public spaces as $he fondles _hisU genitals.")>>
+			<<set _hostageAction.push("happily resting in $his much larger partner's lap as _heU pets $his head.")>>
+			<<set _hostageAction.push("happily putting $his mouth to work on $his much larger partner's genitals.")>>
+		<<else>>
+			<<set $hostage.counter.oral += 30>>
+			<<set $hostage.counter.vaginal += 15>>
+			<<set $hostage.counter.anal += 15>>
+			<<set _hostageAction.push("begging for $his towering partner to pick $him up and take $him for a walk'n'fuck.")>>
+			<<set _hostageAction.push("enjoying the feeling of $his much larger partner inside of $him as $he rests on _hisU lap.")>>
+			<<set _hostageAction.push("happily putting $his mouth to work on $his much larger partner's genitals as _heU returns the favor.")>>
+		<</if>>
+	<<case "Statuesque Glorification">>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 1>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set $hostage.counter.anal += 1>>
+			<<set _hostageAction.push("sitting on a table, out of reach of a shorter _womanU and swearing at _himU.")>>
+			<<set _hostageAction.push("keeping $his smaller partner from reaching $him.")>>
+			<<set _hostageAction.push("rebuking $his smaller partner's advances.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 3>>
+			<<set $hostage.counter.vaginal += 7>>
+			<<set $hostage.counter.anal += 7>>
+			<<set _hostageAction.push("crying gently as a shorter _womenU eagerly fondles $him.")>>
+			<<set _hostageAction.push("shying away from $his shorter partner.")>>
+			<<set _hostageAction.push("curiously exploring $his shorter partner's body.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.oral += 7>>
+			<<set $hostage.counter.vaginal += 13>>
+			<<set $hostage.counter.anal += 13>>
+			<<set _hostageAction.push("trying to catch a break from $his shorter partner's tongue in $his pussy.")>>
+			<<set _hostageAction.push("spooning $his shorter partner.")>>
+			<<set _hostageAction.push("cautiously giving $his shorter partner a full body massage.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.oral += 7>>
+			<<set $hostage.counter.vaginal += 13>>
+			<<set $hostage.counter.anal += 13>>
+			<<set _hostageAction.push("patting $his tiny lover's head.")>>
+			<<set _hostageAction.push("resting $his head on $his tiny love's lap.")>>
+			<<set _hostageAction.push("helping support $his tiny lover so _heU can fuck $him properly.")>>
+		<<else>>
+			<<set $hostage.counter.oral += 15>>
+			<<set $hostage.counter.vaginal += 25>>
+			<<set $hostage.counter.anal += 25>>
+			<<set _hostageAction.push("basking in the afterglow with $his tiny love seated in $his lap.")>>
+			<<set _hostageAction.push("whispering something sexy into $his tiny lover's ear.")>>
+			<<set _hostageAction.push("hugging $his tiny lover tight as _heU fucks $him as deep as _heU can.")>>
+		<</if>>
+	<<default>>
+		<<if $rivalryDuration <= 5>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set _hostageAction.push("refusing to believe what happens to slaves who don't fit into your arcology's Revivalist culture.")>>
+			<<set _hostageAction.push("refusing to believe a video of your arcology's Revivalist public events is real.")>>
+			<<set _hostageAction.push("refusing to socialize with other slaves.")>>
+		<<elseif $rivalryDuration <= 10>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("reluctantly reading a report on what happens to slaves who don't fit into your arcology's Revivalist culture.")>>
+			<<set _hostageAction.push("questioning the validity of a video of your arcology's Revivalist public events.")>>
+			<<set _hostageAction.push("reluctantly spending time in $his arcology's modern public spaces.")>>
+		<<elseif $rivalryDuration <= 15>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.fetishStrength += 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("gasping at a report on what happens to slaves who don't fit into your arcology's Revivalist culture.")>>
+			<<set _hostageAction.push("gasping at the absurdity of a video of your arcology's Revivalist public events.")>>
+			<<set _hostageAction.push("cautiously chatting with a group of slaves in $his arcology's modern public spaces.")>>
+		<<elseif $rivalryDuration <= 20>>
+			<<set $hostage.trust -= 5>>
+			<<set $hostage.devotion -= 5>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("crying over a report on what happens to slaves who don't fit into your arcology's Revivalist culture.")>>
+			<<set _hostageAction.push("shaking $his head in incomprehension at video of your arcology's Revivalist public events.")>>
+			<<set _hostageAction.push("happily chatting with a group of slaves in $his arcology's modern public spaces.")>>
+		<<else>>
+			<<set $hostage.counter.vaginal += 1>>
+			<<set _hostageAction.push("educating the public on what happens to slaves who don't fit into your arcology's Revivalist culture.")>>
+			<<set _hostageAction.push("laughing at the ridiculousness of a video of your arcology's Revivalist public events.")>>
+			<<set _hostageAction.push("chatting with a group of slaves and feeling right at home in $his arcology's modern public spaces.")>>
+		<</if>>
+	<</switch>>
+	<<= _hostageAction.random()>>
+<</if>>
+<</if>>
+
+<br><br>
+
+<<if $rivalGender == 2>>
+	<<set _hisR = "his">>
+	<<set _himR = "him">>
+	<<set _HeR = "He">>
+	<<set _HisR = capFirstChar(_hisR)>>
+<<else>>
+	<<set _hisR = "her">>
+	<<set _himR = "her">>
+	<<set _HeR = "She">>
+	<<set _HisR = capFirstChar(_hisR)>>
+<</if>>
+
+You remind yourself that success in this conflict will not be defined by the traditional measures of impending victory and defeat. The primary concern here is the weight of your holdings against those of your opponent. Improving your arcology's prosperity will move you closer to victory<<if $rivalSet == 1>>, and so will attacking the prosperity of your rival's neighboring arcology through economic means<</if>>. Of course, you can also take more direct action.
+
+<br><br>
+
+<<= capFirstChar($assistant.name)>> collates several options for directly attacking your rival. This is a corporate war, not a military one; your peers would not tolerate a direct attack on _himR. You must bankrupt your opponent so they are no longer able to hide within the physical and intangible fortress that is their arcology. Your rival <<if ($rivalOwner-$rivalryPower)/$arcologies[0].prosperity < 0.6>>is on their economic knees, putting them on the verge of defeat.<<elseif ($rivalOwner-$rivalryPower)/$arcologies[0].prosperity < 0.7>>is in a bad financial state, well on the way to final dissolution and defeat.<<elseif ($rivalOwner-$rivalryPower)/$arcologies[0].prosperity < 0.8>>has taken some hard corporate blows but is still standing.<<elseif ($rivalOwner-$rivalryPower)/$arcologies[0].prosperity < 0.9>>is starting to feel the pressure.<<else>>is essentially undamaged; you have hard work ahead of you.<</if>>
+
+<br><br>
+
+<span id="result">
+<<link "Apply <<print cashFormat(10000)>> in standard corporate warfare">>
+	<<if random(1,100) > 50>>
+		<<replace "#result">>
+		Money is your infantry, your weapon, your ammunition in one. Last century, your soldiers would have died taking the enemy's positions. Today, your ¤ die @@.green;taking@@ _hisU holdings. Once more unto the breach.
+		<<run cashX(-10000, "war")>>
+		<<set $rivalryPower += 2>>
+		<</replace>>
+	<<else>>
+		<<replace "#result">>
+		Money is your infantry, your weapon, your ammunition in one. Last century, your soldiers would have died before the enemy's machine guns. Today, your ¤ die @@.red;failing to take@@ _hisU holdings. Once more unto the breach.
+		<<run cashX(-10000, "war")>>
+		<<set $rivalryPower += 1>>
+		<</replace>>
+	<</if>>
+<</link>>
+<br><<link "Spend <<print cashFormat(10000)>> funding sabotage">>
+	<<if random(1,100) > 70>>
+		<<replace "#result">>
+		Since you are not so uncouth as to, for example, help fund a coup attempt, you fund traditional acts of corporate sabotage, including hacking, slander, and actual, physical thievery. There are some @@.red;minor rumors@@ that you are to blame, but they're outweighed by the @@.green;great pressure@@ these incidents put on your enemy.
+		<<run cashX(-10000, "war")>>
+		<<run repX(-100, "war")>>
+		<<set $rivalryPower += 5>>
+		<</replace>>
+	<<else>>
+		<<replace "#result">>
+		Since you are not so uncouth as to, for example, help fund a coup attempt, you fund traditional acts of corporate sabotage, including hacking, slander, and actual, physical thievery. Unfortunately, you seem to be a step behind this week. Your enemy @@.red;prevents@@ many of your attacks, and even manages to turn a few minor players into public confessions that @@.red;damage@@ your reputation.
+		<<run cashX(-10000, "war")>>
+		<<run repX(-500, "war")>>
+		<<set $rivalryPower += 2>>
+		<</replace>>
+	<</if>>
+<</link>>
+<br><<link "Use <<print cashFormat(25000)>> creating local shortages">>
+	<<replace "#result">>
+	With enough money, it's entirely possible to temporarily overwhelm even the advanced free market of the Free Cities. You choose a few critical items — pharmaceutical materials, electronic components, and other physical items — and purchase shipments intended for your rival's arcology. _HisR tenants are @@.green;seriously inconvenienced@@ and blame their difficulties on their hapless landlord.
+	<<run cashX(-25000, "war")>>
+	<<set $rivalryPower += 3>>
+	<</replace>>
+<</link>>
+<br><<link "Devote <<print cashFormat(50000)>> to purchasing the support of your peers">>
+	<<replace "#result">>
+	Your fellow arcology owners have an interest in seeing the funder of the Daughters' attempt on you destroyed, but few of them are willing to spend any money or real effort on the matter. You do a few of them the favor of making the money and effort spent yours. Your rival finds _hisR dealings with your mutual peers becoming @@.green;strangely difficult.@@ Market opinion is swinging your way.
+	<<run cashX(-50000, "war")>>
+	<<set $rivalryPower += 5>>
+	<</replace>>
+<</link>>
+<<if $arcologies[0].FSRestartDecoration == 100>>
+	<<if $rep >= 15000>>
+		<br><<link "Use your connections to throttle your rival's arcology">>
+			<<replace "#result">>
+			With every external, and several internal, supply lines severed, _hisR tenants are faced with imminent destruction and @@.green;rise up@@ against their hapless landlord. _HeR will not be able to weather such a siege for long.
+			<<set $rivalryPower += 10>>
+			<</replace>>
+		<</link>>&nbsp;&nbsp;&nbsp;&nbsp;//This option is available due to your @@.springgreen;societal connections,@@ and will economically devastate your rival//
+	<</if>>
+<</if>>
+<<if ($PC.career == "mercenary") || ($PC.career == "arcology owner")>>
+	<<if $mercenaries >= 3>>
+		<br><<link "Your peers will tolerate an attack if it's covert">>
+			<<replace "#result">>
+				One night, you're working late in your office, $assistant.name's avatar glowing companionably beside you. Without preamble, _heA reports to you in _hisA normal tones, "Team One reports
+				<<switch $rivalryFS>>
+				<<case "Racial Subjugationism">>Racemixer
+				<<case "Racial Supremacism">>Miscegenator
+				<<case "Repopulation Focus">>Sterilizer
+				<<case "Eugenics">>Breeder
+				<<case "Gender Radicalism">>Handholder
+				<<case "Gender Fundamentalism">>Sodomite
+				<<case "Paternalism">>Lucifer
+				<<case "Degradationism">>Archangel Prime
+				<<case "Body Purism">>Plastic Surgeon
+				<<case "Transformation Fetishism">>Purist One
+				<<case "Youth Preferentialism">>Cake Eater
+				<<case "Maturity Preferentialism">>Epheb
+				<<case "Slimness Enthusiasm">>Grower
+				<<case "Asset Expansionism">>Flat Lover
+				<<case "Pastoralism">>Gym Rat
+				<<case "Physical Idealism">>Feeder
+				<<case "Hedonistic Decadence">>Gym Rat
+				<<case "Chattel Religionism">>Cultural Marxist
+				<<case "Multiculturalism">>Prophet
+				<<case "Intellectual Dependency">>Teacher
+				<<case "Slave Professionalism">>Brain Drainer
+				<<case "Petite Admiration">>Macrophile
+				<<case "Statuesque Glorification">>Midget Muncher
+				<<default>>Target One
+				<</switch>>
+				EKIA. Confirm, E. K. I. A. No other casualties, team exfiltrating."
+				<<set $rivalOwner = 0, $rivalryPower = 0>>
+				<<if $rivalSet != 0>>
+					<<for _pra = 0; _pra < $arcologies.length; _pra++>>
+						<<if $arcologies[_pra].rival == 1>>
+							<<set $arcologies[_pra].embargo = 0>>
+							<<set $arcologies[_pra].embargoTarget = -1>>
+							<<set $arcologies[_pra].influenceTarget = -1>>
+							<<set $arcologies[_pra].rival = 0>>
+							<<set $arcologies[_pra].government = "direct democracy">>
+							<<break>>
+						<</if>>
+					<</for>>
+				<</if>>
+				<<if $hostageAnnounced == 1>>
+					$assistant.name pauses. "Also confirm package is secure."
+					<<set $hostageRescued = 1>>
+				<</if>>
+				You go back to your work.
+			<</replace>>
+		<</link>>&nbsp;&nbsp;&nbsp;&nbsp;//This option is available due to your @@.springgreen;military background,@@ and will immediately end the conflict without enslaving your rival//
+	<</if>>
+<</if>>
+
+<<if ($PC.skill.hacking >= 100)>>
+	<<if $mercenaries >= 3>>
+		<br><<link "Lock your rival down and let your mercs walk right in.">>
+			<<replace "#result">>
+				While you hold your rival's arcology's system under your complete control, $assistant.name finally reports to you in _hisA normal tones, "Team One reports
+				<<switch $rivalryFS>>
+				<<case "Racial Subjugationism">>Racemixer
+				<<case "Racial Supremacism">>Miscegenator
+				<<case "Repopulation Focus">>Sterilizer
+				<<case "Eugenics">>Breeder
+				<<case "Gender Radicalism">>Handholder
+				<<case "Gender Fundamentalism">>Sodomite
+				<<case "Paternalism">>Lucifer
+				<<case "Degradationism">>Archangel Prime
+				<<case "Body Purism">>Plastic Surgeon
+				<<case "Transformation Fetishism">>Purist One
+				<<case "Youth Preferentialism">>Cake Eater
+				<<case "Maturity Preferentialism">>Epheb
+				<<case "Slimness Enthusiasm">>Grower
+				<<case "Asset Expansionism">>Flat Lover
+				<<case "Pastoralism">>Gym Rat
+				<<case "Physical Idealism">>Feeder
+				<<case "Hedonistic Decadence">>Gym Rat
+				<<case "Chattel Religionism">>Cultural Marxist
+				<<case "Multiculturalism">>Prophet
+				<<case "Intellectual Dependency">>Teacher
+				<<case "Slave Professionalism">>Brain Drainer
+				<<case "Petite Admiration">>Macrophile
+				<<case "Statuesque Glorification">>Midget Muncher
+				<<default>>Target One
+				<</switch>>
+				<<if random(0,100) > 50>>
+					Bagged and tagged. Confirm, bagged and tagged. No
+					<<set _rivalCaptured = 1>>
+				<<else>>
+					EKIA. Confirm, E. K. I. A. No other
+					<<set $rivalOwner = 0>>
+				<</if>>
+				casualties, team exfiltrating."
+				<<set $rivalryPower = 0>>
+				<<if $rivalSet != 0>>
+					<<for _pra = 0; _pra < $arcologies.length; _pra++>>
+						<<if $arcologies[_pra].rival == 1>>
+							<<set $arcologies[_pra].embargo = 0>>
+							<<set $arcologies[_pra].embargoTarget = -1>>
+							<<set $arcologies[_pra].influenceTarget = -1>>
+							<<set $arcologies[_pra].rival = 0>>
+							<<set $arcologies[_pra].government = "direct democracy">>
+							<<if _rivalCaptured == 1 && $arcologies[_pra].FSSupremacist > 20>>
+								<<set $rivalRace = $arcologies[_pra].FSSupremacistRace>>
+							<<elseif _rivalCaptured == 1 && $arcologies[_pra].FSSubjugationist > 20>>
+								<<set $rivalRace = setup.filterRacesLowercase.filter(race => race !== $arcologies[_pra].FSSubjugationistRace)>>
+							<</if>>
+							<<break>>
+						<</if>>
+					<</for>>
+				<</if>>
+				<<if $hostageAnnounced == 1>>
+					$assistant.name pauses. "Also confirm package is secure."
+					<<set $hostageRescued = 1>>
+				<</if>>
+				Smirking to yourself at a job well done, you
+				<<if _rivalCaptured != 1>>
+					return to your usual work.
+				<<else>>
+					await the bastard's arrival.
+					<br><br>
+					<<include "P rivalry capture">>
+				<</if>>
+			<</replace>>
+		<</link>>&nbsp;&nbsp;&nbsp;&nbsp;//This option is available due to your @@.springgreen;your hacking mastery,@@ and will immediately end the conflict with a chance of enslaving your rival//
+	<</if>>
+<</if>>
+</span>

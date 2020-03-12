@@ -1,0 +1,439 @@
+:: Manage Penthouse [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Main", $showEncyclopedia = 1, $encyclopedia = "What the Upgrades Do">>
+
+<<if $cheatMode == 1>>
+	<div class="cheat-menu">[[Cheat Edit Arcology|MOD_Edit Arcology Cheat][$cheater = 1]]</div>
+<</if>>
+
+<h1>Penthouse</h1>
+
+<p>
+	<div class="scene-intro">
+	<<include "Office Description">>
+	<<if $PC.career == "mercenary">>
+		You look back at the rifle. It could never hold a zero, and would fail to feed if it wasn't given just the right amount of lubricant. But sometimes, you'd give anything for one more mission with that shitty old rifle.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $SF.Toggle && $SF.Active >= 1>>
+		<br>
+		<<link "Take your express elevator down to $SF.Lower""Firebase">> <</link>>
+	<<elseif $SF.FS.Tension > 100>>
+		<<= App.SF.fsIntegration('BadOutcome_Firebase')>>
+	<</if>>
+	</div>
+</p>
+
+<h2>Penthouse Capacity</h2>
+
+<p>
+	<div>
+	The main penthouse dormitory, which houses slaves who aren't living in a facility and aren't granted a luxurious standard of living, has a capacity of ''$dormitory'' slaves.
+	[[Expand the dormitory|Manage Penthouse][cashX(forceNeg(Math.trunc($dormitory*1000*$upgradeMultiplierArcology)), "capEx"), $dormitory += 10, $PC.skill.engineering += .1]]
+	<span class="detail">
+		Costs <<print cashFormat(Math.trunc($dormitory*1000*$upgradeMultiplierArcology))>>
+		<div class="indent">Exceeding this limit is bad for slaves' health, devotion and trust.</div>
+	</span>
+	</div>
+
+	<div>
+	The penthouse also features little individual rooms, which house slaves who do enjoy a luxurious standard of living. They have a capacity of ''$rooms'' slaves.
+	[[Expand the rooms|Manage Penthouse][cashX(forceNeg(Math.trunc($rooms*1000*$upgradeMultiplierArcology)), "capEx"), $rooms += 5, $PC.skill.engineering += .1]]
+	<span class="detail">
+		Costs <<print cashFormat(Math.trunc($rooms*1000*$upgradeMultiplierArcology))>>
+		<div class="indent">The number of rooms determines the number of slaves that can be granted luxury.</div>
+	</span>
+	</div>
+</p>
+
+<h2>Penthouse Facilities</h2>
+
+<p>
+	<div>
+	<<if $masterSuite == 0>>
+		[[Improve your master bedroom to house a harem of personal toys|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $masterSuite = 1, $PC.skill.engineering += 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		Your penthouse is capped by a master suite with room for an entire harem of personal toys.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $servantsQuarters == 0>>
+		[[Build a dormitory to house large numbers of house servants|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $servantsQuarters = 5, $PC.skill.engineering += 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		Your penthouse includes a dormitory to house large numbers of house servants.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $schoolroom == 0>>
+		[[Build a schoolroom where slaves can be educated|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $schoolroom = 5, $PC.skill.engineering += 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		Your penthouse includes a schoolroom where slaves can be educated.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $spa == 0>>
+		[[Install open baths to provide relaxation space for resting slaves|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $spa = 5, $PC.skill.engineering += 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		The penthouse includes a fully appointed spa where slaves can rest and recuperate.
+	<</if>>
+	</div>
+
+	<<if $familyTesting == 1 && $seePreg != 0>>
+		<<if $experimental.nursery == 1>>
+			<div>
+				<<if $nursery == 0>>
+					[[Build a nursery to raise children from birth|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $nursery = 5, $nurseryNannies = 1, $PC.skill.engineering += 1]]
+					<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+				<<else>>
+						The penthouse has a nursery built where infants can be brought up.
+				<</if>>
+			</div>
+		<</if>>
+	<</if>>
+
+	<div>
+	<<if $clinic == 0>>
+		[[Expand the surgical recovery area to accommodate patients and a nurse|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $clinic = 5, $PC.skill.engineering += 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		The surgical recovery area has been expanded to take in more unhealthy slaves and be staffed by a nurse.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $cellblock == 0>>
+		[[Construct cells to properly confine disobedient slaves|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $cellblock = 5, $PC.skill.engineering += 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		The lower level of the penthouse includes a hallway of cells to confine slaves in.
+	<</if>>
+	</div>
+
+	<<if $familyTesting == 1 && $seePreg != 0>>
+		<div>
+		<<if $arcologyUpgrade.grid == 1>>
+			<<if $incubator == 0>>
+				[[Install an incubation chamber to rapidly age children|Manage Penthouse][cashX(forceNeg(Math.trunc(100000*$upgradeMultiplierArcology)), "capEx"), $incubator = 1, $PC.skill.engineering += 1, $readySlaves = 0]]
+				<span class="detail">Costs <<print cashFormat(Math.trunc(100000*$upgradeMultiplierArcology))>></span>
+			<<else>>
+				The penthouse has a specialized facility dedicated to rapidly aging children.
+			<</if>>
+		<<elseif $arcologyUpgrade.hydro == 1 || $arcologyUpgrade.apron == 1>>
+			<span class="note">Installation of a child aging facility will require the arcology's electrical infrastructure to be overhauled.</span>
+		<</if>>
+		</div>
+	<</if>>
+
+	<div>
+	<<if $HGSuite != 1>>
+		[[Build a small suite for a Head Girl to live in|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $HGSuite = 1, $PC.skill.engineering += 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		There is a small but handsome suite next to yours reserved for the Head Girl.
+	<</if>>
+	</div>
+</p>
+
+<h2>Penthouse Upgrades</h2>
+
+<p>
+	<div>
+	<<if $servantMilkers != 1>>
+		Your penthouse is equipped with basic milkers for lactating slaves. [[Install more and tie them into the liquid systems|Manage Penthouse][cashX(forceNeg(Math.trunc(25000*$upgradeMultiplierArcology)), "capEx"), $servantMilkers = 1, $PC.skill.engineering += .1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(25000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		Every room in the penthouse is equipped with milkers tied into the liquid systems, letting slaves with full udders drain them anywhere.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $boobAccessibility != 1>>
+		<<if $pregAccessibility == 1 || $ballsAccessibility || $buttAccessibility>>
+			Your penthouse has already been widened for overly wide slaves but there are no special accommodations for slaves with enormous breasts. [[Remodel for accessibility|Manage Penthouse][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "capEx"), $boobAccessibility = 1, $PC.skill.engineering += .5]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>></span>
+		<<else>>
+			Your penthouse has no special accessibility provisions for slaves with enormous breasts. [[Remodel for accessibility|Manage Penthouse][cashX(forceNeg(Math.trunc(50000*$upgradeMultiplierArcology)), "capEx"), $boobAccessibility = 1, $PC.skill.engineering += 1]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(50000*$upgradeMultiplierArcology))>></span>
+		<</if>>
+	<<else>>
+		The entire penthouse has been remodeled to make life with enormous breasts easier. The doorways have been widened, and tables, sinks, and other items now have two levels: one at shoulder height for slaves to use, and another at waist height for them to rest their tits on while they do.
+	<</if>>
+	</div>
+
+	<<if $seeHyperPreg == 1>>
+		<div>
+		<<if $pregAccessibility != 1>>
+			<<if $boobAccessibility == 1 || $ballsAccessibility || $buttAccessibility>>
+				Your penthouse has already been widened to make life for overly wide slaves easier but there are no special accommodations for slaves with enormous pregnancies. [[Remodel for accessibility|Manage Penthouse][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "capEx"), $pregAccessibility = 1, $PC.skill.engineering += .5]]
+				<span class="detail">Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>></span>
+			<<else>>
+				Your penthouse has no special accessibility provisions for slaves with enormous pregnancies. [[Remodel for accessibility|Manage Penthouse][cashX(forceNeg(Math.trunc(50000*$upgradeMultiplierArcology)), "capEx"), $pregAccessibility = 1, $PC.skill.engineering += 1]]
+				<span class="detail">Costs <<print cashFormat(Math.trunc(50000*$upgradeMultiplierArcology))>></span>
+			<</if>>
+		<<else>>
+			The entire penthouse has been remodeled to make life with enormous pregnancies easier. The doorways have been widened, and tables, sinks, and other items are now designed to work around a massively distended belly.
+		<</if>>
+		</div>
+	<</if>>
+
+	<<if $arcologies[0].FSAssetExpansionistResearch == 1>>
+		<div>
+		<<if $dickAccessibility != 1>>
+			Your penthouse has no special accessibility provisions for slaves with enormous dicks. [[Remodel for accessibility|Manage Penthouse][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "capEx"), $dickAccessibility = 1, $PC.skill.engineering += .5]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>></span>
+		<<else>>
+			The entire penthouse has been remodeled to make life with enormous dicks easier. Carts, slings and harnesses are available to keep things from dragging and there is now plenty of room for huge genitals to occupy when a slave must use appliances, tables and seats.
+		<</if>>
+		</div>
+
+		<div>
+		<<if $ballsAccessibility != 1>>
+			<<if $boobAccessibility == 1 || $buttAccessibility || $pregAccessibility>>
+				Your penthouse has already been widened to make life for overly wide slaves easier but there are no special accommodations for slaves with enormous testicles. [[Remodel for accessibility|Manage Penthouse][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "capEx"), $ballsAccessibility = 1, $PC.skill.engineering += .5]]
+				<span class="detail">Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>></span>
+			<<else>>
+				Your penthouse has no special accessibility provisions for slaves with enormous testicles. [[Remodel for accessibility|Manage Penthouse][cashX(forceNeg(Math.trunc(50000*$upgradeMultiplierArcology)), "capEx"), $ballsAccessibility = 1, $PC.skill.engineering += 1]]
+				<span class="detail">Costs <<print cashFormat(Math.trunc(50000*$upgradeMultiplierArcology))>></span>
+			<</if>>
+		<<else>>
+			The entire penthouse has been remodeled to make life with enormous testicles easier. The doorways have been widened, tables, sinks, and other items are now designed to fit over giant balls, drains have been widened to allow excessive cum to flow easier, and seats have been specially altered to allow plenty of ball room for seated slaves.
+		<</if>>
+		</div>
+
+		<div>
+		<<if $buttAccessibility != 1>>
+			<<if $boobAccessibility == 1 || $dickAccessibility || $ballsAccessibility>>
+				Your penthouse has already been widened to make life for overly wide slaves easier but there are no special accommodations for slaves with gigantic posteriors. [[Remodel for accessibility|Manage Penthouse][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "capEx"), $buttAccessibility = 1, $PC.skill.engineering += .5]]
+				<span class="detail">Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>></span>
+			<<else>>
+				Your penthouse has no special accessibility provisions for slaves with enormous posteriors. [[Remodel for accessibility|Manage Penthouse][cashX(forceNeg(Math.trunc(50000*$upgradeMultiplierArcology)), "capEx"), $buttAccessibility = 1, $PC.skill.engineering += 1]]
+				<span class="detail">Costs <<print cashFormat(Math.trunc(50000*$upgradeMultiplierArcology))>></span>
+			<</if>>
+		<<else>>
+			The entire penthouse has been remodeled to make life with enormous rears easier. The doorways have been widened, and anything that can be sat on is now extra, extra wide and reinforced to allow even the heaviest, biggest asses to comfortably rest upon it.
+		<</if>>
+		</div>
+	<</if>>
+
+	<<if $boobAccessibility > 0 || $pregAccessibility > 0 || $dickAccessibility > 0 || $ballsAccessibility > 0 || $buttAccessibility > 0>>
+		<<set _removeCost = Math.trunc(((5000*($boobAccessibility+$pregAccessibility+$dickAccessibility+$ballsAccessibility+$buttAccessibility)))*$upgradeMultiplierArcology)>>
+		<div class="detail">
+			[[Remove the accessibility renovations|Manage Penthouse][cashX(forceNeg(_removeCost), "capEx"), $boobAccessibility = 0, $pregAccessibility = 0, $dickAccessibility = 0, $ballsAccessibility = 0, $buttAccessibility = 0]] Will cost <<print cashFormat(_removeCost)>>
+		</div>
+	<</if>>
+
+	<div>
+	<<if $feeder == 0>>
+		[[Upgrade the kitchen's nutritional sensing systems|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $feeder = 1, $PC.skill.engineering += .1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		The kitchen mounts sensors to refine diets in real time.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $cockFeeder == 0>>
+		[[Enhance the feeding system with faux phalli|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $cockFeeder = 1, $PC.skill.engineering += .1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		The kitchen dispenses food from phalli slaves must suck off in order to eat. <span class="detail">[[Remove them|Manage Penthouse][$cockFeeder = 0]]</span>
+	<</if>>
+	</div>
+
+	<div>
+	<<if $suppository == 0>>
+		[[Replace the drug dispensers with reciprocating dildo suppositories|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $suppository = 1, $PC.skill.engineering += .1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		The kitchen applies drugs that can be absorbed rectally by assfucking slaves with dildos that cum the pharmaceuticals. <span class="detail">[[Remove them|Manage Penthouse][$suppository = 0]]</span>
+	<</if>>
+	</div>
+
+	<div>
+	<<if $dairy != 0>>
+		<<if $dairyPiping == 0>>
+			[[Install pipes connecting the Dairy to the rest of your penthouse for use in enema play|Manage Penthouse][cashX(forceNeg(Math.trunc(15000*$upgradeMultiplierArcology)), "capEx"), $dairyPiping = 1, $PC.skill.engineering += .5]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(15000*$upgradeMultiplierArcology))>></span>
+		<<else>>
+			Various taps around the penthouse supply product from $dairyName for use in enema play and force-feeding.
+		<</if>>
+	<<elseif $dairyPiping == 1>>
+		Various taps around the penthouse supply product from $dairyName for use in enema play and force-feeding. With no dairy to draw from, they are currently unused.
+	<</if>>
+	</div>
+
+	<<if $seePee == 1>>
+		<div>
+		<<if $wcPiping == 0>>
+			[[Install pipes connecting the slave bathrooms to the rest of your penthouse for use in watersports|Manage Penthouse][cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierArcology)), "capEx"), $wcPiping = 1, $PC.skill.engineering += .5]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology))>></span>
+		<<else>>
+			The plumbing underneath the slave bathrooms connects to various taps throughout the penthouse that can dispense its contents when needed.
+		<</if>>
+		</div>
+	<</if>>
+
+	<div>
+	<<if $studio == 0>>
+		[[Install a media hub to convert slave video feeds into pornography|Manage Penthouse][cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierArcology)), "capEx"), $studio = 1, $PC.skill.engineering += 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		The arcology's video systems are connected to a media hub that can convert slave video feeds into pornography.
+		<<if $studioFeed == 0>>
+			[[Upgrade the media hub to allow better control of pornographic content|Manage Penthouse][cashX(forceNeg(Math.trunc(15000*$upgradeMultiplierArcology)), "capEx"), $studioFeed = 1]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(15000*$upgradeMultiplierArcology))>></span>
+		<<else>>
+			It has been upgraded to allow superior control of a slave's pornographic content.
+		<</if>>
+	<</if>>
+	</div>
+
+	<div>
+	<<if $dojo == 0>>
+		[[Set up a personal armory to support a bodyguard|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $dojo = 1, $PC.skill.engineering += 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+	<<elseif $dojo == 1>>
+		There is a small armory next to your office that can support a bodyguard. [[Upgrade the armory with a private room for the bodyguard|Manage Penthouse][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $dojo = 2, $PC.skill.engineering += .5]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>></span>
+	<<else>>
+		There is a small armory next to your office that can support a bodyguard, with a little room for them to rest in when off duty.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $dispensary == 0>>
+		<<if $rep > 2000>>
+			[[Install a pharmaceutical fabricator|Manage Penthouse][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "capEx"), $dispensary = 1, $drugsCost = $drugsCost*.75, $PC.skill.engineering += .1]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>></span>
+		<<else>>
+			<span class="note">You lack the reputation to obtain cutting-edge pharmaceutical technology.</span>
+		<</if>>
+	<<else>>
+		There is a [[pharmaceutical fabricator|Dispensary]] attached to the surgery.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $ImplantProductionUpgrade == 0>>
+		<<if $rep > 2000>>
+			[[Install an implant manufactory|Manage Penthouse][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "capEx"), $ImplantProductionUpgrade = 1, $PC.skill.engineering += .1]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>></span>
+		<<else>>
+			<span class="note">You lack the reputation to obtain cutting-edge implant fabrication technology.</span>
+		<</if>>
+	<<else>>
+		There is a [[implant manufactory|Implant Manufactory]] attached to the surgery.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $organFarmUpgrade == 0>>
+		<<if $rep > 10000>>
+			[[Install an experimental organ farm|Manage Penthouse][cashX(forceNeg(Math.trunc(70000*$upgradeMultiplierArcology)), "capEx"), $organFarmUpgrade = 1, $PC.skill.engineering += .1]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(70000*$upgradeMultiplierArcology))>></span>
+		<<else>>
+			<span class="note">You lack the reputation to obtain an experimental organ fabricator.</span>
+		<</if>>
+	<<else>>
+		There is an [[organ farm|Organ Farm]] attached to the surgery.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $geneticMappingUpgrade == 0>>
+		<<if $rep > 14000>>
+			[[Install a genetic sequencer|Manage Penthouse][cashX(-120000, "capEx"), $geneticMappingUpgrade = 1, $PC.skill.engineering += .1]]
+			<span class="detail">Costs <<print cashFormat(120000)>></span>
+		<<else>>
+			<span class="note">You lack the reputation to purchase a cutting-edge genetic sequencer</span>
+		<</if>>
+	<<else>>
+		There is a [[genetic sequencer|Gene Lab]] attached to the surgery.
+	<</if>>
+	</div>
+
+	<div>
+	<<switch $prostheticsUpgrade>>
+	<<case 0>>
+		<<if ($rep > 8000)>>
+			[[Install basic equipment for attaching and maintenance of prosthetics|Manage Penthouse][cashX(forceNeg(Math.trunc(100000*$upgradeMultiplierArcology)), "capEx"), $prostheticsUpgrade = 1, $PC.skill.engineering += 1]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(100000*$upgradeMultiplierArcology))>></span>
+		<<else>>
+			<span class="note">You lack the reputation to buy basic equipment for attaching and maintenance of prosthetics.</span>
+		<</if>>
+	<<case 1>>
+		You have basic equipment for attaching and maintenance of prosthetics.
+		<<if ($rep > 12000)>>
+			[[Buy a contract for advanced prosthetics|Manage Penthouse][cashX(forceNeg(Math.trunc(100000*$upgradeMultiplierArcology)), "capEx"), $prostheticsUpgrade = 2]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(100000*$upgradeMultiplierArcology))>></span>
+		<<else>>
+			<span class="note">You lack the reputation to get a contract for advanced prosthetics.</span>
+		<</if>>
+	<<case 2>>
+		You have basic equipment for attaching and maintenance of prosthetics and a contract to guarantee the availability of advanced prosthetics.
+		<<if ($rep > 16000)>>
+			[[Buy a contract for high-tech prosthetics|Manage Penthouse][cashX(forceNeg(Math.trunc(100000*$upgradeMultiplierArcology)), "capEx"), $prostheticsUpgrade = 3]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(100000*$upgradeMultiplierArcology))>></span>
+		<<else>>
+			<span class="note">You lack the reputation to get a contract for high-tech prosthetics.</span>
+		<</if>>
+	<<case 3>>
+		You have basic equipment for attaching and maintenance of prosthetics and a contract to guarantee the availability of high-tech prosthetics.
+	<</switch>>
+	</div>
+
+	<<if $prostheticsUpgrade > 0>>
+		<div>
+		<<if $researchLab.level > 0>>
+			Your penthouse is equipped with an advanced prosthetic lab.
+		<<else>>
+			[[Clear out one of the floors and install equipment to construct prosthetics yourself|Manage Penthouse][cashX(forceNeg(Math.trunc(150000*$upgradeMultiplierArcology)), "capEx"), $researchLab.level = 1, $researchLab.maxSpace = 5, $PC.skill.engineering += 1]]
+			<span class="detail">
+				Costs <<print cashFormat(Math.trunc(150000*$upgradeMultiplierArcology))>>
+				<div class="indent">
+					Buying the equipment to construct prosthetics yourself is expensive but if you want to construct a lot of prosthetics it will pay out in the long run.
+				</div>
+			</span>
+		<</if>>
+		</div>
+	<</if>>
+</p>
+
+<p>
+	<div>
+	<<if $surgeryUpgrade == 0>>
+		<<if $rep > 10000>>
+			[[Upgrade the remote surgery|Manage Penthouse][cashX(forceNeg(Math.trunc(50000*$upgradeMultiplierArcology)), "capEx"), $surgeryUpgrade = 1, $PC.skill.engineering += 1]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(50000*$upgradeMultiplierArcology))>></span>
+		<<else>>
+			<span class="note">You lack the reputation to secure rare surgery upgrades.</span>
+		<</if>>
+	<<else>>
+		Your remote surgery has been heavily upgraded and customized.
+	<</if>>
+	</div>
+
+	<<if $seePreg == 1>>
+		<div>
+		<<if $pregnancyMonitoringUpgrade == 0>>
+			<<if $rep > 10000>>
+				[[Upgrade the pregnancy monitoring systems|Manage Penthouse][cashX(forceNeg(Math.trunc(30000*$upgradeMultiplierArcology)), "capEx"), $pregnancyMonitoringUpgrade = 1, $PC.skill.engineering += 1]]
+				<span class="detail">Costs <<print cashFormat(Math.trunc(30000*$upgradeMultiplierArcology))>></span>
+			<<else>>
+				<span class="note">You lack the reputation to purchase improved pregnancy monitoring systems.</span>
+			<</if>>
+		<<else>>
+			Your pregnancy monitoring systems have been heavily upgraded.
+		<</if>>
+		</div>
+	<</if>>
+</p>

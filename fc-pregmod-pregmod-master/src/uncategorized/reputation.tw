@@ -1,0 +1,902 @@
+:: Reputation [nobr]
+
+<<if $useTabs == 0>>__Reputation__<</if>>
+<br>
+
+<<run PCTitle()>>
+
+On formal occasions, you are announced as $PCTitle.
+
+<<if $arcologies[0].FSChattelReligionist != "unset">>
+	<<if $arcologies[0].FSChattelReligionistCreed == 1>>
+		$arcologies[0].name keeps the creed of the $nicaeaName. The faithful
+		<<if $nicaeaAchievement == "slaves">>
+			<<if $slaves.length > 50>>
+				@@.green;strongly approve@@ of the large
+				<<= FutureSocieties.Change("ChattelReligionist", 5)>>
+			<<elseif $slaves.length > 20>>
+				@@.green;approve@@ of the good
+				<<= FutureSocieties.Change("ChattelReligionist", 2)>>
+			<<else>>
+				are not impressed by the
+			<</if>>
+			number of people you're giving the honor of sexual servitude.
+		<<elseif $nicaeaAchievement == "devotion">>
+			<<if $averageDevotion > 80>>
+				@@.green;strongly approve@@ of the worshipfulness
+				<<= FutureSocieties.Change("ChattelReligionist", 5)>>
+			<<elseif $averageDevotion > 50>>
+				@@.green;approve@@ of the devotion
+				<<= FutureSocieties.Change("ChattelReligionist", 2)>>
+			<<else>>
+				are not impressed by the devotion
+			<</if>>
+			of your slaves.
+		<<else>>
+			<<if $averageTrust > 50>>
+				@@.green;strongly approve@@ of the great trust your slaves place in you.
+				<<= FutureSocieties.Change("ChattelReligionist", 5)>>
+			<<elseif $averageTrust > 20>>
+				@@.green;approve@@ of the trust your slaves place in you.
+				<<= FutureSocieties.Change("ChattelReligionist", 2)>>
+			<<else>>
+				are not impressed by the fear many of your slaves feel towards you.
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<set _repDecay = 0.05,
+_enduringRep = $enduringRep>>
+<<if $arcologies.FSChattelReligionistLaw == 1>>
+	<<set _enduringRep = Math.min(_enduringRep + 2000, 12000)>>
+<</if>>
+<<if $arcologies.FSRestartDecoration == 100>>
+	<<set _enduringRep = Math.min(_enduringRep + 2000, 13000)>> /* that 13000 is not a typo, it allows for some stacking of FSRestart and FSChattel */
+<</if>>
+<<if $rep > _enduringRep>>
+	<<if $arcologies[0].FSMaturityPreferentialistLaw == 1>>
+		<<if $PC.actualAge >= 65>>
+			Since you're getting on in years and have an impressive list of accomplishments, and $arcologies[0].name's society respects age, your reputation degrades quite slowly.
+			<<set _repLoss = Math.trunc(($rep-_enduringRep)*(_repDecay-0.0125))>>
+		<<elseif $PC.actualAge >= 50>>
+			Since you're well into middle age and have an impressive list of accomplishments, and $arcologies[0].name's society respects age, your reputation degrades quite slowly.
+			<<set _repLoss = Math.trunc(($rep-_enduringRep)*(_repDecay-0.0125))>>
+		<<elseif $PC.actualAge < 35>>
+			Since you're unusually young for an arcology owner, and $arcologies[0].name's society respects age, your reputation degrades quite quickly.
+			<<set _repLoss = Math.trunc(($rep-_enduringRep)*(_repDecay+0.0125))>>
+		<<else>>
+			Since you're only entering middle age, and $arcologies[0].name's society respects age, your reputation degrades fairly quickly.
+			<<set _repLoss = Math.trunc(($rep-_enduringRep)*(_repDecay))>>
+		<</if>>
+	<<elseif $arcologies[0].FSYouthPreferentialistLaw == 1>>
+		<<if $PC.actualAge >= 65>>
+			Since you're getting on in years and have an impressive list of accomplishments, but $arcologies[0].name's society is coming to prefer youth to experience, so your reputation degrades fairly quickly.
+			<<set _repLoss = Math.trunc(($rep-_enduringRep)*(_repDecay+0.0125))>>
+		<<elseif $PC.actualAge >= 50>>
+			You're well into middle age and have an impressive list of accomplishments, but $arcologies[0].name's society is coming to prefer youth to experience, so your reputation degrades fairly quickly.
+			<<set _repLoss = Math.trunc(($rep-_enduringRep)*(_repDecay+0.0125))>>
+		<<elseif $PC.actualAge < 35>>
+			You're unusually young for an arcology owner, but $arcologies[0].name's society doesn't mind.
+			<<set _repLoss = Math.trunc(($rep-_enduringRep)*(_repDecay))>>
+		<<else>>
+			Since you're entering middle age, and $arcologies[0].name's society respects youth, your reputation degrades fairly quickly.
+			<<set _repLoss = Math.trunc(($rep-_enduringRep)*(_repDecay+0.0125))>>
+		<</if>>
+	<<else>>
+		<<if $PC.actualAge >= 65>>
+			Since you're getting on in years and have an impressive list of accomplishments, and $arcologies[0].name's society respects age, your reputation degrades quite slowly.
+			<<set _repLoss = Math.trunc(($rep-_enduringRep)*(_repDecay-0.0125))>>
+		<<elseif $PC.actualAge >= 50>>
+			Since you're well into middle age and have an impressive list of accomplishments, your reputation degrades fairly slowly.
+			<<set _repLoss = Math.trunc(($rep-_enduringRep)*(_repDecay-0.0125))>>
+		<<elseif $PC.actualAge < 35>>
+			Since you're unusually young for an arcology owner, your reputation degrades fairly quickly.
+			<<set _repLoss = Math.trunc(($rep-_enduringRep)*(_repDecay+0.0125))>>
+		<<else>>
+			<<set _repLoss = Math.trunc(($rep-_enduringRep)*(_repDecay))>>
+		<</if>>
+	<</if>>
+	<<if $arcologies[0].FSChattelReligionistLaw == 1>>
+		<<if _repLoss > 100>>
+			<<set _repLoss -= 100, $PC.degeneracy = 0>>
+		<<else>>
+			<<set _repLoss = 0, $PC.degeneracy = 0>>
+		<</if>>
+		Since you are the Prophet, your reputation degrades less.
+	<</if>>
+	<<if $arcologies[0].FSRestartDecoration == 100>>
+		<<if _repLoss > 100>>
+			<<set _repLoss -= 100, $PC.degeneracy = 0>>
+		<<else>>
+			<<set _repLoss = 100, $PC.degeneracy = 0>>
+		<</if>>
+		Since you are an established member of the Societal Elite, your public reputation degrades less.
+	<</if>>
+	<<if _enduringRep > 8000>>
+		However, you have been a figure of renown for so long that much of your reputation has become permanent.
+	<<elseif _enduringRep > 5000>>
+		However, you have been a figure of repute for enough time that part of your reputation has become permanent.
+	<<elseif _enduringRep > 2000>>
+		However, you have been a figure of regard for long enough that some of your reputation has become permanent.
+	<</if>>
+	<<if _repLoss > 500 * (1 - (5 - $baseDifficulty) / 10)>>
+		<<set _repLoss = 500 * (1 - (5 - $baseDifficulty) / 10)>>
+	<<elseif _repLoss < 0>>
+		<<set _repLoss = 0>>
+	<</if>>
+	<<set $enduringRep += Math.trunc(1 + Math.pow((10000 - $enduringRep) / 5770, 2) * _repLoss * 0.1)>>
+<<else>>
+	<<if $arcologies[0].FSChattelReligionistLaw == 1 || $arcologies[0].FSRestartDecoration == 100>>
+		<<set $PC.degeneracy = 0>>
+	<</if>>
+	<<set _repLoss = 0>>
+	<<if _enduringRep > 8000>>
+		You have been a figure of renown for so long that your reputation does not decay past its present level.
+	<<elseif _enduringRep > 5000>>
+		You have been a figure of repute for enough time that your reputation does not decay past its present level.
+	<<elseif _enduringRep > 2000>>
+		You have been a figure of regard for long enough that your reputation does not decay past its present level.
+	<</if>>
+<</if>>
+
+/*play games with overflow. Gains are calculated (and then sadly rounded) on previous pages but losses are calculated here, after the overflow happened. Let's borrow from the past.*/
+<<if $lastWeeksRepExpenses.overflow < 0>>
+	<<set $rep += Math.abs($lastWeeksRepExpenses.overflow)>>
+	<<set $lastWeeksRepExpenses.overflow = 0>>
+<</if>>
+<<run repX(forceNeg(_repLoss), "multiplier")>>
+
+<<if ($weatherAwareness == 0) && ($weatherCladding == 2)>>
+	The public @@.green;is awestruck@@ of the beautiful weather hardening you have applied to the arcology's exterior, though they do not understand why you would waste so much money first ruining your arcology's appearance before doing this.
+	<<run repX(10, "architecture")>>
+<<elseif ($weatherAwareness == 0) && ($weatherCladding == 1)>>
+	The public @@.red;disapproves@@ of the ugly weather hardening you have applied to the arcology's exterior, not understanding what you're worried about.
+	<<run repX(-100, "architecture")>>
+<</if>>
+
+<<if $arcologies[0].FSRestartDecoration == 100>>
+	As a member of the Societal Elite, your appearance has no bearing on your reputation.
+<<else>>
+	<<if ($PC.dick == 0) && ($PC.boobs >= 300) && $PC.title == 0>>
+		<<if $rep > 18000>>
+			Your reputation is so well-established that society has accepted your notoriously feminine appearance despite how unusual it is for a prominent slaveowner to look like you do.
+			<<if $arcologies[0].FSGenderRadicalist > 30>>
+				Indeed, society sees you as entirely male, since you are powerful, and @@.green;strongly approves@@ of your nonconformity; this advances the redefinition of gender around power.
+				<<= FutureSocieties.Change("GenderRadicalist", 5)>>
+			<<elseif $arcologies[0].FSGenderFundamentalist > 30>>
+				Indeed, society has been reconciled to female leadership, preferring to see you as a mother figure.
+			<</if>>
+		<<elseif $arcologies[0].FSGenderRadicalist > 40>>
+			Society accepts you as an arcology owner, since it has become open-minded about power and gender.
+			<<if $arcologies[0].FSGenderRadicalist > 50>>
+				Indeed, society sees you as fundamentally male, since you are powerful, and @@.green;strongly approves@@ of your audacity; this advances the redefinition of gender around power.
+				<<= FutureSocieties.Change("GenderRadicalist", 5)>>
+			<</if>>
+		<<else>>
+			Most prominent slaveowners are male, and your obviously feminine appearance makes it @@.red;harder for you to maintain your reputation.@@
+			<<run repX(forceNeg(Math.min(($rep*0.05), 500)), "PCappearance")>>
+			<<if $arcologies[0].FSGenderFundamentalist > 10>>
+				Society @@.red;strongly resents@@ your being an arcology owner; this damages the idea that women should not be in positions of responsibility.
+				<<= FutureSocieties.Change("GenderFundamentalist", -5)>>
+			<</if>>
+		<</if>>
+	<<elseif ($PC.boobs >= 300) || $PC.title == 0>>
+		<<if $rep > 15000>>
+			Your reputation is so strong that society has accepted your feminine appearance despite how unusual it is for a prominent slaveowner to look like you do.
+			<<if $arcologies[0].FSGenderRadicalist > 30>>
+				Indeed, society sees you as entirely male, since you are powerful, and @@.green;strongly approves@@ of your nonconformity; this advances the redefinition of gender around power.
+				<<= FutureSocieties.Change("GenderRadicalist", 5)>>
+			<<elseif $arcologies[0].FSGenderFundamentalist > 30>>
+				Indeed, society has been reconciled to your feminine appearance, seeing you as a person apart.
+			<</if>>
+		<<elseif $arcologies[0].FSGenderRadicalist > 20>>
+			Society accepts you as an arcology owner, since it has become open-minded anyone who has a cock and fucks.
+			<<if $arcologies[0].FSGenderRadicalist > 30>>
+				Indeed, society sees you as dominant, since you fuck bitches, and @@.green;strongly approves@@ of your nonconformity; this advances the redefinition of gender around power.
+				<<= FutureSocieties.Change("GenderRadicalist", 5)>>
+			<</if>>
+		<<else>>
+			Most prominent slaveowners are very masculine, and your feminine appearance makes it @@.red;harder for you to maintain your reputation.@@
+			<<run repX(forceNeg(Math.min(($rep*0.025), 250)), "PCappearance")>>
+			<<if $arcologies[0].FSGenderFundamentalist > 30>>
+				Society @@.red;strongly resents@@ your being an arcology owner; this damages the idea that feminine people should not be in positions of responsibility.
+				<<= FutureSocieties.Change("GenderFundamentalist", -5)>>
+			<</if>>
+		<</if>>
+	<<elseif ($PC.dick == 0) || ($PC.vagina != -1)>>
+		<<if $rep > 15000>>
+			Your reputation is so strong that society has accepted your unorthodox arrangement downstairs, for an arcology owner.
+			<<if $arcologies[0].FSGenderRadicalist > 30>>
+				Indeed, society sees you as entirely male, since you are powerful, and @@.green;strongly approves@@ of your nonconformity; this advances the redefinition of gender around power.
+				<<= FutureSocieties.Change("GenderRadicalist", 5)>>
+			<<elseif $arcologies[0].FSGenderFundamentalist > 30>>
+				Indeed, society has been reconciled to your strangeness, seeing you as a person apart.
+			<</if>>
+		<<elseif $arcologies[0].FSGenderRadicalist > 20>>
+			Society accepts you as an arcology owner, since it has become open-minded about the exact genital layout of powerful people.
+			<<if $arcologies[0].FSGenderRadicalist > 30>>
+				Indeed, society sees you as dominant, since you are powerful, and @@.green;strongly approves@@ of your nonconformity; this advances the redefinition of gender around power.
+				<<= FutureSocieties.Change("GenderRadicalist", 5)>>
+			<</if>>
+		<<else>>
+			Most prominent slaveowners are very masculine, and though your unorthodox arrangement downstairs isn't obvious when you're clothed, the rumors are unavoidable and it's @@.red;harder for you to maintain your reputation.@@
+			<<run repX(forceNeg(Math.min(($rep*0.025), 250)), "PCappearance")>>
+			<<if $arcologies[0].FSGenderFundamentalist > 30>>
+				Society @@.red;strongly resents@@ your being an arcology owner; this damages the idea that people who are not men should not be in positions of responsibility.
+				<<= FutureSocieties.Change("GenderFundamentalist", -5)>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+/* height block here */
+
+<<if $arcologies[0].FSChattelReligionistLaw == 1 || $arcologies[0].FSRestartDecoration == 100>>
+	/* already handled above */
+<<elseif $arcologies[0].FSIntellectualDependency != "unset">>
+	<<if $PC.intelligence+$PC.intelligenceImplant < -10>>
+		<<if $rep > 18000>>
+			You've somehow built such a reputation for yourself that your lack of a brain is no longer a societal concern.
+		<<else>>
+			<<run repX(forceNeg(Math.min(($rep*0.025), 100)), "PCappearance")>>
+			Society @@.red;is uncomfortable@@ with just how slow you are. While they may find your mannerisms cute, it is not befitting of a leader.
+		<</if>>
+	<</if>>
+<<elseif $arcologies[0].FSSlaveProfessionalism != "unset">>
+	<<if $PC.intelligence+$PC.intelligenceImplant < 100>>
+		<<if $rep > 18000>>
+			You've built such a reputation for yourself that you not being a genius is no longer a societal concern.
+		<<else>>
+			<<run repX(forceNeg(Math.min(($rep*0.05), 750)), "PCappearance")>>
+			Society @@.red;strongly despises@@ being led by someone so easily outsmarted by even the slave population.
+			<<= FutureSocieties.Change("SlaveProfessionalism", -10)>>
+		<</if>>
+	<</if>>
+<<elseif $PC.intelligence+$PC.intelligenceImplant <= 10>>
+	<<if $rep > 18000>>
+		You've managed to build such a reputation for yourself that your lack of intelligence is no longer a societal concern.
+	<<else>>
+		<<run repX(forceNeg(Math.min(($rep*0.05), 750)), "PCappearance")>>
+		Society @@.red;is uncomfortable@@ being led by someone not smart. Your lack of intelligence brings your every action under scrutiny.
+	<</if>>
+<<elseif $PC.intelligence+$PC.intelligenceImplant <= 50>>
+	<<if $rep > 12000>>
+		You've built such a reputation for yourself that your lack of intelligence is no longer a societal concern.
+	<<else>>
+		<<run repX(forceNeg(Math.min(($rep*0.05), 500)), "PCappearance")>>
+		Society @@.red;is uncomfortable@@ being led by someone not very smart. Your lack of intelligence brings your every action under scrutiny.
+	<</if>>
+<</if>>
+
+<<if $sexualOpeness == 1>>
+	<<if $arcologies[0].FSChattelReligionistLaw == 1 || $arcologies[0].FSRestartDecoration == 100>>
+		/* already handled above */
+	<<else>>
+		<<if $arcologies[0].FSGenderRadicalist != "unset">>
+			<<if $rep > 18000>>
+				You are so well regarded that society has acquiesced that getting penetrated is not a sure sign of femininity.
+			<<else>>
+				Society views getting fucked as sign of femininity and is @@.red;strongly against your sexual preferences.@@
+				<<= FutureSocieties.Change("GenderRadicalist", -1)>>
+				<<run repX(-1000, "PCactions")>>
+			<</if>>
+		<<elseif $arcologies[0].FSGenderFundamentalist != "unset" && $PC.vagina != -1 && $PC.title == 0>>
+			<<if $rep > 10000>>
+				Society has grown accustomed to your efforts enough to not care that you enjoy slave dick. In fact, it even @@.green;strengthens@@ traditional gender roles, even though you insist on breaking them.
+				<<= FutureSocieties.Change("GenderFundamentalist", 1)>>
+			<<else>>
+				Society wonders if you would be happier in a whore house getting fucked all day instead of trying to lead an arcology. Your efforts @@.red;strongly support@@ the idea that women should not be in positions of responsibility.
+				<<= FutureSocieties.Change("GenderFundamentalist", -3)>>
+				<<run repX(-1000, "PCactions")>>
+			<</if>>
+		<<else>>
+			<<if $rep > 15000>>
+				You are so well liked that society has accepted that you enjoy taking everything a slave has to offer.
+			<<else>>
+				Society finds your penchant for taking slave dick @@.red;very distasteful@@ for a slaveowner.
+				<<run repX(-500, "PCactions")>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $secExpEnabled == 1>>
+	<<if $smilingManFate == 1>>
+		The grim statue of the Smiling Man outside your arcology @@.green;reminds the world of who managed to eliminate such a threat.@@
+		<<run repX(100, "architecture")>>
+	<</if>>
+
+	<<if $weaponsLaw == 3>>
+		The absence of any kind of restriction on weaponry within your arcology is @@.green;welcomed by your citizens@@ as sign of your respect for the ideals the Free Cities stand for.
+		<<run repX(20, "edicts")>>
+	<</if>>
+<</if>>
+
+<<if $SF.Toggle && $SF.Active >= 1 && $SF.UC.Assign > 0>>
+	<br>Assigning a <<if $SF.UC.Assign === 1>>small<<else>>large<</if>> portion of $SF.Lower to @@.green;undercover work, slightly boosts your reputation.@@
+	<<if $SF.UC.Assign === 1>>
+		<<set _value = $SF.Squad.Troops * 0.05>>
+	<<else>>
+		<<set _value = $SF.Squad.Troops * 0.25>>
+	<</if>>
+	<<run repX(_value, "specialForces")>> <br>
+<<elseif $SF.FS.BadOutcome === "ISOLATION">>
+	<br>Your citizens are @@.red;very displeased@@ that you are hosting a legion of heavily armed squatters in your basement.
+	<<run repX(forceNeg($SF.Squad.Troops+$SF.Size), "specialForces")>>
+<</if>>
+
+<<if $arcologies[0].FSSupremacist != "unset">>
+	<<if ($PC.race == $arcologies[0].FSSupremacistRace)>>
+		Since you are a member of the $PC.race race, society @@.green;strongly approves@@ of your ownership of the arcology.
+		<<= FutureSocieties.Change("Supremacist", 5)>>
+	<</if>>
+<<elseif $arcologies[0].FSSubjugationist != "unset">>
+	<<if ($PC.race == $arcologies[0].FSSubjugationistRace)>>
+		<<if $rep > 15000>>
+			Your reputation is so strong that society has accepted your <<print $PC.race>>ness despite you being an inferior race.
+		<<else>>
+			Society @@.red;loathes;@@ being lead by an inferior $PC.race, believing that any other race would make a far better leader than you.
+			<<run repX(forceNeg(200*($arcologies[0].FSSubjugationist/$FSLockinLevel)), "PCappearance")>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSAssetExpansionist != "unset">>
+	<<if $PC.boobs >= 1400>>
+		Society loves enormous breasts and you are no exception; your <<if $PC.boobsImplant > 0>>chest balloons<<else>>cow tits<</if>> @@.green;improve@@ your public image.
+		<<run repX(10, "PCappearance")>>
+	<</if>>
+	<<if $PC.butt >= 5>>
+		Society loves big butts and you are no exception; your <<if $PC.buttImplant > 0>>inflated ass<<else>>fat ass<</if>> @@.green;improves@@ your public image.
+		<<run repX(10, "PCappearance")>>
+	<</if>>
+	<<if $PC.balls >= 9>>
+		Society loves big things and the bulge in your crotch is no exception; your swollen balls @@.green;improve@@ your public image.
+		<<run repX((5*$PC.ballsImplant), "PCappearance")>>
+	<</if>>
+<<elseif $arcologies[0].FSSlimnessEnthusiast != "unset">>
+	<<if $PC.boobs >= 1000>>
+		Society finds big breasts unsightly and you are no exception; your <<if $PC.boobsImplant > 0>>chest balloons<<else>>fat tits<</if>> @@.red;harm@@ your public image.
+		<<run repX(forceNeg(($PC.boobs/100)*3), "PCappearance")>>
+	<</if>>
+	<<if $PC.butt >= 5>>
+		Society finds big butts unsightly and you are no exception; your <<if $PC.buttImplant > 0>>inflated ass<<else>>fat ass<</if>> @@.red;harms@@ your public image.
+		<<run repX(forceNeg(10*$PC.butt), "PCappearance")>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSTransformationFetishist != "unset">>
+	<<if $PC.boobsImplant > 0>>
+		Society loves fake breasts and yours are no exception; your breast implants @@.green;improve@@ your public image.
+		<<run repX(($PC.boobsImplant/5), "PCappearance")>>
+	<</if>>
+	<<if $PC.buttImplant > 0>>
+		Society loves fake butts and yours are no exception; your ass implants @@.green;improve@@ your public image.
+		<<run repX((7*$PC.buttImplant), "PCappearance")>>
+	<</if>>
+	<<if $PC.ballsImplant > 0>>
+		Society loves everything augmented and the bulge in your crotch is no exception; your swollen balls @@.green;improve@@ your public image.
+		<<run repX((5*($PC.ballsImplant)), "PCappearance")>>
+	<</if>>
+	<<if ($arcologies[0].FSRepopulationFocus != "unset")>>
+		<<if $PC.boobs >= 1000 && $PC.boobsImplant == 0>>
+			Society approves of anything that helps the repopulation efforts. Your large breasts promise plentiful milk and @@.green;improve@@ your public image.
+			<<run repX(($PC.boobs/50), "PCappearance")>>
+		<</if>>
+		<<if $PC.balls >= 5>>
+			Society loves anything that helps the repopulation efforts. Your huge fertile balls indicate that you're a successful breeder and @@.green;strongly improves@@ your public image.
+			<<run repX((15*$PC.balls), "PCappearance")>>
+		<</if>>
+	<</if>>
+<<elseif $arcologies[0].FSBodyPurist != "unset">>
+	<<if $PC.boobsImplant != 0>>
+		Society finds fake breasts repulsive and yours are no exception; your balloon-like breasts @@.red;harm@@ your public image.
+		<<run repX(forceNeg($PC.boobsImplant/10), "PCappearance")>>
+	<</if>>
+	<<if $PC.buttImplant > 0>>
+		Society finds fake butts unsightly and yours is no exception; your inflated ass @@.red;harms@@ your public image.
+		<<run repX(forceNeg(10*$PC.buttImplant), "PCappearance")>>
+	<</if>>
+	<<if $PC.ballsImplant > 0>>
+		Society finds everything unnatural disgusting and the grotesque bulge in your crotch is no exception; your gel filled balls @@.red;harm@@ your public image.
+		<<run repX(forceNeg(10*$PC.ballsImplant), "PCappearance")>>
+	<</if>>
+	<<if ($arcologies[0].FSRepopulationFocus != "unset") && $PC.boobs >= 1000 && $PC.boobsImplant == 0>>
+		Society approves of anything that helps the repopulation efforts. Your large breasts promise plentiful milk and @@.green;improve@@ your public image.
+		<<run repX(($PC.boobs/50), "PCappearance")>>
+	<</if>>
+<<elseif ($arcologies[0].FSRepopulationFocus != "unset")>>
+	<<if $PC.boobs >= 1000 && $PC.boobsImplant == 0>>
+		Society approves of anything that helps the repopulation efforts. Your large breasts promise plentiful milk and @@.green;improve@@ your public image.
+		<<run repX(($PC.boobs/50), "PCappearance")>>
+	<</if>>
+	<<if $PC.balls >= 5>>
+		Society loves anything that helps the repopulation efforts. Your huge fertile balls indicate that you're a successful breeder and @@.green;strongly improves@@ your public image.
+		<<run repX((5*($PC.balls)), "PCappearance")>>
+	<</if>>
+<</if>>
+
+<<if (($PC.belly >= 1500) || ($PC.career == "escort" && $PC.belly >= 500)) && $PC.preg > 0>>
+	<<if $arcologies[0].FSRestart != "unset">>
+		<<if $arcologies[0].FSRestartDecoration == 100>>
+			<<if $PC.pregSource != -1 && $PC.pregSource != -6>>
+				Most prominent female owners avoid being penetrated on
+				<<if $sexualOpeness == 1>>
+					principle, though you choose the opposite; your fecund figure suggests a slave knocked you up, a huge
+				<<else>>
+					principle; your fecund figure exposes not only your willingness to be penetrated, but your
+				<</if>>
+				breach of eugenics. Your citizens are @@.red;livid@@ over your actions and are calling for your removal.
+				<<run repX(-500, "PCactions")>>
+				<<if $eugenicsFullControl != 1>>
+					<<set $failedElite += 100>>
+				<</if>>
+			<<else>>
+				Since it is public knowledge that you are carrying a child in the name of eugenics, society views you as a bearer of the future and @@.green;celebrates@@ your contributions to society.
+				<<run repX(200, "PCappearance")>>
+				<<set $failedElite -= 10>>
+			<</if>>
+		<<else>>
+			<<if $PC.pregSource != -1 && $PC.pregSource != -6>>
+				Most prominent female owners avoid being penetrated on
+				<<if $sexualOpeness == 1>>
+					principle, though you choose the opposite; your fecund figure suggests a slave knocked you up, a huge
+				<<else>>
+					principle; your fecund figure exposes not only your willingness to be penetrated, but your
+				<</if>>
+				breach of the eugenics you are pushing for. Your citizens are @@.red;disgusted@@ by both your body and your lack of commitment.
+				<<run repX(-500, "PCactions")>>
+				<<if $eugenicsFullControl != 1>>
+					<<set $failedElite += 50>>
+				<</if>>
+			<<else>>
+				Since it is public knowledge that you are carrying a child in the name of eugenics, society views you as a bearer of modernity and @@.green;commends@@ your contributions to society.
+				<<run repX(200, "PCappearance")>>
+				<<set $failedElite -= 5>>
+			<</if>>
+		<</if>>
+	<<elseif $arcologies[0].FSRepopulationFocus >= 60>>
+		Most prominent female owners avoid being penetrated on principle, but your arcology values motherhood so much that it is more @@.green;pleased@@ with your dedication than it is disappointed in your
+		<<if $sexualOpeness == 1>>
+			suspected slave baby.
+		<<else>>
+			penetration.
+		<</if>>
+		<<run repX(10, "PCappearance")>>
+	<<else>>
+		Most prominent female owners avoid being penetrated on
+		<<if $sexualOpeness == 1>>
+			principle, though you choose the opposite; your fecund figure suggests a slave knocked you up,
+		<<else>>
+			principle; your fecund figure exposes your willingness to be penetrated,
+		<</if>>
+		making it @@.red;harder for you to maintain your reputation.@@
+		<<run repX(-200, "PCactions")>>
+	<</if>>
+<</if>>
+
+<<if $PC.career == "escort" && $rep < 16000>>
+	Society @@.red;frowns@@ over being run by an ex-whore. The presence of porn of you on the net doesn't aid your reputation either.
+	<<run repX(forceNeg(Math.min(($rep*0.05), 500)), "PCactions")>>
+<<elseif $PC.career == "escort">>
+	Your reputation is so strong that society has accepted your previous endeavors despite how unusual it is for a prominent slaveowner to have once nearly been a slave.
+<</if>>
+<<if $PC.career == "servant" && $rep < 12000>>
+	Society @@.red;frowns@@ over being run by an ex-<<if $PC.title == 1>>butler<<else>>maid<</if>>, despite how prominent their previous owner was.
+	<<run repX(forceNeg(Math.min(($rep*0.05), 500)), "PCactions")>>
+<<elseif $PC.career == "servant">>
+	Your reputation is so strong that society has accepted your previous vocation despite how unusual it is for a prominent slaveowner to have once been nothing more than a lowly servant.
+<</if>>
+<<if $PC.career == "gang" && $rep < 15000>>
+	Society @@.red;frowns@@ over being run by an ex-gang leader, no matter how strong they might have been.
+	<<run repX(forceNeg(Math.min(($rep*0.05), 500)), "PCactions")>>
+<<elseif $PC.career == "BlackHat" && $rep < 15000>>
+	Society @@.red;dislikes@@ being run by someone so capable of dredging up secrets, especially when they used to do it for the highest bidder.
+	<<run repX(forceNeg(Math.min(($rep*0.05), 500)), "PCactions")>>
+<<elseif $PC.career == "gang" || $PC.career == "BlackHat">>
+	Your reputation is strong enough that society has come to accept your background as part of your image.
+<</if>>
+
+<<if $PCSlutContacts == 2>>
+	You are actively starring in pornographic videos. While they are rather exclusive, @@.red;some still leak out to the public,@@ harming your image.
+	<<run repX(-50, "PCactions")>>
+	<<if canGetPregnant($PC)>>
+		That's not all that leaks out of you, considering all your shoots are rubber free.
+		<<= knockMeUp($PC, 20, 0, -5, 1)>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSRomanRevivalist != "unset">>
+	<<if $mercenaries > 0>>
+		Society @@.green;approves@@ of how you are providing for the defense of the state, as should all citizens of the new Rome.
+		<<= FutureSocieties.Change("RomanRevivalist", $mercenaries)>>
+	<</if>>
+		<<if ($slaves.length > 20) && ($cash > 50000)>>
+		Society @@.green;strongly approves@@ of your wealth and prosperity, fit goals for the <<if def $PC.customTitle>>$PC.customTitle<<elseif $PC.title == 1>>new Roman man<<else>>rising Roman lady<</if>>.
+		<<= FutureSocieties.Change("RomanRevivalist", 5)>>
+	<</if>>
+	<<if $language != "Latin">>
+		Continuing to use $language as the lingua franca of $arcologies[0].name rather than the storied Latin @@.red;disappoints@@ society and causes doubt about your revivalist project.
+		<<= FutureSocieties.Change("RomanRevivalist", -2)>>
+	<</if>>
+<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+	<<if $PC.visualAge >= 35>>
+		Society @@.green;approves@@ of your advancing age, which advances the ancient Aztec ideal of an experienced leader of the people.
+		<<= FutureSocieties.Change("AztecRevivalist", 1)>>
+	<</if>>
+	<<if $HeadGirl == 0>>
+		Society @@.red;disapproves@@ of you not having a Head Girl as an advisor and assistant.
+		<<= FutureSocieties.Change("AztecRevivalist", -2)>>
+	<<else>>
+		Society @@.green;approves@@ of your reliance on a Head Girl as an advisor and assistant.
+		<<= FutureSocieties.Change("AztecRevivalist", 2)>>
+	<</if>>
+	<<if $PC.skill.warfare < 0>>
+		Society @@.red;greatly disapproves@@ of your feebleness in the arts of war.
+		<<= FutureSocieties.Change("AztecRevivalist", -4)>>
+	<<elseif $PC.skill.warfare < 50>>
+		Society @@.red;disapproves@@ of you not being properly trained in the arts of war.
+		<<= FutureSocieties.Change("AztecRevivalist", -2)>>
+	<<else>>
+		Society @@.green;approves@@ of having a leader that is trained in the arts of war.
+		<<= FutureSocieties.Change("AztecRevivalist", 2)>>
+	<</if>>
+	<<if $language != "Nahuatl">>
+		Continuing to use $language as the lingua franca of $arcologies[0].name rather than the revived Nahuatl @@.red;disappoints@@ society and causes doubt about your revivalist project.
+		<<= FutureSocieties.Change("AztecRevivalist", -3)>>
+	<</if>>
+<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+	<<set _racialVarieties = new Set($slaves.map((s) => s.race))>>
+	<<if _racialVarieties.size > 4>>
+		Society @@.green;strongly approves@@ of how you own a cornucopia of different races, which advances the ancient Egyptian ideal of cosmopolitan sex slavery.
+		<<= FutureSocieties.Change("EgyptianRevivalist", 5)>>
+	<</if>>
+	<<if $language != "Ancient Egyptian">>
+		Continuing to use $language as the lingua franca of $arcologies[0].name rather than revived Ancient Egyptian @@.red;disappoints@@ society and causes doubt about your revivalist project.
+		<<= FutureSocieties.Change("EgyptianRevivalist", -2)>>
+	<</if>>
+<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+	<<set _threshold = Math.trunc($rep/2000)>>
+	<<if $publicServants <= _threshold>>
+		Society @@.red;disapproves@@ of your failure to provide for cultural development by offering public servants or club slaves in a number that befits your reputation.
+		<<= FutureSocieties.Change("EdoRevivalist", -2)>>
+	<<else>>
+		Society @@.green;approves@@ of your provision for cultural development by offering public servants and club slaves in a number that befits your reputation.
+		<<= FutureSocieties.Change("EdoRevivalist", 2)>>
+	<</if>>
+	<<if $language != "Japanese">>
+		Continuing to use $language as the lingua franca of $arcologies[0].name rather than pure Japanese @@.red;disappoints@@ society and causes doubt about your revivalist project.
+		<<= FutureSocieties.Change("EdoRevivalist", -2)>>
+	<</if>>
+<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+	<<if $fuckSlaves < $rep/3500>>
+		Society @@.red;disapproves@@ of the small size of your harem, feeling that you do not have enough fucktoys or slaves in your master suite for your reputation.
+		<<= FutureSocieties.Change("ArabianRevivalist", -2)>>
+	<<else>>
+		Society @@.green;approves@@ of the size of your harem, feeling that you have a good number of fucktoys and slaves in your master suite for your reputation.
+		<<= FutureSocieties.Change("ArabianRevivalist", 2)>>
+	<</if>>
+	<<if $language != "Arabic">>
+		Continuing to use $language as the lingua franca of $arcologies[0].name rather than the Arabic in which the word of God was passed to Muhammad @@.red;disappoints@@ society and causes doubt about your revivalist project.
+		<<= FutureSocieties.Change("ArabianRevivalist", -2)>>
+	<</if>>
+<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+	<<if $HeadGirl == 0>>
+		Society @@.red;disapproves@@ of your failure to rely on a Head Girl, as proper imperial administration requires,
+		<<= FutureSocieties.Change("ChineseRevivalist", -2)>>
+	<<else>>
+		Society @@.green;approves@@ of your reliance on a Head Girl, as proper imperial administration requires,
+		<<= FutureSocieties.Change("ChineseRevivalist", 2)>>
+	<</if>>
+	<<if $Recruiter == 0>>
+		@@.red;disapproves@@ of your failure to maintain a Recruiter to expand the Middle Kingdom,
+		<<= FutureSocieties.Change("ChineseRevivalist", -2)>>
+	<<else>>
+		@@.green;approves@@ of your maintaining a Recruiter to expand the Middle Kingdom,
+		<<= FutureSocieties.Change("ChineseRevivalist", 2)>>
+	<</if>>
+	<<if $Bodyguard == 0>>
+		and @@.red;disapproves@@ of your failure to keep a Bodyguard as befits a proper imperial palace.
+		<<= FutureSocieties.Change("ChineseRevivalist", -2)>>
+	<<else>>
+		and @@.green;approves@@ of your keeping a Bodyguard, as befits a proper imperial palace.
+		<<= FutureSocieties.Change("ChineseRevivalist", 2)>>
+	<</if>>
+	<<if $language != "Chinese">>
+		Continuing to use $language as the lingua franca of $arcologies[0].name rather than the Chinese of the Middle Kingdom @@.red;disappoints@@ society and causes doubt about your revivalist project.
+		<<= FutureSocieties.Change("ChineseRevivalist", -2)>>
+	<</if>>
+<</if>>
+
+<<if ($arcologies[0].FSRepopulationFocus != "unset")>>
+	<<if $IntelligenceEugenicsSMR == 1 || $HeightEugenicsSMR == 1 || $FaceEugenicsSMR == 1>>
+		Society @@.red;disapproves@@ of your policies sterilizing potential mothers. Your insistence on eugenics hinders adoption of your new society.
+		<<set _noEugenics = -1*($IntelligenceEugenicsSMR+$HeightEugenicsSMR+$FaceEugenicsSMR)>>
+		<<= FutureSocieties.Change("RepopulationFocus", _noEugenics)>>
+	<</if>>
+<<elseif $arcologies[0].FSPaternalist != "unset">>
+	<<if $IntelligenceEugenicsSMR == 1 || $HeightEugenicsSMR == 1 || $FaceEugenicsSMR == 1>>
+		Society @@.red;disapproves@@ of your policies forcefully sterilizing slaves, especially when they snuff out the life growing within them.
+		<<set _noEugenics = -1*($IntelligenceEugenicsSMR+$HeightEugenicsSMR+$FaceEugenicsSMR)>>
+		<<= FutureSocieties.Change("Paternalist", _noEugenics)>>
+	<</if>>
+<<elseif ($arcologies[0].FSRestart != "unset") && $arcologies[0].FSPaternalist == "unset">>
+	<<if ($IntelligenceEugenicsSMR == 1 || $HeightEugenicsSMR == 1 || $FaceEugenicsSMR == 1) && $arcologies[0].FSRestartSMR != 1>>
+		Society @@.green; approves@@ of your slave eugenics policies, easing them into more thorough eugenics.
+		<<set _yesEugenics = ($IntelligenceEugenicsSMR+$HeightEugenicsSMR+$FaceEugenicsSMR)>>
+		<<= FutureSocieties.Change("Eugenics", _yesEugenics)>>
+		<<set $failedElite -= 1*($IntelligenceEugenicsSMR+$HeightEugenicsSMR+$FaceEugenicsSMR)>>
+	<<elseif $arcologies[0].FSRestartSMR == 1>>
+		<<set $failedElite -= 2*($IntelligenceEugenicsSMR+$HeightEugenicsSMR+$FaceEugenicsSMR)>>
+	<</if>>
+<</if>>
+
+<<if ($arcologies[0].FSRepopulationFocus != "unset") && ($birthsTotal > 0)>>
+	The number of children you've brought into the world @@.green;pleases@@ your citizens.
+	<<if $birthsTotal < 1000>>
+		<<run repX($birthsTotal, "PCactions")>>
+	<<else>>
+		<<run repX(1000, "PCactions")>>
+	<</if>>
+<</if>>
+
+<<if $shelterAbuse > 5>>
+	<<if $arcologies[0].FSPaternalist != "unset">>
+		You are on the Slave Shelter's public list of abusive slaveowners. Society @@.red;disapproves@@ of your falling foul of such a well regarded charity.
+		<<= FutureSocieties.Change("Paternalist", -2)>>
+	<<elseif $arcologies[0].FSDegradationist != "unset">>
+		You are on the Slave Shelter's public list of abusive slaveowners. Your citizens find this hilarious, and @@.green;approve@@ of your taking advantage of a pack of idiots.
+		<<= FutureSocieties.Change("Degradationist", 2)>>
+	<</if>>
+<</if>>
+
+<<if $TCR.schoolPresent == 1>>
+	<<if $arcologies[0].FSRestart != "unset">>
+		Your Eugenics focused society @@.red;disagrees@@ with the local branch of The Cattle Ranch's views on slave breeding. Until society sees them as nothing more than mindless cattle and not human, they are in conflict with current reproduction standards.
+		<<= FutureSocieties.Change("Eugenics", -1)>>
+	<<elseif $arcologies[0].FSPaternalist != "unset">>
+		While they can't stop what happens to slaves outside of your arcology, they can @@.red;disapprove and protest@@ you allowing a branch of the mentally and physically abusive Cattle Ranch to be established in your arcology.
+		<<= FutureSocieties.Change("Paternalist", -2)>>
+	<</if>>
+<</if>>
+
+<<if $Cash4Babies == 1>>
+	<<if $arcologies[0].FSDegradationist != "unset">>
+		Society @@.green;approves@@ of your poor treatment of slave infants.
+		<<run repX(5*$FSSingleSlaveRep*($arcologies[0].FSDegradationist/$FSLockinLevel), "babyTransfer")>>
+	<<elseif $arcologies[0].FSRestart != "unset">>
+		<<if $eugenicsFullControl != 1>>
+			The Societal Elite @@.red;strongly disapproves@@ of your creating an economic incentive for the lower classes to breed and sell infants, holding back acceptance of your new society.
+			<<set $failedElite += 5>>
+		<<else>>
+			Society @@.red;strongly disapproves@@ of your creating an economic incentive for the lower classes to breed and sell infants, holding back acceptance of your new society.
+		<</if>>
+		<<set $arcologies[0].FSRestart -= $FSSingleSlaveRep>>
+		<<run repX(forceNeg((5*$FSSingleSlaveRep*($arcologies[0].FSRestart/$FSLockinLevel))+($rep/40)), "babyTransfer")>>
+	<<elseif $arcologies[0].FSPaternalist != "unset">>
+		Society @@.red;greatly despises@@ your poor treatment of slave infants.
+		<<run repX(forceNeg((25*$FSSingleSlaveRep*($arcologies[0].FSPaternalist/$FSLockinLevel))+($rep/20)), "babyTransfer")>>
+	<<elseif $arcologies[0].FSRepopulationFocus != "unset">>
+		Society @@.red;disapproves@@ of your poor treatment of your future population, holding back acceptance of your new society.
+		<<set $arcologies[0].FSRepopulationFocus -= $FSSingleSlaveRep>>
+		<<run repX(forceNeg((5*$FSSingleSlaveRep*($arcologies[0].FSRepopulationFocus/$FSLockinLevel))+($rep/20)), "babyTransfer")>>
+	<<else>>
+		Your citizens @@.red;disapprove@@ of your poor treatment of slave children.
+		<<run repX(forceNeg($rep/20), "babyTransfer")>>
+	<</if>>
+<</if>>
+
+<<if $MixedMarriage == 1>>
+	Your citizens
+	<<if $arcologies[0].FSPaternalist >= 80>>
+		are so paternalistic that they @@.green;approve@@ of
+		<<= FutureSocieties.Change("Paternalist", 2)>>
+	<<elseif $arcologies[0].FSPaternalist >= 40>>
+		are paternalistic enough to tolerate
+	<<else>>
+		@@.red;disapprove@@ of
+		<<run repX(-50, "PCactions")>>
+	<</if>>
+	your support for marriage between citizens and slaves.
+<</if>>
+
+<<if $citizenOrphanageTotal > 0>>
+	<<if $arcologies[0].FSPaternalist != "unset">>
+		The public @@.green;approves@@ of the way you're providing for $citizenOrphanageTotal of your slaves' children to be raised as citizens.
+		<<= FutureSocieties.Change("Paternalist", $citizenOrphanageTotal)>>
+		<<if $privateOrphanageTotal > 0>>
+			Raising <<print num($privateOrphanageTotal)>> of your slaves' children privately is considered even more @@.green;impressive.@@
+			<<set _care = $privateOrphanageTotal*2>>
+			<<= FutureSocieties.Change("Paternalist", _care)>>
+		<</if>>
+	<<elseif $arcologies[0].FSDegradationist != "unset">>
+		The public @@.red;disapproves@@ of the way you're providing for $citizenOrphanageTotal of your slaves' children to be raised as citizens.
+		<<set _care = -$citizenOrphanageTotal>>
+		<<= FutureSocieties.Change("Degradationist", _care)>>
+		<<if $privateOrphanageTotal > 0>>Fortunately your raising slaves' children privately is not publicly known.<</if>>
+	<</if>>
+<<elseif $privateOrphanageTotal > 0>>
+	<<if $arcologies[0].FSPaternalist != "unset">>
+		Raising <<print num($privateOrphanageTotal)>> of your slaves' children privately is considered extremely @@.green;impressive.@@
+		<<set _care = $privateOrphanageTotal*2>>
+		<<= FutureSocieties.Change("Paternalist", _care)>>
+	<<elseif $arcologies[0].FSDegradationist != "unset">>
+		Fortunately your raising slaves' children privately is not publicly known.
+	<</if>>
+<</if>>
+<<if $breederOrphanageTotal > 0 && $arcologies[0].FSRepopulationFocus != "unset">>
+	The public @@.green;approves@@ of the way you've dedicated <<print num($breederOrphanageTotal)>> of your slaves' children to be raised into future breeders.
+	<<set _futureBreeders = Math.round((($breederOrphanageTotal/100)+1))>>
+	<<= FutureSocieties.Change("RepopulationFocus", _futureBreeders)>>
+<</if>>
+
+<<if $arcologies[0].FSNull != "unset">>
+	Your cultural openness @@.green;helps your reputation,@@ since few citizens have disputes with your permissive approach.
+	<<run repX(50*$FSSingleSlaveRep*($arcologies[0].FSNull/$FSLockinLevel), "policies")>>
+<</if>>
+
+<<if $arcologies[0].FSRestartLaw == 1>>
+	Your laws requiring the non-elite to pay additional taxes or be sterilized @@.red;agitates@@ some of your citizens, but they don't matter. Only your @@.green;pleased@@ elite do.
+	<<run repX(-100, "policies")>>
+	<<set $failedElite -= 1>>
+<</if>>
+
+<<if $arcologies[0].FSHedonisticDecadenceLaw == 1>>
+	The burgeoning prosperity brought on by new business through your policies @@.green;builds your reputation,@@ since nearly every citizen has something available to satisfy their cravings.
+	<<run repX(100, "policies")>>
+<</if>>
+
+<<if $arcologies[0].FSIntellectualDependencyLaw == 1>>
+	The protections you have in place to protect invalids @@.green;adds to your reputation,@@ since every citizen will eventually find themselves benefitting from it.
+	<<run repX(100, "policies")>>
+<</if>>
+
+<<if $FrigiditySMR == 1>>
+	Your market regulations regarding slave sex drives @@.red;outrages@@ your citizens seeking sex slaves, since only slaves disinterested in sex are available.
+	<<run repX(-250, "policies")>>
+<</if>>
+
+<<if $PC.degeneracy > 0>>
+	<<if $PC.degeneracy > 100>>
+		There are @@.red;severe and devastating rumors@@ about you spreading across the arcology.
+		<<run repX(forceNeg(100*$PC.degeneracy), "PCactions")>>
+		<<set $enduringRep = 0>>
+	<<elseif $PC.degeneracy > 75>>
+		There are @@.red;severe rumors@@ about you spreading across the arcology.
+		<<run repX(forceNeg(20*$PC.degeneracy), "PCactions")>>
+	<<elseif $PC.degeneracy > 50>>
+		There are @@.red;bad rumors@@ about you spreading across the arcology.
+		<<run repX(forceNeg(10*$PC.degeneracy), "PCactions")>>
+	<<elseif $PC.degeneracy > 25>>
+		There are @@.red;rumors@@ about you spreading across the arcology.
+		<<run repX(forceNeg(5*$PC.degeneracy), "PCactions")>>
+	<<elseif $PC.degeneracy > 10>>
+		There are @@.red;minor rumors@@ about you spreading across the arcology.
+		<<run repX(forceNeg(2*$PC.degeneracy), "PCactions")>>
+	<<else>>
+		The occasional rumor about you can be heard throughout the arcology.
+		<<run repX(forceNeg(1*$PC.degeneracy), "PCactions")>>
+	<</if>>
+<</if>>
+
+<<if $FCNNstation == 1>>
+	Playing host to the Free Cities News Network brings @@.green;approval@@ from those who still consider freedom of the press a virtue.
+	<<run repX(500, "policies")>>
+<</if>>
+
+<<if $secExpEnabled == 1>>
+	<<if $SecExp.buildings.propHub.fakeNews > 0>>
+		The authenticity department produces and distributes copious amounts of plausible enough news and reports, @@.green;increasing your reputation.@@
+		<<run repX(10 * $SecExp.buildings.propHub.miniTruth, "policies")>>
+	<</if>>
+<</if>>
+
+<br>
+<<set _repGain = hashSum($lastWeeksRepIncome), _repLoss = hashSum($lastWeeksRepIncome)>>
+<<if _repGain > _repLoss>>
+	@@.green;Your reputation increased this week.@@
+<<elseif _repGain < _repLoss>>
+	@@.red;Your reputation decreased this week.@@
+<</if>>
+
+
+<<if isNaN($rep)>>
+	<br>@@.red;Error: rep is outside accepted range, please report this issue@@
+<</if>>
+
+<<if $rep > 20000>>
+	Your reputation is capped.
+<<elseif $rep-$enduringRep > 7500>>
+	Your base rate of reputation decay is very high.
+<<elseif $rep-$enduringRep > 5000>>
+	Your base rate of reputation decay is high.
+<<elseif $rep-$enduringRep > 2500>>
+	Your base rate of reputation decay is moderate.
+<<elseif $rep-$enduringRep > 0>>
+	Your base rate of reputation decay is low.
+<</if>>
+<<if $enduringRep >= 10000>>
+	Your legend is perfected, reducing reputation decay to its lowest possible level.
+	<<set $enduringRep = 10000>>
+<</if>>
+
+<<if $alwaysSubsidizeRep == 1>>
+	<<if $rep <= 19900>>
+		<<run repX(100, "policies")>>
+		Reputation subsidized as planned.
+		<<if $PC.degeneracy > 1>>
+			<<set $PC.degeneracy -= 1>>
+		<</if>>
+	<<elseif $PC.degeneracy > 1>>
+		<<set $PC.degeneracy -= 1>>
+		Rumors quelled as planned.
+	<<else>>
+		<<run cashX(1000, "policies")>>
+		Reputation subsidy reclaimed this week since your reputation is capped.
+	<</if>>
+<</if>>
+
+<<if $failedElite > 1>>
+	<<set $failedElite -= 1>>
+<</if>>
+<<if $PC.degeneracy > 1>>
+	<<set $PC.degeneracy -= 1>>
+<</if>>
+
+<<if $arcologies[0].FSRestartDecoration == 100>>
+	<<if $eugenicsFullControl != 1>>
+		<<if $failedElite > 300>>
+			The Societal Elite @@.red;are plotting your demise.@@
+		<<elseif $failedElite > 250>>
+			The Societal Elite @@.red;are openly discussing about your failures.@@ It would be in your best interests to appease them.
+		<<elseif $failedElite > 200>>
+			The Societal Elite @@.red;are avoiding you.@@ Getting back on their good side is a good idea, lest you want to disappear.
+		<<elseif $failedElite > 150>>
+			The Societal Elite @@.red;stop their conversations around you.@@ You may want to consider your actions more.
+		<<elseif $failedElite > 100>>
+			The Societal Elite @@.red;seem to dislike you.@@
+		<<elseif $failedElite > 50>>
+			The Societal Elite @@.red;mutter about you.@@
+		<<elseif $failedElite > 0>>
+			The Societal Elite @@.red;question some of your actions.@@
+		<<else>>
+			The Societal Elite hold you in high regards.
+		<</if>>
+	<<else>>
+		The Societal Elite can think what they want, they know better than to try and cross you again.
+	<</if>>
+<<elseif $arcologies[0].FSRestart != "unset">>
+	<<if $eugenicsFullControl != 1>>
+		<<if $failedElite > 300>>
+			The Societal Elite @@.red;have departed from your arcology in disgust.@@
+			<<run FutureSocieties.remove("FSRestart")>>
+			<<run repX(forceNeg(10000), "event")>>
+			<<set $eliteFail = random(30,100),
+			$eliteFailTimer = 15>>
+			<<if $eliteFail > $topClass - 20>>
+				<<set $eliteFail = $topClass - 20>>
+			<</if>>
+			<<if $arcologies[0].prosperity > 50>>
+				<<set $arcologies[0].prosperity -= random(20,40)>>
+			<</if>>
+		<<elseif $failedElite > 250>>
+			The Societal Elite @@.red;are openly discussing leaving.@@ It would be in your best interests to appease them.
+		<<elseif $failedElite > 200>>
+			The Societal Elite @@.red;are avoiding you.@@ Getting back on their good side is a good idea, lest you want to disappear.
+		<<elseif $failedElite > 150>>
+			The Societal Elite @@.red;stop their conversations around you.@@ You may want to consider your actions more.
+		<<elseif $failedElite > 100>>
+			The Societal Elite @@.red;seem to dislike you.@@
+		<<elseif $failedElite > 50>>
+			The Societal Elite @@.red;mutter about you.@@
+		<<elseif $failedElite > 0>>
+			The Societal Elite @@.red;question some of your actions.@@
+		<<else>>
+			The Societal Elite hold you in warm regards.
+		<</if>>
+	<<else>>
+		The Societal Elite can think what they want, they know better than to try and cross you again.
+	<</if>>
+<</if>>
+<br>

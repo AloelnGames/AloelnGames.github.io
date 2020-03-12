@@ -1,0 +1,395 @@
+:: Clinic Report [nobr]
+
+<<SlaveIDSort $CliniciIDs>>
+<<set _DL = $CliniciIDs.length, _SL = $slaves.length, _healthBonus = 0, _idleBonus = 0, _FLsFetish = 0, _restedSlaves = 0>>
+
+<<if $clinicDecoration != "standard">>
+	<<set _devBonus = 1>>
+<<else>>
+	<<set _devBonus = 0>>
+<</if>>
+
+<<if $Nurse != 0>>
+	<<set _FLs = $slaveIndices[$Nurse.ID]>>
+
+	<<if ($slaves[_FLs].health.condition < 100)>>
+		<<run improveCondition($slaves[_FLs], 20)>>
+	<</if>>
+	<<if ($slaves[_FLs].devotion <= 60)>>
+		<<set $slaves[_FLs].devotion++>>
+	<</if>>
+	<<if $slaves[_FLs].trust < 60>>
+		<<set $slaves[_FLs].trust++>>
+	<</if>>
+
+	<<if $slaves[_FLs].rules.living != "luxurious">>
+		<<set $slaves[_FLs].rules.living = "luxurious">>
+	<</if>>
+
+	<<set $slaves[_FLs].devotion += _devBonus>>
+	<<if $slaves[_FLs].fetishStrength <= 95>>
+		<<if $slaves[_FLs].fetish != "dom">>
+			<<if fetishChangeChance($slaves[_FLs]) > random(0,100)>>
+				<<set _FLsFetish = 1, $slaves[_FLs].fetishKnown = 1, $slaves[_FLs].fetish = "dom">>
+			<</if>>
+		<<elseif $slaves[_FLs].fetishKnown == 0>>
+			<<set _FLsFetish = 1, $slaves[_FLs].fetishKnown = 1>>
+		<<else>>
+			<<set _FLsFetish = 2, $slaves[_FLs].fetishStrength += 4>>
+		<</if>>
+	<</if>>
+	<<set $Nurse = $slaves[_FLs]>>
+	<<setLocalPronouns $Nurse>>
+	&nbsp;&nbsp;&nbsp;&nbsp;<<= SlaveFullName($Nurse)>> is serving as the clinical nurse.
+	<<if $Nurse.relationship == -3 && $Nurse.devotion > 50>>
+		$He does $his best to be a caring and nurturing $wife.
+		<<set _healthBonus += 2>>
+	<</if>>
+	<<if (_FLsFetish == 1)>>
+		$His job involves giving naked sex slaves orders for their own good. Even though most of these commands are medical rather than sexual, $he can be forgiven for not always seeing the difference, and @@.lightsalmon;becomes more dominant.@@
+	<<elseif (_FLsFetish == 2)>>
+		Every new patient in the clinic is a new target for $his authority. @@.lightsalmon;$He becomes more dominant.@@
+	<</if>>
+	<<if setup.nurseCareers.includes($Nurse.career)>>
+		$He has experience with medicine from $his life before $he was a slave, and can often recognize conditions before even the medical scanners can.
+		<<set _idleBonus++, _healthBonus++>>
+	<<elseif $Nurse.skill.nurse >= $masteredXP>>
+		$He has experience with medicine from working for you, and can often recognize conditions before even the medical scanners can.
+		<<set _idleBonus++, _healthBonus++>>
+	<<else>>
+		<<set $slaves[_FLs].skill.nurse += random(1,Math.ceil(($Nurse.intelligence+$Nurse.intelligenceImplant)/15) + 8)>>
+	<</if>>
+	<<if ($Nurse.fetish == "dom")>>
+		$He raps out commands with the confidence of long and partly sexual experience, so patients are inclined to follow even unpleasant medical instructions.
+		<<set _idleBonus++, _healthBonus++>>
+	<</if>>
+	<<if ($Nurse.muscles > 5)>>
+		$He's strong enough to gently but firmly restrain resistant slaves, allowing $him to be sparing with the inescapable but less healthy restraints.
+		<<set _idleBonus++, _healthBonus++>>
+	<</if>>
+	<<if ($Nurse.intelligence+$Nurse.intelligenceImplant > 50)>>
+		The diagnostic equipment is state-of-the-art, but $he's smart and perceptive enough that on occasion, $he can add meaningfully to its medical scans.
+		<<set _idleBonus++, _healthBonus++>>
+	<</if>>
+	<<if ($Nurse.face > 40)>>
+		Patients rarely object to seeing $his gorgeous face hovering over them.
+		<<set _idleBonus++, _devBonus++>>
+	<</if>>
+	<<if ($slaves[_FLs].devotion >= 60)>>
+		<<set _healthBonus++>>
+	<</if>>
+	<<for _dI = 0; _dI < _DL; _dI++>>
+		<<set $i = $slaveIndices[$CliniciIDs[_dI]]>>
+		<<if $Nurse.rivalryTarget == $slaves[$i].ID>>
+			<<setLocalPronouns $slaves[$i] 2>>
+			$He purposefully neglects the needs of $his <<print rivalryTerm($Nurse)>>, $slaves[$i].slaveName, hindering _his2 recovery and deepening their dislike for each other.
+			<<set $slaves[$i].devotion--, $slaves[$i].trust-->>
+			<<run healthDamage($slaves[$i], 3)>>
+			<<if random(1,100) > 65>>
+				<<set $Nurse.rivalry++, $slaves[_FLs].rivalry++, $slaves[$i].rivalry++>>
+			<</if>>
+		<<elseif $Nurse.relationshipTarget == $slaves[$i].ID>>
+			<<setLocalPronouns $slaves[$i] 2>>
+			$He dedicates most of $his attention to $his <<print relationshipTerm($Nurse)>>, $slaves[$i].slaveName, making sure _he2 has everything _he2 needs and more. This lavish attention detracts from $his overall effectiveness.
+			<<set _idleBonus -= 3, $slaves[$i].devotion++, $slaves[$i].trust++>>
+			<<run improveCondition($slaves[$i], 3)>>
+		<<elseif areRelated($Nurse, $slaves[$i])>>
+			$He makes sure to spend extra time caring for $his <<print relativeTerm($Nurse,$slaves[$i])>>, $slaves[$i].slaveName.
+			<<set $slaves[$i].trust++>>
+			<<run improveCondition($slaves[$i], 1)>>
+		<</if>>
+		<<switch $slaves[$i].prestigeDesc>>
+		<<case "$He is a famed Free Cities whore, and commands top prices.">>
+			<<setLocalPronouns $slaves[$i] 2>>
+			$He does $his best to aid the famous whore, $slaves[$i].slaveName, making sure to pay special attention to _his2 worn holes.
+			<<run improveCondition($slaves[$i], 2)>>
+		<<case "$He is a famed Free Cities slut, and can please anyone.">>
+			<<setLocalPronouns $slaves[$i] 2>>
+			$He does $his best to aid the famous entertainer, $slaves[$i].slaveName, making sure _he2 can show off as soon as possible.
+			<<run improveCondition($slaves[$i], 2)>>
+		<<case "$He is remembered for winning best in show as a cockmilker.">>
+			<<setLocalPronouns $slaves[$i] 2>>
+			<<if ($slaves[$i].balls > 4) && ($slaves[$i].dick != 0)>>
+				$He does $his best to aid the dribbling $slaves[$i].slaveName, paying special attention to _his2 huge cock and balls as well as making sure to milk _his2 <<if canAchieveErection($slaves[$i])>>erect <</if>>dick hourly.
+				<<run improveCondition($slaves[$i], 4)>>
+				<<if (random(1,100) > 65) && (($Nurse.fetish == "none") || ($Nurse.fetish == "cumslut"))>>
+					<<if $Nurse.fetish == "none">>
+						<<set $Nurse.fetish = "cumslut", $slaves[_FLs].fetish = "cumslut">>
+					<<else>>
+						<<set $Nurse.fetishStrength += 4, $slaves[_FLs].fetishStrength += 4>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<<case "$He is remembered for winning best in show as a dairy cow.">>
+			<<setLocalPronouns $slaves[$i] 2>>
+			<<if ($slaves[$i].lactation > 0) && (($slaves[$i].boobs-$slaves[$i].boobsImplant) > 6000)>>
+				$He does $his best to aid the leaking $slaves[$i].slaveName, paying special attention to _his2 huge breasts as well as making sure to milk _him2 hourly.
+				<<run improveCondition($slaves[$i], 4)>>
+				<<set $slaves[$i].lactationDuration = 2, $slaves[$i].boobs -= $slaves[$i].boobsMilk, $slaves[$i].boobsMilk = 0>>
+				<<if (random(1,100) > 65) && (($Nurse.fetish == "none") || ($Nurse.fetish == "boobs"))>>
+					<<if $Nurse.fetish == "none">>
+						<<set $Nurse.fetish = "boobs", $slaves[_FLs].fetish = "boobs">>
+					<<else>>
+						<<set $Nurse.fetishStrength += 4, $slaves[_FLs].fetishStrength += 4>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<<case "$He is remembered for winning best in show as a breeder.">>
+			<<setLocalPronouns $slaves[$i] 2>>
+			<<if $slaves[$i].bellyPreg >= 1500>>
+				$He does $his best to aid the pregnant $slaves[$i].slaveName, paying special attention to _his2 swollen belly and the welfare of the life within.
+				<<run improveCondition($slaves[$i], 6)>>
+			<<elseif $slaves[$i].ovaries == 1 || $slaves[$i].mpreg == 1>>
+				$He does $his best to aid the breeder $slaves[$i].slaveName, paying special attention to _his2 fertility and reproductive organs.
+				<<run improveCondition($slaves[$i], 4)>>
+			<<else>>
+				$He lays out plans on how to restore the breeder $slaves[$i].slaveName to _his2 former gravid glory.
+			<</if>>
+		<</switch>>
+		<<if $slaves[$i].bellyImplant > -1 && $clinicInflateBelly == 1>>
+			<<setLocalPronouns $slaves[$i] 2>>
+			<br>''@@.pink;$slaves[$i].slaveName@@'' spent a lot of time during the week under IV-like stands with bags of inert filler steadily flowing into _his2 belly implant, slowly pushing _his2 belly further and further out. Careful attention, along with several drug injections, were used to make sure _his2 body was able to safely adjust to the implant's rapid growth.
+			<<run healthDamage($slaves[$i], 10)>>
+			<<set $slaves[$i].bellyImplant += 5000>>
+			<<if ($slaves[$i].devotion > 50)>>
+				<<set $slaves[$i].devotion += 4, $slaves[$i].trust += 3>>
+			<<elseif ($slaves[$i].devotion >= -20)>>
+				<<set $slaves[$i].trust -= 5>>
+			<<else>>
+				<<set $slaves[$i].devotion -= 5, $slaves[$i].trust -= 10>>
+			<</if>>
+			<<if $slaves[$i].bellyImplant > ($arcologies[0].FSTransformationFetishistResearch ? 800000 : 130000)>>
+				<<set $slaves[$i].bellyImplant = ($arcologies[0].FSTransformationFetishistResearch ? 800000 : 130000)>>
+				_He2 is filled to the maximum that _his2 implant can stand.
+			<</if>>
+		<</if>>
+		<<if $slaves[$i].pregKnown == 1 && $slaves[$i].preg < $slaves[$i].pregData.normalBirth && $slaves[$i].pregControl == "speed up">>
+			<<setLocalPronouns $slaves[$i] 2>>
+			<br>''@@.pink;$slaves[$i].slaveName@@'' spends most of _his2 time on bedrest being filled with rapid gestation agents and concentrated slave food. All _he2 can do is <<if hasAnyArms($slaves[$i]) && canSee($slaves[$i])>>watch and feel _his2 belly pushing further and further out with life<<elseif canSee($slaves[$i])>>watch _his2 belly bulging further and further out with life<<elseif hasAnyArms($slaves[$i])>>feel _his2 belly pushing further and further out with life beneath _his2 fingers<<else>>feel the every growing pressure inside _his2 abdomen<</if>>. Careful attention, along with numerous drug injections, are used to make sure _his2 body is able to safely adjust to _his2 pregnancy's rapid growth.
+			<<run healthDamage($slaves[$i], 10)>>
+			<<if ($slaves[$i].devotion > 50)>>
+				<<set $slaves[$i].devotion += 2, $slaves[$i].trust += 1>>
+			<<elseif ($slaves[$i].devotion >= -20)>>
+				<<set $slaves[$i].trust -= 5>>
+			<<else>>
+				<<set $slaves[$i].devotion -= 5, $slaves[$i].trust -= 10>>
+			<</if>>
+			<<if $slaves[$i].preg >= $slaves[$i].pregData.minLiveBirth && $slaves[$i].pregControl == "speed up">>
+				<<set $slaves[$i].pregControl = "none">>
+				''@@.pink;$slaves[$i].slaveName's@@'' child is ready to pop out of _his2 womb, ''@@.yellow;_his2 course of rapid gestation agents is finished@@''.
+			<</if>>
+		<<elseif $slaves[$i].preg > 2 && $slaves[$i].pregKnown == 0>>
+			During $his tests, $he discovers that $slaves[$i].slaveName @@.lime;is pregnant.@@
+			<<set $slaves[$i].pregKnown = 1>>
+		<</if>>
+	<</for>>
+	<<if (_DL < $clinic)>>
+		<<set _seed = random(1,10)+(($clinic-_DL)*(random(150,170)+(_idleBonus*10)))>>
+		<<run cashX(_seed, "clinic", $Nurse)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;Since $he doesn't have enough patients to occupy all $his time, the clinic takes in citizens' slaves on a contract basis and $he helps them too, earning @@.yellowgreen;<<print cashFormat(_seed)>>.@@
+	<</if>>
+	<<if (_DL > 0)>><br><br><</if>>
+<</if>>
+
+<<if (_DL > 0)>>
+	&nbsp;&nbsp;&nbsp;&nbsp;<<if (_DL == 1)>>''There is one slave receiving treatment in the clinic.''<<else>>''There are _DL slaves receiving treatment in the clinic.''<</if>>
+<</if>>
+
+<<if ($Nurse != 0)>>
+	<<set $i = _FLs>> /* apply following SA passages to facility leader */
+	<<if $showEWD != 0>>
+		<br><br>
+		/* 000-250-006 */
+		<<if $seeImages && $seeReportImages>>
+		<div class="imageRef tinyImg">
+			<<= SlaveArt($slaves[_FLs], 0, 0)>>
+		</div>
+		<</if>>
+		/* 000-250-006 */
+		<span class='slave-name'><<= SlaveFullName($slaves[_FLs])>></span> is serving as the clinical nurse.
+		<br>&nbsp;&nbsp;&nbsp;
+		<<= saChoosesOwnClothes($slaves[$i])>>
+		<<run tired($slaves[$i])>>
+		<<include "SA rules">>
+		<<include "SA diet">>
+		<<include "SA long term effects">>
+		<<= saDrugs($slaves[$i])>>
+		<<include "SA relationships">>
+		<<include "SA rivalries">>
+		<br><<include "SA devotion">>
+	<<else>>
+		<<silently>>
+		<<run saChoosesOwnClothes($slaves[$i])>>
+		<<run tired($slaves[$i])>>
+		<<include "SA rules">>
+		<<include "SA diet">>
+		<<include "SA long term effects">>
+		<<run saDrugs($slaves[$i])>>
+		<<include "SA relationships">>
+		<<include "SA rivalries">>
+		<<include "SA devotion">>
+		<</silently>>
+	<</if>>
+	<<set $Nurse = $slaves[_FLs]>>
+<</if>>
+
+<<for _dI = 0; _dI < _DL; _dI++>>
+	<<set $i = $slaveIndices[$CliniciIDs[_dI]]>>
+	<<setLocalPronouns $slaves[$i]>>
+
+	<<if $slaves[$i].devotion < 45>>
+		<<set $slaves[$i].devotion += 4>>
+	<</if>>
+	<<set $slaves[$i].devotion += _devBonus>>
+	<<if $slaves[$i].trust < 45>>
+		<<set $slaves[$i].trust += 4>>
+	<</if>>
+
+	<<if ($slaves[$i].health.condition < -80)>>
+		<<run improveCondition($slaves[$i], (20 + ($curativeUpgrade * 10) + _healthBonus))>>
+	<<elseif ($slaves[$i].health.condition < -40)>>
+		<<run improveCondition($slaves[$i], (10 + ($curativeUpgrade * 7) + _healthBonus))>>
+	<<elseif ($slaves[$i].health.condition < 0)>>
+		<<run improveCondition($slaves[$i], (7 + ($curativeUpgrade * 5) + _healthBonus))>>
+	<<elseif ($slaves[$i].health.condition < 90)>>
+		<<run improveCondition($slaves[$i], (3 + ($curativeUpgrade * 3) + _healthBonus))>>
+	<</if>>
+
+	/* the clinic is a well-equipped medical facility and can allow the Nurse or player to
+	 * directly cure serious wounds caused by injury and surgery with minimal side effects */
+	<<if $slaves[$i].health.shortDamage >= 10>>
+		<<if ($Nurse != 0)>>
+			<<run healthCure($slaves[$i], 5 + _healthBonus)>>
+		<<else>>
+			<<run healthCure($slaves[$i], $PC.skill.medicine / 15)>> /* maximum of 6...even a bad full-time nurse will be better than a player doctor */
+		<</if>>
+	<</if>>
+
+	<<switch $clinicDecoration>>
+	<<case "Eugenics" "Gender Fundamentalist" "Gender Radicalist" "Hedonistic" "Intellectual Dependency" "Maturity Preferentialist" "Paternalist" "Petite Admiration" "Repopulation Focus" "Slimness Enthusiast" "Statuesque Glorification" "Youth Preferentialist">>
+		<<set $slaves[$i].rules.living = "luxurious">>
+	<<case "Arabian Revivalist" "Aztec Revivalist" "Chattel Religionist" "Chinese Revivalist" "Edo Revivalist" "Egyptian Revivalist" "Roman Revivalist">>
+		<<set $slaves[$i].rules.living = "normal">>
+	<<default>>
+		<<set $slaves[$i].rules.living = "spare">>
+	<</switch>>
+
+	<<if ($Nurse != 0)>>
+		<<if ($clinicSpeedGestation == 1) && ($slaves[$i].pregKnown == 1)>>
+			<<set $slaves[$i].pregControl = "speed up">>
+		<</if>>
+		<<if ($slaves[$i].chem > 10) && ($clinicUpgradeFilters >= 1)>>
+			<<if $slaves[$i].health.health > -50 && ($clinicUpgradePurge > 0)>>
+				<<set $slaves[$i].chem -= 100 * $clinicUpgradePurge>>
+				<<run healthDamage($slaves[$i], 15)>>
+			<</if>>
+			<<set $slaves[$i].chem = Math.max($slaves[$i].chem - 5, 0)>>
+		<</if>>
+		<<if $slaves[$i].lactation == 1>>
+			<<set $slaves[$i].boobs -= $slaves[$i].boobsMilk, $slaves[$i].boobsMilk = 0>>
+		<</if>>
+	<</if>>
+	<<if ($slaves[$i].health.illness > 0)>>
+	<<elseif ($slaves[$i].health.shortDamage >= 20)>> /* shortDamage does no real harm, until it gets to 20 */
+	<<elseif ($slaves[$i].health.condition <= 40)>>
+	<<elseif ($Nurse != 0) && ($slaves[$i].chem > 15) && ($clinicUpgradeFilters == 1)>>
+	<<elseif ($Nurse != 0) && ($slaves[$i].pregKnown == 1) && ($clinicSpeedGestation > 0 || $slaves[$i].pregControl == "speed up")>>
+	<<elseif ($Nurse != 0) && ($clinicObservePregnancy == 1) && ($slaves[$i].pregAdaptation*1000 < $slaves[$i].bellyPreg || $slaves[$i].preg > $slaves[$i].pregData.normalBirth/1.33)>>
+	<<elseif ($Nurse != 0) && ($clinicInflateBelly > 0) && ($slaves[$i].bellyImplant >= 0) && ($slaves[$i].bellyImplant <= ($arcologies[0].FSTransformationFetishistResearch ? 800000 : 130000))>>
+	<<else>>
+		<p>
+			<span class="slave-name">$slaves[$i].slaveName</span> has been cured<<if ($Nurse != 0) && ($clinicUpgradeFilters == 1)>> and purified<</if>>,
+			<span class="noteworthy">
+				<<if $assignmentRecords[$slaves[$i].ID]>>
+					<<set _oldJob = $assignmentRecords[$slaves[$i].ID]>>
+					<<= assignJobSafely($slaves[$i], _oldJob)>>
+					<<if $slaves[$i].choosesOwnAssignment === 1>>
+						and $he is resting before choosing another task.
+					<<elseif $slaves[$i].assignment === "rest">>
+						<<if _oldJob != "rest">>
+							and since $he was unable to return to $his old task to <<print _oldJob>>, $his assignment has defaulted to rest.
+						<<else>>
+							so $he has returned to rest.
+						<</if>>
+					<<else>>
+						so $he goes back to <<print $slaves[$i].assignment>>.
+					<</if>>
+				<<else>>
+					so $his assignment has defaulted to rest.
+					<<= removeJob($slaves[$i], "get treatment in the clinic")>>
+				<</if>>
+			</span>
+		</p>
+		<<set _restedSlaves++, _dI--, _DL-->>
+		<<continue>>
+	<</if>>
+	<<if $showEWD != 0>>
+		<br><br>
+		/* 000-250-006 */
+		<<if $seeImages && $seeReportImages>>
+			<div class="imageRef tinyImg">
+				<<= SlaveArt($slaves[$i], 0, 0)>>
+			</div>
+		<</if>>
+		/* 000-250-006 */
+		<span class='slave-name'><<= SlaveFullName($slaves[$i])>></span>
+		<<if $slaves[$i].choosesOwnAssignment == 2>>
+			<<include "SA chooses own job">>
+		<<else>>
+			is receiving treatment in $clinicName.
+		<</if>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;$He <<= saRest($slaves[$i])>>
+		<<if ($slaves[$i].health.illness > 0)>>
+			$He stays in the clinic since $he is still sick.
+		<<elseif ($slaves[$i].health.condition <= 40)>>
+			$He stays in the clinic since $his health is still poor.
+		<<elseif ($slaves[$i].health.shortDamage >= 20)>>
+			$He stays in the clinic to recover from $his injuries.
+		<<elseif ($Nurse != 0) && ($slaves[$i].chem > 15) && ($clinicUpgradeFilters == 1)>>
+			$He stays in the clinic as unhealthy chemicals are still being flushed from $his system.
+		<<elseif ($Nurse != 0) && ($slaves[$i].pregKnown == 1) && ($clinicSpeedGestation > 0 || $slaves[$i].pregControl == "speed up")>>
+			$He stays in the clinic to hurry $his pregnancy along safely.
+		<<elseif ($Nurse != 0) && ($clinicInflateBelly > 0) && ($slaves[$i].bellyImplant >= 0) && ($slaves[$i].bellyImplant <= ($arcologies[0].FSTransformationFetishistResearch ? 800000 : 130000))>>
+			$He stays in the clinic as $his implants can still receive more filling.
+		<<elseif ($Nurse != 0) && ($clinicObservePregnancy == 1) && ($slaves[$i].pregAdaptation*1000 < $slaves[$i].bellyPreg || $slaves[$i].preg > $slaves[$i].pregData.normalBirth/1.33)>>
+			$He stays in the clinic waiting for the child to be born.
+		<</if>>
+		<br>&nbsp;&nbsp;&nbsp;
+		<<= saChoosesOwnClothes($slaves[$i])>>
+		<<include "SA rules">>
+		<<include "SA diet">>
+		<<include "SA long term effects">>
+		<<= saDrugs($slaves[$i])>>
+		<<include "SA relationships">>
+		<<include "SA rivalries">>
+		<br><<include "SA devotion">>
+	<<else>>
+		<<silently>>
+		<<include "SA chooses own job">>
+		<<run saRest($slaves[$i])>>
+		<<run saChoosesOwnClothes($slaves[$i])>>
+		<<include "SA rules">>
+		<<include "SA diet">>
+		<<include "SA long term effects">>
+		<<run saDrugs($slaves[$i])>>
+		<<include "SA relationships">>
+		<<include "SA rivalries">>
+		<<include "SA devotion">>
+		<</silently>>
+	<</if>>
+<</for>>
+<<if (_restedSlaves > 0)>>
+	<br><br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<if (_restedSlaves == 1)>>
+		One slave has
+	<<else>>
+		_restedSlaves slaves have
+	<</if>>
+	been returned to @@.green;health<<if ($Nurse != 0) && ($clinicUpgradeFilters == 1)>> and purity<</if>>@@ and will be released from the clinic before the end of the week.
+	<<if $clinicDecoration != "standard">>
+		<br><br>&nbsp;&nbsp;&nbsp;&nbsp;$clinicNameCaps's $clinicDecoration atmosphere @@.hotpink;had an impact on them while they were@@ getting treatment.
+	<</if>>
+<</if>>
+<<if _DL > 0 || $Nurse != 0>>
+	<br><br>
+<</if>>

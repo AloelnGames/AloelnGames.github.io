@@ -1,0 +1,76 @@
+:: Assistant Appearance Pack Two [nobr]
+
+<span id="artFrame">
+	<<if $seeImages == 1>><<= assistantArt(3)>><</if>>
+</span>
+
+<<setAssistantPronouns>>
+
+"Cool! New appearances to play around with!" Your assistant happily chimes. "Let's see what's inside! This looks heavenly..." _HeA hunches forward as a large pair of white feathered wings extend from _hisA upper back. _HeA takes several experimental flaps before taking to the sky. "I feel positively radiant! Maybe a smaller version will be more to your liking?" _HeA loses both height and wingspan until _heA stands roughly equivalent to <<= heightToEitherUnit(120)>>. _HeA flutters around cutely. "This is neat, I'm like cupid. Want me to hook you up with anyone?" _HeA winks as _hisA wings become bat-like and a pair of cute little nubs appears on _hisA head. "Or maybe you'd just like to play with me instead." The impish figure flirts, before landing and blossoming into a stunning woman. "You know a succubus can take _hisA lover's ideal form." _HeA runs _hisA hands down _hisA sides and to _hisA crotch. <<if $seeDicks != 0>>_HeA begins rubbing _hisA clit as it steadily grows into a meaty cock. "Or an incubus, for the ladies." _HeA returns to _hisA previous form. <</if>>"Says here it comes with 'bonus novice witch' too. Neat. What's this though? It looks like an appeara"
+
+<br><br><br><br><br><br><br><br>You tap at the screen; did _heA crash or something?
+
+<br><br><br>
+
+After several minutes, _heA snaps back to life, with no mention about what exactly tied _himA up for so long.
+<br>
+<span ID="app">
+__Personal assistant appearances:__
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Angel">>
+	<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+	<<replace "#app">>
+	At your order, _heA installs the angel appearance. _HeA spreads _hisA wings and checks out _hisA new body, "Thanks, <<= properTitle()>>, but could I have a robe or something? I'm indecent!" _HeA blushes red. "You can always customize me from the arcology management menu," _heA adds.
+	<<set $assistant.appearance = "angel">>
+	<</replace>>
+<</link>>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Cherub">>
+	<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+	<<replace "#app">>
+	At your order, _heA installs the cherub appearance. _HeA returns to _hisA youthful figure and sprouts _hisA wings. "This is awesome, little embarrassing though..." _HeA says, covering _hisA shame. "You can always customize me from the arcology management menu," _heA adds.
+	<<set $assistant.appearance = "cherub">>
+	<</replace>>
+<</link>>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Imp">>
+	<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+	<<replace "#app">>
+	At your order, _heA installs the imp appearance. _HeA returns to _hisA youthful figure and sprouts _hisA wings. "This is awesome! So, wanna fool around? Maybe go torment some slaves?" _HeA says, pulling out a pitchfork. "You can always customize me from the arcology management menu," _heA adds.
+	<<set $assistant.appearance = "imp">>
+	<</replace>>
+<</link>>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Succubus">>
+	<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+	<<replace "#app">>
+	At your order, _heA installs the succubus appearance. _HeA promptly takes your breath away. "Thank you, <<= properTitle()>>. Now how shall I show you my appreciation..." _HisA avatar trails off while spreading _hisA legs and flashing you _hisA lovely pussy. "You can always customize me from the arcology management menu," _heA adds, with a hint of disapproval.
+	<<set $assistant.appearance = "succubus">>
+	<</replace>>
+<</link>>
+<<if $seeDicks != 0>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "Incubus">>
+		<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+		<<replace "#app">>
+		At your order, _heA installs the incubus appearance. _HeA becomes rather masculine, sporting a soft cock nearly as long as _hisA thigh. "Thank you, <<= properTitle()>>. This is going to be fun. Would you like a taste?" _HeA steadily becomes erect, a bead of precum forming at its tip. "You can always customize me from the arcology management menu," _heA adds, with a hint of disapproval.
+		<<set $assistant.appearance = "incubus">>
+		<</replace>>
+	<</link>>
+<</if>>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<<link "witch">>
+	<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+	<<replace "#app">>
+	At your order, _heA installs the novice witch appearance. _HeA wraps a tightly clinging robe around _hisA voluptuous body and dons a wide-brimmed hat. "You can always customize me from the arcology management menu," _heA adds, pulling a book of lewd spells out.
+	<<set $assistant.appearance = "witch">>
+	<</replace>>
+<</link>>
+<<link "_">>
+	<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+	<<replace "#app">>
+	At your order, _heA installs the bugged appearance. _HisA body twists and contorts into an abomination of flesh and bone. It is honestly unsettling to look at. The thing morphs its body into a familiar female shape, though it is still off. Especially _hisA eyes; they seem soulless. "You can always customize me from the arcology management menu," _heA adds, in an ill pronounced mimicry of your voice.
+	<<set $assistant.appearance = "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+	<</replace>>
+<</link>>
+<br><<link "Your current appearance will do">>
+	<<if $seeImages == 1>><<replace "#artFrame">><<= assistantArt(3)>><</replace>><</if>>
+	<<replace "#app">>
+	At your order, _heA maintains the $assistant.appearance appearance as _hisA avatar. "Yes, <<= properTitle()>>," _heA confirms, and adds "if you reconsider, I can be customized from the arcology management menu."
+	<</replace>>
+<</link>>
+</span>

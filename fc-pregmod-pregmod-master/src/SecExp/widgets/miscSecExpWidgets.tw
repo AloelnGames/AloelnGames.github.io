@@ -1,0 +1,361 @@
+:: miscSecExpWidgets [widget nobr]
+
+<<widget "recalcManpower">>
+	<<if $wasToggledBefore == 0>>
+		<<if $mercenaries == 1>>
+			<<set $mercFreeManpower = random(5,20)>>
+		<<elseif $mercenaries > 1>>
+			<<set $mercFreeManpower = random(10,30)>>
+		<</if>>
+	<</if>>
+
+	<<set _correctEmployedMP = 0>>
+	<<for _i = 0; _i < $slaveUnits.length; _i++>>
+		<<set _correctEmployedMP += $slaveUnits[_i].troops>>
+	<</for>>
+
+	<<if $slavesEmployedManpower != _correctEmployedMP>>
+		<<set $slavesEmployedManpower = _correctEmployedMP>>
+	<</if>>
+
+	<<set _correctEmployedMP = 0>>
+	<<for _i = 0; _i < $militiaUnits.length; _i++>>
+		<<set _correctEmployedMP += $militiaUnits[_i].troops>>
+	<</for>>
+
+	<<if $militiaEmployedManpower != _correctEmployedMP>>
+		<<set $militiaEmployedManpower = _correctEmployedMP>>
+	<</if>>
+
+	<<set _correctEmployedMP = 0>>
+	<<for _i = 0; _i < $mercUnits.length; _i++>>
+		<<set _correctEmployedMP += $mercUnits[_i].troops>>
+	<</for>>
+
+	<<if $mercEmployedManpower != _correctEmployedMP>>
+		<<set $mercEmployedManpower = _correctEmployedMP>>
+	<</if>>
+
+	<<set $militiaTotalManpower = $militiaEmployedManpower + $militiaFreeManpower>>
+	<<set $mercTotalManpower = $mercEmployedManpower + $mercFreeManpower>>
+<</widget>>
+
+<<widget "fixBrokenUnits">>
+	<<if ndef $secBots.ID>>
+		<<set $secBots.ID = -1>>
+	<</if>>
+	<<if $secBots.maxTroops < 30>>
+		<br>Fixed security bots wrong max troop count.
+		<<set $secBots.maxTroops = 30>>
+	<</if>>
+	<<if !Number.isInteger($secBots.troops)>>
+		<br>Fixed security bots wrong max troop count.
+		<<set $secBots.troops = $secBots.maxTroops>>
+	<</if>>
+	<<if $secBots.troops > 0 && $secBots.active != 1>>
+		<br>Fixed security bots wrong "active" flag.
+		<<set $secBots.active = 1>>
+	<</if>>
+
+	<<for _i = 0; _i < $militiaUnits.length; _i++>>
+		<<if ndef $militiaUnits[_i].SF>>
+			<br>Set militia missing flag
+			<<set $militiaUnits[_i].SF = 0>>
+		<</if>>
+		<<if ndef $militiaUnits[_i].ID>>
+			<br>Set militia missing ID
+			<<generateUnitID $militiaUnits[_i]>>
+		<</if>>
+		<<if ndef $militiaUnits[_i].cyber>>
+			<br>Set militia missing flag
+			<<set $militiaUnits[_i].cyber = 0>>
+		<</if>>
+		<<if ndef $militiaUnits[_i].commissars>>
+			<br>Set militia missing flag
+			<<set $militiaUnits[_i].commissars = 0>>
+		<</if>>
+		<<if $militiaUnits[_i].maxTroops < 30>>
+			<br>Fixed militia unit wrong max troop count.
+			<<set $militiaUnits[_i].maxTroops = 30>>
+		<</if>>
+		<<if !Number.isInteger($militiaUnits[_i].troops)>>
+			<<set $militiaUnits[_i].troops = $militiaUnits[_i].maxTroops>>
+			<br>Fixed militia unit wrong troop count.
+		<</if>>
+		<<if $militiaUnits[_i].troops > 0 && $militiaUnits[_i].active != 1>>
+			<br>Fixed militia unit wrong "active" flag.
+			<<set $militiaUnits[_i].active = 1>>
+		<</if>>
+	<</for>>
+
+	<<for _i = 0; _i < $slaveUnits.length; _i++>>
+		<<if ndef $slaveUnits[_i].SF>>
+			<br>Set slave missing flag
+			<<set $slaveUnits[_i].SF = 0>>
+		<</if>>
+		<<if ndef $slaveUnits[_i].ID>>
+			<br>Set slave missing ID
+			<<generateUnitID $slaveUnits[_i]>>
+		<</if>>
+		<<if ndef $slaveUnits[_i].cyber>>
+			<br>Set slave missing flag
+			<<set $slaveUnits[_i].cyber = 0>>
+		<</if>>
+		<<if ndef $slaveUnits[_i].commissars>>
+			<br>Set slave missing flag
+			<<set $slaveUnits[_i].commissars = 0>>
+		<</if>>
+		<<if $slaveUnits[_i].maxTroops < 30>>
+			<br>Fixed slave unit wrong max troop count.
+			<<set $slaveUnits[_i].maxTroops = 30>>
+		<</if>>
+		<<if !Number.isInteger($slaveUnits[_i].troops)>>
+			<<set $slaveUnits[_i].troops = $slaveUnits[_i].maxTroops>>
+			<br>Fixed slave unit wrong troop count.
+		<</if>>
+		<<if $slaveUnits[_i].troops > 0 && $slaveUnits[_i].active != 1>>
+			<br>Fixed slave unit wrong "active" flag.
+			<<set $slaveUnits[_i].active = 1>>
+		<</if>>
+	<</for>>
+
+	<<for _i = 0; _i < $mercUnits.length; _i++>>
+		<<if ndef $mercUnits[_i].SF>>
+			<br>Set merc missing flag
+			<<set $mercUnits[_i].SF = 0>>
+		<</if>>
+		<<if ndef $mercUnits[_i].ID>>
+			<br>Set merc missing ID
+			<<generateUnitID $mercUnits[_i]>>
+		<</if>>
+		<<if ndef $mercUnits[_i].cyber>>
+			<br>Set merc missing flag
+			<<set $mercUnits[_i].cyber = 0>>
+		<</if>>
+		<<if ndef $mercUnits[_i].commissars>>
+			<br>Set merc missing flag
+			<<set $mercUnits[_i].commissars = 0>>
+		<</if>>
+		<<if $mercUnits[_i].maxTroops < 30>>
+			<br>Fixed merc unit wrong max troop count.
+			<<set $mercUnits[_i].maxTroops = 30>>
+		<</if>>
+		<<if !Number.isInteger($mercUnits[_i].troops)>>
+			<<set $mercUnits[_i].troops = $mercUnits[_i].maxTroops>>
+			<br>Fixed merc unit wrong troop count.
+		<</if>>
+		<<if $mercUnits[_i].troops > 0 && $mercUnits[_i].active != 1>>
+			<br>Fixed merc unit wrong "active" flag.
+			<<set $mercUnits[_i].active = 1>>
+		<</if>>
+	<</for>>
+<</widget>>
+
+<<widget "fixBrokenStats">>
+	<<if !Number.isInteger($totalKills)>>
+		<<set $totalKills = 0>>
+	<</if>>
+	<<if !Number.isInteger($mercTotalCasualties)>>
+		<<set $mercTotalCasualties = 0>>
+	<</if>>
+	<<if !Number.isInteger($mercEmployedManpower)>>
+		<<set $mercEmployedManpower = 0>>
+	<</if>>
+	<<if !Number.isInteger($mercTotalManpower)>>
+		<<set $mercTotalManpower = 0>>
+	<</if>>
+	<<if !Number.isInteger($slavesTotalCasualties)>>
+		<<set $slavesTotalCasualties = 0>>
+	<</if>>
+	<<if !Number.isInteger($slavesEmployedManpower)>>
+		<<set $slavesEmployedManpower = 0>>
+	<</if>>
+	<<if !Number.isInteger($militiaTotalCasualties)>>
+		<<set $militiaTotalCasualties = 0>>
+	<</if>>
+	<<if !Number.isInteger($militiaEmployedManpower)>>
+		<<set $militiaEmployedManpower = 0>>
+	<</if>>
+	<<if !Number.isInteger($militiaFreeManpower)>>
+		<<set $militiaFreeManpower = 0>>
+	<</if>>
+	<<if !Number.isInteger($militiaTotalManpower)>>
+		<<set $militiaTotalManpower = 0>>
+	<</if>>
+	<<if !Number.isInteger($battlesCount)>>
+		<<set $battlesCount = 0>>
+	<</if>>
+<</widget>>
+
+<<widget "recalcBaseStats">>
+	<<if $secBotsBaseAttack != 7 + $droneUpgrades.attack>>
+		<<set $secBotsBaseAttack = 7 + $droneUpgrades.attack>>
+	<</if>>
+	<<if $secBotsBaseDefense != 3 + $droneUpgrades.defense>>
+		<<set $secBotsBaseDefense = 3 + $droneUpgrades.defense>>
+	<</if>>
+	<<if $secBotsMorale != 200>>
+		<<set $secBotsMorale = 200>>
+	<</if>>
+	<<if $secBotsBaseHp != 3 + $droneUpgrades.hp>>
+		<<set $secBotsBaseHp = 3 + $droneUpgrades.hp>>
+	<</if>>
+	<<if $militiaBaseAttack != 7 + $humanUpgrade.attack>>
+		<<set $militiaBaseAttack = 7 + $humanUpgrade.attack>>
+	<</if>>
+	<<if $militiaBaseDefense != 5 + $humanUpgrade.defense>>
+		<<set $militiaBaseDefense = 5 + $humanUpgrade.defense>>
+	<</if>>
+	<<if $militiaBaseMorale != 140 + $humanUpgrade.morale>>
+		<<set $militiaBaseMorale = 140 + $humanUpgrade.morale>>
+	<</if>>
+	<<if $militiaBaseHp != 3 + $humanUpgrade.hp>>
+		<<set $militiaBaseHp = 3 + $humanUpgrade.hp>>
+	<</if>>
+	<<if $slaveBaseAttack != 8 + $humanUpgrade.attack>>
+		<<set $slaveBaseAttack = 8 + $humanUpgrade.attack>>
+	<</if>>
+	<<if $slaveBaseDefense != 3 + $humanUpgrade.defense>>
+		<<set $slaveBaseDefense = 3 + $humanUpgrade.defense>>
+	<</if>>
+	<<if $slaveBaseMorale != 110 + $humanUpgrade.morale>>
+		<<set $slaveBaseMorale = 110 + $humanUpgrade.morale>>
+	<</if>>
+	<<if $slaveBaseHp != 3 + $humanUpgrade.hp>>
+		<<set $slaveBaseHp = 3 + $humanUpgrade.hp>>
+	<</if>>
+	<<if $mercBaseAttack != 8 + $humanUpgrade.attack>>
+		<<set $mercBaseAttack = 8 + $humanUpgrade.attack>>
+	<</if>>
+	<<if $mercBaseDefense != 4 + $humanUpgrade.defense>>
+		<<set $mercBaseDefense = 4 + $humanUpgrade.defense>>
+	<</if>>
+	<<if $mercBaseMorale != 125 + $humanUpgrade.morale>>
+		<<set $mercBaseMorale = 125 + $humanUpgrade.morale>>
+	<</if>>
+	<<if $mercBaseHp != 4 + $humanUpgrade.hp>>
+		<<set $mercBaseHp = 4 + $humanUpgrade.hp>>
+	<</if>>
+	<<if $SFBaseAttack != 8 + $humanUpgrade.attack>>
+		<<set $SFBaseAttack = 8 + $humanUpgrade.attack>>
+	<</if>>
+	<<if $SFBaseDefense != 4 + $humanUpgrade.defense>>
+		<<set $SFBaseDefense = 4 + $humanUpgrade.defense>>
+	<</if>>
+	<<if $SFBaseMorale != 140 + $humanUpgrade.morale>>
+		<<set $SFBaseMorale = 140 + $humanUpgrade.morale>>
+	<</if>>
+	<<if $SFBaseHp != 4 + $humanUpgrade.hp>>
+		<<set $SFBaseHp = 4 + $humanUpgrade.hp>>
+	<</if>>
+<</widget>>
+
+<<widget "replenishAllUnits">>
+	<<set _hasLossesBots = 0, _hasLossesM = 0>>
+	<<set _hasLossesS = 0, _hasLossesMe = 0>>
+
+	<<if $secBots.troops < $secBots.maxTroops && $cash >= 500>>
+		<<set _hasLossesBots = 1>>
+	<</if>>
+
+	<<for _i = 0; _i < $militiaUnits.length; _i++>>
+		<<if $militiaUnits[_i].troops < $militiaUnits[_i].maxTroops && $militiaFreeManpower > 0>>
+			<<set _hasLossesM = 1>>
+			<<break>>
+		<</if>>
+	<</for>>
+
+	<<for _i = 0; _i < $slaveUnits.length; _i++>>
+		<<if $slaveUnits[_i].troops < $slaveUnits[_i].maxTroops && $menials > 0>>
+			<<set _hasLossesS = 1>>
+			<<break>>
+		<</if>>
+	<</for>>
+
+	<<for _i = 0; _i < $mercUnits.length; _i++>>
+		<<if $mercUnits[_i].troops < $mercUnits[_i].maxTroops && $mercFreeManpower > 0>>
+			<<set _hasLossesMe = 1>>
+			<<break>>
+		<</if>>
+	<</for>>
+
+	<<if _hasLossesBots == 1 || _hasLossesM == 1 || _hasLossesS == 1 || _hasLossesMe == 1>>
+		<br><br><<link "Replenish all units">>
+			<<if _hasLossesBots == 1>>
+					<<run cashX(-(($secBots.maxTroops - $secBots.troops) * 500), "securityExpansion")>>
+					<<set $secBots.troops = $secBots.maxTroops>>
+			<</if>>
+
+			<<if _hasLossesM == 1>>
+				<<for _i = 0; _i < $militiaUnits.length; _i++>>
+					<<if $militiaUnits[_i].troops < $militiaUnits[_i].maxTroops && $militiaFreeManpower > 0>>
+						<<if $militiaFreeManpower >= $militiaUnits[_i].maxTroops - $militiaUnits[_i].troops>>
+							<<set $militiaFreeManpower -= $militiaUnits[_i].maxTroops - $militiaUnits[_i].troops>>
+							<<set $militiaEmployedManpower += $militiaUnits[_i].maxTroops - $militiaUnits[_i].troops>>
+							<<set _expLoss = ($militiaUnits[_i].maxTroops - $militiaUnits[_i].troops) / $militiaUnits[_i].troops>>
+							<<set $militiaUnits[_i].training -= $militiaUnits[_i].training * _expLoss>>
+							<<set $militiaUnits[_i].troops = $militiaUnits[_i].maxTroops>>
+						<<else>>
+							<<set $militiaEmployedManpower += $militiaFreeManpower>>
+							<<set _expLoss = $militiaFreeManpower / $militiaUnits[_i].troops>>
+							<<set $militiaUnits[_i].training -= $militiaUnits[_i].training * _expLoss>>
+							<<set $militiaUnits[_i].troops += $militiaFreeManpower>>
+							<<set $militiaFreeManpower = 0>>
+						<</if>>
+					<</if>>
+				<</for>>
+			<</if>>
+
+			<<if _hasLossesS == 1>>
+				<<for _i = 0; _i < $slaveUnits.length; _i++>>
+					<<if $slaveUnits[_i].troops < $slaveUnits[_i].maxTroops && $menials > 0>>
+						<<if $menials >= $slaveUnits[_i].maxTroops - $slaveUnits[_i].troops>>
+							<<set $menials -= $slaveUnits[_i].maxTroops - $slaveUnits[_i].troops>>
+							<<set $slavesEmployedManpower += $slaveUnits[_i].maxTroops - $slaveUnits[_i].troops>>
+							<<set _expLoss = ($slaveUnits[_i].maxTroops - $slaveUnits[_i].troops) / $slaveUnits[_i].troops>>
+							<<set $slaveUnits[_i].training -= $slaveUnits[_i].training * _expLoss>>
+							<<set $slaveUnits[_i].troops = $slaveUnits[_i].maxTroops>>
+						<<else>>
+							<<set $slavesEmployedManpower += $menials>>
+							<<set _expLoss = $menials / $slaveUnits[_i].troops>>
+							<<set $slaveUnits[_i].training -= $slaveUnits[_i].training * _expLoss>>
+							<<set $slaveUnits[_i].troops += $menials>>
+							<<set $menials = 0>>
+						<</if>>
+					<</if>>
+				<</for>>
+			<</if>>
+
+			<<if _hasLossesMe == 1>>
+				<<for _i = 0; _i < $mercUnits.length; _i++>>
+					<<if $mercUnits[_i].troops < $mercUnits[_i].maxTroops && $mercFreeManpower > 0>>
+						<<if $mercFreeManpower >= $mercUnits[_i].maxTroops - $mercUnits[_i].troops>>
+							<<set $mercFreeManpower -= $mercUnits[_i].maxTroops - $mercUnits[_i].troops>>
+							<<set $mercEmployedManpower += $mercUnits[_i].maxTroops - $mercUnits[_i].troops>>
+							<<set _expLoss = ($mercUnits[_i].maxTroops - $mercUnits[_i].troops) / $mercUnits[_i].troops>>
+							<<set $mercUnits[_i].training -= $mercUnits[_i].training * _expLoss>>
+							<<set $mercUnits[_i].troops = $mercUnits[_i].maxTroops>>
+						<<else>>
+							<<set $mercEmployedManpower += $mercFreeManpower>>
+							<<set _expLoss = $mercFreeManpower / $mercUnits[_i].troops>>
+							<<set $mercUnits[_i].training -= $mercUnits[_i].training * _expLoss>>
+							<<set $mercUnits[_i].troops += $mercFreeManpower>>
+							<<set $mercFreeManpower = 0>>
+						<</if>>
+					<</if>>
+				<</for>>
+			<</if>>
+
+			<<if $slaveRebellion == 1 || $citizenRebellion == 1>>
+				<<goto "rebellionOptions">>
+			<<elseif $attackThisWeek == 1>>
+				<<goto "attackOptions">>
+			<<else>>
+				<<goto "secBarracks">>
+			<</if>>
+
+		<</link>>
+		//Will replenish units as long as requirements are met.//<br>
+	<</if>>
+
+<</widget>>

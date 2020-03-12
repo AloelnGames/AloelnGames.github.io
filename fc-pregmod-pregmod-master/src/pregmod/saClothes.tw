@@ -1,0 +1,1018 @@
+:: SA clothes [nobr]
+
+<<if $slaves[$i].fuckdoll == 0>>
+	<<if $slaves[$i].fetish != "mindbroken">>
+
+		<<switch $slaves[$i].clothes>>
+		<<case "no clothing">>
+			<<if $slaves[$i].devotion >= -20>>
+				<<if ($slaves[$i].fetish == "humiliation") && ($slaves[$i].fetishKnown == 0)>>
+					$He pretends to be embarrassed by $his nudity but seems to get off on it. @@.lightcoral;$He's into humiliation.@@
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<elseif ($slaves[$i].fetish == "humiliation") && ($slaves[$i].fetishStrength > 60)>>
+					$He pretends to be embarrassed by $his nudity but @@.hotpink;openly gets off on it.@@
+					<<set $slaves[$i].devotion += 2>>
+				<<elseif ($slaves[$i].fetish == "humiliation")>>
+					$He pretends to be embarrassed by $his nudity but @@.hotpink;secretly gets off on it.@@
+					<<set $slaves[$i].devotion += 1>>
+				<<elseif ($slaves[$i].energy > 95)>>
+					$His libido is so strong that $he @@.hotpink;enjoys being naked and available.@@
+					<<set $slaves[$i].devotion += 1>>
+				<</if>>
+			<</if>>
+		<<case "a penitent nuns habit">>
+			The mortification of the flesh $he endures from wearing $his sackcloth habit slowly and painfully @@.hotpink;purifies $his mind@@ of any but devoted, @@.gold;fearful@@ thoughts. It's also @@.red;unhealthy.@@
+			<<set $slaves[$i].devotion += 2, $slaves[$i].trust -= 2>>
+			<<run healthDamage($slaves[$i], 3)>>
+			<<if ($slaves[$i].fetish == "masochist") && ($slaves[$i].fetishKnown == 0)>>
+				$His chafed skin makes sex an agonizing prospect. $He seems to get off on the pain; $he's a @@.lightcoral;natural masochist.@@
+				<<set $slaves[$i].fetishKnown = 1>>
+			<<elseif ($slaves[$i].fetish == "none") || ($slaves[$i].fetishKnown == 0)>>
+				<<if _fetishChangeChance > random(0,100)>>
+					$His chafed skin makes sex an agonizing prospect. $He learns to come in spite of, and then @@.lightcoral;because of the pain.@@
+					<<set $slaves[$i].fetish = "masochist", $slaves[$i].fetishKnown = 1, $slaves[$i].fetishStrength = 10>>
+				<</if>>
+			<</if>>
+		<<case "uncomfortable straps">>
+			<<if ($slaves[$i].devotion >= -20) && ($slaves[$i].fetish == "masochist") && $slaves[$i].fetishKnown == 1>>
+				The uncomfortable straps $he's wearing constantly give $him little twinges of pain, @@.hotpink;titillating $him.@@
+				<<set $slaves[$i].devotion += 2>>
+			<<elseif ($slaves[$i].devotion <= 20) && ($slaves[$i].trust >= -50)>>
+				The uncomfortable straps $he's wearing keep $him @@.hotpink;servile@@ and @@.gold;afraid.@@
+				<<set $slaves[$i].devotion += 1, $slaves[$i].trust -= 1>>
+				<<if ($slaves[$i].fetish == "masochist") && ($slaves[$i].fetishKnown == 0)>>
+					The straps pinch and constrict $him whenever $he's used. $He seems to get off on the discomfort; $he's a @@.lightcoral;natural masochist.@@
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<elseif ($slaves[$i].fetish == "none") || ($slaves[$i].fetishKnown == 0)>>
+					<<if _fetishChangeChance > random(0,100)>>
+						The straps pinch and constrict $him whenever $he's used. $He learns to come in spite of, and then @@.lightcoral;because of the discomfort.@@
+						<<set $slaves[$i].fetish = "masochist", $slaves[$i].fetishKnown = 1, $slaves[$i].fetishStrength = 10>>
+					<</if>>
+				<</if>>
+			<<else>>
+				<<if ($slaves[$i].fetish == "masochist") && ($slaves[$i].fetishKnown == 0)>>
+					$His straps pinch and constrict $him whenever $he's used. $He seems to get off on the discomfort; $he's a @@.lightcoral;natural masochist.@@
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<elseif ($slaves[$i].fetish == "none") || ($slaves[$i].fetishKnown == 0)>>
+					<<if _fetishChangeChance > random(0,100)>>
+						$His straps pinch and constrict $him whenever $he's used. $He learns to come in spite of, and then @@.lightcoral;because of the discomfort.@@
+						<<set $slaves[$i].fetish = "masochist", $slaves[$i].fetishKnown = 1, $slaves[$i].fetishStrength = 10>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<<case "chains">>
+			<<if ($slaves[$i].devotion >= -20) && ($slaves[$i].fetish == "masochist") && $slaves[$i].fetishKnown == 1>>
+				The chains $he's wearing constantly give $him little twinges of pain, @@.hotpink;titillating $him.@@
+				<<set $slaves[$i].devotion += 2>>
+			<<elseif ($slaves[$i].devotion <= 20) && ($slaves[$i].trust >= -50)>>
+				The chains $he's wearing keep $him @@.hotpink;servile@@ and @@.gold;afraid.@@
+				<<set $slaves[$i].devotion += 1, $slaves[$i].trust -= 1>>
+				<<if ($slaves[$i].fetish == "masochist") && ($slaves[$i].fetishKnown == 0)>>
+					$His chains pinch and constrict $him whenever $he's used. $He seems to get off on the discomfort; $he's a @@.lightcoral;natural masochist.@@
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<elseif ($slaves[$i].fetish == "none") || ($slaves[$i].fetishKnown == 0)>>
+					<<if _fetishChangeChance > random(0,100)>>
+						$His chains pinch and constrict $him whenever $he's used. $He learns to come in spite of, and then @@.lightcoral;because of the discomfort.@@
+						<<set $slaves[$i].fetish = "masochist", $slaves[$i].fetishKnown = 1, $slaves[$i].fetishStrength = 10>>
+					<</if>>
+				<</if>>
+			<<else>>
+				<<if ($slaves[$i].fetish == "masochist") && ($slaves[$i].fetishKnown == 0)>>
+					$His chains pinch and constrict $him whenever $he's used. $He seems to get off on the discomfort; $he's a @@.lightcoral;natural masochist.@@
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<elseif ($slaves[$i].fetish == "none") || ($slaves[$i].fetishKnown == 0)>>
+					<<if _fetishChangeChance > random(0,100)>>
+						$His chains pinch and constrict $him whenever $he's used. $He learns to come in spite of, and then @@.lightcoral;because of the discomfort.@@
+						<<set $slaves[$i].fetish = "masochist", $slaves[$i].fetishKnown = 1, $slaves[$i].fetishStrength = 10>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<<case "restrictive latex">>
+			<<if ($slaves[$i].devotion > 20) && ($slaves[$i].trust >= -50) && ($slaves[$i].fetish == "submissive")>>
+				<<if $slaves[$i].fetishKnown == 0>>
+					The latex $he's wearing limits $his world to your input and control. $He seems to get off on the lack of control; $he's a @@.lightcoral;total submissive.@@
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<elseif ($slaves[$i].fetishStrength > 60)>>
+					As a submissive $he @@.hotpink;openly enjoys being immured in latex.@@
+					<<set $slaves[$i].devotion += 2>>
+				<<else>>
+					$His submissive tendencies help $him @@.hotpink;enjoy being immured in latex.@@
+					<<set $slaves[$i].devotion += 1>>
+				<</if>>
+			<<elseif ($slaves[$i].devotion < -20)>>
+				The latex $he's wearing limits $his world to @@.hotpink;your input and control@@ and @@.gold;fear@@ of unexpected pain.
+				<<set $slaves[$i].devotion += 1, $slaves[$i].trust -= 1>>
+			<</if>>
+		<<case "shibari ropes">>
+			<<if ($slaves[$i].devotion > 20) && ($slaves[$i].trust >= -50) && ($slaves[$i].fetish == "submissive")>>
+				<<if $slaves[$i].fetishKnown == 0>>
+					The ropes $he's wearing restrict $him and leave $him completely helpless. $He seems to get off on the lack of control; $he's a @@.lightcoral;natural submissive.@@
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<elseif ($slaves[$i].fetishStrength > 60)>>
+					As a submissive $he @@.hotpink;openly enjoys wearing binding ropes as clothing.@@
+					<<set $slaves[$i].devotion += 2>>
+				<<else>>
+					$His submissive tendencies help $him @@.hotpink;enjoy wearing binding ropes as clothing.@@
+					<<set $slaves[$i].devotion += 1>>
+				<</if>>
+			<<elseif ($slaves[$i].devotion < -20)>>
+				The ropes $he's wearing restrict $him without pain, rendering $him @@.hotpink;susceptible to control@@ and @@.gold;afraid.@@
+				<<set $slaves[$i].devotion += 1, $slaves[$i].trust -= 1>>
+			<</if>>
+		<<case "an apron">>
+			<<if $slaves[$i].fetish == "submissive">>
+				<<if ($slaves[$i].fetishKnown == 0)>>
+					$He pretends to be embarrassed by wearing nothing but an apron, but seems to get off on how it invites other to take control and use $him. @@.lightcoral;$He's a natural submissive.@@
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<else>>
+					$He pretends to be embarrassed by wearing nothing but an apron but @@.hotpink;secretly gets off@@ on how it invites men to bend $him over and put $him in $his place.
+					<<set $slaves[$i].devotion += 1>>
+				<</if>>
+			<<elseif $slaves[$i].fetish == "humiliation">>
+				<<if ($slaves[$i].fetishKnown == 0)>>
+					$He pretends to be embarrassed by $his extremely revealing clothing but seems to get off on it. @@.lightcoral;$He's into humiliation.@@
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<elseif ($slaves[$i].fetishStrength > 60)>>
+					$He pretends to be embarrassed by $his extremely revealing clothing but @@.hotpink;openly gets off on it.@@
+					<<set $slaves[$i].devotion += 2>>
+				<<else>>
+					$He pretends to be embarrassed by $his extremely revealing clothing but @@.hotpink;secretly gets off on it.@@
+					<<set $slaves[$i].devotion += 1>>
+				<</if>>
+			<<elseif $slaves[$i].fetish == "pregnancy" && ($slaves[$i].bellyPreg >= 1500 || $slaves[$i].bellyImplant >= 1500)>>
+				<<if ($slaves[$i].fetishKnown == 0)>>
+					$He pretends to be embarrassed over only having an apron to cover $his gravid swell but seems to get off on it. @@.lightcoral;$He's a pregnancy fetishist.@@
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<elseif ($slaves[$i].fetishStrength > 60)>>
+					$He @@.hotpink;openly gets off@@ from how motherly $he looks wearing nothing but an apron over $his <<if $slaves[$i].bellyPreg > 100>>increasingly <</if>>gravid frame.
+					<<set $slaves[$i].devotion += 2>>
+				<<else>>
+					$He @@.hotpink;secretly gets off@@ from how motherly $he feels wearing nothing but an apron over $his <<if $slaves[$i].bellyPreg > 100>>increasingly <</if>>gravid frame.
+					<<set $slaves[$i].devotion += 1>>
+				<</if>>
+			<<elseif ($slaves[$i].devotion <= 20)>>
+				$He is @@.mediumorchid;inappropriately proud@@ of the nice apron $he's wearing, @@.mediumaquamarine;building $his confidence.@@
+				<<set $slaves[$i].devotion -= 5, $slaves[$i].trust += 3>>
+			<<else>>
+				$He is @@.hotpink;proud@@ and @@.mediumaquamarine;confident@@ of the nice apron $he's wearing.
+				<<set $slaves[$i].devotion += 1, $slaves[$i].trust += 1>>
+			<</if>>
+		<<default>>
+			<<if ($slaves[$i].devotion <= 20)>>
+				$He is @@.mediumorchid;inappropriately proud@@ of the nice clothes $he's wearing, @@.mediumaquamarine;building $his confidence.@@
+				<<set $slaves[$i].devotion -= 5, $slaves[$i].trust += 3>>
+			<<elseif $slaves[$i].fetish == "boobs" && $slaves[$i].clothes == "a monokini">>
+				<<if ($slaves[$i].fetishKnown == 0)>>
+					$He pretends to be embarrassed by how $his monokini draws attention to $his breasts but @@.hotpink;seems to get off on it.@@
+					<<set $slaves[$i].devotion += 1>>
+				<<elseif ($slaves[$i].fetishStrength > 60)>>
+					$He pretends to be embarrassed by $his clearly exposed breasts but @@.hotpink;openly gets off on it.@@
+					<<set $slaves[$i].devotion += 2>>
+				<<else>>
+					$He pretends to be embarrassed by $his clearly exposed breasts but @@.hotpink;secretly gets off on it.@@
+					<<set $slaves[$i].devotion += 1>>
+				<</if>>
+			<<elseif $slaves[$i].fetish == "humiliation" && setup.humiliatingClothes.includes($slaves[$i].clothes)>>
+				<<if ($slaves[$i].fetishKnown == 0)>>
+					$He pretends to be embarrassed by $his extremely revealing clothing but seems to get off on it. @@.lightcoral;$He's into humiliation.@@
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<elseif ($slaves[$i].fetishStrength > 60)>>
+					$He pretends to be embarrassed by $his extremely revealing clothing but @@.hotpink;openly gets off on it.@@
+					<<set $slaves[$i].devotion += 2>>
+				<<else>>
+					$He pretends to be embarrassed by $his extremely revealing clothing but @@.hotpink;secretly gets off on it.@@
+					<<set $slaves[$i].devotion += 1>>
+				<</if>>
+			<<elseif ($slaves[$i].dick > 0)>>
+				/* males have trouble with outfit block */ /* return to with crotch description overhaul */
+				<<switch $slaves[$i].clothes>>
+				<<case "attractive lingerie" "attractive lingerie for a pregnant woman">>
+					$He is @@.hotpink;proud@@ of the pretty lingerie $he's wearing, but $he constantly has to adjust $his g-string to cover $his penis.
+					<<set $slaves[$i].devotion += 1>>
+				<<case "a string bikini">>
+					$He is @@.hotpink;proud@@ of the slutty swimsuit $he's wearing, but $he constantly has to adjust $his string bikini bottom in a vain effort to cover $his penis.
+					<<set $slaves[$i].devotion += 1>>
+				<<default>>
+					$He is @@.hotpink;proud@@ and @@.mediumaquamarine;confident@@ of the nice clothes $he's wearing.
+					<<set $slaves[$i].devotion += 1, $slaves[$i].trust += 1>>
+				<</switch>>
+			<<else>>
+				$He is @@.hotpink;proud@@ and @@.mediumaquamarine;confident@@ of the nice clothes $he's wearing.
+				<<set $slaves[$i].devotion += 1, $slaves[$i].trust += 1>>
+			<</if>>
+		<</switch>>
+
+		<<if ($slaves[$i].fetishKnown == 0) || ($slaves[$i].fetish == "none")>>
+			<<if setup.humiliatingClothes.includes($slaves[$i].clothes)>>
+				<<if _fetishChangeChance > random(0,100)>>
+					Surprisingly, $he takes to $his extremely revealing clothing, and gets an obvious thrill from it. @@.lightcoral;$He's become a humiliation fetishist!@@
+					<<set $slaves[$i].fetish = "humiliation", $slaves[$i].fetishKnown = 1, $slaves[$i].fetishStrength = 10>>
+				<</if>>
+			<</if>>
+		<</if>>
+
+		<<if ($slaves[$i].chastityVagina)>>
+			<<if ($slaves[$i].devotion > 20)>>
+				<<if ($slaves[$i].vagina == 0)>>
+					<<if ($slaves[$i].fetish == "buttslut") && ($slaves[$i].fetishStrength > 60)>>
+						<<if $slaves[$i].fetishKnown == 1>>
+							$He's such an anal whore that $he's @@.hotpink;perversely proud@@ of the chastity belt that covers $his neglected pussy.
+							<<set $slaves[$i].devotion += 1>>
+						<<else>>
+							$He @@.hotpink;doesn't seem to mind@@ that $his pussy is going unused.
+							<<set $slaves[$i].devotion += 1>>
+						<</if>>
+					<<else>>
+						$He @@.mediumaquamarine;trusts@@ that you're using the chastity belt $he wears to save $his virginity for something special.
+						<<set $slaves[$i].trust += 1>>
+					<</if>>
+				<<else>>
+					<<if ($slaves[$i].energy > 60)>>
+						<<if ($slaves[$i].fetish == "buttslut") && ($slaves[$i].fetishStrength > 60)>>
+							<<if $slaves[$i].fetishKnown == 1>>
+								$He's such a butthole slut that $he doesn't care about having $his pussy kept off limits.
+							<<else>>
+								$He seems to like that $his chastity is directing all the dicks into $his ass.
+								<<set $slaves[$i].devotion += 1>>
+							<</if>>
+						<<elseif ($slaves[$i].energy > 95)>>
+							$He's such a nympho that having $his butthole do double duty for $his pussy doesn't bother $him.
+						<<else>>
+							$He has a healthy sexuality, and misses vaginal sex, @@.red;reducing $his sex drive slightly.@@
+							<<set $slaves[$i].energy -= 1>>
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if ($slaves[$i].chastityPenis)>>
+			<<if ($slaves[$i].devotion >= -20)>>
+				<<if ($slaves[$i].energy > 40)>>
+					<<if ($slaves[$i].hormoneBalance < 100)>>
+						<<if ($slaves[$i].fetish == "buttslut") && ($slaves[$i].fetishStrength > 60)>>
+							<<if $slaves[$i].fetishKnown == 1>>
+								$He's such a butthole slut that $he manages to get off just fine despite $his dick being kept untouchable and soft behind a chastity cage.
+							<<else>>
+								$He seems to be getting off just fine without access to $his dick.
+							<</if>>
+						<<elseif ($slaves[$i].energy > 95)>>
+							$His sex drive is so overcharged that $he manages to orgasm often despite the chastity cage that <<if ($slaves[$i].balls == 0 || $slaves[$i].ballType == "sterile")>>prevents $him or anyone else from touching $his soft cock<<else>>keeps $his dick soft and untouched<</if>>; it's almost always dripping a stream of precum.
+						<<elseif ($slaves[$i].fetish == "masochist") && ($slaves[$i].fetishStrength > 60) && canAchieveErection($slaves[$i])>>
+							<<if $slaves[$i].fetishKnown == 1>>
+								$He's such a masochist that the pain of even getting semi-hard in $his chastity cage turns $him on even more, @@.green;slightly increasing $his sexual appetite.@@
+								<<set $slaves[$i].energy++>>
+							<<else>>
+								$His chastity cage is always painfully tight around $his semi-hard dick; something that seems to be arousing to $him, only to make it even more painful.
+								<<set $slaves[$i].energy++>>
+							<</if>>
+						<<elseif $slaves[$i].sexualFlaw == "neglectful">>
+							$His soft, constrained dick is of little concern to $him. $He doesn't need release during sex.
+						<<elseif ($slaves[$i].balls > 0 && $slaves[$i].ballType == "sterile")>>
+							Though $he's a soft bitch with worthless balls, having $his dick guarded against all stimulation by a chastity cage reduces $his enjoyment of intercourse a bit, @@.red;slightly reducing $his sexual appetite.@@
+							<<set $slaves[$i].energy -= 1>>
+						<<elseif ($slaves[$i].balls == 0)>>
+							Though $he's a soft, ballsless bitch, having $his dick guarded against all stimulation by a chastity cage reduces $his enjoyment of intercourse a bit, @@.red;slightly reducing $his sexual appetite.@@
+							<<set $slaves[$i].energy -= 1>>
+						<<else>>
+							$He has a healthy sexuality, but $his chastity cage punishes it by making it very uncomfortable to achieve erection. $He often goes without release rather than pushing through, @@.red;reducing $his sex drive.@@
+							<<set $slaves[$i].energy -= 2>>
+							<<if ($slaves[$i].devotion > 95)>>
+								$He's so devoted to you that $he doesn't let this affect $his opinion of you.
+							<<else>>
+								$He's @@.mediumorchid;a bit resentful@@ and @@.gold;much less trusting@@ under all this discomfort.
+								<<set $slaves[$i].devotion -= 1, $slaves[$i].trust -= 1>>
+							<</if>>
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+
+		<<if ($arcologies[0].FSChattelReligionist != "unset")>>
+			<<if ($slaves[$i].behavioralQuirk == "sinful")>>
+				<<if ($slaves[$i].clothes == "a fallen nuns habit") || ($slaves[$i].clothes == "a chattel habit") || ($slaves[$i].clothes == "a succubus outfit")>>
+					$He's @@.hotpink;gratified@@ by the sacrilegious clothing $he's wearing, glad to be an obvious anathema to old world faiths.
+					<<set $slaves[$i].devotion += 1>>
+				<</if>>
+			<</if>>
+		<</if>>
+
+		/* ACCESSORIES */
+		<<if ($slaves[$i].collar != "none")>>
+
+			<<if $slaves[$i].collar == "preg biometrics">>
+				<<if $slaves[$i].fetish == "pregnancy" && $slaves[$i].fetishKnown == 1>>
+					<<if $slaves[$i].preg < -1>>
+						$His collar's display reveals all sorts of personal information about $his womb, which as an infertile pregnancy fetishist, is @@.mediumorchid;crippling@@ to $him.
+						<<set $slaves[$i].devotion -= 3>>
+					<<else>>
+						$His collar's display reveals all sorts of personal information about $his womb, which as a pregnancy fetishist, is @@.hotpink;pleasing@@ to $him.
+						<<set $slaves[$i].devotion += 1>>
+					<</if>>
+				<<elseif $slaves[$i].fetish == "pregnancy" && $slaves[$i].fetishKnown == 0>>
+					<<if $slaves[$i].preg < -1>>
+						$His collar's display reveals all sorts of personal information about $his womb, which nearly causes $him to have a @@.mediumorchid;mental breakdown,@@ painting $him as an infertile @@.lightcoral;pregnancy fetishist.@@
+						<<set $slaves[$i].devotion -= 3>>
+					<<else>>
+						$His collar's display reveals all sorts of personal information about $his womb, @@.hotpink;oddly exciting@@ $him. It would seem $he has a @@.lightcoral;pregnancy fetish!@@
+						<<set $slaves[$i].devotion += 1>>
+					<</if>>
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<elseif $slaves[$i].fetish == "humiliation" && $slaves[$i].fetishKnown == 1>>
+					$His collar's display reveals all sorts of personal information about $his womb, which is completely humiliating, and @@.hotpink;pleasing@@ to $him.
+					<<set $slaves[$i].devotion += 1>>
+				<<elseif $slaves[$i].fetish == "humiliation" && $slaves[$i].fetishKnown == 0>>
+					$His collar's display reveals all sorts of personal information about $his womb, which is completely humiliating, and @@.hotpink;oddly pleasing@@ to $him. $He seems to have a @@.lightcoral;humiliation fetish!@@
+					<<set $slaves[$i].devotion += 1>>
+					<<set $slaves[$i].fetishKnown = 1>>
+				<<elseif $slaves[$i].devotion < -20>>
+					$His collar's display reveals all sorts of personal information about $his fertility, filling $him @@.mediumorchid;with disgust@@ that you that you consider $his womb little more than property, as well as @@.gold;fear@@ that
+					<<if $slaves[$i].pregKnown == 1>>
+						it will be promptly filled with an unwelcome child once $his pregnancy ends.
+					<<else>>
+						it will soon be swelling with an unwelcome child.
+					<</if>>
+					<<set $slaves[$i].devotion -= 2>>
+					<<set $slaves[$i].trust -= 2>>
+				<<elseif ($slaves[$i].devotion <= 20)>>
+					$His collar's display reveals all sorts of personal information about $his womb, completely @@.hotpink;degrading $him@@ and making $him @@.gold;fear@@ $his new life.
+					<<set $slaves[$i].devotion += 1>>
+					<<set $slaves[$i].trust -= 2>>
+				<<elseif $slaves[$i].devotion > 20>>
+					$His collar's display reveals all sorts of personal information about $his womb, filling $him @@.hotpink;with pride@@ that you think $his womb is worth attention.
+					<<set $slaves[$i].devotion += 1>>
+				<</if>>
+			<<elseif ($slaves[$i].devotion <= 20)>>
+				<<if (($slaves[$i].collar == "tight steel") || ($slaves[$i].collar == "cruel retirement counter"))>>
+					The tight metal collar $he's wearing @@.gold;reminds $him to be afraid@@ every time $he takes a breath.
+					<<set $slaves[$i].trust -= 1>>
+				<<elseif ($slaves[$i].collar == "uncomfortable leather") || ($slaves[$i].collar == "neck corset")>>
+					The uncomfortable leather collar $he's wearing @@.gold;reminds $him to be afraid@@ every time $he turns $his head.
+					<<set $slaves[$i].trust -= 1>>
+				<<elseif ($slaves[$i].collar == "dildo gag")>>
+					The dildo gag $he's wearing @@.gold;reminds $him to be afraid@@ with every breath $he must carefully take through $his nose.
+					<<set $slaves[$i].trust -= 1>>
+				<<elseif ($slaves[$i].collar == "ball gag")>>
+					The ball gag $he's wearing keeps $his mouth filled and, since $he can't speak out, forces $him @@.hotpink;to submit@@ to your will. $He @@.gold;fears@@ for $his safety with every suppressed word.
+					<<set $slaves[$i].devotion++, $slaves[$i].trust -= 2>>
+				<<elseif ($slaves[$i].collar == "bit gag")>>
+					The uncomfortable bit gag $he's wearing keeps $his mouth locked and, since $he can't speak out, forces $him @@.hotpink;to submit@@ to your will. $He @@.gold;fears@@ for $his safety with every suppressed word.
+					<<set $slaves[$i].devotion++, $slaves[$i].trust -= 2>>
+				<<elseif ($slaves[$i].collar == "porcelain mask")>>
+					The beautiful porcelain mask $he's wearing slowly erodes $his identity, forcing $him @@.hotpink;to submit@@ to your will. $He @@.gold;questions@@ who $he is.
+					<<set $slaves[$i].devotion++, $slaves[$i].trust -= 2>>
+				<<elseif ($slaves[$i].collar == "massive dildo gag")>>
+					The enormous dildo gag $he's wearing @@.gold;terrifies $him@@ that $he will soon be choking down cocks of similar size. $He can feel $his throat stretching around the giant dildo, and @@.mediumorchid;resents you@@ for tormenting $him this way.
+					<<set $slaves[$i].devotion -= 1, $slaves[$i].trust -= 2>>
+				<<elseif ($slaves[$i].collar == "shock punishment")>>
+					The shock collar $he's wearing makes $his frequent, deserved punishments @@.gold;immediate, inescapable,@@ and @@.mediumorchid;awful.@@
+					<<set $slaves[$i].devotion -= 2, $slaves[$i].trust -= 5>>
+					<<if ($slaves[$i].devotion < -20) && ($slaves[$i].behavioralFlaw != "odd")>>
+						Since $he's rebellious $his life is near-constant electroshock torture. $His resistance is @@.hotpink;worn down by the agony@@ and $he is @@.gold;thoroughly cowed,@@ but $he has been @@.red;emotionally damaged@@ by the experience to the extent that further shock torture is not likely to affect $him as greatly.
+						<<set $slaves[$i].devotion += 10>>
+						<<set $slaves[$i].trust -= 10>>
+						<<set $slaves[$i].behavioralFlaw = "odd">>
+					<</if>>
+				<<else>>
+					$He is @@.mediumorchid;inappropriately proud@@ and @@.mediumaquamarine;confident@@ of the nice collar $he's wearing.
+					<<set $slaves[$i].devotion -= 5, $slaves[$i].trust += 3>>
+				<</if>>
+			<<else>>
+				<<if (($slaves[$i].collar == "heavy gold") || ($slaves[$i].collar == "ancient Egyptian"))>>
+					$He bears the burden of $his heavy gold collar with @@.mediumaquamarine;confidence.@@
+					<<set $slaves[$i].trust += 1>>
+				<<elseif ($slaves[$i].collar == "bowtie")>>
+					The bowtie and shirt collar $he wears fill $him with @@.mediumaquamarine;confidence,@@ since although they conceal a more traditional slave collar that can be used to restrain $him, they don't look like it.
+					<<set $slaves[$i].trust += 1>>
+				<<elseif ($slaves[$i].collar == "pretty jewelry") || ($slaves[$i].collar == "nice retirement counter") || ($slaves[$i].collar == "satin choker") || ($slaves[$i].collar == "stylish leather") || ($slaves[$i].collar == "silk ribbon")>>
+					The lovely collar $he wears fills $him with @@.mediumaquamarine;confidence.@@
+					<<set $slaves[$i].trust += 1>>
+				<<elseif ($slaves[$i].collar == "leather with cowbell")>>
+					<<if ($slaves[$i].fetish == "boobs") && ($slaves[$i].fetishStrength > 95)>>
+						$He @@.hotpink;loves@@ how $his cow collar encourages everyone to fuck $his udders.
+						<<set $slaves[$i].devotion += 1>>
+					<<elseif ($slaves[$i].fetish == "boobs") || ($slaves[$i].energy > 95)>>
+						$He @@.hotpink;likes@@ how $his cow collar encourages everyone to touch $his udders.
+						<<set $slaves[$i].devotion += 1>>
+					<</if>>
+				<<elseif ($slaves[$i].collar == "ball gag" || $slaves[$i].collar == "bit gag")>>
+					<<if ($slaves[$i].fetish == "submissive") && ($slaves[$i].fetishStrength > 95)>>
+						$He @@.hotpink;loves@@ how $his gag forces $him to keep silent.
+						<<set $slaves[$i].devotion += 1>>
+					<<elseif ($slaves[$i].fetish == "submissive") || ($slaves[$i].energy > 95)>>
+						$He @@.hotpink;likes@@ how $his gag forces $him to keep silent.
+						<<set $slaves[$i].devotion += 1>>
+					<</if>>
+				<<elseif ($slaves[$i].collar == "porcelain mask")>>
+					<<if ($slaves[$i].fetish == "submissive") && ($slaves[$i].fetishStrength > 95)>>
+						$He @@.hotpink;loves@@ how $his mask makes $him beautiful enough for you.
+						<<set $slaves[$i].devotion += 1>>
+					<<elseif ($slaves[$i].fetish == "submissive") || ($slaves[$i].energy > 95)>>
+						$He @@.hotpink;likes@@ how $his mask makes $him beautiful enough for you.
+						<<set $slaves[$i].devotion += 1>>
+					<</if>>
+				<</if>>
+			<</if>>
+			<<if ($slaves[$i].collar == "dildo gag")>>
+				<<if $slaves[$i].skill.oral <= 10>>
+					Living gagged by a dildo, $he can't help but get better at having things down $his throat.
+					<<= SkillIncrease.Oral($slaves[$i], 5)>>
+				<</if>>
+			<</if>>
+			<<if ($slaves[$i].collar == "massive dildo gag")>>
+				<<if $slaves[$i].skill.oral < 75>>
+					Living gagged by such an immense dildo, $he can't help but get even better at having giant things rammed down $his throat.
+					<<= SkillIncrease.Oral($slaves[$i], 5)>>
+				<</if>>
+			<</if>>
+		<</if>>
+
+	<</if>> /* CLOSES MINDBREAK CHECK FOR MENTAL ONLY ITEM EFFECTS */
+<</if>> /* CLOSES FUCKDOLL CHECK FOR MENTAL ONLY ITEM EFFECTS */
+
+<<if $slaves[$i].bellyAccessory != "none">>
+	<<if $slaves[$i].bellyAccessory == "an extreme corset">>
+		<<if $slaves[$i].belly >= 100000>>
+			$His straining corset finally gives in to $his giant stomach and bursts, freeing $his belly.
+			<<set $slaves[$i].bellyAccessory = "none">>
+		<<elseif $slaves[$i].bellyPreg >= 1500>>
+			The tight corseting has @@.orange;caused $him to miscarry,@@ which @@.red;damages $his health.@@
+			<<run healthDamage($slaves[$i], 20)>>
+			<<if lastPregRule($slaves[$i],$defaultRules)>><<set $slaves[$i].preg = -1>><<else>><<set $slaves[$i].preg = 0>><</if>>
+			<<run TerminatePregnancy($slaves[$i])>>
+			<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+				<<if $slaves[$i].devotion < -50>>
+					$He is @@.mediumorchid;filled with violent, consuming hatred@@ and @@.gold;fear.@@ Even though $he knew $his baby was destined for a slave orphanage, it seems $he cared for it and views you as its killer.
+					<<set $slaves[$i].devotion -= 25, $slaves[$i].trust -= 25>>
+				<<elseif $slaves[$i].devotion < -20>>
+					$He is @@.mediumorchid;afflicted by desperate, inconsolable grief@@ and @@.gold;horror.@@ Even though $he knew $his baby was destined for a slave orphanage, it seems $he cared for it.
+					<<set $slaves[$i].devotion -= 10, $slaves[$i].trust -= 20>>
+				<<elseif $slaves[$i].devotion <= 20>>
+					$He is @@.mediumorchid;consumed by enduring sorrow@@ and @@.gold;horror.@@ Even though $he knew $his baby was destined for a slave orphanage, it seems $he cared for it.
+					<<set $slaves[$i].devotion -= 5, $slaves[$i].trust -= 5>>
+				<<elseif $slaves[$i].devotion <= 50>>
+					$He is dully obedient. $He has been broken to slave life so thoroughly that even this is neither surprising nor affecting.
+				<<else>>
+					$He is @@.hotpink;pleased by this stark development,@@ since $he is so attentive to your will. $He also expects $he'll be able to fuck better now.
+					<<set $slaves[$i].devotion += 4>>
+				<</if>>
+			<</if>>
+			<<if $slaves[$i].abortionTat > -1>>
+				<<set $slaves[$i].abortionTat++>>
+				The temporary tattoo of a child has been replaced with $his <<= ordinalSuffix($slaves[$i].abortionTat)>> crossed out infant.
+				<<run cashX(forceNeg($modCost), "slaveMod", $slaves[$i])>>
+			<</if>>
+		<<else>>
+			<<if $slaves[$i].waist <= -95>>
+				$His waist is so absurd that $his extreme corsetage does not affect $him further.
+			<<else>>
+				@@.lime;The extreme corseting narrows $his waist.@@
+				<<set $slaves[$i].waist -= 5>>
+				<<if $slaves[$i].waist < -95>> /*can only get here if waist was previously > -95 */
+					<<set $slaves[$i].waist = -95>>
+				<</if>>
+				<<if $slaves[$i].waist >= -40>>
+					It's so tight that it's @@.red;unhealthy.@@
+					<<run healthDamage($slaves[$i], 5)>>
+					<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+						<<if $slaves[$i].devotion < -20>>
+							$He @@.hotpink;barely has breath to think,@@ though $he has enough to @@.gold;fear.@@
+							<<set $slaves[$i].devotion += 2, $slaves[$i].trust -= 2>>
+						<</if>>
+						<<if ($slaves[$i].fetish == "masochist")>>
+							During sex, every breath in and out is agonizing.
+							<<if ($slaves[$i].fetishKnown == 0)>>
+								Despite this, $he seems to get off on the pain; $he's a @@.lightcoral;natural masochist.@@
+								<<set $slaves[$i].fetishKnown = 1>>
+							<<else>>
+								It only adds to $his pleasure, much to $his @@.hotpink;enjoyment.@@
+								<<set $slaves[$i].devotion += 1>>
+								<<if ($slaves[$i].fetishStrength <= 95)>>
+									Such constant suffering @@.lightcoral;deepens $his masochism.@@
+									<<set $slaves[$i].fetishStrength += 2>>
+								<</if>>
+							<</if>>
+						<<elseif ($slaves[$i].fetish == "none") || ($slaves[$i].fetishKnown == 0)>>
+							<<if _fetishChangeChance > random(0,100)>>
+								During sex, every breath in and out is agonizing. $He learns to come in spite of, and then @@.lightcoral;because of the pain.@@
+								<<set $slaves[$i].fetish = "masochist", $slaves[$i].fetishKnown = 1, $slaves[$i].fetishStrength = 10>>
+							<</if>>
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif $slaves[$i].bellyAccessory == "a corset">>
+		<<if $slaves[$i].bellyPreg >= 1500>>
+			$His corset lets $his growing belly protrude comfortably, preventing any danger to $his pregnancy but preventing any effect on $his waist.
+		<<elseif $slaves[$i].belly >= 1500>>
+			$His corset lets $his rounded belly protrude comfortably but prevents any effect on $his waist.
+		<<else>>
+			<<if $slaves[$i].waist < -40>>
+				$His waist is so narrow that $his corsetage does not affect it.
+			<<else>>
+				@@.lime;The corseting narrows $his waist.@@
+				<<set $slaves[$i].waist -= 3>>
+			<</if>>
+		<</if>>
+	<<elseif $slaves[$i].bellyAccessory == "a support band">>
+		<<if $slaves[$i].belly > 10000>>
+			$His pregnancy support band takes some weight off $his back, but it does little beyond that.
+		<</if>>
+	<<elseif setup.fakeBellies.includes($slaves[$i].bellyAccessory)>>
+		<<if $slaves[$i].weight > 130>>
+			$He has trouble keeping $his fake belly strapped around $his huge gut, forcing it to be removed to prevent damage.
+			<<set $slaves[$i].bellyAccessory = "none">>
+		<<else>>
+			<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+				<<if ($slaves[$i].sexualFlaw == "breeder")>>
+					$He @@.mediumorchid;resents@@ being forced to carry a fake pregnancy instead of a real one.
+					<<set $slaves[$i].devotion -= 5>>
+				<<elseif ($slaves[$i].devotion <= 20) && ($slaves[$i].trust >= -50) && ($slaves[$i].fetish == "pregnancy")>>
+					<<if ($slaves[$i].fetishStrength > 60)>>
+						As a pregnancy fetishist, $he @@.hotpink;openly enjoys@@ wearing $his fake belly around.
+						<<set $slaves[$i].devotion += 2>>
+					<<else>>
+						$His interest in pregnancy helps $him @@.hotpink;enjoy@@ wearing a fake belly.
+						<<set $slaves[$i].devotion += 1>>
+					<</if>>
+				<<elseif ($slaves[$i].fetish == "pregnancy") && ($slaves[$i].devotion > 50)>>
+					$He carries $his fake belly @@.hotpink;with pride,@@ eager for the day you give $him one of $his own.
+					<<set $slaves[$i].devotion += 1>>
+				<<elseif ($slaves[$i].fetish == "pregnancy") && ($slaves[$i].pregKnown == 0) && ($slaves[$i].ovaries ==1 || $slaves[$i].mpreg == 1)>>
+					The fake belly $he wears @@.mediumorchid;reminds $him@@ that $he isn't pregnant with a child.
+					<<set $slaves[$i].devotion -= 1>>
+				<<elseif ($slaves[$i].vagina == 0) && isFertile($slaves[$i]) && $arcologies[0].FSRepopulationFocus == "unset" && $slaves[$i].devotion <= 20>>
+					The fake belly $he wears @@.gold;worries@@ $him that you will soon put a real baby in $him.
+					<<set $slaves[$i].trust -= 1>>
+				<</if>>
+				<<if $slaves[$i].bellyAccessory == "a huge empathy belly" && $slaves[$i].fetish != "pregnancy">>
+					<<if $slaves[$i].devotion > 50>>
+						$His full-sized twins belly is heavy and unwieldy, but $he carries it @@.hotpink;proudly@@ for you.
+						<<set $slaves[$i].devotion += 1>>
+					<<else>>
+						$His full-sized twins belly is heavy and unwieldy, and $he @@.mediumorchid;despises@@ being forced to bear it.
+						<<set $slaves[$i].devotion -= 1>>
+					<</if>>
+				<</if>>
+				<<if ($slaves[$i].fetish == "pregnancy") && ($slaves[$i].fetishStrength <= 95)>>
+					<<if random(1,100) >= 20>>
+						Pretending to be pregnant has @@.lightcoral;furthered $his interest in pregnancy.@@
+						<<set $slaves[$i].fetishStrength += 4>>
+					<<elseif ($slaves[$i].fetishStrength <= 40)>>
+						Lugging around a fake pregnancy for the week has shown $him $he @@.coral;isn't as into pregnancy as $he thought.@@
+						<<set $slaves[$i].fetish = "none", $slaves[$i].fetishStrength = 10>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if hasAnyLegs($slaves[$i])>>
+	<<if ($slaves[$i].shoes == "heels")>>
+		<<if hasAnyNaturalLegs($slaves[$i])>>
+			<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+				<<if $slaves[$i].devotion < -20>>
+					$He @@.mediumorchid;resents being forced@@ to wear high heels.
+					<<set $slaves[$i].devotion -= 2>>
+				<</if>>
+			<</if>>
+		<<else>>
+			$His P-Limb <<if hasBothLegs($slaves[$i])>>legs work<<else>>leg works<</if>> just as well in heels as <<if hasBothLegs($slaves[$i])>>they do<<else>>it does<</if>> out of them.
+		<</if>>
+	<<elseif ($slaves[$i].shoes == "boots")>>
+		<<if hasAnyNaturalLegs($slaves[$i])>>
+			<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+				<<if $slaves[$i].devotion < -20>>
+					$He @@.mediumorchid;resents being forced@@ to wear high heeled boots.
+					<<set $slaves[$i].devotion -= 2>>
+				<</if>>
+			<</if>>
+		<<else>>
+			$His P-Limb <<if hasBothLegs($slaves[$i])>>legs work<<else>>leg works<</if>> just as well in boots as <<if hasBothLegs($slaves[$i])>>they do<<else>>it does<</if>> out of them.
+		<</if>>
+	<<elseif ($slaves[$i].shoes == "extreme heels")>>
+		<<if hasAnyNaturalLegs($slaves[$i])>>
+			<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+				<<if $slaves[$i].devotion < -20>>
+					$He @@.mediumorchid;resents being forced@@ to wear @@.gold;painfully@@ high heels.
+					<<set $slaves[$i].devotion -= 2>>
+					<<set $slaves[$i].trust -= 2>>
+				<<elseif ($slaves[$i].fetish == "masochist")>>
+					It is difficult to walk in $his extreme heels, but $he
+					<<if ($slaves[$i].fetishKnown == 0)>>
+						seems to enjoy every painful step; $he's a @@.lightcoral;natural masochist.@@
+						<<set $slaves[$i].fetishKnown = 1>>
+					<<else>>
+						@@.hotpink;appreciates@@ every painful step $he gets to take.
+						<<set $slaves[$i].devotion += 1>>
+					<</if>>
+				<<else>>
+					$He is kept @@.hotpink;mindful@@ and @@.gold;fearful@@ by the difficulty of walking in $his extreme heels.
+					<<set $slaves[$i].devotion += 1>>
+					<<set $slaves[$i].trust -= 1>>
+				<</if>>
+				They're so high they're a bit @@.red;unhealthy@@ for $his legs.
+				<<run healthDamage($slaves[$i], 2)>>
+			<</if>>
+		<<else>>
+			$His P-Limb <<if hasBothLegs($slaves[$i])>>legs work<<else>>leg works<</if>> just as well in extreme heels as <<if hasBothLegs($slaves[$i])>>they do<<else>>it does<</if>> out of them.
+		<</if>>
+	<<else>>
+		<<if ($slaves[$i].heels == 1) && !canWalk($slaves[$i]) && ($slaves[$i].fetish != "mindbroken")>>
+			<<if $slaves[$i].shoes == "pumps">>
+				While $he can just barely stand with $his heeled pumps, $he is incapable of taking a step in them.
+			<</if>>
+			<<if ($slaves[$i].devotion >= -20) && ($slaves[$i].fetish == "submissive") && ($slaves[$i].fetishKnown == 1)>>
+				$He @@.hotpink;loves being forced@@ to crawl around like some kind of animal.
+				<<set $slaves[$i].devotion += 1>>
+			<<elseif $slaves[$i].devotion > 50>>
+				$He accepts being forced to crawl around on <<if hasAllLimbs($slaves[$i])>>all fours<<else>>the ground<</if>>.
+			<<else>>
+				$He @@.mediumorchid;resents being forced@@ to crawl around like some kind of animal, but it keeps $him properly @@.gold;afraid.@@
+				<<set $slaves[$i].devotion -= 2, $slaves[$i].trust -= 4>>
+			<</if>>
+		<</if>>
+	<</if>>
+<<else>>
+	<<if $slaves[$i].shoes != "none">>
+		<<set $slaves[$i].shoes = "none">>
+	<</if>>
+	<<if $slaves[$i].legAccessory != "none">>
+		<<set $slaves[$i].legAccessory = "none">>
+	<</if>>
+<</if>>
+
+<<if ($slaves[$i].vaginalAccessory != "none")>>
+	<<if ($slaves[$i].vaginalAttachment == "bullet vibrator" || $slaves[$i].vaginalAttachment == "smart bullet vibrator")>>
+		Constantly wearing a bullet vibrator
+		<<if $slaves[$i].devotion < 20>>
+			habituates $him to sexual slavery and @@.hotpink;increases $his submissiveness.@@
+			<<set $slaves[$i].devotion += 2>>
+		<<else>>
+			reminds $him of $his place and @@.hotpink;increases $his devotion to you.@@
+			<<set $slaves[$i].devotion++>>
+		<</if>>
+	<<elseif ($slaves[$i].vaginalAccessory == "dildo")>>
+		<<if ($slaves[$i].vagina < 1) && (random(1,100) > 50)>>
+			Constantly wearing a dildo in $his virgin pussy @@.lime;gets it used to penetration.@@
+			<<set $slaves[$i].vagina += 1>>
+		<<else>>
+			$His pussy easily accommodates the dildo $he's required to wear.
+		<</if>>
+		<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+			<<if ($slaves[$i].sexualFlaw == "hates penetration") && (random(1,100) > 50)>>
+				The habit @@.green;reduces $his dislike of having $his pussy filled.@@
+				<<set $slaves[$i].sexualFlaw = "none">>
+			<</if>>
+		<</if>>
+	<<elseif ($slaves[$i].vaginalAccessory == "long dildo")>>
+		<<if ($slaves[$i].vagina < 1) && (random(1,100) > 50)>>
+			Constantly wearing a dildo in $his virgin pussy @@.lime;gets it used to penetration.@@
+			<<set $slaves[$i].vagina += 1>>
+		<<else>>
+			$His pussy easily accommodates the dildo $he's required to wear.
+		<</if>>
+		<<if $slaves[$i].fuckdoll == 0>>
+			<<if $slaves[$i].fetish != "mindbroken">>
+				<<if ($slaves[$i].sexualFlaw == "hates penetration") && (random(1,100) > 50)>>
+					The habit @@.green;reduces $his dislike of having $his pussy filled.@@
+					<<set $slaves[$i].sexualFlaw = "none">>
+				<</if>>
+				<<if ($slaves[$i].sexualQuirk == "size queen")>>
+					Being able to hold such a long dildo is a @@.hotpink;point of pride@@ for the ostentatious size queen.
+					<<set $slaves[$i].devotion += 2>>
+				<<else>>
+					It penetrates $his cervix causing $him tremendous discomfort, making $him a little @@.gold;less trusting@@ of you.
+					<<set $slaves[$i].trust -= 1>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif ($slaves[$i].vaginalAccessory == "large dildo")>>
+		<<if $slaves[$i].vagina < 3>>
+			<<if random(1,4) == 1>>
+				Constantly wearing a large dildo in $his pussy @@.lime;stretches it out.@@
+				<<set $slaves[$i].vagina += 1>>
+			<<else>>
+				The large dildo $he's required to wear is a stretch for $his cunt, but pussies are resilient and $hers isn't seriously affected.
+			<</if>>
+		<<else>>
+			$His pussy accommodates the large dildo $he's required to wear.
+		<</if>>
+		<<if $slaves[$i].fuckdoll == 0>>
+			<<if $slaves[$i].fetish != "mindbroken">>
+				<<if ($slaves[$i].vagina < 2)>>
+					The big dildo in $his tight cunt
+					<<if ($slaves[$i].sexualQuirk == "size queen")>>
+						is a @@.hotpink;point of pride@@ for the ostentatious size queen.
+						<<set $slaves[$i].devotion += 2>>
+					<<else>>
+						@@.hotpink;breaks $him to sexual slavery@@ slightly.
+						<<set $slaves[$i].devotion += 1>>
+					<</if>>
+					<<if ($slaves[$i].vagina == 1)>>
+						It stretches $his tight cunt to soreness by the end of every day, so it also makes $him a little @@.gold;less trusting@@ of you.
+						<<set $slaves[$i].trust -= 1>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif ($slaves[$i].vaginalAccessory == "long, large dildo")>>
+		<<if ($slaves[$i].vagina < 3)>>
+			<<if random(1,4) == 1>>
+				Constantly wearing a large dildo in $his pussy @@.lime;stretches it out.@@
+				<<set $slaves[$i].vagina += 1>>
+			<<else>>
+				The large dildo $he's required to wear is a stretch for $his cunt, but pussies are resilient and $hers isn't seriously affected.
+			<</if>>
+		<<else>>
+			$His pussy accommodates the large dildo $he's required to wear.
+		<</if>>
+		<<if ($slaves[$i].vagina < 2)>>
+			<<if $slaves[$i].fuckdoll == 0>>
+				<<if $slaves[$i].fetish != "mindbroken">>
+					The big, long dildo in $his tight cunt
+					<<if ($slaves[$i].sexualQuirk == "size queen")>>
+						is a @@.hotpink;point of pride@@ for the ostentatious size queen.
+						<<set $slaves[$i].devotion += 2>>
+					<<else>>
+						@@.hotpink;breaks $him to sexual slavery@@ slightly. It also penetrates $his cervix, causing $him tremendous discomfort, and making $him a little @@.gold;less trusting@@ of you.
+						<<set $slaves[$i].devotion += 1>>
+						<<set $slaves[$i].trust -= 1>>
+					<</if>>
+					<<if ($slaves[$i].vagina == 1)>>
+						It stretches $his tight cunt to soreness by the end of every day, so it also makes $him a little @@.gold;less trusting@@ of you.
+						<<set $slaves[$i].trust -= 1>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif ($slaves[$i].vaginalAccessory == "huge dildo")>>
+		<<if ($slaves[$i].vagina < 4)>>
+			<<if $slaves[$i].fuckdoll == 0>>
+				<<if $slaves[$i].fetish != "mindbroken">>
+					<<if ($slaves[$i].sexualQuirk == "size queen")>>
+						$He thinks of the massive dildo stretching out $his womanhood as @@.lime;preparation for the biggest cocks,@@ and @@.hotpink;looks forward@@ to take anything — dicks, hands, truly anything — inside $his newly capacious cunt.
+						<<set $slaves[$i].devotion += 4>>
+					<<elseif ($slaves[$i].fetish == "masochist") && ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+						$He gets off on the agony of having $his cunt @@.lime;permanently stretched@@ by a huge dildo. The terrible combination of pain and pleasure @@.hotpink;breaks $his will@@ but fills $him with @@.gold;fear.@@
+						<<set $slaves[$i].devotion += 5, $slaves[$i].trust -= 5>>
+					<<elseif ($slaves[$i].fetish == "submissive") && ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+						$He submits to the agony of having $his cunt @@.lime;permanently stretched@@ by a huge dildo. Having $his hole ruined at your whim @@.hotpink;breaks $his will@@ but fills $him with @@.gold;fear.@@
+						<<set $slaves[$i].devotion += 5, $slaves[$i].trust -= 5>>
+					<<else>>
+						The agony of having $his cunt @@.lime;permanently stretched@@ by a huge dildo fills $him with @@.mediumorchid;resentment@@ and @@.gold;fear.@@
+						<<set $slaves[$i].devotion -= 5, $slaves[$i].trust -= 5>>
+					<</if>>
+				<</if>>
+			<</if>>
+			<<set $slaves[$i].vagina += 1>>
+		<<else>>
+			$His cavernous pussy accommodates the huge dildo $he's required to wear.
+		<</if>>
+	<<elseif ($slaves[$i].vaginalAccessory == "long, huge dildo")>>
+		<<if ($slaves[$i].vagina < 4)>>
+			<<if $slaves[$i].fuckdoll == 0>>
+				<<if $slaves[$i].fetish != "mindbroken">>
+					<<if ($slaves[$i].sexualQuirk == "size queen")>>
+						$He thinks of the massive dildo stretching out $his womanhood and stomach as @@.lime;preparation for the biggest cocks,@@ and @@.hotpink;looks forward@@ to take anything — dicks, hands, arms, truly anything — inside $his newly capacious cunt.
+						<<set $slaves[$i].devotion += 4>>
+					<<elseif ($slaves[$i].fetish == "masochist") && ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+						$He gets off on the agony of having $his cunt @@.lime;permanently stretched@@ and $his cervix penetrated by a huge dildo. The terrible combination of pain and pleasure @@.hotpink;breaks $his will@@ but fills $him with @@.gold;fear.@@
+						<<set $slaves[$i].devotion += 5, $slaves[$i].trust -= 5>>
+					<<elseif ($slaves[$i].fetish == "submissive") && ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+						$He submits to the agony of having $his cunt @@.lime;permanently stretched@@ and $his cervix penetrated by a huge dildo. Having $his hole and cervix ruined at your whim @@.hotpink;breaks $his will@@ but fills $him with @@.gold;fear.@@
+						<<set $slaves[$i].devotion += 5, $slaves[$i].trust -= 5>>
+					<<else>>
+						The agony of having $his cunt @@.lime;permanently stretched@@ and $his cervix penetrated by a huge dildo fills $him with @@.mediumorchid;resentment@@ and @@.gold;fear.@@
+						<<set $slaves[$i].devotion -= 5, $slaves[$i].trust -= 5>>
+					<</if>>
+				<</if>>
+			<</if>>
+			<<set $slaves[$i].vagina += 1>>
+		<<else>>
+			$His cavernous pussy accommodates the huge dildo $he's required to wear.
+		<</if>>
+	<</if>>
+	<<if ($slaves[$i].vaginalAccessory == "long, huge dildo") || ($slaves[$i].vaginalAccessory == "long, large dildo") || ($slaves[$i].vaginalAccessory == "long dildo")>>
+		<<if ($slaves[$i].preg > $slaves[$i].pregData.normalBirth/10) && $slaves[$i].pregKnown == 1>>
+			<<if (random(1,100) > 50)>>
+				The dildo penetrating $his womb @@.orange;caused $him to miscarry,@@ which @@.red;damages $his health.@@
+				<<run healthDamage($slaves[$i], 20)>>
+				<<if lastPregRule($slaves[$i],$defaultRules)>><<set $slaves[$i].preg = -1>><<else>><<set $slaves[$i].preg = 0>><</if>>
+				<<run TerminatePregnancy($slaves[$i])>>
+				$He is
+				<<if $slaves[$i].devotion < -50>>
+					@@.mediumorchid;filled with violent, consuming hatred@@ and @@.gold;fear.@@ Even though $he knew $his baby was destined for a slave orphanage, it seems $he cared for it and views you as its killer.
+					<<set $slaves[$i].devotion -= 25, $slaves[$i].trust -= 25>>
+				<<elseif $slaves[$i].devotion < -20>>
+					@@.mediumorchid;afflicted by desperate, inconsolable grief@@ and @@.gold;horror.@@ Even though $he knew $his baby was destined for a slave orphanage, it seems $he cared for it.
+					<<set $slaves[$i].devotion -= 10, $slaves[$i].trust -= 20>>
+				<<elseif $slaves[$i].devotion <= 20>>
+					@@.mediumorchid;consumed by enduring sorrow@@ and @@.gold;horror.@@ Even though $he knew $his baby was destined for a slave orphanage, it seems $he cared for it.
+					<<set $slaves[$i].devotion -= 5, $slaves[$i].trust -= 5>>
+				<<elseif $slaves[$i].devotion <= 50>>
+					dully obedient. $He has been broken to slave life so thoroughly that even this is neither surprising nor affecting.
+				<<else>>
+					@@.hotpink;pleased by this stark development,@@ since $he is so attentive to your will. $He also expects $he'll be able to fuck better now.
+					<<set $slaves[$i].devotion += 4>>
+				<</if>>
+				<<if $slaves[$i].abortionTat > -1>>
+					<<set $slaves[$i].abortionTat++>>
+					The temporary tattoo of a child has been replaced with $his <<= ordinalSuffix($slaves[$i].abortionTat)>> crossed out infant.
+					<<run cashX(forceNeg($modCost), "slaveMod", $slaves[$i])>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+<<if ($slaves[$i].vaginalAttachment != "none")>>
+	/* TODO: write effects here */
+	<<elseif ($slaves[$i].vaginalAttachment == "vibrator")>>
+<</if>>
+
+<<if ($slaves[$i].buttplug != "none")>>
+	<<if ($slaves[$i].buttplug == "plug") || ($slaves[$i].buttplug == "long plug")>>
+		<<if ["cat tail", "cow tail", "fox tail", "tail"].includes($slaves[$i].buttplugAttachment)>>
+			<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+				<<if $slaves[$i].anus < 1>>
+					Constantly wearing a tail plug in $his virgin butthole @@.lime;stretches it out@@ and @@.gold;is a constant degrading reminder of $his submission.@@
+					<<set $slaves[$i].anus += 1>>
+					<<set $slaves[$i].trust -= 2>>
+				<<else>>
+					$His asshole is used to being penetrated and wearing $his tailed buttplug doesn't affect it, though it still serves as @@.gold;a constant degrading reminder of $his submission.@@
+					<<set $slaves[$i].trust -= 2>>
+				<</if>>
+				<<if ($slaves[$i].sexualFlaw == "hates anal") && (random(1,100) > 50)>>
+					It @@.green;gets $him habituated to having $his asshole filled.@@
+					<<set $slaves[$i].sexualFlaw = "none">>
+				<</if>>
+				<<if ($slaves[$i].sexualQuirk == "size queen") && ($slaves[$i].buttplug == "long plug")>>
+					The overly long plug delving the depths of $his rear @@.hotpink;gets $him off,@@ since $he's a size queen.
+					<<set $slaves[$i].devotion += 2>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+				<<if $slaves[$i].anus < 1>>
+					Constantly wearing a plug in $his virgin butthole @@.lime;stretches it out.@@
+					<<set $slaves[$i].anus += 1>>
+				<<else>>
+					$His asshole is used to being penetrated and wearing $his buttplug doesn't affect it.
+				<</if>>
+				<<if ($slaves[$i].sexualFlaw == "hates anal") && (random(1,100) > 50)>>
+					It @@.green;gets $him habituated to having $his asshole filled.@@
+					<<set $slaves[$i].sexualFlaw = "none">>
+				<</if>>
+				<<if ($slaves[$i].sexualQuirk == "size queen") && ($slaves[$i].buttplug == "long plug")>>
+					The overly long plug delving the depths of $his rear @@.hotpink;gets $him off,@@ since $he's a size queen.
+					<<set $slaves[$i].devotion += 2>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif ($slaves[$i].buttplug == "large plug") || ($slaves[$i].buttplug == "long, large plug")>>
+		<<if ["cat tail", "cow tail", "fox tail", "tail"].includes($slaves[$i].buttplugAttachment)>>
+			<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+				<<if ($slaves[$i].anus < 2)>>
+					The uncomfortable tailed plug in $his asshole
+					<<if ($slaves[$i].sexualQuirk == "size queen")>>
+						@@.hotpink;gets $him off,@@ since $he's a size queen, while serving as @@.gold;a constant degrading reminder of $his submission.@@
+						<<set $slaves[$i].devotion += 2, $slaves[$i].trust -= 2>>
+					<<else>>
+						@@.hotpink;breaks $him to anal slavery@@ slightly, while serving as a @@.gold;a constant degrading reminder of $his submission.@@
+						<<set $slaves[$i].devotion += 1, $slaves[$i].trust -= 2>>
+					<</if>>
+					<<if ($slaves[$i].anus < 1)>>
+						It stretches $his tight rosebud painfully, making $him somewhat @@.gold;less trusting@@ of you.
+						<<set $slaves[$i].trust -= 1>>
+					<</if>>
+				<</if>>
+			<</if>>
+			<<if $slaves[$i].anus < 3>>
+				<<if ($slaves[$i].anus < 1) || (random(1,2) == 1)>>
+					Constantly wearing a large tailed plug up $his ass @@.lime;loosens $his sphincter.@@
+					<<set $slaves[$i].anus += 1>>
+				<<else>>
+					The large tailed plug $he's required to wear up $his ass stretches it to the limit, but on the rare occasions when the plug is removed, $his rear hole still tightens up.
+				<</if>>
+			<<else>>
+				$His anus accommodates the large plug $he's required to wear.
+				<<if ($slaves[$i].fetish == "buttslut") && ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+					In fact, $he @@.hotpink;regularly orgasms@@ even in non-sexual situations as the plug is @@.green;constantly stimulating@@ $his rear-end.
+					<<set $slaves[$i].devotion += 1>>
+					<<set $slaves[$i].energy += 1>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+				<<if ($slaves[$i].anus < 2)>>
+					The uncomfortable plug in $his asshole
+					<<if ($slaves[$i].sexualQuirk == "size queen")>>
+						@@.hotpink;gets $him off,@@ since $he's a size queen.
+						<<set $slaves[$i].devotion += 2>>
+					<<else>>
+						@@.hotpink;breaks $him to anal slavery@@ slightly.
+						<<set $slaves[$i].devotion += 1>>
+					<</if>>
+					<<if ($slaves[$i].anus < 1)>>
+						It stretches $his tight rosebud painfully, making $him somewhat @@.gold;less trusting@@ of you.
+						<<set $slaves[$i].trust -= 1>>
+					<</if>>
+				<</if>>
+			<</if>>
+			<<if $slaves[$i].anus < 3>>
+				<<if ($slaves[$i].anus < 1) || (random(1,2) == 1)>>
+					Constantly wearing a large plug up $his ass @@.lime;loosens $his sphincter.@@
+					<<set $slaves[$i].anus += 1>>
+				<<else>>
+					The large plug $he's required to wear up $his ass stretches it to the limit, but on the rare occasions when the plug is removed, $his rear hole still tightens up.
+				<</if>>
+			<<else>>
+				$His anus accommodates the large plug $he's required to wear.
+				<<if ($slaves[$i].fetish == "buttslut") && ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+					In fact, $he @@.hotpink;regularly orgasms@@ even in non-sexual situations as the plug is @@.green;constantly stimulating@@ $his rear-end.
+					<<set $slaves[$i].devotion += 1>>
+					<<set $slaves[$i].energy += 1>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif ($slaves[$i].buttplug == "huge plug") || ($slaves[$i].buttplug == "long, huge plug")>>
+		<<if ["cat tail", "cow tail", "fox tail", "tail"].includes($slaves[$i].buttplugAttachment)>>
+			<<if ($slaves[$i].anus < 4)>>
+				<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+					<<if ($slaves[$i].sexualQuirk == "size queen")>>
+						$He thinks of the horribly huge tailed plug $he has wear in $his butt as @@.lime;preparation for the biggest cocks,@@ and @@.hotpink;looks forward@@ to being able to safely take unlubricated anal from them. Even so, the tail hanging from $his rear is @@.gold;a constant degrading reminder of $his submission.@@
+						<<set $slaves[$i].devotion += 4, $slaves[$i].trust -= 5>>
+					<<elseif ($slaves[$i].fetish == "masochist") && ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+						$He gets off on the agony of having $his anal sphincter @@.lime;permanently gaped@@ by a huge tailed buttplug, but can't ignore the tail hanging from the back of the plug. The terrible combination of anal pleasure and degradation @@.hotpink;breaks $his will@@ and fills $him with @@.gold;humiliation.@@
+						<<set $slaves[$i].devotion += 5, $slaves[$i].trust -= 7>>
+					<<elseif ($slaves[$i].fetish == "submissive") && ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+						$He submits to the agony of having $his anal sphincter @@.lime;permanently gaped@@ by a huge tailed buttplug and the shame of having a tail dangle from the back of the plug. Having $his hole ruined at your whim and in such a degrading fashion @@.hotpink;breaks $his will@@ and fills $him with @@.gold;humiliation.@@
+						<<set $slaves[$i].devotion += 5, $slaves[$i].trust -= 7>>
+					<<else>>
+						The agony of having $his anal sphincter @@.lime;permanently gaped@@ by a huge tailed buttplug fills $him with @@.mediumorchid;resentment@@ and @@.gold;humiliation.@@
+						<<set $slaves[$i].devotion -= 5, $slaves[$i].trust -= 5>>
+					<</if>>
+				<</if>>
+				<<set $slaves[$i].anus += 1>>
+			<<else>>
+				$His gaping anus accommodates the huge tailed plug $he's required to wear, serving little purpose other than to remind $him of $his @@.gold;humiliation.@@
+				<<if ($slaves[$i].fetish == "buttslut") && ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+					In fact, $he @@.hotpink;regularly orgasms@@ even in non-sexual situations as the plug is @@.green;constantly stimulating@@ $his rear-end.
+					<<set $slaves[$i].devotion += 1>>
+					<<set $slaves[$i].energy += 1>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if ($slaves[$i].anus < 4)>>
+				<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+					<<if ($slaves[$i].sexualQuirk == "size queen")>>
+						$He thinks of the horribly huge plug $he has wear in $his butt as @@.lime;preparation for the biggest cocks,@@ and @@.hotpink;looks forward@@ to being able to safely take unlubricated anal from them.
+						<<set $slaves[$i].devotion += 4>>
+					<<elseif ($slaves[$i].fetish == "masochist") && ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+						$He gets off on the agony of having $his anal sphincter @@.lime;permanently gaped@@ by a huge buttplug. The terrible combination of pain and pleasure @@.hotpink;breaks $his will@@ but fills $him with @@.gold;fear.@@
+						<<set $slaves[$i].devotion += 5, $slaves[$i].trust -= 5>>
+					<<elseif ($slaves[$i].fetish == "submissive") && ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+						$He submits to the agony of having $his anal sphincter @@.lime;permanently gaped@@ by a huge buttplug. Having $his hole ruined at your whim @@.hotpink;breaks $his will@@ but fills $him with @@.gold;fear.@@
+						<<set $slaves[$i].devotion += 5, $slaves[$i].trust -= 5>>
+					<<else>>
+						The agony of having $his anal sphincter @@.lime;permanently gaped@@ by a huge buttplug fills $him with @@.mediumorchid;resentment@@ and @@.gold;fear.@@
+						<<set $slaves[$i].devotion -= 5, $slaves[$i].trust -= 5>>
+					<</if>>
+				<</if>>
+				<<set $slaves[$i].anus += 1>>
+			<<else>>
+				$His gaping anus accommodates the huge plug $he's required to wear.
+				<<if ($slaves[$i].fetish == "buttslut") && ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+					In fact, $he @@.hotpink;regularly orgasms@@ even in non-sexual situations as the plug is @@.green;constantly stimulating@@ $his rear-end.
+					<<set $slaves[$i].devotion += 1>>
+					<<set $slaves[$i].energy += 1>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $slaves[$i].fuckdoll == 0 && $slaves[$i].fetish != "mindbroken">>
+		<<if ["cat tail", "cow tail", "fox tail", "tail"].includes($slaves[$i].buttplugAttachment)>>
+			<<if ($slaves[$i].fetish == "humiliation") && ($slaves[$i].fetishKnown == 0)>>
+				$He shows a surprising lack of resistance to the routine of having a tail inserted in $his ass each morning; $he seems to @@.lightcoral;naturally enjoy the humiliation.@@
+				<<set $slaves[$i].fetishKnown = 1>>
+			<<elseif ($slaves[$i].fetish == "none") || ($slaves[$i].fetishKnown == 0)>>
+				<<if _fetishChangeChance > random(0,100)>>
+					Slowly, $his shame at having a tail inserted in $his ass each morning turns to secret enjoyment and finally to @@.lightcoral;open arousal at the humiliating accessory.@@
+					<<set $slaves[$i].fetish = "humiliation", $slaves[$i].fetishKnown = 1, $slaves[$i].fetishStrength = 10>>
+				<</if>>
+			<</if>>
+		<<elseif ($slaves[$i].buttplug == "plug") || ($slaves[$i].buttplug == "large plug") || ($slaves[$i].buttplug == "long, large plug") || ($slaves[$i].buttplug == "long plug")>>
+			<<if ($slaves[$i].fetish == "buttslut") && ($slaves[$i].fetishKnown == 0)>>
+				$He shows a surprising lack of resistance to the routine of getting the plug up $his butt in the morning; $he seems to @@.lightcoral;naturally enjoy anal stimulation.@@
+				<<set $slaves[$i].fetishKnown = 1>>
+			<<elseif ($slaves[$i].fetish == "none") || ($slaves[$i].fetishKnown == 0)>>
+				<<if _fetishChangeChance > random(0,100)>>
+					Slowly, $his anguish at getting the plug up $his butt in the morning turns to secret enjoyment and finally to @@.lightcoral;open arousal at having $his anus filled.@@
+					<<set $slaves[$i].fetish = "buttslut", $slaves[$i].fetishKnown = 1, $slaves[$i].fetishStrength = 10>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>

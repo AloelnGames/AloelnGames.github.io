@@ -1,0 +1,15 @@
+:: Matron Select [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Nursery", $showEncyclopedia = 1, $encyclopedia = "Matron">>
+<<if ($Matron != 0)>>
+	<<set $Matron = getSlave($Matron.ID)>>
+	<<setLocalPronouns $Matron>>
+	<span class='slave-name'><<= SlaveFullName($Matron)>></span> is serving as your Matron.<br><br>$He will manage the nursery.
+<<else>>
+	You have not selected a Matron.
+<</if>>
+
+<br><br>''Appoint a Matron from your devoted slaves:''
+<br><br>[[None|Nursery][removeJob($Matron, "be the Matron")]]
+<br><br>
+<<print App.UI.SlaveList.facilityManagerSelection(App.Entity.facilities.nursery, "Nursery")>>

@@ -1,0 +1,57 @@
+:: SE Birth [nobr]
+
+/*
+Refactoring this passage. Main idea for structure:
+
+1. Making all checks about where and how slave give birth (health too).
+2. Showing scene (widget with preparations)
+3. Make calculation of birth process. All live babies will be added to slave property .curBabies as array. They will be in it as long as slave not give next birth. Enough time for any processing.
+4. Showing scene of birth based on calculation (broodmother and normal is merged in one scene, just with variations).
+5. Dealing with babies — they are in separate array, no need to mess with mother .pregType or .preg now.
+6. Setting up postpartum
+7. Dealing with mother critical states.
+
+I need to break single passage to several widgets, as it's been overcomplicated monster with too many nested if's — true horror for me. :) At least for testing and bugfixing time, later it can be merged back, if needed for processing speed up.
+
+*/
+<<set $nextButton = "Continue">>
+<<set $nextLink = "Scheduled Event">>
+
+<<if $legendaryWombID != 0>>
+	<<set $legendaryWombID = 0>>
+<</if>>
+
+<<for $i = 0; $i < $slaves.length; $i++>>
+	<<if $slaves[$i].labor == 1>>
+		<<if ndef $slaves[$i].counter.laborCount>>
+			<<set $slaves[$i].counter.laborCount = 0>>
+			<<if $slaves[$i].counter.birthsTotal > 0 && $slaves[$i].counter.laborCount == 0>>
+				<<set $slaves[$i].counter.laborCount = $slaves[$i].counter.birthsTotal>> /*we do not have a way to know multiples birth count for backward compatibility code. :( */
+			<</if>>
+		<</if>>
+		<<set $dispositionId = _.uniqueId('babyDisposition-')>>
+		Birth report: @@.coral;<<= SlaveFullName($slaves[$i])>>@@
+		<br>
+		<<seBirthPreCheck>>
+		<<seBirthPreScene>>
+		<<if $slaveDead != 1>>
+			<<seBirthCalc>>
+			<<seBirthMainScene>>
+			<<seBirthBabies>>
+			<<seBirthPostpartum>>
+			<<set $slaves[$i].counter.laborCount++>>
+			<<seBirthCritical>>
+		<<else>>
+			<<set $activeSlave = $slaves[$i]>>
+			<<= removeActiveSlave() >>
+			<<set $slaveDead = 0>>
+		<</if>>
+		<br><br><hr style="margin:0"><br>
+	<</if>>
+<</for>>
+
+<<set $reservedChildren = FetusGlobalReserveCount("incubator")>>
+<<set $reservedChildrenNursery = FetusGlobalReserveCount("nursery")>>
+
+<<set $birthee = 0>>
+<<set $birthed = 0>>

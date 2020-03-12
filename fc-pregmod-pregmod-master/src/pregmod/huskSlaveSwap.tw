@@ -1,0 +1,41 @@
+:: Husk Slave Swap [nobr]
+
+<<set $nextButton = "Continue">>
+<<set _oldSlave = clone($swappingSlave)>>
+<<set _m = $slaveIndices[$swappingSlave.ID]>>
+
+You strap $slaves[_m].slaveName, and the body to which $he will be transferred, into the remote surgery and stand back as it goes to work.
+<<BodySwap $slaves[_m] $activeSlave>>
+<<set _gps = $genePool.findIndex(function(s) { return s.ID == $slaves[_m].ID; })>>
+<<set $genePool[_gps].race = $slaves[_m].race, $genePool[_gps].origRace = $slaves[_m].origRace, $genePool[_gps].skin = $slaves[_m].skin, $genePool[_gps].markings = $slaves[_m].markings, $genePool[_gps].eye.origColor = $slaves[_m].eye.origColor, $genePool[_gps].origHColor = $slaves[_m].origHColor, $genePool[_gps].origSkin = $slaves[_m].origSkin, $genePool[_gps].face = $slaves[_m].face, $genePool[_gps].pubicHStyle = $slaves[_m].pubicHStyle, $genePool[_gps].underArmHStyle = $slaves[_m].underArmHStyle, $genePool[_gps].eyebrowHStyle = $slaves[_m].eyebrowHStyle>> /* special exception to swap genePool since the temporary body lacks an entry. Otherwise we could just call the widget using the genePool entries */
+
+<br><br>
+After an honestly impressive procedure, $slaves[_m].slaveName is recovering nicely.
+
+<<BodySwapReaction $slaves[_m] _oldSlave>>
+
+<br><br>
+<<set _slaveCost = slaveCost(_oldSlave)>>
+<<set _payout = Math.trunc(_slaveCost/3)>>
+$slaves[_m].slaveName's old body was bought by the Flesh Heap for <<print cashFormat(_payout)>>.
+<<if $slaves[_m].bodySwap > 0>>
+	<<set _myBody = $slaves.findIndex(function(s) { return s.origBodyOwnerID == $slaves[_m].ID; })>>
+	<<if _myBody != -1>>
+		<<set $slaves[_myBody].origBodyOwnerID = 0>>
+		<<setLocalPronouns $slaves[_myBody] 2>>
+		<<if $slaves[_myBody].fetish != "mindbroken" && $slaves[_myBody].fuckdoll == 0>>
+			<<if $slaves[_myBody].devotion > 20>>
+				$slaves[_myBody].slaveName is somewhat saddened to see _his2 body leave forever.
+			<<elseif $slaves[_myBody].devotion >= -50>>
+				$slaves[_myBody].slaveName is @@.mediumorchid;disturbed@@ to find _his2 body is gone for good, damaging _his2 @@.gold;ability to trust you.@@
+				<<set $slaves[_myBody].devotion -= 30, $slaves[_myBody].trust -= 30>>
+			<<else>>
+				$slaves[_myBody].slaveName is @@.mediumorchid;deeply upset@@ that _he2'll never see _his2 body again. With so little left, _he2 finds it easy to take vengeance by @@.orangered;completely rejecting your ownership of _him2.@@
+				<<set $slaves[_myBody].devotion -= 50, $slaves[_myBody].trust = 100>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+<<set $slaves[_m].bodySwap++>>
+<<run cashX(_payout, "slaveTransfer")>>
+<<set $activeSlave = 0, $swappingSlave = 0>>

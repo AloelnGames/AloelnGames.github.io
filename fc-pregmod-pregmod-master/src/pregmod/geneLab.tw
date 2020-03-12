@@ -1,0 +1,69 @@
+:: Gene Lab [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Manage Penthouse", $showEncyclopedia = 1, $encyclopedia = "The Pharmaceutical Fab.", _PCSkillCheck = Math.min($upgradeMultiplierMedicine, $HackingSkillMultiplier)>>
+
+<br>
+The Gene Lab
+<hr>
+
+<<if $geneticMappingUpgrade == 1>>
+	//The gene lab is fully operational. It is capable of mapping a slave's genes, identifying genetic traits and abnormalities. It can be used to modify a slave's genome should you obtain the data necessary to adjust it.//
+	<br>
+	[[Upgrade the genome mapper|Gene Lab][cashX(forceNeg(Math.trunc(500000*$upgradeMultiplierArcology)), "capEx"), $geneticMappingUpgrade = 2]]
+	//Costs <<print cashFormat(Math.trunc(500000*$upgradeMultiplierArcology))>>//
+<<elseif $geneticMappingUpgrade == 2>>
+	//The gene lab is fully operational. It is capable of fully mapping a slave's genes, identifying genetic traits and abnormalities. It can be used to correct (or flaw) a slave's genome, as well as modify it should you obtain the data necessary to adjust it.//
+<</if>>
+
+<br><br>
+Genetic Modification
+<hr>
+
+<<if $dispensaryUpgrade == 0>>
+	//The fabricator must be upgraded before it can produce treatments to alter genes//
+	<br>
+<<else>>
+	The fabricator is capable of producing treatments to alter a slave's genetic code.
+	<br>
+	<<if $arcologies[0].childhoodFertilityInducedNCSResearch == 1>>
+		The fabricator is capable of producing treatments to induce NCS.
+		<br>
+	<</if>>
+	<<if $RapidCellGrowthFormula == 1>>
+		The fabricator is capable of producing treatments to accelerate cellular reproduction.
+		<br>
+	<</if>>
+	<<if $geneticMappingUpgrade >= 2>>
+		<<if $geneticFlawLibrary != 1>>
+			[[Purchase designs for inducing genetic anomalies|Gene Lab][cashX(forceNeg(100000*_PCSkillCheck), "capEx"), $geneticFlawLibrary = 1]]
+			//Costs <<print cashFormat(100000*_PCSkillCheck)>>//
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;//Will allow genetic flaws and quirks to be injected into a slave's genome//
+			<br>
+		<<else>>
+			The fabricator is capable of producing treatments to induce various genetic anomalies.
+			<br>
+		<</if>>
+	<</if>>
+<</if>>
+
+<br><br>
+Genetic Harvesting
+<hr>
+
+<<if ($cloningSystem != 1) && ($rep <= 18000*_PCSkillCheck)>>
+	//You lack the reputation needed to access methods for human cloning//
+	<br>
+<<elseif ($cloningSystem != 1) && ($rep > 18000*_PCSkillCheck)>>
+	<<if $organFarmUpgrade == 0>>
+		//An organ farm is needed to grow the blank embryo to serve as a clone base//
+		<br>
+	<<else>>
+		[[Purchase methods for human cloning|Gene Lab][cashX(forceNeg(100000*_PCSkillCheck), "capEx"), $cloningSystem = 1]]
+		//Costs <<print cashFormat(100000*_PCSkillCheck)>>//
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;//Will allow children to be created with identical base genetics as the source DNA//
+		<br>
+	<</if>>
+<<elseif ($cloningSystem > 0)>>
+	The gene lab is capable of implanting a slave's genetic sequence into a blank embryo to produce a basic clone. [[Make a clone|Cloning Workaround][$donatrix = "Undecided", $receptrix = "Undecided"]]
+	<br>
+<</if>>

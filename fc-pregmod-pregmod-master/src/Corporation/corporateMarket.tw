@@ -1,0 +1,110 @@
+:: Corporate Market [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Main">>
+/* Multi-Purchase Support */
+<<if ndef $newSlaves>><<set $newSlaves = []>><</if>>
+<<if $newSlaves.length > 0>>
+	<<set $nextButton = "Continue", $nextLink = "Bulk Slave Intro", $slaveMarket = "corporate", $returnTo = "Main", $newSlaveIndex = 0>>
+<</if>>
+
+<<if $corp.SpecGender == 2>>
+	<<setNonlocalPronouns 100>>
+<<elseif $corp.SpecGender == 1>>
+	<<setNonlocalPronouns 0>>
+<<else>>
+	<<setNonlocalPronouns $seeDicks>>
+<</if>>
+
+You're in your corporation's flagship slave market.
+
+The corporation pays you only nominal rent for this space, but will offer you a discount on slaves here based on your shares in it. Additionally, having the corporation's premiere products sold here in $arcologies[0].name will associate them with you, allowing your reputation to improve the corporate brand. A pretty
+<<if $corp.SpecDick == 1 && $corp.SpecPussy == 1>>futanari<<elseif $corp.SpecGender == 2>><<if $corp.SpecBalls == -1>>clipped<<else>>shemale<</if>><</if>>
+sales<<if $corp.SpecAge == 3>>_womanU<<else>>_girlU<</if>> in a slutty suit greets you properly. _HeU's a corporate slave chosen for loyalty and intelligence, and to physically represent the brand.
+<<if $corp.SpecHeight == 5>>
+	Even before _heU engaged with you _hisU towering height made _himU stand out and caught your eye, from up close _heU's even more impressive.
+<<elseif $corp.SpecHeight == 1>>
+	_HeU's so short you have to physically look down on _himU.
+<</if>>
+<<if $corp.SpecInjection == 4>>
+	_HeU has awe-inspiring breasts which _hisU suit jacket helps support; even so, their bottoms reach past _hisU navel.
+<<elseif $corp.SpecInjection == 5>>
+	_HeU has gigantic, milk-swollen breasts almost spilling out of _hisU suit.
+<<elseif $corp.SpecImplants == 2>>
+	_HeU has enormous fake tits that ride inhumanly high on _hisU chest.
+<<elseif $corp.SpecInjection == 3>>
+	_HeU has huge tits and a nice broad butt which _hisU tight skirt hugs closely.
+<<elseif $corp.SpecImplants == 1>>
+	_HeU has nice fake bimbo tits and a silicone bubble butt.
+<<elseif $corp.SpecInjection == 2>>
+	_HeU's nice and curvy, with nice breasts and a lovely ass.
+<<elseif $corp.SpecInjection == 1>>
+	_HeU has cute little breasts and a petite rump.
+<</if>>
+<<if $corp.SpecCosmetics == 1>>_HisU face is flawless.<</if>>
+<<if ($corp.SpecRaces.length == 1)>>
+	<<set _corpSpecRace = $corp.SpecRaces.random()>>
+	_HeU's <<print _corpSpecRace>>, of course<<if $corp.SpecAccent == 1>>, and has a cute accent<</if>>.
+<</if>>
+<<if $corp.SpecHormones == 1>>
+	_HisU voice is soft and feminine, and _heU bats _hisU eyes at you.
+<<elseif $corp.SpecHormones == 2>>
+	_HeU has a deep voice, and speaks assertively.
+<</if>>
+<<if $corp.SpecMuscle == 4>>
+	_HisU hot body is perfectly toned under _hisU suit.
+<<elseif $corp.SpecMuscle == 5>>
+	_HisU suit is specially tailored to flatter _hisU visible musculature.
+<</if>>
+Of course, you know all about the corporation, but sales<<if $corp.SpecAge == 3>>_womenU<<else>><<= _girlU>>s<</if>> here have standing orders to treat you like any other customer, so you can review the market properly. The slave turns to <<if $corp.SpecAmputee != 1>>a multimedia presentation on<<else>>a rack of<</if>> your corporation's slaves.
+
+<br><br>
+
+_HeU explains that the corporation captures many people, so it only retains and trains those that fit its product lines.
+
+<<= generateMarketSlave("corporate")>>
+<br><br>
+
+_HisU presentation done, the
+<<if $corp.SpecDick == 1 && $corp.SpecPussy == 1>>futanari<<elseif $corp.SpecGender == 2>><<if $corp.SpecBalls == -1>>clipped<<else>>shemale<</if>><</if>>
+sales<<if $corp.SpecAge == 3>>_womanU<<else>>_girlU<</if>> directs you to the inventory interface that will allow you to peruse the corporation's slaves, and moves over to stand next to it, ready to answer any questions.
+<<if $PC.dick != 0>>
+	_HeU positions _himselfU facing away from you and hikes up _hisU skirt to bare _hisU
+	<<if $corp.SpecInjection > 4>>gigantic ass<<elseif $corp.SpecImplants > 0>>fake ass<<elseif $corp.SpecInjection == 3>>big butt<<elseif $corp.SpecInjection == 2>>cute butt<<else>>little behind<</if>>
+	and cocks _hisU hips<<if $corp.SpecBalls == -1>>, keeping _hisU soft cock demurely out of sight<</if>>, if you feel like <<if $corp.SpecGender == 2 && $corp.SpecPussy != 1>>sodomizing<<else>>fucking<</if>> _himU
+<<else>>
+	_HeU gets down on _hisU knees right there, making _hisU mouth available if you feel like riding _hisU face
+<</if>>
+while you browse.
+<span id="result">
+<<link "Use _himU">>
+	<<replace "#result">>
+		<<if $PC.dick != 0>>
+			_HisU <<if $corp.SpecGender == 2 && $corp.SpecPussy != 1>>asshole is thoughtfully pre-lubed, and your cock slides easily up it<<else>>pussy is nice and wet, and your cock slides inside _himU easily<</if>> as you consider the slaves on offer. _HeU's well trained, and uses _hisU <<if $corp.SpecGender == 2 && $corp.SpecPussy != 1>>sphincter<<else>>womanly muscles<</if>> to please your member expertly as _heU ruts _himselfU gently back against you, doing almost all the work. When you orgasm, _heU retains the load carefully, keeping your cum inside _himU and away from _hisU nice clothes.
+		<<else>>
+			_HeU's very well trained, and does all the work. Once you move in and straddle _himU, _heU gets right down to it, or in this case, up to it. _HisU clever tongue runs gently along your labia to build anticipation before starting a delightful dance around and then atop your clitoris. You orgasm in no time at all, a climax which _heU carefully prolongs by kissing you full on the pussy in just the right way, only breaking the oral embrace when you've ridden it as far as you'll go.
+		<</if>>
+	<</replace>>
+<</link>>
+</span>
+
+<br><br>
+
+<<set _slaveCost = slaveCost($activeSlave)>>
+<<if $slavesSeen > $slaveMarketLimit>><<set _slaveCost += _slaveCost*(($slavesSeen-$slaveMarketLimit)*0.1)>><</if>>
+
+<<if $corp.Market == 1>>
+	Your own local franchise of your corporation allows you to enjoy a discount.
+	<<set _slaveCost *= 0.9>>
+<</if>>
+
+<<set _slaveCost = 500*Math.trunc(_slaveCost/500)>>
+The offered price is <<print cashFormat(_slaveCost)>>.<<if $slavesSeen > $slaveMarketLimit>> You have cast such a wide net for slaves this week that it is becoming more expensive to find more for sale. Your reputation helps determine your reach within the slave market.<</if>>
+<br>
+<<setLocalPronouns $activeSlave>>
+<<buyingFromMarketControls>>
+
+<<link "End corporate slave sales here and return this sector to standard markets">>
+	<<set $corp.Market = 0>>
+	<<run App.Arcology.cellUpgrade($building, App.Arcology.Cell.Market, "Corporate Market", "Markets")>>
+	<<goto "Main">>
+<</link>>

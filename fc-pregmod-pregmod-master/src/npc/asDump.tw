@@ -1,0 +1,30 @@
+:: AS Dump
+
+<<if (ndef $activeSlave) || ($activeSlave == 0)>>
+
+	@@.red;ERROR:@@ AS Dump, activeSlave invalid, returnTo is '$returnTo', previous passage was '<<print previous()>>'. Please report this.
+
+	<<link "Continue">><<goto $returnTo>><</link>> | [[Go Back|previous()]]
+
+<<else>>
+
+	<<silently>>
+
+	<<set _SL = $slaves.length, _ID = $activeSlave.ID>>
+
+	<<if $i >= 0 && $i < _SL && $slaves[$i].ID == _ID>> /* shortcut if $i is already pointing to this slave */
+		<<set $slaves[$i] = $activeSlave>>
+	<<else>>
+		<<set $i = $slaveIndices[_ID]>> /* find $i if exists */
+		<<if ndef $i>> /* not found, so new slave */
+			<<run newSlave($activeSlave)>>
+		<<else>>
+			<<set $slaves[$i] = $activeSlave>>
+		<</if>>
+	<</if>>
+
+	<</silently>>
+
+	<<goto $returnTo>>
+
+<</if>>

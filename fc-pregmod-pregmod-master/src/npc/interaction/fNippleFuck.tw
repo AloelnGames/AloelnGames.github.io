@@ -1,0 +1,81 @@
+:: FNippleFuck [nobr]
+
+<<set $AS = $activeSlave.ID>>
+<<run Enunciate($activeSlave)>>
+<<setLocalPronouns $activeSlave>>
+
+<<set getSlave($AS).counter.mammary += 2>>
+<<set $mammaryTotal += 2>>
+
+You call $him over to make use of $his lewd nipple cunts.
+<<if getSlave($AS).fetish == "boobs" && getSlave($AS).fetishKnown == 1>>
+	$He practically vibrates with excitement at the prospect of getting $his tits fucked.
+<<elseif getSlave($AS).boobs >= 40000>>
+	You set out a few cushions on the floor for $him and let $his breasts spill across them.
+<<elseif getSlave($AS).boobs >= 20000>>
+	It takes a moment to find a table that can support $his breasts and withstand your lovemaking.
+<<else>>
+	You settle $him on a couch and have $him present $his chest to you.
+<</if>>
+
+Once $he seems comfortable, you turn your attention to $his chest. You start by groping and nuzzling $his breasts, teasing $his nipples with your tongue.
+
+<<if getSlave($AS).lactation > 0>>
+	It doesn't take much stimulation before milk starts dribbling onto your tongue.
+<</if>>
+
+<<if getSlave($AS).devotion > 20 || getSlave($AS).trust > 20>>
+	$He starts making soft noises of pleasure and luxuriates in your attentions.
+<<else>>
+	$He fidgets at your ministrations, but doesn't say anything.
+<</if>>
+Once you're satisfied, you line up your dick with $his right nipple and slowly ease yourself into $him.
+
+<<if getSlave($AS).lactation > 0>>
+	Milk gushes around your length and soaks your crotch, the feeling almost like a waterjet, as $his
+<<else>>
+	$His
+<</if>>
+breast flesh grips you tightly. A few experimental pumps draws gasps from $him before you start to thrust in earnest. Soon, the room is filled with $his moaning and the sound of flesh on flesh.
+
+
+<<if getSlave($AS).fetish == "boobs" && getSlave($AS).fetishKnown == 1>>
+	$He has a glassy-eyed expression as $he
+	<<if hasAnyArms(getSlave($AS))>>
+		gropes $his breasts with <<if hasBothArms(getSlave($AS))>>both hands<<else>>$his hand<</if>>, fingering $his unoccupied nipple in time with your thrusts.
+	<<else>>
+		savors the sensations running through $his breast.
+	<</if>>
+<<elseif getSlave($AS).devotion > 20 || getSlave($AS).trust > 20>>
+	$He has a glassy-eyed expression as $he
+	<<if hasBothArms(getSlave($AS))>>
+		gropes $his breasts with one hand and furiously abuses $his clit with the other.
+	<<elseif hasAnyArms(getSlave($AS))>>
+		fingers $his pussy while rubbing $his arm alongside $his breasts.
+	<<else>>
+		tries $his hardest to pleasure $himself with no hands.
+	<</if>>
+<<else>>
+	$He turns $his gaze away from you as a blush suffuses $his cheeks and does $his best to suppress $his moans.
+<</if>>
+
+As your orgasm begins to build, you roughly grasp $his shoulders and begin to pick up the pace.
+
+<<if getSlave($AS).fetish == "boobs" && getSlave($AS).fetishKnown == 1>>
+	As $he reaches $his climax, $his eyes roll back into $his head and $he quivers in delight at the intense breastgasm $he just sustained.
+<<elseif getSlave($AS).devotion > 20 || getSlave($AS).trust > 20>>
+	Eager for release, $his moaning grows louder and higher in pitch<<if hasAnyArms(getSlave($AS))>>, and $his self-molesting becomes furious and desperate<</if>>.
+<<else>>
+	As $he reaches $his climax, $his body seems to tense and $he bites $his lip.
+<</if>>
+
+It only takes few more thrusts before you bottom out inside $his breast and release your load deep inside $him. You pull yourself free with a lewd sound and proudly survey what you've wrought. Cum <<if getSlave($AS).lactation > 0>>and milk dribble<<else>>dribbles<</if>> from $his gaping nipple. Enjoying the sight, you begin to feel yourself hardening and line up your dick at $his left nipple for a repeat performance.
+
+<<if getSlave($AS).lactation > 0>>
+	<<set getSlave($AS).lactationDuration = 2>>
+	<<set getSlave($AS).boobs -= getSlave($AS).boobsMilk, getSlave($AS).boobsMilk = 0>>
+<<else>>
+	<<= induceLactation(getSlave($AS))>>
+<</if>>
+
+Once both $his breasts have been thoroughly fucked, you send $him away to clean $himself up.

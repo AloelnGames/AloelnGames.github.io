@@ -1,0 +1,187 @@
+:: attackGenerator [nobr]
+
+/* _attackChance value is the chance out of 100 of an attack happening this week */
+/* attacks are deactivated if the arcology is in the middle of the ocean, security drones are not around yet, there is not a rebellion this week or the last attack/rebellion happened within 3 weeks */
+<<if $terrain == "oceanic" || $arcologyUpgrade.drones != 1 || $lastAttackWeeks <= 3 || $citizenRebellion == 1 || $slaveRebellion == 1 || $lastRebellionWeeks <= 3>>
+	<<set _attackChance = 0>>
+<<else>>
+	<<if $week < 30>>
+		<<set _attackChance = 5>>
+	<<elseif $week < 60>>
+		<<set _attackChance = 8>>
+	<<elseif $week < 90>>
+		<<set _attackChance = 12>>
+	<<elseif $week < 120>>
+		<<set _attackChance = 16>>
+	<<else>>
+		<<set _attackChance = 20>>
+	<</if>>
+	<<if $hasFoughtOnce == 1>>
+		<<set _attackChance = 25>>
+	<</if>>
+	<<if $lastAttackWeeks >= 10>>
+		<<set _attackChance += 5>>
+	<</if>>
+<</if>>
+/* battle frequency */
+<<set _attackChance *= $SecExp.settings.battle.frequency>>
+
+<<if $SecExp.settings.battle.force == 1 && $SecExp.settings.rebellion.force != 1 && $foughtThisWeek == 0>>
+	<<set _attackChance = 100>>
+<</if>>
+
+/* Rolls to see if attack happens this week */
+/* raiders are attracted by low security */
+/* the old world by "degenerate" future societies */
+/* free Cities by high prosperity */
+/* freedom fighters by high slave/citizen ratio */
+<<if random(1,100) <= _attackChance>>
+	<<set $attackThisWeek = 1>>
+	<<set $lastAttackWeeks = 0>>
+	<<set $leadingTroops = "assistant">>
+	<<set $chosenTactic = either("Bait and Bleed", "Blitzkrieg", "Choke Points", "Defense In Depth", "Guerrilla", "Human Wave", "Interior Lines", "Pincer Maneuver")>>
+	/* _type is the chance out of 100 of an attack of that type happening */
+	<<set _raider = 25>>
+	<<set _oldWorld = 25>>
+	<<set _freeCity = 25>>
+	<<set _free = 25>>
+	/* old world */
+	<<if $arcologies[0].FSRomanRevivalist != "unset" || $arcologies[0].FSEdoRevivalist != "unset" || $arcologies[0].FSArabianRevivalist != "unset" || $arcologies[0].FSChineseRevivalist != "unset" || $arcologies[0].FSEgyptianRevivalist != "unset" || $arcologies[0].FSAztecRevivalist != "unset" || $arcologies[0].FSRepopulationFocus != "unset" || $arcologies[0].FSGenderRadicalist != "unset" || $arcologies[0].FSPastoralist != "unset" || $arcologies[0].FSChattelReligionist != "unset">>
+		<<set _oldWorld += 15>>
+		<<set _raider -= 5>>
+		<<set _freeCity -= 5>>
+		<<set _free -= 5>>
+	<<elseif ($arcologies[0].FSRomanRevivalist != "unset" || $arcologies[0].FSEdoRevivalist != "unset" || $arcologies[0].FSArabianRevivalist != "unset" || $arcologies[0].FSChineseRevivalist != "unset" || $arcologies[0].FSEgyptianRevivalist != "unset" || $arcologies[0].FSAztecRevivalist != "unset") && ($arcologies[0].FSRepopulationFocus != "unset" || $arcologies[0].FSGenderRadicalist != "unset" || $arcologies[0].FSPastoralist != "unset" || $arcologies[0].FSChattelReligionist != "unset")>>
+		<<set _oldWorld += 24>>
+		<<set _raider -= 8>>
+		<<set _freeCity -= 8>>
+		<<set _free -= 8>>
+	<</if>>
+	/* freedom fighter */
+	<<if $ASlaves > $ACitizens * 2>>
+		<<set _oldWorld -= 8>>
+		<<set _raider -= 8>>
+		<<set _freeCity -= 8>>
+		<<set _free += 24>>
+	<<elseif $ASlaves > $ACitizens * 1.2 || $arcologies[0].FSDegradationist != "unset">>
+		<<set _oldWorld -= 5>>
+		<<set _raider -= 5>>
+		<<set _freeCity -= 5>>
+		<<set _free += 15>>
+	<</if>>
+	/* Free Cities */
+	<<if $arcologies[0].prosperity >= 10 && $arcologies[0].prosperity < 20>>
+		<<set _oldWorld -= 5>>
+		<<set _raider -= 5>>
+		<<set _freeCity += 15>>
+		<<set _free -= 5>>
+	<<elseif $arcologies[0].prosperity >= 20>>
+		<<set _oldWorld -= 8>>
+		<<set _raider -= 8>>
+		<<set _freeCity += 24>>
+		<<set _free -= 8>>
+	<</if>>
+	/* raiders */
+	<<if $SecExp.security.cap <= 50>>
+		<<set _oldWorld -= 5>>
+		<<set _raider += 15>>
+		<<set _freeCity -= 5>>
+		<<set _free -= 5>>
+	<<elseif $SecExp.security.cap <= 25>>
+		<<set _oldWorld -= 8>>
+		<<set _raider += 24>>
+		<<set _freeCity -= 8>>
+		<<set _free -= 8>>
+	<</if>>
+
+	/* makes the actual roll */
+	<<set _roll = random(1,100)>>
+	<<if _roll <= _raider>>
+		<<set $attackType = "raiders">>
+	<<elseif _roll <= _raider + _oldWorld>>
+		<<set $attackType = "old world">>
+	<<elseif _roll <= _raider + _oldWorld + _freeCity>>
+		<<set $attackType = "free city">>
+	<<elseif _roll <= _raider + _oldWorld + _freeCity + _free>>
+		<<set $attackType = "freedom fighters">>
+	<</if>>
+<<else>>
+	<<set $lastAttackWeeks++>>
+<</if>>
+
+/* if an attack happens */
+<<if $attackThisWeek == 1>>
+
+	/* terrain */
+	<<if $terrain == "urban">>
+		<<set $battleTerrain = either("outskirts", "urban", "wasteland")>>
+	<<elseif $terrain == "rural">>
+		<<set $battleTerrain = either("hills", "outskirts", "rural", "wasteland")>>
+	<<elseif $terrain == "ravine">>
+		<<set $battleTerrain = either("hills", "mountains", "outskirts", "wasteland")>>
+	<<elseif $terrain == "marine">>
+		<<set $battleTerrain = either("coast", "hills", "outskirts", "wasteland")>>
+	<<elseif $terrain == "oceanic">>
+		<<set $battleTerrain = either("coast", "hills", "outskirts", "wasteland")>>
+	<<else>>
+		<<set $battleTerrain = "error">>
+	<</if>>
+
+	<<set _L=0>>
+	<<if $attackType == "raiders">>
+		<<set $attackTroops = random(40,80),_L=1>>
+	<<elseif $attackType == "free city">>
+		<<set $attackTroops = random(20,40)>>
+	<<elseif $attackType == "old world">>
+		<<set $attackTroops = random(25,50)>>
+	<<elseif $attackType == "freedom fighters">>
+		<<set $attackTroops = random(30,60)>>
+	<</if>>
+	<<if $week < 30>>
+		/*<<set $attackTroops *= Math.trunc(random( (1*(1.01+($week/100))), (2*(1.01+($week/100))) ))>>*/ <<set $attackTroops *= random(1,2)>>
+	<<elseif $week < 60>>
+		/*<<set $attackTroops *= Math.trunc(random( (1*(1.01+($week/200))), (3*(1.01+($week/200))) ))>>*/ <<set $attackTroops *= random(1,3)>>
+	<<elseif $week < 90>>
+		/*<<set $attackTroops *= Math.trunc(random( (2*(1.01+($week/300))), (3*(1.01+($week/300))) ))>>*/ <<set $attackTroops *= random(2,3)>>
+	<<elseif $week < 120>>
+		/*<<set $attackTroops *= Math.trunc(random( (2*(1.01+($week/400))), (4*(1.01+($week/400))) ))>>*/ <<set $attackTroops *= random(2,4)>>
+	<<else>>
+		<<set $attackTroops *= random(3,5)>>
+	<</if>>
+	<<if $week < 60>>
+		<<set $attackEquip = random(0,1)>>
+	<<elseif $week < 90>>
+		<<set $attackEquip = random(0,3-_L)>> /*"raiders" <<set $attackEquip = random(0,2)>>*/
+	<<elseif $week < 120>>
+		<<set $attackEquip = random(1-_L,3)>> /*"raiders" <<set $attackEquip = random(0,3)>>*/
+	<<else>>
+		<<set $attackEquip = random(2-_L,4-_L)>> /*"raiders" <<set $attackEquip = random(1,3)>>*/
+	<</if>>
+
+	/* major battles have a 50% chance of firing after week 120 */
+	<<if $SecExp.settings.battle.major.enabled == 1>>
+		<<if ($week >= 120 && $attackType != "none") || ($SecExp.settings.battle.major.force == 1 && $foughtThisWeek == 0)>>
+			<<if random(1,100) >= 50 || $SecExp.settings.battle.major.force == 1>>
+				<<set $majorBattle = 1>>
+				<<if $SF.Toggle && $SF.Active >= 1>>
+					<<set $attackTroops = Math.trunc($attackTroops * random(4,6) * $SecExp.settings.battle.major.mult)>>
+					<<set $attackEquip = either(3,4)>>
+				<<else>>
+					<<set $attackTroops = Math.trunc($attackTroops * random(2,3) * $SecExp.settings.battle.major.mult)>>
+					<<set $attackEquip = either(2,3,4)>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<set $estimatedMen = Math.round($attackTroops * (1 + either(-1,1) * (random(3,4) - App.SecExp.battle.recon()) * 0.1))>>
+	<<if App.SecExp.battle.recon() == 3>>
+		<<set $expectedEquip = $attackEquip + random(-1,1)>>
+	<<elseif App.SecExp.battle.recon() == 2>>
+		<<set $expectedEquip = $attackEquip + random(-1,2)>>
+	<<elseif App.SecExp.battle.recon() == 1>>
+		<<set $expectedEquip = $attackEquip + random(-2,2)>>
+	<<else>>
+		<<set $expectedEquip = $attackEquip + random(-2,3)>>
+	<</if>>
+<</if>>

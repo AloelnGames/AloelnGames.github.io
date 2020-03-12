@@ -1,0 +1,33 @@
+:: Extreme Intro [nobr]
+
+<p>
+	The early Free Cities were wild places where the writ of law did not run. In some of the most depraved, slaves' bodies, minds and even lives were playthings of the wealthy and powerful. Though modern Free Cities are tremendously varied, a majority of the new communities made a choice about whether extreme practices were a flaw in a lawless society or one of its benefits.
+	<span class="intro question">
+		How did most Free Cities react to the excesses of the early days?
+	</span>
+</p>
+
+<div>
+	[[They drew back from them.|Gender Intro][$seeExtreme = 0]]
+	<span class="note">
+		Extreme content such as amputation and castration will not appear.
+	</span>
+</div>
+<div>
+	[[They reveled in them.|Gender Intro][$seeExtreme = 1]]
+	<span class="note">
+		Extreme content will appear.
+	</span>
+</div>
+<div>
+	[[They drew back from them, but remained creative.|Gender Intro][$seeExtreme = 0,$seeHyperPreg = 1]]
+	<span class="note">
+		Extreme content will not appear, but hyper-pregnancy related content might appear.
+	</span>
+</div>
+<div>
+	[[They reveled in them and were particularly inventive.|Gender Intro][$seeExtreme = 1,$seeHyperPreg = 1]]
+	<span class="note">
+		Extreme content will appear, including hyper-pregnancy related content
+	</span>
+</div>

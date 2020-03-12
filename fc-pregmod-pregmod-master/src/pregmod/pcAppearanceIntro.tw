@@ -1,0 +1,281 @@
+:: PC Appearance Intro [nobr]
+
+<p>
+	Race and appearance are largely irrelevant in the Free Cities; there are only the free and the enslaved.
+	<div class="indent note">
+		Appearance only, no effect on gameplay (unless you make a big deal out of it).
+	</div>
+</p>
+
+<p>
+	<div class="intro question">
+		What nationality are you?
+	</div>
+	<div>
+		You are $PC.nationality.
+	</div>
+	<div>
+		<<textbox "$PC.nationality" $PC.nationality "PC Appearance Intro">>
+		<span class="note">
+			Capitalize it
+		</span>
+	</div>
+</p>
+
+<p>
+	<div class="intro question">
+		What race are you?
+	</div>
+	<div id = "ethnicity">
+		You're $PC.race.
+	</div>
+	<<link "White">>
+		<<set $PC.race = "white">>
+		<<PlayerRace>>
+	<</link>>
+	|
+	<<link "Asian">>
+		<<set $PC.race = "asian">>
+		<<PlayerRace>>
+	<</link>>
+	|
+	<<link "Latina">>
+		<<set $PC.race = "latina">>
+		<<PlayerRace>>
+	<</link>>
+	|
+	<<link "Middle Eastern">>
+		<<set $PC.race = "middle eastern">>
+		<<PlayerRace>>
+	<</link>>
+	|
+	<<link "Black">>
+		<<set $PC.race = "black">>
+		<<PlayerRace>>
+	<</link>>
+	|
+	<<link "Semitic">>
+		<<set $PC.race = "semitic">>
+		<<PlayerRace>>
+	<</link>>
+	|
+	<<link "Southern European">>
+		<<set $PC.race = "southern european">>
+		<<PlayerRace>>
+	<</link>>
+	|
+	<<link "Indo-Aryan">>
+		<<set $PC.race = "indo-aryan">>
+		<<PlayerRace>>
+	<</link>>
+	|
+	<<link "Amerindian">>
+		<<set $PC.race = "amerindian">>
+		<<PlayerRace>>
+	<</link>>
+	|
+	<<link "Pacific Islander">>
+		<<set $PC.race = "pacific islander">>
+		<<PlayerRace>>
+	<</link>>
+	|
+	<<link "Malay">>
+		<<set $PC.race = "malay">>
+		<<PlayerRace>>
+	<</link>>
+	|
+	<<link "Mixed Race">>
+		<<set $PC.race = "mixed race">>
+		<<PlayerRace>>
+	<</link>>
+</p>
+
+<p>
+	<div class="intro question">
+		What is your skin tone?
+	</div>
+	<div id = "skin">
+		You have $PC.origSkin skin.
+	</div>
+	<<link "Pure White">>
+		<<set $PC.origSkin = "pure white">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Ivory">>
+		<<set $PC.origSkin = "ivory">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "White">>
+		<<set $PC.origSkin = "white">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Extremely Pale">>
+		<<set $PC.origSkin = "extremely pale">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Very Pale">>
+		<<set $PC.origSkin = "very pale">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Pale">>
+		<<set $PC.origSkin = "pale">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Extremely Fair">>
+		<<set $PC.origSkin = "extremely fair">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Very Fair">>
+		<<set $PC.origSkin = "very fair">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Fair">>
+		<<set $PC.origSkin = "fair">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Light">>
+		<<set $PC.origSkin = "light">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Light Olive">>
+		<<set $PC.origSkin = "light olive">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Tan">>
+		<<set $PC.origSkin = "tan">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Olive">>
+		<<set $PC.origSkin = "olive">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Bronze">>
+		<<set $PC.origSkin = "bronze">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Dark Olive">>
+		<<set $PC.origSkin = "dark olive">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Dark">>
+		<<set $PC.origSkin = "dark">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Light Beige">>
+		<<set $PC.origSkin = "light beige">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Beige">>
+		<<set $PC.origSkin = "beige">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Dark Beige">>
+		<<set $PC.origSkin = "dark beige">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Light Brown">>
+		<<set $PC.origSkin = "light brown">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Brown">>
+		<<set $PC.origSkin = "brown">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Dark Brown">>
+		<<set $PC.origSkin = "dark brown">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Black">>
+		<<set $PC.origSkin = "black">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Ebony">>
+		<<set $PC.origSkin = "ebony">>
+		<<PlayerSkin>>
+	<</link>>
+	|
+	<<link "Pure Black">>
+		<<set $PC.origSkin = "pure black">>
+		<<PlayerSkin>>
+	<</link>>
+</p>
+
+<p>
+	<div class="intro question">
+		Some people have freckles.
+	</div>
+	<div id = "markings">
+		<<if $PC.markings == "none">>
+			Your skin is pure and clear of any freckles.
+		<<elseif $PC.markings == "freckles">>
+			You have some freckles on your cheeks and elsewhere.
+		<<elseif $PC.markings == "heavily freckled">>
+			You have dense freckles on your cheeks and elsewhere.
+		<</if>>
+	</div>
+	<<link "No Freckles">>
+		<<set $PC.markings = "none">>
+		<<PlayerMarkings>>
+	<</link>>
+	|
+	<<link "Light Freckles">>
+		<<set $PC.markings = "freckles">>
+		<<PlayerMarkings>>
+	<</link>>
+	|
+	<<link "Heavy Freckles">>
+		<<set $PC.markings = "heavily freckled">>
+		<<PlayerMarkings>>
+	<</link>>
+</p>
+
+<p>
+	<div class="intro question">
+		What color are your eyes?
+	</div>
+	<div>
+		You have $PC.eye.origColor eyes.
+	</div>
+	<div>
+		<<textbox "$PC.eye.origColor" $PC.eye.origColor "PC Appearance Intro">>
+	</div>
+</p>
+
+<p>
+	<div class="intro question">
+		What color is your hair?
+	</div>
+	<div>
+		You have $PC.hColor hair.
+	</div>
+	<div>
+		<<textbox "$PC.hColor" $PC.hColor "PC Appearance Intro">>
+	</div>
+</p>
+
+<p>
+	[[Finish player character customization|PC Experience Intro][resetEyeColor($PC)]]
+</p>

@@ -1,0 +1,81 @@
+:: P traitor message [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event">>
+<<set _weeks = $traitorWeeks, _pregWeeks = $traitorWeeks, $traitorWeeks = 1>>
+<<setLocalPronouns $traitor>>
+
+/* ------------------ pregnancy setup start here----------------- */
+
+<<if $traitor.preg > 0>>
+	<<set _wasPreg = 1>>
+<<else>>
+	<<set _wasPreg = 0>>
+<</if>>
+
+<<set WombProgress($traitor, _pregWeeks, _pregWeeks)>> /* In all cases should be done */
+<<set WombUpdatePregVars($traitor)>>
+<<if $traitor.broodmother > 0>> /* Broodmother implant is assumed as removed.*/
+	<<set $traitor.preg = -1, $traitor.counter.birthsTotal += WombBirthReady($traitor, 37), $traitor.broodmother == 0, $traitor.broodmotherFetuses = 0>>
+	<<set WombFlush($traitor)>>
+<<elseif WombBirthReady($traitor, $traitor.pregData.normalBirth) > 0 >> /* normal birth case, partial birthers not supported*/
+	<<set $traitor.preg = -1, $traitor.counter.birthsTotal += WombBirthReady($traitor, $traitor.pregData.normalBirth)>>
+	<<set WombFlush($traitor)>>
+<<else>>/* still pregnant slave */
+	<<set $traitor.preg = WombMaxPreg($traitor)>> /*most ready fetus is a base*/
+	<<set $traitor.pregWeek = WombMaxPreg($traitor)>> /*most ready fetus is a base*/
+<</if>>
+<<run SetBellySize($traitor)>> /*In any case it's useful to do.*/
+
+<<if $traitor.preg > 0>>
+	<<set _isPreg = 1>>
+<<else>>
+	<<set _isPreg = 0>>
+<</if>>
+
+/* ------------------ pregnancy setup end here-----------------
+	As no broodmother cases in code below, it's no need to setup every case of impregnation through new system. Backup mechanic will do it for normal pregnancies.
+*/
+
+<<if $traitor.hStyle == "shaved">>
+	<<set $traitor.hStyle = "strip">>
+<</if>>
+<<if $traitor.bald != 1>>
+	<<if ($traitor.hLength < 150)>>
+		<<set $traitor.hLength += _weeks>>
+	<</if>>
+<</if>>
+<<if $seeAge != 0>>
+	<<for _weeks > 0>>
+		<<set $traitor.birthWeek++>>
+		<<if $traitor.birthWeek >= 52>>
+			<<set $traitor.birthWeek = 0>>
+			<<if $seeAge == 1>>
+				<<set $traitor.physicalAge += 1, $traitor.actualAge += 1, $traitor.visualAge += 1>>
+				<<set $traitor.ovaryAge += either(.8, .9, .9, 1, 1, 1, 1.1)>>
+				<<if $traitor.physicalAge <= 18 && $loliGrow > 0>>
+					<<run physicalDevelopment($traitor)>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<set _weeks-->>
+	<</for>>
+<</if>>
+
+The month after freeing $traitor.slaveName, you receive another message from the Daughters of Liberty. This one contains a video. It shows $traitor.slaveName sitting quietly at a table<<if _wasPreg != _isPreg>>, no longer clearly pregnant<</if>>, wearing comfortable clothes and eating a nice meal.
+<<if $traitorType == "agent">>
+	<<if $traitor.intelligence+$traitor.intelligenceImplant < -50>>
+		$He looks a little bewildered, but there's an obvious happiness to $him; $he may be falling in with their teachings. $He seems unaware $he's being recorded.
+	<<elseif _wasPreg != _isPreg>>
+		$He looks a little depressed, likely due to giving birth away from home, but $he is still playing the part of a traitor impeccably. $He seems aware $he's being recorded and, for the briefest moment, makes eye contact with the camera.
+	<<else>>
+		$He's playing the part of a traitor impeccably, feigning happiness despite yearning to be at your side. $He seems aware $he's being recorded and, for the briefest moment, makes eye contact with the camera.
+	<</if>>
+<<elseif $traitorType == "defiant">>
+	$He looks elated to be free, it's impossible to deny. $He seems unaware $he's being recorded.
+<<else>>
+	$He looks a little bewildered, but there's an obvious happiness to $him, it's impossible to deny. $He seems unaware $he's being recorded.
+<</if>>
+
+<br><br>
+
+A voice cuts in, calm but filled with unmistakable rage: "I hope you don't think this fixes everything, scum. We're still coming for you, and for all your slaveowning friends. All you've bought with this is the chance to maybe come out alive at the end. We'll be in touch."

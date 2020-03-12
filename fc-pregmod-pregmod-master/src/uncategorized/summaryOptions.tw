@@ -1,0 +1,190 @@
+:: Summary Options [nobr]
+
+<<set $nextButton = "Back">>
+<<if $storedLink !== "Slave Interact" && $storedLink !== "Main">>
+	<<if lastVisited("Main") === 1>>
+		<<set $storedLink = "Main">>
+	<<else>>
+		<<set $storedLink = "Options">>
+	<</if>>
+<</if>>
+<<set $nextLink = $storedLink>>
+
+<p class="scene-intro">
+	These options will affect the short slave summaries that appear on the main menu and the facility management screens.
+</p>
+
+<h3 style="text-align:center">Main menu features</h3>
+<<options $rulesAssistantMain "Summary Options">>
+	Rules Assistant visibility:
+	<<option 1 "Shown">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateSidebar "Summary Options">>
+	Facilities in the sidebar are
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+<</options>>
+
+<h3 style="text-align:center">Main Menu slave sorting</h3>
+<<options $sortSlavesMain "Summary Options">>
+	Sorting main menu options are
+	<<option 1 "Shown">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<if $sortSlavesMain > 0>>
+	<<options $sortSlavesOrder "Summary Options">>
+		in
+		<<option "ascending" "Ascending">>
+		<<option "descending" "Descending">>
+	<</options>>
+
+	<<options $sortSlavesBy "Summary Options">>
+		order and are organized by
+		<<option "devotion" "Devotion">>
+		<<option "name" "Name">>
+		<<option "seniority" "Date purchased">>
+		<<option "actualAge" "Age">>
+		<<option "visualAge" "How old they look">>
+		<<option "physicalAge" "Age of their body">>
+		<<option "assignment" "Assignment">>
+		<<option "weeklyIncome" "Weekly Income">>
+	<</options>>
+<</if>>
+
+<h3 style="text-align:center">Individual panels</h3>
+Sample summary:
+<<= App.UI.SlaveList.render.listMarkup(
+	[App.Utils.slaveIndexForId($activeSlave.ID)],
+	[],
+	App.UI.SlaveList.SlaveInteract.stdInteract
+)>>
+
+<<options $slavePanelStyle "Summary Options">>
+	Panel style is
+	<<option 0 "None">>
+	<<option 1 "Line Seperators">>
+	<<option 2 "Card">>
+<</options>>
+
+<<options $abbreviateDevotion "Summary Options">>
+	Mental stats are
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateMental "Summary Options">>
+	Mental attributes are
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateRules "Summary Options">>
+	Rules are
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateHealth "Summary Options">>
+	Health is
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateDiet "Summary Options">>
+	Diet and weight are
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateDrugs "Summary Options">>
+	Drugs and addiction are
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateHormoneBalance "Summary Options">>
+	Hormone balance is
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateGenitalia "Summary Options">>
+	Genitalia are
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviatePhysicals "Summary Options">>
+	Physical traits are
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateSkills "Summary Options">>
+	Skills are
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateNationality "Summary Options">>
+	Nationality is
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateRace "Summary Options">>
+	Race is
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateRulesets "Summary Options">>
+	Rules Assistant rulesets are
+	<<option 2 "Summarized">>
+	<<option 1 "Abbreviated">>
+<</options>>
+
+<<options $summaryStats "Summary Options">>
+	Granular slave stat numbers are
+	<<option 1 "Shown">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $displayAssignments "Summary Options">>
+Main menu assignment shortcuts are
+	<<option 1 "Shown">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<options $abbreviateOrigins "Summary Options">>
+	Origins are
+	<<option 2 "Summarized">>
+	<<option 0 "Hidden">>
+<</options>>
+
+<<if $showMissingSlaves>>
+	<<options $showMissingSlavesSD "Summary Options">>
+		Missing slave parents are
+		<<option true "Shown">>
+		<<option false "Hidden">>
+	<</options>>
+<</if>>
+
+<p style="font-style:italic">
+	[[FC Dev's preferred options|Summary Options ][$seeDesk = 0, $seeFCNN = 0, $sortSlavesBy = "devotion",$sortSlavesOrder = "descending",$sortSlavesMain = 0,$rulesAssistantMain = 1,$abbreviateDevotion = 1,$abbreviateRules = 1,$abbreviateClothes = 2,$abbreviateHealth = 1,$abbreviateDiet = 1,$abbreviateDrugs = 1,$abbreviateRace = 1,$abbreviateGenitalia = 1,$abbreviatePhysicals = 1,$abbreviateSkills = 1,$abbreviateMental = 1,$abbreviateSidebar = 1]]
+</p>

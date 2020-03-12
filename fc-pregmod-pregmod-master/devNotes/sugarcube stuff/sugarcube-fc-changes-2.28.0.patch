@@ -1,0 +1,73 @@
+diff -r df721eb4cd55 src/lib/jquery-plugins.js
+--- a/src/lib/jquery-plugins.js	Sun Dec 16 04:39:00 2018 -0600
++++ b/src/lib/jquery-plugins.js	Fri Jan 25 00:54:01 2019 +0100
+@@ -43,14 +43,9 @@
+		return function () {
+			const $this = jQuery(this);
+
+-			// Exit if the element is disabled.
+-			//
+-			// NOTE: This should only be necessary for elements which are not disableable
+-			// per the HTML specification as disableable elements should be made inert
+-			// automatically.
+-			if ($this.ariaIsDisabled()) {
+-				return;
+-			}
++			const dataPassage = $this.attr('data-passage');
++			const initialDataPassage = window && window.SugarCube && window.SugarCube.State && window.SugarCube.State.passage;
++			const savedYOffset = window.pageYOffset;
+
+			// Toggle "aria-pressed" status, if the attribute exists.
+			if ($this.is('[aria-pressed]')) {
+@@ -59,6 +54,11 @@
+
+			// Call the true handler.
+			fn.apply(this, arguments);
++
++			const doJump = function(){ window.scrollTo(0, savedYOffset); }
++			if ( dataPassage && (window.lastDataPassageLink === dataPassage || initialDataPassage === dataPassage))
++				doJump();
++			window.lastDataPassageLink = dataPassage;
+		};
+	}
+
+diff -r df721eb4cd55 src/lib/simplestore/adapters/webstorage.js
+--- a/src/lib/simplestore/adapters/webstorage.js	Sun Dec 16 04:39:00 2018 -0600
++++ b/src/lib/simplestore/adapters/webstorage.js	Fri Jan 25 00:54:01 2019 +0100
+@@ -189,11 +189,11 @@
+		}
+
+		static _serialize(obj) {
+-			return LZString.compressToUTF16(JSON.stringify(obj));
++			return JSON.stringify(obj);
+		}
+
+		static _deserialize(str) {
+-			return JSON.parse(LZString.decompressFromUTF16(str));
++			return JSON.parse((!str || str[0] == "{") ? str : LZString.decompressFromUTF16(str));
+		}
+	}
+
+diff -r df721eb4cd55 src/state.js
+--- a/src/state.js	Sun Dec 16 04:39:00 2018 -0600
++++ b/src/state.js	Fri Jan 25 00:54:01 2019 +0100
+@@ -104,7 +104,7 @@
+		}
+
+		if (_expired.length > 0) {
+-			stateObj.expired = [..._expired];
++			stateObj.expired = [];
+		}
+
+		if (_prng !== null) {
+diff -r df721eb4cd55 src/ui.js
+--- a/src/ui.js	Sun Dec 16 04:39:00 2018 -0600
++++ b/src/ui.js	Fri Jan 25 00:54:01 2019 +0100
+@@ -334,6 +334,7 @@
+				if (saves.slots[i]) {
+					// Add the load button.
+					$tdLoad.append(
++						createButton('save', 'ui-close', L10n.get('savesLabelSave'), i, Save.slots.save),
+						createButton('load', 'ui-close', L10n.get('savesLabelLoad'), i, slot => {
+							jQuery(document).one(':dialogclose', () => Save.slots.load(slot));
+						})

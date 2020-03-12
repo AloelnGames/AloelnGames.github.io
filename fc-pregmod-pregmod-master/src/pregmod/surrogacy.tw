@@ -1,0 +1,200 @@
+:: Surrogacy [nobr]
+
+<<set $nextButton = "Continue">>
+
+<<switch $surgeryType>>
+
+<<case "surrogacy">>
+
+	<<if $receptrix.ID == -1>>
+		Since the surgery required only a local anesthetic, you remain fully aware of the procedure as the autosurgery carries it out. You slowly rise to your feet, a hand to your lower belly, appreciating the new life growing within you.
+		<<set $PC.pregKnown = 1>>
+		<<run WombSurrogate($PC, 1, $donatrix, $impregnatrix.ID, 1)>>
+		<<run WombNormalizePreg($PC)>>
+	<<else>>
+		<<set $receptrix.pregKnown = 1>>
+		<<run WombSurrogate($receptrix, 1, $donatrix, $impregnatrix.ID, 1)>>
+		<<run WombNormalizePreg($receptrix)>>
+		<<setLocalPronouns $receptrix>>
+		<<if $receptrix.fetish == "mindbroken">>
+			$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated.
+		<<elseif ($receptrix.fetish == "pregnancy") && ($receptrix.fetishStrength > 60) && ($receptrix.fetishKnown == 1)>>
+			<<if canSee($receptrix)>>
+				Since the surgery required only a local anesthetic, $receptrix.slaveName remained fully aware throughout the procedure. $He was overjoyed at the sight of the syringe containing $his future child emptying into $his womb.
+			<<else>>
+				$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated.
+			<</if>>
+			$He is @@.hotpink; filled with joy@@ over the life settling into $his womb and can't wait to see the result. $He's so pleased that $he now @@.mediumaquamarine;trusts@@ your plans for $his body.
+			<<set $receptrix.trust += 4, $receptrix.devotion += 10>>
+		<<elseif ($receptrix.devotion > 50)>>
+			<<if canSee($receptrix)>>
+				Since the surgery required only a local anesthetic, $receptrix.slaveName remained fully aware throughout the procedure. $He watched the syringe containing $his new pregnancy empty into $his womb with rapt attention.
+			<<else>>
+				$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated.
+			<</if>>
+			$He's @@.hotpink;grateful@@ that you think $him worthy of carrying this child, and a little nervous about how $he'll perform as a surrogate.
+			<<set $receptrix.devotion += 4>>
+		<<elseif ($receptrix.devotion >= -20)>>
+			<<if canSee($receptrix)>>
+				Since the surgery required only a local anesthetic, $receptrix.slaveName remained fully aware throughout the procedure. From the syringe making contact with $his skin, to the egg's delivery into $his womb and $his subsequent impregnation, $he couldn't look away.
+			<<else>>
+				$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated.
+			<</if>>
+			$He understands the realities of $his life as a slave, so it isn't much of a shock. $He is @@.gold;sensibly fearful@@ of your total power over $his body.
+			<<set $receptrix.trust -= 10>>
+		<<else>>
+			<<if canSee($receptrix)>>
+				Since the surgery required only a local anesthetic, $receptrix.slaveName remained fully aware throughout the procedure. The moment $he realized what was happening, $he shut $his eyes tight, only opening them again as $he feels the slight tingle of the injector exiting $his lower abdomen.
+			<<else>>
+				$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated.
+			<</if>>
+			$He does not understand the realities of $his life as a slave at a core level, so $he's @@.mediumorchid;terrified and angry@@ that you have forced $him to bear this child, even more so as $he realizes $he doesn't know who the father is. $He is @@.gold;sensibly fearful@@ of your total power over $his body and the future of the life $he now harbors within $him.
+			<<set $receptrix.trust -= 15, $receptrix.devotion -= 15>>
+		<</if>>
+		<<set _surr = $slaves.findIndex(function(s) { return s.ID == $receptrix.ID; })>>
+		<<set $slaves[_surr] = $receptrix>>
+	<</if>>
+	<<set $receptrix = 0, $impregnatrix = 0, $donatrix = 0>>
+
+<<case "transplant">>
+
+	<<if $receptrix.ID == -1>>
+		Since the surgery required only a local anesthetic, you are very aware that you are now carrying $activeSlave.slaveName's child. You slowly rise to your feet, a hand to your lower belly, appreciating the new life growing within you.
+		<<set _fetus = WombRemoveFetus($activeSlave, $wombIndex)>>
+		<<run WombAddFetus($PC, _fetus)>>
+		<<set $PC.pregKnown = 1, $PC.preg = WombMaxPreg($PC), $activeSlave.preg = WombMaxPreg($activeSlave)>>
+		<<run WombNormalizePreg($PC)>>
+		<<run WombNormalizePreg($activeSlave)>>
+	<<else>>
+		<<set _fetus = WombRemoveFetus($donatrix, $wombIndex)>>
+		<<run WombAddFetus($receptrix, _fetus)>>
+		<<set $receptrix.pregKnown = 1, $receptrix.preg = WombMaxPreg($receptrix), $donatrix.preg = WombMaxPreg($donatrix)>>
+		<<run WombNormalizePreg($receptrix)>>
+		<<run WombNormalizePreg($donatrix)>>
+		<<if $donatrix.ID == -1>>
+			<<set $PC = $donatrix>>
+		<<else>>
+			<<set _surr = $slaves.findIndex(function(s) { return s.ID == $donatrix.ID; })>>
+			<<set $activeSlave = $donatrix>>
+		<</if>>
+		<<setLocalPronouns $receptrix>>
+		<<if $receptrix.fetish == "mindbroken">>
+			$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated.
+		<<elseif ($receptrix.fetish == "pregnancy") && ($receptrix.fetishStrength > 60) && ($receptrix.fetishKnown == 1)>>
+			<<if canSee($receptrix)>>
+				Since the surgery required only a local anesthetic, $receptrix.slaveName remained fully aware throughout the procedure. $He was overjoyed at the sight of the syringe containing $his future child emptying into $his womb.
+			<<else>>
+				$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated.
+			<</if>>
+			$He is @@.hotpink; filled with joy@@ over the life resettling into $his womb and can't wait to see the result. $He's so pleased that $he now @@.mediumaquamarine;trusts@@ your plans for $his body.
+			<<set $receptrix.trust += 4, $receptrix.devotion += 10>>
+		<<elseif ($receptrix.devotion > 50)>>
+			<<if canSee($receptrix)>>
+				Since the surgery required only a local anesthetic, $receptrix.slaveName remained fully aware throughout the procedure. $He watched the syringe containing $his new pregnancy empty into $his womb with rapt attention.
+			<<else>>
+				$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated.
+			<</if>>
+			$He's @@.hotpink;grateful@@ that you think $him worthy of carrying this child in <<if $donatrix.ID == -1>>your stead<<else>>lieu of $donatrix.slaveName<</if>>, and a little nervous about how $he'll perform as a surrogate.
+			<<set $receptrix.devotion += 4>>
+		<<elseif ($receptrix.devotion >= -20)>>
+			<<if canSee($receptrix)>>
+				Since the surgery required only a local anesthetic, $receptrix.slaveName remained fully aware throughout the procedure. From the syringe making contact with $his skin, to the egg's delivery into $his womb and $his subsequent impregnation, $he couldn't look away.
+			<<else>>
+				$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated.
+			<</if>>
+			$He understands the realities of $his life as a slave, so it isn't much of a shock. $He is @@.gold;sensibly fearful@@ of your total power over $his body and how you are forcing <<if $donatrix.ID == -1>>your pregnancy upon $him<<else>>$him to carry what should have been $donatrix.slaveName's burden<</if>>.
+			<<set $receptrix.trust -= 10>>
+		<<else>>
+			<<if canSee($receptrix)>>
+				Since the surgery required only a local anesthetic, $receptrix.slaveName remained fully aware throughout the procedure. The moment $he realized what was happening, $he shut $his eyes tight, only opening them again as $he feels the slight tingle of the injector exiting $his lower abdomen.
+			<<else>>
+				$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated.
+			<</if>>
+			$He does not understand the realities of $his life as a slave at a core level, so $he's @@.mediumorchid;terrified and angry@@ that you have forced $him to <<if $donatrix.ID == -1>>carry your child instead of doing so yourself<<else>>bear this child in lieu of $donatrix.slaveName<</if>>. $He is @@.gold;sensibly fearful@@ of your total power over $his body and who else's troubles may be levied upon $him.
+			<<set $receptrix.trust -= 15, $receptrix.devotion -= 15>>
+		<</if>>
+		<<set _surr = $slaves.findIndex(function(s) { return s.ID == $receptrix.ID; })>>
+		<<set $slaves[_surr] = $receptrix>>
+	<</if>>
+	<<set $receptrix = 0, $donatrix = 0, $wombIndex = 0>>
+
+<<case "clone">>
+
+	<<if $receptrix.ID == -1>>
+		Since the surgery required only a local anesthetic, you remain fully aware of the procedure as the autosurgery carries it out. You slowly rise to your feet, a hand to your lower belly, appreciating the clone growing within you.
+		<<set $PC.pregKnown = 1>>
+		<<if $donatrix.ID != -1>>
+			<<set _babyDaddy = $genePool.find(function(s) { return s.ID == $donatrix.ID; })>>
+			<<if ndef _babyDaddy>>
+				<<set _babyDaddy = $slaveIndices[$donatrix.ID]>>
+			<</if>>
+			<<run WombImpregnateClone($PC, 1, $donatrix, _babyDaddy, 1)>>
+		<<else>>
+			<<set _babyDaddy = $PC>>
+			<<run WombImpregnateClone($PC, 1, $PC, _babyDaddy, 1)>>
+		<</if>>
+		<<run WombNormalizePreg($PC)>>
+	<<else>>
+		<<set $receptrix.pregKnown = 1>>
+		<<if $donatrix.ID != -1>>
+			<<set _babyDaddy = $genePool.find(function(s) { return s.ID == $donatrix.ID; })>>
+			<<if ndef _babyDaddy>>
+				<<set _babyDaddy = $slaveIndices[$donatrix.ID]>>
+			<</if>>
+			<<run WombImpregnateClone($receptrix, 1, $donatrix, _babyDaddy, 1)>>
+		<<else>>
+			<<set _babyDaddy = $PC>>
+			<<run WombImpregnateClone($receptrix, 1, $PC, _babyDaddy, 1)>>
+		<</if>>
+		<<run WombNormalizePreg($receptrix)>>
+		<<setLocalPronouns $receptrix>>
+		<<if $receptrix.fetish == "mindbroken">>
+			$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen,
+			<<if $receptrix.ID == $donatrix.ID>>
+				but has no idea $he carries $his own clone.
+			<<else>>
+				$he knows that $he has been impregnated.
+			<</if>>
+		<<elseif ($receptrix.fetish == "pregnancy") && ($receptrix.fetishStrength > 60) && ($receptrix.fetishKnown == 1)>>
+			<<if canSee($receptrix)>>
+				Since the surgery required only a local anesthetic, $receptrix.slaveName remained fully aware throughout the procedure. $He was overjoyed at the sight of the syringe containing $his <<if $receptrix.ID == $donatrix.ID>>clone<<else>>future child<</if>> emptying into $his womb.
+			<<else>>
+				$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated<<if $receptrix.ID == $donatrix.ID>>, but not that $he now bears $his own clone<</if>>.
+			<</if>>
+			$He is @@.hotpink; filled with joy@@ over the life settling into $his womb and can't wait to see the result. $He's so pleased that $he now @@.mediumaquamarine;trusts@@ your plans for $his body.
+			<<set $receptrix.trust += 4, $receptrix.devotion += 10>>
+		<<elseif ($receptrix.devotion > 50)>>
+			<<if canSee($receptrix)>>
+				Since the surgery required only a local anesthetic, $receptrix.slaveName remained fully aware throughout the procedure. $He watched the syringe containing $his new pregnancy empty into $his womb with rapt attention.
+			<<else>>
+				$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated<<if $receptrix.ID == $donatrix.ID>>, but not that $he now bears $his own clone<</if>>.
+			<</if>>
+			$He's @@.hotpink;grateful@@ that you think $him worthy of carrying this child, and a little nervous about how $he'll perform as a surrogate.
+			<<set $receptrix.devotion += 4>>
+		<<elseif ($receptrix.devotion >= -20)>>
+			<<if canSee($receptrix)>>
+				Since the surgery required only a local anesthetic, $receptrix.slaveName remained fully aware throughout the procedure. From the syringe making contact with $his skin, to the egg's delivery into $his womb and $his subsequent impregnation, $he couldn't look away.
+			<<else>>
+				$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated<<if $receptrix.ID == $donatrix.ID>>, but not that $he now bears $his own clone<</if>>.
+			<</if>>
+			$He understands the realities of $his life as a slave, so it isn't much of a shock. $He is @@.gold;sensibly fearful@@ of your total power over $his body.
+			<<set $receptrix.trust -= 10>>
+		<<else>>
+			<<if canSee($receptrix)>>
+				Since the surgery required only a local anesthetic, $receptrix.slaveName remained fully aware throughout the procedure. The moment $he realized what was happening, $he shut $his eyes tight, only opening them again as $he feels the slight tingle of the injector exiting $his lower abdomen.
+			<<else>>
+				$receptrix.slaveName leaves the surgery with a certain warmth in $his lower abdomen, $he knows that $he has been impregnated.
+			<</if>>
+			$He does not understand the realities of $his life as a slave at a core level, so $he's @@.mediumorchid;terrified and angry@@ that you have forced $him to bear <<if $receptrix.ID == $donatrix.ID>>$his own clone and potential replacement<<else>>this child, even more so as $he realizes $he doesn't know who the father is<</if>>. $He is @@.gold;sensibly fearful@@ of your total power over $his body and the future of the life $he now harbors within $him.
+			<<set $receptrix.trust -= 15, $receptrix.devotion -= 15>>
+		<</if>>
+		<<set _surr = $slaves.findIndex(function(s) { return s.ID == $receptrix.ID; })>>
+		<<set $slaves[_surr] = $receptrix>>
+	<</if>>
+	<<if $donatrix.ID != -1 && $donatrix.ID != $receptrix.ID>>
+		<<set _surr = $slaves.findIndex(function(s) { return s.ID == $donatrix.ID; })>>
+		<<set $slaves[_surr] = $donatrix>>
+	<</if>>
+	<<set $receptrix = 0, $donatrix = 0>>
+
+<</switch>>

@@ -1,0 +1,46 @@
+:: FAnimalImpreg [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Slave Interact", $impregnatrix = 0, $eligibility = 0>>
+
+<<set _CL = $canines.length, _HL = $hooved.length, _FL = $felines.length>>
+
+<br><br>
+
+__Select an eligible animal to knock $him up:__
+
+<br>
+
+/* FIXME: this might not work */
+
+<<for _c = 0; _c < _CL; _c++>>
+	<<if canBreed($activeSlave, $canines[_c])>>
+		<<if $canines[_c].species != "dog">>
+			<<set _canine = $canines[_c].species>>
+		<<else>>
+			<<set _canine = $canines[_c].breed>>
+		<</if>>
+		<br><<link "Have a _canine knock $him up" "FAnimalImpreg Consummate">><<set $impregnatrix = $canines[_c]>><</link>>
+		<<set $eligibility = 1>>
+	<</if>>
+<</for>>
+<<for _h = 0; _h < _HL; _h++>>
+	<<if canBreed($activeSlave, $hooved[_h])>>
+		<<set _hooved = $hooved[_h].species>>
+		<br><<link "Have a _hooved knock $him up" "FAnimalImpreg Consummate">><<set $impregnatrix = $hooved[_h]>><</link>>
+		<<set $eligibility = 1>>
+	<</if>>
+<</for>>
+<<for _f = 0; _f < _fL; _f++>>
+	<<if canBreed($activeSlave, $felines[_f])>>
+		<<if $felines[_f].species != "cat">>
+			<<set _feline = $felines[_f].species>>
+		<<else>>
+			<<set _feline = $felines[_f].breed>>
+		<</if>>
+		<br><<link "Have a _feline knock $him up" "FAnimalImpreg Consummate">><<set $impregnatrix = $felines[_f]>><</link>>
+		<<set $eligibility = 1>>
+	<</if>>
+<</for>>
+<<if ($eligibility == 0)>>
+	//You have no animals capable of inseminating $him.//
+<</if>>

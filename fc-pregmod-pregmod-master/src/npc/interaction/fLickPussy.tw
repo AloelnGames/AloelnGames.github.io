@@ -1,0 +1,30 @@
+:: FLickPussy [nobr]
+
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+<<setPlayerPronouns>>
+
+<<set _devotion = getSlave($AS).devotion>> /*for brevity*/
+
+<<if canWalk(getSlave($AS))>>
+	You summon <<= getSlave($AS).slaveName>> to your office and order $him to lie down on the couch. $He does so
+	<<if _devotion > 95>>
+		with a smile, skipping over to give you a quick kiss before $he complies with your request.
+	<<elseif _devotion > 50>>
+		without hesitation, ready to serve and obey.
+	<<elseif _devotion > -50>>
+		with a look of trepidation, as though afraid you're going to hurt $him.
+	<<elseif _devotion <= -50>>
+		with a look of hatred, though only after you threaten to punish $him.
+	<</if>>
+<<else>>
+	You have <<= getSlave($AS).slaveName>> brought into your office and placed on your couch.
+<</if>>
+
+After $he is situated, you go over to $him<<if getSlave($AS).clothes != "no clothing">> and take off $his clothing, causing $him to <<if _devotion > 50>>give you a soft smile<<else>>give you an angry glare<</if>><</if>>. You suddenly grab $his hips and pull $his crotch to your face, causing $him to give a shriek of surprise. Looking at $him directly in the eyes, you begin to run your tongue along $his labia, drawing a soft moan from $him. The combination of the pleasure and the intense look from the _womanP $he<<if _devotion > 95>> loves <<elseif _devotion > 50>>'s accepted as $his <<= WrittenMaster(getSlave($AS))>><<else>> hates/*not sure what to use for "reluctant"*/<</if>> makes $him blush, but you don't let up.
+<<if getSlave($AS).dick == 0>>
+	You give $his clit a few experimental tweaks, causing $his moans to intensify<<if hasBothLegs(getSlave($AS))>> and $his legs to tighten around your head<</if>>.
+<</if>>
+Before $he cums, though, you pull back, causing $him to whine in frustration. You begin again, then pull back again just before $he orgasms. You repeat this several more times, each time causing $him to become more and more frustrated. Finally, one last stroke of your tongue causes $him to go over the edge, making $him scream out <<if _devotion > 50>>your name<</if>> in ecstasy<<if getSlave($AS).dick > 0>><<if canAchieveErection(getSlave($AS))>> and spray cum across $his chest<<else>> and dribble cum from $his limp dick<</if>><</if>>. You send $him back to $his assignment before calling in another slave to clean up the mess.
+
+<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>

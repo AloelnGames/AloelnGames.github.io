@@ -1,0 +1,477 @@
+:: BeastFucked [nobr]
+
+<<setLocalPronouns $activeSlave>>
+
+<<if $animalType == "canine">>
+	<<set _animal = $activeCanine>>
+<<elseif $animalType == "hooved">>
+	<<set _animal = $activeHooved>>
+<<elseif $animalType == "feline">>
+	<<set _animal = $activeFeline>>
+<</if>>
+
+/* add any animal species that begin with a vowel here */
+<<switch _animal.species>>
+<<default>>
+	<<set _a = "a">>
+<</switch>>
+
+<<if canDoVaginal($activeSlave)>>
+	<<set _sexAct = "vaginal">>
+	<<set _orifice = "pussy">>
+	<<set _hole = 0>>
+<<elseif canDoAnal($activeSlave)>>
+	<<set _sexAct = "anal">>
+	<<set _orifice = "asshole">>
+	<<set _hole = 1>>
+<<else>>
+	<<set _sexAct = "oral">>
+	<<set _orifice = "mouth">>
+<</if>>
+
+<<set _used = {mouth: 0, vagina: 0, anus: 0}>>
+<<if $activeSlave.vagina > 0>>
+	<<set _used.vagina = 1>>
+<</if>>
+<<if $activeSlave.anus > 0>>
+	<<set _used.anus = 1>>
+<</if>>
+<<if $activeSlave.counter.oral > 0>>
+	<<set _used.mouth = 1>>
+<</if>>
+
+<<if $activeSlave.fetish == "masochist">>
+	<<set _fetishDesc = "committing such a painful act", _activeQuirk = 1, _quirk = 1>>
+<<elseif $activeSlave.fetish == "humiliation">>
+	<<set _fetishDesc = "committing such a humiliating act", _activeQuirk = 1, _quirk = 1>>
+<<elseif $activeSlave.sexualQuirk == "perverted">>
+	<<set _fetishDesc = "committing such a perverted act", _activeQuirk = 1, _quirk = 1>>
+<<elseif $activeSlave.behavioralQuirk == "sinful">>
+	<<set _fetishDesc = "committing such a sinful act", _activeQuirk = 1, _quirk = 1>>
+<<elseif $activeSlave.fetish == "cumslut">>
+	<<set _fetishDesc = "getting to drink more cum", _activeQuirk = 1, _quirk = 2>>
+<<elseif $activeSlave.sexualQuirk == "gagfuck queen">>
+	<<set _fetishDesc = "getting to suck more dick", _activeQuirk = 1, _quirk = 2>>
+<</if>>
+
+<<if canWalk($activeSlave)>>You call $him over and<<else>>You order another slave to bring $activeSlave.slaveName over. Once $he is situated, you<</if>> tell $him you want to watch $him <<switch _sexAct>><<case "oral">>suck off<<default>>get fucked by<</switch>> <<print _a>> _animal.species.
+
+<<if ($activeSlave.fetish != "mindbroken")>>
+	<<if ($activeSlave.devotion > 50)>>
+		<<if _sexAct == "vaginal" || _sexAct == "anal">>
+			<<if _used.vagina || _used.anus>>
+				<<if $activeSlave.fetishKnown == 1 && _activeQuirk>>
+					$activeSlave.slaveName's face visibly brightens at the thought of _fetishDesc.
+				<<else>>
+					$activeSlave.slaveName looks visibly disturbed, but is so attentive to your will that $he quickly agrees.
+				<</if>>
+			<<else>>
+				<<if $activeSlave.fetishKnown == 1 && _activeQuirk>>
+					$activeSlave.slaveName's face visibly brightens at the thought of _fetishDesc, although $he seems a bit hesitant at the thought of giving $his <<if _sexAct == "anal">>anal <</if>>virginity to an animal.
+				<<else>>
+					$activeSlave.slaveName looks visibly shaken at the thought of having $his precious <<if _sexAct == "anal">>anal <</if>>virginity taken by an animal, but is so attentive to your will that $he agrees.
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $activeSlave.fetishKnown == 1 && _activeQuirk && _quirk == 2>>
+				$activeSlave.slaveName's face visibly brightens at the thought of _fetishDesc, even if it's <<print _a>> _animal.species's cum.
+			<<else>>
+				$activeSlave.slaveName blanches at the thought of having to suck <<print _a>> _animal.species's dick, but $he is so devoted to you that $he reluctantly agrees.
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<if ($activeSlave.devotion > 20) && ($activeSlave.devotion <= 50)>>
+		<<if _sexAct == "vaginal" || _sexAct == "anal">>
+			<<if _used.vagina || _used.anus>>
+				<<if $activeSlave.fetishKnown == 1 && _activeQuirk>>
+					$activeSlave.slaveName isn't too keen on the idea of fucking <<print _a>> _animal.species, but the thought of _fetishDesc soon convinces $him to comply.
+				<<else>>
+					$activeSlave.slaveName tries in vain to conceal $his horror, but quickly regains $his composure.
+				<</if>>
+			<<else>>
+				<<if $activeSlave.fetishKnown == 1 && _activeQuirk>>
+					$activeSlave.slaveName clearly has some reservations about having $his <<if _sexAct == "anal">>anal <</if>>virginity taken by <<print _a>> _animal.species, but the thought of _fetishDesc soon convinces $him to comply.
+				<<else>>
+					$activeSlave.slaveName tries in vain to conceal $his horror at the thought of having $his <<if _sexAct == "anal">>rosebud<<else>>pearl<</if>> taken by a beast, but quickly regains $his composure.
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $activeSlave.fetishKnown == 1 && _activeQuirk && _quirk == 2>>
+				$activeSlave.slaveName isn't too keen on the idea of sucking off <<print _a>> _animal.species, but the thought of _fetishDesc soon convinces $him to comply.
+			<<else>>
+				$activeSlave.slaveName tries in vain to conceal $his horror, but quickly regains $his composure.
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<if ($activeSlave.devotion >= -20) && ($activeSlave.devotion <= 20)>>
+		<<if _sexAct == "vaginal" || _sexAct == "anal">>
+			<<if _used.vagina || _used.anus>>
+				<<if $activeSlave.fetishKnown == 1 && _activeQuirk>>
+					$activeSlave.slaveName looks disgusted at the thought of fucking <<print _a>> _animal.species at first, but the thought of the _fetishDesc that comes with it seems to spark a small flame of lust in $him.
+				<<else>>
+					$activeSlave.slaveName tries in vain to conceal $his horror,
+				<</if>>
+			<<else>>
+				<<if $activeSlave.fetishKnown == 1 && _activeQuirk>>
+					$activeSlave.slaveName looks disgusted at the thought of giving up $his <<if _sexAct == "anal">>anal <</if>>virginity to <<print _a>> _animal.species, but the thought of _fetishDesc it soon sparks a small flame of lust in $him.
+				<<else>>
+					$activeSlave.slaveName tries in vain to conceal $his horror at the thought of giving $his <<if _sexAct == "anal">>anal <</if>>virginity to an animal, and only the threat of a far worse punishment keeps $him from running out of the room.
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $activeSlave.fetishKnown == 1 && _activeQuirk && _quirk == 2>>
+				$activeSlave.slaveName looks disgusted at the thought of sucking off <<print _a>> _animal.species at first, but the thought of _fetishDesc seems to spark a small flame of lust in $him.
+			<<else>>
+				$activeSlave.slaveName tries in vain to conceal $his horror,
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<if ($activeSlave.devotion < -20)>>
+		$activeSlave.slaveName's face contorts into a mixture of <<if ($activeSlave.devotion < -50)>>hatred, anger, and disgust, <<else>>anger and disgust, <</if>>
+	<</if>>
+
+<<else>>
+	$activeSlave.slaveName nods $his head dumbly, $his eyes vacant<<if !canSee($activeSlave)>> as always<</if>>.
+<</if>>
+
+<<if canWalk($activeSlave)>>
+	<<if $activeSlave.devotion >= -20>>
+		<<if ($activeSlave.devotion <= 20)>>
+			and only the threat of worse punishment prevents $him from running out of the room.
+		<</if>>
+			You have $him <<if ($activeSlave.clothes != "no clothing") && (_sexAct != "oral")>>take off $his clothing, then <</if>><<if _sexAct == "oral">>lay <<else>>kneel <</if>>down on the floor <<if _sexAct != "oral">>with $his ass in the air<<else>>on $his back<</if>>
+	<<else>>
+		and $Bodyguard.slaveName has to physically prevent $him from running out of the room<<if random(1,100) > 75>><<set $activeSlave.minorInjury = either("black eye", "bruise", "split lip")>>, resulting in a $activeSlave.minorInjury. <<else>>. <</if>>You <<if ($activeSlave.clothes != "no clothing")>>force $him to take off $his $activeSlave.clothes and <</if>>restrain $him on the floor <<if _sexAct != "oral">>with $his ass in the air<<else>>with a ring gag in $his mouth<</if>> — all the while ignoring $his screams and pleas for mercy —
+	<</if>>
+<<else>>
+	but $he knows $he is powerless to stop you. You <<if ($activeSlave.clothes != "no clothing")>>take off $his clothes and <</if>><<if _sexAct == "oral">>place a ring gag in $his mouth, then<</if>>place $him on the ground with a cushion under $his hips <<if _sexAct != "oral">>, $his ass in the air,<</if>>
+<</if>>
+
+before calling in the _animal.species. The _animal.species slowly saunters up to the <<if ($activeSlave.devotion <= 20)>>bound <</if>>slave and takes its position
+<<if canWalk($activeSlave)>><<if _sexAct != "oral">>behind<<else>>above<</if>><<else>>above<</if>> $him. You can see its _animal.dickSize penis slowly come to attention as its animalistic brain realizes that it's standing <<if canWalk($activeSlave)>><<if _sexAct != "oral">>behind<<else>>above<</if>><<else>>above<</if>> a warm hole that needs to be filled with seed.
+
+<<switch _animal.type>>
+<<case "canine">>
+	<<if canWalk($activeSlave)>>
+		<<switch _sexAct>>
+		<<case "oral">>
+			<<if $activeSlave.devotion > 20>>
+				$activeSlave.slaveName <<if _activeQuirk != 1>>reluctantly<</if>> grabs the _animal.dickSize cock and gives it a tentative lick.
+			<</if>>
+		<<default>>
+			The _animal.species clambers up to mount $activeSlave.slaveName, eliciting a squeal from the $girl as its claws dig into $his flesh.
+		<</switch>>
+	<<else>>
+		The _animal.species <<if _sexAct != "oral">> takes a few curious sniffs, then <</if>>lines its cock up with $activeSlave.slaveName's <<switch _sexAct>><<case "vaginal" "anal">>_orifice.<<case "oral">>mouth, then, with a mighty shove, begins to thrust rapidly, in the way that only _animal.species can.<</switch>>
+	<</if>>
+
+	<<switch _sexAct>>
+	<<case "vaginal" "anal">>
+		It takes a couple of tries, but it finally manages to sink its cock into $his <<if _sexAct == "vaginal" && _activeQuirk>>wet <</if>>_orifice.
+	<<case "oral">>
+		<<if canWalk($activeSlave)>>
+			In one swift motion, the canine buries its cock deep in $his throat, causing $him to gag. It then begins to thrust rapidly, in the way that only <<print _animal.species>>s can.
+		<</if>>
+	<</switch>>
+
+	<<if _sexAct != "oral">>
+		<<if (_sexAct == "vaginal" && !_used.vagina) || (_sexAct == "anal" && !_used.anus)>>The slave gives a loud <<if ($activeSlave.devotion > 20)>>moan<<else>>groan<</if>> as $his <<if _sexAct == "anal">>@@.lime;anal@@<</if>> @@.lime;virginity is taken from $him@@<<if ($activeSlave.devotion < -20)>>@@.lime; by force@@<</if>>.<</if>>
+	<</if>>
+
+<<case "hooved">>
+	The _animal.species stands over $him as another slave lines its massive phallus up with $activeSlave.slaveName's <<switch _sexAct>><<case "oral">>open mouth<<case "vaginal" "anal">><<if _activeQuirk>>wet <</if>>_orifice<</switch>>.
+
+	With a slight thrust, it enters $him and begins to fuck <<if _sexAct == "oral">>$his mouth<<else>> $him<</if>>. $activeSlave.slaveName can't help but give a loud groan as the huge cock
+	<<switch _sexAct>>
+	<<case "oral">>
+		stretches $his throat to the limit.
+	<<default>>
+		<<if _sexAct == "vaginal" && ($activeSlave.vagina <= 1) || _sexAct == "anal" && ($activeSlave.anus <= 1)>>
+			@@.lime;all but splits $his@@
+		<<elseif _sexAct == "vaginal" && ($activeSlave.vagina <= 3) || _sexAct == "anal" && ($activeSlave.anus <= 2)>>
+			@@.lime;stretches $his@@
+		<<else>>
+			fills $his
+		<</if>>
+
+	<<if _sexAct == "vaginal">>
+		<<if $activeSlave.vagina == 0>>
+			@@.lime;virgin@@
+		<<elseif $activeSlave.vagina == 1>>
+			@@.lime;tight@@
+		<<elseif $activeSlave.vagina == 2>>
+			@@.lime;reasonably tight@@
+		<<elseif $activeSlave.vagina == 3>>
+			@@.lime;loose@@
+		<<elseif $activeSlave.vagina <= 9>>
+			cavernous
+		<<else>>
+			ruined
+		<</if>>
+	<<else>>
+		<<if $activeSlave.anus == 0>>
+			@@.lime;virgin@@
+		<<elseif $activeSlave.anus == 1>>
+			@@.lime;tight@@
+		<<elseif $activeSlave.anus == 2>>
+			@@.lime;loose@@
+		<<elseif $activeSlave.anus == 3>>
+			very loose
+		<<else>>
+			gaping
+		<</if>>
+	<</if>>
+
+	<<if (_sexAct == "vaginal" && $activeSlave.vagina <= 3) || (_sexAct == "anal" && $activeSlave.anus <= 2) >>@@.lime;_orifice@@<<else>>_orifice<</if>><<if (_sexAct == "vaginal" && ($activeSlave.vagina <= 1)) || (_sexAct == "anal" && ($activeSlave.anus <= 1))>>@@.lime; apart.@@<<elseif (_sexAct == "vaginal" && ($activeSlave.vagina <= 3)) || (_sexAct == "anal" && ($activeSlave.anus <= 2))>>@@.lime;.@@<<else>>.<</if>>
+	<</switch>>
+
+<<case "feline">>
+	<<if canWalk($activeSlave)>>
+		The _animal.species mounts $him, causing $him to give a squeal as its claws dig into $his flesh.
+	<<else>>
+		The _animal.species lines its _animal.dickSize penis with $activeSlave.slaveName's _orifice and gives a mighty shove.
+	<</if>>
+	$activeSlave.slaveName gives a loud <<if $activeSlave.devotion > 50>>moan<<else>>groan<</if>> as the _animal.species buries its large, barbed, cock deep in $his _orifice.
+<</switch>>
+
+<<if _sexAct != "oral">>
+	<<if _sexAct == "vaginal">>
+		<<if !_used.vagina>>
+			<<if ($activeSlave.devotion >= -20)>>
+				<<if _activeQuirk>>
+					@@.lime;Losing $his virginity@@ in such a painful manner has @@.hotpink;increased $his devotion to you.@@
+					<<set $activeSlave.devotion += 10>>
+				<<else>>
+					<<if $activeSlave.devotion > 50>>
+						Since $he is well broken, @@.lime;losing $his virginity@@ in such a manner has @@.hotpink;increased $his submission to you.@@
+						<<set $activeSlave.devotion += 5>>
+					<<elseif ($activeSlave.devotion >= -20) && ($activeSlave.devotion <= 50)>>
+						@@.lime;Losing $his virginity@@ in such a manner has @@.hotpink;increased $his submission to you,@@ though $he is @@.gold;fearful@@ that you'll decide to only use $him to sate your animals' lust.
+						<<set $activeSlave.devotion += 5, $activeSlave.trust -= 5>>
+					<<elseif ($activeSlave.devotion >= -50) && ($activeSlave.devotion < -20)>>
+						$He is clearly @@.mediumorchid;unhappy@@ in the manner in which $his virginity has been taken, and $he @@.gold;fears@@ you'll decide to only use $him to sate your animals' lust.
+						<<set $activeSlave.devotion -= 10, $activeSlave.trust -= 10>>
+					<</if>>
+				<</if>>
+			<<else>>
+				Having $his @@.lime;pearl of great price taken@@ by a mere beast has @@.mediumorchid;reinforced the hatred $he holds towards you,@@ and $he is @@.gold;terrified@@ you'll only use $him as a plaything for your animals.
+				<<set $activeSlave.devotion -= 10, $activeSlave.trust -= 10>>
+			<</if>>
+		<</if>>
+	<<else>>
+		<<if !_used.anus>>
+			<<if ($activeSlave.devotion >= -20)>>
+				<<if _activeQuirk>>
+					@@.lime;Losing $his anal virginity@@ in such a painful manner has @@.hotpink;increased $his devotion to you.@@
+					<<set $activeSlave.devotion += 10>>
+				<<else>>
+					<<if $activeSlave.devotion > 50>>
+						Since $he is well broken, @@.lime;losing $his anal virginity@@ in such a manner has @@.hotpink;increased $his submission to you.@@
+						<<set $activeSlave.devotion += 5>>
+					<<elseif ($activeSlave.devotion >= -20) && ($activeSlave.devotion <= 50)>>
+						@@.lime;Losing $his anal virginity@@ in such a manner has @@.hotpink;increased $his submission to you,@@ though $he is @@.gold;fearful@@ that you'll decide to only use $him to sate your animals' lust.
+						<<set $activeSlave.devotion += 5, $activeSlave.trust -= 5>>
+					<<elseif ($activeSlave.devotion >= -50) && ($activeSlave.devotion < -20)>>
+						$He is clearly @@.mediumorchid;unhappy@@ in the manner in which @@.lime;$his anal virginity has been taken,@@ and $he @@.gold;fears@@ you'll decide to only use $him to sate your animals' lust.
+						<<set $activeSlave.devotion -= 10, $activeSlave.trust -= 10>>
+					<</if>>
+				<</if>>
+			<<else>>
+				Having @@.lime;$his rosebud taken@@ by a mere beast has @@.mediumorchid;reinforced the hatred $he holds towards you,@@ and $he is @@.gold;terrified@@ you'll only use $him as a plaything for your animals.
+				<<set $activeSlave.devotion -= 10, $activeSlave.trust -= 10>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<if (!_used.vagina && _sexAct == "vaginal") || (!_used.anus && _sexAct == "anal")>>
+		The pain of having such a _animal.dickSize cock take $his <<if _sexAct == "anal">>anal <</if>>virginity has @@.red;damaged $his health.@@
+		<<run healthDamage($activeSlave, 5)>>
+	<</if>>
+<</if>>
+
+<<switch _animal.type>>
+<<case "canine">>
+	The <<switch _animal.species>><<case "dog">>hound<<default>>_animal.species<</switch>> wastes no time in beginning to hammer away at $his _orifice, causing $activeSlave.slaveName to moan uncontrollably as its thick, veiny member probes the depths of $his <<switch _sexAct>><<case "oral">>throat<<case "vaginal">>cunt<<case "anal">>rectum<</switch>>.
+	A few short minutes later, $he gives a loud groan
+	<<if ($activeSlave.fetishKnown == 1) && (_activeQuirk)>> and shakes in orgasm <</if>>
+	as the _animal.species's knot begins to swell and its penis begins to erupt a thick stream of jizz <<switch _sexAct>><<case "vaginal" "anal">>into $him<<case "oral">>down $his throat<</switch>>.
+	After almost a minute, the _animal.species has finally finished cumming and its knot is sufficiently small enough that the _animal.species is able to pull its cock out, causing
+	<<switch _sexAct>>
+	<<case "vaginal" "anal">>
+		a stream of cum to slide out of $his
+		<<if _sexAct == "vaginal" && ($activeSlave.vagina <= 2) || _sexAct == "anal" && ($activeSlave.anus <= 1)>>
+			@@.lime;now-gaping _orifice.@@
+		<<else>>
+			<<if _sexAct == "vaginal">>
+				<<if $activeSlave.vagina == 3>>
+					loose
+				<<elseif $activeSlave.vagina <= 9>>
+					cavernous
+				<<else>>
+					ruined
+				<</if>>
+			<<else>>
+				<<if $activeSlave.anus == 0>>
+					virgin
+				<<elseif $activeSlave.anus == 1>>
+					tight
+				<<elseif $activeSlave.anus == 2>>
+					loose
+				<<elseif $activeSlave.anus == 3>>
+					very loose
+				<<else>>
+					gaping
+				<</if>>
+			<</if>> _orifice.
+		<</if>>
+		<<if canGetPregnant($activeSlave) && canBreed($activeSlave, _animal)>>
+			<<= knockMeUp($activeSlave, 5, _hole, -8)>>
+		<</if>>
+	<<case "oral">>
+		$activeSlave.slaveName to immediately start coughing and retching uncontrollably.
+
+	<</switch>> Having finished its business, the _animal.species runs off, presumably in search of food.
+
+	<<switch _sexAct>>
+	<<case "vaginal">>
+		<<if $activeSlave.vagina < 3>>
+			<<set $activeSlave.vagina = 3>>
+		<</if>>
+		<<set $activeSlave.counter.vaginal += 1>>
+	<<case "anal">>
+		<<if $activeSlave.anus < 2>>
+			<<set $activeSlave.anus = 2>>
+		<</if>>
+		<<set $activeSlave.counter.vaginal += 1>>
+	<<case "oral">>
+		<<set $activeSlave.counter.oral += 1>>
+	<</switch>>
+
+<<case "hooved">>
+	The <<switch _animal.species>><<case "horse">>stallion<<default>>_animal.species<</switch>> begins to thrust faster and faster, causing $activeSlave.slaveName to moan and groan in pain as the<<if _sexAct == "vaginal">> tip rams $his cervix<<else>> huge _animal.species cock fills $him completely<</if>>. Before too long, the _animal.species's movements begin to slow, and you can see its large testicles contract slightly as it begins to fill $activeSlave.slaveName's <<switch _sexAct>><<case "vaginal" "anal">>_orifice<<case "oral">>stomach<</switch>> to the brim with thick _animal.species semen.
+	After what seems like an impossibly long time, the _animal.species's dick finally begins to soften and it finally pulls out<<if _sexAct == "oral">>, causing $activeSlave.slaveName to immediately begin to cough and retch uncontrollably<</if>>. You have a servant lead the _animal.species away, with a fresh apple as a treat for its good performance.
+
+	<<switch _sexAct>>
+	<<case "vaginal">>
+		<<if $activeSlave.vagina < 4>>
+			<<set $activeSlave.vagina = 4>>
+		<</if>>
+		<<set $activeSlave.counter.vaginal += 1>>
+	<<case "anal">>
+		<<if $activeSlave.anus < 4>>
+			<<set $activeSlave.anus = 4>>
+		<</if>>
+		<<set $activeSlave.counter.anal += 1>>
+	<<case "oral">>
+		<<set $activeSlave.counter.oral += 1>>
+	<</switch>>
+	<<if _sexAct != "oral">>
+		<<if canGetPregnant($activeSlave) && canBreed($activeSlave, _animal)>>
+			<<= knockMeUp($activeSlave, 5, _hole, -8)>>
+		<</if>>
+	<</if>>
+
+<<case "feline">>
+	The _animal.species begins to move, thrusting faster and faster. The $girl beneath can't stop a groan of pain from escaping $his lips as the barbs on its dick @@.red;rub the inside of $his _orifice raw.@@ After a few minutes of painful coupling, the _animal.species's thrusts finally slow, then stop completely. With a <<if _animal.species != "cat">>deep bellow<<else>>loud //meow//<</if>>, he finally dismounts, gives you a long look, then stalks off.
+
+	<<run healthDamage($activeSlave, 1)>>
+	<<switch _sexAct>>
+	<<case "vaginal">>
+		<<if $activeSlave.vagina < 2>>
+			<<set $activeSlave.vagina = 2>>
+		<</if>>
+		<<set $activeSlave.counter.vaginal += 1>>
+	<<case "anal">>
+		<<if $activeSlave.anus < 2>>
+			<<set $activeSlave.anus = 2>>
+		<</if>>
+		<<set $activeSlave.counter.vaginal += 1>>
+	<<case "oral">>
+		<<set $activeSlave.counter.oral += 1>>
+	<</switch>>
+	<<if _sexAct != "oral">>
+		<<if canGetPregnant($activeSlave) && canBreed($activeSlave, _animal)>>
+			<<= knockMeUp($activeSlave, 5, _hole, -8)>>
+		<</if>>
+	<</if>>
+<</switch>>
+
+<<if (random(1,100) > (100 + $activeSlave.devotion))>>
+	<<switch _sexAct>>
+	<<case "vaginal">>
+		<<if ($activeSlave.energy <= 95) && ($activeSlave.sexualFlaw != "hates penetration")>>
+			Having <<print _a>> _animal.species fuck $him by force has given $him a @@.red;hatred of penetration.@@
+			<<set $activeSlave.sexualFlaw = "hates penetration">>
+		<</if>>
+	<<case "anal">>
+		<<if ($activeSlave.energy <= 95) && ($activeSlave.sexualFlaw != "hates anal")>>
+			Having <<print _a>> _animal.species fuck $him by force has given $him a @@.red;hatred of anal penetration.@@
+			<<set $activeSlave.sexualFlaw = "hates anal">>
+		<</if>>
+	<<case "oral">>
+		<<if ($activeSlave.energy <= 95) && ($activeSlave.sexualFlaw != "hates oral")>>
+			Having <<print _a>> _animal.species fuck $him by force has given $him a @@.red;hatred of oral penetration.@@
+			<<set $activeSlave.sexualFlaw = "hates oral">>
+		<</if>>
+	<</switch>>
+<</if>>
+
+<<if _sexAct != "oral">>
+	<<if $postSexCleanUp > 0>>
+
+		<<if ($activeSlave.vagina == 3)>>
+			<<= capFirstChar(_animal.species)>> cum drips out of $his fucked-out hole.
+		<<elseif ($activeSlave.vagina == 2)>>
+			<<= capFirstChar(_animal.species)>> cum drips out of $his stretched vagina.
+		<<elseif ($activeSlave.vagina == 1)>>
+			$His still-tight vagina keeps the _animal.species's load inside $him.
+		<<elseif ($activeSlave.vagina < 0)>>
+			<<= capFirstChar(_animal.species)>> cum drips out of $his girly ass.
+		<<else>>
+			<<= capFirstChar(_animal.species)>> cum slides right out of $his gaping hole.
+		<</if>>
+
+		<<if canWalk($activeSlave)>>
+			$He uses <<if $activeSlave.vagina > 0>>a quick douche to clean $his <<if $activeSlave.vagina < 2>>tight<<elseif $activeSlave.vagina > 3>>loose<</if>> pussy<<else>>an enema to clean $his <<if $activeSlave.anus < 2>>tight<<elseif $activeSlave.anus < 3>>used<<else>>gaping<</if>> butthole<</if>>,
+			<<switch $activeSlave.assignment>>
+			<<case "work in the brothel">>
+				just like $he does between each customer.
+			<<case "serve in the club">>
+				just like $he does in the club.
+			<<case "work in the dairy">>
+				to avoid besmirching the nice clean dairy.
+			<<case "work as a farmhand">>
+				to avoid tainting the food in $farmyardName.
+			<<case "work as a servant">>
+				mostly to keep everything $he has to clean from getting any dirtier.
+			<<case "whore">>
+				before returning to offering it for sale.
+			<<case "serve the public">>
+				before returning to offering it for free.
+			<<case "rest">>
+				before crawling back into bed.
+			<<case "get milked">>
+				<<if $activeSlave.lactation > 0>>before going to get $his uncomfortably milk-filled tits drained<<else>>and then rests until $his balls are ready to be drained again<</if>>.
+			<<case "be a servant">>
+				since $his chores didn't perform themselves while you used $his fuckhole.
+			<<case "please you">>
+				before returning to await your next use of $his fuckhole, as though nothing had happened.
+			<<case "be a subordinate slave">>
+				though it's only a matter of time before another slave decides to play with $his fuckhole.
+			<<case "be your Head Girl">>
+				worried that $his charges got up to trouble while $he enjoyed $his <<= WrittenMaster()>>'s use.
+			<<case "guard you">>
+				so $he can be fresh and ready for more sexual use even as $he guards your person.
+			<<case "be the Schoolteacher">>
+				before $he returns to teaching $his classes.
+			<<default>>
+				before $he returns to $activeSlave.assignment.
+			<</switch>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<set $animalType = 0>>

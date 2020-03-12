@@ -1,0 +1,79 @@
+div.tabbar {
+	overflow: hidden;
+}
+
+div.tabbar button {
+	background-color: #252525;
+	border: solid 2px #252525;
+	color: #68d;
+	float: left;
+	outline: none;
+	cursor: pointer;
+	padding: 1ex 1ex;
+	transition: 0.2s;
+	font-size: large;
+}
+
+div.tabbar button.card {
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	border: none;
+}
+
+div.tabbar button.card.active {
+	background-color: #1a1a1a;
+}
+
+div.tabbar button:hover {
+	background-color: #414141;
+}
+
+div.tabbar button.active {
+	background-color: #050505;
+	color: #c7cedf;
+}
+
+div.tabbar a.active {
+	color: white;
+	pointer-events: none;
+	cursor: default;
+}
+
+.tabcontent:not(.noFade) {
+	display: none;
+	padding: 6px 12px;
+	-webkit-animation: fadeEffect 0.3s;
+	animation: fadeEffect 0.3s;
+}
+
+.tabcontent.card {
+	border-radius: 0 8px 8px 8px;
+	background-color: #1a1a1a;
+	box-shadow: 10px 10px 5px black;
+	margin-bottom: 15px;
+}
+
+
+.tabcontent.card .slaveSummary.card {
+	background-color: #252525;
+}
+
+@-webkit-keyframes fadeEffect {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeEffect {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}

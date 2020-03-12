@@ -1,0 +1,596 @@
+:: Universal Rules [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Manage Penthouse">>
+
+''Permissions for slaves''
+<br>
+
+<<if $universalRulesRest == 0>>
+	Slaves will ''remain on assignment'' when unhealthy. [[Allow automatic rest when unhealthy|Universal Rules][$universalRulesRest = 1]]
+<<else>>
+	Slaves will ''automatically rest'' at $assistant.name's discretion when unhealthy. [[Require all slaves to stay on assignment|Universal Rules][$universalRulesRest = 0]]
+<</if>>
+
+<br>
+
+<<if $universalRulesConsent == 0>>
+	Slaves are ''not required'' to get consent before fucking other slaves. [[Restrain slave on slave molestation|Universal Rules][$universalRulesConsent = 1]]
+<<else>>
+	Slaves are ''generally required'' to get consent before fucking other slaves. [[Encourage slave on slave molestation|Universal Rules][$universalRulesConsent = 0]]
+<</if>>
+
+<br>
+
+Slave requests for body mods are
+<<if ($modRequestsAllowed == 0)>>
+	@@.red;FORBIDDEN.@@ [[Allow|Universal Rules][$modRequestsAllowed = 1]]
+<<else>>
+	@@.cyan;ALLOWED.@@ [[Forbid|Universal Rules][$modRequestsAllowed = 0]]
+<</if>>
+
+<br>
+
+Slave requests for growth hormones are
+<<if ($expansionRequestsAllowed == 0)>>
+	@@.red;FORBIDDEN.@@ [[Allow|Universal Rules][$expansionRequestsAllowed = 1]]
+<<else>>
+	@@.cyan;ALLOWED.@@ [[Forbid|Universal Rules][$expansionRequestsAllowed = 0]]
+<</if>>
+
+<<if $brothel+$club+$dairy+$farmyard+$servantsQuarters+$arcade+$schoolroom+$spa+$nursery+$clinic+$masterSuite+$cellblock > 0>>
+	<br>
+	<<if $universalRulesFacilityWork == 0>>
+		Slaves ''will not'' cooperate with staffed facilities to improve their performance. [[Allow cooperation|Universal Rules][$universalRulesFacilityWork = 1]]
+	<<else>>
+		Slaves ''will'' cooperate with staffed facilities to improve their performance. [[Stop cooperation|Universal Rules][$universalRulesFacilityWork = 0]]
+	<</if>>
+<</if>>
+
+<<if $brothel+$club+$dairy+$farmyard+$servantsQuarters+$arcade+$schoolroom+$spa+$nursery+$clinic+$masterSuite+$cellblock > 0>>
+	<br>
+	<<if $universalRulesAssignsSelfFacility == 1>>
+		Slaves ''are'' permitted to assign themselves to facilities when choosing their assignment. [[Deny self assignment to facilities|Universal Rules][$universalRulesAssignsSelfFacility = 0]]
+	<<else>>
+		Slaves ''are not'' permitted to assign themselves to facilities when choosing their assignment. [[Permit self assignment to facilities|Universal Rules][$universalRulesAssignsSelfFacility = 1]]
+	<</if>>
+<</if>>
+
+<br>
+
+<<if $universalRulesImmobileSlavesMaintainMuscles == 1>>
+	Immobile slaves ''will maintain'' their muscles rather than allow themselves to become soft.
+	[[Stop mandatory workouts|Universal Rules][$universalRulesImmobileSlavesMaintainMuscles = 0]]
+<<else>>
+	Immobile slaves ''will not maintain'' their musculature and will gradually lose it.
+	[[Mandatory workouts|Universal Rules][$universalRulesImmobileSlavesMaintainMuscles = 1]]
+<</if>>
+
+<br><br>
+''Branding for slaves''
+<br>
+
+Choose an official brand. Any slave marked with this brand will be connected to your reputation, and will receive a beauty boost or penalty depending on how high or low that reputation is.
+<br>
+Use ''$brandDesign.official'' or choose another brand:
+[[Your slaving emblem|Universal Rules][$brandDesign.official = "your personal symbol"]]
+| [[Your initials|Universal Rules][$brandDesign.official = "your initials"]]
+<br>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+[[SLUT|Universal Rules][$brandDesign.official = "SLUT"]]
+| [[WHORE|Universal Rules][$brandDesign.official = "WHORE"]]
+| [[SLAVE|Universal Rules][$brandDesign.official = "SLAVE"]]
+| [[COW|Universal Rules][$brandDesign.official = "COW"]]
+| [[MEAT|Universal Rules][$brandDesign.official = "MEAT"]]
+| [[CUMDUMP|Universal Rules][$brandDesign.official = "CUMDUMP"]]
+| [[LOVER|Universal Rules][$brandDesign.official = "LOVER"]]
+<br>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+[[Pussy symbol|Universal Rules][$brandDesign.official = "a pussy symbol"]]
+| [[Anus symbol|Universal Rules][$brandDesign.official = "an anus symbol"]]
+| [[Penis symbol|Universal Rules][$brandDesign.official = "a penis symbol"]]
+<br>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+[[Lady|Universal Rules][$brandDesign.official = "a lady silhouette"]]
+| [[Princess|Universal Rules][$brandDesign.official = "a princess silhouette"]]
+| [[Queen|Universal Rules][$brandDesign.official = "a queen silhouette"]]
+| [[Angel|Universal Rules][$brandDesign.official = "an angel silhouette"]]
+| [[Devil|Universal Rules][$brandDesign.official = "a devil silhouette"]]
+<<if ($arcologies[0].FSSupremacist != "unset") && ($activeSlave.race != $arcologies[0].FSSupremacistRace)>>
+| //FS// [[Racial Slur|Universal Rules][$brandDesign.official = "a racial slur"]] <</if>>
+<<if ($arcologies[0].FSSubjugationist != "unset") && ($activeSlave.race == $arcologies[0].FSSubjugationistRace)>>
+| //FS// [[Racial Slur|Universal Rules][$brandDesign.official = "a racial slur"]] <</if>>
+<<if ($arcologies[0].FSIntellectualDependency != "unset")>>
+| //FS// [[Scores|Universal Rules][$brandDesign.official = "how much sex $he needs per day"]] <</if>>
+<<if ($arcologies[0].FSSlaveProfessionalism != "unset")>>
+| //FS// [[Scores|Universal Rules][$brandDesign.official = "$his average slave aptitude test scores"]] <</if>>
+<<if ($arcologies[0].FSRepopulationFocus != "unset")>>
+| //FS// [[Birth Count|Universal Rules][$brandDesign.official = "the number of children $he has birthed"]] <</if>>
+<<if ($arcologies[0].FSGenderRadicalist != "unset") || ($arcologies[0].FSGenderFundamentalist != "unset")>>
+| //FS// [[Gender Symbol|Universal Rules][$brandDesign.official = "a gender symbol"]] <</if>>
+<<if ($arcologies[0].FSPaternalist != "unset")>>
+| //FS// [[Personal Symbol|Universal Rules][$brandDesign.official = "$his own personal symbol"]] <</if>>
+<<if ($arcologies[0].FSDegradationist != "unset")>>
+| //FS// [[Chain Symbol|Universal Rules][$brandDesign.official = "a chain symbol"]] <</if>>
+<<if ($arcologies[0].FSBodyPurist != "unset")>>
+| //FS// [[Vitruvian Man|Universal Rules][$brandDesign.official = "a Vitruvian man"]] <</if>>
+<<if ($arcologies[0].FSTransformationFetishist != "unset")>>
+| //FS// [[Scalpel|Universal Rules][$brandDesign.official = "a scalpel"]] <</if>>
+<<if ($arcologies[0].FSYouthPreferentialist != "unset")>>
+| //FS// [[Virginity Status|Universal Rules][$brandDesign.official = "$his virginity status"]] <</if>>
+<<if ($arcologies[0].FSMaturityPreferentialist != "unset")>>
+| //FS// [[Sexual Skill Info|Universal Rules][$brandDesign.official = "$his sexual skills"]] <</if>>
+<<if ($arcologies[0].FSPetiteAdmiration != "unset") || ($arcologies[0].FSStatuesqueGlorification != "unset")>>
+| //FS// [[Current height|Universal Rules][$brandDesign.official = "$his current height"]] <</if>>
+<<if ($arcologies[0].FSSlimnessEnthusiast != "unset")>>
+| //FS// [[Breast Floor|Universal Rules][$brandDesign.official = "$his absolute minimum breast size"]] <</if>>
+<<if ($arcologies[0].FSAssetExpansionist != "unset")>>
+| //FS// [[Breast Ceiling|Universal Rules][$brandDesign.official = "$his absolute maximum breast size"]] <</if>>
+<<if ($arcologies[0].FSHedonisticDecadence != "unset")>>
+| //FS// [[Weight Record|Universal Rules][$brandDesign.official = "$his highest weigh-in"]] <</if>>
+<<if ($arcologies[0].FSHedonisticDecadence != "unset") && $PC.refreshmentType == 2>>
+| //FS// [[Favorite Food|Universal Rules][$brandDesign.official = "a big helping of "+$PC.refreshment]] <</if>>
+<<if ($arcologies[0].FSPastoralist != "unset")>>
+| //FS// [[Product Quality|Universal Rules][$brandDesign.official = "$his body product quality"]] <</if>>
+<<if ($arcologies[0].FSPhysicalIdealist != "unset")>>
+| //FS// [[Deadlift Info|Universal Rules][$brandDesign.official = "$his deadlift record"]] <</if>>
+<<if ($arcologies[0].FSChattelReligionist != "unset")>>
+| //FS// [[Religious Symbol|Universal Rules][$brandDesign.official = "a religious symbol"]] <</if>>
+<<if ($arcologies[0].FSRomanRevivalist != "unset")>>
+| //FS// [[Republican Crest|Universal Rules][$brandDesign.official = "the crest of your Republic"]] <</if>>
+<<if ($arcologies[0].FSAztecRevivalist != "unset")>>
+| //FS// [[Seven Serpents|Universal Rules][$brandDesign.official = "the symbol of the Aztec gods"]] <</if>>
+<<if ($arcologies[0].FSEgyptianRevivalist != "unset")>>
+| //FS// [[Dynastic Sigil|Universal Rules][$brandDesign.official = "the sigil of your Dynasty"]] <</if>>
+<<if ($arcologies[0].FSEdoRevivalist != "unset")>>
+| //FS// [[Mon|Universal Rules][$brandDesign.official = "the Shogunate's mon"]] <</if>>
+<<if ($arcologies[0].FSArabianRevivalist != "unset")>>
+| //FS// [[Caliphate Symbol|Universal Rules][$brandDesign.official = "a symbol of the Caliphate"]] <</if>>
+<<if ($arcologies[0].FSChineseRevivalist != "unset")>>
+| //FS// [[Imperial Seal|Universal Rules][$brandDesign.official = "your Imperial Seal"]] <</if>>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+Or design your own: <<textbox "$brandDesign.official" $brandDesign.official "Universal Rules">> //For best results, use a single word//
+
+<br><br>
+
+One 'welcome' for a new slave is to have them branded. Where would you like such brands to be applied?
+<<if ["ankle", "breast", "buttock", "calf", "cheek", "ear", "foot", "hand", "lower arm", "shoulder", "testicle", "thigh", "upper arm", "wrist"].includes($brandTarget.primary)>>
+	<br> On the
+	[[left|Universal Rules][$brandTarget.primary = ("left " + $brandTarget.primary)]]
+	$brandTarget.primary, or the
+	[[right|Universal Rules][$brandTarget.primary = ("right " + $brandTarget.primary)]]?
+<<else>>
+	<br> Current site is ''$brandTarget.primary'':
+	[[Ears|Universal Rules][$brandTarget.primary = "ear"]]
+	| [[Cheeks|Universal Rules][$brandTarget.primary = "cheek"]]
+	| [[Shoulders|Universal Rules][$brandTarget.primary = "shoulder"]]
+	| [[Breasts|Universal Rules][$brandTarget.primary = "breast"]]
+	| [[Arm, upper|Universal Rules][$brandTarget.primary = "upper arm"]]
+	| [[Arm, lower|Universal Rules][$brandTarget.primary = "lower arm"]]
+	| [[Wrist|Universal Rules][$brandTarget.primary = "wrist"]]
+	| [[Hand|Universal Rules][$brandTarget.primary = "hand"]]
+	| [[Buttocks|Universal Rules][$brandTarget.primary = "buttock"]]
+	| [[Thigh|Universal Rules][$brandTarget.primary = "thigh"]]
+	| [[Calf|Universal Rules][$brandTarget.primary = "calf"]]
+	| [[Ankle|Universal Rules][$brandTarget.primary = "ankle"]]
+	| [[Feet|Universal Rules][$brandTarget.primary = "foot"]]
+	| [[Neck|Universal Rules][$brandTarget.primary = "neck"]]
+	| [[Chest|Universal Rules][$brandTarget.primary = "chest"]]
+	| [[Belly|Universal Rules][$brandTarget.primary = "belly"]]
+	| [[Pubic Mound|Universal Rules][$brandTarget.primary = "pubic mound"]]
+	| [[Penis|Universal Rules][$brandTarget.primary = "penis"]]
+	| [[Testicles|Universal Rules][$brandTarget.primary = "testicle"]]
+	| [[Back|Universal Rules][$brandTarget.primary = "back"]]
+	| [[Lower Back|Universal Rules][$brandTarget.primary = "lower back"]]
+<</if>>
+
+<<if ["ankle", "breast", "buttock", "calf", "cheek", "ear", "foot", "hand", "lower arm", "shoulder", "testicle", "thigh", "upper arm", "wrist"].includes($brandTarget.secondary)>>
+	<br> On the
+	[[left|Universal Rules][$brandTarget.secondary = ("left " + $brandTarget.secondary)]]
+	$brandTarget.secondary, or the
+	[[right|Universal Rules][$brandTarget.secondary = ("right " + $brandTarget.secondary)]]?
+<<elseif [
+	"left ankle", "right ankle",
+	"left calve", "right calve",
+	"left ear", "right ear",
+	"left foot", "right foot",
+	"left hand", "right hand",
+	"left lower arm", "right lower arm",
+	"left penis", "right penis",
+	"left testicle", "right testicle",
+	"left thigh", "right thigh",
+	"left upper arm", "right upper arm",
+	"left wrist", "right wrist"
+	].includes($brandTarget.primary)>>
+	<br> It's possible that ''$brandTarget.primary'' may be missing from a slave. Choose a fallback in case it is not available: Current backup is ''$brandTarget.secondary'':
+	/* Material copied from bodyModification, but please leave commented out any sections that may not be on ALL slaves. */
+
+	/*<<if hasAnyEars($activeSlave)>>[[Ears|Universal Rules][$brandTarget.secondary = "ear"]]<</if>>*/
+	| [[Cheeks|Universal Rules][$brandTarget.secondary = "cheek"]]
+	| [[Shoulders|Universal Rules][$brandTarget.secondary = "shoulder"]]
+	| [[Breasts|Universal Rules][$brandTarget.secondary = "breast"]]
+	/*<<if hasAnyNaturalArms($activeSlave)>>
+		| [[Arm, upper|Universal Rules][$brandTarget.secondary = "upper arm"]]
+		| [[Arm, lower|Universal Rules][$brandTarget.secondary = "lower arm"]]
+		| [[Wrist|Universal Rules][$brandTarget.secondary = "wrist"]]
+		| [[Hand|Universal Rules][$brandTarget.secondary = "hand"]]
+	<</if>>*/
+	| [[Buttocks|Universal Rules][$brandTarget.secondary = "buttock"]]
+	/*<<if hasAnyNaturalLegs($activeSlave)>>
+		| [[Thigh|Universal Rules][$brandTarget.secondary = "thigh"]]
+		| [[Calf|Universal Rules][$brandTarget.secondary = "calf"]]
+		| [[Ankle|Universal Rules][$brandTarget.secondary = "ankle"]]
+		| [[Feet|Universal Rules][$brandTarget.secondary = "foot"]]
+	<</if>>*/
+	| [[Neck|Universal Rules][$brandTarget.secondary = "neck"]]
+	| [[Chest|Universal Rules][$brandTarget.secondary = "chest"]]
+	| [[Belly|Universal Rules][$brandTarget.secondary = "belly"]]
+	| [[Pubic Mound|Universal Rules][$brandTarget.secondary = "pubic mound"]]
+	/*<<if $activeSlave.dick > 0>>
+		| [[Penis|Universal Rules][$brandTarget.secondary = "penis"]]
+	<</if>>*/
+	/*<<if $activeSlave.balls > 0 && $activeSlave.scrotum > 0>>
+		| [[Testicles|Universal Rules][$brandTarget.secondary = "testicle"]]
+	<</if>>*/
+	| [[Back|Universal Rules][$brandTarget.secondary = "back"]]
+	| [[Lower Back|Universal Rules][$brandTarget.secondary = "lower back"]]
+<</if>>
+
+<br>
+
+Use ''$brandDesign.primary'' or choose another brand:
+[[Your slaving emblem|Universal Rules][$brandDesign.primary = "your personal symbol"]]
+| [[Your initials|Universal Rules][$brandDesign.primary = "your initials"]]
+<br>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+[[SLUT|Universal Rules][$brandDesign.primary = "SLUT"]]
+| [[WHORE|Universal Rules][$brandDesign.primary = "WHORE"]]
+| [[SLAVE|Universal Rules][$brandDesign.primary = "SLAVE"]]
+| [[COW|Universal Rules][$brandDesign.primary = "COW"]]
+| [[MEAT|Universal Rules][$brandDesign.primary = "MEAT"]]
+| [[CUMDUMP|Universal Rules][$brandDesign.primary = "CUMDUMP"]]
+| [[LOVER|Universal Rules][$brandDesign.primary = "LOVER"]]
+<br>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+[[Pussy symbol|Universal Rules][$brandDesign.primary = "a pussy symbol"]]
+| [[Anus symbol|Universal Rules][$brandDesign.primary = "an anus symbol"]]
+| [[Penis symbol|Universal Rules][$brandDesign.primary = "a penis symbol"]]
+<br>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+[[Lady|Universal Rules][$brandDesign.primary = "a lady silhouette"]]
+| [[Princess|Universal Rules][$brandDesign.primary = "a princess silhouette"]]
+| [[Queen|Universal Rules][$brandDesign.primary = "a queen silhouette"]]
+| [[Angel|Universal Rules][$brandDesign.primary = "an angel silhouette"]]
+| [[Devil|Universal Rules][$brandDesign.primary = "a devil silhouette"]]
+<<if ($arcologies[0].FSSupremacist != "unset") && ($activeSlave.race != $arcologies[0].FSSupremacistRace)>>
+| //FS// [[Racial Slur|Universal Rules][$brandDesign.primary = "a racial slur"]] <</if>>
+<<if ($arcologies[0].FSSubjugationist != "unset") && ($activeSlave.race == $arcologies[0].FSSubjugationistRace)>>
+| //FS// [[Racial Slur|Universal Rules][$brandDesign.primary = "a racial slur"]] <</if>>
+<<if ($arcologies[0].FSSubjugationist != "unset") && ($activeSlave.race == $arcologies[0].FSSubjugationistRace)>>
+| //FS// [[Racial Slur|Universal Rules][$brandDesign.primary = "a racial slur"]] <</if>>
+<<if ($arcologies[0].FSIntellectualDependency != "unset")>>
+| //FS// [[Scores|Universal Rules][$brandDesign.primary = "how much sex $he needs per day"]] <</if>>
+<<if ($arcologies[0].FSSlaveProfessionalism != "unset")>>
+| //FS// [[Scores|Universal Rules][$brandDesign.primary = "$his average slave aptitude test scores"]] <</if>>
+<<if ($arcologies[0].FSRepopulationFocus != "unset")>>
+| //FS// [[Birth Count|Universal Rules][$brandDesign.primary = "the number of children $he has birthed"]] <</if>>
+<<if ($arcologies[0].FSGenderRadicalist != "unset") || ($arcologies[0].FSGenderFundamentalist != "unset")>>
+| //FS// [[Gender Symbol|Universal Rules][$brandDesign.primary = "a gender symbol"]] <</if>>
+<<if ($arcologies[0].FSPaternalist != "unset")>>
+| //FS// [[Personal Symbol|Universal Rules][$brandDesign.primary = "$his own personal symbol"]] <</if>>
+<<if ($arcologies[0].FSDegradationist != "unset")>>
+| //FS// [[Chain Symbol|Universal Rules][$brandDesign.primary = "a chain symbol"]] <</if>>
+<<if ($arcologies[0].FSBodyPurist != "unset")>>
+| //FS// [[Vitruvian Man|Universal Rules][$brandDesign.primary = "a Vitruvian man"]] <</if>>
+<<if ($arcologies[0].FSTransformationFetishist != "unset")>>
+| //FS// [[Scalpel|Universal Rules][$brandDesign.primary = "a scalpel"]] <</if>>
+<<if ($arcologies[0].FSYouthPreferentialist != "unset")>>
+| //FS// [[Virginity Status|Universal Rules][$brandDesign.primary = "$his virginity status"]] <</if>>
+<<if ($arcologies[0].FSMaturityPreferentialist != "unset")>>
+| //FS// [[Sexual Skill Info|Universal Rules][$brandDesign.primary = "$his sexual skills"]] <</if>>
+<<if ($arcologies[0].FSPetiteAdmiration != "unset") || ($arcologies[0].FSStatuesqueGlorification != "unset")>>
+| //FS// [[Current height|Universal Rules][$brandDesign.primary = "$his current height"]] <</if>>
+<<if ($arcologies[0].FSSlimnessEnthusiast != "unset")>>
+| //FS// [[Breast Floor|Universal Rules][$brandDesign.primary = "$his absolute minimum breast size"]] <</if>>
+<<if ($arcologies[0].FSAssetExpansionist != "unset")>>
+| //FS// [[Breast Ceiling|Universal Rules][$brandDesign.primary = "$his absolute maximum breast size"]] <</if>>
+<<if ($arcologies[0].FSHedonisticDecadence != "unset")>>
+| //FS// [[Weight Record|Universal Rules][$brandDesign.primary = "$his highest weigh-in"]] <</if>>
+<<if ($arcologies[0].FSHedonisticDecadence != "unset") && $PC.refreshmentType == 2>>
+| //FS// [[Favorite Food|Universal Rules][$brandDesign.primary = "a big helping of "+$PC.refreshment]] <</if>>
+<<if ($arcologies[0].FSPastoralist != "unset")>>
+| //FS// [[Product Quality|Universal Rules][$brandDesign.primary = "$his body product quality"]] <</if>>
+<<if ($arcologies[0].FSPhysicalIdealist != "unset")>>
+| //FS// [[Deadlift Info|Universal Rules][$brandDesign.primary = "$his deadlift record"]] <</if>>
+<<if ($arcologies[0].FSChattelReligionist != "unset")>>
+| //FS// [[Religious Symbol|Universal Rules][$brandDesign.primary = "a religious symbol"]] <</if>>
+<<if ($arcologies[0].FSRomanRevivalist != "unset")>>
+| //FS// [[Republican Crest|Universal Rules][$brandDesign.primary = "the crest of your Republic"]] <</if>>
+<<if ($arcologies[0].FSAztecRevivalist != "unset")>>
+| //FS// [[Seven Serpents|Universal Rules][$brandDesign.primary = "the symbol of the Aztec gods"]] <</if>>
+<<if ($arcologies[0].FSEgyptianRevivalist != "unset")>>
+| //FS// [[Dynastic Sigil|Universal Rules][$brandDesign.primary = "the sigil of your Dynasty"]] <</if>>
+<<if ($arcologies[0].FSEdoRevivalist != "unset")>>
+| //FS// [[Mon|Universal Rules][$brandDesign.primary = "the Shogunate's mon"]] <</if>>
+<<if ($arcologies[0].FSArabianRevivalist != "unset")>>
+| //FS// [[Caliphate Symbol|Universal Rules][$brandDesign.primary = "a symbol of the Caliphate"]] <</if>>
+<<if ($arcologies[0].FSChineseRevivalist != "unset")>>
+| //FS// [[Imperial Seal|Universal Rules][$brandDesign.primary = "your Imperial Seal"]] <</if>>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+Or design your own: <<textbox "$brandDesign.primary" $brandDesign.primary "Universal Rules">> //For best results, use a single word//
+
+<br><br>
+''Scarring for slaves''
+<br>
+
+/* Correct some "bad" choices" */
+<<if ["menacing", "exotic"].includes($scarDesign.primary)>>
+	<<if !["cheek", "left cheek", "right cheek"].includes($scarTarget.primary)>>
+		<<set $scarTarget.primary = "cheek">>
+	<</if>>
+<</if>>
+
+One 'welcome' for a new slave is to have them scarred. Where would you like such scars to be applied?
+<<if ["ankle", "breast", "buttock", "calf", "cheek", "ear", "foot", "hand", "lower arm", "shoulder", "testicle", "thigh", "upper arm", "wrist"].includes($scarTarget.primary)>>
+	<br> On the
+	[[left|Universal Rules][$scarTarget.primary = ("left " + $scarTarget.primary)]]
+	$scarTarget.primary, or the
+	[[right|Universal Rules][$scarTarget.primary = ("right " + $scarTarget.primary)]]?
+<<else>>
+	<br> Current site is ''$scarTarget.primary'':
+	[[Ears|Universal Rules][$scarTarget.primary = "ear"]]
+	| [[Cheeks|Universal Rules][$scarTarget.primary = "cheek"]]
+	| [[Shoulders|Universal Rules][$scarTarget.primary = "shoulder"]]
+	| [[Breasts|Universal Rules][$scarTarget.primary = "breast"]]
+	| [[Arm, upper|Universal Rules][$scarTarget.primary = "upper arm"]]
+	| [[Arm, lower|Universal Rules][$scarTarget.primary = "lower arm"]]
+	| [[Wrist|Universal Rules][$scarTarget.primary = "wrist"]]
+	| [[Hand|Universal Rules][$scarTarget.primary = "hand"]]
+	| [[Buttocks|Universal Rules][$scarTarget.primary = "buttock"]]
+	| [[Thigh|Universal Rules][$scarTarget.primary = "thigh"]]
+	| [[Calf|Universal Rules][$scarTarget.primary = "calf"]]
+	| [[Ankle|Universal Rules][$scarTarget.primary = "ankle"]]
+	| [[Feet|Universal Rules][$scarTarget.primary = "foot"]]
+	| [[Neck|Universal Rules][$scarTarget.primary = "neck"]]
+	| [[Chest|Universal Rules][$scarTarget.primary = "chest"]]
+	| [[Belly|Universal Rules][$scarTarget.primary = "belly"]]
+	| [[Pubic Mound|Universal Rules][$scarTarget.primary = "pubic mound"]]
+	| [[Penis|Universal Rules][$scarTarget.primary = "penis"]]
+	| [[Testicles|Universal Rules][$scarTarget.primary = "testicle"]]
+	| [[Back|Universal Rules][$scarTarget.primary = "back"]]
+	| [[Lower Back|Universal Rules][$scarTarget.primary = "lower back"]]
+<</if>>
+
+<<if ["ankle", "breast", "buttock", "calf", "cheek", "ear", "foot", "hand", "lower arm", "shoulder", "testicle", "thigh", "upper arm", "wrist"].includes($scarTarget.secondary)>>
+	<br> On the
+	[[left|Universal Rules][$scarTarget.secondary = ("left " + $scarTarget.secondary)]]
+	$scarTarget.secondary, or the
+	[[right|Universal Rules][$scarTarget.secondary = ("right " + $scarTarget.secondary)]]?
+<<elseif [
+	"left ankle", "right ankle",
+	"left calve", "right calve",
+	"left ear", "right ear",
+	"left foot", "right foot",
+	"left hand", "right hand",
+	"left lower arm", "right lower arm",
+	"left penis", "right penis",
+	"left testicle", "right testicle",
+	"left thigh", "right thigh",
+	"left upper arm", "right upper arm",
+	"left wrist", "right wrist"
+	].includes($scarTarget.primary)>>
+	<br> It's possible that ''$scarTarget.primary'' may be missing from a slave. Choose a fallback in case it is not available: Current backup is ''$scarTarget.secondary'':
+	/* Material copied from bodyModification, but please leave commented out any sections that may not be on ALL slaves. */
+
+	/*<<if hasAnyEars($activeSlave)>>[[Ears|Universal Rules][$scarTarget.secondary = "ear"]]<</if>>*/
+	| [[Cheeks|Universal Rules][$scarTarget.secondary = "cheek"]]
+	| [[Shoulders|Universal Rules][$scarTarget.secondary = "shoulder"]]
+	| [[Breasts|Universal Rules][$scarTarget.secondary = "breast"]]
+	/*<<if hasAnyNaturalArms($activeSlave)>>
+		| [[Arm, upper|Universal Rules][$scarTarget.secondary = "upper arm"]]
+		| [[Arm, lower|Universal Rules][$scarTarget.secondary = "lower arm"]]
+		| [[Wrist|Universal Rules][$scarTarget.secondary = "wrist"]]
+		| [[Hand|Universal Rules][$scarTarget.secondary = "hand"]]
+	<</if>>*/
+	| [[Buttocks|Universal Rules][$scarTarget.secondary = "buttock"]]
+	/*<<if hasAnyNaturalLegs($activeSlave)>>
+		| [[Thigh|Universal Rules][$scarTarget.secondary = "thigh"]]
+		| [[Calf|Universal Rules][$scarTarget.secondary = "calf"]]
+		| [[Ankle|Universal Rules][$scarTarget.secondary = "ankle"]]
+		| [[Feet|Universal Rules][$scarTarget.secondary = "foot"]]
+	<</if>>*/
+	| [[Neck|Universal Rules][$scarTarget.secondary = "neck"]]
+	| [[Chest|Universal Rules][$scarTarget.secondary = "chest"]]
+	| [[Belly|Universal Rules][$scarTarget.secondary = "belly"]]
+	| [[Pubic Mound|Universal Rules][$scarTarget.secondary = "pubic mound"]]
+	/*<<if $activeSlave.dick > 0>>
+		| [[Penis|Universal Rules][$scarTarget.secondary = "penis"]]
+	<</if>>*/
+	/*<<if $activeSlave.balls > 0 && $activeSlave.scrotum > 0>>
+		| [[Testicles|Universal Rules][$scarTarget.secondary = "testicle"]]
+	<</if>>*/
+	| [[Back|Universal Rules][$scarTarget.secondary = "back"]]
+	| [[Lower Back|Universal Rules][$scarTarget.secondary = "lower back"]]
+<</if>>
+
+<br>
+
+Use ''$scarDesign.primary'' or choose another scar:
+[[Whip|Universal Rules][$scarDesign.primary = "whip"]]
+| [[Burns|Universal Rules][$scarDesign.primary = "burn"]]
+| [[Surgical|Universal Rules][$scarDesign.primary = "surgical"]]
+| [[Menacing|Universal Rules][$scarDesign.primary = "menacing"]]
+| [[Exotic|Universal Rules][$scarDesign.primary = "exotic"]]
+/* Other common scars might be battle scars or c-Section but it makes little sense to include them here */
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+Or design your own: <<textbox "$scarDesign.primary" $scarDesign.primary "Universal Rules">> //For best results, use a single word//
+
+<br><br>
+''Names for slaves''
+<br>
+
+<<if $surnamesForbidden == 0>>
+	<span id="strip">
+	<<link "Strip all slaves of their surnames, both new and old">>
+		<<for _i = 0; _i < $slaves.length; _i++>>
+			<<set $slaves[_i].slaveSurname = 0>>
+		<</for>>
+		<<set $surnamesForbidden = 1>>
+		<<replace "#strip">>
+			Surnames taken.
+		<</replace>>
+	<</link>>
+	</span>
+<<else>>
+	[[Allow future slaves to keep their surnames|Universal Rules][$surnamesForbidden = 0]]
+<</if>>
+
+<br>
+
+Slave nicknames are
+<<if ($nicknamesAllowed == 0)>>
+	@@.red;FORBIDDEN.@@ [[Allow|Universal Rules][$nicknamesAllowed = 1]]
+<<else>>
+	@@.cyan;ALLOWED.@@ [[Forbid|Universal Rules][$nicknamesAllowed = 0]]
+<</if>>
+
+<<if $FSAnnounced > 0>>
+	<br>
+	<<if ($useFSNames == 0)>>
+		Future society names for new slaves are currently @@.red;NOT APPLIED.@@ [[Apply|Universal Rules][$useFSNames = 1]]
+	<<else>>
+		Future society names for new slaves are currently @@.cyan;APPLIED.@@ [[Stop applying|Universal Rules][$useFSNames = 0]]
+
+		<<if $FSNamePref == 0>>
+			You are currently not setting direction towards which Future Society names are preferred.
+		<<elseif $FSNamePref == 1>>
+			New Slaves are currently being given devotional names.
+		<<elseif $FSNamePref == 2>>
+			New slaves are currently being named according to Roman Custom.
+		<<elseif $FSNamePref == 3>>
+			New slaves are currently being named according to ancient Aztec Custom.
+		<<elseif $FSNamePref == 4>>
+			New slaves are currently being named according to ancient Egyptian Custom.
+		<<elseif $FSNamePref == 5>>
+			New slaves are currently being named according to feudal Japanese Custom.
+		<<elseif $FSNamePref == 6>>
+			New slaves are currently being named according to Degradationalist Custom.
+		<<elseif $FSNamePref == 7>>
+			New slaves are currently being named according to Paternalist Custom.
+		<<elseif $FSNamePref == 8>>
+			New slaves are currently being given simple bimbo names.
+		<<elseif $FSNamePref == 9>>
+			New Slaves are currently being named according to Pastoralist Custom.
+		<</if>>
+
+		<br>
+
+		<<if $FSNamePref != 0>>
+			[[No Longer Specify which Future Society to Draw Names From.|Universal Rules][$FSNamePref = 0]] <br>
+		<</if>>
+		<<if $FSNamePref != 1 && $arcologies[0].FSChattelReligionist >= 20>>
+			[[Give New Slaves Devotional Names|Universal Rules][$FSNamePref = 1]] <br>
+		<</if>>
+		<<if $FSNamePref != 2 && $arcologies[0].FSRomanRevivalist > 20>>
+			[[Give New slaves Roman Names|Universal Rules][$FSNamePref = 2]] <br>
+		<</if>>
+		<<if $FSNamePref != 3 && $arcologies[0].FSAztecRevivalist > 20>>
+			[[Give New Slaves Ancient Aztec Names.|Universal Rules][$FSNamePref = 3]] <br>
+		<</if>>
+		<<if $FSNamePref != 4 && $arcologies[0].FSEgyptianRevivalist > 20>>
+			[[Give New Slaves Ancient Egyptian Names|Universal Rules][$FSNamePref = 4]] <br>
+		<</if>>
+		<<if $FSNamePref != 5 && $arcologies[0].FSEdoRevivalist > 20>>
+			[[Give New Slaves Feudal Japanese Names|Universal Rules][$FSNamePref = 5]] <br>
+		<</if>>
+		<<if $FSNamePref != 6 && $arcologies[0].FSDegradationist !== "unset">>
+			[[Give New Slaves Degrading Names|Universal Rules][$FSNamePref = 6]] <br>
+		<</if>>
+		<<if $FSNamePref != 7 && $arcologies[0].FSPaternalist >= 20>>
+			[[Give New Slaves Paternalist Names|Universal Rules][$FSNamePref = 7]] <br>
+		<</if>>
+		<<if $FSNamePref != 8 && $arcologies[0].FSIntellectualDependency >= 20>>
+			[[Give New Slaves Simple Bimbo Names|Universal Rules][$FSNamePref = 8]]
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $seePreg != 0>>
+<br><br>
+''Pregnant slaves''
+<br>
+<<if $universalRulesImpregnation == "HG">>
+	<<setLocalPronouns $HeadGirl>>
+	Fertile slaves will be ''systematically impregnated by your Head Girl,'' if $he is able to do so. [[Cancel insemination regime|Universal Rules][($universalRulesImpregnation = "none"),($universalHGImpregnateMasterSuiteToggle = 0)]]<<if $PC.dick > 0>> | [[Inseminate them yourself|Universal Rules][($universalRulesImpregnation = "PC"),($universalHGImpregnateMasterSuiteToggle = 0)]]<</if>> <br>
+	<<if $universalHGImpregnateMasterSuiteToggle == 1>>
+		Your Head Girl, if able, ''is not'' inseminating slaves in the Master Suite. [["Allow "+$him+" to inseminate Master Suite slaves"|Universal Rules][$universalHGImpregnateMasterSuiteToggle = 0]]
+	<<else>>
+		Your Head Girl, if able, ''is'' inseminating slaves in the Master Suite. [["Forbid "+$him+" from inseminating Master Suite slaves"|Universal Rules][$universalHGImpregnateMasterSuiteToggle = 1]]
+	<</if>>
+<<elseif $universalRulesImpregnation == "PC">>
+	Fertile slaves will be ''systematically impregnated by you.'' [[Cancel insemination regime|Universal Rules][$universalRulesImpregnation = "none"]]<<if $seeDicks != 0>> | [[Delegate insemination to your Head Girl|Universal Rules][$universalRulesImpregnation = "HG"]]<</if>>
+<<elseif $seePreg != 0>>
+	Fertile slaves will ''not be systematically impregnated.'' <<if $PC.dick > 0>>[[Inseminate them yourself|Universal Rules][$universalRulesImpregnation = "PC"]]<</if>><<if ($PC.dick > 0) && ($seeDicks != 0)>> | <</if>><<if $seeDicks != 0>>[[Delegate insemination to your Head Girl|Universal Rules][$universalRulesImpregnation = "HG"]]<</if>>
+<</if>>
+
+<br>
+
+<<if $universalRulesBirthing == 1>>
+	Heavily pregnant slaves will be ''scanned daily'' for signs of labor and moved to a birthing area immediately if any are detected.
+	[[Stop scanning|Universal Rules][$universalRulesBirthing = 0]]
+<<else>>
+	Heavily pregnant slaves will be ''required to work'' right up until they feel contractions.
+	[[Apply daily scanning|Universal Rules][$universalRulesBirthing = 1]]
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	//This will increase upkeep costs for these slaves//
+<</if>>
+
+<br>
+
+<<if $universalRulesCSec == 1>>
+	Pregnant slaves will be ''given Caesarean sections'' rather than allowed to give birth naturally in order to minimize health issues and to preserve their vaginas.
+	[[Only perform c-sections when necessary|Universal Rules][$universalRulesCSec = 0]]
+<<else>>
+	Pregnant slaves will ''give birth naturally'' unless health issues pose a threat.
+	[[Always perform c-sections|Universal Rules][$universalRulesCSec = 1]]
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	//Will lessen medical costs, at the expense of scarring//
+<</if>>
+
+<br><br>
+''Babies''
+<br>
+
+Upon birth slave babies will be sent to $DefaultBirthDestination.
+<br>You can decide on a new policy:
+	<<if $DefaultBirthDestination != "individually decided fates">>
+		[[Decide individually|Universal Rules][$DefaultBirthDestination = "individually decided fates",$universalRulesChildrenBecomeBreeders = 0]]
+	<</if>>
+	<<if $DefaultBirthDestination != "an orphanage">>
+		| [[Slave orphanage|Universal Rules][$DefaultBirthDestination = "an orphanage",$universalRulesChildrenBecomeBreeders = 0]]
+	<</if>>
+	<<if $DefaultBirthDestination != "a citizen school">>
+		| [[Citizen school|Universal Rules][$DefaultBirthDestination = "a citizen school",$universalRulesChildrenBecomeBreeders = 0]]
+	<</if>>
+	<<if $DefaultBirthDestination != "a private school">>
+		| [[Private school|Universal Rules][$DefaultBirthDestination = "a private school",$universalRulesChildrenBecomeBreeders = 0]]
+	<</if>>
+	<<if $Cash4Babies > 0>>
+		<<if $DefaultBirthDestination != "the market">>
+			| [[Market|Universal Rules][$DefaultBirthDestination = "the market",$universalRulesChildrenBecomeBreeders = 0]]
+		<</if>>
+	<</if>>
+	<<if $arcologies[0].FSRepopulationFocus > 40>>
+		<br>
+		<<if $DefaultBirthDestination != "breeder schools">>
+			| [[Breeder schools|Universal Rules][$DefaultBirthDestination = "breeder schools",$universalRulesChildrenBecomeBreeders = 1]]
+			//Will require a <<print cashFormat(50)>> donation per week once enrollment begins//
+		<</if>>
+	<</if>>
+	//Children reserved for the Incubator or Nursery will not be affected//
+
+<</if>>/*Closes seePreg check*/
+<br><br>
+''New slaves''
+<br>
+<<if $universalRulesNewSlavesRA == 0>>
+	The Rules Assistant ''will not apply'' automatically to newly acquired slaves. [[Apply to new slaves|Universal Rules][$universalRulesNewSlavesRA = 1]]
+<<else>>
+	The Rules Assistant ''will apply'' automatically to newly acquired slaves [[Stop applying to new slaves|Universal Rules][$universalRulesNewSlavesRA = 0]]
+<</if>>

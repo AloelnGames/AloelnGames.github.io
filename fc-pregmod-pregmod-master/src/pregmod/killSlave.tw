@@ -1,0 +1,270 @@
+:: KillSlave [nobr]
+
+<<set _qualifiedFS = []>>
+<<if $arcologies[0].FSRomanRevivalist != "unset">>
+	<<set _qualifiedFS.push("roman revivalist"), _weapon = 'gladius'>>
+<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+	<<set _qualifiedFS.push("aztec revivalist"), _weapon = 'Tecpatl'>>
+<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+	<<set _qualifiedFS.push("egyptian revivalist"), _weapon = 'kopesh'>>
+<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+	<<set _qualifiedFS.push("edo revivalist"), _weapon = 'katana'>>
+<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+	<<set _qualifiedFS.push("arabian revivalist"), _weapon = 'scimitar'>>
+<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+	<<set _qualifiedFS.push("chinese revivalist"), _weapon = 'jian'>>
+<</if>>
+
+<<if _qualifiedFS.length < 1>>
+	<<set _weapon = 'handgun'>>
+<</if>>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<<if canWalk($activeSlave)>>
+	You call $activeSlave.slaveName into your office.
+<<else>>
+	You have $activeSlave.slaveName brought into your office.
+<</if>>
+
+<<if $activeSlave.fuckdoll <= 0>>
+	$He looks at you
+	<<if $activeSlave.fetish != "mindbroken">>
+		with
+		<<if $activeSlave.devotion > 50>>
+			adoration
+		<<elseif ($activeSlave.devotion) > 20 && ($activeSlave.devotion <= 50)>>
+			calmly
+		<<elseif ($activeSlave.devotion >= -20) && ($activeSlave.devotion <= 20)>>
+			apprehension
+		<<elseif $activeSlave.devotion < -20>>
+			hatred
+		<</if>>
+	<<else>>
+		blankly
+	<</if>>
+	and waits for you to continue.
+<<else>>
+	It's hard to tell the expression on the Fuckdoll's face, but your guess is it's
+	<<if $activeSlave.fetish != "mindbroken">>
+		one of
+		<<if $activeSlave.devotion > 50>>
+			adoration.
+		<<elseif ($activeSlave.devotion) > 20 && ($activeSlave.devotion <= 50)>>
+			calm.
+		<<elseif ($activeSlave.devotion >= -20) && ($activeSlave.devotion <= 20)>>
+			apprehension.
+		<<elseif $activeSlave.devotion < -20>>
+			hatred.
+		<</if>>
+	<<else>>
+		blank.
+	<</if>>
+<</if>>
+	You tell $him that you've gotten tired of having $him around and that you have decided it is time you got rid of $him.
+
+<<if $activeSlave.fuckdoll <= 0>>
+	<<if $activeSlave.fetish != "mindbroken">> $His expression changes to one of
+		<<if $activeSlave.devotion > 50>>
+			pure sorrow
+		<<elseif ($activeSlave.devotion) > 20 && ($activeSlave.devotion <= 50)>>
+			sadness
+		<<else>>
+			relief
+		<</if>>
+		until
+	<<else>>
+		$He just nods dumbly and continues to watch you with a vacant expression, even as
+	<</if>>
+<<else>>
+	$He simply nods, not being able to see
+<</if>>
+you <<if canHear($activeSlave)>>quietly <</if>>reach behind your desk and pull out your trusty _weapon<<if $activeSlave.fuckdoll <= 0 && canSee($activeSlave)>><<if $activeSlave.fetish != "mindbroken">>, at which point abject fear fills $his face. $He immediately <<if hasBothLegs($activeSlave)>>drops to $his knees and <</if>>begins openly begging for you to have mercy.<<else>>, to which $he still doesn't respond.<</if>><<else>>.<</if>>
+
+<<if $killChoice == -1>>
+	<br>
+	<span id="killScene">
+	<br><<link "Kill $him">><<set $killChoice = 0>>
+	<<replace "#killScene">>
+		<<if $Bodyguard>>
+			<<setLocalPronouns $Bodyguard 2>>
+		<</if>>
+
+		<<set _qualifiedFS = []>>
+		<<if $arcologies[0].FSRomanRevivalist != "unset">>
+			<<set _qualifiedFS.push("roman revivalist"), _weapon = 'gladius'>>
+		<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+			<<set _qualifiedFS.push("aztec revivalist"), _weapon = 'Tecpatl'>>
+		<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+			<<set _qualifiedFS.push("egyptian revivalist"), _weapon = 'kopesh'>>
+		<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+			<<set _qualifiedFS.push("edo revivalist"), _weapon = 'katana'>>
+		<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+			<<set _qualifiedFS.push("arabian revivalist"), _weapon = 'scimitar'>>
+		<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+			<<set _qualifiedFS.push("chinese revivalist"), _weapon = 'jian'>>
+		<</if>>
+
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<<if $activeSlave.fuckdoll <= 0 && $activeSlave.fetish != "mindbroken">>
+			You simply smile at $him and tell $him not to worry
+		<<else>>
+			You say nothing
+		<</if>>
+		as you continue
+
+		<<if _qualifiedFS.length > 0>>
+			sharpening your _weapon.
+		<<else>>
+			threading on a suppressor.
+		<</if>>
+
+		$activeSlave.slaveName
+		<<if $activeSlave.fuckdoll <= 0 && $activeSlave.fetish != "mindbroken">>
+			gives an audible sigh of relief and begins to thank you profusely, though $his thanks are cut short as the sound of
+		<<else>>
+			continues to stand there dumbly until the sound of
+		<</if>>
+
+		<<if _qualifiedFS.length > 0>>
+			a sharp edge slicing though flesh
+		<<else>>
+			a suppressed gunshot
+		<</if>>
+
+		rings through the room. You have another servant clean up the mess as you continue with what you were previously doing.
+
+		<br><br>
+		<<if $familyTesting == 1>>
+				<<for _ss = 0; _ss < $slaves.length; _ss++>>
+					<<if $activeSlave.mother == $slaves[_ss].ID>>
+						<<setLocalPronouns $slaves[_ss] 2>>
+						$slaves[_ss].slaveName is @@.mediumorchid;grieved@@ that you have killed _his2 $daughter.
+						<br><br>
+						<<set $slaves[_ss].devotion -= 30>>
+					<</if>>
+					<<if $activeSlave.father == $slaves[_ss].ID>>
+						<<setLocalPronouns $slaves[_ss] 2>>
+						$slaves[_ss].slaveName is @@.mediumorchid;disappointed@@ that you have killed _his2 $daughter.
+						<br><br>
+						<<set $slaves[_ss].devotion -= 20>>
+					<</if>>
+					<<if $activeSlave.ID == $slaves[_ss].father>>
+						<<setLocalPronouns $slaves[_ss] 2>>
+						$slaves[_ss].slaveName is @@.mediumorchid;saddened@@ that you have killed _his2 father.
+						<br><br>
+						<<set $slaves[_ss].devotion -= 20>>
+					<</if>>
+					<<if $activeSlave.ID == $slaves[_ss].mother>>
+						<<setLocalPronouns $slaves[_ss] 2>>
+						$slaves[_ss].slaveName is @@.mediumorchid;grieved@@ that you have killed _his2 mother.
+						<br><br>
+						<<set $slaves[_ss].devotion -= 30>>
+					<</if>>
+					<<switch areSisters($activeSlave, $slaves[_ss])>>
+					<<case 1>>
+						<<setLocalPronouns $slaves[_ss] 2>>
+						$slaves[_ss].slaveName is @@.mediumorchid;devastated@@ that you have killed _his2 twin.
+						<br><br>
+						<<set $slaves[_ss].devotion -= 30>>
+					<<case 2>>
+						<<setLocalPronouns $slaves[_ss] 2>>
+						$slaves[_ss].slaveName is @@.mediumorchid;grieved@@ that you have killed _his2 $sister.
+						<br><br>
+						<<set $slaves[_ss].devotion -= 30>>
+					<<case 3>>
+						<<setLocalPronouns $slaves[_ss] 2>>
+						$slaves[_ss].slaveName is @@.mediumorchid;disheartened@@ that you have killed _his2 half-<<= $sister>>.
+						<br><br>
+						<<set $slaves[_ss].devotion -= 20>>
+					<</switch>>
+				<</for>>
+			<<else>>
+				<<if $activeSlave.relation != 0>>
+					<<set _ss = $slaveIndices[$activeSlave.relationTarget]>>
+					<<if (def _ss) && $slaves[_ss].fetish != "mindbroken">>
+						<<setLocalPronouns $slaves[_ss] 2>>
+						$slaves[_ss].slaveName is @@.mediumorchid;grieved@@ that you have killed _his2 $activeSlave.relation.
+						<br><br>
+						<<set $slaves[_ss].devotion -= 30>>
+						<<set $display = 1>>
+					<</if>>
+				<</if>>
+			<</if>>
+			<<if $activeSlave.relationship > 0>>
+				<<set _ss = $slaveIndices[$activeSlave.relationshipTarget]>>
+				<<if (def _ss) && $slaves[_ss].fetish != "mindbroken">>
+					<<setLocalPronouns $slaves[_ss] 2>>
+					$slaves[_ss].slaveName is @@.mediumorchid;grieved@@ that you have killed _his2 best source of comfort and companionship in a life of bondage.
+					<br><br>
+					<<set $slaves[_ss].devotion -= $slaves[_ss].relationship*10>>
+					<<set $display = 1>>
+				<</if>>
+			<<elseif $activeSlave.relationship == -3>>
+				Killing one of your slave $wives is @@.red;socially unacceptable.@@ In addition, your other devoted slaves are @@.gold;worried@@ that you may not respect their status.
+				<br><br>
+				<<run repX(-200, "event")>>
+				<<set $display = 1>>
+				<<for _ss = 0; _ss < $slaves.length; _ss++>>
+					<<if $slaves[_ss].devotion > 50>>
+						<<set $slaves[_ss].trust -= 10>>
+					<</if>>
+				<</for>>
+			<</if>>
+			<<if $activeSlave.rivalry != 0>>
+				<<set _ss = $slaveIndices[$activeSlave.rivalryTarget]>>
+				<<if (def _ss) && $slaves[_ss].fetish != "mindbroken">>
+					<<setLocalPronouns $slaves[_ss] 2>>
+					$slaves[_ss].slaveName is @@.hotpink;pleased@@ that $he won't have to see _his2 rival any more.
+					<br><br>
+					<<set $slaves[_ss].devotion += $slaves[_ss].rivalry*3>>
+					<<set $display = 1>>
+				<</if>>
+			<</if>>
+
+			<<= removeActiveSlave() >>
+			<<set $nextLink = "Main", $killChoice = -1>>
+	<</replace>><</link>>
+	<br><<link "Have mercy on $him">><<set $killChoice = 1>>
+	<<replace "#killScene">>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<<if $activeSlave.fuckdoll <= 0 && $activeSlave.fetish != "mindbroken">>
+			You make a show of considering sparing $his life, then, with a heavy sigh, unbuckle your pants and sit down at your desk. You beckon to $him, and $he just about trips over $himself as $he hastily makes $his way over to you. $His blowjob isn't the best you've ever had, $him @@.gold;sobbing@@ as much as $he is; but $his enthusiasm more than makes up for it. After you finish deep in $his throat, $he sits back and wipes away $his tears, sniffling and @@.hotpink;thanking you again@@ for giving $him another chance.
+
+			<<if $activeSlave.devotion <= 30>>
+				<<set $activeSlave.devotion = 30>>
+			<<else>>
+				<<set $activeSlave.devotion += 20>>
+			<</if>>
+			<<set $activeSlave.trust = -100>>
+		<<else>>
+			You change your mind, and with a wave of your hand, send $activeSlave.slaveName back to $his duties. Maybe some other time.
+		<</if>>
+		<<set $killChoice = -1>>
+	<</replace>><</link>>
+	<<if $activeSlave.assignment != "guard you" && $pit && $Bodyguard && $activeSlave.fuckdoll <= 0 && $activeSlave.fetish != "mindbroken">>
+		<<if ($pitLethal == 1)>>
+			<br><<link "Let $him win $his life in combat">><<set $killChoice = 2>>
+			<<replace "#killScene">>
+				&nbsp;&nbsp;&nbsp;&nbsp;You tell $him that you'll let your bodyguard $Bodyguard.slaveName decide $his fate — if $he wants to live, $he'll have to beat _him2 in hand-to-hand combat in $pitName.
+				<<if $activeSlave.skill.combat == 0>>
+					The fear on $his face is palpable, though $he nods slowly and agrees, not seeing another choice.
+				<<else>>
+					$He nods $his head and straightens up, as though mentally preparing $himself for the fight for $his life.
+				<</if>>
+
+				<<set $slaveFightingBG = $activeSlave, $pitAnimal = 0, $killChoice = -1>>
+			<</replace>><</link>>
+		<<else>>
+			<br>//You must allow lethal fights in $pitName to have $activeSlave.slaveName fight your bodyguard for $his life//
+		<</if>>
+	<</if>>
+	</span>
+<<else>>
+	<<if $activeSlave.fetish != "mindbroken" || $activeSlave.fuckdoll <= 0>>
+		You abruptly cut $his begging short once you
+	<<else>>
+		You change your mind as you suddenly
+	<</if>>
+	realize $slaveFightingBG.slaveName is already fighting your bodyguard $Bodyguard.slaveName for $his life this week. [[Cancel the fight|KillSlave][$killChoice = -1]]
+<</if>>

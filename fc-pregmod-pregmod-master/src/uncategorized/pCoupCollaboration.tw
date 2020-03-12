@@ -1,0 +1,97 @@
+:: P coup collaboration [nobr]
+
+<<if $traitor != 0>>
+	<<set _weeks = $traitorWeeks, _pregWeeks = $traitorWeeks, $traitorWeeks = 0>>
+	<<setLocalPronouns $traitor>>
+	<<run Enunciate($traitor)>>
+
+	<<set WombProgress($traitor, _pregWeeks, _pregWeeks)>> /* In all cases should be done */
+	<<set WombUpdatePregVars($traitor)>>
+	<<if WombBirthReady($traitor, $traitor.pregData.normalBirth) > 0 >> /* normal birth case, partial birthers not supported*/
+		<<set $traitor.preg = -1, $traitor.counter.birthsTotal += WombBirthReady($traitor, $traitor.pregData.normalBirth)>>
+		<<set WombFlush($traitor)>>
+	<<else>>/* still pregnant slave */
+		<<set $traitor.preg = WombMaxPreg($traitor)>> /*most ready fetus is a base*/
+		<<set $traitor.pregWeek = WombMaxPreg($traitor)>> /*most ready fetus is a base*/
+	<</if>>
+	<<run SetBellySize($traitor)>> /*In any case it's useful to do.*/
+<</if>>
+
+You are awakened in the middle of the night by an odd darkness. All the normal lights of your healthy arcology are out. Main power has gone out, and you claw your way in the darkness to the video feeds, running on emergency backup.
+
+<br><br>
+
+Armed rebels are running unchecked down the corridors. <<if $mercenaries > 0>>Your mercenaries' quarters is locked down, but from the interior feeds you can see a few of them lying in their beds or slumped in chairs as gas is pumped through the ventilation systems. <</if>>The security drones are actively assisting the rebels.
+<<if $traitor != 0>>
+	You can see
+	<<if $traitor.bellyPreg >= 100000>>
+		the staggeringly pregnant
+	<<elseif $traitor.bellyPreg >= 15000>>
+		the heavily pregnant
+	<<elseif $traitor.bellyPreg >= 10000>>
+		the very pregnant
+	<<elseif $traitor.bellyPreg >= 5000>>
+		the pregnant
+	<</if>>
+	$traitor.slaveName on one of the feeds,
+	<<if $traitorType == "agent">>
+		trying to sabotage a stockpile of explosives.
+	<<elseif $traitorType == "horror">>
+		encouraging $his fellow fighters<<if canTalk($traitor)>> with yells<</if>> from the back lines.
+	<<elseif $traitorType == "defiant">>
+		encouraging $his fellow fighters<<if canTalk($traitor)>> with yells<</if>> and spearheading the charge<<if $traitor.bellyPreg >= 15000>> as best $he can<</if>>.
+	<<else>>
+		encouraging $his fellow fighters<<if canTalk($traitor)>> with yells<</if>>, and when that fails, leading them by example<<if $traitor.bellyPreg >= 15000>> as best $he can<</if>>.
+	<</if>>
+<</if>>
+In areas already controlled by the Daughters, slaveowners are being summarily shot in the streets. "<<= properTitle()>>," $assistant.name says, "the Daughters of Liberty are in complete control of all arcology systems. Remain here."
+
+<br><br>
+
+After half an hour of watching the executions,
+<<if $traitor != 0>>
+	<<if $traitorType == "agent">>
+		$traitor.slaveName <<if $traitor.bellyPreg >= 10000>>waddles<<else>>steps<</if>> slowly into your office, dreading what is to come. You greet $him by name and $he breaks down in tears. As $he takes a shot at the nearest Daughter, they open fire on the both of you. Your cause of death is that of many an oppressor — an aneurysm of the cerebellum, in 9mm Parabellum.
+	<<elseif $traitorType == "horror">>
+		$traitor.slaveName <<if $traitor.bellyPreg >= 10000>>waddles<<else>>steps<</if>> gingerly into your office, not happy to be here once more. You greet $him by name, in response to which $he cowers in fear<<if hasAnyArms($traitor)>> and drops $his weapon<</if>>. Not interested in giving you an opportunity, $his comrade takes the shot. Your cause of death is that of many an oppressor — an aneurysm of the cerebellum, in 9mm Parabellum.
+	<<elseif $traitorType == "defiant">>
+		$traitor.slaveName <<if $traitor.bellyPreg >= 10000>>waddles<<else>>strides<</if>> confidently into your office. You greet $him by name, in response to which $he <<if hasAnyArms($traitor)>>deals<<else>>orders one of $his comrades to give<</if>> you a vicious open-handed slap that knocks you out of your chair.
+		<<if !canTalk($traitor)>>
+			$His last words to you are nothing more than a rude gesture.
+		<<elseif $traitor.slaveName != $traitor.birthName>>
+			"My name," $he <<say>>s, "i<<s>>
+			<<if SlaveStatsChecker.checkForLisp($traitor)>>
+				<<= lispReplace($traitor.birthName)>>.
+			<<else>>
+				$traitor.birthName.
+			<</if>>
+			I'm going to enjoy thi<<s>> after what you did to me."
+		<<else>>
+			"You <<s>>tupid fuck," $he <<say>>s. "I'm going to enjoy thi<<s>> after what you did to me."
+		<</if>>
+		Your cause of death is that of many an oppressor — an aneurysm of the cerebellum, in 9mm Parabellum.
+	<<else>>
+		$traitor.slaveName <<if $traitor.bellyPreg >= 10000>>waddles<<else>>strides<</if>> confidently into your office. You greet $him by name, in response to which $he <<if hasAnyArms($traitor)>>deals<<else>>orders one of $his comrades to give<</if>> you a vicious open-handed slap that knocks you out of your chair.
+		<<if !canTalk($traitor)>>
+			$He wastes no time trying to speak to the likes of you.
+		<<elseif $traitor.slaveName != $traitor.birthName>>
+			"My name," $he <<say>>s, "i<<s>>
+			<<if SlaveStatsChecker.checkForLisp($traitor)>>
+				<<= lispReplace($traitor.birthName)>>."
+			<<else>>
+				$traitor.birthName."
+			<</if>>
+		<<else>>
+			"You <<s>>tupid fuck," $he <<say>>s.
+		<</if>>
+		Your cause of death is that of many an oppressor — an aneurysm of the cerebellum, in 9mm Parabellum.
+	<</if>>
+<<else>>
+	the leader of the assault strides confidently into your office, deals you a vicious open-handed slap that knocks you out of your chair, and holds a pistol to your forehead. Your cause of death is that of many an oppressor — an aneurysm of the cerebellum, in 9mm Parabellum.
+<</if>>
+
+<br><br>
+
+''GAME OVER''
+
+<<set $ui = "start">>

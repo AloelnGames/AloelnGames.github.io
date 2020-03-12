@@ -1,0 +1,376 @@
+:: Next Week [nobr]
+
+<<set $HackingSkillMultiplier = upgradeMultiplier('hacking')>>
+<<set $upgradeMultiplierArcology = upgradeMultiplier('engineering')>>
+<<set $upgradeMultiplierMedicine = upgradeMultiplier('medicine')>>
+<<set $upgradeMultiplierTrade = upgradeMultiplier('trading')>>
+
+<<if $rivalOwner != 0>>
+	<<set _rival = $arcologies.find(function(s) { return s.rival == 1; })>>
+	<<if def _rival>>
+		<<set $rivalOwner = _rival.prosperity>>
+	<</if>>
+<</if>>
+
+<<if $playerAging != 0>>
+	<<set $PC.birthWeek += 1>>
+	<<if $PC.ovaryAge >= 47 && $PC.ovaries == 1 && ($PC.preg == -1 || $PC.preg == 0)>>
+		<<set $PC.preg = -2>>
+	<</if>>
+	<<if $PC.birthWeek >= 52>>
+		<<set $PC.birthWeek = 0>>
+		<<if $playerAging == 2>>
+			<<set $PC.physicalAge++, $PC.actualAge++, $PC.visualAge++, $PC.ovaryAge++>>
+			<<AgePCEffects>>
+		<</if>>
+	<</if>>
+<</if>>
+<<if $menstruation == 1>>
+<<elseif $PC.geneticQuirks.superfetation == 2 && $PC.womb.length > 0>>
+	<<if $PC.fertPeak == 0>>
+		<<set $PC.fertPeak = 1>>
+	<</if>>
+	<<set $PC.fertPeak-->>
+<<elseif $PC.fertPeak != 0>>
+	<<set $PC.fertPeak = 0>>
+<</if>>
+
+/*Adding random changes to the economy*/
+<<if $difficultySwitch == 1>>
+	<<set _globalEconSeed = random(1,100)>>
+	<<if _globalEconSeed > 98>>
+		<<set $economy += 2>>
+	<<elseif _globalEconSeed > 85>>
+		<<set $economy += 1>>
+	<<elseif _globalEconSeed <= 2>>
+		<<set $economy -= 2>>
+	<<elseif _globalEconSeed <= 25 + $econRate * 10>>
+		<<set $economy -= 1>>
+	<</if>>
+	<<if $economy < 20>>
+		<<set $economy = 20>>
+	<</if>>
+	<<set _localEconSeed = random(1,100)>>
+	<<if $localEcon <= ($economy + $econAdvantage)>>
+		<<if _localEconSeed > 95>>
+			<<set $localEcon += 2>>
+		<<elseif _localEconSeed > 50>>
+			<<set $localEcon += 1>>
+		<<elseif _localEconSeed <= 1>>
+			<<set $localEcon -= 2>>
+		<<elseif _localEconSeed <= 10>>
+			<<set $localEcon -= 1>>
+		<</if>>
+	<<elseif $localEcon <= ($economy + $econAdvantage + 5)>>
+		<<if _localEconSeed > 98>>
+			<<set $localEcon += 2>>
+		<<elseif _localEconSeed > 66>>
+			<<set $localEcon += 1>>
+		<<elseif _localEconSeed <= 2>>
+			<<set $localEcon -= 2>>
+		<<elseif _localEconSeed <= 33>>
+			<<set $localEcon -= 1>>
+		<</if>>
+	<<elseif _localEconSeed > 99>>
+		<<set $localEcon += 2>>
+	<<elseif _localEconSeed > 90>>
+		<<set $localEcon += 1>>
+	<<elseif _localEconSeed <= 5>>
+		<<set $localEcon -= 2>>
+	<<elseif _localEconSeed <= 50>>
+		<<set $localEcon -= 1>>
+	<</if>>
+	<<if $localEcon < 20>>
+		<<set $localEcon = 20>>
+	<</if>>
+
+	<<if $experimental.food == 1>>
+		<<if $localEcon > 100>>
+			<<set $farmyardFoodCost = Math.max(5 / (1 + (Math.trunc(1000-100000/$localEcon)/10)/100), 3.125)>>
+		<<elseif $localEcon == 100>>
+			<<set $farmyardFoodCost = 5 >>
+		<<else>>
+			<<set $farmyardFoodCost = Math.min(5 * (1 + 1.5 * Math.sqrt(Math.trunc(100000/$localEcon-1000)/10)/100), 6.5)>>
+		<</if>>
+	<</if>>
+	<<set $foodCost = Math.trunc(2500/$localEcon)>>
+	<<set $drugsCost = Math.trunc(10000/$localEcon)>>
+	<<set $rulesCost = Math.trunc(10000/$localEcon)>>
+	<<set $modCost = Math.trunc(5000/$localEcon)>>
+	<<set $surgeryCost = Math.trunc(30000/($localEcon * ($PC.career === "medicine" ? 2 : 1)))>>
+<</if>>
+
+<<set $arcologies[0].prosperity = Math.clamp($arcologies[0].prosperity, 1, $AProsperityCap)>>
+
+<<set $averageTrust = 0, $averageDevotion = 0, _slavesContributing = 0, _OldHG = -1, _NewHG = -1, _SL = $slaves.length>>
+<<if $studio == 1>>
+	<<for _genre range App.Porn.getAllGenres()>>
+		<<set $pornStars[_genre.fameVar].p1count = 0>>
+	<</for>>
+<</if>>
+<<for _i = 0; _i < _SL; _i++>>
+	<<if def $slaves[_i].curBabies>>
+		<<run delete $slaves[_i].curBabies>>
+	<</if>>
+	<<if $seeAge != 0>>
+		<<set $slaves[_i].birthWeek++>>
+		<<if $slaves[_i].birthWeek >= 52>>
+			<<set $slaves[_i].birthWeek = 0>>
+			<<if $seeAge == 1>>
+				<<set $slaves[_i].physicalAge += 1, $slaves[_i].actualAge += 1>>
+				/* Note Induced NCS completely takes over visual aging, so the increment from pre-existing code simply is trapped behind a !NCS test. Additionally, because of the neoteny aspects of NCS, ovaries don't age quite as fast. */
+				<<if $slaves[_i].geneMods.NCS == 0>>
+					<<set $slaves[_i].visualAge += 1>>
+					/* (prev comment) Hopefully this works. It is intended, over a slave's lifetime, to cause her menopause to shift. */
+					<<set $slaves[_i].ovaryAge += either(.8, .9, .9, 1, 1, 1, 1.1)>>
+				<<else>>
+					<<set $slaves[_i].ovaryAge += either(.5, .6, .7, .7, .8, .9, 1)>>
+				<</if>>
+				<<if $slaves[_i].broodmother == 1>>
+					<<set $slaves[_i].ovaryAge += .2>>
+				<</if>>
+				<<if $slaves[_i].physicalAge <= 18 && $loliGrow > 0>>
+					<<run physicalDevelopment($slaves[_i])>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $slaves[_i].indenture > 0>>
+		<<set $slaves[_i].indenture -= 1>>
+	<</if>>
+	<<if $slaves[_i].induceLactation > 0>>
+		<<set $slaves[_i].induceLactation-->>
+	<</if>>
+	<<if ($slaves[_i].lactation == 1)>>
+		<<if $slaves[_i].lactationDuration == 1>>
+			<<set $slaves[_i].boobsMilk = 10*$slaves[_i].lactationAdaptation>>
+			<<set $slaves[_i].boobs += $slaves[_i].boobsMilk>>
+		<</if>>
+	<</if>>
+	<<if $menstruation == 1>>
+	<<elseif $slaves[_i].geneticQuirks.superfetation == 2 && $slaves[_i].womb.length > 0>>
+		<<if $slaves[_i].fertPeak == 0>>
+			<<set $slaves[_i].fertPeak = 1>>
+		<</if>>
+		<<set $slaves[_i].fertPeak-->>
+	<<elseif $slaves[_i].fertPeak != 0>>
+		<<set $slaves[_i].fertPeak = 0>>
+	<</if>>
+	<<set $slaves[_i].trust = Number($slaves[_i].trust.toFixed(1)), $slaves[_i].devotion = Number($slaves[_i].devotion.toFixed(1))>>
+	<<set $slaves[_i].oldDevotion = $slaves[_i].devotion, $slaves[_i].oldTrust = $slaves[_i].trust, $slaves[_i].minorInjury = 0>>
+	<<if $slaves[_i].sentence > 1>>
+		<<set $slaves[_i].sentence -= 1>>
+	<<elseif $slaves[_i].sentence == 1>>
+		<<= removeJob($slaves[_i], $slaves[_i].assignment)>>
+	<</if>>
+	<<if $slaves[_i].weekAcquired < 0>>
+		<<set $slaves[_i].weekAcquired = 0>>
+	<</if>>
+	<<if $slaves[_i].relation == 0>>
+		<<set $slaves[_i].relationTarget = 0>>
+	<</if>>
+	<<if $slaves[_i].relationship == 0>>
+		<<set $slaves[_i].relationshipTarget = 0>>
+	<</if>>
+	<<if $slaves[_i].rivalry == 0>>
+		<<set $slaves[_i].rivalryTarget = 0>>
+	<<elseif $slaves[_i].rivalry < 0>>
+		<<set $slaves[_i].rivalryTarget = 0, $slaves[_i].rivalry = 0>>
+	<</if>>
+	<<if $slaves[_i].vagina < 0>>
+		<<set $slaves[_i].vaginalAccessory = "none", $slaves[_i].chastityVagina = 0, $slaves[_i].vaginaPiercing = 0>>
+	<</if>>
+	<<if $slaves[_i].dick == 0>>
+		<<set $slaves[_i].dickAccessory = "none", $slaves[_i].chastityPenis = 0, $slaves[_i].dickTat = 0, $slaves[_i].dickPiercing = 0>>
+	<</if>>
+	/* I don't trust these */
+	<<if !hasAnyArms($slaves[_i])>>
+		<<set $slaves[_i].armsTat = 0, $slaves[_i].nails = 0, $slaves[_i].armAccessory = "none">>
+	<</if>>
+	<<if !hasAnyLegs($slaves[_i])>>
+		<<set $slaves[_i].heels = 0, $slaves[_i].shoes = "none", $slaves[_i].legAccessory = "none", $slaves[_i].legsTat = 0, $slaves[_i].heightImplant = 0>>
+	<</if>>
+	/* irregular leptin production weight gain/loss setter */
+	<<if $slaves[_i].geneticQuirks.wGain == 2 && $slaves[_i].geneticQuirks.wLoss == 2>>
+		<<set $slaves[_i].weightDirection = either(-1, 1)>>
+	<<elseif $slaves[_i].geneticQuirks.wGain == 2>>
+		<<set $slaves[_i].weightDirection = 1>>
+	<<elseif $slaves[_i].geneticQuirks.wLoss == 2>>
+		<<set $slaves[_i].weightDirection = -1>>
+	<<else>>
+		<<set $slaves[_i].weightDirection = 0>>
+	<</if>>
+	/% Fix some possible floating point rounding errors, and bring precision to one decimal place. %/
+	<<run SlaveStatClamp($slaves[_i])>>
+	<<set $slaves[_i].energy = Math.clamp($slaves[_i].energy.toFixed(1), 0, 100)>>
+	<<if $slaves[_i].fetishStrength > 95>>
+		<<set $slaves[_i].fetishStrength = 100>>
+	<<else>>
+		<<set $slaves[_i].fetishStrength = Math.clamp($slaves[_i].fetishStrength.toFixed(1), 0, 100)>>
+	<</if>>
+	<<set $slaves[_i].weight = Math.clamp($slaves[_i].weight.toFixed(1), -100, 200)>>
+	<<set $slaves[_i].butt = Number($slaves[_i].butt.toFixed(1))>>
+	<<set $slaves[_i].muscles = Math.clamp($slaves[_i].muscles.toFixed(1), -100, 100)>>
+	<<set $slaves[_i].lips = Math.clamp($slaves[_i].lips.toFixed(1), 0, 100)>>
+	<<set $slaves[_i].skill.oral = Math.clamp($slaves[_i].skill.oral.toFixed(1), 0, 100)>>
+	<<set $slaves[_i].skill.vaginal = Math.clamp($slaves[_i].skill.vaginal.toFixed(1), 0, 100)>>
+	<<set $slaves[_i].skill.anal = Math.clamp($slaves[_i].skill.anal.toFixed(1), 0, 100)>>
+	<<set $slaves[_i].skill.whoring = Math.clamp($slaves[_i].skill.whoring.toFixed(1), 0, 100)>>
+	<<set $slaves[_i].skill.entertainment = Math.clamp($slaves[_i].skill.entertainment.toFixed(1), 0, 100)>>
+	<<set $slaves[_i].lactationAdaptation = Math.clamp($slaves[_i].lactationAdaptation.toFixed(1), 0, 100)>>
+	<<set $slaves[_i].intelligenceImplant = Number($slaves[_i].intelligenceImplant.toFixed(1), 0, 30)>>
+	<<set $slaves[_i].prematureBirth = 0>>
+	<<if ($HGSuiteEquality == 1) && ($HeadGirl != 0) && ($slaves[_i].devotion > 50)>>
+		<<if ($slaves[_i].assignment == "live with your Head Girl")>>
+			<<set _NewHG = _i>>
+		<<elseif ($slaves[_i].ID == $HeadGirl.ID)>>
+			<<set _OldHG = _i>>
+		<</if>>
+	<</if>>
+	/* AVERAGE VALUES UPDATE */
+	<<if assignmentVisible($slaves[_i])>>
+		<<set $averageTrust += $slaves[_i].trust, $averageDevotion += $slaves[_i].devotion, _slavesContributing++>>
+	<<elseif ($slaves[_i].assignment != "be confined in the cellblock") && ($slaves[_i].assignment != "be confined in the arcade") && (($slaves[_i].assignment != "work in the dairy") || ($dairyRestraintsSetting < 2)) && $slaves[_i].assignment != "labor in the production line">>
+		<<set $averageTrust += $slaves[_i].trust*0.5, $averageDevotion += $slaves[_i].devotion*0.5, _slavesContributing += 0.5>>
+	<</if>>
+	<<if $studio == 1>>
+		<<set _activeGenres = App.Porn.getAllGenres().filter((g) => $slaves[_i].porn.fame[g.fameVar] > 0)>>
+		<<for _genre range _activeGenres>>
+			<<set $pornStars[_genre.fameVar].p1count++>>
+		<</for>>
+	<</if>>
+	<<if $slaves[_i].choosesOwnAssignment > 0>>
+		<<= assignJob($slaves[_i], "choose her own job")>>
+	<</if>>
+<</for>>
+<<if _slavesContributing != 0>>
+	<<set $averageTrust = $averageTrust/_slavesContributing>>
+	<<set $averageDevotion = $averageDevotion/_slavesContributing>>
+<</if>>
+<<set $enduringTrust = ($averageTrust+($enduringTrust*3))/4>>
+<<set $enduringDevotion = ($averageDevotion+($enduringDevotion*3))/4>>
+
+<<if (_OldHG != -1) && (_NewHG != -1)>>
+	<<set _oldTimeInGrade = $HGTimeInGrade>> /* preserve time in grade during HG swaps */
+	<<= removeJob($slaves[_NewHG], "live with your Head Girl")>>
+	<<= assignJob($slaves[_OldHG], "live with your Head Girl")>>
+	<<= assignJob($slaves[_NewHG], "be your Head Girl")>>
+	<<set $slaves[_NewHG].diet = "healthy", $HGTimeInGrade = _oldTimeInGrade>>
+<</if>>
+
+<<if WombBirthReady($PC, 38) > 0 && random(1,100) > 50>>
+	<<set $PC.labor = 1>>
+<<elseif WombBirthReady($PC, 43) > 0>>
+	<<set $PC.labor = 1>>
+<</if>>
+
+<<set _toSearch = $PC.refreshment.toLowerCase()>>
+<<if _toSearch.indexOf("fertility") != -1>>
+	<<set $PC.forcedFertDrugs = 1>>
+<<elseif $PC.forcedFertDrugs > 0>>
+	<<set $PC.forcedFertDrugs-->>
+<</if>>
+
+<<if $FCTVreceiver > 0>>
+	<<set $FCTVcount += 1>>
+	<<if $FCTVcount >= $FCTVrate && $FCTVrate != -1>>
+		<<set $FCTVcount = 0>>
+		<<set $FCTVshow = 1>>
+	<</if>>
+<</if>>
+
+<<set $week++>>
+
+<<if $playerSurgery > 0>>
+	<<set $playerSurgery-->>
+<</if>>
+
+<<if $secExpEnabled > 0>>
+	<<if $foughtThisWeek == 1>>
+		<<set $foughtThisWeek = 0>>
+	<</if>>
+
+	<<if $sentUnitCooldown > 0>>
+		<<set $sentUnitCooldown-->>
+	<</if>>
+	<<if $SecExp.proclamation.cooldown > 0>>
+		<<set $SecExp.proclamation.cooldown-->>
+	<</if>>
+<</if>>
+
+<<set _seed = random(1,10)>>
+<<if $week < 25>>
+	<<if _seed > 4>>
+		<<set $weatherToday = App.Data.weather.nice.random()>>
+	<<else>>
+		<<set $weatherToday = App.Data.weather.light.random()>>
+	<</if>>
+<<elseif $week < 50>>
+	<<if _seed > 4>>
+		<<set $weatherToday = App.Data.weather.nice.random()>>
+	<<elseif _seed > 2>>
+		<<set $weatherToday = App.Data.weather.light.random()>>
+	<<else>>
+		<<set $weatherToday = App.Data.weather.heavy.random()>>
+	<</if>>
+<<elseif $week < 75>>
+	<<if _seed > 6>>
+		<<set $weatherToday = App.Data.weather.nice.random()>>
+	<<elseif _seed > 3>>
+		<<set $weatherToday = App.Data.weather.light.random()>>
+	<<else>>
+		<<set $weatherToday = App.Data.weather.heavy.random()>>
+	<</if>>
+<<else>>
+	<<if _seed > 8>>
+		<<set $weatherToday = App.Data.weather.nice.random()>>
+	<<elseif _seed > 6>>
+		<<set $weatherToday = App.Data.weather.light.random()>>
+	<<elseif _seed > 2>>
+		<<set $weatherToday = App.Data.weather.heavy.random()>>
+	<<else>>
+		<<set $weatherToday = App.Data.weather.extreme.random()>>
+	<</if>>
+<</if>>
+
+<<if $boomerangWeeks>><<set $boomerangWeeks++>><<else>><<set $boomerangSlave = 0>><</if>>
+<<if $traitorWeeks>><<set $traitorWeeks++>><</if>>
+
+<<set $thisWeeksFSWares = $merchantFSWares.randomMany(2)>>
+<<set $thisWeeksIllegalWares = $merchantIllegalWares.randomMany(1)>>
+<<set $prisonCircuitIndex++>><<if $prisonCircuitIndex >= $prisonCircuit.length>><<set $prisonCircuitIndex = 0>><</if>>
+
+<<set $coursed = 0, $eventDescription = 0, $pitFought = 0, $prestigeAuctioned = 0, $eliteAuctioned = 0, $shelterSlave = 0, $shelterSlaveBought = 0, $slaveMarketLimit = 10 + ($rep / 1000), $slavesSeen = 0, $slavesSacrificedThisWeek = 0, $subSlaves = 0>>
+
+/* Not sure where to put this one, so here is where it goes for now. slaveJobValues() also adds .sexAmount and .sexQuality to slave objects, perhaps those too should get zeroed somewhere around here? */
+<<set $slaveJobValues = {}>>
+
+/% These are variables that either should be made into _temp vars or should be Zeroed out once done with them instead of here. This can also interfere with debugging or hide NaN's as zeroing things out would clear a NaN. Also could stop from NaN's getting worse? %/
+/% Integer and float variables. No real need to zero them out but doesn't hurt to have them in a known state, though this might mask variables NaN'ing out. Takes up the least amount of Memory besides a "" string. %/
+<<set $i = 0, $j = 0, $averageProsperity = 0, $motherSlave = -1, $daughterSlave = -1, $devMother = -1, $devDaughter = -1, $alphaTwin = -1, $betaTwin = -1, $youngerSister = -1, $olderSister = -1, $recruiterSlave = -1>>
+<<set $boobsID = -1, $boobsInterestTargetID = -1, $buttslutID = -1, $buttslutInterestTargetID = -1, $cumslutID = -1, $cumslutInterestTargetID = -1, $humiliationID = -1, $humiliationInterestTargetID = -1, $sadistID = -1, $sadistInterestTargetID = -1, $masochistID = -1, $masochistInterestTargetID = -1, $domID = -1, $dominantInterestTargetID = -1, $subID = -1, $submissiveInterestTargetID = -1>>
+
+/% Other arrays %/
+<<set $events = [], $RESSevent = [], $RESSTRevent = [], $RETSevent = [], $RECIevent = [], $RecETSevent = [], $REFIevent = [], $REFSevent = [], $PESSevent = [], $PETSevent = [], $FSAcquisitionEvents = [], $FSNonconformistEvents = [], $REAnalCowgirlSubIDs = [], $REButtholeCheckinIDs = [], $recruit = [], $RETasteTestSubIDs = [], $devotedSlaves = [], $rebelSlaves = [], $REBoobCollisionSubIDs = [], $REIfYouEnjoyItSubIDs = [], $RESadisticDescriptionSubIDs = [], $REShowerForceSubIDs = [], $RESimpleAssaultIDs = [], $RECockmilkInterceptionIDs = [], $REInterslaveBeggingIDs = [], $bedSlaves = [], $eligibleSlaves = []>>
+
+/% Slave Objects using 0 instead of null. Second most memory eaten up. %/
+<<set $activeSlave = 0, $eventSlave = 0, $slaveWithoutBonuses = 0, $subSlave = 0, $milkTap = 0, $relation = 0, $relative = 0, $relative2 = 0>>
+
+/% Slave Objects that never get zeroed so null them here. Second most memory eaten up. %/
+<<set $beforeGingering = null>>
+
+/% Strings Memory varies. %/
+<<set $buyer = "", $desc = "", $event = "", $goto = "", $malefactor = "", $oldName = "", $oldSurname = "", $k = "">>
+/% Done with zeroing out, what should be for the most part Temps %/
+
+<<if $autosave != 0>>
+	<<script>>Save.autosave.save("Week Start Autosave")<</script>>
+<</if>>
+
+<<if $SF.Toggle && $SF.Active >= 1>>
+	<<= App.SF.Count()>>
+<<elseif $SF.Toggle && $SF.FS.Tension > 100>>
+	<<if ($rep > 17500)>> <<set $rep = 17500>> <</if>>
+<</if>>
+<<set $NaNArray = findNaN()>>
+<<goto "Main">>

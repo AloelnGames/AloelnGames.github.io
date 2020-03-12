@@ -1,0 +1,105 @@
+:: FAssistedSex [nobr]
+
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+
+You order $his servants forward so that $he can tease you with $his enormously swollen body.
+<<if getSlave($AS).devotion > 95>>
+	Smirking, $he leans backwards,
+	<<if hasBothArms(getSlave($AS))>>
+		raising $his hands above $his head
+	<<elseif hasAnyArms(getSlave($AS))>>
+		raising $his hand above $his head
+	<<else>>
+		with two slender arms rising upward behind $him, making it look like $he has limbs once more
+	<</if>>
+	as a gaggle of $his trained menials slide underneath $his belly, lifting the monolithic organ off the ground and setting the tightly packed orb to wobbling.
+<<elseif (getSlave($AS).trust < -20) && (getSlave($AS).devotion > -10)>>
+	Smiling nervously, $he leans backwards,
+	<<if hasBothArms(getSlave($AS))>>
+		raising $his hands above $his head
+	<<elseif hasAnyArms(getSlave($AS))>>
+		raising $his hand above $his head
+	<<else>>
+		with two slender arms rising upward behind $him, making it look like $he has limbs once more
+	<</if>>
+	as a gaggle of $his trained menials slide underneath $his belly, lifting the monolithic organ off the ground and setting the tightly packed orb to wobbling.
+<<else>>
+	<<if hasBothArms(getSlave($AS))>>
+		$He covers $his <<if canSee(getSlave($AS))>>eyes<<else>>face<</if>> with $his hands,
+	<<elseif hasAnyArms(getSlave($AS))>>
+		$He tries to cover $his <<if canSee(getSlave($AS))>>eyes<<else>>face<</if>> with $his hand,
+	<<else>>
+		Two slender arms snake around from behind $him, almost making it look like $he has limbs once more. They cover $his quivering <<if canSee(getSlave($AS))>>eyes<<else>>expression<</if>>
+	<</if>>
+	as a gaggle of $his trained menials slide underneath $his belly, lifting the monolithic organ off the ground and setting the tightly packed orb to wobbling.
+	<<if hasBothArms(getSlave($AS))>>
+		Two more servants take hold of $his arms, forcing $him to lift them above $his head.
+	<<elseif hasAnyArms(getSlave($AS))>>
+		Another servant takes hold of $his arm, forcing $him to lift it above $his head.
+	<<else>>
+		The hands covering $his <<if canSee(getSlave($AS))>>eyes<<else>>head<</if>> draw away, revealing $his crying face, then lift above $his head in a deliberately provocative pose.
+	<</if>>
+	$He tenses in a moment of instinctive resistance, then surrenders $his body to $his aids' total control, clearly afraid of punishment.
+<</if>>
+You remove your clothes and lie back on the office couch,
+<<if $PC.dick != 0>>
+	allowing your exposed, full-mast dick to loll in front of you.
+<<else>>
+	spreading your exposed, oozing twat.
+<</if>>
+<<if getSlave($AS).devotion > 95>>
+	Licking $his lips,
+<<elseif (getSlave($AS).trust < -20) && (getSlave($AS).devotion > -10)>>
+	Breathing heavily,
+<<else>>
+	Smiling fakely,
+<</if>>
+$he draws toward you, half-floating on a river of silent, groping hands. When $he is mere <<if $showInches == 2>>inches<<else>>centimeters<</if>> away from you, $his servants lift $him higher, and $he
+<<if $PC.dick != 0>>
+	teases your dick with a series of masterful — and carefully balanced — belly isolations, rubbing the thick nub of $his belly button in small semicircles around your oozing cockhead as $he does so. Right when you feel ready to explode, $he rotates around, bringing
+	<<if getSlave($AS).butt > 11>>
+		$his overgrown, wobbling ass cheeks
+	<<elseif getSlave($AS).butt > 5>>
+		$his huge, wobbling ass cheeks
+	<<elseif Math.floor(getSlave($AS).buttImplant/getSlave($AS).butt) > .60>>
+		$his saline inflated ass cheeks
+	<<elseif getSlave($AS).butt > 2>>
+		$his wobbling ass cheeks
+	<<else>>
+		the shallow inverted bowls of $his petite ass cheeks
+	<</if>>
+	level with your erection. Two of $his servants reach around $his inflated profile and push $his cheeks together, wrapping your dick in a firm layer of butt cleavage. $He lifts $his ass, then drops it, again and again, smacking your chest on the downswing as $his servants manipulate $his hotdogging to maximize your pleasure.
+	<<if canDoVaginal(getSlave($AS))>>
+		When you feel the tension within you reaching its apex, you signal to $his servants to hold $him in place. With $his silent menials, still as statues, anchoring $his bloated body at the perfect angle for fucking while contorting their anonymous bodies to frame $him in a manner that maximizes $his visual attractiveness, you grab hold of $his flanks and ram into $his pregnant pussy, driving $him to the first of many orgasms in just a few casual thrusts.
+		<<= VCheck.Vaginal()>>
+		When you feel your own orgasm approaching, you pull out, ejaculating
+	<<elseif canDoAnal(getSlave($AS))>>
+		When you feel the tension within you reaching its apex, you signal to $his servants to hold $him in place. With $his silent menials, still as statues, anchoring $his bloated body at the perfect angle for fucking while contorting their anonymous bodies to frame $him in a manner that maximizes $his visual attractiveness, you grab hold of $his flanks and ram into $his asshole, driving $him to the first of many orgasms with just a few casual thrusts.
+		<<= VCheck.Anal()>>
+		When you feel your own orgasm approaching, you pull out, ejaculating
+	<<else>>
+		When you feel the tension with your reaching its apex, you signal to $his servants and they pull $him forward. You ejaculate
+	<</if>>
+	a thick stream of semen all over $his ass and back, $he shifts into a kneeling position on the ground in front of you, tilted sideways so that $his massive fecundity can pool on the ground beside $him, and gently sucks you off, cleaning your dick with $his mouth.
+	<<set getSlave($AS).counter.oral++, $oralTotal++>>
+<<else>>
+	Presses the thick nub of $his belly button into your pussy, rubbing it back and forth against your engorged clit as $he performs a series of masterful — and carefully balanced — belly isolations. After $he has you quaking at the edge of release, $he rolls forward and buries $his head in your lap, plying you with $his
+	<<if getSlave($AS).devotion > 95>>
+		devoted tongue
+	<<elseif (getSlave($AS).trust < -20) && (getSlave($AS).devotion > -10)>>
+		dedicated tongue
+	<<else>>
+		tongue
+	<</if>>
+	and driving you into a series of crashing orgasms. When $his tongue tires, $he tries to draw away, but you grab hold of $his head and hold $him in place until you are finished.
+	<<set getSlave($AS).counter.oral++, $oralTotal++>>
+<</if>>
+Once you are satisfied, you send $him away to clean $himself up before returning to $his duties.
+
+<<if passage() != "Slave Interact">>
+	<<set _fv = $slaveIndices[getSlave($AS).ID]>>
+	<<if def _fv>>
+		<<set $slaves[_fv] = getSlave($AS)>>
+	<</if>>
+<</if>>

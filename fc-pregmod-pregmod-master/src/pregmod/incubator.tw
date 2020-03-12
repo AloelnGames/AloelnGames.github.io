@@ -1,0 +1,688 @@
+:: Incubator [nobr]
+
+<<set $nextButton = "Back to Main", $nextLink = "Main", $returnTo = "Incubator">>
+<<set $targetAge = Number($targetAge) || $minimumSlaveAge>>
+<<set $targetAge = Math.clamp($targetAge, $minimumSlaveAge, 42)>>
+
+<<if $incubatorName != "the Incubator">>
+	<<set $incubatorNameCaps = $incubatorName.replace("the ", "The ")>>
+<</if>>
+
+<<set $readySlaves = 0, $readySlave = 0, $incubatorSlaves = $tanks.length, $freeTanks = $incubator - $incubatorSlaves, _SL = $slaves.length, _eligibility = 0, $reservedChildren = FetusGlobalReserveCount("incubator"), $reservedChildrenNursery = FetusGlobalReserveCount("nursery")>>
+
+<br><br>
+$incubatorNameCaps is a clean, cold hall designed to be lined with tanks and their connected monitoring systems.
+
+<<if $incubatorSlaves > 2>>
+	It's well used. The hum of active tanks fill the air.
+<<elseif $incubatorSlaves > 0>>
+	It's barely used; most of the tanks lie dormant.
+<<else>>
+	It's empty and quiet.
+	<div class="choices" style="font-style:normal">
+		[[Decommission the incubator|Main][$incubator = 0, $incubatorUpgradeSpeed = 5, $incubatorUpgradeWeight = 0, $incubatorUpgradeMuscles = 0, $incubatorUpgradeReproduction = 0, $incubatorUpgradeGrowthStims = 0, $incubatorWeightSetting = 0, $incubatorMusclesSetting = 0, $incubatorReproductionSetting = 0, $incubatorGrowthStimsSetting = 0, $tanks = []]]
+	</div>
+<</if>>
+
+<br>It can support $incubator child<<if $incubator != 1>>ren<</if>>. There <<if $incubatorSlaves == 1>>is<<else>>are<</if>> currently $incubatorSlaves tank<<if $incubatorSlaves != 1>>s<</if>> in use in $incubatorName.
+[[Add another incubation tank|Incubator][cashX(forceNeg(Math.trunc(60000*$upgradeMultiplierArcology)), "capEx"), $incubator += 1]] //Costs <<print cashFormat(Math.trunc(60000*$upgradeMultiplierArcology))>> and will increase upkeep costs//
+<<if $freeTanks == 0>>
+	All of the tanks are currently occupied by growing children.
+<<elseif $incubator > 1 && $reservedChildren < $freeTanks>>
+	[[Remove an incubation tank|Incubator][cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierArcology)), "capEx"), $incubator -= 1]] //Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology))>> and will reduce upkeep costs//
+<</if>>
+
+<br><br>
+Reserve an eligible mother-to-be's child to be placed in a tank upon birth. Of $incubator tanks, <<print $freeTanks>> <<if $freeTanks == 1>>is<<else>>are<</if>> unoccupied. Of those, $reservedChildren <<if $reservedChildren == 1>>tank is<<else>>tanks are<</if>> reserved.
+/*
+** With hundreds of slaves, navigating the Incubator room was giving me as much of a headache as other lists.
+** So, I borrowed the sorting list and dropped a few options here.
+*/
+<<if (0 < _SL)>>
+	<<set $sortIncubatorList = $sortIncubatorList || 'Unsorted'>>
+	<br>//Sorting:// ''<span id="qlIncubatorSort">$sortIncubatorList</span>.''
+	<<link "Sort by Name">>
+		<<set $sortIncubatorList = 'Name'>>
+		<<replace "#qlIncubatorSort">>$sortIncubatorList<</replace>>
+		<<script>>
+			sortIncubatorPossiblesByName();
+		<</script>>
+	<</link>> |
+	<<link "Sort by Reserved Incubator Spots">>
+		<<set $sortIncubatorList = 'Reserved Incubator Spots'>>
+		<<replace "#qlIncubatorSort">>$sortIncubatorList<</replace>>
+		<<script>>
+			sortIncubatorPossiblesByReservedSpots();
+		<</script>>
+	<</link>> |
+	<<link "Sort by Pregnancy Week">>
+		<<set $sortIncubatorList = 'Pregnancy Week'>>
+		<<replace "#qlIncubatorSort">>$sortIncubatorList<</replace>>
+		<<script>>
+			sortIncubatorPossiblesByPregnancyWeek();
+		<</script>>
+	<</link>> |
+	<<link "Sort by Number of Children">>
+		<<set $sortIncubatorList = 'Number of Children'>>
+		<<replace "#qlIncubatorSort">>$sortIncubatorList<</replace>>
+		<<script>>
+			sortIncubatorPossiblesByPregnancyCount();
+		<</script>>
+	<</link>>
+	<br>
+<</if>>
+<div id="qlIncubator">
+<<for _u = 0; _u < _SL; _u++>>
+	<<setLocalPronouns $slaves[_u]>>
+	<<if $slaves[_u].preg > 0 && $slaves[_u].broodmother == 0 && $slaves[_u].pregKnown == 1 && $slaves[_u].eggType == "human">>
+		<<if ($slaves[_u].assignment == "work in the dairy" && $dairyPregSetting > 0) || $activeSlave.assignment == "be your agent" || $activeSlave.assignment == "live with your agent">>
+		<<else>>
+			<<set _slaveId = "slave-" + $slaves[_u].ID>>
+			<<set _WL = $slaves[_u].womb.length>>
+			<<set _reservedIncubator = WombReserveCount($slaves[_u], "incubator")>>
+			<<set _reservedNursery = WombReserveCount($slaves[_u], "nursery")>>
+			<<set _pregWeek = $slaves[_u].pregWeek>>
+			<<set _slaveName = SlaveFullName($slaves[_u])>>
+			<div class="possible" @id="_slaveId" @data-preg-count="_pregCount" @data-reserved-spots="_reservedIncubator" @data-preg-week="_pregWeek" @data-name="_slaveName">
+			<<print "[[_slaveName|Long Slave Description][$activeSlave = $slaves[" + _u + "], $nextLink = passage()]]">> is $slaves[_u].pregWeek week<<if $slaves[_u].pregWeek > 1>>s<</if>> pregnant with
+			<<if $slaves[_u].pregSource == 0 || $slaves[_u].preg <= 5>>someone's<<if $slaves[_u].preg <= 5>>, though it is too early to tell whose,<</if>>
+			<<elseif $slaves[_u].pregSource == -1>>your
+			<<elseif $slaves[_u].pregSource == -2>>a citizen's
+			<<elseif $slaves[_u].pregSource == -3>>your Master's
+			<<elseif $slaves[_u].pregSource == -4>>another arcology owner's
+			<<elseif $slaves[_u].pregSource == -5>>your client's
+			<<elseif $slaves[_u].pregSource == -6>>the Societal Elite's
+			<<elseif $slaves[_u].pregSource == -7>>the lab's
+			<<elseif $slaves[_u].pregSource == -9>>the Futanari Sisters'
+			<<else>>
+				<<set _t = $slaveIndices[$slaves[_u].pregSource]>>
+				<<if def _t>>
+					<<print $slaves[_t].slaveName>>'s
+				<</if>>
+			<</if>>
+			<<if _WL > 1>>_WL babies<<else>>baby<</if>>.
+			<<if _reservedIncubator > 0>>
+				<<set _childrenReserved = 1>>
+				<<if _WL == 1>>
+					$His child will be placed in $incubatorName.
+				<<elseif _reservedIncubator < _WL>>
+					_reservedIncubator of $his children will be placed in $incubatorName.
+				<<elseif _WL == 2>>
+					Both of $his children will be placed in $incubatorName.
+				<<else>>
+					All _reservedIncubator of $his children will be placed in $incubatorName.
+				<</if>>
+				<<if (_reservedIncubator + _reservedNursery < _WL) && ($reservedChildren < $freeTanks)>>
+					<br>&nbsp;&nbsp;&nbsp;&nbsp;
+					<<if $pregnancyMonitoringUpgrade == 1>>
+						<<print "[[Inspect pregnancy|Analyze Pregnancy][$i = " + _u + "; $activeSlave = $slaves[$i]]] | ">>
+					<</if>>
+					<<print "[[Keep another child|Incubator][WombAddToGenericReserve($slaves[" + _u + "], 'incubator', 1)]]">>
+					<<if _reservedIncubator > 0>>
+						| <<print "[[Keep one less child|Incubator][WombCleanGenericReserve($slaves[" + _u + "], 'incubator', 1)]]">>
+					<</if>>
+					<<if _reservedIncubator > 1>>
+						| <<print "[[Keep none of " + $his + " children|Incubator][WombCleanGenericReserve($slaves[" + _u + "], 'incubator', 9999)]]">>
+					<</if>>
+					<<if ($reservedChildren + _WL - _reservedIncubator) <= $freeTanks>>
+						| <<print "[[Keep the rest of " + $his + " children|Incubator][WombAddToGenericReserve($slaves[" + _u + "], 'incubator', 9999)]]">>
+					<</if>>
+				<<elseif (_reservedIncubator == _WL) || ($reservedChildren == $freeTanks) || (_reservedIncubator + _reservedNursery == _WL)>>
+					<br>&nbsp;&nbsp;&nbsp;&nbsp;
+					<<if $pregnancyMonitoringUpgrade == 1>>
+						<<print "[[Inspect pregnancy|Analyze Pregnancy][$i = " + _u + "; $activeSlave = $slaves[$i]]] | ">>
+					<</if>>
+					<<print "[[Keep one less child|Incubator][WombCleanGenericReserve($slaves[" + _u + "], 'incubator', 1)]]">>
+					<<if _reservedIncubator > 1>>
+						| <<print "[[Keep none of " + $his + " children|Incubator][WombCleanGenericReserve($slaves[" + _u + "], 'incubator', 9999)]]">>
+					<</if>>
+				<</if>>
+			<<elseif ($reservedChildren < $freeTanks)>>
+				<<if _WL - _reservedNursery == 0>>
+					//$His children are already reserved for $nurseryName//
+					<br>&nbsp;&nbsp;&nbsp;&nbsp;
+					<<if $pregnancyMonitoringUpgrade == 1>>
+						<<print "[[Inspect pregnancy|Analyze Pregnancy][$i = " + _u + "; $activeSlave = $slaves[$i]]] | ">>
+					<</if>>
+					<<print "[[Keep " + $his + " " + ((_WL > 1) ? "children" : "child") + " here instead|Incubator][WombChangeReserveType($slaves[" + _u + "], 'nursery', 'incubator')]]">>
+				<<else>>
+					You have <<if $freeTanks == 1>>an<</if>> @@.lime;available aging tank<<if $freeTanks > 1>>s<</if>>.@@
+					<br>&nbsp;&nbsp;&nbsp;&nbsp;
+					<<if $pregnancyMonitoringUpgrade == 1>>
+						<<print "[[Inspect pregnancy|Analyze Pregnancy][$i = " + _u + "; $activeSlave = $slaves[$i]]] | ">>
+					<</if>>
+					<<print "[[Keep "+ ((_WL > 1) ? "a" : "the") +" child|Incubator][WombAddToGenericReserve($slaves[" + _u + "], 'incubator', 1)]]">>
+					<<if (_WL > 1) && ($reservedChildren + _WL - _reservedIncubator) <= $freeTanks>>
+						| <<print "[[Keep all of " + $his + " children|Incubator][WombAddToGenericReserve($slaves[" + _u + "], 'incubator', 9999)]]">>
+					<</if>>
+				<</if>>
+			<<elseif $reservedChildren == $freeTanks>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;
+				<<if $pregnancyMonitoringUpgrade == 1>>
+					<<print "[[Inspect pregnancy|Analyze Pregnancy][$i = " + _u + "; $activeSlave = $slaves[$i]]] | ">>
+				<</if>>
+				You have @@.red;no room for $his offspring.@@
+			<</if>>
+			<<set _eligibility = 1>>
+			</div>
+		<</if>>
+	<</if>>
+<</for>>
+</div>
+<<script>>
+	$('div#qlIncubator').ready(sortIncubatorPossiblesByPreviousSort);
+<</script>>
+<<if _eligibility == 0>>
+	<br>
+	//You have no pregnant slaves bearing eligible children.//
+<</if>>
+<<if $PC.pregKnown == 1 && ($arcologies[0].FSRestart == "unset" || $eugenicsFullControl == 1 || ($PC.pregSource != -1 && $PC.pregSource != -6))>>
+	<<set _WL = $PC.womb.length>>
+	<<set _reservedIncubator = WombReserveCount($PC, "incubator")>>
+	<<set _reservedNursery = WombReserveCount($PC, "nursery")>>
+	<br>''@@.pink;You're pregnant@@'' and going to have
+		<<if _WL == 1>>
+			a baby.
+		<<else>>
+			<<print pregNumberName(_WL, 2)>>.
+		<</if>>
+	<<if (_reservedIncubator > 0)>>
+		<<set _childrenReserved = 1>>
+		<<if _WL == 1>>
+			Your child will be placed in $incubatorName.
+		<<elseif _reservedIncubator < _WL>>
+			_reservedIncubator of your children will be placed in $incubatorName.
+		<<elseif _WL == 2>>
+			Both of your children will be placed in $incubatorName.
+		<<else>>
+			All _reservedIncubator of your children will be placed in $incubatorName.
+		<</if>>
+		<<if (_reservedIncubator < _WL) && ($reservedChildren < $freeTanks) && (_reservedIncubator - _reservedNursery > 0)>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<<if $pregnancyMonitoringUpgrade == 1>>
+				<<print "[[Inspect pregnancy|Analyze PC Pregnancy]] | ">>
+			<</if>>
+			<<print "[[Keep another child|Incubator][WombAddToGenericReserve($PC, 'incubator', 1)]]">>
+			<<if _reservedIncubator > 0>>
+				| <<print "[[Keep one less child|Incubator][WombCleanGenericReserve($PC, 'incubator', 1)]]">>
+			<</if>>
+			<<if _reservedIncubator > 1>>
+				| <<print "[[Keep none of your children|Incubator][WombCleanGenericReserve($PC, 'incubator', 9999)]]">>
+			<</if>>
+			<<if ($reservedChildren + _WL - _reservedIncubator) <= $freeTanks>>
+				| <<print "[[Keep the rest of your children|Incubator][WombAddToGenericReserve($PC, 'incubator', 9999)]]">>
+			<</if>>
+		<<elseif (_reservedIncubator == _WL) || ($reservedChildren == $freeTanks) || (_reservedIncubator - _reservedNursery >= 0)>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<<if $pregnancyMonitoringUpgrade == 1>>
+				<<print "[[Inspect pregnancy|Analyze PC Pregnancy]] | ">>
+			<</if>>
+			<<print "[[Keep one less child|Incubator][_reservedIncubator -= 1, $reservedChildren -= 1]]">>
+			<<if _reservedIncubator > 1>>
+				| <<print "[[Keep none of your children|Incubator][WombCleanGenericReserve($PC, 'incubator', 9999)]]">>
+			<</if>>
+		<</if>>
+	<<elseif $reservedChildren < $freeTanks>>
+		<<if _WL - _reservedNursery == 0>>
+			//Your child<<if _WL > 0>>ren are<<else>>is<</if>> already reserved for $nurseryName//
+			<<print "[[Keep your" + ((_WL > 1) ? "children" : "child") + " here instead|Incubator][WombChangeReserveType($PC, 'nursery', 'incubator')]]">>
+		<<else>>
+			You have <<if $freeTanks == 1>>an<</if>> @@.lime;available aging tank<<if $freeTanks > 1>>s<</if>>.@@
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<<if $pregnancyMonitoringUpgrade == 1>>
+				<<print "[[Inspect pregnancy|Analyze PC Pregnancy]] | ">>
+			<</if>>
+			<<print "[[Keep " + ((_WL > 1) ? "a" : "your") +" child|Incubator][WombAddToGenericReserve($PC, 'incubator', 1)]]">>
+			<<if (_WL > 1) && ($reservedChildren + _WL - _reservedIncubator) <= $freeTanks>>
+				| [[Keep all of your children|Incubator][WombAddToGenericReserve($PC, 'incubator', 9999)]]
+			<</if>>
+		<</if>>
+	<<elseif $reservedChildren == $freeTanks>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<if $pregnancyMonitoringUpgrade == 1>>
+			<<print "[[Inspect pregnancy|Analyze PC Pregnancy]] | ">>
+		<</if>>
+		You have @@.red;no room for your offspring.@@
+	<</if>>
+<</if>>
+<<if $reservedChildren != 0 || _childrenReserved == 1>> /* the oops I made it go negative somehow button */
+	<br>
+	<<link "Clear all reserved children">>
+		<<for _u = 0; _u < _SL; _u++>>
+			<<if WombReserveCount($slaves[_u], "incubator") != 0>>
+				<<set WombCleanGenericReserve($slaves[_u], 'incubator', 9999)>>
+			<</if>>
+		<</for>>
+		<<set WombCleanGenericReserve($PC, 'incubator', 9999)>>
+		<<goto "Incubator">>
+	<</link>>
+<</if>>
+
+<br><br>
+Target age for release: <<textbox "$targetAge" $targetAge "Incubator">> [[Minimum Legal Age|Incubator][$targetAge = $minimumSlaveAge]] | [[Average Age of Fertility|Incubator][$targetAge = $fertilityAge]] | [[Average Age of Potency|Incubator][$targetAge = $potencyAge]] | [[Legal Adulthood|Incubator][$targetAge = 18]]
+//Setting will not be applied to tanks in use.//
+
+<br>
+<<if $incubatorBulkRelease == 1>>
+	Released children will be handled in bulk and not receive personal attention.
+	[[Individual release|Incubator][$incubatorBulkRelease = 0]]
+<<else>>
+	Released children will be seen to personally.
+	[[Bulk release|Incubator][$incubatorBulkRelease = 1]]
+<</if>>
+
+<br>
+<<if $incubatorUpgradeSpeed == 52>>
+	It has been upgraded with perfected growth accelerants; children grow at the rate of 1 week to 1 year.
+<<elseif $incubatorUpgradeSpeed == 18>>
+	It has been upgraded with advanced experimental growth accelerants; children grow at the rate of 3 weeks to 1 year. [[Fund speculative research into maximizing growth rate|Incubator][cashX(forceNeg(Math.trunc(500000*$upgradeMultiplierArcology)), "capEx"), $incubatorUpgradeSpeed = 52]] //Costs <<print cashFormat(Math.trunc(500000*$upgradeMultiplierArcology))>> and will increase upkeep costs//
+<<elseif $incubatorUpgradeSpeed == 9>>
+	It has been upgraded with advanced growth accelerants; children grow at the rate of 6 weeks to 1 year. [[Fund research into increasing growth rate even further|Incubator][cashX(forceNeg(Math.trunc(75000*$upgradeMultiplierArcology)), "capEx"), $incubatorUpgradeSpeed = 18]] //Costs <<print cashFormat(Math.trunc(75000*$upgradeMultiplierArcology))>> and will increase upkeep costs//
+<<elseif $incubatorUpgradeSpeed == 6>>
+	It has been upgraded with growth accelerants; children grow at the rate of 9 weeks to 1 year. [[Further upgrade the incubators with specialized stem cells to speed growth|Incubator][cashX(forceNeg(Math.trunc(30000*$upgradeMultiplierArcology)), "capEx"), $incubatorUpgradeSpeed = 9]] //Costs <<print cashFormat(Math.trunc(30000*$upgradeMultiplierArcology))>> and will increase upkeep costs//
+<<elseif $incubatorUpgradeSpeed == 5>>
+	The incubation tanks are basic; children grow at the rate of 12 weeks to 1 year. [[Upgrade the incubators with growth accelerating drugs|Incubator][cashX(forceNeg(Math.trunc(30000*$upgradeMultiplierArcology)), "capEx"), $incubatorUpgradeSpeed = 6]] //Costs <<print cashFormat(Math.trunc(30000*$upgradeMultiplierArcology))>> and will increase upkeep costs//
+<</if>>
+
+<br>
+<<if $incubatorUpgradeWeight == 1>>
+	Advanced caloric monitoring systems have been installed in the tanks to monitor and maintain a developing child's weight.
+<<else>>
+	There are no systems in place to control a growing child's weight; they will likely come out emaciated from the rapid growth. [[Upgrade the growth tanks with weight monitoring systems|Incubator][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "capEx"), $incubatorUpgradeWeight = 1]] //Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>> and will increase upkeep costs//
+<</if>>
+
+<br>
+<<if $incubatorUpgradeMuscles == 1>>
+	Advanced monitoring and steroid injection systems have been installed in the tanks to monitor and maintain a developing child's musculature.
+<<else>>
+	There are no systems in place to control a growing child's musculature; they will likely come out frail and weak from the rapid growth. [[Upgrade the growth tanks with muscle monitoring systems|Incubator][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "capEx"), $incubatorUpgradeMuscles = 1]] //Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>> and will increase upkeep costs//
+<</if>>
+
+<br>
+<<if $incubatorUpgradeReproduction == 1>>
+	Advanced monitoring and hormone injection systems have been installed in the tanks to influence a developing child's reproductive organs.
+<<else>>
+	There are no systems in place to control a growing child's reproductive capability. [[Upgrade the growth tanks with hormone monitoring systems|Incubator][cashX(forceNeg(Math.trunc(50000*$upgradeMultiplierArcology)), "capEx"), $incubatorUpgradeReproduction = 1]] //Costs <<print cashFormat(Math.trunc(50000*$upgradeMultiplierArcology))>> and will increase upkeep costs//
+<</if>>
+
+<br>
+<<if $incubatorUpgradeOrgans == 1>>
+	Surgical tools have been added to the tank to be able to extract tissue samples from the occupant.
+<<elseif $organFarmUpgrade >= 1>>
+	The tanks lack the ability to extract tissue samples to be used by the organ fabricator. [[Upgrade the growth tanks with surgical extraction tools|Incubator][cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierArcology)), "capEx"), $incubatorUpgradeOrgans = 1]] //Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology))>> and will increase upkeep costs//
+<<else>>
+	The tanks lack the ability to extract tissue samples and the dispensary lacks the ability to make use of them to fabricate organs.
+<</if>>
+
+<br>
+<<if $incubatorUpgradeGrowthStims == 1>>
+	Advanced monitoring and stimulant injection systems have been installed in the tanks to monitor and maintain a developing child's height.
+<<elseif $growthStim == 1>>
+	There are no systems in place to control a growing child's height. [[Upgrade the growth tanks with stimulants injection systems|Incubator][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "capEx"), $incubatorUpgradeGrowthStims = 1]] //Costs <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>> and will increase upkeep costs//
+<<else>>
+	There are no systems in place to control a growing child's height and you lack the capability to fabricate growth stimulants.
+<</if>>
+
+<br>
+<<if $incubatorImprintSetting == "terror">>
+	The imprinting system is currently focused on making them devoted but fearful of you. The imprinting cycle is locked upon incubation start.
+	[[Switch the system to focus on attachment|Incubator][$incubatorImprintSetting = "trust"]] //Only affects new infants//
+<<else>>
+	The imprinting system is currently focused on making them devoted and trusting of you. The imprinting cycle is locked upon incubation start.
+	[[Switch the system to focus on dependence|Incubator][$incubatorImprintSetting = "terror"]] //Only affects new infants//
+<</if>>
+
+
+<<if $incubatorSlaves > 0>>
+<br><br>''Children in $incubatorName''
+
+<<for $i = 0; $i < $incubatorSlaves; $i++>>
+	<<capture $i>>
+		<<setLocalPronouns $tanks[$i]>>
+		<br><br>@@.pink;$tanks[$i].slaveName@@ occupies this tank.
+		<<if $geneticMappingUpgrade >= 1>>
+			$He is a <<if $tanks[$i].genes == "XX">>female<<else>>male<</if>> of $tanks[$i].race descent with <<print App.Desc.eyesColor($tanks[$i])>>, $tanks[$i].hColor hair and $tanks[$i].skin skin. Given $his parentage, $he is considered $tanks[$i].nationality.
+		<<else>>
+			$He appears to be <<if $tanks[$i].genes == "XX">>a natural girl<<else>>a natural boy<</if>>, with $tanks[$i].hColor hair<<if getBestVision($tanks[$i]) === 0>> and <<print App.Desc.eyesColor($tanks[$i])>>.<<else>>. $He most likely will be blind.<</if>>
+		<</if>>
+		Statistical projections indicates that once released $he will be around <<= heightToEitherUnit($tanks[$i].height + random(-5,5))>> tall. Most likely $he will be
+			<<if $tanks[$i].weight <= 30 && $tanks[$i].weight >= -30>>
+				at a healthy weight and
+			<<elseif $tanks[$i].weight >= 31 && $tanks[$i].weight <= 95>>
+				quite overweight and
+			<<elseif $tanks[$i].weight >= 96>>
+				very overweight and
+			<<elseif $tanks[$i].weight <= -31 && $tanks[$i].weight >= -95>>
+				quite thin and
+			<<elseif $tanks[$i].weight <= -96>>
+				very thin and
+			<</if>>
+			<<if $tanks[$i].muscles <= 5 && $tanks[$i].muscles >= -5>>
+				with a normal musculature.
+			<<elseif $tanks[$i].muscles >= 6 && $tanks[$i].muscles <= 30>>
+				quite toned.
+			<<elseif $tanks[$i].muscles >= 31 && $tanks[$i].muscles <= 95>>
+				quite muscular.
+			<<elseif $tanks[$i].muscles >= 96>>
+				with a powerful musculature.
+			<<elseif $tanks[$i].muscles <= -6 && $tanks[$i].muscles >= -30>>
+				quite weak.
+			<<elseif $tanks[$i].muscles <= -31 && $tanks[$i].muscles >= -95>>
+				very weak.
+			<<elseif $tanks[$i].muscles <= -96>>
+				extremely weak.
+			<</if>>
+			$His breasts are projected to be
+			<<if $tanks[$i].boobs <= 299>>
+				of small size,
+			<<elseif $tanks[$i].boobs <= 799>>
+				of normal size,
+			<<elseif $tanks[$i].boobs <= 1799>>
+				of generous size,
+			<<elseif $tanks[$i].boobs <= 3249>>
+				of incredible size,
+			<<else>>
+				of humongous size,
+			<</if>>
+			while $his rear will be
+			<<if $tanks[$i].butt <= 3>>
+				a healthy size.
+			<<elseif $tanks[$i].butt <= 6>>
+				quite impressive.
+			<<elseif $tanks[$i].butt <= 9>>
+				very impressive.
+			<<else>>
+				immense.
+			<</if>>
+			<<if $tanks[$i].dick > 0>>
+				<<if $tanks[$i].dick <= 3>>
+					The latest analysis reported $his dick will end up being around the average
+				<<elseif $tanks[$i].dick >= 4 && $tanks[$i].dick <= 6>>
+					The latest analysis reported $his dick will end up being above average
+				<<elseif $tanks[$i].dick >= 7 && $tanks[$i].dick <= 9>>
+					The latest analysis reported $his dick will end up being far above the average
+				<<else>>
+					The latest analysis reported $his dick will end up being of monstrous size
+				<</if>>
+			<</if>>
+			<<if $tanks[$i].balls > 0>>
+				<<if $tanks[$i].balls <= 3>>
+					and $his testicles will reach a normal size.
+				<<elseif $tanks[$i].balls >= 4 && $tanks[$i].balls <= 6>>
+					and $his testicles will be of remarkable size.
+				<<elseif $tanks[$i].balls >= 7 && $tanks[$i].balls <= 9>>
+					and $his testicles will reach an impressive size.
+				<<else>>
+					and $his testicles will reach a monstrous size.
+				<</if>>
+			<</if>>
+			<<if $tanks[$i].pubertyXX == 1 && $tanks[$i].ovaries == 1>>
+				Scanners report $his womb is fertile.
+			<<else>>
+				Scanners report $he is not fertile,
+				<<if $tanks[$i].pubertyXX == 0>>
+					as $he has not yet entered puberty.
+				<<else>>
+					as it appears $his womb is sterile.
+				<</if>>
+			<</if>>
+		<<if $tanks[$i].growTime <= 0>>
+			<<set $readySlaves = 1>>
+			<br>$He is ready to be released from $his tank.
+		<<else>>
+			<<set _weekDisplay = Math.round($tanks[$i].growTime/$incubatorUpgradeSpeed)>>
+			<br>$His growth is currently being accelerated. $He will be ready for release in about _weekDisplay week<<if _weekDisplay > 1>>s<</if>>.
+		<</if>>
+		<br>The tank is imprinting $him with basic life and sexual skills, though $he will still be very naïve and inexperienced on release.
+		<<if $tanks[$i].tankBaby == 2>>
+			The majority of $his indoctrination involves painting the world as a terrible place where only horror awaits $him should $he not obey $his owner.
+		<<else>>
+			The majority of $his indoctrination involves painting the world as a wonderful place only if $he is unconditionally devoted to, and absolutely trusting of, $his owner.
+		<</if>>
+		<<if $incubatorUpgradeWeight == 1>>
+			<br>
+			<<if $incubatorWeightSetting == 1>>
+				$His weight is not being properly managed, saving costs but likely causing excessive weight gain.
+			<<elseif $incubatorWeightSetting == 2>>
+				$His weight is being carefully managed; $he will be released at a healthy weight.
+			<<elseif $incubatorWeightSetting == 0>>
+				Weight management systems are offline; $he will likely be malnourished.
+			<</if>>
+		<</if>>
+		<<if $incubatorUpgradeMuscles == 1>>
+			<br>
+			<<if $incubatorMusclesSetting == 2>>
+				$His strength levels are purposefully set higher than recommended; $he is likely to have excessive musculature.
+			<<elseif $incubatorMusclesSetting == 1>>
+				$His musculature is being carefully managed; $he will be released with near normal strength.
+			<<elseif $incubatorMusclesSetting == 0>>
+				Strength management systems are offline; $he will likely be released extremely weak.
+			<</if>>
+		<</if>>
+		<<if $incubatorUpgradeGrowthStims == 1>>
+			<br>
+			<<if $incubatorGrowthStimsSetting == 2>>
+				$He is being injected with higher than recommended doses of stimulants; $he is likely to be much taller than expected.
+			<<elseif $incubatorGrowthStimsSetting == 1>>
+				$He is injected with the recommended dosage of stimulants; $he will grow to $his full expected height.
+			<<elseif $incubatorGrowthStimsSetting == 0>>
+				Growth stimulant injection systems are offline; $he will develop normally.
+			<</if>>
+		<</if>>
+		<<if $incubatorUpgradeReproduction == 1>>
+			<br>
+			<<if $incubatorReproductionSetting == 2>>
+				$His hormone levels are purposefully set higher than recommended; $his reproductive systems are likely to be over-active.
+			<<elseif $incubatorReproductionSetting == 1>>
+				$His hormone levels are being carefully managed; $he will be released with fully functional reproductive organs.
+			<<elseif $incubatorReproductionSetting == 0>>
+				Reproduction management systems are offline; $he will undergo normal puberty.
+			<</if>>
+		<</if>>
+		<br>Rename $him: <<textbox "_tempName" _tempName >> [[Apply |Incubator][$tanks[$i].slaveName = _tempName]] // Given name only //
+		<<if $cheatMode == 1>>
+			<br>''Cheatmode:''
+			<<link "Retrieve immediately">>
+				<<set $incubatorOldID = $tanks[$i].ID>>
+				<<set $readySlave = $tanks[$i]>>
+				<<run $tanks.splice($i, 1)>>
+				<<goto "Incubator Retrieval Workaround">>
+			<</link>>
+		<</if>>
+		<<if $incubatorUpgradeOrgans == 1>>
+			<br>
+			You can extract a sample and prepare a new organ for $him to be implanted once $he exits $his tank.
+			<<set _newOrgan = 0>>
+			<<set $tankOrgans = {
+				ovaries: 0,
+				penis: 0,
+				testicles:0,
+				rightEye: 0,
+				leftEye: 0,
+				voiceBox: 0}>>
+			<<for _i = 0; _i < $incubatorOrgans.length; _i++>>
+				<<if $tanks[$i].ID == $incubatorOrgans[_i].ID>>
+					<<if $incubatorOrgans[_i].type == "ovaries">>
+						<<set $tankOrgans.ovaries = 1>>
+					<</if>>
+					<<if $incubatorOrgans[_i].type == "testicles">>
+						<<set $tankOrgans.testicles = 1>>
+					<</if>>
+					<<if $incubatorOrgans[_i].type == "penis">>
+						<<set $tankOrgans.penis = 1>>
+					<</if>>
+					<<if $incubatorOrgans[_i].type == "rightEye">>
+						<<set $tankOrgans.rightEye = 1>>
+					<</if>>
+					<<if $incubatorOrgans[_i].type == "leftEye">>
+						<<set $tankOrgans.leftEye = 1>>
+					<</if>>
+					<<if $incubatorOrgans[_i].type == "voicebox">>
+						<<set $tankOrgans.voicebox = 1>>
+					<</if>>
+				<</if>>
+			<</for>>
+			<<if $tanks[$i].genes == "XX">>
+				Being a natural girl, $he possesses a functional vagina and ovaries. You can:
+			<<else>>
+				Being a natural boy, $he possesses a functional penis and balls. You can:
+			<</if>>
+			<br>
+			<<if $tanks[$i].ovaries == 0>>
+				<<if $tankOrgans.ovaries != 1>>
+					<<link "Prepare ovaries">>
+						<<run App.Medicine.OrganFarm.growIncubatorOrgan($tanks[$i], "ovaries")>>
+						<<goto "Incubator">>
+					<</link>>
+				<<else>>
+					@@.detail;Ovaries are already prepared.@@
+				<</if>>
+			<</if>>
+			<<if $tanks[$i].dick == 0>>
+				<<if $tankOrgans.penis != 1>>
+					<<link "Prepare penis">>
+						<<run App.Medicine.OrganFarm.growIncubatorOrgan($tanks[$i], "penis")>>
+						<<goto "Incubator">>
+					<</link>>
+				<<else>>
+					@@.detail;A penis is already prepared.@@
+				<</if>>
+			<</if>>
+			<<if $tanks[$i].balls == 0>>
+				|
+				<<if $tankOrgans.testicles != 1>>
+					<<link "Prepare testicles">>
+						<<run App.Medicine.OrganFarm.growIncubatorOrgan($tanks[$i], "testicles")>>
+						<<goto "Incubator">>
+					<</link>>
+				<<else>>
+					@@.detail;Testicles are already prepared.@@
+				<</if>>
+			<</if>>
+			<<if getLeftEyeVision($tanks[$i]) === 0 || getRightEyeVision($tanks[$i]) === 0>>
+				<br>
+				<<set _both = getLeftEyeVision($tanks[$i]) === 0 && getRightEyeVision($tanks[$i]) === 0>>
+				<<if _both>>
+					$He appears to be blind in both eyes:
+				<<elseif getLeftEyeVision($tanks[$i]) === 0>>
+					$He appears to be blind in $his left eye:
+				<<else>>
+					$He appears to be blind in $his right eye:
+				<</if>>
+				<<set _unprepared = 0>>
+				<<if getLeftEyeVision($tanks[$i]) === 0 && $tankOrgans.leftEye != 1>>
+					<<link "Prepare left eye">>
+						<<run App.Medicine.OrganFarm.growIncubatorOrgan($tanks[$i], "leftEye")>>
+						<<goto "Incubator">>
+					<</link>>
+					<<set _unprepared++>>
+				<</if>>
+				<<if getRightEyeVision($tanks[$i]) === 0 && $tankOrgans.rightEye != 1>>
+					<<if _unprepared > 0>> | <</if>>
+					<<link "Prepare right eye">>
+						<<run App.Medicine.OrganFarm.growIncubatorOrgan($tanks[$i], "rightEye")>>
+						<<goto "Incubator">>
+					<</link>>
+					<<set _unprepared++>>
+				<</if>>
+				<<if _both && _unprepared === 2>>
+					|
+					<<link "Prepare both eyes">>
+						<<run App.Medicine.OrganFarm.growIncubatorOrgan($tanks[$i], "leftEye"), App.Medicine.OrganFarm.growIncubatorOrgan($tanks[$i], "rightEye")>>
+						<<goto "Incubator">>
+					<</link>>
+				<</if>>
+				<<if _both && _unprepared === 0>> @@.detail;Both eyes are already prepared.@@
+				<<elseif $tankOrgans.leftEye == 1>> @@.detail;A left eye is already prepared.@@
+				<<elseif $tankOrgans.rightEye == 1>> @@.detail;A right eye is already prepared.@@
+				<</if>>
+			<</if>>
+			<<if $tanks[$i].voice == 0>>
+				<br>$He appears to be mute:
+				<<if $tankOrgans.voicebox != 1>>
+					<<link "Prepare vocal cords">>
+						<<run App.Medicine.OrganFarm.growIncubatorOrgan($tanks[$i], "voicebox")>>
+						<<goto "Incubator">>
+					<</link>>
+				<<else>>
+					@@.detail;Vocal cords are already prepared.@@
+				<</if>>
+			<</if>>
+		<</if>>
+	<</capture>>
+<</for>>
+<</if>>
+
+<br>
+<br>
+
+<<if $incubatorUpgradeWeight == 1>>
+	<<if $incubatorWeightSetting == 1>>
+		Weight is not being properly managed; excessive weight gain is likely. [[Monitor|Incubator][$incubatorWeightSetting = 2]] | [[Disable|Incubator][$incubatorWeightSetting = 0]]
+	<<elseif $incubatorWeightSetting == 2>>
+		Weight is being carefully managed; children will be released at a healthy weight. [[Estimate only|Incubator][$incubatorWeightSetting = 1]] | [[Disable|Incubator][$incubatorWeightSetting = 0]]
+	<<elseif $incubatorWeightSetting == 0>>
+		Weight management systems are offline; children will likely be malnourished. [[Activate|Incubator][$incubatorWeightSetting = 2]]
+	<</if>>
+<</if>>
+<br>
+<<if $incubatorUpgradeMuscles == 1>>
+	<<if $incubatorMusclesSetting == 2>>
+		Strength levels are purposefully set higher than recommended; excessive muscle gain is likely. [[Limit|Incubator][$incubatorMusclesSetting = 1]] | [[Disable|Incubator][$incubatorMusclesSetting = 0]]
+	<<elseif $incubatorMusclesSetting == 1>>
+		Musculature is being carefully managed; children will be released with near normal strength. [[Overload|Incubator][$incubatorMusclesSetting = 2]] | [[Disable|Incubator][$incubatorMusclesSetting = 0]]
+	<<elseif $incubatorMusclesSetting == 0>>
+		Strength management systems are offline; children will likely be released extremely weak. [[Activate|Incubator][$incubatorMusclesSetting = 1]]
+	<</if>>
+<</if>>
+<br>
+<<if $incubatorUpgradeReproduction == 1>>
+	<<if $incubatorReproductionSetting == 2>>
+		Hormone levels are purposefully set higher than recommended; over-active reproductive systems are likely. [[Limit|Incubator][$incubatorReproductionSetting = 1]] | [[Disable|Incubator][$incubatorReproductionSetting = 0]]
+	<<elseif $incubatorReproductionSetting == 1>>
+		Hormone levels are being carefully managed; children will be released with fully functional reproductive organs. [[Overload|Incubator][$incubatorReproductionSetting = 2]] | [[Disable|Incubator][$incubatorReproductionSetting = 0]]
+	<<elseif $incubatorReproductionSetting == 0>>
+		Reproduction management systems are offline; children will undergo normal puberty. [[Activate|Incubator][$incubatorReproductionSetting = 1]]
+	<</if>>
+<</if>>
+<br>
+<<if $incubatorUpgradeGrowthStims == 1>>
+	<<if $incubatorGrowthStimsSetting == 2>>
+		Children are injected with higher than recommended doses of stimulants; exceeding expected final height is likely. [[Limit|Incubator][$incubatorGrowthStimsSetting = 1]] | [[Disable|Incubator][$incubatorGrowthStimsSetting = 0]]
+	<<elseif $incubatorGrowthStimsSetting == 1>>
+		Children are injected with the recommended dosage of stimulants; they will grow to their full expected height. [[Overload|Incubator][$incubatorGrowthStimsSetting = 2]] | [[Disable|Incubator][$incubatorGrowthStimsSetting = 0]]
+	<<elseif $incubatorGrowthStimsSetting == 0>>
+		Growth stimulant injection systems are offline; children will develop normally. [[Activate|Incubator][$incubatorGrowthStimsSetting = 1]]
+	<</if>>
+<</if>>
+
+<<if $readySlaves == 1>>
+	<<if $incubatorBulkRelease == 1>>
+		<<set $newSlavePool = []>>
+		<<for _inc = 0; _inc < $tanks.length; _inc++>>
+			<<if $tanks[_inc].growTime <= 0>>
+				<<set $incubatorOldID = $tanks[_inc].ID>> /* single slave case */
+				<<set _tempObject = {object: $tanks[_inc], ID: $tanks[_inc].ID}>>
+				<<set $newSlavePool.push(clone(_tempObject))>>
+				<<run $tanks.splice(_inc, 1)>>
+				<<set _inc-->>
+			<</if>>
+		<</for>>
+		<<if $newSlavePool.length == 1>>
+			<<set $readySlave = $newSlavePool[0].object>>
+			<<set $newSlavePool = 0>>
+		<</if>>
+	<<else>>
+		<<for _inc = 0; _inc < $incubatorSlaves; _inc++>>
+			<<if $tanks[_inc].growTime <= 0>>
+				<<set $incubatorOldID = $tanks[_inc].ID>>
+				<<set $readySlave = $tanks[_inc]>>
+				<<run $tanks.splice(_inc, 1)>>
+				<<break>>
+			<</if>>
+		<</for>>
+	<</if>>
+	<<goto "Incubator Retrieval Workaround">>
+<</if>>
+
+<br><br>Rename $incubatorName: <<textbox "$incubatorName" $incubatorName "Incubator">> //Use a noun or similar short phrase//

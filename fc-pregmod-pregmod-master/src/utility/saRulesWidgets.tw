@@ -1,0 +1,1059 @@
+:: saRulesWidgets [nobr widget]
+
+/* needed to manage the obscene code duplication present in the revised saRules.tw */
+
+<<widget "saRulesAttractionDiscovery">>
+
+<<if $slaves[$i].attrXY <= 5>>
+	@@.red;disgusted by men@@
+<<elseif $slaves[$i].attrXY <= 15>>
+	@@.red;turned off by men@@
+<<elseif $slaves[$i].attrXY <= 35>>
+	@@.red;not attracted to men@@
+<<elseif $slaves[$i].attrXY <= 65>>
+	indifferent to men
+<<elseif $slaves[$i].attrXY <= 85>>
+	@@.green;attracted to men@@
+<<elseif $slaves[$i].attrXY <= 95>>
+	@@.green;aroused by men@@
+<<else>>
+	@@.green;passionate about men@@
+<</if>>
+and
+<<if $slaves[$i].attrXX <= 5>>
+	@@.red;disgusted by women.@@
+<<elseif $slaves[$i].attrXX <= 15>>
+	@@.red;turned off by women.@@
+<<elseif $slaves[$i].attrXX <= 35>>
+	@@.red;not attracted to women.@@
+<<elseif $slaves[$i].attrXX <= 65>>
+	indifferent to women.
+<<elseif $slaves[$i].attrXX <= 85>>
+	@@.green;attracted to women.@@
+<<elseif $slaves[$i].attrXX <= 95>>
+	@@.green;aroused by women.@@
+<<else>>
+	@@.green;passionate about women.@@
+<</if>>
+
+<</widget>>
+
+<<widget "saRulesPlayerFetishPlay">>
+
+<<if ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+	<<switch $slaves[$i].fetish>>
+	<<case "submissive">>
+		hold $him down and
+		<<if $slaves[$i].vagina <= 0 && $slaves[$i].anus <= 0>>
+			use $his body
+		<<else>>
+			fuck $him
+		<</if>>
+	<<case "cumslut">>
+		<<if $PC.dick != 0>>
+			cum in $his mouth
+		<<else>>
+			use your strap-on on $his mouth
+		<</if>>
+	<<case "humiliation">>
+		use $him in public
+	<<case "buttslut">>
+		fuck $his butt
+	<<case "boobs">>
+		fondle $his breasts
+		<<if $slaves[$i].lactation > 0>>
+			<<set $slaves[$i].lactationDuration = 2>>
+			<<set $slaves[$i].boobs -= $slaves[$i].boobsMilk, $slaves[$i].boobsMilk = 0>>
+		<</if>>
+	<<case "sadist">>
+		let $him help you abuse other slaves
+	<<case "masochist">>
+		hurt $him
+	<<case "dom">>
+		let $him help you use other slaves
+	<<case "pregnancy">>
+		<<if isFertile($slaves[$i]) && $PC.dick != 0>>
+			put a baby in $him
+		<<elseif $slaves[$i].bellyPreg >= 1500 || $slaves[$i].bellyImplant >= 1500>>
+			enjoy $his fecund curves
+		<<else>>
+			breed $him
+		<</if>>
+	<<default>>
+		fuck $him
+	<</switch>>
+<<else>>
+	fuck $him
+<</if>>
+
+<</widget>>
+
+<<widget "saRulesPlayerEnergy">>
+
+<<if $freeSexualEnergy > 0>>
+	<<if $freeSexualEnergy == 3>>
+		You have surplus sexual energy to burn, even when $he doesn't ask, and $he
+		<<if $slaves[$i].devotion < -20>>
+			@@.hotpink;hates $himself@@ for how often $he gets off on you relieving your needs with $his body.
+		<<elseif $slaves[$i].devotion <= 50 || $slaves[$i].trust <= 20>>
+			@@.hotpink;gets used to being a sex slave@@ every time $he climaxes as you use $him.
+		<<else>>
+			@@.hotpink;eagerly looks forward@@ to each climax $he shares with you.
+		<</if>>
+		<<set $slaves[$i].devotion += 2, $slaves[$i].need = 0>>
+		<<= SimpleSexAct.Player($slaves[$i], 10)>>
+	<<elseif $freeSexualEnergy == 2>>
+		You have surplus sexual energy to fuck $him whenever <<if $slaves[$i].relationship == -3>> you notice $his need<<else>>$he forces $himself to ask<</if>>, and $he is @@.hotpink;sexually dependent@@ on you.
+		<<set $slaves[$i].devotion += 1, $slaves[$i].need -= 40>>
+		<<= SimpleSexAct.Player($slaves[$i], 5)>>
+	<<elseif $slaves[$i].relationship == -3>>
+		You have little surplus sexual energy, but you make sure to keep your $wife's needs in mind<<if $slaves[$i].devotion < -20>>, even if $he doesn't want it<</if>>.
+		<<set $slaves[$i].need -= 40>>
+		<<= SimpleSexAct.Player($slaves[$i], 5)>>
+	<<else>>
+		You have little surplus sexual energy, and occasionally, $he asks in vain.
+		<<set $slaves[$i].need -= 20>>
+		<<= SimpleSexAct.Player($slaves[$i], 2)>>
+	<</if>>
+<<else>>
+	You have no surplus sexual energy, and $he asks in vain, @@.gold;reducing $his trust@@ in you.
+	<<set $slaves[$i].trust -= 1>>
+<</if>>
+
+<</widget>>
+
+<<widget "saRulesPlayerDiscoversFetish">>
+
+<<if $slaves[$i].fetishKnown == 0>>
+	<<if $freeSexualEnergy > 0>>
+		<<if $freeSexualEnergy > random(0,5)>>
+			<<set $slaves[$i].fetishKnown = 1>>
+			You discover that $he really likes it when you
+			<<switch $slaves[$i].fetish>>
+			<<case "submissive">>
+				hold $him down and fuck $him; @@.lightcoral;$he's a submissive!@@
+			<<case "cumslut">>
+				<<if $PC.dick != 0>>
+					cum in $his mouth; @@.lightcoral;$he's a cumslut!@@
+				<<else>>
+					use your strap-on in $his mouth; @@.lightcoral;$he's a cumslut!@@
+				<</if>>
+			<<case "humiliation">>
+				use $him in public; @@.lightcoral;$he's a humiliation fetishist!@@
+			<<case "buttslut">>
+				<<if canDoAnal($slaves[$i])>>fuck $his butt<<else>>tease $his anus<</if>>; @@.lightcoral;$he's an anal slut!@@
+			<<case "boobs">>
+				fondle $his breasts; @@.lightcoral;$he's a boob fetishist!@@
+			<<case "sadist">>
+				let $him help you abuse other slaves; @@.lightcoral;$he's a sadist!@@
+			<<case "masochist">>
+				hurt $him; @@.lightcoral;$he's a masochist!@@
+			<<case "dom">>
+				let $him help you use other slaves; @@.lightcoral;$he's dominant!@@
+			<<case "pregnancy">>
+				<<if $PC.dick != 0>>
+					<<if $slaves[$i].mpreg == 0>>
+						come <<if canDoVaginal($slaves[$i])>>inside<<else>>on<</if>> $him; @@.lightcoral;$he's a pregnancy fetishist!@@
+					<<else>>
+						come <<if canDoAnal($slaves[$i])>>inside<<else>>on<</if>> $him; @@.lightcoral;$he's a pregnancy fetishist!@@
+					<</if>>
+				<<else>>
+					talk dirty and call $him a mother; @@.lightcoral;$he's a pregnancy fetishist!@@
+				<</if>>
+			<<default>>
+				fuck $him; @@.lightcoral;$he's got a normal sexuality.@@
+			<</switch>>
+		<</if>>
+	<</if>>
+<</if>> /* closes fetish discovery */
+
+<</widget>>
+
+<<widget "saRulesPlayerDrugEffects">>
+
+<<if $slaves[$i].balls > 0>>
+	<<if ($slaves[$i].drugs == "testicle enhancement" || $slaves[$i].drugs == "intensive testicle enhancement")>>
+		<<if ($slaves[$i].devotion > 20) || ($slaves[$i].trust < -20)>>
+			<<if $slaves[$i].hormoneBalance >= 100>>
+				$He can't seem to get enough cum out of $his terribly swollen balls in one orgasm to relieve the pressure:
+				<<if $slaves[$i].dick>>
+					$his poor soft dick produces slow, anemic ejaculations, no matter how backed up $he is.
+				<<else>>
+					$his cumhole produces slow, anemic ejaculations, no matter how backed up $he is.
+				<</if>>
+				This forces $him to come to you for release many times a day, and $he @@.mediumaquamarine;is desperately reliant@@
+				<<if $slaves[$i].anus > 0 && canDoAnal($slaves[$i]) && $freeSexualEnergy > 0>>
+					on your <<if $PC.dick == 0>>strap-on<<else>>penis<</if>> inside $his ass as a source of relief.
+				<<else>>
+					on you for relief.
+				<</if>>
+				<<set $slaves[$i].trust += 2>>
+			<<else>>
+				$His terribly swollen balls force $him to come to you for release several times a day, and $he @@.mediumaquamarine;learns to rely@@
+				<<if $slaves[$i].anus > 0 && canDoAnal($slaves[$i]) && $freeSexualEnergy > 0>>
+					on your <<if $PC.dick == 0>>strap-on<<else>>penis<</if>> inside $his ass as a source of relief.
+				<<else>>
+					on you for relief.
+				<</if>>
+				<<set $slaves[$i].trust += 1>>
+			<</if>>
+		<<else>>
+			$He refuses to come to you for help with $his terribly swollen balls, no matter how backed up $he becomes. The intense blue-balling only @@.mediumorchid;makes $him dislike you more.@@
+			<<set $slaves[$i].devotion -= 1>>
+		<</if>>
+	<<elseif $slaves[$i].drugs == "hyper testicle enhancement">>
+		<<if ($slaves[$i].devotion > 20) || ($slaves[$i].trust < -20)>>
+			<<if $slaves[$i].hormoneBalance >= 100>>
+				$He can't seem to get enough cum out of $his grotesquely swollen balls in one orgasm to get relieve the pressure:
+				<<if $slaves[$i].dick>>
+					$his poor soft dick produces slow, anemic ejaculations, no matter how backed up $he is.
+				<<else>>
+					$his cumhole produces slow, anemic ejaculations, no matter how backed up $he is.
+				<</if>>
+				This forces $him to come to you for release many times a day, and $he @@.mediumaquamarine;is desperately reliant@@
+				<<if $slaves[$i].anus > 0 && canDoAnal($slaves[$i]) && $freeSexualEnergy > 0>>
+					on your <<if $PC.dick == 0>>strap-on<<else>>penis<</if>> inside $his ass as a source of relief.
+				<<else>>
+					on you for relief.
+				<</if>>
+				<<set $slaves[$i].trust += 2>>
+			<<else>>
+				$His grotesquely swollen balls force $him to come to you for release dozens of times a day, and $he @@.mediumaquamarine;is desperately reliant@@
+				<<if $slaves[$i].anus > 0 && canDoAnal($slaves[$i]) && $freeSexualEnergy > 0>>
+					on your <<if $PC.dick == 0>>strap-on<<else>>penis<</if>> inside $his ass as a source of relief.
+				<<else>>
+					on you for relief.
+				<</if>>
+				<<set $slaves[$i].trust += 1>>
+			<</if>>
+		<<else>>
+			$He refuses to come to you for help with $his grotesquely swollen balls, no matter how backed up and sore $he becomes. The intense blue-balling only @@.mediumorchid;makes $him hate you more.@@
+			<<set $slaves[$i].devotion -= 3>>
+		<</if>>
+	<</if>>
+<</if>> /* close overactive balls block */
+<<if $slaves[$i].drugs == "super fertility drugs" && canImpreg($slaves[$i], $PC)>>
+	<<if ($slaves[$i].devotion > 20) || ($slaves[$i].trust < -20)>>
+		$His reproductive system is in overdrive leading $him to come to you for insemination several times a day; $he @@.mediumaquamarine;desperately hopes@@ for the day your seed takes root in $his womb.
+		<<set $slaves[$i].trust += 1>>
+	<</if>>
+<</if>>
+
+<</widget>>
+
+<<widget "saRulesMasturbationFetishPlay">>
+
+<<if ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+	<<if ($slaves[$i].fetish == "submissive")>>
+		frequently pretends to be getting held down and dominated.
+	<<elseif ($slaves[$i].fetish == "cumslut")>>
+		<<if $slaves[$i].dick > 5>>
+			enjoys giving $himself head.
+		<<elseif $slaves[$i].dick > 0>>
+			enjoys licking up $his own cum.
+		<<else>>
+			always has a dildo in $his mouth.
+		<</if>>
+	<<elseif ($slaves[$i].fetish == "humiliation")>>
+		usually does it out in the open for all to see.
+	<<elseif ($slaves[$i].fetish == "buttslut")>>
+		<<if ($slaves[$i].anus > 0)>>
+			usually pounds $his ass with the largest dildo $he can find.
+		<<else>>
+			enjoys fiddling with $his virgin asshole.
+		<</if>>
+	<<elseif ($slaves[$i].fetish == "boobs")>>
+		pays extra attention to $his breasts and nipples.
+		<<if $slaves[$i].lactation > 0>>
+			<<set $slaves[$i].lactationDuration = 2>>
+			<<set $slaves[$i].boobs -= $slaves[$i].boobsMilk, $slaves[$i].boobsMilk = 0>>
+		<<else>>
+			<<= induceLactation($slaves[$i])>>
+		<</if>>
+	<<elseif ($slaves[$i].fetish == "sadist")>>
+		frequently poses threats at $himself.
+	<<elseif ($slaves[$i].fetish == "masochist")>>
+		frequently pretends to be getting held down and forcibly raped.
+	<<elseif ($slaves[$i].fetish == "dom")>>
+		usually pretends to dominate $himself.
+	<<elseif ($slaves[$i].fetish == "pregnancy")>>
+		<<if $slaves[$i].belly > 1500>>
+			<<set _belly = bellyAdjective($slaves[$i])>>
+			always rubs and teases $his _belly belly while doing so.
+		<<elseif isItemAccessible("a small empathy belly")>>
+			frequently straps on a fake belly to enhance $his fun.
+		<<else>>
+			frequently pretends to be
+			<<if $slaves[$i].balls > 0>>
+				getting a girl pregnant.
+			<<else>>
+				getting knocked up.
+			<</if>>
+		<</if>>
+	<<elseif ($slaves[$i].energy > 95)>>
+		strives to achieve as many orgasms as $he can in one session.
+	<<else>>
+		quickly gets off and moves on.
+	<</if>>
+<<elseif ($slaves[$i].energy > 95)>>
+	strives to achieve as many orgasms as $he can in one session.
+<<else>>
+	quickly gets off and moves on.
+<</if>> /* closes ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60) */
+
+<</widget>>
+
+<<widget "saRulesMasturbationDiscoversFetish">>
+
+<<if ($slaves[$i].fetishKnown == 0) && (random(1,20) == 1)>>
+	<<set $slaves[$i].fetishKnown = 1>>
+	However, you start to notice a trend in $his fantasies,
+	<<if ($slaves[$i].fetish == "submissive")>>
+		$he likes to tie $himself up and boss $himself around; @@.lightcoral;$he's a submissive!@@
+	<<elseif ($slaves[$i].fetish == "cumslut")>>
+		<<if $slaves[$i].dick > 0>>
+			$he often eats $his own cum when $he's finished; @@.lightcoral;$he's a cumslut!@@
+		<<else>>
+			$he likes to have something, anything, in $his mouth while $he masturbates; @@.lightcoral;$he's a cumslut!@@
+		<</if>>
+	<<elseif ($slaves[$i].fetish == "humiliation")>>
+		$he tends to masturbate in places where others can walk in on $him; @@.lightcoral;$he's a humiliation fetishist!@@
+	<<elseif ($slaves[$i].fetish == "buttslut")>>
+		$he always pays special attention to $his butthole; @@.lightcoral;$he's an anal slut!@@
+	<<elseif ($slaves[$i].fetish == "boobs")>>
+		$he always has a hand to $his nipples; @@.lightcoral;$he's a boob fetishist!@@
+		<<if $slaves[$i].lactation > 0>>
+			<<set $slaves[$i].lactationDuration = 2>>
+			<<set $slaves[$i].boobs -= $slaves[$i].boobsMilk, $slaves[$i].boobsMilk = 0>>
+		<<else>>
+			<<= induceLactation($slaves[$i])>>
+		<</if>>
+	<<elseif ($slaves[$i].fetish == "sadist")>>
+		$he tends to threaten $his toys; @@.lightcoral;$he's a sadist!@@
+	<<elseif ($slaves[$i].fetish == "masochist")>>
+		$he often to abuses $himself; @@.lightcoral;$he's a masochist!@@
+	<<elseif ($slaves[$i].fetish == "dom")>>
+		$he sometimes bosses $his toys around; @@.lightcoral;$he's dominant!@@
+	<<elseif ($slaves[$i].fetish == "pregnancy")>>
+		$he frequently pretends to either get pregnant, be pregnant, or get someone else pregnant; @@.lightcoral;$he's a pregnancy fetishist!@@
+	<<elseif ($slaves[$i].energy > 95)>>
+		$he's always horny; @@.lightcoral;$he's a nympho!@@
+	<<else>>
+		@@.lightcoral;they are incredibly mundane.@@
+	<</if>>
+<</if>>
+
+<</widget>>
+
+<<widget "saRulesMasturbationDrugEffects">>
+
+<<if $slaves[$i].balls > 0>>
+	<<if $slaves[$i].drugs == "testicle enhancement" || $slaves[$i].drugs == "intensive testicle enhancement">>
+		<<if $slaves[$i].hormoneBalance >= 100>>
+			$He can't seem to get enough cum out of $his terribly swollen balls in one orgasm to get relieve the pressure:
+			<<if $slaves[$i].dick>>
+				$his poor soft dick produces slow, anemic ejaculations, no matter how backed up $he is.
+			<<else>>
+				$his cumhole produces slow, anemic ejaculations, no matter how backed up $he is.
+			<</if>>
+			$He masturbates as often as $he can, but @@.mediumorchid;can't find relief.@@
+			<<set $slaves[$i].devotion-->>
+		<<else>>
+			$His terribly swollen balls force $him to masturbate several times a day, cultivating a need for sex that @@.mediumorchid;$he can't fulfill.@@
+			<<set $slaves[$i].devotion -= 1>>
+		<</if>>
+	<<elseif $slaves[$i].drugs == "hyper testicle enhancement">>
+		<<if $slaves[$i].hormoneBalance >= 100>>
+			$He can't seem to get enough cum out of $his grotesquely swollen balls in one orgasm to get relieve the pressure:
+			<<if $slaves[$i].dick>>
+				$his poor soft dick produces slow, anemic ejaculations, no matter how backed up $he is.
+			<<else>>
+				$his cumhole produces slow, anemic ejaculations, no matter how backed up $he is.
+			<</if>>
+			$He masturbates non-stop, but @@.mediumorchid;can't find relief.@@
+			<<set $slaves[$i].devotion -= 3>>
+		<<else>>
+			$His grotesquely swollen balls force $him to masturbate constantly, cultivating a need for sex that @@.mediumorchid;$he can't fulfill.@@
+			<<set $slaves[$i].devotion -= 1>>
+		<</if>>
+		<<if $slaves[$i].energy > 40>>
+			The constant orgasms steadily lose their impact, @@.red;weakening $his sex drive.@@
+			<<set $slaves[$i].energy -= 2>>
+		<</if>>
+	<</if>>
+<</if>>
+<<if $slaves[$i].drugs == "super fertility drugs" && canGetPregnant($slaves[$i])>>
+	$His reproductive system is in overdrive,
+	<<if $slaves[$i].dick > 9>>
+		leaving $him @@.mediumorchid;desperately fucking $himself@@ in an effort to get pregnant since @@.gold;you won't <<if $PC.dick != 0>>give $him<<else>>let $him find<</if>> the dick $he needs.@@
+		<<if canImpreg($slaves[$i], $slaves[$i])>>
+			<<= knockMeUp($slaves[$i], 5, 2, $slaves[$i].ID, 1)>>
+		<</if>>
+		<<if $slaves[$i].mpreg == 1 && $slaves[$i].anus == 0>>
+			@@.lime;$He is so baby crazed $he takes $his own anal virginity.@@
+			<<set $slaves[$i].anus++>>
+		<<elseif $slaves[$i].vagina == 0>>
+			@@.lime;$He is so baby crazed $he takes $his own virginity.@@
+			<<set $slaves[$i].vagina++>>
+		<</if>>
+		<<set $slaves[$i].devotion -= 3, $slaves[$i].trust -= 2>>
+	<<elseif ($slaves[$i].devotion >= -20)>>
+		leaving $him @@.mediumorchid;completely unfulfilled@@ since @@.gold;you won't <<if $PC.dick != 0>>give $him<<else>>let $him find<</if>> the dick $he needs.@@
+		<<set $slaves[$i].devotion -= 3, $slaves[$i].trust -= 2>>
+	<<else>>
+		leaving $him desperate for a thorough seeding @@.mediumorchid;that you've forbidden $him from having.@@
+		<<set $slaves[$i].devotion -= 3>>
+	<</if>>
+<</if>>
+<<if $slaves[$i].energy > 60>>
+	$His chronic masturbation @@.red;steadily dulls@@ $his sexual pleasure.
+	<<set $slaves[$i].energy-->>
+<</if>>
+
+<</widget>>
+
+<<widget "saRulesRapeFetish">>
+
+<<set _who = ($slaves[$i].rules.release.slaves === 1) ? "other slaves" : $his + " family">> /* should be the only two choices if we get here */
+<<if ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+	<<if ($slaves[$i].fetish == "submissive")>>
+		plead that _who fuck $him.
+		<<if $averageDick > 4>>
+			<<if $slaves[$i].anus > 0 && $slaves[$i].anus < 3 && canDoAnal($slaves[$i])>>
+				<<if ($slaves[$i].anus*40)-($averageDick*5) < random(1,100)>>
+					@@.lime;$His asshole is loosened@@ during sex with other slaves, since most of the cocks $he enticed a dominating buttfuck from are very large.
+					<<set $slaves[$i].anus++>>
+					<<set $slaves[$i].counter.anal += 3, $analTotal += 3>>
+				<</if>>
+			<</if>>
+			<<if $averageDick > 5>>
+				<<if $slaves[$i].vagina > 0 && $slaves[$i].vagina < 3 && canDoVaginal($slaves[$i])>>
+					<<if ($slaves[$i].vagina*40)-($averageDick*5) < random(1,100)>>
+						Since most of the slaves $he enticed a pounding from are extremely hung, @@.lime;$his cunt gets stretched out.@@
+						<<set $slaves[$i].vagina++>>
+						<<set $slaves[$i].counter.vaginal += 3, $vaginalTotal += 3>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<run SimpleSexAct.Slave($slaves[$i], 7)>>
+	<<elseif ($slaves[$i].fetish == "cumslut")>>
+		suck or be sucked by any <<if $slaves[$i].rules.release.slaves === 1>>slave<<else>>relative<</if>> $he fancies.
+		<<set _fuckCount = random(5,15)>>
+		<<set $slaves[$i].counter.oral += _fuckCount, $oralTotal += _fuckCount>>
+	<<elseif ($slaves[$i].fetish == "humiliation")>>
+		demand that _who let $him fuck them in public.
+		<<if !$slaves[$i].rivalry>>
+			<<set _rival = randomRapeRivalryTarget($slaves[$i], (s) => { return (s.devotion <= 20 && s.trust < -20); })>>
+			<<if def _rival>>
+				Craving a rush, $he repeatedly forces a reluctant <<= SlaveFullName(_rival)>> to have sex with $him in public. _rival.slaveName resents this, and $slaves[$i].slaveName's ongoing sexual abuse @@.lightsalmon;starts a rivalry@@ between them.
+				<<set $slaves[$i].rivalry = 1, _rival.rivalry = 1, $slaves[$i].rivalryTarget = _rival.ID, _rival.rivalryTarget = $slaves[$i].ID>>
+				<<run SimpleSexAct.Slave(_rival, 4)>>
+				<<if canPenetrate(_rival)>>
+					<<set _fuckCount = random(1,3)>>
+					<<set _rival.counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+				<</if>>
+				<<if !App.Utils.sexAllowed($slaves[$i], _rival)>>
+					As the rules do not permit $slaves[$i].slaveName and _rival.slaveName to have sex, $he is @@.yellow;severely punished.@@
+					<<set $slaves[$i].trust -= 4>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<run SimpleSexAct.Slave($slaves[$i], 4)>>
+		<<if canPenetrate($slaves[$i])>>
+			<<set _fuckCount = random(1,3)>>
+			<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+		<</if>>
+	<<elseif ($slaves[$i].fetish == "buttslut") && canDoAnal($slaves[$i])>>
+		demand that _who penetrate $his anus.
+		<<if $averageDick > 4>>
+			<<if $slaves[$i].anus > 0 && $slaves[$i].anus < 3 && canDoAnal($slaves[$i])>>
+				<<if ($slaves[$i].anus*30)-($averageDick*5) < random(1,100)>>
+					Since most of the slaves $he demands anal sex from are extremely hung, @@.lime;$his asshole gets stretched out.@@
+					<<set $slaves[$i].anus += 1>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<set _fuckCount = random(5,12)>>
+		<<set $slaves[$i].counter.anal += _fuckCount, $analTotal += _fuckCount>>
+	<<elseif ($slaves[$i].fetish == "boobs")>>
+		demand that _who massage $his breasts.
+		<<if $slaves[$i].lactation > 0>>
+			<<set $slaves[$i].lactationDuration = 2>>
+			<<set $slaves[$i].boobs -= $slaves[$i].boobsMilk, $slaves[$i].boobsMilk = 0>>
+		<<else>>
+			<<= induceLactation($slaves[$i])>>
+		<</if>>
+		<<set _fuckCount = random(10,25)>>
+		<<set $slaves[$i].counter.mammary += _fuckCount, $mammaryTotal += _fuckCount>>
+	<<elseif ($slaves[$i].fetish == "sadist")>>
+		force the most reluctant <<if $slaves[$i].rules.release.slaves === 1>>slaves<<else>>members of $his family<</if>> to let $him fuck them.
+		<<if !$slaves[$i].rivalry>>
+			<<set _rival = randomRapeRivalryTarget($slaves[$i], (s) => { return (s.devotion <= 50 && s.sexualFlaw !== "none"); })>>
+			<<if def _rival>>
+				$He focuses on <<= SlaveFullName(_rival)>>, who has a sexual flaw $slaves[$i].slaveName can exploit. $He sadistically
+				<<if _rival.sexualFlaw == "hates oral">>
+					rapes the poor slave's face<<if !canAchieveErection($slaves[$i])>> with <<if (hasAnyArms($slaves[$i]))>>$his fingers<<else>>a strap-on<</if>><</if>>. _rival.slaveName hates oral
+				<<elseif _rival.sexualFlaw == "hates penetration" && canDoVaginal(_rival)>>
+					rapes the poor slave's pussy<<if !canAchieveErection($slaves[$i])>> with <<if (hasAnyArms($slaves[$i]))>>$his fingers<<else>>a strap-on<</if>><</if>>. _rival.slaveName hates penetration
+				<<elseif (_rival.sexualFlaw == "hates anal" || _rival.sexualFlaw == "hates penetration") && canDoAnal(_rival)>>
+					rapes the poor slave's ass<<if !canAchieveErection($slaves[$i])>> with <<if (hasAnyArms($slaves[$i]))>>$his fingers<<else>>a strap-on<</if>><</if>>. _rival.slaveName hates anal
+				<<elseif _rival.sexualFlaw == "shamefast">>
+					rapes the poor slave in public. _rival.slaveName is terribly shamefast
+				<<elseif _rival.sexualFlaw == "idealistic">>
+					rapes the poor slave every time $he catches _him2 being romantic. _rival.slaveName is still idealistic
+				<<else>>
+					rapes the poor slave every chance $he gets,
+				<</if>>
+				and the sexual abuse @@.lightsalmon;starts a rivalry@@ between them.
+				<<set $slaves[$i].rivalry = 1, _rival.rivalry = 1, $slaves[$i].rivalryTarget = _rival.ID, _rival.rivalryTarget = $slaves[$i].ID>>
+				<<run SimpleSexAct.Slave(_rival, 4)>>
+				<<if canPenetrate(_rival)>>
+					<<set _fuckCount = random(1,3)>>
+					<<set _rival.counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+				<</if>>
+				<<if !App.Utils.sexAllowed($slaves[$i], _rival)>>
+					As the rules do not permit $slaves[$i].slaveName and _rival.slaveName to have sex, $he is @@.yellow;severely punished.@@
+					<<set $slaves[$i].trust -= 4>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<run SimpleSexAct.Slave($slaves[$i], 4)>>
+		<<if canPenetrate($slaves[$i])>>
+			<<set _fuckCount = random(1,3)>>
+			<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+		<</if>>
+	<<elseif ($slaves[$i].fetish == "masochist")>>
+		demand that _who hurt $him.
+		<<if $averageDick > 4>>
+			<<if $slaves[$i].anus > 0 && $slaves[$i].anus < 3 && canDoAnal($slaves[$i])>>
+				<<if ($slaves[$i].anus*30)-($averageDick*5) < random(1,100)>>
+					@@.lime;$His asshole is loosened@@ during sex with hung slaves, since $he often relies on painal to address $his needs.
+					<<set $slaves[$i].anus += 1>>
+					<<set $slaves[$i].counter.anal += 3, $analTotal += 3>>
+				<</if>>
+			<</if>>
+			<<if $averageDick > 5>>
+				<<if $slaves[$i].vagina > 0 && $slaves[$i].vagina < 3 && canDoVaginal($slaves[$i])>>
+					<<if ($slaves[$i].vagina*30)-($averageDick*5) < random(1,100)>>
+						Since $he usually demands that hung slaves fuck $him hard enough to make $his pussy hurt, @@.lime;$his cunt gets stretched out.@@
+						<<set $slaves[$i].vagina += 1>>
+						<<set $slaves[$i].counter.vaginal += 3, $vaginalTotal += 3>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<run SimpleSexAct.Slave($slaves[$i], 12)>>
+	<<elseif ($slaves[$i].fetish == "dom")>>
+		force _who to submit to $him.
+		<<if !$slaves[$i].rivalry>>
+			<<set _rival = randomRapeRivalryTarget($slaves[$i], (s) => { return (s.devotion <= 20 && s.trust < -20); })>>
+			<<if def _rival>>
+				$He repeatedly rapes a reluctant <<= SlaveFullName(_rival)>>; $he can't seem to keep $his hand<<if (hasBothArms($slaves[$i]) || !hasAnyArms($slaves[$i]))>>s<</if>><<if (!hasAnyArms($slaves[$i]))>> (so to speak)<</if>> off the poor slave, who can't avoid $him. Not surprisingly, _rival.slaveName resents this, and $slaves[$i].slaveName's ongoing sexual abuse @@.lightsalmon;starts a rivalry@@ between them.
+				<<set $slaves[$i].rivalry = 1, _rival.rivalry = 1, $slaves[$i].rivalryTarget = _rival.ID, _rival.rivalryTarget = $slaves[$i].ID>>
+				<<run SimpleSexAct.Slave(_rival, 4)>>
+				<<if !App.Utils.sexAllowed($slaves[$i], _rival)>>
+					As the rules do not permit $slaves[$i].slaveName and _rival.slaveName to have sex, $he is @@.yellow;severely punished.@@
+					<<set $slaves[$i].trust -= 4>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<run SimpleSexAct.Slave($slaves[$i], 7)>>
+		<<if canPenetrate($slaves[$i])>>
+			<<set _fuckCount = random(6,9)>>
+			<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+		<</if>>
+	<<elseif ($slaves[$i].fetish == "pregnancy")>>
+		demand that _who indulge $his pregnancy fetish.
+		<<if $averageDick > 5>>
+			<<if $slaves[$i].mpreg == 0>>
+				<<if $slaves[$i].vagina > 0 && $slaves[$i].vagina < 3 && canDoVaginal($slaves[$i])>>
+					<<if ($slaves[$i].vagina*40)-($averageDick*5) < random(1,100)>>
+						Since $he constantly demands to be fucked deeply to get $his womb filled with cum, @@.lime;$his cunt gets stretched out.@@
+						<<set $slaves[$i].vagina += 1>>
+						<<set _fuckCount = random(7,14)>>
+						<<set $slaves[$i].counter.vaginal += _fuckCount, $vaginalTotal += _fuckCount>>
+					<</if>>
+				<</if>>
+			<<else>>
+				<<if $slaves[$i].anus > 0 && $slaves[$i].anus < 3 && canDoAnal($slaves[$i])>>
+					<<if ($slaves[$i].anus*40)-($averageDick*5) < random(1,100)>>
+						Since $he constantly demands to be fucked deeply to get $his womb filled with cum, @@.lime;$his ass gets stretched out.@@
+						<<set $slaves[$i].anus += 1>>
+						<<set _fuckCount = random(7,14)>>
+						<<set $slaves[$i].counter.anal += _fuckCount, $analTotal += _fuckCount>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if canPenetrate($slaves[$i])>>
+			<<set _fuckCount = random(6,9)>>
+			<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+		<</if>>
+	<<elseif ($slaves[$i].energy > 95)>>
+		demand that _who satisfy $his formidable appetites.
+		<<if $averageDick > 4>>
+			<<if $slaves[$i].anus > 0 && $slaves[$i].anus < 3 && canDoAnal($slaves[$i])>>
+				<<if ($slaves[$i].anus*30)-($averageDick*5) < random(1,100)>>
+					@@.lime;$His asshole is loosened@@ during sex with well endowed slaves, since $he's so addicted to sex all $his holes see heavy traffic.
+					<<set $slaves[$i].anus += 1>>
+					<<set $slaves[$i].counter.anal += 3, $analTotal += 3>>
+				<</if>>
+			<</if>>
+			<<if $averageDick > 5>>
+				<<if $slaves[$i].vagina > 0 && $slaves[$i].vagina < 3 && canDoVaginal($slaves[$i])>>
+					<<if ($slaves[$i].vagina*30)-($averageDick*5) < random(1,100)>>
+						$He indulges in non-stop sex with your well endowed slaves, so much so that @@.lime;$his cunt gets stretched out.@@
+						<<set $slaves[$i].vagina += 1>>
+						<<set $slaves[$i].counter.vaginal += 3, $vaginalTotal += 3>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<run SimpleSexAct.Slave($slaves[$i], 7)>>
+		<<if canPenetrate($slaves[$i])>>
+			<<set _fuckCount = random(3,6)>>
+			<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+		<</if>>
+	<<else>>
+		demand that _who have sex with $him.
+		<<run SimpleSexAct.Slave($slaves[$i], 7)>>
+		<<if canPenetrate($slaves[$i])>>
+			<<set _fuckCount = random(3,6)>>
+			<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+		<</if>>
+	<</if>>
+<<else>>
+	demand that _who have sex with $him.
+	<<run SimpleSexAct.Slave($slaves[$i], 7)>>
+	<<if canPenetrate($slaves[$i])>>
+		<<set _fuckCount = random(3,6)>>
+		<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+	<</if>>
+<</if>> /* closes ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60) */
+
+<</widget>>
+
+<<widget "saRulesConsentFetish">>
+
+<<if ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60)>>
+	<<if ($slaves[$i].fetish == "submissive")>>
+		usually pairing off with a more dominant slave.
+		<<if $averageDick > 4>>
+			<<if $slaves[$i].anus > 0 && $slaves[$i].anus < 3 && canDoAnal($slaves[$i])>>
+				<<if ($slaves[$i].anus*40)-($averageDick*5) < random(1,100)>>
+					@@.lime;$His asshole is loosened@@ during sex with other slaves, since most of the cocks $he lets dominate $his backdoor are very large.
+					<<set $slaves[$i].anus += 1>>
+					<<set $slaves[$i].counter.anal += 3, $analTotal += 3>>
+				<</if>>
+			<</if>>
+			<<if $averageDick > 5>>
+				<<if $slaves[$i].vagina > 0 && $slaves[$i].vagina < 3 && canDoVaginal($slaves[$i])>>
+					<<if ($slaves[$i].vagina*40)-($averageDick*5) < random(1,100)>>
+						Since most of the slaves $he takes a pounding from are extremely hung, @@.lime;$his cunt gets stretched out.@@
+						<<set $slaves[$i].vagina += 1>>
+						<<set $slaves[$i].counter.vaginal += 3, $vaginalTotal += 3>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<run SimpleSexAct.Slave($slaves[$i], 7)>>
+	<<elseif ($slaves[$i].fetish == "cumslut")>>
+		and is popular for $his willingness to give oral.
+		<<set _fuckCount = random(5,15)>>
+		<<set $slaves[$i].counter.oral += _fuckCount, $oralTotal += _fuckCount>>
+	<<elseif ($slaves[$i].fetish == "humiliation")>>
+		usually asking them to fuck out in the open.
+		<<run SimpleSexAct.Slave($slaves[$i], 7)>>
+		<<if canPenetrate($slaves[$i])>>
+			<<set _fuckCount = random(1,3)>>
+			<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+		<</if>>
+	<<elseif ($slaves[$i].fetish == "buttslut")>>
+		looking after anyone who will
+		<<if ($slaves[$i].anus > 0)>>
+			<<if canDoAnal($slaves[$i])>>
+				penetrate
+				<<set _fuckCount = random(5,12)>>
+				<<set $slaves[$i].counter.anal += _fuckCount, $analTotal += _fuckCount>>
+			<<else>>
+				tease
+			<</if>>
+			$his ass
+		<<else>>
+			tease $his virgin anus
+		<</if>>
+		in return.
+		<<if $averageDick > 4>>
+			<<if $slaves[$i].anus > 0 && $slaves[$i].anus < 3 && canDoAnal($slaves[$i])>>
+				<<if ($slaves[$i].anus*30)-($averageDick*5) < random(1,100)>>
+					Since most of the slaves $he enjoys anal sex with are extremely hung, @@.lime;$his asshole gets stretched out.@@
+					<<set $slaves[$i].anus += 1>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif ($slaves[$i].fetish == "boobs")>>
+		seeing to anyone who will show $his breasts some love.
+		<<if $slaves[$i].lactation > 0>>
+			<<set $slaves[$i].lactationDuration = 2>>
+			<<set $slaves[$i].boobs -= $slaves[$i].boobsMilk, $slaves[$i].boobsMilk = 0>>
+		<<else>>
+			<<= induceLactation($slaves[$i])>>
+		<</if>>
+		<<set _fuckCount = random(10,25)>>
+		<<set $slaves[$i].counter.mammary += _fuckCount, $mammaryTotal += _fuckCount>>
+	<<elseif ($slaves[$i].fetish == "sadist")>>
+		usually pairing off with a masochistic slave willing to accept $his abuse.
+		<<run SimpleSexAct.Slave($slaves[$i], 7)>>
+		<<if canPenetrate($slaves[$i])>>
+			<<set _fuckCount = random(1,3)>>
+			<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+		<</if>>
+	<<elseif ($slaves[$i].fetish == "masochist")>>
+		usually pairing off with an abusive slave.
+		<<if $averageDick > 4>>
+			<<if $slaves[$i].anus > 0 && $slaves[$i].anus < 3 && canDoAnal($slaves[$i])>>
+				<<if ($slaves[$i].anus*30)-($averageDick*5) < random(1,100)>>
+					@@.lime;$His asshole is loosened,@@ since $he begs hung slaves to fuck $his butt until $he cries.
+					<<set $slaves[$i].anus += 1>>
+					<<set $slaves[$i].counter.anal += 3, $analTotal += 3>>
+				<</if>>
+			<</if>>
+			<<if $averageDick > 5>>
+				<<if $slaves[$i].vagina > 0 && $slaves[$i].vagina < 3 && canDoVaginal($slaves[$i])>>
+					<<if ($slaves[$i].vagina*30)-($averageDick*5) < random(1,100)>>
+						Since $he eagerly begs hung slaves to fuck $him until $he cries, @@.lime;$his cunt gets stretched out.@@
+						<<set $slaves[$i].vagina += 1>>
+						<<set $slaves[$i].counter.vaginal += 3, $vaginalTotal += 3>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<run SimpleSexAct.Slave($slaves[$i], 6)>>
+	<<elseif ($slaves[$i].fetish == "dom")>>
+		usually pairing off with a submissive bitch.
+		<<run SimpleSexAct.Slave($slaves[$i], 6)>>
+		<<if canPenetrate($slaves[$i])>>
+			<<set _fuckCount = random(1,3)>>
+			<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+		<</if>>
+	<<elseif ($slaves[$i].fetish == "pregnancy")>>
+		doing $his best to pair off with any pregnant slaves.
+		<<if $slaves[$i].mpreg == 0>>
+			<<if $averageDick > 5>>
+				<<if $slaves[$i].vagina > 0 && $slaves[$i].vagina < 3 && canDoVaginal($slaves[$i])>>
+					<<if ($slaves[$i].vagina*40)-($averageDick*5) < random(1,100)>>
+						$He also takes cock whenever $he can, begging to be fucked deeply to get $his womb filled with cum, so @@.lime;$his cunt gets stretched out.@@
+						<<set $slaves[$i].vagina += 1>>
+						<<set $slaves[$i].counter.vaginal += 3, $vaginalTotal += 3>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $averageDick > 5>>
+				<<if $slaves[$i].anus > 0 && $slaves[$i].anus < 3 && canDoAnal($slaves[$i])>>
+					<<if ($slaves[$i].anus*40)-($averageDick*5) < random(1,100)>>
+						$He also takes cock whenever $he can, begging to be fucked deeply to get $his womb filled with cum, so @@.lime;$his ass gets stretched out.@@
+						<<set $slaves[$i].anus += 1>>
+						<<set $slaves[$i].counter.anal += 3, $analTotal += 3>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<run SimpleSexAct.Slave($slaves[$i], 7)>>
+		<<if canPenetrate($slaves[$i])>>
+			<<set _fuckCount = random(6,9)>>
+			<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+		<</if>>
+	<<elseif ($slaves[$i].energy > 95)>>
+		and has to give out a lot of favors to get enough attention for $himself.
+		<<if $averageDick > 4>>
+			<<if $slaves[$i].anus > 0 && $slaves[$i].anus < 3 && canDoAnal($slaves[$i])>>
+				<<if ($slaves[$i].anus*30)-($averageDick*5) < random(1,100)>>
+					@@.lime;$His asshole is loosened@@ during sex with well endowed slaves, since $he's so addicted to sex all $his holes see heavy traffic.
+					<<set $slaves[$i].anus += 1>>
+					<<set $slaves[$i].counter.anal += 3, $analTotal += 3>>
+				<</if>>
+			<</if>>
+			<<if $averageDick > 5>>
+				<<if $slaves[$i].vagina > 0 && $slaves[$i].vagina < 3 && canDoVaginal($slaves[$i])>>
+					<<if ($slaves[$i].vagina*30)-($averageDick*5) < random(1,100)>>
+						$He indulges in non-stop sex with your well endowed slaves, so much so that @@.lime;$his cunt gets stretched out.@@
+						<<set $slaves[$i].vagina += 1>>
+						<<set $slaves[$i].counter.vaginal += 3, $vaginalTotal += 3>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<run SimpleSexAct.Slave($slaves[$i], 7)>>
+		<<if canPenetrate($slaves[$i])>>
+			<<set _fuckCount = random(3,6)>>
+			<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+		<</if>>
+	<<else>>
+		doing $his best to get off and move on.
+		<<run SimpleSexAct.Slave($slaves[$i], 7)>>
+		<<if canPenetrate($slaves[$i])>>
+			<<set _fuckCount = random(3,6)>>
+			<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+		<</if>>
+	<</if>>
+<<else>>
+	doing $his best to get off and move on.
+	<<run SimpleSexAct.Slave($slaves[$i], 7)>>
+	<<if canPenetrate($slaves[$i])>>
+		<<set _fuckCount = random(3,6)>>
+		<<set $slaves[$i].counter.penetrative += _fuckCount, $penetrativeTotal += _fuckCount>>
+	<</if>>
+<</if>> /* closes ($slaves[$i].fetishKnown == 1) && ($slaves[$i].fetishStrength > 60) */
+
+<</widget>>
+
+<<widget "saRulesConsentDiscoversFetish">>
+
+<<if ($slaves[$i].fetishKnown == 0)>>
+	<<if (random(1,2) == 1)>>
+		<<set $slaves[$i].fetishKnown = 1>>
+		However, one of $his partners
+		<<if ($slaves[$i].fetish == "submissive")>>
+			holds $him down, and $he loves it; @@.lightcoral;$he's a submissive!@@
+		<<elseif ($slaves[$i].fetish == "cumslut")>>
+			finally has to push $him away to get $him to stop sucking; @@.lightcoral;$he's a cumslut!@@
+		<<elseif ($slaves[$i].fetish == "humiliation")>>
+			fucks $him in public, and $he loves it; @@.lightcoral;$he's a humiliation fetishist!@@
+		<<elseif ($slaves[$i].fetish == "buttslut")>>
+			<<if ($slaves[$i].anus > 0)>>
+				<<if canDoAnal($slaves[$i])>>fucks $his butt<<else>>teases $his anus<</if>>, and $he loves it;
+			<<else>>
+				teases $his virgin anus, and $he loves it;
+			<</if>>
+			@@.lightcoral;$he's an anal slut!@@
+		<<elseif ($slaves[$i].fetish == "boobs")>>
+			fondles $his breasts, and $he loves it; @@.lightcoral;$he's a boob fetishist!@@
+			<<if $slaves[$i].lactation > 0>>
+				<<set $slaves[$i].lactationDuration = 2>>
+				<<set $slaves[$i].boobs -= $slaves[$i].boobsMilk, $slaves[$i].boobsMilk = 0>>
+			<<else>>
+				<<= induceLactation($slaves[$i])>>
+			<</if>>
+		<<elseif ($slaves[$i].fetish == "sadist")>>
+			asks $slaves[$i].slaveName to hit $him, which $slaves[$i].slaveName enjoys doing; @@.lightcoral;$he's a sadist!@@
+		<<elseif ($slaves[$i].fetish == "masochist")>>
+			hits $slaves[$i].slaveName while fucking $him, which only makes $him hornier; @@.lightcoral;$he's a masochist!@@
+		<<elseif ($slaves[$i].fetish == "dom")>>
+			asks $slaves[$i].slaveName to make them $slaves[$i].slaveName's bitch, which $slaves[$i].slaveName manages like a natural; @@.lightcoral;$he's dominant!@@
+		<<elseif ($slaves[$i].fetish == "pregnancy")>>
+			pretends to get $him pregnant, which $he really enjoys; @@.lightcoral;$he's a pregnancy fetishist!@@
+		<<elseif ($slaves[$i].energy > 95)>>
+			discovers that $he cannot be satisfied; @@.lightcoral;$he's a nympho!@@
+		<<else>>
+			discovers that $he isn't terribly exciting; @@.lightcoral;$he's got a normal sexuality.@@
+		<</if>>
+	<</if>>
+<</if>>
+
+<</widget>>
+
+<<widget "saRulesRapeDiscoversFetish">>
+
+<<if ($slaves[$i].fetishKnown == 0)>>
+	<<if (random(1,2) == 1)>>
+		<<set $slaves[$i].fetishKnown = 1>>
+		You discover that $he really likes it when the other slaves
+		<<if ($slaves[$i].fetish == "submissive")>>
+			hold $him down and fuck $him; @@.lightcoral;$he's a submissive!@@
+		<<elseif ($slaves[$i].fetish == "cumslut")>>
+			cum in $his mouth; @@.lightcoral;$he's a cumslut!@@
+		<<elseif ($slaves[$i].fetish == "humiliation")>>
+			use $him in public; @@.lightcoral;$he's a humiliation fetishist!@@
+		<<elseif ($slaves[$i].fetish == "buttslut")>>
+			<<if ($slaves[$i].anus > 0)>>
+				<<if canDoAnal($slaves[$i])>>fuck $his butt<<else>>tease $his anus<</if>>;
+			<<else>>
+				tease $his virgin anus;
+			<</if>>
+			@@.lightcoral;$he's an anal slut!@@
+		<<elseif ($slaves[$i].fetish == "boobs")>>
+			fondle $his breasts; @@.lightcoral;$he's a boob fetishist!@@
+			<<if $slaves[$i].lactation > 0>>
+				<<set $slaves[$i].lactationDuration = 2>>
+				<<set $slaves[$i].boobs -= $slaves[$i].boobsMilk, $slaves[$i].boobsMilk = 0>>
+			<<else>>
+				<<= induceLactation($slaves[$i])>>
+			<</if>>
+		<<elseif ($slaves[$i].fetish == "sadist")>>
+			let $him abuse them; @@.lightcoral;$he's a sadist!@@
+		<<elseif ($slaves[$i].fetish == "masochist")>>
+			hurt $him; @@.lightcoral;$he's a masochist!@@
+		<<elseif ($slaves[$i].fetish == "dom")>>
+			let $him dominate them; @@.lightcoral;$he's dominant!@@
+		<<elseif ($slaves[$i].fetish == "pregnancy")>>
+			<<if $slaves[$i].mpreg == 0>>
+				come <<if canDoVaginal($slaves[$i])>>inside<<else>>on<</if>> $him; @@.lightcoral;$he's a pregnancy fetishist!@@
+			<<else>>
+				come <<if canDoAnal($slaves[$i])>>inside<<else>>on<</if>> $him; @@.lightcoral;$he's a pregnancy fetishist!@@
+			<</if>>
+		<<else>>
+			fuck $him; @@.lightcoral;$he's got a normal sexuality.@@
+		<</if>>
+	<</if>>
+<</if>>
+
+<</widget>>
+
+<<widget "saRulesPermissiveDrugEffects">>
+
+<<set _who = ($slaves[$i].rules.release.slaves === 1) ? "other slaves" : $his + " family">> /* should be the only two choices if we get here */
+<<if $slaves[$i].balls > 0>>
+	<<if $slaves[$i].drugs == "testicle enhancement" || $slaves[$i].drugs == "intensive testicle enhancement">>
+		<<if ($slaves[$i].devotion > 20) || ($slaves[$i].trust < -20)>>
+			<<if $slaves[$i].hormoneBalance >= 100>>
+				$He can't seem to get enough cum out of $his terribly swollen balls in one orgasm to relieve the pressure:
+				<<if $slaves[$i].dick>>
+					$his poor soft dick produces slow, anemic ejaculations, no matter how backed up $he is.
+				<<else>>
+					$his cumhole produces slow, anemic ejaculations, no matter how backed up $he is.
+				<</if>>
+				$He is very reliant on _who to help $him, which @@.mediumaquamarine;habituates $him@@ to slave sex.
+			<<else>>
+				$His terribly swollen balls force $him to rely on _who for release several times a day, and jetting cum into and onto them @@.mediumaquamarine;habituates $him@@ to slave sex.
+			<</if>>
+			<<set $slaves[$i].trust += 1>>
+		<<else>>
+			$He can't seem to get enough cum out of $his terribly swollen balls to relieve the pressure and is either unwilling or unable to get help with it, something $he @@.mediumorchid;blames you for.@@
+			<<set $slaves[$i].devotion -= 1>>
+		<</if>>
+	<<elseif $slaves[$i].drugs == "hyper testicle enhancement">>
+		<<if ($slaves[$i].devotion > 20) || ($slaves[$i].trust < -20) || !canPenetrate($slaves[$i])>>
+			<<if $slaves[$i].hormoneBalance >= 100>>
+				$He can't seem to get enough cum out of $his grotesquely swollen balls in one orgasm to get relieve the pressure:
+				<<if $slaves[$i].dick>>
+					$his poor soft dick produces slow, anemic ejaculations, no matter how backed up $he is.
+				<<else>>
+					$his cumhole produces slow, anemic ejaculations, no matter how backed up $he is.
+				<</if>>
+				$He is completely dependent on your _who to help $him, which @@.mediumaquamarine;habituates $him@@ to slave sex.
+			<<else>>
+				$His grotesquely swollen balls force $him to rely on _who for release throughout times a day, and swelling them with cum @@.mediumaquamarine;habituates $him@@ to slave sex, though you have to take precautions so $he doesn't knock up your entire stock.
+			<</if>>
+			<<set $slaves[$i].trust += 1>>
+		<<else>>
+			$He can't seem to get enough cum out of $his grotesquely swollen balls to relieve the pressure and is either unwilling or unable to get help with it, something $he @@.mediumorchid;blames you for.@@
+			<<set $slaves[$i].devotion -= 1>>
+		<</if>>
+	<</if>>
+<</if>>
+<<if $slaves[$i].drugs == "super fertility drugs" && canGetPregnant($slaves[$i])>>
+	$His reproductive system is in overdrive leading $him to seek out any dicked <<if $slaves[$i].rules.release.slaves === 1>>slaves<<else>>relatives<</if>> $he can find several times a day. $He @@.mediumaquamarine;desperately longs@@ for the day $his efforts fill $his womb with child.
+	<<set $slaves[$i].trust += 1>>
+<</if>>
+
+<</widget>>
+
+<<widget "saRulesNoRelease">>
+
+	<<if (disobedience($slaves[$i]) > random(0, 100))>>
+		is forbidden to masturbate or seek sexual release. In $his @@.mediumorchid;intense frustration@@ $he disobeys and is @@.gold;severely punished@@ for illicit masturbation.
+		<<set $slaves[$i].devotion -= 2, $slaves[$i].trust -= 2>>
+	<<else>>
+		is forbidden to masturbate or seek sexual release, which @@.mediumorchid;highly frustrates@@ $him.
+		<<set $slaves[$i].devotion -= 2>>
+	<</if>>
+
+<</widget>>
+
+<<widget "saRulesNoReleaseDrugEffects">>
+
+<<if $slaves[$i].balls > 0>>
+	<<if $slaves[$i].drugs == "testicle enhancement" || $slaves[$i].drugs == "intensive testicle enhancement">>
+		<<if $slaves[$i].hormoneBalance >= 100>>
+			$He can't seem to get enough cum out of $his terribly swollen balls in one orgasm to get relieve the pressure:
+			<<if $slaves[$i].dick>>
+				$his poor soft dick produces slow, anemic ejaculations, no matter how backed up $he is.
+			<<else>>
+				$his cumhole produces slow, anemic ejaculations, no matter how backed up $he is.
+			<</if>>
+			Forbidden to masturbate or seek relief through sex, he @@.mediumorchid;can't find relief@@ and @@.red;the situation harms $his health.@@
+			<<set $slaves[$i].devotion -= 2>>
+		<<else>>
+			$His terribly swollen balls ache, cultivating a need for sex that @@.mediumorchid;$he can't fulfill@@ and @@.red;harming $his health.@@
+			<<set $slaves[$i].devotion -= 2>>
+		<</if>>
+		<<run healthDamage($slaves[$i], 3)>>
+	<<elseif $slaves[$i].drugs == "hyper testicle enhancement">>
+		<<if $slaves[$i].hormoneBalance >= 100>>
+			$He can't seem to get enough cum out of $his grotesquely swollen balls in one orgasm to get relieve the pressure:
+			<<if $slaves[$i].dick>>
+				$his poor soft dick produces slow, anemic ejaculations, no matter how backed up $he is.
+			<<else>>
+				$his cumhole produces slow, anemic ejaculations, no matter how backed up $he is.
+			<</if>>
+			Forbidden to masturbate or seek relief through sex, he @@.mediumorchid;can't find relief@@ and @@.red;the situation harms $his health.@@
+			<<set $slaves[$i].devotion -= 4>>
+		<<else>>
+			$His grotesquely swollen balls ache, cultivating a need for sex that @@.mediumorchid;$he can't fulfill@@ and @@.red;harming $his health.@@
+			<<set $slaves[$i].devotion -= 4>>
+		<</if>>
+		<<run healthDamage($slaves[$i], 6)>>
+	<</if>>
+<</if>>
+<<if $slaves[$i].drugs == "super fertility drugs" && canGetPregnant($slaves[$i])>>
+	$His reproductive system is in overdrive,
+	<<if ($slaves[$i].devotion >= -20)>>
+		leaving $him @@.mediumorchid;completely unfulfilled@@ since @@.gold;you won't <<if $PC.dick != 0>>give $him<<else>>let $him find<</if>> the dick $he needs.@@
+		<<set $slaves[$i].devotion -= 3, $slaves[$i].trust -= 2>>
+	<<else>>
+		leaving $him desperate for a thorough seeding @@.mediumorchid;that you've forbidden $him from having.@@
+		<<set $slaves[$i].devotion -= 3>>
+	<</if>>
+<</if>>
+<<if $slaves[$i].energy > 50>>
+	$His enforced chastity @@.red;habituates $him to a lack of release.@@
+	<<set $slaves[$i].energy -= 2>>
+<</if>>
+
+<</widget>>
+
+<<widget "saRulesPartnerDrugEffects">>
+
+<<set _sr = getSlave($slaves[$i].relationshipTarget)>>
+<<setLocalPronouns _sr 2>>
+<<if $slaves[$i].balls > 0>>
+	<<if ($slaves[$i].drugs == "testicle enhancement" || $slaves[$i].drugs == "intensive testicle enhancement")>>
+		<<if $slaves[$i].hormoneBalance >= 100>>
+			$He can't seem to get enough cum out of $his terribly swollen balls in one orgasm to relieve the pressure:
+			<<if $slaves[$i].dick>>
+				$his poor soft dick produces slow, anemic ejaculations, no matter how backed up $he is.
+			<<else>>
+				$his cumhole produces slow, anemic ejaculations, no matter how backed up $he is.
+			<</if>>
+			This forces $him to find $his <<= relationshipTerm($slaves[$i])>> for release many times a day, and $he @@.mediumaquamarine;is desperately reliant@@ on _him2 for relief.
+			<<set $slaves[$i].trust += 2>>
+		<<else>>
+			$His terribly swollen balls force $him to find $his <<= relationshipTerm($slaves[$i])>> for release several times a day, and $he @@.mediumaquamarine;relies@@ on _him2 for relief.
+			<<set $slaves[$i].trust += 1>>
+		<</if>>
+	<<elseif $slaves[$i].drugs == "hyper testicle enhancement">>
+		<<if $slaves[$i].hormoneBalance >= 100>>
+			$He can't seem to get enough cum out of $his grotesquely swollen balls in one orgasm to get relieve the pressure:
+			<<if $slaves[$i].dick>>
+				$his poor soft dick produces slow, anemic ejaculations, no matter how backed up $he is.
+			<<else>>
+				$his cumhole produces slow, anemic ejaculations, no matter how backed up $he is.
+			<</if>>
+			This forces $him to find $his <<= relationshipTerm($slaves[$i])>> for release many times a day, and $he @@.mediumaquamarine;is desperately reliant@@ on _him2 for relief.
+			<<set $slaves[$i].trust += 2>>
+		<<else>>
+			$His grotesquely swollen balls force $him to come to find $his <<= relationshipTerm($slaves[$i])>> for release dozens of times a day, and $he @@.mediumaquamarine;is desperately reliant@@ on _him2 for relief.
+			<<set $slaves[$i].trust += 1>>
+		<</if>>
+	<</if>>
+<</if>> /* close overactive balls block */
+<<if $slaves[$i].drugs == "super fertility drugs" && canImpreg($slaves[$i], _sr)>>
+	<<if ($slaves[$i].devotion > 20) || ($slaves[$i].trust < -20)>>
+		$His reproductive system is in overdrive leading $him to come to find $his <<= relationshipTerm($slaves[$i])>> for insemination several times a day; $he @@.mediumaquamarine;desperately hopes@@ for the day _his2 seed takes root in $his womb.
+		<<set $slaves[$i].trust += 1>>
+	<</if>>
+<</if>>
+
+<</widget>>

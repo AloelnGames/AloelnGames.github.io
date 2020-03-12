@@ -1,0 +1,30 @@
+BUILD REQUIREMENTS
+
+The below requirements must be met to build this project.
+
+ - Chromium Embedded Framework (CEF) 76.1.5 or newer.  The windows build is
+   currently configured to operate with the X64 binary distribution of CEF.
+
+ - CMake version 2.8.12.1 or newer.
+
+ - Linux/MacOS requirements:
+   I haven't tested these platforms, and there is platform-specific code missing.
+   Shouldn't be too hard to add, check the CEF distribution and treat FCHost
+   as a derivative of tests/cefsimple.
+
+ - Windows requirements:
+   Visual Studio 2015 or newer.
+
+BUILD STEPS
+
+You must have the environment variable CEF_ROOT set to the root of your
+CEF distribution.
+
+If you are running Windows, execute cmake_vs2015.bat, open FCHost.sln, and
+build from there.  Resulting binary and support files will be in
+FCHost/fchost/Debug, or FCHost/fchost/Release depending on the configuration
+selected in Visual Studio.  You should be able to zip up the contents of the
+Release folder and distribute them to another machine or user if desired.
+
+If you are not running Windows or you need something else special, please
+familiarize yourself with CMake and see the detailed information in CMakeLists.txt.

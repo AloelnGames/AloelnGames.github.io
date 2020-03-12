@@ -1,0 +1,21 @@
+:: Rules Assistant Summary [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Rules Assistant", $returnTo = "Rules Assistant">>
+<div class="scroll" style="height:90vh">
+<i>Here you can see an overview of all of your rules at the same time.
+<br>Rules further to the right will always take priority, but some rules may not apply to all slaves.</i>
+
+<style>
+	table.finances {
+		text-align: left;
+		border-collapse: separate;
+		border-spacing: 5px;
+		border-style: hidden;
+		empty-cells: hide;
+	}
+</style>
+
+<table class= "finances" border= "1">
+<<print RASummaryCell()>>
+</table>
+</div>

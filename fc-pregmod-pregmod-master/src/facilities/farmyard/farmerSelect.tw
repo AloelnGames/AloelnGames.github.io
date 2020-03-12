@@ -1,0 +1,15 @@
+:: Farmer Select [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Farmyard", $showEncyclopedia = 1, $encyclopedia = "Farmer">>
+<<if ($Farmer != 0)>>
+	<<set $Farmer = getSlave($Farmer.ID)>>
+	<<setLocalPronouns $Farmer>>
+	<span class='slave-name'><<= SlaveFullName($Farmer)>></span> is serving as your Farmer.<br><br>$He will tend to your crops and animals.
+<<else>>
+	You have not selected a Farmer.
+<</if>>
+
+<br><br>''Appoint a Farmer from your obedient slaves:''
+<br><br>[[None|Farmyard][removeJob($Farmer, "be the Farmer")]]
+<br><br>
+<<print App.UI.SlaveList.facilityManagerSelection(App.Entity.facilities.farmyard, "Farmyard")>>

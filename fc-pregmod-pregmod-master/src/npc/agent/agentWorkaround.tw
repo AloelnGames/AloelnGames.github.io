@@ -1,0 +1,62 @@
+:: Agent Workaround [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Neighbor Interact">>
+
+<<= assignJob($slaves[$i], "be your agent")>>
+
+<<set $reservedChildren = FetusGlobalReserveCount("incubator")>>
+<<set $reservedChildrenNursery = FetusGlobalReserveCount("nursery")>>
+
+<<if $slaves[$i].rivalry > 0>>
+	<<set _i = $slaveIndices[$slaves[$i].rivalryTarget]>>
+	<<if def _i>>
+		<<set $slaves[_i].rivalry = 0, $slaves[_i].rivalryTarget = 0>>
+	<<else>>
+		@@.red;Error, rival not found.@@
+	<</if>>
+	<<set $slaves[$i].rivalry = 0, $slaves[$i].rivalryTarget = 0>>
+<</if>>
+
+<<if $slaves[$i].relationship > 0 && $slaves[$i].relationship < 4>>
+	<<set _i = $slaveIndices[$slaves[$i].relationshipTarget]>>
+	<<if def _i>>
+		<<set $slaves[_i].relationship = 0, $slaves[_i].relationshipTarget = 0>>
+	<<else>>
+		@@.red;Error, relationshipTarget not found.@@
+	<</if>>
+	<<set $slaves[$i].relationship = 0, $slaves[$i].relationshipTarget = 0>>
+<</if>>
+
+<<set $desc = SlaveTitle($slaves[$i])>>
+<<setLocalPronouns $slaves[$i]>>
+
+You order $slaves[$i].slaveName to come into your office for orders. The devoted $desc has no prior warning that this is anything unusual, and from the <<if $slaves[$i].energy > 95>>horny glint<<else>>glow of sexual availability<</if>> in $his <<= App.Desc.eyesColor($slaves[$i])>> as $he <<if canWalk($slaves[$i])>>enters<<else>>is helped in<</if>>, $he <<if $slaves[$i].energy > 95>>seems to be hoping<<else>>wouldn't mind hearing<</if>> that you've called $him in for a quick fuck. In fact, the matter at hand is about as far as it could possibly be from that, on the spectrum of interactions between <<= properMaster()>> and slave.
+
+<br><br>You offer $him, without preamble, agency on your behalf in <<=App.activeArcology().name>>. As a $woman of intelligence, $he knows the basics of such an arrangement, but $he's stunned into silence by the offer, so you outline it briefly. Having a slave lead an arcology would be too much, even for the most open minded of Free Cities societies. So, $he would be freed, albeit subject to a set of private, restrictive contracts that would allow you to recall $him if you wish, and require $him to follow your directions, if you give $him any. But other than that, $he would be the effective leader of an entire arcology. It's an unusual arrangement, but one that's becoming more common as multiple arcologies come under united control.
+
+<br><br>$He's intelligent and confident of $his place within society as a valued slave, and knows that with your resources behind $him, this is likely something $he's capable of succeeding at. Nevertheless, $his feelings are obviously mixed. It will be a challenge,
+<<switch $slaves[$i].fetish>>
+<<case "submissive">>
+	especially for a sexual submissive like $him.
+<<case "cumslut">>
+	and $he'll have to find dominant ways to sate $his oral appetites.
+<<case "humiliation">>
+	especially for a humiliation addict like $him.
+<<case "buttslut">>
+	though $he'll probably be able to live $his anal life vicariously by buttfucking others.
+<<case "boobs">>
+	but $he'll have a practically infinite procession of breasts to judge and fondle.
+<<case "pregnancy">>
+	but the potential for impregnation of hundreds of slaves excites $him.
+<<case "dom">>
+	but the prospect of having more slaves at $his whim than even $he could possibly use is incredibly exciting to $him.
+<<case "sadist">>
+	but the prospect of having more slaves at $his whim than even $he could possibly break is incredibly exciting to $him.
+<<case "masochist">>
+	especially for a masochist like $him.
+<<default>>
+	though one $he's willing to take on.
+<</switch>>
+It will mean that $he'll see much less of you, something such a devoted slave may struggle with. Oppressed by the confusion and strength of $his feelings, $he begins to cry.
+
+<br><br>"Thank you, <<Master $slaves[$i]>>," $he gasps out. "I'll do my be<<s>>t."

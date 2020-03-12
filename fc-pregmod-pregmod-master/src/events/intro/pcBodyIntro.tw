@@ -1,0 +1,155 @@
+:: PC Body Intro [nobr]
+
+<p>
+	Most slaveowners in the Free Cities are male. The preexisting power structures of the old world have mostly migrated to the new, and it can often be very hard to be a free woman in the Free Cities. Some manage to make their way, but in many arcologies, men are the owners, and women are the owned. You'll cut a striking figure as the owner and leader of your arcology, but
+	<span class="intro question">
+		what's under your business attire?
+	</span>
+</p>
+
+<<set $PC.actualAge = Math.clamp($PC.actualAge, 14, 80)>>
+
+<p>
+	<div>
+		<<if $PC.title > 0>>
+			You are a <<if $PC.genes == "XX">>wo<</if>>man with a masculine figure and will be referred to as
+			<span style="font-weight:Bold">
+				Master.
+			</span>
+			[[Switch to a feminine appearance|PC Body Intro][$PC.title = 0]]
+		<<else>>
+			You are a <<if $PC.genes == "XX">>wo<</if>>man with a feminine figure and will be referred to as
+			<span style="font-weight:Bold">
+				Mistress.
+			</span>
+			[[Switch to a masculine appearance|PC Body Intro][$PC.title = 1]]
+		<</if>>
+	</div>
+	<div class="indent note">
+		This option will affect scenes. Femininity may increase difficulty in the future, but for now only your chest and junk matter.
+	</div>
+
+	<div>
+		Under my suit jacket,
+		<<if $PC.boobs > 300>>
+			<span style="font-weight:Bold">
+				feminine breasts.
+			</span>
+			[[Remove breasts|PC Body Intro][$PC.boobs = 100]]
+		<<else>>
+			<<if $PC.title > 0>>
+				<span style="font-weight:Bold">
+					masculine muscles.
+				</span>
+				[[Add breasts|PC Body Intro][$PC.boobs = 900]]
+			<<else>>
+				<span style="font-weight:Bold">
+					a flat chest.
+				</span>
+				<span class="note">
+					not 100% implemented
+				</span>
+				[[Add breasts|PC Body Intro][$PC.boobs = 900]]
+			<</if>>
+		<</if>>
+		<div class="note">
+			These options will affect scenes. Sporting breasts will increase difficulty.
+		</div>
+	</div>
+
+	<div>
+		Behind the front of my tailored
+		<<if $PC.dick != 0>>
+			<<if $PC.vagina != -1>>
+				slacks,
+				<span style="font-weight:Bold">
+					both a penis and a vagina.
+				</span>
+				[[Remove the penis|PC Body Intro][$PC.dick = 0, $PC.balls = 0, $PC.scrotum = 0, $PC.prostate = 0]] | [[Remove the vagina|PC Body Intro][$PC.vagina = -1, $PC.ovaries = 0]]
+			<<else>>
+				slacks, a
+				<span style="font-weight:Bold">
+					penis.
+				</span>
+				[[Switch to vagina|PC Body Intro][$PC.dick = 0, $PC.balls = 0, $PC.scrotum = 0, $PC.prostate = 0, $PC.genes = "XX", $PC.vagina = 1, $PC.ovaries = 1]] | [[Add a vagina|PC Body Intro][$PC.vagina = 1, $PC.ovaries = 1]]
+			<</if>>
+		<<else>>
+			skirt, a
+			<span style="font-weight:Bold">
+				vagina.
+			</span>
+			[[Switch to penis|PC Body Intro][$PC.dick = 4, $PC.balls = 3, $PC.scrotum = 3, $PC.prostate = 1, $PC.genes = "XY", $PC.vagina = -1, $PC.ovaries = 0]] | [[Add a penis|PC Body Intro][$PC.dick = 4, $PC.balls = 3, $PC.scrotum = 3, $PC.prostate = 1]]
+		<</if>>
+	</div>
+	<div class="indent note">
+		These options will affect sex scenes. Feminine options will increase difficulty.
+	</div>
+</p>
+
+<p>
+	<div class="intro question">
+		How old are you?
+	</div>
+	<div>
+		I'm
+		<<if $PC.actualAge >= 65>>
+			getting up in years. I've made a legacy for myself, and I'm not done yet.
+		<<elseif $PC.actualAge >= 50>>
+			well into middle age. I've made a name for myself, and I've still got it.
+		<<elseif $PC.actualAge >= 35>>
+			entering middle age. I'm accomplished, and I retain some youthful vigor.
+		<<else>>
+			surprisingly young. I'll need to prove myself, but I've got energy to burn.
+		<</if>>
+		My age:
+		<span style="font-weight:Bold">
+			<<textbox "$PC.actualAge" $PC.actualAge "PC Body Intro">>
+		</span>
+		<<set $PC.physicalAge = $PC.actualAge, $PC.visualAge = $PC.actualAge>>
+	</div>
+	<div class="indent note">
+		Older player characters start with more reputation and maintain reputation somewhat more easily, but have slightly less sexual energy.
+	</div>
+</p>
+
+<p>
+	<div class="intro question">
+		What is your name and alternate indulgence?
+	</div>
+
+	<div>
+		Name your character: <<textbox "$PC.slaveName" $PC.slaveName "PC Body Intro">> (surname)
+		<<if $PC.slaveSurname>>
+			<<textbox "$PC.slaveSurname" $PC.slaveSurname "PC Body Intro">>
+			<<link "Go by a single name">><<set $PC.slaveSurname = 0, $PC.birthSurname = "">><<goto "PC Body Intro">><</link>>
+		<<else>>
+			<<textbox "$PC.slaveSurname" "" "PC Body Intro">>
+		<</if>>
+	</div>
+	<div class="indent note">
+		As with all text boxes in FC, press the enter key to commit your changes.
+	</div>
+	<div>
+		Preferred refreshment: <<textbox "$PC.refreshment" $PC.refreshment "PC Body Intro">> [[Cigars|PC Body Intro][$PC.refreshment = "cigar",$PC.refreshmentType = 0]] | [[Whiskey|PC Body Intro][$PC.refreshment = "whiskey",$PC.refreshmentType = 1]]
+	</div>
+	<div>
+		Preferred method of consumption:
+		<span style="font-weight:Bold"><<if $PC.refreshmentType == 0>>Smoked<<elseif $PC.refreshmentType == 1>>Drank<<elseif $PC.refreshmentType == 2>>Eaten<<elseif $PC.refreshmentType == 3>>Snorted<<elseif $PC.refreshmentType == 4>>Injected<<elseif $PC.refreshmentType == 5>>Popped<<elseif $PC.refreshmentType == 6>>Dissolved orally<</if>></span>.
+	</div>
+	[[Smoked|PC Body Intro][$PC.refreshmentType = 0]] | [[Drank|PC Body Intro][$PC.refreshmentType = 1]] | [[Eaten|PC Body Intro][$PC.refreshmentType = 2]] | [[Snorted|PC Body Intro][$PC.refreshmentType = 3]] | [[Injected|PC Body Intro][$PC.refreshmentType = 4]] | [[Popped|PC Body Intro][$PC.refreshmentType = 5]] | [[Orally Dissolved|PC Body Intro][$PC.refreshmentType = 6]]
+	<div class="indent note">
+		Flavor only; no mechanical effect. If entering a custom refreshment, please assign proper usage.
+		<<if $PC.refreshmentType == 0>>"Smoke" must fit into the following sentence: "I smoked a $PC.refreshment" to fit events properly
+		<<elseif $PC.refreshmentType == 5>>"Popped" must fit into the following sentence: "I shook the bottle of $PC.refreshment" to fit events properly
+		<<elseif $PC.refreshmentType == 6>>"Orally Dissolved" must fit into the following sentence: "I placed a tab of $PC.refreshment under my tongue" to fit events properly
+		<</if>>
+	</div>
+</p>
+
+<p>
+	<<if $PC.vagina != -1>>
+		[[Confirm player character customization|PC Preg Intro]]
+	<<else>>
+		[[Confirm player character customization|PC Appearance Intro]]
+	<</if>>
+</p>

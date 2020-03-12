@@ -1,0 +1,389 @@
+:: secExpSmilingMan [nobr]
+
+<strong>The Smiling Man</strong> <br>
+<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event">>
+<<setAssistantPronouns>>
+<<if $smilingManProgress == 0>>
+	<<set $fcnn.push("...encryption techniques: how to protect you and your loved ones from hackers ...")>>
+
+	<br>
+	During your morning routine, a peculiar report appears: it's been several weeks since your arcology was the victim of a series of cyber-crimes conducted by a mysterious figure.
+	The egocentric criminal apparently took great pride in their acts, to the point of signing them with a symbol: a stylized smiling face. Your arcology was not the only one under assault by the
+	machinations of the one the media quickly nicknamed //the Smiling Man//.
+	<br>Despite the sheer damage this criminal did, you cannot help but admire the skill with which every misdeed was performed — the worst white collar crimes of the century, carried out with such elegance
+	that they almost seemed the product of natural laws, rather than masterful manipulation of the digital market.
+	While sifting through the report, $assistant.name remains strangely quiet. "I'm worried, <<= properTitle()>> — this individual seems to be able to penetrate whichever system garners his attention. I... feel vulnerable," _heA says. "It's not something I'm used to."
+	<br>Fortunately you have not been hit directly by this criminal — yet. Still, the repercussions of numerous bankruptcies take their toll on your arcology, whose @@.red;prosperity suffers.@@
+	<br><<set $arcologies[0].prosperity *= random(80,90) * 0.01>>
+	<br>
+	<span id="result">
+	<br>
+	<<if $cash >= 10000>>
+		<<link "Devote funds to the search for this dangerous criminal">>
+			<<run cashX(-10000, "event")>>
+			<<set $investedFunds = 1>>
+			<<set $relationshipLM++>>
+			<<set $smilingManProgress++>>
+			<<replace "#result">>
+				You devote funds to capture and neutralize the threat. You cannot help but wonder what the end game of this "smiling man" is. Money? Fame? Or is he on an ideological crusade?
+			<</replace>>
+		<</link>>
+		<br>
+		<<link "Attempt to contact the mysterious figure">>
+			<<run cashX(-10000, "event")>>
+			<<set $investedFunds = 1>>
+			<<set $relationshipLM += 2>>
+			<<set $smilingManProgress++>>
+			<<replace "#result">>
+				You devote funds to an attempt at communicating with the smiling man. You cannot help but wonder what the end game of this "smiling man" is. Money? Fame? Or is he on an ideological crusade?
+			<</replace>>
+		<</link>>
+		<br>
+		<<link "Invest funds to increase the cyber-security of the arcology">>
+			<<run cashX(-10000, "event")>>
+			<<set $investedFunds = 1>>
+			<<set $relationshipLM += random(5,10)>>
+			<<set $smilingManProgress++>>
+			<<replace "#result">>
+				You devote funds to the improvement of the cyber-security of your arcology. You cannot help but wonder what the end game of this "smiling man" is. Money? Fame? Or is he on an ideological crusade?
+			<</replace>>
+		<</link>>
+	<<else>>
+		Not enough funds to take further action.
+	<</if>>
+	<br>
+	<<link "Ignore the issue">>
+		<<set $smilingManProgress++>>
+		<<replace "#result">>
+			You do not consider this individual a threat.
+		<</replace>>
+	<</link>>
+	</span>
+<<elseif $smilingManProgress == 1>>
+	<<set $fcnn.push("...cybersecurity market is booming thanks to a series of recent high-profile attacks...")>>
+
+	<br>
+	You have just reached your penthouse when your faithful assistant appears in front of you, evidently excited.
+	"<<= properTitle()>>, I have just received news of a new attack by the Smiling Man. It appears a few hours ago he infiltrated another arcology and caused a catastrophic failure of its power plant.
+	Between old debts and the loss of value for his shares, the owner went bankrupt in minutes. It seems the Smiling Man managed to keep a small auxiliary generator functioning enough to project a giant holographic picture of his symbol on the arcology's walls.
+	Say what you will about his actions, but you can't deny he has style... Anyways, this opens up a great opportunity to gain control of the structure for ourselves."
+	It is indeed a great opportunity, one you cannot resist. You quickly organize the affair and in a few minutes a message reaches your assistant.
+	<br>"Should I open it?" your assistant asks. You silently nod.
+	<br>Suddenly the room flashes red, while your assistant fades for half a second. When _heA reappears, _hisA face has been replaced by a stylized smiling face.
+	<br>"Hello, my dear $PC.birthName. I can call you $PC.birthName, right? I've been keeping an eye on you for so long now, it feels like we're friends! I am terribly sorry for my unannounced visit, but I wanted to meet face to face... well, face to hologram." it says, letting out a childlike giggle.
+	"I'm sure you're aware of my recent activities around this rock of ours, and, well, to put it simply, it's your turn to contribute to my great project! You'll love it when you see it, I'm sure! By the way, thanks for the offer — it's so nice to see people contribute to a worthy cause so generously! Well, I've taken enough of your time, see you soon!"
+	<br>The lights flicker once more and an instant later your assistant returns to _hisA usual self.
+	<br>"I... I — I couldn't stop him! I'm sorry, <<= properTitle()>>."
+	<br>You waste no time in rushing to the console and checking your finances. It's as you feared, @@.red;you have been robbed.@@
+	<<set _lostCash = Math.clamp(50000 * Math.trunc($week / 20), 50000, 1000000)>>
+	<<if $assistant.power >= 1>>
+		<br>Fortunately, the computing power available to $assistant.name allowed _himA to
+		<<if $assistant.power == 1>>
+			<<set _lostCash -= Math.min(20000, _lostCash)>>
+			somewhat
+		<<elseif $assistant.power == 2>>
+			<<set _lostCash -= Math.min(30000, _lostCash)>>
+		<<elseif $assistant.power >= 3>>
+			<<set _lostCash -= Math.min(40000, _lostCash)>>
+			significantly
+		<</if>>
+			limit the damage.
+	<</if>>
+	<<if $secUpgrades.cyberBots == 1>>
+		<<set _lostCash -= Math.min(30000, _lostCash)>>
+		The additional cyber defenses acquired and running in the security HQ <<if _lostCash < 200000>>further<</if>> limit the damage.
+	<</if>>
+	<<if $investedFunds == 1>>
+		<<set _lostCash -= Math.min(20000, _lostCash)>>
+		The funding you dedicated to the Smiling Man case saved some of the assets that would have been otherwise lost.
+	<</if>>
+	<<run cashX(forceNeg(_lostCash), "event")>>
+	<br>
+	<br>
+	<span id="result">
+	<br>
+	<<link "&quot;I want him dead. Now.&quot;">>
+		<<set $relationshipLM-->>
+		<<set $smilingManProgress++>>
+		<<replace "#result">>
+			You command your loyal operatives to double down on the search and elimination of the threat.
+		<</replace>>
+	<</link>>
+	<br>
+	<<link "&quot;I want him, dead or alive!&quot;">>
+		<<set $relationshipLM++>>
+		<<set $smilingManProgress++>>
+		<<replace "#result">>
+			You command your loyal operatives to double down on the search and capture of the threat.
+		<</replace>>
+	<</link>>
+	<br>
+	<<link "&quot;If we don't find him soon, we will regret it.&quot;">>
+		<<set $relationshipLM += 2>>
+		<<set $smilingManProgress++>>
+		<<replace "#result">>
+			You command your loyal operatives to double down on the search and neutralization of the threat.
+		<</replace>>
+	<</link>>
+	<br>
+	<<link "&quot;He got what he wanted. Hopefully, we will be left in peace.&quot;">>
+		<<set $smilingManProgress++>>
+		<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event">>
+		<<replace "#result">>
+			You take no further action. Hopefully this ordeal is over.
+		<</replace>>
+	<</link>>
+	</span>
+<<elseif $smilingManProgress == 2>>
+	<<set $fcnn.push("...my money safe the old-fashioned way: I store it all underneath my mattress...")>>
+
+	<br>
+	<<set $smilingManWeek = $week>>
+	When $assistant.name violently wakes you up, _hisA worried expression can mean only one thing: the Smiling Man had been back. "We were anonymously sent a link to a new website: it's a very simple site, no visuals, no text; only a countdown ticking away. It will reach zero this evening." your assistant says.
+	This is troubling, yet somewhat exciting. The Smiling Man never failed to cause damage, but his ego had gotten the best of him this time — having time to prepare before their attack will give you a chance to find them. For the rest of the day you do your best to plan, prepare and focus.
+	<br>
+	<br>Evening came faster than you anticipated. Your security team was already at full alert, waiting for any signal on the horizon. The die was cast.
+	<br>Suddenly all the computers in the room begin to act strangely, and then it happened. On all of the screens across the arcology the Smiling Man's icon appears, then every speaker begins broadcasting the same voice, one that you have already heard once before:
+	<br>"Hello citizens of $arcologies[0].name! I am here on this special day to relay to you a very important message: we find ourselves in very peculiar times, times of strife and suffering! But these are also times of change and regeneration! Indeed, I say humanity itself is regenerating, turning into a new being for which the
+	ideals of the old world no longer hold meaning. A new blank page from which humanity can begin to prosper again.
+	<br>Alas, my friends, not all is good, as in this rebirth a great injustice is being perpetrated. If we truly want to ascend to this new form of humanity the old must give way to the new. If we must cleanse our mind of old ideas, our world must cleanse itself of them as well.
+	It's to fix this injustice, that I worked so hard all this time! To cleanse the world of the old, we must get rid of our precious, precious data. At the end of this message every digital device will see its memory erased, every archive cleaned, every drive deleted.
+	<br>It will be a true rebirth! A true new beginning! No longer will the chains of the past keep humanity anchored!"
+	<br>The voice stopped for a second.
+	<br>"Have a good day," it simply concluded.
+	<br>Then it happened.
+	<br>In little more than seconds all the data collected in the years past vanished. It's a disaster.
+	The vast majority of currency is digital, so the actions of the Smiling Man have a devastating effect on the money supply.
+	<<if $cash < 0>>
+		Luckily for you this means that your @@.yellowgreen;debt is reduced.@@
+	<<else>>
+		Unfortunately this means that your @@.red;cash reserves are gutted.@@
+	<</if>>
+	<<run cashX(($cash * 0.2)-$cash, "event")>>
+	You are not the only one affected by this however. @@.red;The economy of the entire world is severely affected@@ by the loss of vast quantities of currency. Who knows how long will it take for the global economy to recover.
+	<<set $globalCrisisWeeks = random(8,16)>>
+	Trade is @@.red;severely affected.@@
+	<<set $SecExp.core.trade *= 0.2>>
+	With the loss of so much information, most of your accomplishments are simply forgotten, so @@.red;your reputation suffers.@@
+	<<run repX(($rep * 0.6)-$rep, "event")>>
+
+	<<if $arcologies[0].ownership >= 60>>
+		<<if $SecExp.core.authority <= 10000>>
+			<<set _cells = $building.findCells(cell => cell.canBeSold())>>
+			<<set jsEither(_cells).owner = 0>>
+			Vast amount of data relative to the ownership of the arcology is lost. You lost all legal claims to one of the sectors.
+		<<else>>
+			Vast amount of data relative to the ownership of the arcology is lost. You would've run the risk of losing ownership of one of the sectors, but fortunately your authority is so high your citizens do not dare question your claims even in the absence of a valid legal case.
+		<</if>>
+	<</if>>
+	<<if $secUpgrades.coldstorage > 3>>
+		Your cold storage facility has ensured that the Smiling Man's destruction of the primary archives was unable to damage the security of your arcology.
+	<<elseif $secUpgrades.coldstorage == 0>>
+		Your security department sees its archives butchered by the Smiling Man. Almost all data on criminals, citizens, and operations are lost. The @@.red;security of the arcology is greatly reduced.@@ Criminals, on the other hand, with their past erased, cannot wait to join this new world, so @@.red;crime will inevitably increase.@@
+		<<set $SecExp.security.cap = Math.clamp($SecExp.security.cap * 0.2,0,100)>>
+		<<set $SecExp.core.crimeLow = Math.clamp($SecExp.core.crimeLow * 1.5, 20,100)>>
+	<</if>>
+
+	<br>A short, meek man approaches you with a weak smile. "Not all is lost, <<= properTitle()>>. We have a lead on him — he is here, in $arcologies[0].name."
+	<br>Despite the bleak situation, you cannot help but smile back.
+	<br>
+	<br>
+	<span id="result">
+	<br>
+	<<link "&quot;Eliminate the threat, once and for all.&quot;">>
+		<<set $relationshipLM-->>
+		<<set $smilingManProgress++>>
+		<<replace "#result">>
+			You command your loyal operatives to prepare for a manhunt.
+		<</replace>>
+	<</link>>
+	<br>
+	<<link "&quot;Bring him to me.&quot;">>
+		<<set $relationshipLM++>>
+		<<set $smilingManProgress++>>
+		<<replace "#result">>
+			You command your loyal operatives to prepare for a manhunt.
+		<</replace>>
+	<</link>>
+	<br>
+	<<link "&quot;Such skill on my side would be a great boon. Find him.&quot;">>
+		<<set $relationshipLM += 2>>
+		<<set $smilingManProgress++>>
+		<<replace "#result">>
+			You command your loyal operatives to prepare for a manhunt.
+		<</replace>>
+	<</link>>
+	<br>
+	<<link "&quot;He finally got what he always wanted. Let him have his victory, we have better things to do.&quot;">>
+		<<set $smilingManProgress++>>
+		<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event">>
+		<<replace "#result">>
+			You take no further action. Hopefully this ordeal is finally over.
+		<</replace>>
+	<</link>>
+	</span>
+<<elseif $smilingManProgress == 3>>
+	<<set $nextButton = " ">>
+	<<set $fcnn.push("...sometimes high-tech problems have low-tech solutions. Back to you in the...")>>
+
+	<<set $activeSlaveOneTimeMinAge = 16>>
+	<<set $activeSlaveOneTimeMaxAge = 18>>
+	<<set $one_time_age_overrides_pedo_mode = 1>>
+	<<set $oneTimeDisableDisability = 1>>
+	<<set $fixedRace = "asian">>
+	<<set $fixedNationality = "Japanese">>
+	<<if $seeDicks != 100>>
+		<<set $activeSlave = GenerateNewSlave("XX")>>
+		<<set $activeSlave.faceShape = "cute">>
+		<<set $activeSlave.boobs = 450>>
+		<<set $activeSlave.vagina = 0>>
+		<<set $activeSlave.ovaries = 1>>
+	<<else>>
+		<<set $activeSlave = GenerateNewSlave("XY")>>
+		<<set $activeSlave.boobs = 250>>
+		<<set $activeSlave.faceShape = "androgynous">>
+	<</if>>
+	<<set $activeSlave.boobShape = "perky">>
+	<<set $activeSlave.nipples = "cute">>
+	<<set $activeSlave.origin = "$He was a criminal mastermind, captured shortly after completing $his master plan.">>
+	<<set $activeSlave.career = "a student from a private school">>
+	<<set $activeSlave.intelligence = 100>>
+	<<set $activeSlave.intelligenceImplant = 30>>
+	<<set $activeSlave.slaveSurname = "Yamadera">>
+	<<set $activeSlave.birthSurname = "Yamadera">>
+	<<set $activeSlave.origSkin = "pale">>
+	<<run applyGeneticColor($activeSlave)>>
+	<<set $activeSlave.devotion = 5 * $relationshipLM>>
+	<<set $activeSlave.trust = 5 * $relationshipLM>>
+	<<set $activeSlave.face = random(10,50)>>
+	<<run setHealth($activeSlave, 70, 0, 0, 0, 0)>>
+	<<set $activeSlave.teeth = "normal">>
+	<<set $activeSlave.areolae = 0>>
+	<<set $activeSlave.anus = 0>>
+	<<set $activeSlave.butt = 3>>
+	<<set $activeSlave.lips = 15>>
+	<<set $activeSlave.behavioralFlaw = "odd">>
+	<<set $activeSlave.skill.vaginal = 0>>
+	<<set $activeSlave.skill.oral = 0>>
+	<<set $activeSlave.skill.anal = 0>>
+	<<set $activeSlave.skill.whoring = 0>>
+	<<set $activeSlave.skill.entertainment = 0>>
+	<<set $activeSlave.birthWeek = random(0,50)>>
+	<<set $activeSlave.voice = 2>>
+	<<set $activeSlave.weight = -20>>
+	<<set $activeSlave.muscles = 0>>
+	<<set $activeSlave.shoulders = -1>>
+	<<set $activeSlave.hips = 0>>
+	<<set $activeSlave.clit = 0>>
+	<<set $activeSlave.labia = 0>>
+	<<set $activeSlave.waist = 10>>
+	<<set $activeSlave.preg = 0>>
+	<<set $activeSlave.prestige = 3>>
+	<<set $activeSlave.prestigeDesc = "$He was the famous Smiling Man.">>
+	<<set $activeSlave.clothes = "a military uniform">> /*closest thing to commie/punk we have at the moment*/
+	<<setLocalPronouns $activeSlave>>
+
+	<br>
+	The day has come to finally put an end to this story. Your men are ready to go, waiting only on your signal. You quickly don your protective gear and proceed down the busy streets of your arcology.
+	You carefully planned the day so that nothing could exit the arcology without being scanned at least three times and poked twice. The Smiling Man has no escape.
+	<br>After a short walk you are in front of the criminal's lair, a rundown old apartment in a scarcely populated part of the arcology. You give the order to breach and your men rush inside without problems.
+	After a couple of seconds pass without a single noise coming from the apartment, you begin to worry. Then you hear the captain
+
+	<span id="continue">
+
+ <<link "calling you inside.">>
+		<<replace "#continue">>
+			/* 000-250-006 */
+			<<if $seeImages == 1>>
+				<div class="imageRef medImg"><<= SlaveArt($activeSlave, 2, 0)>></div>
+			<</if>>
+			/* 000-250-006 */
+			calling you inside.
+			<br><br>"So it was you to find me first.
+			<<if $relationshipLM > 2>>
+				I was hoping you would be the one!
+			<<else>>
+				I expected you would be the one.
+			<</if>>
+			Well, I hope I'm everything you expected," you hear a voice say. Despite recognizing it, you struggle to convince yourself that the little $girl in front of you is indeed the famous criminal mastermind.
+			<br>"As you can see, I have no intention of escaping. I knew my life was over the second my plan went into effect. I accepted my end a long time ago, so feel free to do your worst; my life has already ended in triumph."
+			<br>You evaluate the situation: the burning desire of vengeance for all the damage that little twerp caused is hard to ignore, but equally so is the admiration for $his skill and determination. Indeed, $he would be a great addition to your court, as a free individual or not.
+
+		<span id="result"> <br><br>
+
+		<<link "Offer $him a new life">>
+			<<set $smilingManFate = 0>>
+			<<replace "#result">>
+				<br>You decide it would be criminally wasteful to throw away such talent. You offer $him a new life at your side. $His expertise will surely guarantee safety, if not supremacy, to your arcology in cyberspace, while $he will have safety and luxury in the physical world.
+				<br>
+				<<link "Continue">>
+					<<set $smilingManProgress++>>
+					<<goto "secExpSmilingMan">>
+				<</link>>
+			<</replace>>
+		<</link>>
+
+		<br> <<link "Make $him pay">>
+			<<set $smilingManFate = 1>>
+			<<replace "#result">>
+				<br>You decide to end $his pitiful life. $He has crossed the wrong master of the new world $he worked so hard to create. No mercy was asked for and no mercy will be given.
+				<br>
+				<<link "Continue">>
+					<<set $smilingManProgress++>>
+					<<goto "secExpSmilingMan">>
+				<</link>>
+			<</replace>>
+		<</link>>
+		<br> <<link "Enslave $him">>
+			<<set $smilingManFate = 2>>
+			<<replace "#result">>
+				<br>You decide to enslave the $girl. $His skill may be great, but $his crimes are equally so, which makes it all the sweeter to turn $him into an obedient little toy to play with.
+				<br>
+				<<link "Continue">>
+					<<set $smilingManProgress++>>
+					<<goto "secExpSmilingMan">>
+				<</link>>
+			<</replace>>
+		<</link>>
+		</span>
+		<</replace>> /* closes replace "#continue" */
+	<</link>>
+	</span> /* closes id="continue" */
+<<else>>
+	<<if $smilingManFate < 2>>
+		/* 000-250-006 */
+		<<if $seeImages == 1>>
+				<div class="imageRef medImg"><<= SlaveArt($activeSlave, 2, 0)>></div>
+		<</if>>
+		/* 000-250-006 */
+		<<if $smilingManFate == 0>>
+			The $girl asks for a few minutes to think about your offer,
+			<<if $relationshipLM >= 4>>
+				but $he quickly comes to terms with the situation and accepts.
+			<<else>>
+				and after some time $he reluctantly accepts.
+			<</if>>
+			In the following weeks $he will get acquainted with the security network of the arcology and work to protect $his new home in the new world $he has created.
+			The world will never find out the truth of the Smiling Man and his legend will only grow with time, outliving his creator and maybe even $his new employer.
+			<br>The collaboration of the ex-Smiling Man permanently increases @@.green;security and the rate of prosperity growth.@@ @@.limegreen;Cash will be also provided,@@ but you're better off not knowing the sources.
+		<<elseif $smilingManFate == 1>>
+			<<set $activeSlave.clothes = "no clothing">>
+			For such a criminal a simple execution is not enough. You order the $girl captured and crucified outside the city, with a mask resembling $his famous symbol. Your men quickly obey. $He never once shows sign of pain or fear, remaining stoic and proud to the end.
+			Once $his life ends, you order a statue erected in commemoration of the death of the Smiling Man. From this day forward the statue of the crucified criminal will adorn your arcology and his legend will be forever entangled with yours.
+			<br>Having dealt with the Smiling Man will provide @@.green;a large boost to your reputation, as well as a moderate amount of reputation each week.@@
+			<<run repX(10000, "architecture")>>
+		<</if>>
+	<<elseif $smilingManFate == 2>>
+		<<set $activeSlave.clothes = "no clothing">>
+		Your men move to immobilize $him. Terror flashes through $his eyes for
+		<<if $relationshipLM >= 4>>
+			a second, but $he quickly recovers $his usual demeanor.
+		<<else>>
+			a second — $he barely manages to recover $his usual demeanor.
+		<</if>>
+		<br><br>
+		<<set $saleDescription = 0, $applyLaw = 0>>
+		<<include "Long Slave Description">>
+		<br> <<include "New Slave Intro">>
+	<</if>>
+<</if>>

@@ -1,0 +1,238 @@
+:: Rep Budget [nobr]
+
+<<set $nextButton = "Back to Main", $nextLink = "Main", _arcologyCosts = 0>>
+
+<<set $lastWeeksRepIncome.Total = 0>>
+<<set $lastWeeksRepExpenses.Total = 0>>
+<<set $lastWeeksRepIncome.Total = hashSum($lastWeeksRepIncome)>>
+<<set $lastWeeksRepExpenses.Total = hashSum($lastWeeksRepExpenses)>>
+
+<<if def $lastWeeksRepProfits.Total>>
+	<<set $lastWeeksRepProfits.Total = 0>>
+<</if>>
+
+<<if ndef $showAllEntries>>
+	<<set $showAllEntries = {costsBudget: 0, repBudget: 0}>>
+<</if>>
+
+<br>
+//Reputation is a difficult thing to quantify, <<= properTitle()>>. Here you see an overview of topics that interest people in the arcology, and in turn, reflect on your own reputation. The more symbols you see in a category, the more impact that category is having on your reputation lately.//
+
+<br style="clear:both"><<if $lineSeparations == 0>><br><<else>><hr style="margin:0"><</if>>
+<br>
+//Your weekly reputation changes are as follows://
+<<options $showAllEntries.repBudget>>
+	<<option 0 "Normal">>
+	<<option 1 "Show Empty Entries">>
+<</options>>
+
+/* Table of Totals */
+<<if ndef $lastWeeksRepIncome>>
+	Financial data currently unavailable.
+<<else>>
+
+<<script>>
+for (var i = 0; i < State.variables.lastWeeksRepIncome.length; i++){
+	State.variables.lastWeeksRepProfits[i] = (State.variables.lastWeeksRepIncome[i] + State.variables.lastWeeksRepExpenses[i]);
+}
+<</script>>
+
+<style>
+	table.finances {
+		/*table-layout: fixed;*/
+		text-align: right;
+		border-collapse: separate;
+		border-spacing: 5px;
+		border-style: hidden;
+		empty-cells: hide;
+		width: 75%;
+	}
+</style>
+
+
+<table class="finances" border="1">
+	<tr>
+		<th><h2>Penthouse</h2></th>
+		<th>Income</th>
+		<th>Expense</th>
+		<th>Totals</th>
+	</tr>
+	<<print budgetLine("fucktoy", "Fucktoys")>>
+
+	<<print budgetLine("publicServant", "Public servants")>>
+
+	<<print budgetLine("gloryhole", "Free glory holes")>>
+
+	<<print budgetLine("concubine", "Concubine")>>
+
+	<<print budgetLine("headGirl", "Head girl")>>
+
+	<<print budgetLine("bodyguard", "Bodyguard")>>
+
+	<<print budgetLine("recruiter", "Recruiter")>>
+
+	<tr>
+		<h2>Structures</h2>		/* TODO: using h2s doesn't fit in with the rest of the game */
+	</tr>
+
+	<<print budgetLine("arcade", "<<if $arcade>>[[$arcadeNameCaps|Arcade][$nextButton = \"Back to Budget\", $nextLink = \"Rep Budget\"]]<<else>>$arcadeNameCaps<</if>> ($ArcadeiIDs.length slaves)")>>
+
+	<<print budgetLine("gloryholeArcade", "Free arcade")>>
+
+	<<print budgetLine("brothel", "<<if $brothel>>[[$brothelNameCaps|Brothel][$nextButton = \"Back to Budget\", $nextLink = \"Rep Budget\"]]<<else>>$brothelNameCaps<</if>> ($BrothiIDs.length slaves)")>>
+
+	<<print budgetLine("club", "<<if $club>>[[$clubNameCaps|Club][$nextButton = \"Back to Budget\", $nextLink = \"Rep Budget\"]]<<else>>$clubNameCaps<</if>> ($ClubiIDs.length slaves)")>>
+
+	<<print budgetLine("publicServantClub", "Club servants")>>
+
+	<<print budgetLine("clubAds", "<<if $club>>[[Club ads|Club Advertisement][$nextButton = \"Back to Budget\", $nextLink = \"Rep Budget\"]]<<else>>$clubNameCaps<</if>>")>>
+
+	<<if $club > 0>>
+		<br>
+	<</if>>
+
+	<<print budgetLine("pit", "<<if $pit>>[[$pitNameCaps|Pit][$nextButton = \"Back to Budget\", $nextLink = \"Rep Budget\"]]<<else>>$pitNameCaps<</if>> ($fighterIDs.length slaves)")>>
+
+	<<print budgetLine("servantsQuarters", "<<if $servantsQuarters>>[[Servants' Quarters][$nextButton = \"Back to Budget\", $nextLink = \"Rep Budget\"]]<<else>>Servants' Quarters<</if>> ($ServQiIDs.length slaves)")>>
+
+	<<print budgetLine("spa", "<<if $spa>>[[$spaNameCaps|Spa][$nextButton = \"Back to Budget\", $nextLink = \"Rep Budget\"]]<<else>>$spaNameCaps<</if>> ($SpaiIDs.length slaves)")>>
+
+	<<print budgetLine("architecture", "[[Architecture|Manage Arcology][$nextButton = \"Back to Budget\", $nextLink = \"Rep Budget\"]]")>>
+
+
+	<tr>
+		<h2>Slaves</h2>
+	</tr>
+
+	<<print budgetLine("slavesViewOfPC", "Slave trust and devotion")>>
+
+	<<print budgetLine("prestigiousSlave", "Prestigious slaves")>>
+
+	<<print budgetLine("porn", "Porn")>>
+
+	<<print budgetLine("slaveTransfer", "Selling/buying major slaves")>>
+
+	<<print budgetLine("babyTransfer", "Slave surgery")>>
+
+	<<print budgetLine("birth", "Birth")>>
+
+	<<print budgetLine("retirement", "Slave retirement")>>
+
+	<<print budgetLine("vignette", "Vignettes")>>
+
+	<<print budgetLine("fuckdolls", "Free Fuckdolls")>>
+
+	<tr>
+		<h2>Policies</h2>
+	</tr>
+
+	<<print budgetLine("policies", "Capital expenses")>>
+	<<print budgetLine("edicts", "<<if $secExpEnabled > 0>>[[Edicts|edicts]]<<else>>Edicts<</if>>")>>
+
+	<<print budgetLine("capEx", "[[Policies|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Rep Budget\"]] and [[Edicts|edicts][$nextButton = \"Back to Budget\", $nextLink = \"Rep Budget\"]]")>>
+
+	<<print budgetLine("futureSocieties", "[[Society shaping|Future Society][$nextButton = \"Back to Budget\", $nextLink = \"Rep Budget\"]]")>>
+
+	<<print budgetLine("food", "Food")>>
+
+
+	<tr>
+		<h2>Forces</h2>
+	</tr>
+
+	<<print budgetLine("specialForces", "Special forces")>>
+
+	<<print budgetLine("securityExpansion", "securityExpansion")>>
+
+	<<print budgetLine("peacekeepers", "Peacekeepers")>>
+
+	<<print budgetLine("war", "Conflict")>>
+
+
+	<tr>
+		<h2>Finance</h2>
+	</tr>
+
+	<<print budgetLine("personalBusiness", "Personal business")>>
+
+	<<print budgetLine("PCappearance", "Your appearance")>>
+
+	<<print budgetLine("PCactions", "Your actions")>>
+
+	<<print budgetLine("PCRelationships", "Your skills")>>
+
+	<<print budgetLine("SlaveRelationships", "Slave relationships")>>
+
+	<<print budgetLine("event", "Events")>>
+
+	<br>
+
+	<<print budgetLine("multiplier", "Reputation decay")>>
+
+	<<print budgetLine("overflow", "Some of your reputation gains are no doubt \"wasted,\" since it's impossible to be more well known.")>>
+
+	<<print budgetLine("cheating", "You cheated")>>
+
+	<tr><td></td></tr>
+	<tr>
+		<td>Tracked totals</td>
+		<td>
+			<<print repFormat(Math.trunc($lastWeeksRepIncome.Total))>>
+		</td>
+
+		<td>
+			<<print repFormat(Math.trunc($lastWeeksRepExpenses.Total))>>
+		</td>
+		<td>
+			<<set $lastWeeksRepProfits.Total = ($lastWeeksRepIncome.Total + $lastWeeksRepExpenses.Total)>>
+			/* each "profit" item is calculated on this sheet, and there's two ways to generate a profit total: the difference of the income and expense totals, and adding all the profit items. If they aren't the same, I probably forgot to properly add an item's profit calculation to this sheet.*/
+			<<if $lastWeeksRepProfits.Total != hashSum($lastWeeksRepProfits) - $lastWeeksRepProfits.Total>>/* The profits object includes the total number of profits, so we have to subtract it back out */
+				<<print (num(Math.trunc(hashSum($lastWeeksRepProfits)-$lastWeeksRepProfits.Total)))>><br>
+				@@.red;Fix profit calc<br>@@
+			<</if>>
+			<<print repFormat(Math.trunc($lastWeeksRepProfits.Total))>>
+		</td>
+	</tr>
+
+	<tr><td></td></tr>
+	<tr>
+		<td>Last week actuals</td>
+		<td></td>
+		<td></td>
+		<td><<if ($rep-$repLastWeek) > 0>>
+				<<print repFormat($rep-$repLastWeek)>>
+			<<else>>
+				@@.red;<<print repFormat($rep-$repLastWeek)>>@@
+			<</if>></td>
+	</tr>
+
+	<<if ($rep-$repLastWeek) == $lastWeeksRepProfits.Total>>
+		<tr>
+			@@.green;The books are balanced, <<= properTitle()>>!@@
+		</tr>
+	<<else>>
+		<tr>
+			<td>Transaction tracking off by:</td>
+			<td></td>
+			<td></td>
+			<td>
+				<<print repFormat(Math.trunc(($rep-$repLastWeek) - $lastWeeksRepProfits.Total))>>
+			</td>
+		</tr>
+	<</if>>
+</table>
+
+<br>
+
+<</if>>
+
+<<if ndef $lastWeeksRepErrors>>
+	<<set $lastWeeksRepErrors = "Errors: ">>
+<</if>>
+
+<<if $lastWeeksRepErrors !== "Errors: ">>
+	<<link "Reset">>
+		<<set $lastWeeksRepErrors = "Errors: ">>
+	<</link>><br>
+	@@.red;<<print $lastWeeksRepErrors>>@@
+<</if>>

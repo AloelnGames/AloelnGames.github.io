@@ -1,0 +1,65 @@
+:: RE devoted twins [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "RIE Eligibility Check">>
+
+<<set $i = $slaveIndices[$alphaTwin]>>
+<<set $j = $slaveIndices[$betaTwin]>>
+
+<span id="artFrame">
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<div class="imageColumn">
+			<div class="imageRef medImg">
+				<<= SlaveArt($slaves[$j], 2, 0)>>
+			</div>
+			<div class="imageRef medImg">
+				<<= SlaveArt($slaves[$i], 2, 0)>>
+			</div>
+		</div>
+	<</if>>
+	/* 000-250-006 */
+</span>
+
+$slaves[$i].slaveName and $slaves[$j].slaveName are such good and devoted slaves that they happily do everything together. They sleep <<if hasBothArms($slaves[$i]) && hasBothArms($slaves[$j])>>in each other's arms<<else>>together<</if>>, bathe together, work together whenever they can, and fuck together. For a while they masturbated together until they became so habituated to sexual slavery that they stopped seeing much distinction between masturbation and sex with one another. At the moment, they're getting ready for their day, chatting quietly and helping each other.
+<br><br>
+<span id="result">
+<<link "Take them out for the morning">>
+	<<replace "#result">>
+	<br>You head out of your penthouse with a pretty sex slave under each arm. They're attentive companions, doing everything they can to mirror each other as they show off their bodies to onlookers. It's a bright, sunny day, so you walk them up and down a busy glassed-in galleria. They clearly expect you to fuck them in public, but for once you just enjoy a couple of hours with them. They start disappointed that you aren't going to use them, but they quickly get over it and enjoy preening under your arms.
+	@@.mediumaquamarine;They have both become more trusting of you,@@ and @@.green;your reputation has increased considerably.@@
+	<<set $slaves[$i].trust += 4, $slaves[$j].trust += 4>>
+	<<run repX(2500, "event", $slaves[$i])>>
+	<<run repX(2500, "event", $slaves[$j])>>
+	<</replace>>
+<</link>>
+<br><<link "Use them side by side">>
+	<<replace "#result">>
+	<br>Slave twins inevitably get used to threesomes with their sibling, and $slaves[$i].slaveName and $slaves[$j].slaveName are no exception. They greet you with every appearance of arousal and begin a carefully balanced routine — foreplay with you, of course, but whatever parts of them aren't working on you work on the other slave. They stroke you while making out, stroke each other while sucking you to rock hardness, and finger each others' holes while <<if $PC.vagina != -1>>crowding their faces against your pussy. You reach down and seize a nipple in each hand, pulling them upward so they can suck your nipples instead; they use manual stimulation to keep you going while they do. With one straddling each of your thighs, grinding shamelessly, you can reach around and molest their butts with your own hands.<<else>>rubbing four breasts up and down your dick. Since you only have one cock, the symmetry ends when you start fucking them. As you switch from hole to hole, whichever twin isn't getting fucked at the moment uses their mouth and hands to stimulate your balls and their twin's fuckhole as you pound it. When you finally cum in $slaves[$j].slaveName, $slaves[$i].slaveName sucks it out and they kiss deeply to share your ejaculate.<</if>> @@.hotpink;They have both become more devoted to you.@@
+
+	<<set $slaves[$i].devotion += 4, $slaves[$j].devotion += 4>>
+
+	<<if canDoAnal($slaves[$i])>>
+		<<set $slaves[$i].counter.anal += 1>>
+		<<set $analTotal += 1>>
+	<<elseif canDoVaginal($slaves[$i])>>
+		<<set $slaves[$i].counter.vaginal += 1>>
+		<<set $vaginalTotal += 1>>
+	<<else>>
+		<<set $slaves[$i].counter.oral += 1>>
+		<<set $oralTotal += 1>>
+	<</if>>
+
+	<<if canDoAnal($slaves[$j])>>
+		<<set $slaves[$j].counter.anal += 1>>
+		<<set $analTotal += 1>>
+	<<elseif canDoVaginal($slaves[$j])>>
+		<<set $slaves[$j].counter.vaginal += 1>>
+		<<set $vaginalTotal += 1>>
+	<<else>>
+		<<set $slaves[$j].counter.oral += 1>>
+		<<set $oralTotal += 1>>
+	<</if>>
+
+	<</replace>>
+<</link>>
+</span>

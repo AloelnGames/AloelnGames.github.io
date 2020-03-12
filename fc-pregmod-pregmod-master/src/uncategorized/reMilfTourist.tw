@@ -1,0 +1,181 @@
+:: RE milf tourist [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "RIE Eligibility Check", $returnTo = "RIE Eligibility Check">>
+
+<<set _milfed = $slaveIndices[$milfSlaveID]>>
+<<set _milfSlave = $slaves[_milfed]>>
+<<run Enunciate(_milfSlave)>>
+
+<<set $activeSlaveOneTimeMinAge = 36>>
+<<set $activeSlaveOneTimeMaxAge = 42>>
+<<set $one_time_age_overrides_pedo_mode = 1>> /* middle-aged */
+<<set $oneTimeDisableDisability = 1>>
+<<if $arcologies[0].FSSupremacistLawME == 1>>
+	<<set $fixedRace = $arcologies[0].FSSupremacistRace>>
+<<elseif $arcologies[0].FSSubjugationistLawME == 1>>
+	<<set _races = setup.filterRacesLowercase.filter(race => race !== $arcologies[0].FSSubjugationistRace)>>
+	<<set $fixedRace = _races.random()>>
+<</if>>
+<<set $activeSlave = GenerateNewSlave("XX")>>
+<<set $activeSlave.origin = "$He came to your arcology as a tourist and found $himself enslaved.">>
+<<set $activeSlave.devotion = random(-70,-55)>>
+<<set $activeSlave.trust = random(-45,-25)>>
+<<run setHealth($activeSlave, jsRandom(10, 20))>>
+<<set $activeSlave.vagina++>>
+<<set $activeSlave.hips = 2>>
+<<set $activeSlave.butt = random(4,6)>>
+<<set $activeSlave.boobs = 100*random(10,18)>>
+<<set $activeSlave.weight = random(60,140)>>
+<<set $activeSlave.behavioralQuirk = "none">>
+<<set $activeSlave.sexualQuirk = "none">>
+<<set $activeSlave.canRecruit = 0>>
+<<set $activeSlave.clothes = "nice business attire">>
+
+<span id="artFrame">
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<div class="imageColumn">
+			<div class="imageRef medImg">
+				<<= SlaveArt($activeSlave, 2, 0)>>
+			</div>
+			<div class="imageRef medImg">
+				<<= SlaveArt(_milfSlave, 2, 0)>>
+			</div>
+		</div>
+	<</if>>
+	/* 000-250-006 */
+</span>
+
+<<setLocalPronouns _milfSlave>>
+<<setLocalPronouns $activeSlave 2>>
+<<setAssistantPronouns>>
+
+<<if $assistant.personality == 1>>
+	<<= capFirstChar($assistant.name)>>'s
+		<<if $assistant.appearance == "normal">>
+			symbol
+		<<else>>
+			$assistant.appearance avatar
+		<</if>>
+		appears on your desk in the middle of the day. "Something unusual for you, <<= properTitle()>>," _heA says. "_milfSlave.slaveName is out doing public service. A tourist from the old world accosted $him. _milfSlave.slaveName thought _he2 was a rich citizen who wanted to fuck $him, but it turns out _he2 just wanted a tour guide. It was a reasonable mistake; _he2 seems wealthy. $He has been showing _him2 around for the last half hour. Now _he2's asked $him if _he2 can meet you." _HeA displays a video feed showing _milfSlave.slaveName standing with the tourist in question out on the main plaza. _He2's just into middle age, and extremely plush, wearing Capri pants over _his2 motherly hips and a cashmere sweater that understates _his2 generous bust. _He2's blushing as _he2 asks your slave a discreet question about public sex in the arcology, brought on by the sight of a couple of citizens spitroasting a slave. Your personal assistant's avatar
+		<<switch $assistant.appearance>>
+		<<case "monstergirl">>
+			bares _hisA fangs and makes pinching gestures at nipple height.
+		<<case "shemale">>
+			gives a wolf whistle and makes exaggerated gestures over _hisA own boobs.
+		<<case "amazon">>
+			brandishes a club suggestively.
+		<<case "businesswoman">>
+			looks the tourist up and down over the tops of _hisA glasses.
+		<<case "schoolgirl">>
+			stares openly at the tourist's ass.
+		<<case "fairy" "pregnant fairy">>
+			zips around the tourist, giving _him2 a good look-over.
+		<<case "hypergoddess" "goddess">>
+			eyes _his2 fertile hips.
+		<<case "loli" "preggololi">>
+			stares longingly at _his2 huge tits.
+		<<case "angel">>
+			blushes at the sight of _his2 obvious curves.
+		<<case "cherub">>
+			makes exaggerated movements over _hisA own tits.
+		<<case "incubus">>
+			is sporting an absolutely enormous erection. _HeA seems to be enjoying the show.
+		<<case "succubus">>
+			turns to face you; _hisA breasts huge armfuls, butt jiggling non-stop and a pair of hips to rival any cow. "My curves are better."
+		<<case "imp">>
+			makes pinching gestures at nipple height then turns and slaps _hisA own ass.
+		<<case "witch">>
+			blushes at the sight of those lovely curves.
+		<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+			swells _himselfA to resemble _his2 figure before twisting _hisA arm into a cock and ramming it straight up _hisA cunt.
+		<<default>>
+			reforms into an exaggerated female form before going back to _hisA normal symbol shape.
+		<</switch>>
+<<else>>
+	<<= capFirstChar($assistant.name)>> gets your attention the middle of the day. "A minor matter for you, <<= properTitle()>>," _heA says. "_milfSlave.slaveName is currently performing public service. A tourist from the old world accosted $him. _milfSlave.slaveName thought _he2 was a rich citizen who wanted to have sex with $him, but it seems _he2 just wanted a tour guide. It was a reasonable mistake; the tourist appears wealthy. $He has been acting as _his2 guide for the last half hour. The tourist has asked $him if _he2 can meet you." _HeA displays a video feed showing _milfSlave.slaveName standing with the tourist in question out on the main plaza. _He2's just into middle age, and extremely plush, wearing Capri pants over _his2 motherly hips and a cashmere sweater that understates _his2 generous bust. _He2's blushing as _he2 asks your slave a discreet question about public sex in the arcology, brought on by the sight of a couple of citizens spitroasting a slave.
+<</if>>
+
+<br><br>
+
+<span id="result">
+<<link "Decline politely">>
+	<<replace "#result">>
+	<<setSpokenLocalPronouns _milfSlave $activeSlave>>
+	You have $assistant.name instruct _milfSlave.slaveName to pass on your regrets, and add a message for _milfSlave.slaveName expressing confidence in $him to represent you and the arcology perfectly well without you. $He's @@.mediumaquamarine;affirmed@@ by your trust in $him. "<<Master>>," $he reports the next time you see $him, "that touri<<s>>t wa<<s>> really nice. Al<<s>>o, I got _him2 to have <<s>>e<<x>> with me, after all. <<He 2>> wa<<s>> all he<<s>>itant and blu<<sh>>y about doing it in public, but <<he 2>> got better after the fir<<s>>t time I ate _him2 out." $He looks pleased with $himself. "I bet <<he 2>> @@.green;tell<<s>> all <<his 2>> friend<<s>>@@ back home how much fun it i<<s>> here."
+	<<run repX(500, "event")>>
+	<<set $slaves[_milfed].trust += 4, $slaves[_milfed].counter.oral++>>
+	<<set $oralTotal++>>
+	<</replace>>
+<</link>>
+<br><<link "Share some Free Cities life with _him2">>
+	<<replace "#result">>
+	<<run Enunciate($activeSlave)>>
+	You have _milfSlave.slaveName bring the tourist up to meet you. _He2's full of questions about what it's like to be an arcology owner, and you finally tell _him2 that you can give _him2 a pretty good idea. Eagerly, _he2 asks you how, and you point at _milfSlave.slaveName, telling the tourist _he2 ought to bend the slave over the couch if _he2 wants to know what it's really like to be an oversexed oligarch. "I'm, um, not really a le<<s>>bian," the tourist responds hesitantly.
+	<<run Enunciate(_milfSlave)>>
+	<<if _milfSlave.dick > 0>>
+		"You don't have to be," $he purrs. "I have a cock." $He slides in, just close enough to prove it. "Plea<<s>>e,
+	<<else>>
+		"Having <<s>>e<<x>> with <<s>>lave<<s>> doe<<s>> not make you a le<<s>>bian," $he purrs. "It'<<s>> different here. Plea<<s>>e,
+	<</if>>
+	fuck me. It'll be fun!" The tourist turns to stare at _him2, and _he2 offers just the right kind of plaintive expression. "O-okay," the tourist says in a tiny voice, and _milfSlave.slaveName giggles, hugging _him2 from behind. $He cups one of the tourist's breasts, and snakes $his other hand down the front of _his2 pants. "Here!?" the tourist gasps, staring straight at you and blushing even harder. You tell _him2 that that's how you do things in the Free Cities: enjoying a slave is nothing to be ashamed of. _He2 looks doubtful, but _he2 doesn't try to escape from _milfSlave.slaveName's roving hand<<if hasBothArms(_milfSlave)>>s<</if>>, either. Your presence continues to bother _him2 until _milfSlave.slaveName distracts _him2 by getting _him2 to cuddle on the couch and make out, providing enough of a distraction that _he2 gets over _his2 inhibitions and orgasms rather immodestly.
+	<br><br>
+	You offer _him2 some liquid courage as _he2 recovers, but _he2's rapidly getting over _his2 hesitation. As the alcohol suffuses _him2, _he2 starts stealing glances at _milfSlave.slaveName, who for $his part is being as seductive as humanly possible. Finally, the tourist mouths 'fuck it' silently, reaches over, and openly gropes the slave's ass. _milfSlave.slaveName giggles and shifts lewdly, ensuring that the tourist's hand makes a thorough tour of everything the slave has. The tourist tentatively sinks a couple of fingers into $him, and the slave shamelessly slides $himself onto the invading digits, begging to be fucked. You make a party of it, with the various slaves who come and go over the course of the evening treated to the sight of $him getting fucked by the tourist. _He2 drunkenly promises you to @@.green;tell all _his2 friends@@ how awesome your arcology is at one point, though _he2 has to take _his2 mouth off one of _milfSlave.slaveName's nipples to do so.
+	<<set $slaves[_milfed].trust += 4, $slaves[_milfed].counter.oral += 3, $slaves[_milfed].counter.anal += 3>>
+	<<set $oralTotal += 3, $analTotal += 3>>
+	<<run repX(500, "event")>>
+	<<set $desc = "a thank-you note from a MILF tourist whom you made feel welcome in the arcology">>
+	<<set $trinkets.push($desc)>>
+	<</replace>>
+<</link>>
+<br><<link "Encourage _him2 to enjoy the slave with your compliments">>
+	<<replace "#result">>
+	<<run Enunciate($activeSlave)>>
+	You have _milfSlave.slaveName bring the tourist up to meet you, and exchange some minor pleasantries. You tell _him2 that if _he2 really wants to experience Free Cities life, though, _he2 really should enjoy _milfSlave.slaveName, pointing at the slave hovering behind _him2. _He2 blushes furiously, but before _he2 can stammer a refusal, the slave whispers something into _his2 ear. "I'm, um, not really a le<<s>>bian," the tourist responds hesitantly.
+	<<run Enunciate(_milfSlave)>>
+	<<if _milfSlave.dick > 0>>
+		"You don't have to be," $he purrs. "I have a cock." $He slides in, just close enough to prove it. "Plea<<s>>e,
+	<<else>>
+		"Having <<s>>e<<x>> with <<s>>lave<<s>> doe<<s>> not make you a le<<s>>bian," $he purrs. "It'<<s>> different here. Plea<<s>>e,
+	<</if>>
+	give me a try." The tourist turns to stare at $him, and _he2 offers just the right kind of plaintive expression. "O-okay," the tourist says in a tiny voice, and _milfSlave.slaveName giggles, hugging _him2 from behind. $He takes the tourist's hand, and they leave your office together.
+	<br><br>
+	<<setSpokenLocalPronouns _milfSlave $activeSlave>>
+	"<<Master>>," $he reports the next time you see $him, "that touri<<s>>t was really nice. Al<<s>>o, I got _him2 to have <<s>>e<<x>> with me, after all. <<He 2>> wa<<s>> going to take me back to <<his 2>> hotel but I got _him2 to do me on the way. <<He 2>> wa<<s>> all he<<s>>itant and blu<<sh>>y about doing it in public, but <<he 2>> got better after the fir<<s>>t time I ate _him2 out." $He looks pleased with $himself. "I bet <<he 2>> @@.green;tell<<s>> all <<his 2>> friend<<s>>@@ back home how much fun it i<<s>> here."
+	<<set $slaves[_milfed].trust += 4, $slaves[_milfed].counter.oral++>>
+	<<set $oralTotal++>>
+	<<run repX(500, "event")>>
+	<<set $desc = "a thank-you note from a MILF tourist whom you made feel welcome in the arcology">>
+	<<set $trinkets.push($desc)>>
+	<</replace>>
+<</link>>
+<<if $cash > 20000>>
+	<br><<link "Enslave _him2">>
+		<<set $activeSlave.clothes = "no clothing">>
+		<<replace "#artFrame">>
+			/* 000-250-006 */
+			<<if $seeImages == 1>>
+				<div class="imageColumn">
+					<div class="imageRef medImg">
+						<<= SlaveArt($activeSlave, 2, 0)>>
+					</div>
+					<div class="imageRef medImg">
+						<<= SlaveArt(_milfSlave, 2, 0)>>
+					</div>
+				</div>
+			<</if>>
+			/* 000-250-006 */
+		<</replace>>
+		<<replace "#result">>
+		<<run Enunciate($activeSlave)>>
+		When your new slave comes to, _his2 weight is hanging from _his2 wrists, bound over _his2 head. _He2's not exactly thin, making the position uncomfortable for _his2 arms, so _he2 groggily stands, finding _himself2 in a pool of light in the middle of a cell. _He2's nursing a tremendous hangover, and though _he2 does not realize it, _he2's drugged. You're present, though not visible, witnessing _his2 first conscious moment of slavery from your desk. Realization is slow. _He2's no innocent, so _he2 recognizes the sensations of waking up the morning after a night of drinking interspersed with vigorous vaginal, oral, and anal intercourse, but _he2 does not remember the specifics. After a few minutes, _he2 understands that no one is coming, and speaks up hesitantly: "I<<s>> anyone there?" Getting no immediate answer, _he2 slumps against _his2 wrist restraints again, and begins to cry to _himself2. "W-why would a-anyone do thi<<s>>."
+		<br>
+		<<run cashX(-20000, "event", $activeSlave)>>
+		<<include "New Slave Intro">>
+		<<set $activeSlave.recruiter = 0>>
+		<</replace>>
+	<</link>> //This will require an unprofitable <<print cashFormat(20000)>>, since _he2 is wealthy and obfuscating _his2 fate will require considerable spending//
+<<else>>
+	//You cannot afford the <<print cashFormat(20000)>> enslaving _him2 would require, since _he2 is wealthy and obfuscating _his2 fate would necessitate considerable spending//
+<</if>>
+</span>

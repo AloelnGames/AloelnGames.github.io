@@ -1,0 +1,352 @@
+:: Farmyard Report [nobr]
+
+<span id="farmyardstats">
+</span>
+
+<<SlaveIDSort $FarmyardiIDs>>
+<<set _DL = $FarmyardiIDs.length, _SL = $slaves.length, $FarmerCashBonus = 0, _FLsFetish = 0, _profits = 0, _foodWeek = 0>>
+<<set $FarmerDevotionBonus = 1, $FarmerDevotionThreshold = 45, $FarmerTrustBonus = 1, $FarmerTrustThreshold = 35, $FarmerHealthBonus = 0>>
+/*<<set $legendaryWombID = 0>> TODO: will the Farmyard have a legendary womb system? */
+
+<!-- Statistics gathering -->
+<<set $facility = $facility || {}, $facility.farmyard = initFacilityStatistics($facility.farmyard)>>
+
+<<if ($Farmer != 0)>>
+	<<set _FLs = $slaveIndices[$Farmer.ID]>>
+
+	<<if ($slaves[_FLs].health.condition < -80)>>
+		<<run improveCondition($slaves[_FLs], 20)>>
+	<<elseif $slaves[_FLs].health.condition < -40>>
+		<<run improveCondition($slaves[_FLs], 15)>>
+	<<elseif $slaves[_FLs].health.condition < 0>>
+		<<run improveCondition($slaves[_FLs], 10)>>
+	<<elseif $slaves[_FLs].health.condition < 90>>
+		<<run improveCondition($slaves[_FLs], 7)>>
+	<</if>>
+	<<if $slaves[_FLs].devotion <= 45>>
+		<<set $slaves[_FLs].devotion += 5>>
+	<</if>>
+	<<if $slaves[_FLs].trust < 45>>
+		<<set $slaves[_FLs].trust += 5>>
+	<</if>>
+	<<if $slaves[_FLs].rules.living != "luxurious">>
+		<<set $slaves[_FLs].rules.living = "luxurious">>
+	<</if>>
+	<<if $slaves[_FLs].fetishStrength <= 95>>
+		<<if $slaves[_FLs].fetish != "dom">>
+			<<if fetishChangeChance($slaves[_FLs]) > random(0,100)>>
+				<<set _FLsFetish = 1, $slaves[_FLs].fetishKnown = 1, $slaves[_FLs].fetish = "dom">>
+			<</if>>
+		<<elseif $slaves[_FLs].fetishKnown == 0>>
+			<<set _FLsFetish = 1, $slaves[_FLs].fetishKnown = 1>>
+		<<else>>
+			<<set _FLsFetish = 2, $slaves[_FLs].fetishStrength += 4>>
+		<</if>>
+	<</if>>
+	/% Make sure we have registered living expenses as for any other slave %/
+	<<run getSlaveStatisticData($Farmer, $facility.farmyard)>>
+	<<set $Farmer = $slaves[_FLs]>>
+	<<setLocalPronouns $Farmer>>
+	&nbsp;&nbsp;&nbsp;&nbsp;<<= SlaveFullName($Farmer)>> is serving as the Farmer.
+	<<if $Farmer.relationship == -3 && $Farmer.devotion > 50>>
+		As your loving $wife, $he does $his best to ensure $farmyardName runs smoothly.
+		<<set $FarmerCashBonus += 0.25>>
+	<</if>>
+	<<if (_FLsFetish == 1)>>
+		$He isn't above sampling the merchandise $himself; before long it's obvious to $his workers that $he @@.lightcoral;really likes fucking them.@@
+	<<elseif (_FLsFetish == 2)>>
+		$He's careful that all of the farmhands under $his supervision are all ready to work every morning, and $he @@.lightsalmon;becomes more dominant.@@
+	<</if>>
+	<<if ($Farmer.skill.farmer <= 10)>>
+		Though $Farmer.slaveName does $his best to manage the farmyard, with $his lack of skill $he can do little.
+	<<elseif ($Farmer.skill.farmer <= 30)>>
+		$Farmer.slaveName's basic skills marginally @@.yellowgreen;improve@@ business at $farmyardName.
+		<<set $FarmerCashBonus += 0.05>>
+	<<elseif ($Farmer.skill.farmer <= 60)>>
+		$Farmer.slaveName's skills @@.yellowgreen;improve@@ business at $farmyardName.
+		<<set $FarmerCashBonus += 0.1>>
+	<<elseif ($Farmer.skill.farmer < 100)>>
+		$Farmer.slaveName's skills greatly @@.yellowgreen;improve@@ business at $farmyardName.
+		<<set $FarmerCashBonus += 0.15>>
+	<<else>>
+		$Farmer.slaveName's mastery immensely @@.yellowgreen;improves@@ business at $farmyardName.
+		<<set $FarmerCashBonus += 0.20>>
+	<</if>>
+	<<if ($Farmer.actualAge > 35)>>
+		$His age and experience also contribute.
+		<<set $FarmerCashBonus += 0.05>>
+	<<elseif $AgePenalty == 0>>
+		<<set $FarmerCashBonus += 0.05>>
+	<</if>>
+	<<if setup.farmerCareers.includes($Farmer.career)>>
+		$He has experience from $his life before $he was a slave that helps $him in the difficult life of managing animals and property.
+		<<set $FarmerCashBonus += 0.05>>
+	<<elseif $Farmer.skill.farmer >= $masteredXP>>
+		$He has experience from working for you that helps $him in the difficult life of managing animals and property.
+		<<set $FarmerCashBonus += 0.05>>
+	<<else>>
+		<<set $slaves[_FLs].skill.farmer += random(1,Math.ceil(($Farmer.intelligence+$Farmer.intelligenceImplant)/15) + 8)>>
+	<</if>>
+	<<if ($Farmer.intelligence+$Farmer.intelligenceImplant > 15)>>
+		$He is a clever manager.
+		<<set _intSum = $Farmer.intelligence+$Farmer.intelligenceImplant>>
+		<<set $FarmerCashBonus += 0.05*(Math.floor(-0.00008*_intSum*_intSum+0.0337*_intSum+0.5))>>
+	<</if>>
+	<<if ($Farmer.dick > 2) && (canPenetrate($Farmer))>>
+		$His turgid dick helps $him manage $his workers.
+		<<set $FarmerCashBonus += 0.05>>
+	<</if>>
+	<<if !canSmell($Farmer)>>
+		$His lack of a sense of smell protects $him from that omnipresent barnyard scent.
+		<<set $FarmerCashBonus += 0.05>>
+	<</if>>
+
+	<<for _dI = 0; _dI < _DL; _dI++>>
+		<<set $i = $slaveIndices[$FarmyardiIDs[_dI]]>>
+		<<setLocalPronouns $slaves[$i]>>
+		<<setLocalPronouns $Farmer 2>>
+		<<if $Farmer.rivalryTarget == $slaves[$i].ID>>
+			_He2 forces _his2 <<print rivalryTerm($Farmer)>> to service all the slaves in $farmyardName.	/* TODO: not sure about this */
+			<<set $slaves[$i].devotion -= 2, $slaves[$i].trust -= 2>>
+			<<if canDoVaginal($slaves[$i])>>
+				<<run seX($slaves[$i], "vaginal", "public", "penetrative", 10)>>
+			<</if>>
+			<<if canDoAnal($slaves[$i])>>
+				<<run seX($slaves[$i], "anal", "public", "penetrative", 10)>>
+			<</if>>
+			<<run seX($slaves[$i], "oral", "public", "penetrative", 10)>>
+			<<if random(1,100) > 65>>
+				<<set $slaves[_FLs].rivalry++, $Farmer.rivalry++, $slaves[$i].rivalry++>>
+			<</if>>
+		<<elseif $Farmer.relationshipTarget == $slaves[$i].ID>>
+			_He2 dotes over _his2 <<print relationshipTerm($Farmer)>>, $slaves[$i].slaveName, making sure $he isn't worked too hard, but unfortunately manages to get in the way of $his work.
+			<<set $slaves[$i].devotion++, $FarmerCashBonus -= 0.05>>
+		<<elseif areRelated($Farmer, $slaves[$i])>>
+			_He2 pays special attention to _his2 <<print relativeTerm($Farmer.ID,$slaves[$i].ID)>>, $slaves[$i].slaveName, making sure $he is treated well and showing off $his skills. /* TODO: does this need rewriting? */
+			<<set $slaves[$i].trust++, $FarmerCashBonus += 0.05>>
+		<</if>>
+	<</for>>
+
+	<<set _oldCash = $cash>>
+	<<if (_DL < 5)>>
+		/* TODO: will we need this block?
+		<<set $slavesGettingHelp = 0>>
+		<<if $universalRulesFacilityWork == 1>>
+			<<for $i = 0; $i < _SL; $i++>>
+				<<if ($slaves[$i].assignment == "farmhand")>>
+					<<set $slavesGettingHelp++>>
+				<</if>>
+			<</for>>
+		<</if>>
+		*/
+		<<if (_DL+$slavesGettingHelp < 5)>>
+			<<set $i = _FLs>> /* apply following SA passages to facility leader */
+			<<if $showEWD != 0>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;$He <<include "SA work the farm">>
+			<<else>>
+				<<silently>><<include "SA work the farm">><</silently>>
+			<</if>>
+			<<set _seed = $cash-_oldCash, cashX(Math.trunc(0.5*_seed), "farmyard"), _seed = Math.trunc(1.5*_seed), _profits += _seed, _beauty = Beauty($activeSlave)>>
+			/* TODO: what will the Farmer do when $he isn't busy? */
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;Since $he doesn't have enough farmhands to manage to keep $him busy, $he sees _beauty customers $himself (<<= Math.trunc(_beauty/7)>> a day), earning you @@.yellowgreen;<<print cashFormat(_seed)>>.@@ $He can charge more for $his time, since many citizens find it erotic to fuck the Farmer.
+		<</if>>
+	<</if>>
+	<<if (_DL > 0)>><br><br><</if>>
+<</if>>
+
+<<if (_DL > 0)>>
+	&nbsp;&nbsp;&nbsp;&nbsp;<<if _DL != 1>>''There are _DL farmhands working out of $farmyardName.''<<else>>''There is one farmhand working out of $farmyardName.''<</if>>
+<</if>>
+
+<<if $Farmer != 0>>
+	<<set $i = _FLs>> /* apply following SA passages to facility leader */
+	<<if $showEWD != 0>>
+		<br><br>
+		/* 000-250-006 */
+		<<if $seeImages && $seeReportImages>>
+			<div class="imageRef tinyImg">
+				<<= SlaveArt($slaves[_FLs], 0, 0)>>
+			</div>
+		<</if>>
+		/* 000-250-006 */
+		<span class='slave-name'><<= SlaveFullName($slaves[_FLs])>></span> is serving as the Farmer.
+		<br>&nbsp;&nbsp;&nbsp;
+		<<= saChoosesOwnClothes($slaves[$i])>>
+		<<include "SA rules">>
+		<<include "SA diet">>
+		<<include "SA long term effects">>
+		<<= saDrugs($slaves[$i])>>
+		<<include "SA relationships">>
+		<<include "SA rivalries">>
+		<br><<include "SA devotion">>
+	<<else>>
+		<<silently>>
+		<<run saChoosesOwnClothes($slaves[$i])>>
+		<<include "SA rules">>
+		<<include "SA diet">>
+		<<include "SA long term effects">>
+		<<run saDrugs($slaves[$i])>>
+		<<include "SA relationships">>
+		<<include "SA rivalries">>
+		<<include "SA devotion">>
+		<</silently>>
+	<</if>>
+<</if>>
+
+<<if (_DL > 0)>>
+	<<set _oldCash = $cash, _oldFood = $food>>
+	<<for _dI = 0; _dI < _DL; _dI++>>
+		<<set $i = $slaveIndices[$FarmyardiIDs[_dI]]>>
+		<<setLocalPronouns $slaves[$i]>>
+		/* Perform facility based rule changes */
+		<<switch $farmyardDecoration>>
+		<<case "Degradationist" "standard">>	/* TODO: add the rest of the FS */
+			<<set $slaves[$i].rules.living = "spare">>
+		<<case "Roman Revivalist">>
+			<<set $slaves[$i].rules.living = "luxurious">>
+		<<default>>
+			<<set $slaves[$i].rules.living = "normal">>
+		<</switch>>
+		/* TODO: should FS with "spare" living rules cause some minor health damage and devotion / trust loss? */
+		<<if ($slaves[$i].health.condition < -80)>>
+			<<run improveCondition($slaves[_FLs], 20)>>
+		<<elseif $slaves[$i].health.condition < -40>>
+			<<run improveCondition($slaves[_FLs], 15)>>
+		<<elseif $slaves[$i].health.condition < 0>>
+			<<run improveCondition($slaves[_FLs], 10)>>
+		<<elseif $slaves[$i].health.condition < 90>>
+			<<run improveCondition($slaves[_FLs], 7)>>
+		<</if>>
+		<<if ($slaves[$i].devotion <= 20) && ($slaves[$i].trust >= -20)>>
+			<<set $slaves[$i].devotion -= 5, $slaves[$i].trust -= 5>>
+		<<elseif ($slaves[$i].devotion < 45)>>
+			<<set $slaves[$i].devotion += 4>>
+		<<elseif ($slaves[$i].devotion > 50)>>
+			<<set $slaves[$i].devotion -= 4>>
+		<</if>>
+		<<if ($slaves[$i].trust < 30)>>
+			<<set $slaves[$i].trust += 5>>
+		<</if>>
+		<<if $slaves[$i].energy > 40 && $slaves[$i].energy < 95>>
+			<<set $slaves[$i].energy++>>
+		<</if>>
+
+		<<if $showEWD != 0>>
+			<br><br>
+			/* 000-250-006 */
+			<<if $seeImages && $seeReportImages>>
+				<div class="imageRef tinyImg">
+					<<= SlaveArt($slaves[$i], 0, 0)>>
+				</div>
+			<</if>>
+			/* 000-250-006 */
+			<span class='slave-name'><<= SlaveFullName($slaves[$i])>></span>
+			<<if $slaves[$i].choosesOwnAssignment == 2>>
+				<<include "SA chooses own job">>
+			<<else>>
+				is working out of $farmyardName.
+			<</if>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;$He <<= saWorkTheFarm($slaves[$i])>>
+			<br>&nbsp;&nbsp;&nbsp;
+			<<= saChoosesOwnClothes($slaves[$i])>>
+			<<include "SA rules">>
+			<<include "SA diet">>
+			<<include "SA long term effects">>
+			<<= saDrugs($slaves[$i])>>
+			<<include "SA relationships">>
+			<<include "SA rivalries">>
+			<br><<include "SA devotion">>
+		<<else>>
+			<<silently>>
+			<<include "SA chooses own job">>
+			<<run saWorkTheFarm($slaves[$i])>>
+			<<run saChoosesOwnClothes($slaves[$i])>>
+			<<include "SA rules">>
+			<<include "SA diet">>
+			<<include "SA long term effects">>
+			<<run saDrugs($slaves[$i])>>
+			<<include "SA relationships">>
+			<<include "SA rivalries">>
+			<<include "SA devotion">>
+			<</silently>>
+		<</if>>
+		<span id="showProfits">
+		<<set _incomeStats = getSlaveStatisticData($slaves[$i], $slaves[$i].assignment === Job.FARMYARD ? $facility.farmyard : undefined)>>
+		<<set _profits += _incomeStats.income>>
+		</span>
+
+		<span id="foodProduction">
+		/* TODO: is this right? */
+		<<if _DL > 0>>
+			<<set _foodWeek = _incomeStats.food>>
+		<</if>>
+		<<if $farmMenials > 0>>
+			<<set _farmMenialProductivity = 9>>
+			<<if $farmyardUpgrade.pump == 1>>
+				<<set _farmMenialProductivity += 1>>
+			<</if>>
+			<<if $farmyardUpgrade.fertilizer == 1>>
+				<<set _farmMenialProductivity += 2>>
+			<</if>>
+			<<if $farmyardUpgrade.seeds == 1>>
+				<<set _farmMenialProductivity += 3>>
+			<</if>>
+			<<if $farmyardUpgrade.machinery == 1>>
+				<<set _farmMenialProductivity += 3>>
+			<</if>>
+			<<set _foodWeek += ($farmMenials*_farmMenialProductivity)>>
+		<</if>>
+		</span>
+	<</for>>
+	<<set _profits += $cash-_oldCash, _oldCash = $cash, _foodWeek += $food-_oldFood, _possibleBonuses = 0, _farmyardBonuses = 0>>
+
+	<<set _profits += $cash-_oldCash>>		/* TODO: is this supposed to be set a second time? */
+	<!-- Record statistics gathering -->
+	<<script>>
+		var b = State.variables.facility.farmyard;
+		b.farmhandIncome = 0;
+		b.customers = 0;
+		b.farmhandCosts = 0;
+		b.rep = 0;
+		for (var si of b.income.values()) {
+			b.farmhandIncome += si.income + si.adsIncome;
+			b.customers += si.customers;
+			b.farmhandCosts += si.cost;
+			b.rep += si.rep;
+		}
+		b.adsCosts = State.variables.farmyardAdsSpending;
+		b.maintenance = State.variables.farmyard * State.variables.facilityCost;
+		b.totalIncome = b.farmhandIncome + b.adsIncome;
+		b.totalExpenses = b.farmhandCosts + b.maintenance;
+		b.profit = b.totalIncome - b.totalExpenses;
+	<</script>>
+
+	<br><br>
+	$farmyardNameCaps <<if _profits > 0>>makes you @@.yellowgreen;<<print cashFormat(Math.trunc(_profits))>>@@ and <</if>>produced @@.chocolate;<<print massFormat(_foodWeek)>>@@ of food this week.
+
+	<<set $food += _foodWeek>>
+
+	<<if $farmyardDecoration != "standard">>
+		<br>$farmyardNameCaps's customers enjoyed
+		<<if $seeBestiality == 1 && $farmyardBreeding > 0 && ($canines.length > 0 || $hooved.length > 0 || $felines.length > 0)>>
+			@@.green;watching farmhands fuck animals in $farmyardDecoration surroundings.@@
+		<<elseif $farmyardShows == 1>>
+			@@.green;watching farmhands put on shows in $farmyardDecoration surroundings.@@
+		<<else>>
+			/* TODO: not sure about this one */
+			@@.green;partaking of $farmyardName's fine produce in its $farmyardDecoration décor.@@
+		<</if>>
+	<</if>>
+
+	<!-- Statistics output -->
+	<<FarmyardStatistics 0>>
+	<<timed 50ms>>
+		<<replace #farmyardstats>>
+			<<FarmyardStatistics 1>>
+		<</replace>>
+	<</timed>>
+<</if>>
+
+<<if _DL > 0 || $Farmer != 0>>
+	<br><br>
+<</if>>

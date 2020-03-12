@@ -1,0 +1,105 @@
+:: Special Slave [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Buy Slaves", $returnTo = "Buy Slaves", $showEncyclopedia = 1, $encyclopedia = "Direct Sales">>
+
+<<if $heroSlaves.length == 0>>
+	Unfortunately, the catalog is empty.
+<<else>>
+
+	<<run slaveSortMinor($heroSlaves)>>
+	<<set $activeSlave = App.Utils.getHeroSlave($heroSlaves.random(), $baseHeroSlave)>>
+	<<set $activeSlave.weekAcquired = $week>>
+	<<if ndef $activeSlave.pubicHColor>>
+		<<set $activeSlave.pubicHColor = $activeSlave.hColor>>
+	<</if>>
+	<<if ndef $activeSlave.underArmHColor>>
+		<<set $activeSlave.underArmHColor = $activeSlave.hColor>>
+	<</if>>
+
+	<<if $activeSlave.override_Race != 1>>
+		<<set $activeSlave.origRace = $activeSlave.race>>
+	<</if>>
+
+	<<if $activeSlave.override_Eye_Color != 1>>
+		<<run resetEyeColor($activeSlave, "both")>>
+	<</if>>
+	<<if $activeSlave.override_H_Color != 1>>
+		<<set $activeSlave.hColor = getGeneticHairColor($activeSlave)>>
+	<</if>>
+	<<if $activeSlave.override_Arm_H_Color != 1>>
+		<<set $activeSlave.underArmHColor = getGeneticHairColor($activeSlave)>>
+	<</if>>
+	<<if $activeSlave.override_Pubic_H_Color != 1>>
+		<<set $activeSlave.pubicHColor = getGeneticHairColor($activeSlave)>>
+	<</if>>
+	<<if $activeSlave.override_Brow_H_Color != 1>>
+		<<set $activeSlave.eyebrowHColor = getGeneticHairColor($activeSlave)>>
+	<</if>>
+	<<if $activeSlave.override_Skin != 1>>
+		<<set $activeSlave.skin = getGeneticSkinColor($activeSlave)>>
+	<</if>>
+
+	<<run SetBellySize($activeSlave)>>
+	<<if $familyTesting == 1>>
+		/* special slaves exceptions to keep siblings sensible */
+		<<if $activeSlave.mother == -9999 && $activeSlave.father == -9998>> /* The twins — Camille & Kennerly */
+			<<for _k = 0; _k < $slaves.length; _k++>>
+				<<if areSisters($slaves[_k], $activeSlave) > 0>>
+					<<set $activeSlave.actualAge = $slaves[_k].actualAge, $activeSlave.physicalAge = $activeSlave.actualAge, $activeSlave.visualAge = $activeSlave.actualAge, $activeSlave.ovaryAge = $activeSlave.actualAge, $activeSlave.birthWeek = $slaves[_k].birthWeek>>
+				<</if>>
+			<</for>>
+		<</if>>
+		<<if $activeSlave.mother == -9997 && $activeSlave.father == -9996>> /* The siblings — Elisa & Martin */
+			<<for _k = 0; _k < $slaves.length; _k++>>
+				<<if areSisters($slaves[_k], $activeSlave) > 0>>
+					<<if $activeSlave.birthName == "Elisa">>
+						<<set $activeSlave.actualAge = $slaves[_k].actualAge-1, $activeSlave.physicalAge = $activeSlave.actualAge, $activeSlave.visualAge = $activeSlave.actualAge, $activeSlave.ovaryAge = $activeSlave.actualAge>>
+					<<elseif $activeSlave.birthName == "Martin">>
+						<<set $activeSlave.actualAge = $slaves[_k].actualAge+1, $activeSlave.physicalAge = $activeSlave.actualAge, $activeSlave.visualAge = $activeSlave.actualAge, $activeSlave.ovaryAge = $activeSlave.actualAge>>
+					<</if>>
+				<</if>>
+			<</for>>
+		<</if>>
+		<<if $activeSlave.mother == -9995 && $activeSlave.father == -9994>> /* The fruit siblings — Green & Purple Grape */
+			<<for _k = 0; _k < $slaves.length; _k++>>
+				<<if areSisters($slaves[_k], $activeSlave) > 0>>
+					<<if $activeSlave.birthName == "Green Grape">>
+						<<set $activeSlave.actualAge = $slaves[_k].actualAge-5, $activeSlave.physicalAge = $activeSlave.actualAge, $activeSlave.visualAge = $activeSlave.actualAge, $activeSlave.ovaryAge = $activeSlave.actualAge>>
+					<<elseif $activeSlave.birthName == "Purple Grape">>
+						<<set $activeSlave.actualAge = $slaves[_k].actualAge+5, $activeSlave.physicalAge = $activeSlave.actualAge, $activeSlave.visualAge = $activeSlave.actualAge, $activeSlave.ovaryAge = $activeSlave.actualAge>>
+					<</if>>
+				<</if>>
+			<</for>>
+		<</if>>
+	<</if>>
+	<<run nationalityToAccent($activeSlave)>>
+	<<set $specialSlavesPriceOverride = 1>>
+	<<set _slaveCost = slaveCost($activeSlave)>>
+	<<set _slaveCost = (10*Math.trunc((_slaveCost/10)*2))>>
+	<<if _slaveCost < 20000>>
+		<<set _slaveCost += random(5000,30000)>>
+	<</if>>
+	<<setLocalPronouns $activeSlave>>
+
+	You review a piece of merchandise via video call, making a few lewd demands to gauge $his obedience. The background of the video feed is luxurious and plush; somewhere offscreen someone is moaning rapturously.
+
+	<br><br>
+
+	The offered price is <<print cashFormat(_slaveCost)>>.
+
+	[["Buy " + $his + " slave contract"|New Slave Intro][cashX(forceNeg(_slaveCost), "slaveTransfer", $activeSlave),$nextButton = "Continue",$nextLink = "AS Dump",$returnTo = "Main",$specialSlave = 1]]
+
+	<br><br>
+
+	[[Pay to access complete catalog of slaves|Complete Catalog][cashX(-1000, "personalBusiness")]] //Costs <<print cashFormat(1000)>>.//
+
+	<br><br>
+
+	//Best regards to /d/, whose fine denizens came up with most of the slaves in the "previously owned" database.//
+
+	<br><br>
+
+	<<set $saleDescription = 1>><<include "Long Slave Description">>
+	<<set $specialSlavesPriceOverride = 0>>
+
+<</if>>

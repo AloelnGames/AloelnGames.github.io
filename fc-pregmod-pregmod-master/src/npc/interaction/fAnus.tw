@@ -1,0 +1,252 @@
+:: FAnus [nobr]
+
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+<<set getSlave($AS).counter.anal++, $analTotal++>>
+
+You call $him over so you can
+<<if (getSlave($AS).anus > 3)>>
+	fuck $his gaping anus.
+<<elseif (getSlave($AS).anus == 3)>>
+	fuck $his loose butthole.
+<<elseif (getSlave($AS).anus == 2)>>
+	use $his whorish asshole.
+<<elseif (getSlave($AS).anus == 1)>>
+	use $his tight butt.
+<<else>>
+	take $his anal virginity.
+<</if>>
+
+<<if (getSlave($AS).fetish == "buttslut") && (getSlave($AS).devotion >= -20)>>
+	$He's delighted at the prospect of $his favorite activity.
+<<elseif (getSlave($AS).fetish == "buttslut")>>
+	$He perks up at the prospect of $his favorite activity, but the idea of spending it with you instantly sours $his mood.
+<</if>>
+
+<<if (getSlave($AS).anusTat == "tribal patterns")>>
+	$His bleached asshole is an inviting sight, after all.
+<<elseif (getSlave($AS).anusTat == "scenes")>>
+	$His tattooed asshole invites sodomy, after all.
+<<elseif (getSlave($AS).anusTat == "degradation")>>
+	The tattoos on $his asshole make it clear $he's an anal slut, after all.
+<</if>>
+
+<<if (getSlave($AS).heels == 1)>>
+	<<if !["flats", "flats with long stockings", "flats with short stockings", "none"].includes(getSlave($AS).shoes)>>
+		As $he went past your desk, $his high heels and surgically altered legs enforced a gait that presented $his butt enticingly.
+	<<else>>
+		As $he crawls along on <<if hasAllLimbs(getSlave($AS))>>all fours<<else>>the ground<</if>>, $his anus is readily available.
+	<</if>>
+<</if>>
+
+<<if (getSlave($AS).anusPiercing > 1)>>
+	The ring of stud piercings around $his anus should massage you delightfully as you sodomize $him.
+<<elseif (getSlave($AS).anusPiercing == 1)>>
+	$His perineum piercing has a big ring in it, which you should be able to feel when you hilt yourself in $his ass.
+<</if>>
+
+<<if (getSlave($AS).anusTat !== 0) && (getSlave($AS).anusTat !== 4)>>
+	$His anus is invitingly bleached,
+	<<if (getSlave($AS).vagina > -1)>>
+		which is appropriate: rather than looking like $he has a hole for fucking and an ass, it looks like $he has two fuckholes.
+	<<else>>
+		making $his sole fuckable hole look nice and natural.
+	<</if>>
+<</if>>
+
+<<if (getSlave($AS).anus == 0)>>
+	<<if (getSlave($AS).devotion > 20)>>
+		$He accepts your orders without comment and presents $his virgin anus for defloration. You<<if ($PC.dick == 0)>> don a strap-on and<</if>> gently sodomize $him. You gently ease into $his butthole and slowly accelerate your thrusting into $his ass. Since $he is already well broken, this new connection with $his <<= WrittenMaster()>> <span class="devotion inc">increases $his devotion to you.</span> <span class="virginity loss">$His tight little ass has been broken in.</span> $He looks forward to having $his asshole fucked by you again.
+		<<set getSlave($AS).devotion += 4>>
+	<<elseif (getSlave($AS).devotion >= -20)>>
+		$He is clearly unhappy at the idea of taking a dick up $his butt. $He obeys orders anyway, and lies there wincing and moaning as you<<if ($PC.dick == 0)>> don a strap-on and<</if>> fuck $his ass. You gently ease into $his butthole and slowly accelerate your thrusting into $his ass. However $he still squeals in pain as you continue pounding. <span class="virginity loss">$His tight little ass has been broken in,</span> and $he <span class="trust dec">fears further anal pain.</span>
+		<<set getSlave($AS).trust -= 5>>
+	<<else>>
+		$He is appalled at the idea of taking it up the ass<<if ($PC.dick == 0)>> and cries with fear as you don a strap-on<</if>>. $He does anyway though, sobbing into the cushions<<if hasAnyArms(getSlave($AS))>> while you hold $his arm<<if hasBothArms(getSlave($AS))>>s<</if>> behind $him<</if>>. You force yourself into $his butthole and continue thrusting your member into $his ass. $He sobs and cries with disgust while you pump into $his rear. The painful anal rape @@.devotion.dec;decreases $his devotion to you.@@ <span class="virginity loss">$His tight little ass has been broken in,</span> and $he is <span class="trust dec">terrified of further anal pain.</span>
+		<<set getSlave($AS).devotion -= 10, getSlave($AS).trust -= 10>>
+	<</if>>
+	<<set getSlave($AS).anus++>>
+<<elseif getSlave($AS).fetish == "mindbroken">>
+	<<if hasAnyArms(getSlave($AS))>>
+		You instruct $him to present $his anus. $He dully <<if hasBothLegs(getSlave($AS))>>kneels<<else>>bends over<</if>> and spreads $his buttocks<<if ($PC.dick == 0)>>as you don a strap-on<</if>>. You spit on $his hole and ram <<if ($PC.dick == 0)>>it<<else>>your cock<</if>> up $his butt.
+	<<else>>
+		Talking to a broken mind is pointless, so you simply set $him on the couch, spread $his buttocks with one hand, spit on $his hole, and ram <<if ($PC.dick == 0)>>it<<else>>your cock<</if>> up $his <<if $seeRace == 1>><<= getSlave($AS).race>> <</if>>butt.
+	<</if>>
+	$His butthole spasms as you assrape $him, <<if ($PC.dick == 0)>>an amusing sight<<else>>squeezing your dick nicely<</if>>.
+	<<if (getSlave($AS).dick != 0) && canAchieveErection(getSlave($AS))>>
+		<<if getSlave($AS).chastityPenis == 1>>
+			Automatic responses give $him an erection, which $his chastity makes so uncomfortable that $he spasms. This cycle continues repeatedly, $his rectum squeezing unconsciously each time.
+		<<elseif getSlave($AS).prostate != 0>>
+			Despite $his mental deficiency, the prostate stimulation gives $him an erection anyway.
+		<<else>>
+			Without a prostate, there's little stimulation to provoke an involuntary response, and $his cock stays limp.
+		<</if>>
+	<<elseif getSlave($AS).chastityPenis == 1>>
+		$His dick chastity keeps $his pointless cock hidden away while you use $his anus like a pussy.
+	<<elseif (getSlave($AS).dick != 0)>>
+		$His cock is totally flaccid throughout.
+	<</if>>
+<<elseif getSlave($AS).devotion < -20>>
+	<<if !isAmputee(getSlave($AS))>>
+		You instruct $him to present $his anus<<if ($PC.dick == 0)>> as you don a strap-on<</if>>. Horrified, $he tries to back away, but you catch $him and throw $him on the couch next to your desk. $He tries to <<if hasAnyArms(getSlave($AS))>>shield $his asshole<<else>>back away<</if>>, but you pin <<if hasAnyArms(getSlave($AS))>>$his hand<<if hasBothArms(getSlave($AS))>>s<</if>> behind $him with one hand<<else>>$him down<</if>>, spit on $his hole, and ram your <<if ($PC.dick == 0)>>fake dick<<else>>cock<</if>> up $his butt with the other hand.
+	<<else>>
+		You tell $him it's time for an assfuck. $He's horrified, but as an amputee can do nothing about it. You spit on $his hole and ram your <<if ($PC.dick == 0)>>fake dick<<else>>cock<</if>> up $his <<if $seeRace == 1>><<= getSlave($AS).race>> <</if>>butt.
+	<</if>>
+	$His butthole spasms as you assrape $him, <<if ($PC.dick == 0)>>an amusing sight<<else>>squeezing your dick nicely<</if>>.
+	<<if (getSlave($AS).dick != 0) && canAchieveErection(getSlave($AS))>>
+		<<if getSlave($AS).prostate == 0>>
+			$He lacks a prostate, denying $him any real pleasure from this. $His dick stays flaccid as you rape $him.
+		<<elseif (getSlave($AS).chastityPenis == 1)>>
+			Despite $his unwillingness to be sodomized, the prostate stimulation starts to give $him an erection, which $his dick chastity makes horribly uncomfortable. $He bucks with the pain, $his asshole spasming delightfully.
+		<<else>>
+			Despite $his unwillingness to be sodomized, the prostate stimulation gives $him an erection. $He's mortified that $he would get hard while being anally raped.
+		<</if>>
+	<<elseif (getSlave($AS).chastityPenis == 1)>>
+		$His dick chastity keeps $his bitch cock hidden away while you use $his anus like a pussy.
+	<<elseif (getSlave($AS).dick != 0)>>
+		$His flaccid dick is ground into the back of the couch as you rape $him.
+	<</if>>
+<<elseif (getSlave($AS).devotion <= 20) && (getSlave($AS).vagina < 0)>>
+	<<if !isAmputee(getSlave($AS))>>
+		You instruct $him to present $his anus<<if ($PC.dick == 0)>> as you don a strap-on<</if>>. $He knows a sissy slave takes it up the butt, and lies on the couch next to your desk with $his <<if !hasAnyLegs(getSlave($AS))>>hips<<else>>leg<<if hasBothLegs(getSlave($AS))>>s<</if>><</if>> in the air, spreading $his buttocks <<if !hasAnyArms(getSlave($AS))>>as best $he can<<else>>with $his hand<<if hasBothArms(getSlave($AS))>>s<</if>><</if>>.
+	<<else>>
+		You tell $him it's time for an assfuck. $He's hesitant, but as an amputee can do nothing about it.
+	<</if>>
+	You take your time and fuck $his <<if $seeRace == 1>><<= getSlave($AS).race>> <</if>>butthole for a good long while<<if (getSlave($AS).chastityPenis != 1)>><<if (getSlave($AS).dick != 0)>> so $his limp dick flops around<<elseif (getSlave($AS).balls != 0)>> as $his erect dick waves in the air<</if>><</if>>. This gives you enough time to stroke $him until $he gets aroused despite $his discomfort with anal. $He doesn't orgasm, but $he's getting accustomed to $his asshole as a sexual organ.
+<<elseif getSlave($AS).devotion < 10>>
+	<<if !isAmputee(getSlave($AS))>>
+		You instruct $him to present $his <<if $seeRace == 1>><<= getSlave($AS).race>> <</if>>anus<<if ($PC.dick == 0)>> as you don a strap-on<</if>>. $He hesitates but eventually lies on the couch next to your desk with $his <<if !hasAnyLegs(getSlave($AS))>>hips<<else>>leg<<if hasBothLegs(getSlave($AS))>>s<</if>><</if>> in the air, spreading $his buttocks <<if !hasAnyArms(getSlave($AS))>>as best $he can<<else>>with $his hand<<if hasBothArms(getSlave($AS))>>s<</if>><</if>>.
+	<<else>>
+		You tell $him it's time for an assfuck. $He's hesitant, but as an amputee can do nothing about it.
+	<</if>>
+	You take your time and fuck $his butthole for a good long while.
+	<<if (getSlave($AS).anus == 1)>>
+		$His ass is so tight that $he winces with anal pain
+	<<elseif (getSlave($AS).anus == 2)>>
+		$His experienced ass takes your <<if ($PC.dick == 0)>>fake dick<<else>>cock<</if>> without trouble
+	<<else>>
+		$His asspussy is so loose you can pound it as hard as you like
+	<</if>>
+	<<if (getSlave($AS).dick != 0)>>
+		as $his limp dick flops around.
+	<<elseif (getSlave($AS).dick != 0)>>
+		as $his erect dick waves in the air.
+	<<elseif getSlave($AS).vagina == -1>>
+		as it does its duty as $his sole fuckhole.
+	<<else>>
+		as it substitutes for $his pussy.
+	<</if>>
+	$He gets aroused despite $his discomfort with anal, though $he doesn't orgasm.
+<<else>>
+	<<if hasAnyLegs(getSlave($AS))>>$He kneels on the couch<<else>>You lay $him on the couch<</if>> with $his <<if $seeRace == 1>><<= getSlave($AS).race>> <</if>>butt facing you, back strongly arched to angle $his rectum for more comfortable anal coupling.
+	<<if hasAnyArms(getSlave($AS)) && getSlave($AS).prostate > 1 && getSlave($AS).dick > 3>>
+		<<if $PC.dick == 0>>While you don a strap-on, $he<<else>>$He<</if>> shoves $his slavering dick down and around towards $his ass and squeezes it, pushing a lot of $his precum out to lube $his own asshole.
+	<<else>>
+		<<if $PC.dick == 0>>You don a strap-on and let some saliva fall onto its head<<else>>You let some saliva fall onto your dickhead<</if>> before penetrating $him.
+	<</if>>
+	You take your time and fuck $his butthole for a good long while. <<if (getSlave($AS).anus == 1)>>$His ass is so tight that $he has to concentrate on relaxing for you.<<elseif (getSlave($AS).anus == 2)>>$His experienced ass feels great.<<else>>$His asspussy is so loose you can pound it as hard as you like.<</if>> $He rubs $his <<if !hasAnyArms(getSlave($AS))>>body against you as much as $he can manage<<elseif canAchieveErection(getSlave($AS))>>hard-on<<elseif (getSlave($AS).dick != 0)>>soft dick<<elseif (getSlave($AS).chastityVagina) || (getSlave($AS).clit == 0)>>nipples<<elseif (getSlave($AS).clit > 2)>>huge, stiff clit<<else>>clit<</if>>, and brings $himself to orgasm before you. <<if ($PC.dick == 0)>>The sight of $him gasping and shaking $his way through an anal orgasm brings you to climax yourself, and you shove yourself against the strap-on harness with enough force to give the slave's sensitized hole a final brutal stretching.<<else>>$His orgasmic rectal spasms squeeze your cock and you blow your load inside $his ass.<</if>>
+<</if>>
+
+<<if (getSlave($AS).bellyPreg >= 1500)>>
+	The poor slave's pregnant belly causes $him some discomfort as you sodomize $him.
+<<elseif (getSlave($AS).bellyImplant >= 1500)>>
+	The poor $girl's implant filled belly causes $him some discomfort as you sodomize $him.
+<<elseif (getSlave($AS).bellyFluid >= 1500)>>
+	The poor $girl's sloshing belly causes $him some discomfort as you sodomize $him, though the lewd jiggling the pounding sends through it is quite a sight.
+<</if>>
+
+<<if (getSlave($AS).anusTat == "scenes") && (getSlave($AS).anus == 1)>>
+	As you fucked $his butt, the decorative pattern around $his ass stretched open. When you pull out, $his momentary gape closes the pattern up quickly.
+<<elseif (getSlave($AS).anusTat == "scenes")>>
+	As you fucked $his butt, the decorative pattern around $his ass stretched open. When you pull out, $his gape leaves the pattern distorted.
+<<elseif (getSlave($AS).anusTat == "degradation")>>
+	As you fucked $his butt, the offensive language around $his ass stretched and distorted.
+<</if>>
+
+<<if (random(1,100) > (100 + getSlave($AS).devotion))>>
+	<<if (getSlave($AS).fetish != "buttslut") && (getSlave($AS).energy <= 95) && (getSlave($AS).sexualFlaw != "hates anal")>>
+		Being assraped has given $him a @@.flaw.gain;hatred of anal sex.@@
+		<<set getSlave($AS).sexualFlaw = "hates anal">>
+	<</if>>
+<<elseif (random(1,100) > (110-getSlave($AS).devotion))>>
+	<<if (getSlave($AS).fetish == "none") && (getSlave($AS).sexualFlaw != "hates anal")>>
+		Orgasming to the sensation of your member in $his bottom @@.fetish.gain;has $him eager for anal.@@
+		<<set getSlave($AS).fetish = "buttslut", getSlave($AS).fetishKnown = 1>>
+	<</if>>
+<</if>>
+
+<<if ($PC.dick != 0)>>
+
+	<<if getSlave($AS).cervixImplant == 2 || getSlave($AS).cervixImplant == 3>>
+		<<set getSlave($AS).bellyImplant += random(10,20)>>
+	<</if>>
+
+	<<if (getSlave($AS).anus > 3)>>
+		Your cum falls out of $his gaping hole.
+	<<elseif (getSlave($AS).anus > 2)>>
+		Cum flows out of $his gaped butthole.
+	<<elseif (getSlave($AS).anus == 2)>>
+		Cum drips out of $his newly gaped anus.
+	<<elseif (getSlave($AS).anus == 1)>>
+		$His still-tight ass keeps your load inside $him.
+	<</if>>
+
+	<<if canImpreg(getSlave($AS), $PC)>>
+		<<= knockMeUp(getSlave($AS), 5, 1, -1)>>
+	<</if>>
+
+	<<if $postSexCleanUp > 0>>
+		<<if canWalk(getSlave($AS))>>
+			<<if getSlave($AS).anus < 2>>
+				<<set _Anus = "tight butt">>
+			<<elseif getSlave($AS).anus < 3>>
+				<<set _Anus = "used butthole">>
+			<<elseif getSlave($AS).anus < 4>>
+				<<set _Anus = "gaping butthole">>
+			<<else>>
+				<<set _Anus = "anal gape">>
+			<</if>>
+			<<switch getSlave($AS).assignment>>
+			<<case "work in the brothel">>
+				$He goes to wash $his _Anus so $his next customer can have the illusion that he's the first to use it today.
+			<<case "serve in the club">>
+				$He goes to wash and delicately perfume $his _Anus so it can gratify the finest citizen.
+			<<case "work in the dairy">>
+				$He goes off to carefully wash $his _Anus to avoid besmirching the nice clean dairy.
+			<<case "work as a farmhand">>
+				$He goes off to wash $his _Anus to avoid tainting the food in $farmyardName.
+			<<case "work as a servant">>
+				$He rushes to wash $his _Anus, impatient to get back to $his many chores.
+			<<case "work as a nanny">>
+				$He goes off to wash $his _Anus, before hurrying to continue taking care of the children in $nurseryName.
+			<<case "whore">>
+				$He uses an enema to clean $his _Anus before returning to offering it for sale.
+			<<case "serve the public">>
+				$He uses an enema to clean $his _Anus before returning to offering it for free.
+			<<case "be a servant">>
+				$He uses an enema to clean $his _Anus, since $his chores didn't perform themselves while you used $his backdoor.
+			<<case "rest">>
+				$He uses an enema to clean $his _Anus before crawling back into bed, face-down.
+			<<case "get milked">>
+				$He uses an enema to clean $his _Anus <<if getSlave($AS).lactation > 0>>before going to get $his uncomfortably milk-filled tits drained<<else>>and then rests until $his balls are ready to be drained again<</if>>.
+			<<case "please you">>
+				$He uses an enema to clean $his _Anus before returning to await your next use of $his backdoor, as though nothing had happened.
+			<<case "be a subordinate slave">>
+				$He uses an enema to clean $his _Anus, though it's only a matter of time before another slave decides to play with $his backdoor.
+			<<case "be your Head Girl">>
+				$He uses an enema to clean $his _Anus, worried that $his charges got up to trouble while $he enjoyed the buttsex.
+			<<case "guard you">>
+				$He hurries off to wash $his _Anus so you'll be unguarded for as little time as possible.
+			<<case "train slaves">>
+				$He uses an enema to clean $his _Anus before $he returns to teaching $his classes, a little bow-legged.
+			<<default>>
+				$He hurries off to wash $his _Anus before going back to <<= getSlave($AS).assignment>>.
+			<</switch>>
+			<<set _Anus = "">>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if passage() != "Slave Interact">>
+	<<set $slaves[$slaveIndices[getSlave($AS).ID]] = getSlave($AS)>>
+<</if>>

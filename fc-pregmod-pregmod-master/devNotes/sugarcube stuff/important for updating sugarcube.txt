@@ -1,0 +1,99 @@
+There are two main changes here.
+
+CHANGE 1: Speed up loading
+==========================
+
+The first is to speed up loading the file.
+
+Edit the sugarcube header and change:
+
+	{key:"_serialize",value:function(e)
+	...
+	 return Object.freeze
+
+
+	 {return LZString.compressToUTF16(JSON.stringify(e))}},{key:"_deserialize",value:function(e){return JSON.parse(LZString.decompressFromUTF16(e))}}]),e}();
+
+
+Into this
+
+[{key:"_serialize",value:function(e)
+
+/* look here for changes */
+{return JSON.stringify(e)}},{key:"_deserialize",value:function(e){return JSON.parse((!e || e[0]=="{")?e:LZString.decompressFromUTF16(e))}}]),e}();
+/* changes end here */
+
+return Object.freeze
+
+
+CHANGE 2: Remember scroll position
+==================================
+
+Edit the sugarcube header and change:
+
+	var t=jQuery(this);t.ariaIsDisabled()||(t.is("[aria-pressed]")&&t.attr("aria-pressed","true"===t.attr("aria-pressed")?"false":"true"),e.apply(this,arguments))
+
+into this:
+
+	var t=jQuery(this);
+	const dataPassage = t.attr('data-passage');
+	const initialDataPassage = window && window.SugarCube && window.SugarCube.State && window.SugarCube.State.passage;
+	const savedYOffset = window.pageYOffset;
+	t.is("[aria-pressed]")&&t.attr("aria-pressed","true"===t.attr("aria-pressed")?"false":"true"),e.apply(this,arguments);
+	const doJump = function(){ window.scrollTo(0, savedYOffset); }
+	if ( dataPassage && (window.lastDataPassageLink === dataPassage || initialDataPassage === dataPassage))
+		doJump();
+	window.lastDataPassageLink = dataPassage;
+
+This uses two separate methods to detect if we are returning to the same page. Just checking sugarcube should actually be sufficient, but no harm in this approach either.
+
+
+CHANGE 3: Ignore expired array
+==============================
+
+	return e?t.history=clone(R):t.delta=O(R),V.length>0&&(t.expired=[].concat(_toConsumableArray(V))),null!==B&&(t.seed=B.seed),t}function n(e,t){
+
+	into
+
+	return e?t.history=clone(R):t.delta=O(R),V.length>0&&(t.expired=[]),null!==B&&(t.seed=B.seed),t}function n(e,t){
+
+
+CHANGE 4: Save overwriting?
+===========================
+
+	d.append(e("load","ui-close",L10n.get("savesLabelLoad"),s,function(e){jQuery(document).one(":dialogclose",function(){
+
+	into
+
+	d.append(e("save","ui-close",L10n.get("savesLabelSave"),s,Save.slots.save),e("load","ui-close",L10n.get("savesLabelLoad"),s,function(e){jQuery(document).one(":dialogclose",function(){
+	
+	
+CHANGE 5: Speed up week ends
+===========================
+
+	jQuery(destination).append(document.createTextNode(this.source.substring(startPos, endPos)));
+	
+	into
+	
+	destination.appendChild(document.createTextNode(this.source.substring(startPos, endPos)));
+	
+	
+CHANGE 6: FCHost storage support
+===========================
+
+If you intend to run in FCHost and need to rebuild Sugarcube, then in addition to the other FreeCities patches, you need to add the FCHost.Storage.js module, supplied in this folder, to Sugarcube's src\lib\simplestore\adapters, and add a line in Sugarcube's build.js for 'src/lib/simplestore/adapters/FCHost.Storage.js' immediately BEFORE 'src/lib/simplestore/adapters/webstorage.js' (order is important).
+
+
+CHANGE 7: Don't generate passage excerpts if they aren't going to be used
+===========================
+
+	// Update the excerpt cache to reflect the rendered text.
+	this._excerpt = Passage.getExcerptFromNode(passageEl);
+	
+	into
+	
+	// Update the excerpt cache to reflect the rendered text, if we need it for the passage description
+	if (Config.passages.descriptions == null) {
+		this._excerpt = Passage.getExcerptFromNode(passageEl);
+	}
+	

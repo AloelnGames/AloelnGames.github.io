@@ -1,0 +1,652 @@
+:: Wardrobe [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Manage Penthouse">>
+
+<<if $seeDicks != 100>>
+	<<set _model = GenerateNewSlave("XX")>>
+<<else>>
+	<<set _model = GenerateNewSlave("XY")>>
+<</if>>
+
+<h1>Slave Wardrobe</h1>
+
+<p class="scene-intro">
+The room containing all the clothes and accessories you have available to dress your slaves in, as well as the supplies and tools your tailor needs to resize them to better fit your slaves. Several mirrors are set up for a slave to try on outfits should they be allowed to dress themselves. The selection includes
+<<set _ownItAll = (
+	App.Data.misc.niceClothes.every((i) => isClothingAccessible.entry(i.value, "clothing")) && 
+	App.Data.misc.harshClothes.every((i) => isClothingAccessible.entry(i.value, "clothing"))
+)>>
+<<if _ownItAll>>
+	outfits from all manner of cultures and societies; not a single style eludes you.
+<<else>>
+	many styles of clothing ranging from exciting to mundane and sexy to practical.
+<</if>>
+<<if $shoesBoughtHeels == 1>>
+	A large variety of shoes are available to select from.
+<</if>>
+<<if $toysBoughtDildos == 1 && $toysBoughtGags == 1 && $toysBoughtButtPlugs == 1>>
+	Sex toys of all kinds and shapes line the shelves.
+<<elseif $toysBoughtDildos == 1 || $toysBoughtGags == 1 || $toysBoughtButtPlugs == 1 || $toysBoughtButtPlugTails == 1 || $toysBoughtVaginalAttachments == 1>>
+	Some sex toys line the shelves.
+<</if>>
+<<if $buckets == 1>>
+	Several buckets of various sizes and a sturdy cup have been set aside for you in feeding slaves to their limit.
+<</if>>
+<<if $enema == 1>>
+	A number of drums of specially formulated water for use in enemas line one of the walls.
+<</if>>
+<<if $medicalEnema == 1>>
+	Alongside them, multiple drums of mixtures for use in medical enemas.
+<</if>>
+</p>
+
+<h2>Future Society styles</h2>
+
+<table class="wardrobe">
+<tr>
+<td>
+<<set _model.clothes = "a bunny outfit">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a bunny outfit") !== true>>
+	[[Order a shipment of bunny suits|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtBunny = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with classic bunny suits and bowties.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = "conservative clothing">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("conservative clothing") !== true>>
+	[[Order a shipment of conservative clothes|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtConservative = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with modest outfits.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = "a bimbo outfit">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a bimbo outfit") !== true>>
+	[[Order a shipment of outfits suitable for bimbos|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtBimbo = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with bimbo attire.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = "a courtesan dress">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a courtesan dress") !== true>>
+	[[Order a shipment of courtesan dresses|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtCourtesan = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with courtesan dresses.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = "chains">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("chains") !== true>>
+	[[Order a shipment of chains|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtChains = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with various lengths of binding chains.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = "Western clothing">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("Western clothing") !== true>>
+	[[Order a shipment of western outfits|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtWestern = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with cowgirl outfits.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = "body oil">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("body oil") !== true>>
+	[[Order a shipment of body oil|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtOil = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with various body oils.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = "stretch pants and a crop-top">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("stretch pants and a crop-top") !== true>>
+	[[Order a shipment of comfortable, rather stretchy, clothes|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtLazyClothes = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with various comfy pants and rather tight crop-tops.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = "a chattel habit">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a chattel habit") !== true>>
+	[[Order a shipment of chattel habits|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtHabit = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with habits from the chattel religion.
+<</if>>
+</td>
+<td>
+<<set _model.clothes = "a maternity dress">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a maternity dress") !== true>>
+	[[Order a shipment of maternity dresses|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtMaternityDress = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with dresses specially tailored for pregnant women.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = "attractive lingerie for a pregnant woman">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("attractive lingerie for a pregnant woman") !== true>>
+	[[Order a shipment of maternity lingerie|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtMaternityLingerie = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with sexy silken lingerie designed for pregnant women.
+<</if>>
+</td>
+</tr>
+</table>
+
+<h2>Future Society Revivalist styles</h2>
+
+<table class="wardrobe">
+<tr>
+<td>
+<<set _model.clothes = "no clothing">>
+<<set _model.collar = "ancient Egyptian">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<set _model.collar = "none">>
+<<if !isItemAccessible("ancient Egyptian")>>
+	[[Order a shipment of Egyptian necklaces|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtEgypt = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with ancient Egyptian necklaces.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = "a toga">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a toga") !== true>>
+	[[Order a shipment of togas|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtToga = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with fine roman-styled togas.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = "a huipil">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a huipil") !== true>>
+	[[Order a shipment of huipil|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtHuipil = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with exquisite Aztec huipils.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = "a kimono">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a kimono") !== true>>
+	[[Order a shipment of kimonos|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtKimono = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with elegant Japanese kimonos.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = "harem gauze">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("harem gauze") !== true>>
+	[[Order a shipment of harem outfits|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtHarem = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with Arabic harem garb made from the finest available silks.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = "a slutty qipao">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a slutty qipao") !== true>>
+	[[Order a shipment of qipaos|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtQipao = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with slutty Chinese qipaos.
+<</if>>
+</td>
+</tr>
+</table>
+
+<h2>Other styles</h2>
+
+<table class="wardrobe">
+<tr>
+<td>
+<<set _model.clothes = either("a military uniform", "a red army uniform", "battlearmor", "battledress")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("battlearmor") !== true>>
+	[[Order a shipment of military themed clothing|Wardrobe][cashX(forceNeg(Math.trunc(5000 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtMilitary = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(5000 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with a variety of military themed garb.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = either("a biyelgee costume", "a dirndl", "a hanbok", "a mounty outfit", "lederhosen")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a dirndl") !== true>>
+	[[Order a shipment of cultural outfits|Wardrobe][cashX(forceNeg(Math.trunc(15000 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtCultural = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(15000 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with a variety of signature outfits from a variety of countries.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = either("a burqa", "a niqab and abaya")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a burqa") !== true>>
+	[[Order a shipment of burqas and similar garb|Wardrobe][cashX(forceNeg(Math.trunc(5000 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtMiddleEastern = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(5000 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with a number of burqas and similar clothing.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = either("a button-up shirt and panties", "a button-up shirt", "a sweater and cutoffs", "a sweater and panties", "a sweater", "a t-shirt and jeans", "a t-shirt and panties", "a t-shirt", "a tank-top and panties", "a tank-top", "a tube top", "an oversized t-shirt", "cutoffs", "jeans", "leather pants and a tube top", "leather pants")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("jeans") !== true>>
+	[[Order an extra large shipment of casual clothing|Wardrobe][cashX(forceNeg(Math.trunc(5000 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtCasual = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(5000 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with casual clothing.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = either("a nice nurse outfit", "a police uniform", "nice business attire")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a police uniform") !== true>>
+	[[Order a shipment of professional garments|Wardrobe][cashX(forceNeg(Math.trunc(2500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtCareer = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(2500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with a selection of professional outfits.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = either("a ball gown", "a gothic lolita dress")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a gothic lolita dress") !== true>>
+	[[Order a shipment of professionally tailored dresses|Wardrobe][cashX(forceNeg(Math.trunc(15000 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtDresses = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(15000 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with a selection of fine dresses.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = either("a cybersuit", "a latex catsuit")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a cybersuit") !== true>>
+	[[Order a shipment of exotic bodysuits|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtBodysuits = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with a selection of bodysuits.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = either("a bra", "a skimpy loincloth", "a thong", "boyshorts", "kitty lingerie", "panties and pasties", "pasties")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("boyshorts") !== true>>
+	[[Order a shipment of undergarments|Wardrobe][cashX(forceNeg(Math.trunc(5000 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtUnderwear = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(5000 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with underwear.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = either("a sports bra", "sport shorts and a sports bra", "sport shorts")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("sport shorts and a sports bra") !== true>>
+	[[Order a shipment of exercise wear|Wardrobe][cashX(forceNeg(Math.trunc(2500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtSports = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(2500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with exercise wear.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = either("a monokini", "a one-piece swimsuit")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a one-piece swimsuit") !== true>>
+	[[Order a shipment of swimwear|Wardrobe][cashX(forceNeg(Math.trunc(3500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtSwimwear = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(3500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with swimwear.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = either("a nice pony outfit", "a slutty pony outfit")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a nice pony outfit") !== true>>
+	[[Order a shipment of specialized latex ponygirl outfits|Wardrobe][cashX(forceNeg(Math.trunc(10000 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtPony = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(10000 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with ponygirl bodysuits.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = either("a klan robe", "a schutzstaffel uniform", "a slutty klan robe", "a slutty schutzstaffel uniform")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a schutzstaffel uniform") !== true>>
+	[[Order a shipment of politically incorrect clothing|Wardrobe][cashX(forceNeg(Math.trunc(15000 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtPol = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(15000 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with a selection of outfits once considered distasteful.
+<</if>>
+</td>
+</tr>
+
+<tr>
+<td>
+<<set _model.clothes = "a Santa dress">>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("a Santa dress") !== true>>
+	[[Order a shipment of colorful and revealing costumes|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtCostume = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(15000 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You are well stocked with a variety of costume party supplies.
+<</if>>
+</td>
+
+<td>
+<<set _model.clothes = either("a striped bra", "striped panties", "striped underwear")>>
+<<if $seeImages == 1>>
+	<div class="imageRef smlImg">
+		<<= SlaveArt(_model, 1, 0)>>
+	</div>
+<</if>>
+<<if isClothingAccessible.entry("striped panties") !== true>>
+	[[Order a large crate of panties from Japan|Wardrobe][cashX(forceNeg(Math.trunc(2500 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtPantsu = 1]]
+	<div class="detail">Costs <<print cashFormat(Math.trunc(2500 * $upgradeMultiplierTrade))>></div>
+<<else>>
+	You have an impressive stash of panties and other striped underwear that may or may not be have at one point been used.
+<</if>>
+</td>
+</tr>
+</table>
+
+<h2>Accessories</h2>
+
+<p>
+	<<if !isItemAccessible("platform heels")>>
+		[[Order a shipment of platform shoes|Wardrobe][cashX(forceNeg(Math.trunc(7500 * $upgradeMultiplierTrade)), "capEx"), $shoesBoughtHeels = 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(7500 * $upgradeMultiplierTrade))>></span>
+	<<else>>
+		You have shelves dedicated to your collection of platform shoes.
+	<</if>>
+</p>
+
+<p>
+	<<if !isItemAccessible("a small empathy belly")>>
+		[[Order a shipment of fake pregnancy bellies|Wardrobe][cashX(forceNeg(Math.trunc(15000 * $upgradeMultiplierTrade)), "capEx"), $clothesBoughtBelly = 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(15000 * $upgradeMultiplierTrade))>></span>
+	<<else>>
+		You are well stocked with silicone pregnancy bellies modeled after variously sized women.
+	<</if>>
+</p>
+
+<p>
+	<div>
+	<<if $toysBoughtDildos == 0>>
+		[[Order a shipment of extra long dildos and bullet vibes|Wardrobe][cashX(forceNeg(Math.trunc(10000 * $upgradeMultiplierTrade)), "capEx"), $toysBoughtDildos = 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(10000 * $upgradeMultiplierTrade))>></span>
+	<<else>>
+		You are well stocked with extra long dildos in a variety of sizes, as well as a good amount of bullet vibrators.	/* FIXME: not happy with this line */
+		<<if $toysBoughtSmartVibes == 0>>
+			<div class="indent">
+				[[Order the "smart" variant of the bullet vibrators|Wardrobe][cashX(forceNeg(Math.trunc(5000 * $upgradeMultiplierTrade)), "capEx"), $toysBoughtSmartVibes = 1]]
+				<span class="detail">Costs <<print cashFormat(Math.trunc(5000 * $upgradeMultiplierTrade))>></span>
+			</div>
+		<<else>>
+			Some of the bullet vibes are of the "smart" variety.
+		<</if>>
+	<</if>>
+	</div>
+
+	<div>
+	<<if $toysBoughtVaginalAttachments == 0>>
+		[[Order a shipment of vibrating dildo attachments|Wardrobe][cashX(forceNeg(Math.trunc(10000 * $upgradeMultiplierTrade)), "capEx"), $toysBoughtVaginalAttachments = 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(10000 * $upgradeMultiplierTrade))>></span>
+	<<else>>
+		You are well stocked with attachments that allow dildos to vibrate.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $toysBoughtButtPlugs == 0>>
+		[[Order a shipment of extra long buttplugs|Wardrobe][cashX(forceNeg(Math.trunc(10000 * $upgradeMultiplierTrade)), "capEx"), $toysBoughtButtPlugs = 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(10000 * $upgradeMultiplierTrade))>></span>
+	<<else>>
+		You are well stocked with extra long buttplugs in a variety of sizes.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $toysBoughtButtPlugTails == 0>>
+		[[Order a shipment of attachable tails|Wardrobe][cashX(forceNeg(Math.trunc(5000 * $upgradeMultiplierTrade)), "capEx"), $toysBoughtButtPlugTails = 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000 * $upgradeMultiplierTrade))>></span>
+	<<else>>
+		You are well stocked with tails to attach to your buttplugs.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $toysBoughtGags == 0>>
+		[[Order a shipment of extra long dildo gags|Wardrobe][cashX(forceNeg(Math.trunc(5000 * $upgradeMultiplierTrade)), "capEx"), $toysBoughtGags = 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000 * $upgradeMultiplierTrade))>></span>
+	<<else>>
+		You are well stocked with extra long dildo gags.
+	<</if>>
+	</div>
+</p>
+
+<p>
+	<div>
+	<<if $buckets == 0>>
+		[[Gather up everything you need to force-feed slaves|Wardrobe][$buckets = 1]]
+		<span class="detail">Some supplies from the cafeteria and a slight adjustment to the feeder settings is all it would take.</span>
+	<<else>>
+		You have everything you need in one place to force-feed slaves. You've also adjusted the feeders to cheaply produce filler food to save on money. However, said food is just empty calories and probably bad for a slave's waistline.
+	<</if>>
+	</div>
+
+	<div>
+	<<if $enema == 0>>
+		[[Order enema supplies|Wardrobe][cashX(forceNeg(Math.trunc(5000 * $upgradeMultiplierTrade)), "capEx"), $enema = 1]]
+		<span class="detail">Costs <<print cashFormat(Math.trunc(5000 * $upgradeMultiplierTrade))>></span>
+	<<else>>
+		You are well stocked with specially formulated liquids to be used safely for long term enemas along with the tools needed to keep a slave bloated for extended periods of time.
+		<<if $medicalEnema == 0>>
+			[[Order medical enema supplies|Wardrobe][cashX(forceNeg(Math.trunc(25000 * $upgradeMultiplierTrade)), "capEx"), $medicalEnema = 1]]
+			<span class="detail">Costs <<print cashFormat(Math.trunc(25000 * $upgradeMultiplierTrade))>></span>
+		<<else>>
+			You are also well stocked with drugs to be mixed with the enema water for use in medical enemas.
+		<</if>>
+	<</if>>
+	</div>
+</p>

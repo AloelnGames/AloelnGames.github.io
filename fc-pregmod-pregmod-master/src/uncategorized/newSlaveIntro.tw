@@ -1,0 +1,2441 @@
+:: New Slave Intro [nobr]
+
+/* TODO: rewrite this to take the slave's history into account */
+
+<<set $nextButton = "Continue", $showEncyclopedia = 0>>
+
+<<if $nextLink != "AS Dump" && passage() != "Bulk Slave Intro">>
+	<<set $returnTo = $nextLink, $nextLink = "AS Dump">>
+<</if>>
+
+<<set $desc = SlaveTitle($activeSlave)>>
+<<run Enunciate($activeSlave)>>
+<<setPlayerPronouns>>
+<<setLocalPronouns $activeSlave>>
+
+/* use the secondary location if the primary mark target won't work for this slave */
+<<set _brandTarget = $brandTarget.primary, _scarTarget = $scarTarget.primary>>
+<<if $activeSlave.dick == 0>>
+	<<if $brandTarget.primary == "penis">>
+		<<set _brandTarget = $brandTarget.secondary>>
+	<</if>>
+	<<if $scarTarget.primary == "penis">>
+		<<set _scarTarget = $scarTarget.secondary>>
+	<</if>>
+<</if>>
+<<if $activeSlave.balls == 0 && $activeSlave.scrotum == 0>>
+	<<if ["left testicle", "right testicle"].includes($brandTarget.primary)>>
+		<<set _brandTarget = $brandTarget.secondary>>
+	<</if>>
+	<<if ["left testicle", "right testicle"].includes($scarTarget.primary)>>
+		<<set _scarTarget = $scarTarget.secondary>>
+	<</if>>
+<</if>>
+<<if $activeSlave.earShape == "none">>
+	<<if ["left ear", "right ear"].includes($brandTarget.primary)>>
+		<<set _brandTarget = $brandTarget.secondary>>
+	<</if>>
+	<<if ["left ear", "right ear"].includes($scarTarget.primary)>>
+		<<set _scarTarget = $scarTarget.secondary>>
+	<</if>>
+<</if>>
+<<if getLeftArmID($activeSlave) !== 1>>
+	<<if ([
+		"left upper arm", "left lower arm", "left wrist", "left hand"
+		]).includes($brandTarget.primary)>>
+		<<set _brandTarget = $brandTarget.secondary>>
+	<</if>>
+	<<if ([
+		"left upper arm", "left lower arm", "left wrist", "left hand"
+		]).includes($scarTarget.primary)>>
+		<<set _scarTarget = $scarTarget.secondary>>
+	<</if>>
+<</if>>
+<<if getRightArmID($activeSlave) !== 1>>
+	<<if ([
+		"right upper arm", "right lower arm", "right wrist", "right hand"
+		]).includes($brandTarget.primary)>>
+		<<set _brandTarget = $brandTarget.secondary>>
+	<</if>>
+	<<if ([
+		"right upper arm", "right lower arm", "right wrist", "right hand"
+		]).includes($scarTarget.primary)>>
+		<<set _scarTarget = $scarTarget.secondary>>
+	<</if>>
+<</if>>
+<<if getLeftLegID($activeSlave) !== 1>>
+	<<if ([
+		"left thigh", "left calve", "left ankle", "left foot"
+		]).includes($brandTarget.primary)>>
+		<<set _brandTarget = $brandTarget.secondary>>
+	<</if>>
+	<<if ([
+		"left thigh", "left calve", "left ankle", "left foot"
+		]).includes($scarTarget.primary)>>
+		<<set _scarTarget = $scarTarget.secondary>>
+	<</if>>
+<</if>>
+<<if getRightLegID($activeSlave) !== 1>>
+	<<if ([
+		"right thigh", "right calve", "right ankle", "right foot"
+		]).includes($brandTarget.primary)>>
+		<<set _brandTarget = $brandTarget.secondary>>
+	<</if>>
+	<<if ([
+		"right thigh", "right calve", "right ankle", "right foot"
+		]).includes($scarTarget.primary)>>
+		<<set _scarTarget = $scarTarget.secondary>>
+	<</if>>
+<</if>>
+
+<<if $specialSlave == 1>>
+	<<set $i = $heroSlaves.findIndex(function(s) { return s.ID == $activeSlave.ID; })>>
+	<<if $i != -1>>
+		<<set $heroSlaves.deleteAt($i)>>
+	<</if>>
+	<<set $specialSlave = 0>>
+<</if>>
+
+<p>
+The legalities completed, <span class='slave-name'><<= SlaveFullName($activeSlave)>></span> <<if !hasAnyLegs($activeSlave)>><<if isAmputee($activeSlave)>>lies<<else>>rests<</if>> helplessly on your desk,<<elseif !canWalk($activeSlave)>>kneels before your desk,<<else>>stands before your desk,<</if>>
+<<if $activeSlave.devotion < -50>>
+	<<if canSee($activeSlave)>>looking you in the eyes<<else>>directly facing you<</if>> with defiance.
+<<elseif $activeSlave.devotion < -20>>
+	<<if canSee($activeSlave)>>looking at<<else>>facing<</if>> you sullenly.
+<<elseif $activeSlave.trust <= 50>>
+	staring <<if canSee($activeSlave)>>at the ground<<else>>blankly downwards<</if>> in fear.
+<<elseif $activeSlave.devotion <= 50>>
+	waiting meekly for orders.
+<<elseif canSmell($activeSlave) && $activeSlave.career == "a breeding bull" && canGetPregnant($PC)>>
+	sniffing the air and <<if canSee($activeSlave)>>staring<<else>>pointing $his nose<</if>> intently at your crotch.
+<<elseif $activeSlave.origin == "$He submitted to enslavement to escape the hard life of an old world whore.">>
+	wondering what one of your working <<= $girl>>s can expect.
+<<elseif ($activeSlave.origin == "$He submitted to enslavement to get access to modern prenatal care.") || ($activeSlave.origin == "$He sold $himself into slavery out of fear that life on the streets was endangering $his pregnancy.")>>
+	hoping you'll give $him modern medicine right away.
+<<elseif $activeSlave.origin == "$He submitted to enslavement as $his only way to obtain surgery to transform $him into a woman.">>
+	hoping you'll schedule $his reassignment surgery immediately.
+<<elseif $activeSlave.origin == "$He submitted to enslavement out of a misguided desire to join a sexually libertine society.">>
+	hoping $he's made the right decision, and fantasizing a little, to go by $his half-hard dick.
+<<elseif $activeSlave.origin == "$He submitted to enslavement for a better chance at survival than $he had as a migrant.">>
+	wondering what life as a sex slave will be like.
+<<elseif $activeSlave.origin == "$He came to you to escape being sold to a cruel master after $his producer informed $him of $his debt.">>
+	wondering if $he will get to continue to perform for your people even as a slave.
+<<else>>
+	looking shyly at you and blushing.
+<</if>>
+
+<<if $gingering != 0 && $beforeGingering != 0 && $beforeGingering.ID == $activeSlave.ID>> /* extra checks to ensure gingering state is not left over from a different slave that was inspected but not purchased */
+	<<set _seed = "sale">>
+	<<if $gingeringDetected == 1>>
+		<<if $gingeringDetection == "slaver">>
+			<<set _seed = "sale, as your slaving experience revealed">>
+		<<elseif $gingeringDetection == "mercenary">>
+			<<set _seed = "sale, as the seller admitted in the face of your intimidating reputation">>
+		<<elseif $gingeringDetection == "force">>
+			<<set _seed = "sale, as the seller admitted in the face of your deadly reputation">>
+		<<else>>
+			<<set _seed = "sale, as you suspected">>
+		<</if>>
+	<</if>>
+
+	<<if $gingering == "antidepressant">>
+		$His intake toxicology reveals that $he was<<if $gingeringDetected == 1>> indeed<</if>> given antidepressants to make $him seem less fearful for _seed. $He is much less trusting than $he appeared in the market.
+	<<elseif $gingering == "depressant">>
+		$His intake toxicology reveals that $he was<<if $gingeringDetected == 1>> indeed<</if>> given a depressant to make $him seem less hateful for _seed. $He is much less obedient than $he appeared in the market.
+	<<elseif $gingering == "stimulant">>
+		$His intake toxicology reveals that $he was<<if $gingeringDetected == 1>> indeed<</if>> given a stimulant to make $him seem healthier for _seed. $He is much less vital than $he appeared in the market.
+	<<elseif $gingering == "vasoconstrictor">>
+		$His intake toxicology reveals that $he was<<if $gingeringDetected == 1>> indeed<</if>> given a vasoconstrictor to make $his cock seem more feminine for _seed. It's larger and more apt to become hard than it appeared in the market.
+	<<elseif $gingering == "vasodilator">>
+		$His intake toxicology reveals that $he was<<if $gingeringDetected == 1>> indeed<</if>> given a vasodilator to give $him an excessive erection for _seed. $His dick is somewhat smaller than it appeared in the market, and $he's not really hard all the time.
+	<<elseif $gingering == "aphrodisiac">>
+		$His intake toxicology reveals that $he was<<if $gingeringDetected == 1>> indeed<</if>> given aphrodisiacs to make $him horny and attracted to everyone for _seed. $His true sex drive and sexuality remain to be discovered.
+	<<else>>
+		A close inspection of $his anus reveals that $he was<<if $gingeringDetected == 1>> indeed<</if>> doctored with an irritant to make $him present $his butt when shown for _seed. $He is not an actual anal sex enthusiast.
+	<</if>>
+<</if>>
+
+<<run removeGingering()>> /* retrieve original $activeSlave without gingering effects */
+
+
+<<if $seeRace == 1>>
+	<<if $activeSlave.override_Race != 1>>
+		<<set $activeSlave.origRace = $activeSlave.race>>
+	<</if>>
+	<<if $activeSlave.race != $activeSlave.origRace>>
+		A blood test reveals that $he was originally $activeSlave.origRace, not $activeSlave.race<<if $PC.skill.medicine >= 50 || $PC.skill.slaving >= 50>>, just as you suspected<</if>>.
+	<</if>>
+<</if>>
+<<if $activeSlave.skin != $activeSlave.origSkin>>
+	<<if ($activeSlave.skin != "sun tanned") && ($activeSlave.skin != "spray tanned")>>
+		An epidermis scan reveals that $his skin was originally $activeSlave.origSkin, not $activeSlave.skin<<if $PC.skill.medicine >= 75 || $PC.skill.slaving >= 75>>, just as you suspected<</if>>.
+	<</if>>
+<</if>>
+
+
+<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+<<set $activeSlave.oldTrust = $activeSlave.trust>>
+
+<<if $activeSlave.vagina < 0>>
+	<<set $activeSlave.skill.vaginal = 0>>
+<</if>>
+
+<<if $activeSlave.nipplesPiercing > 0>>
+	<<if $activeSlave.nipples == "partially inverted">>
+		<<set $activeSlave.nipples = "cute">>
+	<<elseif $activeSlave.nipples == "inverted">>
+	<<set $activeSlave.nipples = "puffy">>
+	<</if>>
+<</if>>
+
+<<if $familyTesting == 0 && ($activeSlave.indenture < 0) && ($activeSlave.relation == 0)>>
+	<<if random(1,100) <= 5>>
+		<<set $activeSlave.recruiter = "twin">>
+	<<elseif ($activeSlave.actualAge > 32) && ($activeSlave.vagina != 0) && $activeSlave.trueVirgin != 1 && (random(1,100) <= 41)>>
+		<<set $activeSlave.recruiter = "mother">>
+	<<elseif ($activeSlave.actualAge < 24) && (random(1,100) <= 40)>>
+		<<set $activeSlave.recruiter = "daughter">>
+	<<elseif ($activeSlave.actualAge < 43) && (random(1,100) <= 20)>>
+		<<set $activeSlave.recruiter = "older sister">>
+	<<elseif ($activeSlave.actualAge < 25) && ($activeSlave.actualAge > 18) && (random(1,100) <= 20)>>
+		<<set $activeSlave.recruiter = "young sister">>
+	<</if>>
+<</if>>
+
+
+<<if ($activeSlave.vagina > -1) && ($activeSlave.dick == 0)>>
+	<<if ($PC.dick == 0) && ($PC.boobs >= 300)>>
+		$He looks to you and sees a fellow woman, and is @@.mediumaquamarine;a little less afraid@@ that you will rape and abuse $him.
+		<<set $activeSlave.trust += 4>>
+	<</if>>
+<<elseif $activeSlave.career == "a Futanari Sister">>
+	<<if ($PC.dick != 0) && ($PC.boobs >= 300) && ($PC.vagina != -1)>>
+		<<if $TFS.schoolPresent == 1>>
+			$He's heard of you, of course, as both a futanari yourself and a generous patron of the Sisters. $He feels @@.mediumaquamarine;very lucky@@ that $he's going to be your slave, not to mention @@.hotpink;almost desperate@@ to have sex with you.
+			<<set $activeSlave.devotion += 10>>
+			<<set $activeSlave.trust += 10>>
+		<<else>>
+			<<if canSee($activeSlave)>>Seeing<<else>>Learning<</if>> that you're a fellow futanari, $he's @@.mediumaquamarine;relieved@@ that $he's going to be your slave, not to mention @@.hotpink;quite eager@@ to have sex with you.
+			<<set $activeSlave.devotion += 5>>
+			<<set $activeSlave.trust += 5>>
+		<</if>>
+	<</if>>
+<<elseif ($activeSlave.boobs > 400) && ($activeSlave.dick > 0)>>
+	<<if ($PC.dick != 0) && (($PC.boobs >= 400) || ($PC.vagina != -1))>>
+		$He looks to you and sees a fellow intersex person, and is @@.mediumaquamarine;rather hopeful@@ that $he will find you a sympathetic owner.
+		<<set $activeSlave.trust += 4>>
+	<</if>>
+<</if>>
+
+<<if (($activeSlave.attrXX > 50) || ($activeSlave.energy > 95)) && ($activeSlave.behavioralFlaw != "hates women") && ($activeSlave.trust >= -20)>>
+	<<if ($PC.boobs >= 400)>>
+		$He seems to think you're pretty, and is more willing to @@.hotpink;try for your approval@@ than $he would otherwise be. $He glances at your rack when $he thinks you're not looking.
+		<<set $activeSlave.devotion += 4>>
+	<</if>>
+<</if>>
+
+<<if ($activeSlave.behavioralFlaw == "hates women") && ($activeSlave.devotion <= 50)>>
+	<<if ($PC.dick == 0) && ($PC.boobs >= 300)>>
+		$He obviously does not find you immediately attractive, and is @@.mediumorchid;less eager to conciliate you@@ than $he would otherwise be.
+		<<set $activeSlave.devotion -= 5>>
+	<</if>>
+<</if>>
+
+<<if (($activeSlave.attrXY > 50) || ($activeSlave.energy > 95)) && ($activeSlave.behavioralFlaw != "hates men") && ($activeSlave.trust >= -20)>>
+	<<if ($PC.dick == 0) && ($PC.boobs < 300)>>
+		$He seems to think you're handsome, and is more willing to @@.hotpink;try for your approval@@ than $he would otherwise be. $He glances at your crotch when $he thinks you're not looking.
+		<<set $activeSlave.devotion += 4>>
+	<</if>>
+<</if>>
+
+<<if ($activeSlave.devotion >= -20)>>
+	<<if ($activeSlave.actualAge > 35)>>
+		<<if ($PC.visualAge < 35)>>
+			<<if (($activeSlave.behavioralFlaw != "hates men") && ($PC.title == 1)) || (($activeSlave.behavioralFlaw != "hates women") && ($PC.title == 0))>>
+				$He tries to conceal $his surprise at your age, and keeps glancing at $his own naked body and then back at you, obviously wondering at such a @@.hotpink;gorgeous young _womanP's@@ interest in an old slave like $him.
+				<<set $activeSlave.devotion += 4>>
+			<</if>>
+		<</if>>
+	<<elseif ($activeSlave.actualAge < 25)>>
+		<<if ($PC.visualAge >= 50)>>
+			<<if (($activeSlave.behavioralFlaw != "hates men") && ($PC.title == 1)) || (($activeSlave.behavioralFlaw != "hates women") && ($PC.title == 0))>>
+				$He keeps stealing glances at your face, probably wrestling with $his feelings about your age. Eventually $he seems to relax and accept it, with a certain @@.hotpink;obvious thrill@@ at $his own willingness towards an older <<if $PC.title == 1>>man<<else>>lady<</if>>.
+				<<set $activeSlave.devotion += 4>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $PC.pregKnown == 1>>
+	<<if $PC.career == "escort">>
+		<<if $PC.belly >= 1000>>
+			<<if $activeSlave.fetish == "pregnancy">>
+				<<if $activeSlave.fetishKnown == 0>>
+					$He keeps stealing glances at your <<if $PC.belly >= 120000>>massive<<elseif $PC.belly >= 60000>>giant<<elseif $PC.belly >= 15000>>huge<<elseif $PC.belly >= 5000>>big<</if>> baby bump.<<if canAchieveErection($activeSlave)>> $His dick rapidly hardening.<</if>> You teasingly ask if $he'd like to feel it sometime, eliciting a delighted squeal from the $girl. @@.green;$He's a pregnancy fetishist!@@
+					<<set $activeSlave.fetishKnown = 1>>
+				<<else>>
+					$He keeps stealing glances at your <<if $PC.belly >= 120000>>massive<<elseif $PC.belly >= 60000>>giant<<elseif $PC.belly >= 15000>>huge<<elseif $PC.belly >= 5000>>big<</if>> baby bump.<<if canAchieveErection($activeSlave)>> $His dick rapidly hardening.<</if>> As you inspect $him, you take care to gently brush your pregnancy across $him as you move. $He is practically bursting with lust by the end and @@.hotpink;eager to please you@@ so $he can be close to that belly.
+					<<set $activeSlave.devotion += 5>>
+				<</if>>
+			<<else>>
+				Your pregnancy is obvious to $him, which means two things: you won't be as capable of disciplining $him, leading $him to be @@.mediumorchid;more willing to disobey,@@ and you going to be demanding and needy, possibly even @@.gold;using force to get $him to do what you want.@@
+				<<set $activeSlave.trust -= 10>>
+				<<set $activeSlave.devotion -= 10>>
+			<</if>>
+		<</if>>
+	<<else>>
+		<<if $PC.belly >= 1500>>
+			<<if $activeSlave.fetish == "pregnancy">>
+				<<if $activeSlave.fetishKnown == 0>>
+					$He keeps stealing glances at your <<if $PC.belly >= 120000>>massive<<elseif $PC.belly >= 60000>>giant<<elseif $PC.belly >= 15000>>huge<<elseif $PC.belly >= 5000>>big<</if>> baby bump.<<if canAchieveErection($activeSlave)>> $His dick rapidly hardening.<</if>> You teasingly ask if $he'd like to feel it sometime, eliciting a delighted squeal from the $girl. @@.green;$He's an impregnation fetishist!@@
+					<<set $activeSlave.fetishKnown = 1>>
+				<<else>>
+					$He keeps stealing glances at your <<if $PC.belly >= 120000>>massive<<elseif $PC.belly >= 60000>>giant<<elseif $PC.belly >= 15000>>huge<<elseif $PC.belly >= 5000>>big<</if>> baby bump.<<if canAchieveErection($activeSlave)>> $His dick rapidly hardening.<</if>> As you inspect $him, you take care to gently brush your pregnancy across $him as you move. $He is practically bursting with lust by the end and @@.hotpink;eager to please you@@ so $he can be close to that belly.
+					<<set $activeSlave.devotion += 5>>
+				<</if>>
+			<<else>>
+				Your pregnancy is obvious to $him, which means two things: you won't be as capable of disciplining $him, leading $him to be @@.mediumorchid;more willing to disobey,@@ and you going to be demanding and needy, possibly even @@.gold;using force to get $him to do what you want.@@
+				<<set $activeSlave.trust -= 10>>
+				<<set $activeSlave.devotion -= 10>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $PC.boobs >= 1400>>
+	<<if $activeSlave.fetish == "boobs">>
+		<<if $activeSlave.fetishKnown == 0>>
+			$He keeps stealing glances at your huge rack<<if canAchieveErection($activeSlave)>>, $his dick rapidly hardening<</if>>. You stretch<<if canSee($activeSlave)>>, giving $him a fantastic view of your breasts,<</if>> before circling around behind $him and cupping $his chest. Between your tits against $his back, and how teasingly big you are pretending $his breasts will be, $he can't contain $himself; $he cums from overstimulation, completely pinning $him @@.green;as a breast fetishist!@@
+			<<set $activeSlave.fetishKnown = 1>>
+		<<else>>
+			$He keeps stealing glances at your huge rack<<if canAchieveErection($activeSlave)>>, $his dick rapidly hardening<</if>>. As you inspect $him, you take care to keep "accidentally" bumping $him with your tits, before "tripping" and landing with $his face buried in your chest. $He is practically bursting with lust by the end and @@.hotpink;eager to please you@@ so $he can be close to those boobs.
+			<<set $activeSlave.devotion += 5>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $enduringTrust > 20>>
+	<<if $activeSlave.trust >= -20>>
+		$He notices that most of the slaves $he sees around your penthouse seem to trust you, and hopes that $he can @@.mediumaquamarine;trust you,@@ too.
+		<<set $activeSlave.trust += 1>>
+	<</if>>
+<<else>>
+	<<if $activeSlave.trust < 50>>
+		$He notices that most of the slaves $he sees around your penthouse seem to fear you, and starts to @@.gold;fear you,@@ too.
+		<<set $activeSlave.trust -= 2>>
+	<</if>>
+<</if>>
+
+<<if $enduringDevotion > 20>>
+	<<if $activeSlave.devotion >= -20>>
+		$He sees that most of the slaves $he sees around your penthouse like you, and hopes that $he can @@.hotpink;like you@@ a little more $himself.
+		<<set $activeSlave.devotion += 1>>
+	<</if>>
+<<else>>
+	<<if $activeSlave.devotion <= 50>>
+		$He sees that most of the slaves $he sees around your penthouse dislike you, and starts to @@.mediumorchid;dislike you@@ a little more $himself.
+		<<set $activeSlave.devotion -= 2>>
+	<</if>>
+<</if>>
+
+<<if ($PC.career == "escort")>>
+	$He recognizes you as a whore, leading $him to @@.mediumaquamarine;fear you less;@@ however, $his views of you also leave $him less willing to @@.mediumorchid;listen to you.@@
+	<<set $activeSlave.devotion -= 10>>
+	<<set $activeSlave.trust += 10>>
+<<elseif ($PC.career == "servant")>>
+	<<if canSee($activeSlave)>>Seeing<<else>>Having<</if>> you in your <<if $PC.title == 0>>maid's dress<<else>>maid's outfit<</if>> @@.mediumaquamarine;calms $his fears;@@ however, $he is unwilling to @@.mediumorchid;listen to a servant.@@
+	<<set $activeSlave.devotion -= 3>>
+	<<set $activeSlave.trust += 10>>
+<<elseif ($PC.career == "gang")>>
+	$He recognizes you from various crime reports, @@.gold;filling $him with fear@@ over what life under you will be like.
+	<<set $activeSlave.trust -= 10>>
+<</if>>
+
+<<if ($PC.rumor == "force")>>
+	<<if ($activeSlave.devotion <= 20)>>
+		<<if ($activeSlave.trust > 0)>>
+			$He seems to have picked up rumors about your ruthlessness, and is @@.gold;horrified into obedience.@@
+			<<set $activeSlave.trust -= 25>>
+		<<elseif ($activeSlave.trust > -10)>>
+			$He seems to have picked up rumors about your ruthlessness, and is @@.gold;terrified into obedience.@@
+			<<set $activeSlave.trust -= 20>>
+		<<elseif ($activeSlave.trust >= -20)>>
+			$He seems to have picked up rumors about your ruthlessness, and is @@.gold;frightened into obedience.@@
+			<<set $activeSlave.trust -= 15>>
+		<</if>>
+	<</if>>
+<<elseif $PC.rumor == "diligence">>
+	$He seems to have picked up rumors about your probity, and is @@.mediumaquamarine;less afraid of you@@ and more @@.hotpink;willing to like you.@@
+	<<set $activeSlave.devotion += 5>>
+	<<set $activeSlave.trust += 5>>
+<</if>>
+
+<<if ($activeSlave.accent >= 3)>>
+	<<if ($activeSlave.trust > 20)>>
+		During the enslavement process so far, it became obvious to $him that $he can barely understand enough $language to understand orders. $He's @@.gold;frightened@@ by the sudden danger that $he won't be able to do what $he's told, even if $he wants to.
+		<<set $activeSlave.trust -= 5>>
+	<<elseif ($activeSlave.devotion <= 20)>>
+		<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant > 50>>
+			$He can barely understand the $language language, but $he's smart enough to understand everything that's happening to $him. Even so, @@.mediumaquamarine;some fear is deferred,@@ since the harsh realities of being a sex slave may not be clear to $him yet.
+			<<set $activeSlave.trust += 10>>
+		<<elseif $activeSlave.intelligence+$activeSlave.intelligenceImplant >= -15>>
+			$He can barely understand enough $language to understand what's happening to $him. This incapacity @@.mediumaquamarine;defers a great deal of fear,@@ since $his exact future hasn't become clear to $him yet.
+			<<set $activeSlave.trust += 10>>
+		<<else>>
+			$He can barely understand $language at all, and scarcely understands what's happening to $him. This leaves $him @@.mediumaquamarine;unaware of how afraid $he should be,@@ since $he's too stupid to figure it out without being told.
+			<<set $activeSlave.trust += 25>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSSupremacist >= 50>>
+	<<if $activeSlave.race == $arcologies[0].FSSupremacistRace>>
+		$He realizes that $he's a member of the favored race in your arcology, and @@.mediumaquamarine;hopes@@ this will earn $him good treatment.
+		<<set $activeSlave.trust += 2>>
+	<<else>>
+		$He realizes that $he's not a member of the favored race in your arcology, and @@.gold;fears@@ this will earn $him extra abuse.
+		<<set $activeSlave.trust -= 4>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSSubjugationist >= 50>>
+	<<if $activeSlave.race != $arcologies[0].FSSubjugationistRace>>
+		$He realizes that $he's not one of the people considered subhuman here, and @@.mediumaquamarine;hopes@@ this will allow $him to avoid some abuse.
+		<<set $activeSlave.trust += 2>>
+	<<else>>
+		$He realizes that $he's one of the people considered subhuman here, and @@.gold;fears@@ $he will be unable to avoid degradation.
+		<<set $activeSlave.trust -= 4>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSIntellectualDependency >= 50>>
+	<<if $activeSlave.pregKnown == 1>>
+		$He realizes that your arcology values bearing children and @@.mediumaquamarine;hopes@@ $he'll be treated gently for being pregnant.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSSlaveProfessionalism >= 50>>
+	<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant >= 75>>
+		$He realizes that your arcology values intelligence and @@.mediumaquamarine;expects@@ $his intellect will prove $his worth.
+		<<set $activeSlave.trust += 2>>
+	<<elseif $activeSlave.intelligence+$activeSlave.intelligenceImplant < 10>>
+		$He realizes that your arcology values intelligence and @@.gold;worries@@ $he isn't smart enough to keep up with society's expectations.
+		<<set $activeSlave.trust -= 4>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSRepopulationFocus >= 50>>
+	<<if $activeSlave.pregKnown == 1>>
+		$He realizes that your arcology values bearing children and @@.mediumaquamarine;hopes@@ $he'll be treated gently for being pregnant.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSRestart >= 50>>
+	<<if $activeSlave.pregKnown == 0>>
+		$He recognizes $his place in society and @@.mediumaquamarine;is glad@@ $he isn't pregnant.
+		<<set $activeSlave.trust++>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSGenderRadicalist >= 50>>
+	<<if $activeSlave.dick > 0>>
+		<<if $activeSlave.anus > 0>>
+			$He realizes that your arcology accepts girls with dicks who take it up the ass, and since $he qualifies, $he @@.mediumaquamarine;hopes@@ to be well treated here.
+			<<set $activeSlave.trust += 2>>
+		<<else>>
+			$He realizes that girls with dicks take it up the butt here, and @@.gold;fears@@ for $his virgin anus.
+			<<set $activeSlave.trust -= 4>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSGenderFundamentalist >= 50>>
+	<<if $activeSlave.dick == 0>>
+		$He realizes that $he has a chance of conforming to gender roles in your arcology, and @@.mediumaquamarine;hopes@@ to avoid abuse this way.
+		<<set $activeSlave.trust += 2>>
+	<<else>>
+		$He realizes that your arcology's culture looks down on <<= $girl>>s like $him, and @@.gold;fears@@ $he'll be abused as a result.
+		<<set $activeSlave.trust -= 4>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSPaternalist >= 50>>
+	$He realizes that your arcology's citizens look after their slaves, you more than anyone, and @@.mediumaquamarine;hopes@@ $he'll do well here.
+	<<set $activeSlave.trust += 2>>
+<</if>>
+
+<<if $arcologies[0].FSDegradationist >= 50>>
+	$He realizes that for $him, your arcology is likely to be a hell unending, and is @@.gold;terrified.@@
+	<<set $activeSlave.trust -= 5>>
+<</if>>
+
+<<if $arcologies[0].FSBodyPurist >= 50>>
+	<<if $activeSlave.boobsImplant > 0 || $activeSlave.buttImplant > 0 || $activeSlave.waist < -95 || $activeSlave.lipsImplant > 0 || $activeSlave.faceImplant >= 30>>
+		$He realizes that your arcology disapproves of body modifications like $hers, and @@.gold;fears@@ that $he will be subjected to further surgery to purify $him.
+		<<set $activeSlave.trust -= 4>>
+	<<else>>
+		$He realizes that your arcology approves of natural bodies like $hers, and @@.mediumaquamarine;trusts@@ that $he will be allowed to keep it that way.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSTransformationFetishist >= 50>>
+	<<if $activeSlave.boobsImplant > 0 || $activeSlave.buttImplant > 0 || $activeSlave.waist < -95 || $activeSlave.lipsImplant > 0 || $activeSlave.faceImplant >= 30>>
+		$He realizes that your arcology approves of body modifications like $hers, and @@.mediumaquamarine;trusts@@ that $he will be valued for them.
+		<<set $activeSlave.trust += 2>>
+	<<else>>
+		$He realizes that your arcology disapproves of natural bodies like $hers, and @@.gold;fears@@ that $he will soon be a plastic surgeon's plaything.
+		<<set $activeSlave.trust -= 4>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSMaturityPreferentialist >= 50>>
+	<<if ($activeSlave.actualAge > 30)>>
+		$He realizes that your arcology appreciates older <<= $girl>>s, and @@.mediumaquamarine;hopes@@ it'll be nicer here.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSYouthPreferentialist >= 50>>
+	<<if ($activeSlave.actualAge > 30)>>
+		$He realizes that your arcology has little use for older <<= $girl>>s, and @@.gold;fears@@ $he'll be abused here.
+		<<set $activeSlave.trust -= 4>>
+	<<elseif ($activeSlave.actualAge < 18)>>
+		/% begin is a child block %/
+		/% Set _understands to 0 or 1 to reflect whether $he understands. %/
+		<<set _understands = 0>>
+		<<if ($activeSlave.origin == "$He was raised in a radical slave school that treated $him from a very young age, up to the point that $he never experienced male puberty.") || ($activeSlave.origin == "$He was raised in a radical slave school that treated $him with drugs and surgery from a very young age.") || ($activeSlave.origin == "$He was brought up in a radical slave school to match $his twin.")>>
+			<<set _understands = 1>>
+		<<elseif isSexuallyPure($activeSlave)>>
+			<<if $activeSlave.intelligence > random(0,50)>>
+				<<set _understands = 1>>
+			<</if>>
+		<<else>>
+			<<if $activeSlave.intelligence > random(-50,50)>>
+				<<set _understands = 1>>
+			<</if>>
+		<</if>>
+		<<if _understands < 1>>
+			$He has heard that you like little <<= $girl>>s and is @@.mediumaquamarine;reassured@@ because $he misunderstands what this means.
+			<<set $activeSlave.trust += 2>>
+		<<elseif ($activeSlave.sexualQuirk == "perverted")>>
+			$He has heard that you like little <<= $girl>>s and @@.mediumaquamarine;hopes@@ that matching your taste means $he will be treated well.
+			<<set $activeSlave.trust += 2>>
+		<<elseif ($activeSlave.sexualQuirk == "size queen") && $PC.dick != 0>>
+			$He has heard that you like little <<= $girl>>s and @@.hotpink;bites $his lip@@ at the thought of how big your dick will be inside $him.
+			<<set $activeSlave.devotion += 2>>
+		<<elseif ($activeSlave.sexualFlaw == "repressed") || ($activeSlave.sexualFlaw == "shamefast") || ($activeSlave.behavioralFlaw == "devout")>>
+			$He has heard that you like little <<= $girl>>s and is @@.gold;terrified@@ because $he understands exactly what that means.
+			<<set $activeSlave.trust -= 5>>
+		<<elseif ($activeSlave.sexualFlaw == "hates oral") || ($activeSlave.sexualFlaw == "hates anal") || ($activeSlave.sexualFlaw == "hates penetration") || (isSexuallyPure($activeSlave) && (50 >= random(1, 100)))>>
+			$He has heard that you like little <<= $girl>>s and @@.gold;fears@@ what you might do to $him.
+			<<set $activeSlave.trust -= 4>>
+		<<else>>
+			$He has heard that you like little <<= $girl>>s and @@.mediumaquamarine;hopes@@ that matching your taste means $he will be treated well.
+			<<set $activeSlave.trust += 2>>
+		<</if>>
+		/% end is a child block %/
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSPetiteAdmiration >= 50>>
+	<<if heightPass($activeSlave)>>
+		$He realizes that your arcology favors short slaves, and @@.mediumaquamarine;hopes@@ life will be good here.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSStatuesqueGlorification >= 50>>
+	<<if heightPass($activeSlave)>>
+		$He realizes that your arcology favors the tall, and @@.mediumaquamarine;hopes@@ $he'll retain some dignity.
+		<<set $activeSlave.trust += 2>>
+	<<else>>
+		$He realizes that your arcology favors the tall, and @@.gold;anticipates@@ $his lacking height to bring $him nothing but torment.
+		<<set $activeSlave.trust -= 4>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSSlimnessEnthusiast >= 50>>
+	<<if ($activeSlave.boobs < 500) && ($activeSlave.butt < 3) && ($activeSlave.weight <= 10) && ($activeSlave.muscles <= 30)>>
+		$He realizes that $he has a fashionable body for your arcology, and @@.mediumaquamarine;hopes@@ it'll earn $him some kindness.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSAssetExpansionist >= 50>>
+	<<if ($activeSlave.butt > 4) && ($activeSlave.boobs > 800)>>
+		$He realizes that $he has a fashionable body for your arcology, and @@.mediumaquamarine;hopes@@ it'll earn $him some kindness.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSPastoralist >= 50>>
+	<<if ($activeSlave.pregKnown == 1) || ($activeSlave.lactation > 0)>>
+		$He realizes that your arcology values slaves with motherly bodies, and @@.mediumaquamarine;hopes@@ $he won't be a low value slave for having one.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSPhysicalIdealist >= 50>>
+	<<if ($activeSlave.muscles > 5)>>
+		$He realizes that muscles are respected around here, and though $he isn't truly swole, $he's partway there; $he @@.mediumaquamarine;hopes@@ $he'll be kept healthy and strong.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSHedonisticDecadence >= 50>>
+	<<if $activeSlave.behavioralFlaw == "gluttonous">>
+		$He realizes that fat slaves are preferred around here, and as a glutton, can't wait to @@.mediumaquamarine;eat $himself sick.@@
+		<<set $activeSlave.trust += 2>>
+	<<elseif ($activeSlave.weight > 130) && $activeSlave.behavioralFlaw != "anorexic">>
+		$He realizes that fat slaves are preferred around here, and since $he is quiet rotund already, $he @@.mediumaquamarine;hopes@@ $he'll fit right in. That and if the cafeteria is open 24/7.
+		<<set $activeSlave.trust += 2>>
+	<<elseif ($activeSlave.weight > 10) && $activeSlave.behavioralFlaw != "anorexic">>
+		$He realizes that chubby slaves are preferred around here, and though $he isn't truly fat, $he's partway there; $he @@.mediumaquamarine;hopes@@ $he'll be kept well fed and happy.
+		<<set $activeSlave.trust += 2>>
+	<<elseif $activeSlave.behavioralFlaw == "anorexic">>
+		$He realizes that fat slaves are preferred around here, and that means $he'll @@.gold;be made fat too.@@
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSChattelReligionist >= 50>>
+	<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant < -50>>
+		$His dimwitted mind naturally takes to being told $his role as a slave is righteous, and $he naïvely @@.mediumaquamarine;hopes@@ your arcology's religion will protect $him from harm.
+		<<set $activeSlave.trust += 2>>
+	<<elseif $activeSlave.intelligence+$activeSlave.intelligenceImplant > 50>>
+		$His intelligent mind @@.gold;fears@@ the consequences of living in an arcology in which slavery has taken on religious significance.
+		<<set $activeSlave.trust -= 4>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSRomanRevivalist >= 50>>
+	<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant > 50>>
+		Though $he knows it's not a truly authentic Roman restoration, $his intelligent mind grasps the potential benefits of Roman mores for slaves, and $he @@.mediumaquamarine;hopes@@ life in your arcology will be managed with virtue.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<<elseif $arcologies[0].FSAztecRevivalist >= 50>>
+	<<if $activeSlave.intelligenceImplant >= 15>>
+		Though $he knows it's not a truly authentic ancient Aztec restoration, $his educated mind grasps the potential benefits of ancient Aztec mores for slaves, and $he @@.mediumaquamarine;hopes@@ your arcology will make respectful use of $his devotion.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<<elseif $arcologies[0].FSEgyptianRevivalist >= 50>>
+	<<if $activeSlave.intelligenceImplant >= 15>>
+		Though $he knows it's not a truly authentic ancient Egyptian restoration, $his educated mind grasps the potential benefits of ancient Egyptian mores for slaves, and $he @@.mediumaquamarine;hopes@@ your arcology will make good and respectful use of $his learning.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<<elseif $arcologies[0].FSEdoRevivalist >= 50>>
+	<<if $activeSlave.intelligenceImplant >= 15>>
+		Though $he knows it's not a truly authentic feudal Japanese restoration, $his educated mind grasps the potential benefits of traditional Japanese mores for slaves, and $he @@.mediumaquamarine;hopes@@ your arcology will treat those who behave well with a modicum of honor.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<<elseif $arcologies[0].FSArabianRevivalist >= 50>>
+	<<if $activeSlave.intelligenceImplant >= 15>>
+		Though $he knows it's not a truly authentic restoration of the old Caliphate, $his educated mind grasps the potential benefits of old Arabian law and culture for slaves, and $he @@.mediumaquamarine;hopes@@ your arcology has absorbed enough of the old wisdom to respect slaves.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<<elseif $arcologies[0].FSChineseRevivalist >= 50>>
+	<<if $activeSlave.intelligenceImplant >= 15>>
+		Though $he knows it's not a truly authentic ancient Chinese restoration, $his educated mind grasps the potential benefits of ancient Confucian philosophy for slaves, and $he @@.mediumaquamarine;hopes@@ your arcology at least maintains some pretense of order and conservatism.
+		<<set $activeSlave.trust += 2>>
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSPaternalistLaw == 1>>
+	$He <<if canSee($activeSlave)>>saw<<elseif canHear($activeSlave)>>overheard<<else>>passed through<</if>> a good deal of your arcology and its society on $his way to your penthouse, and was amazed by all the happy, healthy slaves. $He @@.mediumaquamarine;begins to trust@@ that $he'll be one of them, and @@.hotpink;anticipates meeting@@ the person who built this place.
+	<<set $activeSlave.trust += 4>>
+	<<set $activeSlave.devotion += 4>>
+<</if>>
+
+<<if $activeSlave.devotion < -50 && $activeSlave.rudeTitle != 1>>
+	<<if random(-100,0) >= $activeSlave.devotion>>
+		<<set $activeSlave.rudeTitle = 1>>
+		<<set $activeSlave.custom.title = setup.badNames.random()>>
+		<<set $activeSlave.custom.titleLisp = lispReplace($activeSlave.custom.title)>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.breedingMark == 1>>
+	$He knows $his duty in life and playfully splays $himself across your desk with $his legs spread wide. Unfortunately, $he must first be unwrapped before any breeding can begin, so for the time being, $he rights $himself and makes $his way to your crotch to show you just how much $he was worth the ¤.
+	<<set $activeSlave.counter.oral++, $oralTotal++>>
+
+<<else>>
+
+<<if $rulesAssistantAuto == 0>>
+	<br>
+	<span id="rules">
+	<<link "Apply default rules">>
+		<<replace "#rules">>
+			<<= DefaultRules($activeSlave)>>
+		<</replace>>
+	<</link>>
+	<<if $activeSlave.devotion <= 20>>
+		//Will not apply many cosmetic and surgical options since $he is not obedient//
+	<</if>>
+	</span>
+<</if>>
+
+<p id="introResult">
+//Now might be a good time to introduce $him to life in your stable of sex slaves//
+
+<<switch $activeSlave.origin>>
+<<case "$He submitted to enslavement to escape the hard life of an old world whore.">>
+	//and since $he wanted to leave the old world...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Brand $him on the _brandTarget to introduce $him to life as a slave whore">>
+		<<replace "#introResult">>
+			You tell $him you'll be marking $him as one of your working <<= $girl>>s. $He looks resigned as $he follows you to the body modification studio, and lets you strap $him down with $his _brandTarget bare. $He understands what's coming. You've got $him positioned just right<<if canDoAnal($activeSlave)>>, so your cock slides up $his experienced asshole easily<</if>>. You bring the brand in close so $he can feel the radiated heat, which breaks through even $his jaded exterior and makes $him tighten with fear. When you're close, you apply the brand<<if canDoAnal($activeSlave)>>, making the poor whore cinch $his sphincter down hard in agony, bringing you to climax<</if>>. $He knows you know how to @@.gold;apply pain,@@ now, and $he @@.mediumorchid;learns to dislike you@@ even as $his @@.red;wound@@ heals.
+		<</replace>>
+		<<set $activeSlave.brand[_brandTarget] = $brandDesign.primary>>
+		<<set $activeSlave.devotion -= 5>>
+		<<set $activeSlave.trust -= 10>>
+		<<run healthDamage($activeSlave, 10)>>
+		<<if canDoAnal($activeSlave)>>
+			<<= VCheck.Anal()>>
+		<</if>>
+	<</link>>
+	<br>
+<<case "$He submitted to enslavement to get access to modern prenatal care.">>
+	//and since $he's worried about $his child...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Manipulate $his fear for $his pregnancy">>
+		<<replace "#introResult">>
+			You place a curative injector on your desk, and describe its remarkable medical powers in detail, before mentioning its extreme cost. $His face rises at the first part and falls at the second. You tell $him that if $he's a perfect sex slave, $he'll get as much as $he needs, and that $he can start by sucking you off. $He grunts a little as $he hurries to get $his pregnant body down to $his knees, but
+			<<if $PC.dick > 0>>
+				works your cock
+			<<elseif $PC.vagina > 0>>
+				explores your vagina
+			<<else>>
+				licks you to orgasm
+			<</if>>
+			with almost desperate enthusiasm. You stroke $his hair comfortingly as $he does, and inject the healing dose into $his shoulder. $He murmurs $his @@.hotpink;gratitude@@ into your dick, but @@.gold;fears@@ for $his pregnancy.
+		<</replace>>
+		<<set $activeSlave.devotion += 4>>
+		<<set $activeSlave.trust -= 10>>
+		<<set $activeSlave.counter.oral += 1>>
+		<<set $oralTotal += 1>>
+	<</link>>
+	<br>
+<<case "$He offered $himself as a slave to escape the horrors a blind $girl faces on the streets.">>
+	//and since $he loathes $his pregnancy...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Abort $his child">>
+		<<replace "#introResult">>
+			You loudly place an innocuous-looking drug injector on your desk, and let $him think about it for a long moment. Then, you declare exactly what made that sound: abortifacients. After a moment of comprehension, $his mood instantly improves. $He pledges to @@.hotpink;submit to you,@@ <<if $PC.dick != 0 && $PC.vagina != -1>>suck your cock, take it in $his pussy, take it up $his ass, eat you out<<elseif $PC.dick != 0>>suck your cock, take it in $his pussy, take it up $his ass<<else>>eat you out, worship you with $his pussy, serve you with $his ass<</if>>, anything, as long as you @@.mediumaquamarine;remove $his rape baby.@@ You observe that $he'll do all of those things, regardless of what you decide to do about $his pregnancy, but for now, you'll let $him terminate it; $he needs all the nutrients for $himself right now. $He thanks you through $his tears.
+		<</replace>>
+		<<set $activeSlave.devotion += 4>>
+		<<set $activeSlave.trust += 3>>
+		<<run TerminatePregnancy($activeSlave)>>
+	<</link>>
+	<br>
+<<case "$He submitted to enslavement for a better chance at survival than $he had as a migrant.">>
+	//and since $he's trying to do better than life as a migrant...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<if canDoAnal($activeSlave)>>
+		<<link "Introduce $him to anal service">>
+			<<replace "#introResult">>
+				You carefully and patiently explain to the fearful anal virgin how skilled Free Cities slaves take dick up the butt. $He is allowed to go at $his own pace, hesitantly progressing from enemata to a single well-lubricated finger to a little plug. After a long while $he's beginning to get aroused, and you bring $him over to the couch to spoon. $He stiffens with fear but you take your time and just cuddle for a while before gently sodomizing $him. $He @@.hotpink;thanks@@ you for being a @@.mediumaquamarine;kind master,@@ and has @@.green;learned@@ the basics of taking it up the ass.
+			<</replace>>
+			<<set $activeSlave.devotion += 4>>
+			<<set $activeSlave.trust += 4>>
+			<<set $activeSlave.anus += 1>>
+			<<set $activeSlave.skill.anal += 10>>
+			<<= VCheck.Anal()>>
+		<</link>>
+
+		| <<link "Initiate $him with anal pain">>
+			<<replace "#introResult">>
+				You haul $him wordlessly into the bathroom. In a few minutes $he finds $himself standing obediently behind you, waiting for your next command with a clean colon and an uncomfortably large buttplug stretching $his virgin ass. Once it's been in long enough to prevent any damage, you push $his fearful form over the desk and pull it free. $He squeals with more embarrassment than pain at the feeling of $his first sodomy, but before long you're pounding $him hard enough that all $he can do is moan and desperately wonder when you'll be done with $his poor little butt. You keep $him around all day; by night, $his asshole is well broken in and @@.mediumorchid;so is $his spirit.@@ $He @@.gold;fears@@ you now, knowing this is only the beginning.
+			<</replace>>
+			<<set $activeSlave.devotion -= 5>>
+			<<set $activeSlave.trust -= 10>>
+			<<set $activeSlave.anus += 1>>
+			<<= VCheck.Anal()>>
+		<</link>>
+	<</if>>
+	<br>
+<<case "$He submitted to enslavement as $his only way to obtain surgery to transform $him into a woman.">>
+	//and since $he came here for surgery...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Give $him $his surgery">>
+		<<replace "#introResult">>
+			When $he <<if canHear($activeSlave)>>hears<<else>>learns<</if>> $he'll be heading to surgery immediately, $he bursts into @@.hotpink;tears of gratitude@@ and makes to run around your desk to hug you before checking $himself. $He clearly doesn't want to put a foot wrong and isn't sure it would be appropriate. You solve $his dilemma by meeting $him with an embrace. $He @@.mediumaquamarine;cries into your chest@@ and promises to be your best slave. The surgery does affect $his @@.red;health@@ a little.
+		<</replace>>
+		<<set $activeSlave.devotion += 15>>
+		<<run surgeryDamage($activeSlave, 10)>>
+		<<set $activeSlave.trust += 10>>
+		<<set $activeSlave.vagina = 0>>
+		<<set $activeSlave.dick = 0>>
+		<<set $activeSlave.balls = 0>>
+	<</link>>
+	| <<link "Use $him as $he is">>
+		<<replace "#introResult">>
+			You announce that $he'll have to earn $his surgery — if $he ever gets it at all. $He only has time for a moment of shock and betrayal before $he finds $his face jammed into the cushions of your office couch. $He struggles, outraged, but only manages to avoid sodomy for a moment. $His resistance only makes it harder on $himself as you take $his anus without mercy. By the third time you buttfuck $him $he's learned to @@.hotpink;relax and let it happen.@@
+		<</replace>>
+		<<set $activeSlave.devotion += 4>>
+		<<set $activeSlave.anus += 1>>
+		<<= VCheck.Anal()>>
+	<</link>>
+	<br>
+<<case "$He submitted to enslavement out of a misguided desire to join a sexually libertine society.">>
+	//and since $he's looking for a sexually libertine society...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<if canDoAnal($activeSlave)>>
+		<<link "Disabuse $him of $his silly ideas">>
+			<<replace "#introResult">>
+				You rise from your desk and move in close. $He turns to face you but you roughly spin $him around. You haul $him up on tiptoe so you can use $him standing. As you get your <<if $PC.dick != 0>>cock<<else>>strap-on<</if>> lined up with $his sissy ass $he starts to struggle and protest, asking you to fuck in a more comfortable position. You tell $him to keep $his whore mouth shut, and administer an awful slap when $he tries to keep talking. $His stupid illusions about life as a sex slave @@.mediumorchid;melt away@@ with the burning sensation of a dick forcing its way up $his ass at a harsh angle. $He wilts a little as you abuse $his butt, and afterward, $he's in tears as $he stumbles to the bathroom to wash $his fuckhole. $He's regained $his composure by the time $he gets out but @@.gold;breaks down@@ when you tell $him to present $his asshole again.
+			<</replace>>
+			<<set $activeSlave.devotion -= 5>>
+			<<set $activeSlave.trust -= 10>>
+			<<= VCheck.Anal()>>
+		<</link>>
+	<</if>>
+	<<if ($activeSlave.indentureRestrictions <= 0) && ($seeExtreme == 1)>>
+		| <<link "Cruelly castrate $him">>
+			<<replace "#introResult">>
+				You rise from your desk and move in close, wordlessly dominating $him without touch, tempting and overawing $him until $he's desperate with desire, $his prick stiff as iron. $He follows you willingly into the autosurgery and even allows you to strap $him in, face-down, without comment. $His fuckhole welcomes your <<if $PC.dick != 0>>cock<<else>>strap-on<</if>> and $he gasps with pleasure. $He climaxes with indecent speed, dripping $his cum onto the surgery floor. You keep fucking $him, but lean forward to whisper to $him that that was $his last hard-on. $He's completely confused and says nothing, but gradually realizes what the numb feeling around $his ballsack means. $He @@.gold;screams with horror@@ and @@.mediumorchid;sobs disconsolately@@ as the autosurgery disengages from $his clipped genitals and you disengage from $his <<if $PC.dick != 0>>cum-filled<<else>>wilting<</if>> butthole. $He gingerly stumbles back to your office with you and, without even being ordered to, arranges $himself on the couch with $his fuckhole ready. The gelding does affect $his @@.red;health@@ somewhat.
+			<</replace>>
+			<<set $activeSlave.devotion -= 10>>
+			<<set $activeSlave.trust -= -10>>
+			<<run surgeryDamage($activeSlave, 10)>>
+			<<set $activeSlave.balls = 0>>
+			<<= VCheck.Anal()>>
+		<</link>>
+	<</if>>
+	<br>
+<<case "$He asked to be enslaved out of naïve infatuation with you.">>
+	//and since $he is already infatuated with you...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<if canDoAnal($activeSlave) || canDoVaginal($activeSlave)>>
+		<<link "Let $him show you what $he can do">>
+			<<if $activeSlave.vagina == 1>>
+				<<set _temp = random(1,100)>>
+			<<else>>
+				<<set _temp = 0>>
+			<</if>>
+			<<if _temp > 50>>
+				<<= VCheck.Vaginal()>>
+			<<else>>
+				<<= VCheck.Anal()>>
+			<</if>>
+			<<replace "#introResult">>
+				You tell $him that slaves working in your penthouse are all expected to please you, and $he'll have to impress you. $He smiles and even giggles a little, standing to strip off $his clothes, taking $his time and showing off $his fresh body. $He gets lewder and lewder, displaying youthful libido basking in the gaze of $his crush. $He slowly becomes more and more desperate to entice you, so you let $him keep going out of curiosity, to see how far $he'll go. $He goes to the point of reclining on the couch with $his legs back, spreading $himself and masturbating, and when that fails to get you out of your chair, $he begins to wink $his <<if _temp > 50>>pussy<<else>>anus<</if>> meaningfully. $He's clearly got a good idea of what many men like, and you head over and take $his tight <<if _temp > 50>>pussy<<else>>asshole<</if>>. You do it gently, making sure $he enjoys $himself, and $he becomes @@.mediumaquamarine;very hopeful@@ that $he was wrong to doubt you, and that $he really can @@.hotpink;be close to@@ the object of $his infatuation. $He bounces up off the couch afterward to wiggle $his butt at you, and even blows you a kiss as you get back to work.
+			<</replace>>
+			<<set $activeSlave.devotion += 4>>
+			<<set $activeSlave.trust += 4>>
+		<</link>>
+	<</if>>
+	<<if canDoAnal($activeSlave)>>
+		| <<link "Make sure $he knows $he made a mistake">>
+			<<replace "#introResult">>
+				You tell $him that slaves working in your penthouse are all expected to please you, and $he nods eagerly. $He strips, only starting to look doubtful again when you brusquely order $him to hurry up. You order $him to get down on the ground with $his face up, $his shoulders against the floor; $he does, and then you order $him to put $his legs over $his head. $He looks puzzled but does, flipping $himself flexibly up until $he's doing a shoulder stand, bent double with $his crotch over $his face. You stand over $him and shove <<if $PC.dick != 0>>your cock<<else>>a strap-on<</if>> down and into $his asshole. This is an advanced anal position and <<if $activeSlave.anus > 0>>although $he's clearly no<<else>>even for an<</if>> anal virgin it's well beyond $him. $He does $his best but tears begin to streak $his cheeks. After a while you tire of the position and flip $him over onto $his face to assrape $him doggy style. This allows you to whisper into $his ear that $his holes are your property now, to use, to abuse, or to sell. $He @@.mediumorchid;sobs in despair@@ at the latter, knowing $he's @@.gold;thrown $his life away.@@
+			<</replace>>
+			<<set $activeSlave.devotion -= 5>>
+			<<set $activeSlave.trust -= 10>>
+			<<= VCheck.Anal()>>
+		<</link>>
+	<</if>>
+	<br>
+<<case "$He asked to be enslaved in the hope you'd treat a fellow woman well.">>
+	//and since $he's hoping to protect someone...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Build a connection with $him">>
+		<<replace "#introResult">>
+			You ask conversationally what experience $he has with women. $He takes a while to understand your point, but once $he does, $he blushes and <<say>>s, "Uh, I me<<ss>>ed around in <<s>>chool on<<c>>e or twi<<c>>e, but <<s>>in<<c>>e then, I've never —" and is then quiet, because you're making out with $him. $He's surprised and stiffens for a moment but perceptibly thinks things through and realizes $he's yours now, and then $he relaxes to let you have your way. You push $his boundaries pretty far, and before long you've got $him down <<if hasBothLegs($activeSlave)>>on $his knees<<else>>under your desk<</if>> eating you out. $He's badly discomfited but does $his best; $he's @@.mediumaquamarine;hopeful@@ that $he can do this, and slave life won't be so bad.
+		<</replace>>
+		<<set $activeSlave.trust += 4>>
+		<<set $activeSlave.counter.oral += 1>>
+		<<set $oralTotal += 1>>
+	<</link>>
+	<<if canDoAnal($activeSlave)>>
+		| <<link "Put $him in $his place">>
+			<<replace "#introResult">>
+				You stand up and tell $him to strip. $He hesitates, staring at you in dawning apprehension, until $he <<if canSee($activeSlave)>>sees<<else>>realizes<</if>> that you're stepping into a strap-on. $He unconsciously takes a step backward, but that's as far as $he gets before you cover the ground between you, grab $him by the throat, and push $his back until $he falls onto the couch. You drag the head of the fake phallus down over $his pussylips, and $he shivers, but you keep going, telling $him that you'll only be fucking $him there when $he's good. When $he's bad, you'll assfuck $him. <<if hasBothEyes($activeSlave)>>$His eyes fly open and $he <<else>> $He <</if>> tries to struggle, but you give $him a warning slap and then push yourself home. $He starts to cry, more from hopelessness than anal pain, knowing that @@.mediumorchid;you're a slaveowner like any other,@@ more likely to @@.gold;abuse $him@@ than be sympathetic.
+			<</replace>>
+			<<set $activeSlave.devotion -= 5>>
+			<<set $activeSlave.trust -= 5>>
+			<<= VCheck.Anal()>>
+		<</link>>
+	<</if>>
+	<br>
+<<case "$He asked to be enslaved since $he felt you were $his only hope of becoming a prettier woman.">>
+	//and since $he desperately wants to be a prettier woman...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Start by fixing that voice of $hers">>
+		<<replace "#introResult">>
+			You schedule $him for some vocal surgery. You have $him brought in to be inspected the next day, and though $he's healing well, $he's not to speak yet. $He's sore enough to obey the stricture, but when $he stands naked before your desk $he clearly wants to communicate something. You approach $him and place a finger on $his fake lips, shushing $him, and you tell $him you understand. You kiss $him and push $him backward until $he falls onto the couch; $he smiles @@.mediumaquamarine;trustingly@@ and pulls $his legs apart and back, offering you $his asshole. $He has a stiff hard-on, a clear indication that $he's honestly @@.hotpink;attracted to you,@@ and though $he still doesn't speak, $he makes a sore little whinny of pleasure when you enter $his welcoming butt.
+		<</replace>>
+		<<set $activeSlave.devotion += 4>>
+		<<set $activeSlave.trust += 4>>
+		<<set $activeSlave.voice += 1>>
+		<<run surgeryDamage($activeSlave, 10)>>
+		<<= VCheck.Anal()>>
+	<</link>>
+	<<if canDoAnal($activeSlave)>>
+		| <<link "Let $him know $he'll have to earn $his rewards">>
+			<<replace "#introResult">>
+				You complete the induction and then perform a thorough inspection, noting down each area in which surgery or drugs could improve $his body. $He understands what you're doing and can barely contain $his excitement, but you tell $him that $he'll have to earn such improvements. $His face falls. You reassure $him that it won't take the years $he would have had to work to afford such things $himself, but that $he needs to be a good slave, and soon, for you to spend resources on $him. You let $him start by taking a rough buttfuck, bent over the desk. $His ass is tight and you are not merciful. $He gasps and moans but takes it all the same, @@.mediumaquamarine;trusting@@ that $he'll eventually be rewarded with transformation.
+			<</replace>>
+			<<set $activeSlave.trust += 10>>
+			<<= VCheck.Anal()>>
+		<</link>>
+	<</if>>
+	<br>
+<<case "$He was transformed and enslaved after $he fell into debt to you.">>
+	//and since $he's so deeply in debt to you...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<if canDoAnal($activeSlave)>>
+		<<link "Introduce $him to getting fucked">>
+			<<replace "#introResult">>
+				You stand up, your <<if $PC.dick != 0>>erection<<if $PC.vagina != -1>> and the pussy beneath it<</if>><<else>>strap-on<</if>> suddenly becoming visible to $him, and order $him in a conversational tone of voice to <<if hasAnyLegs($activeSlave)>>kneel<<else>>get<</if>> on the couch and spread $his buttocks. The true nature of $his new life crashes down on $him in a moment, and $he cannot decide whether to run, to rage, or to cry. You solve $his dilemma for $him by seizing $him and flinging $him toward the couch, administering practiced cracks of your palm to $his ass until $he complies. $He sobs as $he feels the burning sensation of $his @@.lime;anal virginity being taken,@@ knowing that $he can now be @@.gold;used at will@@ and is now subject to the whims of someone who has shown themselves @@.mediumorchid;willing to rape $his anus.@@
+			<</replace>>
+			<<set $activeSlave.devotion -= 5>>
+			<<set $activeSlave.trust -= 5>>
+			<<set $activeSlave.anus = 1>>
+			<<= VCheck.Anal()>>
+		<</link>>
+	<</if>>
+	<br>
+<<case "$He offered $himself to you as a slave to escape a life of boredom.">>
+	//and since $he was so bored...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<if canDoAnal($activeSlave)>>
+		<<link "Make sure $he enjoys $his first butt stuff">>
+			<<replace "#introResult">>
+				You make no direct answer to $his nervous question about $his virgin butt, though you do wonder how $he was so selfish as to be a Free Cities party $girl without giving up $his asshole nightly. Instead, you ask $him about $himself, ensuring that $he learns the proper way to answer questions from $his <<= WrittenMaster($activeSlave)>>. $He answers readily, even when you turn the subject to $his sexual experiences, and $he starts to get visibly aroused. Before long, $he finds $himself sitting on your lap on the couch, making out with you while $he gives you a handjob. $He stiffens a little when you begin to play with $his butthole, but you take your time. Soon $he's taking a finger, and then two, and before long, $he's riding <<if $PC.dick != 0>>your cock<<else>>a strap-on<</if>>. $He doesn't climax to $his @@.lime;first buttsex,@@ but $he is learning to @@.mediumaquamarine;trust@@ that you won't hurt $him.
+			<</replace>>
+			<<set $activeSlave.trust += 10>>
+			<<set $activeSlave.anus = 1>>
+			<<= VCheck.Anal()>>
+		<</link>>
+	<</if>>
+	<br>
+<<case "$He sold $himself into slavery out of fear that life on the streets was endangering $his pregnancy.">>
+	//and since $he is here to protect $his pregnancy...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<if canDoAnal($activeSlave)>>
+		<<link "Make sure $he enjoys $his first anal sex">>
+			<<replace "#introResult">>
+				You introduce $him to obedience and proper manners regarding $his <<= WrittenMaster($activeSlave)>> before sending $him off for a physical. That night, $he's returned to your room, and finds you doing business on a tablet in bed. $He looks doubtful, but obeys when you direct $him to get into bed<<if $PC.dick == 0>>, even after $he realizes you're wearing a strap-on<</if>>. You turn out the light and spoon $him from behind, kissing $his neck and ears, cupping $his swollen breasts, and running your hands across $his pregnant belly with its taut $activeSlave.skin skin. $He's awkward at first but $his body responds to the tenderness. Before long $he's humping $his pussy back and forth against <<if $PC.dick != 0>>your cock<<else>>the strap-on<</if>>. You tell $him no, not there, and begin to gently work <<if $PC.dick != 0>>your dickhead<<else>>its tip<</if>> up $his tight but relaxed ass. $He's unsure of $himself, but you keep $him nice and relaxed. $He doesn't climax to $his @@.lime;first buttsex,@@ but $he is learning to @@.mediumaquamarine;trust@@ that you won't hurt $him.
+			<</replace>>
+			<<set $activeSlave.trust += 10>>
+			<<set $activeSlave.anus = 1>>
+			<<= VCheck.Anal()>>
+		<</link>>
+	<</if>>
+	<br>
+<<case "$He offered $himself to you as a slave to escape the hard life of a free whore.">>
+	//and since $he is trying to escape the hard life of a free whore...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Clean up $his whorish appearance">>
+		<<replace "#introResult">>
+			$He's totally unsurprised when you send $him to the salon for a makeover. It takes several days of work before $he's brought back in for another inspection; when $he arrives, you wordlessly point $him to a full length mirror. $He <<if canSee($activeSlave)>>sees $himself<<else>><<if hasAnyArms($activeSlave)>>tenderly uses $his hand<<if hasBothArms($activeSlave)>>s<</if>> and finds $himself<<else>>stoically waits while you vividly describe $his new appearance. One<</if>><</if>> without tattoos, a hooker's haircut and piercings, a conventionally pretty $girl with subtle implants and a clean appearance. $He gasps <<if hasAnyArms($activeSlave)>>and covers $his mouth with a hand<<else>>but quickly closes $his mouth<</if>>, and then suddenly bursts into tears. "Thank you, <<Master>>," $he sobs. "I never would have thought."<<if hasAnyArms($activeSlave)>> $He reaches out to touch $his reflection. <<else>> $He pauses for just a moment. <</if>>"I <<if canSee($activeSlave)>>look<<else>>feel<</if>> like a nice $girl." $He is @@.hotpink;grateful to you@@ for <<if canSee($activeSlave)>>showing $him<<else>><<if hasAnyArms($activeSlave)>>letting $him feel<<else>>detailing<</if>><</if>> this new side of $himself, and has @@.mediumaquamarine;begun to trust@@ that being your slave will be less degrading than being a free prostitute.
+		<</replace>>
+		<<set $activeSlave.trust += 4>>
+		<<set $activeSlave.devotion += 4>>
+		<<set $activeSlave.boobs -= $activeSlave.boobsImplant>>
+		<<set $activeSlave.boobsImplant = 0>>
+		<<set $activeSlave.boobsImplantType = "none">>
+		<<set $activeSlave.lips -= $activeSlave.lipsImplant>>
+		<<set $activeSlave.lipsImplant = 0>>
+		<<set $activeSlave.butt -= $activeSlave.buttImplant>>
+		<<set $activeSlave.buttImplant = 0>>
+		<<set $activeSlave.buttImplantType = "none">>
+		<<set $activeSlave.lipsPiercing = 0>>
+		<<set $activeSlave.tonguePiercing = 0>>
+		<<set $activeSlave.nosePiercing = 0>>
+		<<set $activeSlave.eyebrowPiercing = 0>>
+		<<set $activeSlave.navelPiercing = 0>>
+		<<set $activeSlave.nipplesPiercing = 0>>
+		<<set $activeSlave.clitPiercing = 0>>
+		<<set $activeSlave.hStyle = "neat">>
+		<<set $activeSlave.custom.tattoo = " ">>
+	<</link>>
+	<br>
+<<case "$He sold $himself into slavery to escape life on the streets.">>
+	//and since $he is trying to escape life on the streets...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Show off $his tits">>
+		<<replace "#introResult">>
+			You send $him out to be cleaned up and inducted, but have $him brought back afterward. You point out a clothes box on the couch and tell $him to get dressed, since you're about to make a tour of the club, and $he'll be accompanying you. $He obeys without comment, but gasps with shock to find that $he's been given a string sling bikini. $He climbs into it hesitantly, and finds that not only does its string bottom ride up between $his pussylips, it does not cover $his nipples at all: the strings part to either side of the nipples to let them stick through, bare. This can only generously be called clothing. $He accepts this with an obvious internal sigh, however, and walks dutifully behind you, $his bare feet slapping along as $his big butt bounces and $his tits constantly fall out of $his strings.
+			<<if $activeSlave.behavioralFlaw != "shamefast">>
+				After a while, though, $he notices that $he's getting a lot of very positive attention, and even starts to strut it a little. When you get back to the penthouse, you ask $him how $he felt. $He blushes. "Kinda hot, <<Master>>," $he <<say>>s, embarrassed. "I didn't think an older $girl like me would get <<s>>o many <<s>>tare<<s>>." You reach out to grope $his tits, and tell $him that with breasts like $hers, it's not surprising. $He @@.hotpink;likes you@@ for liking $his body, and has @@.mediumaquamarine;begun to trust@@ that even though $he's old, $he can find a place under you.
+				<<set $activeSlave.trust += 4>>
+				<<set $activeSlave.devotion += 4>>
+			<<else>>
+				After a while, though, $he notices that $he's getting a lot of very positive attention, but $he remains embarrassed. $His gait is clumsy and hesitant, and $he almost trips over $himself with mortification. When you get back to the penthouse, you ask $him how $he felt. $He blushes furiously. "T-terrible, <<Master>>," $he <<say>>s with feeling. "P-plea<<s>>e, I'll @@.hotpink;d-do anything you want@@ @@.gold;a<<s>> long a<<s>> you don't m-make me do that again.@@ Anything." $He thinks frantically, obviously trying to come up with the most abject idea $he can. "I'll b-be a whore! J-ju<<s>>t a<<s>> long a<<s>> I can do it, you know, in a room."
+				<<set $activeSlave.trust -= 4>>
+				<<set $activeSlave.devotion += 4>>
+			<</if>>
+		<</replace>>
+	<</link>>
+	<br>
+/*Written by DrPill, coded by Boney M*/
+<<case "$He was recruited into your service by $his older sister.">>
+	<<setLocalPronouns $eventSlave 2>>
+	//and since $he was recruited by $his older _sister2...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Use $his big _sister2 as an example">>
+		<<replace "#introResult">>
+			Your new slave appears <<if $activeSlave.devotion < -10>>reluctant to assume $his new duties<<else>>unsure what $his new duties are<</if>>. You gesture towards $eventSlave.slaveName. _He2 is <<if $eventSlave.intelligence+$eventSlave.intelligenceImplant > 15>>bright enough<<elseif (($eventSlave.skill.vaginal + $eventSlave.skill.anal + $eventSlave.skill.oral) > 100)>>skilled enough<<else>>obedient enough<</if>> to understand you mean a demonstration is in order. $eventSlave.slaveName starts things off with a <<if $eventSlave.skill.entertainment >= 100>>masterful<<elseif $eventSlave.skill.entertainment > 10>>skillful<<else>>passable<</if>> striptease, culminating in _him2 <<if ($eventSlave.anus > 0) && ($eventSlave.fetish != "cumslut")>>bending over<<else>>kneeling<</if>> in front of you. _He2 eagerly moans as you enter _him2, begging for your seed<<if $eventSlave.energy > 95>> like the slut _he2 is<<elseif $eventSlave.skill.whoring > 30>> like the whore _he2 is<<elseif ($eventSlave.assignment == "serve in the master suite") || ($eventSlave.assignment == "please you")>> like the fucktoy _he2 is<</if>>. As you finish, _he2 <<if $eventSlave.fetish == "cumslut">>opens _his2 mouth and savors your gift, thanking you once _he2's swallowed enough to be able to talk again<<elseif ($eventSlave.fetish == "buttslut") || ($eventSlave.fetish == "submissive")>>collapses on the floor with _his2 ass high in the air, thanking you for painting _his2 hole white<<else>>thanks you<</if>>. Witnessing this display of servitude from $his big _sister2 @@.hotpink;eases $activeSlave.slaveName into $his new life,@@ and @@.mediumaquamarine;gives $him hope@@ $he can find a place here.
+		<</replace>>
+		<<if ($eventSlave.anus > 0) && ($eventSlave.fetish != "cumslut")>>
+			<<set $eventSlave.counter.anal += 1>>
+			<<set $analTotal += 1>>
+		<<else>>
+			<<set $eventSlave.counter.oral += 1>>
+			<<set $oralTotal += 1>>
+		<</if>>
+		<<set $activeSlave.devotion += 4>>
+		<<set $activeSlave.trust += 4>>
+	<</link>>
+	<br>
+<<case "$He was recruited into your service by $his younger sister.">>
+	<<setLocalPronouns $eventSlave 2>>
+	//and since $he was recruited by $his younger _sister2...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Use $his little _sister2 as an example">>
+		<<replace "#introResult">>
+			Your new slave appears <<if $activeSlave.devotion < -10>>reluctant to assume $his new duties<<else>>unsure what $his new duties are<</if>>. You gesture towards $eventSlave.slaveName. _He2 is <<if $eventSlave.intelligence+$eventSlave.intelligenceImplant > 15>>bright enough<<elseif (($eventSlave.skill.vaginal + $eventSlave.skill.anal + $eventSlave.skill.oral) > 100)>>skilled enough<<else>>obedient enough<</if>> to understand you mean a demonstration is in order. $eventSlave.slaveName starts things off with a <<if $eventSlave.skill.entertainment >= 100>>masterful<<elseif $eventSlave.skill.entertainment > 10>>skillful<<else>>passable<</if>> striptease, culminating in _him2 <<if ($eventSlave.anus > 0) && ($eventSlave.fetish != "cumslut")>>bending over<<else>>kneeling<</if>> in front of you. _He2 eagerly moans as you enter _him2, begging for your seed<<if $eventSlave.energy > 95>> like the slut _he2 is<<elseif $eventSlave.skill.whoring > 30>> like the whore _he2 is<<elseif ($eventSlave.assignment == "serve in the master suite") || ($eventSlave.assignment == "please you")>> like the fucktoy _he2 is<</if>>. As you finish, _he2 <<if $eventSlave.fetish == "cumslut">>opens _his2 mouth and savors your gift, thanking you once _he2's swallowed enough to be able to talk again<<elseif ($eventSlave.fetish == "buttslut") || ($eventSlave.fetish == "submissive")>>collapses on the floor with _his2 ass high in the air, thanking you for painting _his2 hole white<<else>>thanks you<</if>>. Witnessing this display of servitude from $his little _sister2 @@.hotpink;eases $activeSlave.slaveName into $his new life,@@ and @@.mediumaquamarine;gives $him hope@@ $he can find a place here.
+		<</replace>>
+		<<if ($eventSlave.anus > 0) && ($eventSlave.fetish != "cumslut")>>
+			<<set $eventSlave.counter.anal += 1>>
+			<<set $analTotal += 1>>
+		<<else>>
+			<<set $eventSlave.counter.oral += 1>>
+			<<set $oralTotal += 1>>
+		<</if>>
+		<<set $activeSlave.devotion += 4>>
+		<<set $activeSlave.trust += 4>>
+	<</link>>
+	<br>
+<<case "$He was recruited into your service by $his twin sister.">>
+	<<setLocalPronouns $eventSlave 2>>
+	//and since $he was recruited by $his twin...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Use $his _sister2 as an example">>
+		<<replace "#introResult">>
+			Your new slave appears <<if $activeSlave.devotion < -10>>reluctant to assume $his new duties<<else>>unsure what $his new duties are<</if>>. You gesture towards $eventSlave.slaveName. _He2 is <<if $eventSlave.intelligence+$eventSlave.intelligenceImplant > 15>>bright enough<<elseif (($eventSlave.skill.vaginal + $eventSlave.skill.anal + $eventSlave.skill.oral) > 100)>>skilled enough<<else>>obedient enough<</if>> to understand you mean a demonstration is in order. $eventSlave.slaveName starts things off with a <<if $eventSlave.skill.entertainment >= 100>>masterful<<elseif $eventSlave.skill.entertainment > 10>>skillful<<else>>passable<</if>> striptease, culminating in _him2 <<if ($eventSlave.anus > 0) && ($eventSlave.fetish != "cumslut")>>bending over<<else>>kneeling<</if>> in front of you. _He2 eagerly moans as you enter _him2, begging for your seed<<if $eventSlave.energy > 95>> like the slut _he2 is<<elseif $eventSlave.skill.whoring > 30>> like the whore _he2 is<<elseif ($eventSlave.assignment == "serve in the master suite") || ($eventSlave.assignment == "please you")>> like the fucktoy _he2 is<</if>>. As you finish, _he2 <<if $eventSlave.fetish == "cumslut">>opens _his2 mouth and savors your gift, thanking you once _he2's swallowed enough to be able to talk again<<elseif ($eventSlave.fetish == "buttslut") || ($eventSlave.fetish == "submissive")>>collapses on the floor with _his2 ass high in the air, thanking you for painting _his2 hole white<<else>>thanks you<</if>>. Witnessing this display of servitude from $his twin _sister2 @@.hotpink;eases $activeSlave.slaveName into $his new life,@@ and @@.mediumaquamarine;gives $him hope@@ $he can find a place here.
+		<</replace>>
+		<<if ($eventSlave.anus > 0) && ($eventSlave.fetish != "cumslut")>>
+			<<set $eventSlave.counter.anal += 1>>
+			<<set $analTotal += 1>>
+		<<else>>
+			<<set $eventSlave.counter.oral += 1>>
+			<<set $oralTotal += 1>>
+		<</if>>
+		<<set $activeSlave.devotion += 4>>
+		<<set $activeSlave.trust += 4>>
+	<</link>>
+	<br>
+<<case "$He was recruited into your service by $his mother.">>
+	<<setLocalPronouns $eventSlave 2>>
+	//and since $he was recruited by $his mother...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Use $his mother as an example">>
+		<<replace "#introResult">>
+			You gesture towards $eventSlave.slaveName. _He2 is <<if $eventSlave.intelligence+$eventSlave.intelligenceImplant > 15>>bright enough<<elseif (($eventSlave.skill.vaginal + $eventSlave.skill.anal + $eventSlave.skill.oral) > 100)>>skilled enough<<else>>obedient enough<</if>> to understand you mean a demonstration is in order. $eventSlave.slaveName starts things off with a <<if $eventSlave.skill.entertainment >= 100>>masterful<<elseif $eventSlave.skill.entertainment > 10>>skillful<<else>>passable<</if>> striptease, culminating in _him2 <<if ($eventSlave.anus > 0) && ($eventSlave.fetish != "cumslut")>>bending over<<else>>kneeling<</if>> in front of you. _He2 eagerly moans as you enter _him2, begging for your seed<<if $eventSlave.energy > 95>> like the slut _he2 is<<elseif $eventSlave.skill.whoring > 30>> like the whore _he2 is<<elseif ($eventSlave.assignment == "serve in the master suite") || ($eventSlave.assignment == "please you")>> like the fucktoy _he2 is<</if>>. As you finish, _he2 <<if $eventSlave.fetish == "cumslut">>opens _his2 mouth and savors your gift, thanking you once _he2's swallowed enough to be able to talk again<<elseif ($eventSlave.fetish == "buttslut") || ($eventSlave.fetish == "submissive")>>collapses on the floor with _his2 ass high in the air, thanking you for painting _his2 hole white<<else>>thanks you<</if>>. Witnessing this display of servitude from $his mother @@.hotpink;eases $activeSlave.slaveName into $his new life,@@ and @@.mediumaquamarine;gives $him hope@@ $he can find a place here.
+		<</replace>>
+		<<if ($eventSlave.anus > 0) && ($eventSlave.fetish != "cumslut")>>
+			<<set $eventSlave.counter.anal += 1>>
+			<<set $analTotal += 1>>
+		<<else>>
+			<<set $eventSlave.counter.oral += 1>>
+			<<set $oralTotal += 1>>
+		<</if>>
+		<<set $activeSlave.devotion += 4>>
+		<<set $activeSlave.trust += 4>>
+	<</link>>
+	<br>
+<<case "$He was recruited into your service by $his parent.">>
+	<<setLocalPronouns $eventSlave 2>>
+	//and since $he was recruited by $his parent...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Use $his parent as an example">>
+		<<replace "#introResult">>
+			You gesture towards $eventSlave.slaveName. _He2 is <<if $eventSlave.intelligence+$eventSlave.intelligenceImplant > 15>>bright enough<<elseif (($eventSlave.skill.vaginal + $eventSlave.skill.anal + $eventSlave.skill.oral) > 100)>>skilled enough<<else>>obedient enough<</if>> to understand you mean a demonstration is in order. $eventSlave.slaveName starts things off with a <<if $eventSlave.skill.entertainment >= 100>>masterful<<elseif $eventSlave.skill.entertainment > 10>>skillful<<else>>passable<</if>> striptease, culminating in _him2 <<if ($eventSlave.anus > 0) && ($eventSlave.fetish != "cumslut")>>bending over<<else>>kneeling<</if>> in front of you. _He2 eagerly moans as you enter _him2, begging for your seed<<if $eventSlave.energy > 95>> like the slut _he2 is<<elseif $eventSlave.skill.whoring > 30>> like the whore _he2 is<<elseif ($eventSlave.assignment == "serve in the master suite") || ($eventSlave.assignment == "please you")>> like the fucktoy _he2 is<</if>>. As you finish, _he2 <<if $eventSlave.fetish == "cumslut">>opens _his2 mouth and savors your gift, thanking you once _he2's swallowed enough to be able to talk again<<elseif ($eventSlave.fetish == "buttslut") || ($eventSlave.fetish == "submissive")>>collapses on the floor with _his2 ass high in the air, thanking you for painting _his2 hole white<<else>>thanks you<</if>>. Witnessing this display of servitude from $his <<if $activeSlave.mother == $eventSlave.ID>>mother<<else>>father<</if>> @@.hotpink;eases $activeSlave.slaveName into $his new life,@@ and @@.mediumaquamarine;gives $him hope@@ $he can find a place here.
+		<</replace>>
+		<<if ($eventSlave.anus > 0) && ($eventSlave.fetish != "cumslut")>>
+			<<set $eventSlave.counter.anal += 1>>
+			<<set $analTotal += 1>>
+		<<else>>
+			<<set $eventSlave.counter.oral += 1>>
+			<<set $oralTotal += 1>>
+		<</if>>
+		<<set $activeSlave.devotion += 4>>
+		<<set $activeSlave.trust += 4>>
+	<</link>>
+	<br>
+<<case "$He was recruited into your service by $his daughter.">>
+	<<setLocalPronouns $eventSlave 2>>
+	//and since $he was recruited by $his _daughter2...//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Use $his _daughter2 as an example">>
+		<<replace "#introResult">>
+			You gesture towards $eventSlave.slaveName. _He2 is <<if $eventSlave.intelligence+$eventSlave.intelligenceImplant > 15>>bright enough<<elseif (($eventSlave.skill.vaginal + $eventSlave.skill.anal + $eventSlave.skill.oral) > 100)>>skilled enough<<else>>obedient enough<</if>> to understand you mean a demonstration is in order. $eventSlave.slaveName starts things off with a <<if $eventSlave.skill.entertainment >= 100>>masterful<<elseif $eventSlave.skill.entertainment > 10>>skillful<<else>>passable<</if>> striptease, culminating in _him2 <<if ($eventSlave.anus > 0) && ($eventSlave.fetish != "cumslut")>>bending over<<else>>kneeling<</if>> in front of you. _He2 eagerly moans as you enter _him2, begging for your seed<<if $eventSlave.energy > 95>> like the slut _he2 is<<elseif $eventSlave.skill.whoring > 30>> like the whore _he2 is<<elseif ($eventSlave.assignment == "serve in the master suite") || ($eventSlave.assignment == "please you")>> like the fucktoy _he2 is<</if>>. As you finish, _he2 <<if $eventSlave.fetish == "cumslut">>opens _his2 mouth and savors your gift, thanking you once _he2's swallowed enough to be able to talk again<<elseif ($eventSlave.fetish == "buttslut") || ($eventSlave.fetish == "submissive")>>collapses on the floor with _his2 ass high in the air, thanking you for painting _his2 hole white<<else>>thanks you<</if>>. Witnessing this display of servitude from $his _daughter2 @@.hotpink;eases $activeSlave.slaveName into $his new life,@@ and @@.mediumaquamarine;gives $him hope@@ $he can find a place here.
+		<</replace>>
+		<<if ($eventSlave.anus > 0) && ($eventSlave.fetish != "cumslut")>>
+			<<set $eventSlave.counter.anal += 1>>
+			<<set $analTotal += 1>>
+		<<else>>
+			<<set $eventSlave.counter.oral += 1>>
+			<<set $oralTotal += 1>>
+		<</if>>
+		<<set $activeSlave.devotion += 4>>
+		<<set $activeSlave.trust += 4>>
+	<</link>>
+	<br>
+<<default>>
+	<<if $activeSlave.origin>>
+		<<if ($activeSlave.origin.includes("enslavement for the attempted rape of a free"))>>
+			//and since $he tried to rape you...//
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<<link "Show $him how a professional does it">>
+				<<replace "#introResult">>
+					Judging from $his earlier, amateur attempt, it's clear $activeSlave.slaveName is unfamiliar with the subtle nuances of a high-quality rape. You decide to clear your schedule for the rest of the day and teach $him yourself<<if $PC.dick == 0>>, with the help of your trusty strap-on, of course<</if>>. Once $he's bent over across your desk and properly restrained, $his lesson begins with you thrusting your <<if $PC.dick == 0>>fake <</if>>cock down $his throat as far as it will go. Over the course of the next several hours, you ensure that $he understands the fine points of nonconsensual oral<<if $activeSlave.vagina > -1>>, vaginal,<</if>> and anal intercourse as intimately as possible. When you're finally too tired to continue,you unshackle $his @@.red;bruised and bloody body@@ and ask $him what $he learned. $His voice hoarse from the same brutal fucking that has gaped $his @@.lime;asshole@@<<if $activeSlave.vagina > -1>> and @@.lime;pussy@@<</if>>, $he hesitantly replies that $he has @@.hotpink;learned a great deal about true dominance,@@ before fainting on the spot from a mixture of total exhaustion and pure terror. You've taught your student well.
+				<</replace>>
+				<<set $activeSlave.counter.oral += 15, $oralTotal += 15>>
+				<<set $activeSlave.anus = 2, $activeSlave.counter.anal += 15, $analTotal += 15>>
+				<<if $activeSlave.vagina > -1>>
+					<<set $activeSlave.vagina = 2, $activeSlave.counter.vaginal += 15, $vaginalTotal += 15>>
+				<</if>>
+				<<if isFertile($activeSlave) && $PC.dick > 0>>
+					<<= knockMeUp($activeSlave, 100, 0, -1, 1)>>
+				<</if>>
+				<<set $activeSlave.devotion += 100>>
+			<</link>>
+			| <<link "Show $him that $he could have just asked">>
+				<<replace "#introResult">>
+					You tell $activeSlave.slaveName that while $his previous attempt to fuck you was very flattering, $he should know that one can catch more flies with honey. Ordering the confused slave to lean back over and onto your desk, you proceed to gently <<if $activeSlave.dick > 0>>stroke<<else>>finger<</if>> $him until $his arousal overwhelms $his wariness of you. Once $he's finally relaxed, you climb on top of $him, and gently ease
+					<<if ($PC.vagina > 0) && (canPenetrate($activeSlave))>>
+						your pussy onto $his cock. $He shudders and moan softly as you slide yourself up and down $his shaft with steadily increasing speed. You keep your eyes locked on $hers all the while, as $his expression shifts from bewilderment to acceptance to ecstasy, as $he soon shoots $his seed up into you. Afterwards, you slip $his softening cock out of you, climb off of $him, and leave the exhausted and overwhelmed slave<<= $girl>> on your desk as you attend to business elsewhere. You think $he's @@.orangered;going to like it here.@@
+						<<set $activeSlave.counter.penetrative++, $penetrativeTotal++>>
+						<<if canImpreg($PC, $activeSlave)>>
+							<<= knockMeUp($PC, 100, 0, $activeSlave.ID, 1)>>
+						<</if>>
+					<<else>>
+						yourself into $his <<if $activeSlave.vagina > -1>>pussy<<else>>asshole<</if>>. $He shudders and moans softly as you piston your <<if $PC.dick > 0>>dick<<else>>strap-on<</if>> in and out of $his hole with steadily increasing intensity. You keep your eyes locked on $hers all the while, as $his expression shifts from bewilderment to acceptance to ecstasy, as you soon shoot your seed down into $him. Afterwards, you slip your <<if $PC.dick > 0>>softening<<else>>plastic<</if>> cock out of $him, climb off of $him, and leave the exhausted and overwhelmed slave<<= $girl>> on your desk as you attend to business elsewhere. You think $he's @@.orangered;going to like it here.@@
+						<<if $activeSlave.vagina > -1>>
+							<<= VCheck.Vaginal()>>
+							<<set $activeSlave.counter.vaginal++, $vaginalTotal++>>
+							<<if isFertile($activeSlave) && $PC.dick > 0>>
+								<<= knockMeUp($activeSlave, 100, 0, -1, 1)>>
+							<</if>>
+						<<else>>
+							<<= VCheck.Anal()>>
+							<<set $activeSlave.counter.anal++, $analTotal++>>
+						<</if>>
+					<</if>>
+				<</replace>>
+				<<set $activeSlave.trust += 100>>
+			<</link>>
+			<br>
+		<</if>>
+	<</if>>
+<</switch>>
+
+<br>//Have $him changed...//
+
+<<if $activeSlave.health.condition < -20>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Address $his medical issues">>
+		<<replace "#introResult">>
+			Since $he's in rough shape, you give $him a comprehensive medical exam with the help of the remote surgery. You apply care to @@.green;address@@ some of the most outstanding concerns. Whatever gratitude $he might have felt for prompt medical attention is balanced by fear of the remote surgery and the nagging (and accurate) feeling that $he's being treated like livestock, but $he does @@.mediumaquamarine;begin to hope@@ $he'll be well treated.
+			<<if $arcologies[0].FSPaternalist != "unset">>
+				Society @@.green;approves@@ of your promptly seeing to your stock's health; this advances the idea that all slaveowners should look after their slaves.
+				<<= FutureSocieties.Change("Paternalist", 2)>>
+			<</if>>
+		<</replace>>
+		<<run improveCondition($activeSlave, 10)>>
+		<<set $activeSlave.trust += 4>>
+	<</link>>
+<</if>>
+
+
+<<if ($activeSlave.hStyle.indexOf("shaved") == -1)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Shave $his hair">>
+		<<replace "#introResult">>
+			You seize $him by the hair and drag $him to the auto salon. $He struggles and thrashes around but soon scrambles to keep up with you to relieve the pain in $his scalp as $he's dragged. You strap $him in and set the auto salon to shave. $He <<if canSee($activeSlave)>>looks around frantically<<else>>trembles with fear<</if>> as the manipulators with their buzzing shears descend menacingly. As they run quickly back and forth across $his head, $he begins to sob, obviously @@.gold;fearing@@ that $his new master is @@.mediumorchid;one to enjoy degradation and abuse.@@ $He has a strong indication that obedience is $his only hope.
+		<</replace>>
+		<<set $activeSlave.devotion -= 5>>
+		<<set $activeSlave.hStyle = "shaved">>
+		<<set $activeSlave.hLength = 0>>
+		<<set $activeSlave.trust -= 10>>
+	<</link>>
+<</if>>
+
+
+<<if $activeSlave.stampTat == 0>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Give $him a lewd tramp stamp">>
+	<<set $activeSlave.stampTat = either("advertisements", "degradation", "rude words")>>
+	<<replace "#introResult">>
+		You <<if $activeSlave.devotion > 20>>bring $him down to the studio, lay the compliant<<else>>drag $him down to the studio, strap the reluctant<</if>> slave in the chair face-down, and select a sufficiently lewd pattern to decorate $his lower back. When the automated tattooing is done, a topical application of analgesics leaves $him with nothing more than a slight ache there.
+		<<if canSee($activeSlave)>>
+			When allowed to stand, $he immediately turns $his back to one of the studio's full length mirrors and cranes around to read the writing just over $his butt. It's difficult, since, of course, it's reversed, and $he mouths the words letter by letter.
+			<<if $activeSlave.stampTat == "advertisements">>
+				$He mouths, 'Fuck my ass!'
+			<<elseif $activeSlave.stampTat == "rude words">>
+				'Rear Entrance,' $he mouths, and then understands the arrow pointing down between $his buttocks.
+			<<elseif $activeSlave.stampTat == "degradation">>
+				Struggling to read the ornate gothic lettering, $he slowly mouths, 'Anal Whore.'
+			<</if>>
+		<<elseif canHear($activeSlave)>>
+			When $he sits back up, you tell $him calmly and bluntly what $his new tattoo says:
+			<<if $activeSlave.stampTat == "advertisements">>
+				"Fuck My Ass."
+			<<elseif $activeSlave.stampTat == "rude words">>
+				"Rear Entrance."
+			<<elseif $activeSlave.stampTat == "degradation">>
+				"Anal Whore."
+			<</if>>
+		<<else>>
+			Judging by the expression on $his face, $he's either accurately judged the movement of the needle on $his skin or simply guessed correctly that $his new tattoo consists of
+			<<if $activeSlave.stampTat == "advertisements">>
+				blunt advertisements for anal sex.
+			<<elseif $activeSlave.stampTat == "rude words">>
+				mocking references to anal sex.
+			<<elseif $activeSlave.stampTat == "degradation">>
+				insulting invitations for anal sex.
+			<</if>>
+		<</if>>
+
+		<<if $activeSlave.devotion > 20>>
+			$He gasps at the realization that taking it up the ass is about to become a dominant part of $his life. $He isn't surprised by that, but it's a little stark, having $his status as an anal slave permanently written on $his lower back for anyone to see. Nevertheless, $he @@.hotpink;resolves to do $his best.@@
+			<<set $activeSlave.devotion += 5>>
+		<<else>>
+			$He begins to cry softly. It's not likely that $he didn't know, on some level, that $he's a sex slave, and that most sex slaves are expected to take it up the ass. $He's @@.gold;frightened@@ to find, though, that it's apparently so essential to $his existence that it's worth tattooing right over $his bottom. $He continues to weep as you lead $him out, but @@.hotpink;offers no real resistance.@@ $He's just mourning $his poor anal sphincter in an anticipatory sort of way.
+			<<set $activeSlave.devotion += 5>>
+			<<set $activeSlave.trust -= 5>>
+		<</if>>
+	<</replace>>
+	<</link>>
+<</if>>
+
+| <<link "Brand $him on the _brandTarget">>
+	<<replace "#introResult">>
+		You drag $him to the body modification studio and strap $him down with $his _brandTarget clear and defenseless. $He doesn't understand what's coming for a while, even as disinfectant is applied to $his _brandTarget. $He can't see the approaching brand, <<if !canSee($activeSlave)>>of course, <</if>>but eventually $he feels the radiated heat on $his skin and manages to get one inarticulate, wordless noise of terror out before the dreadful sizzling noise and the sweet smell of burning flesh. If $he didn't know $he was a slave before, @@.mediumorchid;$he does now,@@ and $he's got the @@.gold;agonizing@@ @@.red;injury@@ to prove it.
+		<<if ($arcologies[0].FSSubjugationistRace == $activeSlave.race) && ($arcologies[0].FSSubjugationist > 0)>>
+			Society @@.green;approves@@ of your purchase and branding of an inferior $activeSlave.race person; this advances the idea that $activeSlave.race people ought to be enslaved.
+			<<= FutureSocieties.Change("Subjugationist", 2)>>
+		<<elseif ($arcologies[0].FSSupremacistRace == $activeSlave.race) && ($arcologies[0].FSSupremacist > 0)>>
+			Society @@.red;disapproves@@ of your purchase and branding of <<= addA($activeSlave.race)>> person; this reduces support for the idea that $activeSlave.race people are superior.
+			<<= FutureSocieties.Change("Supremacist", -2)>>
+		<</if>>
+	<</replace>>
+	<<set $activeSlave.brand[_brandTarget] = $brandDesign.primary>>
+	<<set $activeSlave.devotion -= 5>>
+	<<set $activeSlave.trust -= 10>>
+	<<run healthDamage($activeSlave, 10)>>
+<</link>>
+
+
+<<if $activeSlave.dick == 0 && $activeSlave.vagina > -1>>
+	| <<link "Give $him a smart clitoral piercing">>
+		<<run cashX(forceNeg($SPcost), "slaveMod", $activeSlave)>>
+		<<replace "#introResult">>
+			You take $him to the body modification studio, strap $him down, pierce $his clit, and insert what appears to be a large stainless steel barbell piercing. It actually contains a device that can vibrate to give $him sexual stimulation or create subtle pain to suppress pleasure. It is connected wirelessly to the arcology, which can be given instructions to encourage or discourage sexual pleasure in specific situations. You run a quick test. On the oral setting, as soon as $he kneels in front of your crotch, $he gasps as the stimulation starts. On the anal setting, $he whimpers when you run a finger across $his asshole.
+		<</replace>>
+		<<set $activeSlave.clitPiercing = 3>>
+	<</link>>
+	//This option costs <<print cashFormat($SPcost)>>//
+<<else>>
+	| <<link "Give $him a smart frenulum piercing">>
+		<<run cashX(forceNeg($SPcost), "slaveMod", $activeSlave)>>
+		<<replace "#introResult">>
+			You take $him to the body modification studio, strap $him down, pierce $his frenulum, and insert what appears to be a large stainless steel barbell piercing. It actually contains a device that can vibrate to give $him sexual stimulation or create subtle pain to suppress pleasure. It is connected wirelessly to the arcology, which can be given instructions to encourage or discourage sexual pleasure in specific situations. You run a quick test. On the oral setting, as soon as $he kneels in front of your crotch, $he gasps as the stimulation starts. On the anal setting, $he whimpers and gets rock hard when you run a finger across $his asshole.
+		<</replace>>
+		<<set $activeSlave.clitPiercing = 3>>
+	<</link>>
+	//This option costs <<print cashFormat($SPcost)>>//
+<</if>>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+
+<<if $activeSlave.indentureRestrictions <= 0>>
+	<<link "Whip $him until $he scars">>
+		<<run App.Medicine.Modification.addScourged($activeSlave)>>
+		<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>> /* Let's just bill once, for the whip and disinfectant. */
+		<<set $activeSlave.devotion -= 5>>
+		<<set $activeSlave.trust -= 10>>
+		<<run healthDamage($activeSlave, 10)>>
+		<<replace "#introResult">>
+			You drag $him to the
+			<<if $cellblock>>
+				$cellblockName
+			<<else>>
+				body modification studio
+			<</if>>
+			and
+			<<if !isAmputee($activeSlave)>>
+				chain $him spread-eagled
+			<<else>>
+				secure $him
+			<</if>>
+			with $his face to the wall and $his naked back defenseless. $He doesn't understand what's coming for a while, even as disinfectant is applied from $his neck
+			<<if hasAnyLegs($activeSlave)>>
+				to $his knee<<if hasBothLegs($activeSlave)>>s<</if>>.
+			<<else>>
+				down.
+			<</if>>
+			$He can't see you prepare the whip,
+			<<if !canSee($activeSlave)>>
+				of course,
+			<</if>>
+			<<if canHear($activeSlave)>>
+				but almost jumps out of $his $activeSlave.skin skin when you crack it behind $him.
+			<<else>>
+				and in $his deaf state every blow is a devastating surprise.
+			<</if>>
+			$He frantically
+			<<if !isAmputee($activeSlave)>>
+				wrenches $his <<if hasAnyArms($activeSlave)>>hand<<if hasBothArms($activeSlave)>>s<</if>><<if hasAnyLegs($activeSlave)>> and <</if>><</if>><<if hasAnyLegs($activeSlave)>><<if hasBothLegs($activeSlave)>>feet<<else>>foot<</if>><</if>> as you work up and down $his exposed back and limb<<if getLimbCount($activeSlave)>>s<</if>>, but is completely unable to get free.
+			<<else>>
+				twists and turns, but without limbs is powerless to escape the curling whip.
+			<</if>>
+			If $he didn't know $he was a slave before, @@.mediumorchid;$he does now,@@ and $he's got the @@.gold;agonizing@@ @@.red;injury@@ to prove it. What $he doesn't yet know is just how permanent this lashing's effects will be. The level of violence and the coating you used will leave $him scarred with the marks of slavery forever.
+			<<if ($arcologies[0].FSSubjugationistRace == $activeSlave.race) && ($arcologies[0].FSSubjugationist > 0)>>
+				Society @@.green;approves@@ of your purchase and whipping of an inferior $activeSlave.race person; this advances the idea that $activeSlave.race people ought to be enslaved.
+				<<= FutureSocieties.Change("Subjugationist", 2)>>
+			<<elseif ($arcologies[0].FSSupremacistRace == $activeSlave.race) && ($arcologies[0].FSSupremacist > 0)>>
+				Society @@.red;disapproves@@ of your purchase and whipping of <<= addA($activeSlave.race)>> person; this reduces support for the idea that $activeSlave.race people are superior.
+				<<= FutureSocieties.Change("Supremacist", -2)>>
+			<</if>>
+		<</replace>>
+	<</link>>
+
+	| <<link "Scar $him on the _scarTarget">>
+		<<replace "#introResult">>
+			You drag $him to the body modification studio and strap $him down with $his _scarTarget clear and defenseless. $He doesn't understand what's coming for a while, even as disinfectant is applied to $his _scarTarget. You have a wide selection of tools to create scars, the trick is to keep the wound from healing correctly afterwards. Of course, $he has no way of knowing that the pain you are inflicting as you cut into $his flesh will leave such a permanent mark, but the basic message is clear: if $he didn't know $he was a slave before, @@.mediumorchid;$he does now,@@ and $he's got the @@.gold;agonizing@@ @@.red;injury@@ to prove it.
+			<<if ($arcologies[0].FSSubjugationistRace == $activeSlave.race) && ($arcologies[0].FSSubjugationist > 0)>>
+				Society @@.green;approves@@ of your purchase and scarring of an inferior $activeSlave.race person; this advances the idea that $activeSlave.race people ought to be enslaved.
+				<<= FutureSocieties.Change("Subjugationist", 2)>>
+			<<elseif ($arcologies[0].FSSupremacistRace == $activeSlave.race) && ($arcologies[0].FSSupremacist > 0)>>
+				Society @@.red;disapproves@@ of your purchase and scarring of <<= addA($activeSlave.race)>> person; this reduces support for the idea that $activeSlave.race people are superior.
+				<<= FutureSocieties.Change("Supremacist", -2)>>
+			<</if>>
+		<</replace>>
+		<<run App.Medicine.Modification.addScar($activeSlave, _scarTarget, $scarDesign.primary)>>
+		<<set $activeSlave.devotion -= 5>>
+		<<set $activeSlave.trust -= 10>>
+		<<run healthDamage($activeSlave, 10)>>
+	<</link>>
+<</if>>
+
+<<if $arcologies[0].FSHedonisticDecadence >= 50 && $activeSlave.behavioralFlaw == "anorexic" && $activeSlave.weight < 10>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Force-feed $him">>
+		<<replace "#introResult">>
+			$He is much too thin and seems to shirk any offered food, but there is an easy solution to that. If $he refuses to eat, $he can be made to. Pulling the reluctant slave to the feeders, binding $him tightly to a chair, and attaching a hose to the slave food nozzle, you give $him a choice; suck the hose willingly or have it forced down $his throat. $He glares defiantly and keeps $his mouth firmly shut. You clamp down on $his nose, inevitably forcing $him to open $his mouth to breath. In that moment, you shove the hose in and down $his throat, carefully directing it down into $his stomach. $He gags as you turn on the flow, $his eyes filling with tears as $he feels the warm food travel down the tube and into $his stomach. $He sobs as $his belly steadily swells with unwelcome sustenance, $his eyes pleading with you, desperate to let you know $he'll be good. You ignore $him, letting $him fill until $his belly is noticeably distended compared to $his thin frame. Once you feel $he has had enough, you pull the hose from $his gut, spraying $his face with food in the process, and tell $him it will go right back in if $he doesn't keep it all down. $He @@.gold;nods fearfully,@@ anything to not go through that again. $He hobbles away once freed, one hand covering $his retching mouth and the other clasping $his @@.mediumorchid;hated, food bloated middle.@@
+		<</replace>>
+		<<set $activeSlave.devotion -= 10>>
+		<<set $activeSlave.trust -= 10>>
+	<</link>>
+<</if>>
+
+
+<<if ($activeSlave.pregKnown == 1) && ($seeExtreme == 1)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Threaten $his pregnancy">>
+		<<replace "#introResult">>
+			You place an innocuous-looking drug injector on your desk, and let $him <<if !canSee($activeSlave)>>blindly <</if>>stare at it for a long moment. Then, you roll the cylinder slowly across the smooth surface, rotating it until its label comes into <<if canSee($activeSlave)>>$his<<else>>your<</if>> view. It depicts the silhouette of a pregnant woman, with a red "X" over it. Abortifacients. After an <<if !canSee($activeSlave)>>short period<<else>>instant<</if>> of horrified comprehension, $he flings $himself at your feet, crying, begging, promising. $He pledges to @@.hotpink;submit to you,@@ <<if $PC.dick != 0>><<if $PC.vagina != -1>>eat you out, <</if>>suck your cock, take it in $his pussy, take it up $his ass<<else>>eat you out, worship you with $his pussy, serve you with $his ass<</if>>, anything, as long as @@.gold;you don't hurt $his baby.@@ You observe that $he'll do all of those things, regardless of what you decide to do about $his pregnancy, but for now, you'll keep $him as a pregnant slut. $He thanks you through $his tears.
+		<</replace>>
+		<<set $activeSlave.devotion += 10>>
+		<<set $activeSlave.trust -= 10>>
+	<</link>>
+<</if>>
+
+
+<<if ($arcologies[0].FSRestart >= 10) && ($activeSlave.preg != -3) && ($activeSlave.ovaries > 0) && ($activeSlave.indentureRestrictions <= 0) && ($seeExtreme == 1)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Sterilize $him">>
+		<<replace "#introResult">>
+			You drag $him to the remote surgery and strap $him face-up with $his<<if $activeSlave.bellyPreg >= 1500>> pregnant<</if>> stomach bare. $He doesn't understand what's coming for a while, even as $his belly is carefully cleaned and disinfected. $He begins to panic at the <<if canSee($activeSlave)>>sight<<elseif canHear($activeSlave)>>sound<<else>>touch<</if>> of the approaching surgical manipulators, cringing as they cut into $his<<if $activeSlave.bellyPreg >= 1500>> rounded<</if>> abdomen. $He squeals in horror as $his<<if $activeSlave.preg > $activeSlave.pregData.normalBirth/1.33>> swollen womb, still moving with life,<<elseif $activeSlave.bellyPreg >= 1500>> pregnant womb<<else>> womb<</if>> and ovaries are extracted<<if canSee($activeSlave)>> before $his eyes<</if>>.
+			<<if $activeSlave.fetish == "pregnancy" && $activeSlave.pregKnown == 1>>
+				<<if ($activeSlave.preg > $activeSlave.pregData.normalBirth/1.6) && (canSee($activeSlave))>>
+					$He watches $his exposed womb with absolute terror in $his eyes. A small handprint bulges against the organ; $he sobs once before $his mind @@.red;shatters at the sight.@@
+					<<set $activeSlave.fetish = "mindbroken", $activeSlave.fetishKnown = 1, $activeSlave.behavioralQuirk == "none", $activeSlave.behavioralFlaw == "none", $activeSlave.sexualQuirk == "none", $activeSlave.sexualFlaw == "none">>
+				<<else>>
+					$He will never carry another child, and @@.mediumorchid;deeply hates you@@ for snuffing out its life. Your absolute power over $his body is rightfully @@.gold;terrifying.@@
+					<<set $activeSlave.trust = -100, $activeSlave.devotion = -100>>
+				<</if>>
+			<<else>>
+				$He will never<<if $activeSlave.counter.birthsTotal > 0>> again<</if>> bear children, and will @@.mediumorchid;remember $his status@@ with every fucking $he receives. Your absolute power over $his body is rightfully @@.gold;terrifying.@@
+				<<set $activeSlave.trust -= 20, $activeSlave.devotion -= 50>>
+			<</if>>
+			Society @@.green;approves@@ of your promptly rendering $him sterile; this advances the idea that only the elite should breed.
+			<<= FutureSocieties.Change("Eugenics", 1)>>
+			<<if $activeSlave.pregKnown == 1>>
+				Since you snuffed out an unworthy life in the process, the sterilization has an even @@.green;bigger impact.@@
+				<<= FutureSocieties.Change("Eugenics", 2)>>
+			<</if>>
+		<</replace>>
+		<<set TerminatePregnancy($activeSlave)>>
+		<<set $activeSlave.preg = -3>>
+		<<set $activeSlave.ovaries = 0>>
+		<<run surgeryDamage($activeSlave, 10)>>
+	<</link>>
+<</if>>
+
+<<if $activeSlave.balls > 0 && $activeSlave.vasectomy == 0 && $activeSlave.indentureRestrictions <= 1>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Snip $his vas deferens">>
+		<<replace "#introResult">>
+			You drag $him to the remote surgery and strap $him
+			<<if $activeSlave.scrotum > 0>>
+				face-down with $his
+				<<if hasAnyLegs($activeSlave)>>
+					leg<<if hasBothLegs($activeSlave)>>s<</if>> spread.
+				<<else>>
+					testicles exposed.
+				<</if>>
+				$He doesn't understand what's coming for a while, even as $his
+				<<if $activeSlave.balls == 1>>
+					tiny balls
+				<<elseif $activeSlave.balls == 2>>
+					small balls
+				<<elseif $activeSlave.balls == 3>>
+					balls
+				<<elseif $activeSlave.balls == 4>>
+					big balls
+				<<elseif $activeSlave.balls == 5>>
+					lemon-sized balls
+				<<elseif $activeSlave.balls < 10>>
+					fist-sized balls
+				<<else>>
+					hypertrophied balls
+				<</if>>
+				are carefully cleaned and disinfected. $He can't see the approaching surgical manipulators, <<if !canSee($activeSlave)>>of course, <</if>>but eventually $he feels a small tugging on the sides of $his scrotum even through the local anesthetic.
+			<<else>>
+				You drag $him to the remote surgery and strap $him face-up on the operating table. $He doesn't understand what's coming for a while, even as $his crotch and lower stomach are carefully cleaned and disinfected.
+				<<if !canSee($activeSlave)>>
+					$He can't see the approaching surgical manipulators, of course, but eventually $he feels a small pinch to either side of $his pubic mound even through the local anesthetic.
+				<<else>>
+					$He freezes at the sight of the surgical manipulators and squirms slightly as they slip into the sides of $his pubic mound.
+				<</if>>
+			<</if>>
+			$He gets one squeal of protest out before the surgery begins to apply healing agents. $He knows something was done to $his testicles and will @@.mediumorchid;remember this act@@ with every load $he shoots. $He @@.gold;can only imagine@@ what other modifications you may have planned for $him.
+		<</replace>>
+		<<set $activeSlave.vasectomy = 1>>
+		<<set $activeSlave.devotion -= 5>>
+		<<run surgeryDamage($activeSlave, 10)>>
+		<<set $activeSlave.trust -= 5>>
+	<</link>>
+<</if>>
+
+<<if ($activeSlave.balls > 0) && ($activeSlave.attrXY < 65) && ($seeExtreme == 1)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Threaten $his balls">>
+		<<replace "#introResult">>
+			You ask $him how $he feels about taking cock up $his ass. A look of revulsion and fear crosses $his face, and $he backs away from you slightly, unconsciously protecting $his bottom. Before $he can muster any kind of response, you tell $him that you suspected as much, and that $he has balls. $He looks confused at the apparently unrelated remarks until you explain that in your arcology, balls are a privilege. If $he won't be a good little bitch, you'll take them away and turn $him into a bitch anyway. Only good <<= $girl>>s get to keep their hard-ons, and if $he isn't a good $girl, you'll make $him a good little $girl with a bouncing little bitchclit. $He begins to cry, @@.gold;sobbing and sobbing@@ as $he promises to @@.hotpink;be a good $girl.@@
+		<</replace>>
+		<<set $activeSlave.devotion += 10>>
+		<<set $activeSlave.trust -= 10>>
+	<</link>>
+<</if>>
+
+
+<<if ($activeSlave.indentureRestrictions <= 0) && ($seeExtreme == 1)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<if $activeSlave.balls > 0>>
+		<<link "Geld $him">>
+			<<replace "#introResult">>
+				You drag $him to the remote surgery and strap $him face-down with $his legs spread. $He doesn't understand what's happening, since the anesthetics totally deprive $him of any sensation. $He's so drugged and drowsy with @@.red;surgical recovery@@ that it takes a while for $him to figure out what's happened. When $he does, $his poor mind scarcely processes the @@.gold;horror@@ of what's happened. $He numbly carries on, terrified.
+				<<if $arcologies[0].FSGenderRadicalist != "unset">>
+					Society @@.green;approves@@ of your promptly gelding $him; this advances the idea that all societal inferiors can be made female.
+					<<= FutureSocieties.Change("GenderRadicalist", 2)>>
+				<</if>>
+				<<if $arcologies[0].FSRestart != "unset" && $activeSlave.pubertyXY == 1>>
+					Society @@.green;approves@@ of your promptly gelding $him; this advances the idea that all only the elite should breed.
+					<<= FutureSocieties.Change("Eugenics", 2)>>
+				<</if>>
+			<</replace>>
+			<<set $activeSlave.balls = 0, $activeSlave.scrotum = 0>>
+			<<run surgeryDamage($activeSlave, 10)>>
+			<<set $activeSlave.trust -= 50>>
+		<</link>> |
+	<</if>>
+	<<link "Remove $his genitalia">>
+		<<replace "#introResult">>
+			You drag $him to the remote surgery and strap $him face-down with $his legs spread. $He doesn't understand what's happening, since the anesthetics totally deprive $him of any sensation. $He's so drugged and drowsy with @@.red;surgical recovery@@ that it takes a while for $him to figure out what's happened. Eventually, though, $he realizes that $he's been reduced to the status of a genital null: the only remaining feature of $his newly smooth groin is a tiny soft hole, $his urethra.
+			<<if $activeSlave.scrotum > 0>>$He retains $his ballsack beneath this, though of course you can always remove that later if you decide to geld $him, too.<</if>>
+			$He almost passes out from @@.gold;sheer horror.@@ Instead, $he collapses and tries desperately to vomit. Fortunately, $he doesn't have anything to bring up. $He's reduced to impotent weeping and retching as $he begins to process the stress of having had $his parts cut off.
+			<<if $arcologies[0].FSRestart != "unset">>
+				Society @@.green;approves@@ of you stripping away everything from society's inferiors.
+				<<= FutureSocieties.Change("Eugenics", 3)>>
+			<</if>>
+		<</replace>>
+		<<set $activeSlave.chastityPenis = 0, $activeSlave.chastityVagina = 0, $activeSlave.dick = 0, $activeSlave.foreskin = 0, $activeSlave.ovaries = 0, $activeSlave.preg = -2, TerminatePregnancy($activeSlave), $activeSlave.vagina = -1, $activeSlave.skill.vaginal = 0>>
+		<<run surgeryDamage($activeSlave, 10)>>
+		<<set $activeSlave.trust = Math.clamp($activeSlave.trust-100, -100, 100)>>
+	<</link>>
+<</if>>
+
+
+<<if hasAnyNaturalLegs($activeSlave) && ($activeSlave.indentureRestrictions <= 0) && ($seeExtreme == 1)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Clip $his Achilles tendons">>
+		<<replace "#introResult">>
+			You drag $him to the remote surgery and strap $him face-down with $his legs bare. $He doesn't understand what's coming for a while, even as $his lower legs are carefully cleaned and disinfected. $He can't see the approaching surgical manipulators, <<if !canSee($activeSlave)>>of course, <</if>>but eventually $he feels a tugging at $his lower legs even through the local anesthetic. $He gets one squeal of protest out before the surgery begins to apply healing agents. $He now requires special heels to walk, and will @@.mediumorchid;remember $his status@@ with every @@.red;painful@@ step $he takes. $He's barefoot, crawling, and @@.gold;frightened@@ for now, until you decide to give $him heels — if you ever do.
+		<</replace>>
+		<<set $activeSlave.heels = 1>>
+		<<set $activeSlave.devotion -= 5>>
+		<<run surgeryDamage($activeSlave, 10)>>
+		<<set $activeSlave.trust -= 20>>
+	<</link>>
+<</if>>
+
+<<if $activeSlave.lactation != 2 && $activeSlave.indentureRestrictions <= 0>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Implant $him with slow release lactation drugs">>
+		<<replace "#introResult">>
+			You <<if $activeSlave.devotion > 20>> guide the compliant $desc <<else>>have the $desc restrained and brought<</if>> to the remote surgery. The procedure is quick and @@.red;minimally invasive@@<<run surgeryDamage($activeSlave, 10)>>. Once the process is complete and the anesthesia subsides $he begins to feel a rising pressure within $his <<if $activeSlave.boobs > 2000 >>gigantic udders<<elseif $activeSlave.boobs > 900>>plentiful bosom<<elseif $activeSlave.boobs > 400>>healthy breasts<<else>>small breasts<</if>>. You then <<if $activeSlave.devotion > 20>>instruct $him to rest<<else>>have $him restrained<</if>> beside your desk until further notice. After a few hours $his increasing discomfort becomes obvious, and white droplets begin to appear across $his nipples and areola.
+			<<if $activeSlave.devotion > 20>>
+				<<if $activeSlave.fetish == "boobs">>
+					<<if $activeSlave.fetishKnown == 0>>
+						<<if $servantMilkers == 1>>
+							You escort $him to one of the many milkers installed in the penthouse and instruct $him in its use. The combined sensations of nipple stimulation and relief visibly overwhelm $him, and the resulting series of orgasms leaves $him exhausted.
+							@@.green;$He's a breast fetishist!@@
+							<<set $activeSlave.fetishKnown = 1>>
+						<<else>>
+							You kneel behind $him and begin to gently massage $his swollen breasts. A steady stream of milk begins to erupt from each nipple, and the intense sensation of relief and stimulation overwhelms $him. It doesn't take long for $him to reach the first of a series of orgasms, leaving $him exhausted.
+							@@.green;$He's a breast fetishist!@@
+							<<set $activeSlave.fetishKnown = 1>>
+						<</if>>
+					<<else>>
+						<<if $servantMilkers == 1>>
+							You escort $him to one of the many milkers installed in the penthouse and instruct $him in its use. $His breast fetish makes the experience comparable to sex for &him, and the resulting series of orgasms leaves $him exhausted.
+						<<else>>
+							You kneel behind $him and begin to gently massage $his swollen breasts. A steady stream of milk begins to erupt from each nipple. $His breast fetish makes the experience comparable to sex for $him, and the resulting series of orgasms leaves $him exhausted.
+						<</if>>
+					<</if>>
+					After allowing $him to rest for a bit you instruct $him to report for $his first assignment. As $he leaves your office $he can already feel the pressure returning to $his chest. @@.hotpink;As far as $he's concerned $his next milking can't come soon enough.@@
+					<<set $activeSlave.devotion += 5>>
+				<<else>>
+					<<if $servantMilkers == 1>>
+						You escort $him to one of the many milkers installed in the penthouse and instruct $him in its use. The sensation of relief is pleasant for $him, and $he moans softly as $his breasts drain into the apparatus.
+					<<else>>
+						You kneel behind $him and begin to gently massage $his swollen breasts. A steady stream of milk begins to erupt from each nipple, and the sensation of relief is pleasant for $him. $He moans softly as you proceed to drain $his swollen breasts.
+					<</if>>
+					Once drained, you instruct $him to report for $his first assignment. As $he leaves your office $he can already feel the pressure returning to $his chest. $He appreciates that $his next milking will be a nice break from $his regular duties. @@.hotpink;It doesn't hurt that these breaks are both profitable for you, and pleasurable for $him.@@
+					<<set $activeSlave.devotion += 4>>
+				<</if>>
+			<<else>>
+				<<if $activeSlave.fetish == "boobs">>
+					<<if $activeSlave.fetishKnown == 0>>
+						<<if $servantMilkers == 1>>
+							You escort $him to one of the many milkers installed in the penthouse and attach $him to the device, leaving $his restraints in place. $He is still struggling when you activate the device, and the sudden sensation of relief catches $him off guard. A primal moan erupts from the bottom of $his throat, and it's obvious to both of you that $he's enjoying this in spite of $himself. $He spends the rest of $his milking trying and failing to hide the obvious pleasure $he's deriving from $his predicament.
+							@@.green;$He's a breast fetishist!@@
+							<<set $activeSlave.fetishKnown = 1>>
+						<<else>>
+							You kneel behind $him and begin to gently massage $his swollen breasts. A steady stream of milk begins to erupt from each nipple. The sensation overwhelms $him almost immediately, and $his arms struggle against $his restraints as $he fights an impending orgasm. It's an amusing sight that goes on until $he is fully drained.
+							@@.green;$He's a breast fetishist!@@
+							<<set $activeSlave.fetishKnown = 1>>
+						<</if>>
+					<<else>>
+						<<if $servantMilkers == 1>>
+							You escort $him to one of the many milkers installed in the penthouse and attach $him to the device, leaving $his restraints in place. $His breast fetish soon overcomes $his obvious disdain for $his situation, and $he spends the milking red in the face, fighting an obviously impending orgasm.
+						<<else>>
+							You kneel behind $him and begin to gently massage $his swollen breasts. A steady stream of milk begins to erupt from each nipple. With a sharp intake of breath $he begins to squirm, and $his breast fetish soon has $him moaning and writhing as $he fights an intense orgasm with tears of shame rolling down $his flushed cheeks.
+						<</if>>
+					<</if>>
+					As you summon <<if $HeadGirl != 0>>your Head Girl<<else>>another slave<</if>> to escort the $girl to $his first assignment, $he slumps dejectedly in $his restraints. $He is torn between the knowledge that $he is little more than livestock to you, and the disturbing realization that @@.hotpink;$he might enjoy $his new life as a human cow.@@
+					<<set $activeSlave.devotion += 4>>
+				<<else>>
+					<<if $servantMilkers == 1>>
+						You escort $him to one of the many milkers installed in the penthouse and attach $him to the device. $He struggles against $his restraints as you activate the device, drawing a brief pause and a look of confusion as $his breasts begin to drain. This only lasts a moment before $he returns to $his futile struggle, but $his milking continues regardless.
+					<<else>>
+						You kneel behind $him and begin to gently massage $his swollen breasts. A steady stream of milk begins to erupt from each nipple as a look of confusion washes over $his features. $He then closes $his eyes tight and does $his best to ignore what's happening in a futile attempt to deny $his new reality, but you continue $his milking until $he is drained.
+					<</if>>
+					As you summon <<if $HeadGirl != 0>>your Head Girl<<else>>another slave<</if>> to escort the $girl to $his first assignment $he glares at you with disgust. $His resentment at the new burden you've saddled $him with is evident, and the regular milkings $he'll require will serve to remind $him of the @@.gold;disturbing fact that $he is little more than livestock to you.@@
+					<<set $activeSlave.devotion -= 4>>
+				<</if>>
+			<</if>>
+		<</replace>>
+		<<set $activeSlave.lactation = 2>>
+	<</link>>
+<</if>>
+
+<br>
+
+
+//...or show $him what it's like here for a slave//
+
+<<if $activeSlave.fetish != "mindbroken">>
+	/*
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Teach $him how to use $his throat">> TODO: write this <</link>>
+	*/
+
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Inseminate $him">>
+		<<replace "#introResult">>
+			You <<if ($activeSlave.devotion > 20) || ($activeSlave.trust < -20)>>lay the obedient $desc across your desk<<else>>force the resistant $desc to lie atop your desk<</if>> and gently <<if $PC.dick != 0>>slide your hard cock<<else>>push a special strap-on<</if>> <<if $activeSlave.vagina >= 0>>inside $his womanhood<<else>>up $his butt<</if>>. You take $him with care, enjoying $his body <<if ($activeSlave.devotion > 20) || ($activeSlave.trust < -20)>>and doing your best to give $him pleasure, too<<else>>without hurting $him<</if>>. <<if $PC.dick != 0>>You empty your balls inside $him, thrusting in as far as you can go<<else>>The strap-on contains a reservoir of faux ejaculate, and you give it to $him<</if>> as you climax. When $he feels the hot liquid jet into $him,
+			<<if $activeSlave.devotion > 20>>
+				<<if $activeSlave.fetish == "pregnancy">>
+					<<if $activeSlave.fetishKnown == 0>>
+						$he gasps with unaccustomed pleasure, and climaxes so strongly that $he cries a little from the pain in $his flexing abs. @@.green;$He's an impregnation fetishist!@@
+						<<set $activeSlave.fetishKnown = 1>>
+					<<else>>
+						$he climaxes, $his impregnation fetish displayed cutely on $his face.
+					<</if>>
+					As you let $him go, $he feels <<if $PC.dick != 0>>your<<else>>the fake<</if>> cum dripping out of $him, and $he @@.hotpink;feels like your property.@@
+					<<set $activeSlave.devotion += 5>>
+				<<else>>
+					$he gasps and does $his best to relax, accepting the flow. <<if $activeSlave.fetishKnown == 0>>It seems $he<<else>>$He<</if>> isn't an impregnation fetishist, but $he is @@.hotpink;willing to submit@@ to have $his body used as your receptacle.
+					<<set $activeSlave.devotion += 4>>
+				<</if>>
+			<<else>>
+				<<if $activeSlave.fetish == "pregnancy">>
+					<<if $activeSlave.fetishKnown == 0>>
+						$he shudders with a sensation of perverted pleasure, and climaxes despite all $his feelings about the situation. @@.green;$He's an impregnation fetishist!@@
+						<<set $activeSlave.fetishKnown = 1>>
+					<<else>>
+						$he climaxes, $his impregnation fetish forcing $him to feel pleasure $his mind would prefer to reject.
+					<</if>>
+					As you let $him go, $he cries openly, <<if $PC.dick != 0>>your<<else>>the fake<</if>> cum dripping out of $him, and $he @@.hotpink;feels like your property.@@
+					<<set $activeSlave.devotion += 4>>
+				<<else>>
+					$he groans and struggles a little, disgusted to be filled by your fluids so immediately. <<if $activeSlave.fetishKnown == 0>>It seems $he<<else>>$He<</if>> isn't an impregnation fetishist, and is @@.gold;afraid@@ that $he'll be treated as nothing more than your receptacle.
+					<<set $activeSlave.trust -= 4>>
+				<</if>>
+			<</if>>
+			<<= VCheck.Simple()>>
+		<</replace>>
+	<</link>>
+<</if>>
+
+<<if $seePreg != 0>>
+	<<if isFertile($activeSlave) && $activeSlave.womb.length == 0 && $PC.dick != 0 && $activeSlave.eggType == "human">>
+		| <<link "Impregnate $him">>
+			<<replace "#introResult">>
+			You perform a careful medical examination to verify fertility, and then <<if ($activeSlave.devotion > 20) || ($activeSlave.trust < -20)>>lay the obedient $desc across your desk<<else>>restrain the resistant $desc in your office with $his ass in the air<</if>> and gently slide your hard cock <<if $activeSlave.mpreg == 1>>up $his butt<<else>>inside $his womanhood<</if>>. You take $him with care, enjoying $his body <<if ($activeSlave.devotion > 20) || ($activeSlave.trust < -20)>>and doing your best to give $him pleasure, too<<else>>without hurting $him<</if>>. You empty your balls inside $him, thrusting in as far as you can go as you climax. When $he feels the hot liquid jet into $him,
+			<<if $activeSlave.devotion > 20>>
+				<<if $activeSlave.fetish == "pregnancy">>
+					<<if $activeSlave.fetishKnown == 0>>
+						$he gasps with unaccustomed pleasure, and climaxes so strongly that $he cries a little from the pain in $his flexing abs. @@.green;$He's an impregnation fetishist!@@
+						<<set $activeSlave.fetishKnown = 1>>
+					<<else>>
+						$he climaxes, $his impregnation fetish displayed cutely on $his face.
+					<</if>>
+					As you let $him go, $he feels your cum dripping out of $him, and $he @@.hotpink;feels like your property.@@
+					<<set $activeSlave.devotion += 5>>
+				<<else>>
+					$he gasps and does $his best to relax, accepting the flow. <<if $activeSlave.fetishKnown == 0>>It seems $he<<else>>$He<</if>> isn't an impregnation fetishist, but $he is @@.hotpink;willing to submit@@ to have $his body used as your receptacle.
+					<<set $activeSlave.devotion += 4>>
+				<</if>>
+			<<else>>
+				<<if $activeSlave.fetish == "pregnancy">>
+					<<if $activeSlave.fetishKnown == 0>>
+						$he shudders with a sensation of perverted pleasure, and climaxes despite all $his feelings about the situation. @@.green;$He's an impregnation fetishist!@@
+						<<set $activeSlave.fetishKnown = 1>>
+					<<else>>
+						$he climaxes, $his impregnation fetish forcing $him to feel pleasure $his mind would prefer to reject.
+					<</if>>
+					As you let $him go, $he cries openly, your cum dripping out of $him, and $he @@.hotpink;feels like your property.@@
+					<<set $activeSlave.devotion += 4>>
+				<<else>>
+					$he groans and struggles a little, disgusted to be filled by your fluids so immediately. <<if $activeSlave.fetishKnown == 0>>It seems $he<<else>>$He<</if>> isn't an impregnation fetishist, and is @@.gold;afraid@@ that $he'll be treated as nothing more than your receptacle.
+					<<set $activeSlave.trust -= 4>>
+				<</if>>
+			<</if>>
+			<br><br>
+			Whenever you feel able, you drain your balls into $his <<if $activeSlave.mpreg == 1>>ass<<else>>cunt<</if>>, only releasing $him for other duties when scans verify a fertilized ovum.
+			<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant < -50>>
+				$He didn't properly understand the scans, so $he just thought it was bound, forced sex; $he won't realize what happened for some weeks at least.
+			<<elseif $activeSlave.fetish == "pregnancy">>
+				$He is thrilled to imagine $he might be pregnant.
+			<<else>>
+				$He wasn't sure what this was all about, but $he has $his suspicions.
+			<</if>>
+			<<if $activeSlave.mpreg == 1>>
+				<<= VCheck.Anal()>>
+			<<else>>
+				<<= VCheck.Vaginal()>>
+			<</if>>
+			<<if $arcologies[0].FSRestart != "unset" && $eugenicsFullControl != 1>>
+				The Societal Elite @@.green;disapprove@@ of this breach of eugenics.
+				<<set $failedElite += 5>>
+			<<elseif $arcologies[0].FSGenderFundamentalist != "unset" && $activeSlave.mpreg == 0>>
+				Society @@.green;approves@@ of your promptly putting a new slave in $him; this advances the idea that all slaves should bear their masters' babies.
+				<<= FutureSocieties.Change("GenderFundamentalist", 2)>>
+			<<elseif $arcologies[0].FSGenderFundamentalist != "unset">>
+				Society @@.red;is disgusted@@ by you promptly knocking up $his ass; babies come from women, not men.
+				<<= FutureSocieties.Change("GenderFundamentalist", -2)>>
+			<</if>>
+			<</replace>>
+			<<set $activeSlave.preg = 1>>
+			<<set $activeSlave.pregType = setPregType($activeSlave)>>
+			<<set $activeSlave.pregWeek = 1>>
+			<<set $activeSlave.pregKnown = 1>>
+			<<set $activeSlave.pregSource = -1>>
+			<<set WombImpregnate($activeSlave, $activeSlave.pregType, -1, 1)>>
+		<</link>>
+	<</if>>
+<</if>>
+
+<<if ($activeSlave.vagina == 0)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Tie $him up and take $his virginity">>
+		<<replace "#introResult">>
+			<<if ($activeSlave.devotion < -10)>>
+				<<if isAmputee($activeSlave)>>
+					You secure $his struggling, screeching body to the couch next to your desk with $his vagina exposed.
+				<<else>>
+					You cuff $his <<if hasAnyArms($activeSlave)>>wrist<<if hasBothArms($activeSlave)>>s<</if>><<if hasAnyLegs($activeSlave)>> and <</if>><</if>><<if hasAnyLegs($activeSlave)>>ankle<<if hasBothLegs($activeSlave)>>s<</if>><</if>> and secure $his struggling, screeching body to the couch next to your desk with $his legs spread.
+				<</if>>
+				$He wriggles and protests as you take $his virginity. $He's certainly entered your service in a way that colors $his impression of you @@.mediumorchid;with hatred@@ and @@.gold;fear.@@ @@.lime;$His tight little pussy has been broken in.@@
+				<<set $activeSlave.devotion -= 5>>
+			<<else>>
+				<<if isAmputee($activeSlave)>>
+					You secure $his unresisting body to the couch next to your desk with $his vagina exposed.
+				<<else>>
+					You cuff $his <<if hasAnyArms($activeSlave)>>wrist<<if hasBothArms($activeSlave)>>s<</if>><<if hasAnyLegs($activeSlave)>> and <</if>><</if>><<if hasAnyLegs($activeSlave)>>ankle<<if hasBothLegs($activeSlave)>>s<</if>><</if>> and secure $his unresisting body to the couch next to your desk with $his legs spread.
+				<</if>>
+				$He writhes and moans as you enter $his virgin pussy. You might not have even had to restrain $him for this, but being tied up and deflowered sends $him a message. $He's certainly entered your service in a way that colors $his impression of you @@.hotpink;with pain@@ and @@.gold;fear.@@ @@.lime;$His tight little pussy has been broken in.@@
+				<<set $activeSlave.devotion += 5>>
+			<</if>>
+			<<= VCheck.Vaginal()>>
+		<</replace>>
+	<</link>>
+<</if>>
+
+
+<<if ($activeSlave.devotion < -10) && ($activeSlave.anus == 0)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Tie $him up and rape $his virgin ass">>
+		<<replace "#introResult">>
+			<<if isAmputee($activeSlave)>>
+				You secure $his struggling, screeching body to the couch next to your desk with $his butt sticking out.
+			<<else>>
+				You cuff $his <<if hasAnyArms($activeSlave)>>wrist<<if hasBothArms($activeSlave)>>s<</if>><<if hasAnyLegs($activeSlave)>> and <</if>><</if>><<if hasAnyLegs($activeSlave)>>ankle<<if hasBothLegs($activeSlave)>>s<</if>><</if>> and secure $his struggling, screeching body to the couch next to your desk so that $he's straddling the back of the couch with $his butt sticking out.
+			<</if>>
+			$He wriggles and protests until $he feels the lubricated head of <<if $PC.dick != 0>>your dick<<else>>a strap-on<</if>> pushing against $his virgin butthole, at which point $he desperately tries to break free. $He fails, but $he never stops writhing and begging you to take <<if $PC.dick != 0>>your cock<<else>>the phallus<</if>> out of $his asshole. $He's certainly entered your service in a way that colors $his impression of you @@.mediumorchid;with hatred@@ and @@.gold;fear.@@ @@.lime;$His tight little ass has been broken in.@@
+		<</replace>>
+		<<set $activeSlave.devotion -= 5>>
+		<<set $activeSlave.trust -= 10>>
+		<<set $activeSlave.anus = 1>>
+		<<= VCheck.Anal()>>
+	<</link>>
+<<elseif ($activeSlave.anus == 0)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Tie $him up and break $his ass in">>
+		<<replace "#introResult">>
+			<<if isAmputee($activeSlave)>>
+				You secure $his unresisting body to the couch next to your desk with $his butt sticking out.
+			<<else>>
+				You cuff $his <<if hasAnyArms($activeSlave)>>wrist<<if hasBothArms($activeSlave)>>s<</if>><<if hasAnyLegs($activeSlave)>> and <</if>><</if>><<if hasAnyLegs($activeSlave)>>ankle<<if hasBothLegs($activeSlave)>>s<</if>><</if>> and secure $his unresisting body to the couch next to your desk so that $he's straddling the back of the couch with $his butt sticking out.
+			<</if>>
+			$He lies obediently still until $he feels the lubricated head of your cock pushing against $his virgin butthole, at which point $he starts in surprise. When the pain of the buttfuck gets to be too much $he begs you to use $his <<if $activeSlave.dick == 0>>pussy<<else>>mouth<</if>> instead. $He gasps and cries as you slowly push your cock all the way up $his tight little butt, and in no time you fill $his rectum with cum. $He's certainly entered your service in a way that colors $his impression of you @@.mediumorchid;with pain@@ and @@.gold;fear.@@ @@.lime;$His tight little ass has been broken in.@@
+		<</replace>>
+		<<set $activeSlave.devotion -= 5>>
+		<<set $activeSlave.trust -= 10>>
+		<<set $activeSlave.anus = 1>>
+		<<= VCheck.Anal()>>
+	<</link>>
+<</if>>
+
+
+<<if $activeSlave.fetish != "mindbroken">>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+<<link "Break $him in publicly">>
+	<<replace "#introResult">>
+		You <<if ($activeSlave.devotion > 20) || ($activeSlave.trust < -20)>>order the obedient slave to follow you<<else>>bring the resistant slave<</if>> out into the public areas below your penthouse, shove the nude $desc over a convenient handrail, and stick <<if $PC.dick != 0>>your dick<<else>>a strap-on<</if>>
+		<<if $activeSlave.vagina >= 0>>
+			<<if $activeSlave.vagina >= 3>>
+				inside $his gaping cunt, which is loose enough that the rough treatment doesn't bother $him physically.
+			<<elseif $activeSlave.vagina >= 2>>
+				inside $his accommodating pussy, which is welcoming enough that the rough insertion doesn't hurt $him physically.
+			<<else>>
+				inside $his tight little pussy, making the poor $girl writhe with discomfort.
+			<</if>>
+		<<else>>
+			<<if $activeSlave.anus >= 3>>
+				inside $his lewd anal slit, which is so used to being fucked that the rough treatment doesn't bother $him physically.
+			<<elseif $activeSlave.anus >= 2>>
+				up $his welcoming butt, which is loose enough that the rough insertion doesn't hurt $him physically.
+			<<else>>
+				up $his poor little butthole, making the poor $girl struggle desperately with anal pain.
+			<</if>>
+		<</if>>
+		You take $him, hard, while passersby stare at $him as $he gets pounded over a rail.
+		<<if $activeSlave.devotion > 20>>
+			<<if $activeSlave.fetish == "humiliation">>
+				<<if $activeSlave.fetishKnown == 0>>
+					$He struggles under the stares, blushing furiously as $he takes a fuck in the open. $He orgasms despite $himself; @@.green;$he's a humiliation fetishist!@@
+					<<set $activeSlave.fetishKnown = 1>>
+				<<else>>
+					As a humiliation fetishist, $he gets off on the stares, blushing cutely as $he takes a fuck in public.
+				<</if>>
+				$He follows you back inside your penthouse, leaking <<if $PC.dick != 0>>your cum<<else>>lube<</if>>, @@.hotpink;feeling like a slut.@@
+				<<set $activeSlave.devotion += 5>>
+			<<else>>
+				$He takes the fuck obediently, and does $his very best to ignore the stares. <<if $activeSlave.fetishKnown == 0>>It seems $he<<else>>$He<</if>> isn't a humiliation fetishist, but $he is @@.hotpink;willing to submit@@ to being used as a sex slave in public.
+				<<set $activeSlave.devotion += 4>>
+			<</if>>
+		<<else>>
+			<<if $activeSlave.fetish == "humiliation">>
+				<<if $activeSlave.fetishKnown == 0>>
+					$His struggles slowly diminish as the stares have a horribly embarrassing effect on $him. $He orgasms and then starts to cry, realizing what just happened; @@.green;$he's a humiliation fetishist!@@
+					<<set $activeSlave.fetishKnown = 1>>
+				<<else>>
+					As a humiliation fetishist, $he can't stop $himself from getting off on being fucked in public.
+				<</if>>
+				As you pull $him back towards your penthouse, $he leaks <<if $PC.dick != 0>>your cum<<else>>lube<</if>> and @@.hotpink;feels like a slut.@@
+				<<set $activeSlave.devotion += 4>>
+			<<else>>
+				$He takes the fuck unwillingly, crying and doing $his best to ignore the stares. <<if $activeSlave.fetishKnown == 0>>It seems $he<<else>>$He<</if>> isn't a humiliation fetishist, and is @@.gold;rapidly learning what it means@@ to be your sex slave.
+			<<set $activeSlave.trust -= 4>>
+			<</if>>
+		<</if>>
+		<<= VCheck.Simple()>>
+	<</replace>>
+<</link>>
+<</if>>
+
+
+<<if ($activeSlave.devotion > 20)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Give $him a chance to impress">>
+		<<replace "#introResult">>
+			<<set _num = random(1,100)>>
+			$He seems reasonably obedient, so you give $him a chance to impress. You remain seated and offer $him your <<if $PC.dick != 0>>half-erect cock<<if $PC.vagina != -1>> and ready pussy<</if>><<else>>pussy, wet with arousal at the prospect of breaking in a new slut<</if>>. $He comes over obediently and gets on $his knees. $He works hard and is clearly doing $his absolute best to please, so you let $him finish you with $his mouth. <<if $PC.dick != 0>><<if _num > 20>>$He looks up at you as $he swallows<<elseif _num > 40>>$He even swallows your cum without being told<<elseif _num > 60>>$He smiles sloppily as your seed slowly dribbles from $his mouth and down $his chin<<elseif _num > 80>>$He struggles to contain your seed and makes a mess all over $his face as a result<<else>>$He struggles to contain your seed with $his mouth and it splatters over the floor as a result<</if>><<else>>$He worked $his tongue hard and did $his best<</if>>. You spend the rest of the day with $him kneeling on a cushion next to your chair. $He learns obedience, but also learns that you are @@.mediumaquamarine;fair@@ and @@.hotpink;reasonable.@@
+		<</replace>>
+		<<set $activeSlave.devotion += 4>>
+		<<set $activeSlave.trust += 4>>
+		<<set $activeSlave.counter.oral += 1>>
+		<<set $oralTotal += 1>>
+	<</link>>
+<</if>>
+
+
+<<if $activeSlave.fetish != "mindbroken">>
+
+<<if $activeSlave.bellyPreg >= 5000>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Make sure $he knows pregnant $women can still enjoy sex">>
+		<<replace "#introResult">>
+			You introduce $him to obedience and proper manners regarding $his <<= WrittenMaster($activeSlave)>> before sending $him off for a physical. That night, $he's returned to your room, and finds you doing business on a tablet in bed. $He looks doubtful, but obeys when you direct $him to get into bed<<if $PC.dick == 0>>, even after $he realizes you're wearing a strap-on<</if>>. You turn out the light and spoon $him from behind, kissing $his neck and ears, cupping $his swollen breasts, and running your hands across $his pregnant belly with its taut $activeSlave.skin skin. $He's awkward at first but $his body responds to the tenderness. Before long $he's humping $his pussy back and forth against <<if $PC.dick != 0>>your cock<<else>>the strap-on<</if>>. You begin to gently work <<if $PC.dick != 0>>your dickhead<<else>>its tip<</if>> up $his used pussy. $He's unsure of $himself, but you keep $him nice and relaxed. After several minutes of gentle loving, $he's nothing but a satisfied puddle in your arms. $He believes that $he can @@.mediumaquamarine;trust@@ you won't harm $him or $his child<<if $activeSlave.pregType > 1>>ren<</if>>.
+		<</replace>>
+		<<set $activeSlave.trust += 5>>
+		<<= VCheck.Vaginal()>>
+		<<if $activeSlave.fetish == "none" && random(1,100) > 60>>
+			<<set $activeSlave.fetish = "pregnancy", $activeSlave.fetishStrength = 10>>
+		<</if>>
+	<</link>>
+<</if>>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+<<link "Tease $his nipples">>
+	<<replace "#introResult">>
+		You <<if ($activeSlave.devotion > 20) || ($activeSlave.trust < -20)>>instruct the obedient $desc<<else>>force the reluctant $desc<</if>> to lie atop your desk in front of you and go back to business. After a few minutes, you extend an idle hand and begin to fondle $his <<if $activeSlave.boobs > 2000>>massive tits<<elseif $activeSlave.boobs > 400>>healthy breasts<<else>>cute little boobs<</if>>, continuing your work with your other hand. You quickly focus your fiddling on $his $activeSlave.nipples nipples, the stimulation
+		<<if $activeSlave.nipples == "fuckable">>
+			<<if ($activeSlave.devotion > 20)>>quickly engorging them around your fingers<<else>>slowly engorging them around your fingers despite $his feelings<</if>>.
+		<<else>>
+			bringing them <<if ($activeSlave.devotion > 20)>>quickly erect<<else>>slowly erect despite $his feelings<</if>>.
+		<</if>>
+		<<if $activeSlave.devotion > 20>>
+			<<if $activeSlave.fetish == "boobs">>
+				<<if $activeSlave.fetishKnown == 0>>
+					The slave quickly becomes aroused. Before long, an orgasm convulses $his entire body, jiggling the feminine flesh under your hand delightfully. @@.green;$He's a breast fetishist!@@
+					<<set $activeSlave.fetishKnown = 1>>
+				<<else>>
+					$His breast fixation makes this teasing quite pleasurable for $him, almost as good as a handjob. Before long, an orgasm convulses $his entire body, jiggling the feminine flesh under your hand delightfully.
+				<</if>>
+				When you tell $him to go, $he carefully rolls off your desk in such a way that @@.hotpink;$his nipples graze your cheek.@@
+				<<set $activeSlave.devotion += 5>>
+			<<else>>
+				$He accepts being treated as a desktop stress relief toy. $He's no breast fetishist, but $he's @@.hotpink;willing to be used@@ as a sex object.
+				<<set $activeSlave.devotion += 4>>
+			<</if>>
+		<<else>>
+			<<if $activeSlave.fetish == "boobs">>
+				<<if $activeSlave.fetishKnown == 0>>
+					The slave slowly becomes aroused despite $his reluctance. Soon, $he can no longer hide $his horniness and begins to pant, openly enjoying the sensations. @@.green;$He's a breast fetishist!@@
+					<<set $activeSlave.fetishKnown = 1>>
+				<<else>>
+					The slave slowly becomes aroused despite $his reluctance. As a breast fetishist, playing with $his nipples is an excellent way to overcome $his petty resistance to being a sex object.
+				<</if>>
+				When you tell $him to go, $he gets off your desk gingerly, since $he's almost painfully aroused. @@.hotpink;$He feels like quite a slut@@ for wanting a fuck this badly after a little nipple play.
+				<<set $activeSlave.devotion += 4>>
+			<<else>>
+				$He expects something worse to happen immediately, and slowly relaxes when $he realizes that $he's nothing more than your desktop stress relief toy, at least for now. $He experiences the usual effects of nipple play, but seems @@.gold;somewhat frightened@@ to be dehumanized so thoroughly.
+				<<set $activeSlave.devotion -= 4>>
+			<</if>>
+		<</if>>
+	<</replace>>
+<</link>>
+
+<<if $PC.vagina != -1 && $activeSlave.dick > 0 && canAchieveErection($activeSlave)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Dominate $his penis and demonstrate $his place">>
+		<<replace "#introResult">>
+			As you inspect $him, you take note of $his fully functional <<if $activeSlave.dick == 1>>tiny dick<<elseif $activeSlave.dick == 2>>cute dick<<elseif $activeSlave.dick == 3>>dick<<elseif $activeSlave.dick == 4>>big dick<<elseif $activeSlave.dick == 5>>impressive dick<<elseif $activeSlave.dick == 6>>huge dick<</if>>. You roughly push $him up against a wall and begin fondling $his penis, grinning at the look of panic growing on $his face.
+			<<if $activeSlave.dick == 1>>
+				You scoff at $him as $his micropenis barely fills your palm.
+			<<elseif $activeSlave.dick == 2>>
+				You laugh at $him as $his small penis fills your palm.
+			<<elseif $activeSlave.dick == 3>>
+				You nod at $him as $his penis fills your hand.
+			<<elseif $activeSlave.dick == 4>>
+				You smirk at $him as $his big penis fills your hand.
+			<<elseif $activeSlave.dick == 5>>
+				You smile widely at $him, a dangerous look in your eyes, as you bring another hand to $his impressive dick.
+			<<elseif $activeSlave.dick == 6>>
+				You grin sadistically at $him as $his massive dick fills both of your hands.
+			<</if>>
+			As $he begins to moan with lust, you grip down tightly and force $him to the floor. You straddle $him and lower your dripping pussy onto $his face<<if $PC.dick != 0>>, your erect cock coming to rest on $his forehead<</if>>. You continue stroking your toy's rod as $he eagerly begins eating you out. As $his cock begins to throb, anticipating $his upcoming orgasm, you quickly bind the base of $his penis, denying $his release. You grind your cunt into $his face, telling $him that YOU are the one who'll be orgasming here, not $him. Only once you have initiated the new slave by soaking $his face in your cum do you release $his dick and lean back to avoid the coming blast. A few strokes later and your hand is coated in $his cum. You turn around and order the exhausted $girl to clean $his cum off your hand<<if $PC.dick != 0>> and to finish off $his twitching dick<</if>>; $he @@.hotpink;complies meekly,@@ knowing you are the @@.gold;dominant force@@ in $his life now.
+		<</replace>>
+		<<set $activeSlave.devotion += 5>>
+		<<set $activeSlave.trust -= 3>>
+	<</link>>
+<</if>>
+
+<<if $PC.belly >= 3000 && hasAnyArms($activeSlave)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Make $him worship your pregnancy">>
+		<<replace "#introResult">>
+			You aggressively approach $activeSlave.slaveName, forcing your pregnancy directly into $his <<if $activeSlave.height > 175>>stomach<<elseif $activeSlave.height < 155>>face<<else>>chest<</if>> until $he has no choice but to be pushed to the ground. Standing over $him, staring $him down as $he peeks around your firm globe of a middle, you order $him to worship your pregnancy.
+			<<if $activeSlave.fetish == "pregnancy">>
+				$He complies eagerly. $He begins with sucking your popped navel before running $his tongue across the taut, smooth surface of your pregnancy. Once $he has finished with your belly, $he lowers $himself under it to begin work on your needy pussy. Before long, $his overzealous efforts have you quaking in pleasure, rousing your child<<if $PC.pregType > 1>>ren<</if>>. Once $he finishes you off, $he returns to rubbing your belly, soothing your rowdy child<<if $PC.pregType > 1>>ren<</if>> and @@.hotpink;solidifying $his place@@ beneath you.
+				<<set $activeSlave.devotion += 15>>
+			<<else>>
+				$He shifts $his gaze between your middle and your face, not sure what to do. Losing patience, you toss a tube of cream at $him. $He shakily massages it onto your stretched skin, missing spots, much to your pleasure. With reason, you force $him onto $his back, turn around, and plant your needy cunt directly onto $his face. Struggling to breath under your weight, $he begins eating you out in desperation. After coaxing $him to massage your belly as $he does, you quickly climax across $his face and gently lift yourself off the coughing $girl. $He now @@.hotpink;understands $his place in life@@ and is @@.gold;terrified@@ about what $he will have to do if $he wants to survive.
+				<<set $activeSlave.devotion += 5>>
+				<<set $activeSlave.trust -= 5>>
+			<</if>>
+		<</replace>>
+	<</link>>
+	<<if $PC.preg >= 28>>
+		<<if $PC.pregMood == 2 && $PC.vagina > 0 && canPenetrate($activeSlave)>>
+			|
+			<<link "$He has a dick and you need it">>
+				<<replace "#introResult">>
+					You aggressively approach $activeSlave.slaveName, forcing your pregnancy directly into $his <<if $activeSlave.height > 175>>stomach<<elseif $activeSlave.height < 155>>face<<else>>chest<</if>> until $he has no choice but to be pushed to the ground. You quickly straddle $his face, forcing your oozing cunt over $his mouth as you eagerly stroke $his cock to full length.
+					<<if $activeSlave.fetish == "pregnancy">>
+						$He groans with disappointment as your pregnant pussy leaves $his reach, though $his displeasure is short lived as you greedily take $his entire dick into your aching snatch. You ride $him mercilessly, frequently smacking $him with your heavy belly. $He loves every minute of it, especially when $he feels your body tense up as $he lets loose $his load deep into you. Where most slaves would be begging for mercy, $he @@.hotpink;eagerly complies@@ as you adjust yourself and begin round two. You don't know what came over you, but when you wake up, you find $he's resting peacefully under your gravid mass. <<if $activeSlave.fetishKnown == 0>>It seems $he likes @@.green;being a pregnant _womanP's plaything.@@<<set $activeSlave.fetishKnown = 1>><<else>>You knew $he had a pregnancy fetish and the look on $his face confirms it.<</if>> A kick from within startles you from your thoughts; it would appear your child<<if $PC.pregType > 1>>ren<</if>> agree<<if $PC.pregType == 1>>s<</if>> that you'll have to have another ride sometime.
+						<<set $activeSlave.devotion += 15>>
+					<<else>>
+						$He coughs as your pregnant pussy vacates $his face, though $his relief is short lived as you greedily slam yourself down onto $his waiting dick. You ride $him mercilessly, frequently smacking $him with your heavy belly. $He hates every minute of it, choosing to alternate between begging you to stop and just openly weeping. You cum hard as you watch the look on $his face as $he unwillingly cums deep inside you. $He cries out in protest as you continue raping $him, but you don't care. All that matters is your satisfaction. This continues until you pass out from orgasmic exhaustion with $him still inside you. You are eventually awoken by $his desperate struggle to escape from beneath your gravid mass; $he quickly regrets $his choices as you remount $him for one last go. $He now @@.hotpink;better understands $his place as a toy@@ and is @@.gold;terrified@@ of your insatiable lust.
+						<<set $activeSlave.devotion += 5, $activeSlave.trust -= 15>>
+					<</if>>
+					<<set $activeSlave.counter.penetrative += 5, $penetrativeTotal += 5>>
+					<<set $activeSlave.counter.oral++, $oralTotal++>>
+				<</replace>>
+			<</link>>
+		<<elseif $PC.pregMood == 1 && $PC.lactation > 0>>
+			|
+			<<link "Take $him to your breast">>
+				<<replace "#introResult">>
+					You calmly approach $activeSlave.slaveName, pulling $him into a soothing embrace against your
+					<<if $PC.boobs >= 1400>>
+						enormous<<if $PC.boobsImplant > 0>>, fake<</if>>, milk laden breasts.
+					<<elseif $PC.boobs >= 1200>>
+						huge<<if $PC.boobsImplant > 0>>, fake<</if>>, milk laden breasts.
+					<<elseif $PC.boobs >= 1000>>
+						large<<if $PC.boobsImplant > 0>>, fake<</if>>, milk laden breasts.
+					<<elseif $PC.boobs >= 800>>
+						big, milk laden breasts.
+					<<elseif $PC.boobs >= 650>>
+						milk laden breasts.
+					<<elseif $PC.boobs >= 500>>
+						small, milk laden breasts.
+					<<elseif $PC.boobs >= 300>>
+						tiny, milk laden breasts.
+					<<else>>
+						milk swollen chest.
+					<</if>>
+					$He tries to squirm away from the moist spot growing under $his cheek, but you reveal your nipple and carefully direct $his mouth over it.
+					<<if $activeSlave.fetish == "pregnancy">>
+						Slowly $he begins to suckle from your swollen breast. You gently brush $his head as you try to hold back your pleasure — a wasted effort, as a hand sneaks its way to your <<if $PC.dick != 0>>growing erection and enthusiastically begins pumping away<<else>>wet pussy and enthusiastically begins rubbing your clit<</if>>. You clutch your pervy $girl closer to you as $he caresses your pregnancy with one hand and gets you off with the other. Before long you find yourself bucking your hips with lust, a queue for you to release $him from your nipple so $he may slide down your gravid dome of a belly to finish you off. Happy to serve $his pregnant <<= WrittenMaster($activeSlave)>>, $he returns to your chest, happy to relieve you of the pressure building in your neglected breast. <<if $activeSlave.fetishKnown == 0>>Judging by that show, @@.green;$he savors getting to be with a pregnant _womanP.@@<<set $activeSlave.fetishKnown = 1>><<else>>You knew $he had a pregnancy fetish and $his eagerness to serve a pregnant _womanP proves that.<</if>> A kick from within startles you from your thoughts; as you reach to soothe your child<<if $PC.pregType > 1>>ren<</if>>, you find your new slave @@.mediumaquamarine;already doting on them.@@ $He's already starting to @@.hotpink;show understanding of $his place.@@
+						<<set $activeSlave.devotion += 15, $activeSlave.trust += 15>>
+					<<elseif $activeSlave.fetish == "boobs">>
+						Eagerly $he begins to suckle from your swollen breast. You gently brush $his head as you try to hold back your pleasure — a wasted effort, as a hand sneaks its way to your neglected breast. $He massages it, careful not to encourage your lactation too much, as $he greedily sucks you dry. $He wastes no time in swapping to your other nipple, shifting $his ministrations to the one the just left. By the time your reserves are tapped out, both you and $he are quite content. You permit $him to rest against your chest for a little before you send $him on $his way. <<if $activeSlave.fetishKnown == 0>>Judging by $his enthusiasm, @@.green;$he savors getting $his mouth close to a pair of boobs.@@<<set $activeSlave.fetishKnown = 1>><<else>>You knew $he had a breast fetishist and $his eagerness to lighten a lactating _womanP proves that.<</if>> A kick from within startles you from your thoughts; you pat your gravid middle, reassuring your child<<if $PC.pregType > 1>>ren<</if>> that you'll make sure to save some milk for them. $He's already starting to @@.hotpink;show understanding of $his place@@ and even @@.mediumaquamarine;beginning to build trust@@ with you.
+						<<set $activeSlave.devotion += 15, $activeSlave.trust += 15>>
+					<<else>>
+						Reluctantly $he begins to suckle from your swollen breast. You gently brush $his head as you try to hold back your pleasure, but it is too much. As $he drinks deeper, you begin moaning with relief. At first $he tenses at <<if canHear($activeSlave)>>the sound<<else>>your body's shuddering<</if>>, fearing punishment, but soon realizes you have no intent on @@.mediumaquamarine;harming $him.@@ $He allows you to dote over $him as if $he were <<if $activeSlave.father == -1 || $activeSlave.mother == -1>>a<<else>>your<</if>> child, carefully moving to your other breast once the first runs dry. As $he drinks, $he begins to massage your taut middle, $his touch soft and gentle. When you both finish, you push $him <<if hasBothLegs($activeSlave)>>to $his feet<<else>>into an upright position<</if>> and send $him on $his way. @@.hotpink;$He stays and offers a hand to help you to your feet.@@ You are surprised by this display; it might be obedience, but $he also may view you in your gravid state as someone weak. As $he helps you back to your desk, $he shoulders all of your weight. It would appear $he is putting you first, for now.
+						<<set $activeSlave.devotion += 5, $activeSlave.trust += 5>>
+					<</if>>
+					<<set $PC.lactationDuration = 2>>
+				<</replace>>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.belly + $PC.belly <= 2000>> /* got to be able to get close without bumps getting in the way */
+	<<if $PC.boobs >= 800 && $activeSlave.boobs <= $PC.boobs-200 && $activeSlave.boobs >= 300>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<link "Let your ample bust dominate $his pathetic one">>
+			<<replace "#introResult">>
+				You quickly strip off your shirt and draw close to $activeSlave.slaveName. You grab $him as $he attempts to back away and pull $his tits directly into your own. Both sets of <<if canSee($activeSlave)>>eyes lock onto their pair of breasts<<else>>tits push out against each other<</if>>, or they would have, had yours not utterly eclipsed their rival. Scoffing, you release the confused $girl and walk away; leaving $him cupping $his own breasts and feeling uncertain about $himself. $He gets caught up in how small they really are, and how much @@.hotpink;lesser@@ than $his <<= WrittenMaster($activeSlave)>> $he is.
+				<<if $activeSlave.fetish == "boobs">>
+					<<if $activeSlave.fetishKnown == 0>>
+						You did note one thing when your breasts touched: $his nipples <<if $activeSlave.nipples == "fuckable">>tightened around yours<<else>>got very hard<</if>>. @@.green;Looks like $he's a breast fetishist!@@
+						<<set $activeSlave.fetishKnown = 1>>
+					<</if>>
+				<</if>>
+			<</replace>>
+			<<set $activeSlave.devotion += 5>>
+		<</link>>
+	<</if>>
+
+	<<if canAchieveErection($activeSlave) && canSee($activeSlave) && $PC.dick >= 4 && $PC.dick > $activeSlave.dick && $activeSlave.trust >= -20>>
+		<<if $activeSlave.energy > 95 || ($activeSlave.attrXX > 50 && $activeSlave.behavioralFlaw != "hates women" && $PC.boobs >= 400) || ($activeSlave.attrXY > 50 && $activeSlave.behavioralFlaw != "hates men" && $PC.boobs < 300) || ($PC.belly >= 1500 && $activeSlave.fetish == "pregnancy") || ($PC.boobs >= 1400 && $activeSlave.fetish == "pregnancy")>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<<link "Show $him what a real erection looks like">>
+				<<replace "#introResult">>
+					$His arousal is obvious with the hard-on $he is sporting, but $he still has much to learn about size. You pop your own dick out and draw close to $activeSlave.slaveName, grabbing and pulling $him close enough for your erections to touch. Both sets of eyes lock onto the crossed swords, or more appropriatly, your sword and $his dagger. You give the confused $girl plenty of time to internalize what a real dick looks like as you @@.hotpink;thoroughly emasculate@@ $him.
+				<</replace>>
+				<<set $activeSlave.devotion += 5>>
+				<span id="introResult2">
+					<br><<link "Push $his head down">>
+						<<replace "#introResult2">>
+							You place a hand on $his head and guide $him
+							<<if $activeSlave.fetish == "cumslut">>
+								downwards, right onto your penis. As you slip deeper into your throat, you find $him hungrily sucking your cock like an addict looking for their next hit. You let $him drain every last drop from your balls before pulling out. $He licks the last bit off the tip before opening wide again, @@.hotpink;begging you for more.@@ @@.green;You have quite the cum fiend on your hands.@@
+								<<set $activeSlave.fetishKnown = 1>>
+							<<else>>
+								downwards. $He stares at your penis before hesitantly slipping it into $his mouth
+								<<if $activeSlave.skill.oral >= 100>>
+									and practically sucking the life out of you; it stands to reason that $he may have known exactly what $he was doing this whole time.
+								<<elseif $activeSlave.skill.oral > 60>>
+									and giving you a rather surprsing blowjob; $he's well on $his way already, it seems.
+								<<elseif $activeSlave.skill.oral > 30>>
+									and giving you a forgettable blowjob; $he'll learn how to properly suck dick under your ownership.
+								<<else>>
+									and giving you an awful blowjob; $he'll get plenty of practice under your ownership.
+								<</if>>
+								Only once $he has swallowed the last of your cum do you allow $him to clean $himself up and @@.hotpink;reflect on what $he just did.@@
+							<</if>>
+							<<set $activeSlave.devotion += 5>>
+							<<set $activeSlave.counter.oral++, $oralTotal++>>
+						<</replace>>
+					<</link>>
+				</span>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if ($activeSlave.accent >= 3) && ($activeSlave.anus < 2) && ($activeSlave.intelligence+$activeSlave.intelligenceImplant <= 50) && ($activeSlave.devotion < 10) && (canSee($activeSlave))>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Force understanding of $his situation past the language barrier">>
+		<<replace "#introResult">>
+			With a rudimentary understanding of $language, at best, it's doubtful that $he understands exactly what $his immediate future is likely to entail. You resolve to let $him in on the secret, and stand up, drawing $his attention to your hands with gestures. You point first at $him, and then at your left hand, which you form into a hole shape. Then you point at yourself with your left hand, and then at your right hand, whose index and middle fingers you extend, straight and together. Then, you take your left hand hole and your right hand phallus, and fuck the former with the latter, hard enough that the sex act depicted is obviously fun for your right hand only. $He watches raptly, and when comprehension dawns across $his face, @@.gold;$he starts to sob.@@
+			<<if $activeSlave.vagina > -1>>
+				$He indicates $his vagina tentatively, almost hopefully, but you shake your head, and emphasize the circular, anus-like shape of your left hand. $He cries harder.
+			<<else>>
+				$He wilts, pressing $his thighs together in an unconscious attempt to shield $his anus from its future as a target for $his <<= WrittenMaster($activeSlave)>>'s attentions.
+			<</if>>
+		<<set $activeSlave.trust -= 10>>
+		<</replace>>
+	<</link>>
+<</if>>
+
+<<if $activeSlave.inflation == 0 && hasAnyArms($activeSlave) && canTaste($activeSlave) && $arcologies[0].FSHedonisticDecadenceResearch == 1>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Offer $him a slave-food cookie">>
+		<<replace "#introResult">>
+			You pull a big plate of specially formulated cookies from your desk, place it before $him and invite $him to have some. $He looks between the plate and you, unsure of what to make of this development, but eventually grabs one and
+			<<if $activeSlave.behavioralFlaw == "gluttonous">>
+				shoves it into $his mouth. $He nearly chokes in surprise at the taste before greedily reaching for another.
+			<<elseif $activeSlave.behavioralFlaw == "anorexic">>
+				nibbles the edge of it. $He gasps in surprise at the taste before greedily shoving the entire thing into $his mouth and reaching for another.
+			<<else>>
+				takes a bite. $He gasps in surprise at the taste before greedily shoving the entire thing into $his mouth and reaching for another.
+			<</if>>
+			In minutes, $he's managed to devour every last cookie on the plate. Before $he can even pout that they're all gone, you place another pair of plates <<if canSmell($activeSlave)>>under $his nose<<else>>in front of $him<</if>>. $He promptly rushes for them,
+			<<if $activeSlave.behavioralFlaw == "gluttonous">>
+				paying no mind to $his bloated belly bumping into your desk, and resumes stuffing $himself.
+			<<elseif $activeSlave.behavioralFlaw == "anorexic">>
+				only to recoil in shock when $his bloated belly
+				<<if $activeSlave.belly >= 1000>>
+					reaches your desk earlier than expected.
+				<<else>>
+					pushes into your desk.
+				<</if>>
+				$He gropes it uncomfortably before being overwhelmed by the addictive substance and going back to stuffing $himself.
+			<<else>>
+				barely noticing $his bloated belly
+				<<if $activeSlave.belly >= 1000>>
+					hanging heavier than ever,
+				<<else>>
+					bumping into your desk,
+				<</if>>
+				and resumes stuffing $himself.
+			<</if>>
+			By the time $he's done, $his belly
+			<<if $activeSlave.belly >= 1000>>
+				is positively heaving. You can clearly see the defined mass of $his stomach resting atop $his swollen abdomen.
+			<<else>>
+				is positively huge. You can clearly see $his swollen stomach at the top of the mass of food inside $him.
+			<</if>>
+			$He collapses onto $his rear and belches loudly.
+			<<if $arcologies[0].FSDegradationist != "unset">>
+				It doesn't take long for the tainted food to do its thing. $He groans loudly and clutches $his bulging midriff, $his body in severe distress thanks to the modified slave food. $He rolls onto $his back and does everything $he can to soothe the turmoil growing inside $him. You know it won't do any good, but $he doesn't. $He'll spend however long it takes $his body to digest the food in anguish; $he'll regret ever touching the stuff. But you know better, $his growing addiction will have $him scarfing it down at every chance, but for now, all $he can do is @@.mediumorchid;blame you@@ and @@.gold;curse your trickery.@@
+				<<set $activeSlave.devotion -= 20, $activeSlave.trust -= 20>>
+			<<else>>
+				<<if $activeSlave.behavioralFlaw == "gluttonous">>
+					$He @@.mediumaquamarine;happily pats $his full belly;@@ $he's going to @@.hotpink;like it here.@@
+					<<set $activeSlave.devotion += 10, $activeSlave.trust += 10>>
+				<<elseif $activeSlave.behavioralFlaw == "anorexic">>
+					Only then does $he regain composure enough to realize what $he's done. $He @@.mediumorchid; bursts into tears@@ as $he rubs $his disgustingly full belly. $He glares at you, only to catch you toying with even more food. $He begins to @@.gold;tremble@@ when $he realizes how easily you did this to $him. You're sure $he'll change $his tune in time, since you know $he'll be unable to resist sneaking treats.
+					<<set $activeSlave.devotion -= 10, $activeSlave.trust -= 10>>
+				<<else>>
+					$He @@.hotpink;happily pats $his full belly,@@ before coming to $his senses and realizing what $he did. $He begins to @@.gold;tremble@@ as it dawns on $him just how easily you manipulated $him.
+					<<set $activeSlave.devotion += 5, $activeSlave.trust -= 10>>
+				<</if>>
+			<</if>>
+			Given the availability of the slave treats and $his burgeoning addiction to them, $he'll likely keep $himself stuffed unless you force $him to stop.
+			<<if $activeSlave.preg > 0 || $activeSlave.bellyImplant > 0>>
+				<<set $activeSlave.inflation = 1>>
+			<<else>>
+				<<set $activeSlave.inflation = 2>>
+			<</if>>
+			<<set $activeSlave.inflationType = "food", $activeSlave.inflationMethod = 1>>
+			<<run SetBellySize($activeSlave)>>
+		<</replace>>
+	<</link>>
+<</if>>
+
+<</if>> /* CLOSES MINDBROKEN CHECK*/
+
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+<<link "Spank $him">>
+	<<replace "#introResult">>
+		You <<if ($activeSlave.devotion > 20) || ($activeSlave.trust < -20)>>lay the obedient $desc across your knees<<else>>force the resistant $desc to lie across your knees<</if>> and run a voluptuary hand across $his <<if $activeSlave.butt > 6>>jiggling<<elseif $activeSlave.butt > 3>>delightfully big<<elseif $activeSlave.butt > 1>>cute<<else>>skinny<</if>> buttocks, enjoying the way $he tenses up reflexively at the extreme vulnerability of $his position. $He feels the change in your posture as you bring your hand back, and <<if ($activeSlave.devotion > 20) || ($activeSlave.trust < -20)>>can't stop $himself from wriggling<<else>>struggles desperately<</if>> for just a moment before your palm smacks against $his ass.
+		<<if $activeSlave.devotion > 20>>
+			<<if $activeSlave.fetish == "masochist">>
+				<<if $activeSlave.fetishKnown == 0>>
+					$He gasps with profound shock, and you feel $his whole body stiffen atop your thighs as $he tries to work out what just happened. With each spank, $he grows more and more aroused until $he finally reaches orgasm. @@.green;$He's a pain fetishist!@@
+					<<set $activeSlave.fetishKnown = 1>>
+				<<else>>
+					$He groans with guilty pleasure, feeling the pain radiate out from $his buttocks with each swat, feeling it seem to circle around $his hips to pool between $his legs. Before long, $he reaches a quivering orgasm.
+				<</if>>
+				$He gets up very gingerly, but bites $his lip cutely, @@.hotpink;feeling a strange satisfaction.@@
+				<<set $activeSlave.devotion += 5>>
+			<<else>>
+				$He gasps with pain, but does not object or try to escape. $He accepts the spanking dutifully. You're not particularly harsh, and $he gets up after you tire of swatting $his bottom @@.hotpink;without resentment@@ of this treatment.
+				<<set $activeSlave.devotion += 4>>
+			<</if>>
+		<<else>>
+			<<if $activeSlave.fetish == "masochist">>
+				<<if $activeSlave.fetishKnown == 0>>
+					$He gasps with profound shock, and you feel $his whole body stiffen atop your thighs as $he tries to work out what just happened. $He begins to cry as $he realizes that having $his bottom beaten is getting $him horny. @@.green;$He's a pain fetishist!@@
+					<<set $activeSlave.fetishKnown = 1>>
+				<<else>>
+					$He groans with unwilling pleasure, feeling the pain radiate out from $his buttocks with each swat, feeling it seem to circle around $his hips to pool between $his legs. $He does not orgasm, but feels much more pleasure than $he's willing to admit.
+				<</if>>
+				When you let $him up, $he's sobbing, more from humiliation than pain. However, $he @@.hotpink;submits@@ to an uncomfortable groping of $his buttocks, which are pleasingly warm from the spanking.
+				<<set $activeSlave.devotion += 4>>
+			<<else>>
+				$He gasps with pain, and starts to wriggle off you until you pin $him with your other hand. $He accepts the rest of the spanking unhappily. You're not particularly harsh, and $he gets up after you tire of swatting $his bottom, @@.gold;fearful@@ due to the humiliation rather than the pain.
+				<<set $activeSlave.trust -= 4>>
+			<</if>>
+		<</if>>
+	<</replace>>
+<</link>>
+
+
+<<if hasAnyArms($activeSlave)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Tie $him up and give $him a good whipping">>
+		<<replace "#introResult">>
+			You cuff $his wrist<<if hasBothArms($activeSlave)>>s<</if>> and tie the cuffs to a hook in the ceiling so $he's forced up on tiptoe. Reflecting that sometimes the old ways are best, you take a whip to $him. It's soft leather and you have some skill, so $his skin isn't broken, but you lash $his buttocks and every stroke draws a scream. After a while, the pain grows dull for $him and $he slumps in $his bindings, moaning. You switch to $his nipples, bringing $him back to howling life as $he dances on tiptoe and tries to dodge. <<if $activeSlave.dick != 0>>You finish by taking the whip to $his penis, leaving $him sobbing and begging. <</if>>If $he was wondering what kind of master $his new master is, now $he @@.gold;knows.@@ $He will remember @@.mediumorchid;what you can do to $him.@@
+		<<set $activeSlave.devotion -= 5>>
+		<<set $activeSlave.trust -= 10>>
+		<</replace>>
+	<</link>>
+<</if>>
+
+
+<<if ($activeSlave.anus != 0)>>
+	<<if ($activeSlave.vagina > 0)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<link "Use a machine on $his holes">>
+			<<replace "#introResult">>
+				$He's not a virgin anywhere, so you'll have to go more extreme to provide a properly introductory level of sexual torture equivalent to defloration. You tie your new slave down on <<if hasAnyArms($activeSlave)>>hand<<if hasBothArms($activeSlave)>>s<</if>><<if hasAnyLegs($activeSlave)>> and <</if>><</if>><<if hasAnyLegs($activeSlave)>>knee<<if hasBothLegs($activeSlave)>>s<</if>><</if>> and bring a fuckmachine up from storage. It fits over $him as $he whimpers down there on <<if hasAllLimbs($activeSlave)>>all fours<<else>>the floor<</if>>, and you adjust the pistons so that the tip of a dildo rests inside each of $his holes. You add lube when necessary, <<if $assistant.personality == 0>>but the rest of the day is monotonous machine rape for $him.<<else>>but for $him the rest of the day is machine rape controlled by your sultry-voiced personal assistant program. Your assistant is an exquisite sexual torturer, ensuring that the experience is never damaging and always overwhelming. $He keeps up a steady stream of degrading verbal abuse while $he works.<</if>> Any resistance to you is @@.mediumorchid;worn down@@ and replaced with a germ of @@.gold;fear.@@ @@.lime;The slave's holes are nicely stretched.@@
+			<<set $activeSlave.devotion -= 5>>
+			<<set $activeSlave.trust -= 10>>
+			<<set $activeSlave.counter.vaginal += 1>>
+			<<set $vaginalTotal += 1>>
+			<<set $activeSlave.counter.anal += 1>>
+			<<set $analTotal += 1>>
+			<<set $activeSlave.anus += 1>>
+			<<set $activeSlave.vagina += 1>>
+			<</replace>>
+		<</link>>
+	<<elseif ($activeSlave.vagina == -1)>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<link "Use a machine on $his asshole">>
+			<<replace "#introResult">>
+				$He's not an anal virgin, so you'll have to go more extreme to provide an introductory level of sexual torture equivalent to defloration. You tie your new slave down on <<if hasAnyArms($activeSlave)>>hand<<if hasBothArms($activeSlave)>>s<</if>><<if hasAnyLegs($activeSlave)>> and <</if>><</if>><<if hasAnyLegs($activeSlave)>>knee<<if hasBothLegs($activeSlave)>>s<</if>><</if>> and bring a fuckmachine up from storage. It fits over $him as $he whimpers down there on <<if hasAllLimbs($activeSlave)>>all fours<<else>>the floor<</if>>, and you adjust the pistons so that the tip of a dildo rests inside $his asshole. You add lube when necessary, <<if $assistant.personality == 0>>but the rest of the day is monotonous machine rape for $him.<<else>>but for $him the rest of the day is machine rape controlled by your sultry-voiced personal assistant program. Your assistant is an exquisite sexual torturer, ensuring that the experience is never damaging and always overwhelming. $He keeps up a steady stream of degrading verbal abuse while $he works.<</if>> Any resistance to you is @@.mediumorchid;worn down@@ and replaced with a germ of @@.gold;fear.@@ @@.lime;The slave's asshole is nicely stretched.@@ /*Written and coded by Boney M*/
+			<<set $activeSlave.devotion -= 5>>
+			<<set $activeSlave.trust -= 10>>
+			<<set $activeSlave.counter.anal += 1>>
+			<<set $analTotal += 1>>
+			<<set $activeSlave.anus += 1>>
+			<</replace>>
+		<</link>>
+	<</if>>
+<</if>>
+
+
+<<if canTalk($activeSlave) && !isAmputee($activeSlave)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Make $him an office ornament for the day">>
+		<<replace "#introResult">>
+			You cuff $his <<if hasAnyArms($activeSlave)>>wrist<<if hasBothArms($activeSlave)>>s<</if>><<if hasAnyLegs($activeSlave)>> and <</if>><</if>><<if hasAnyLegs($activeSlave)>>ankle<<if hasBothLegs($activeSlave)>>s<</if>><</if>>, bend
+			<<if getLimbCount($activeSlave) === 4>>
+				all four limbs
+			<<elseif getLimbCount($activeSlave) === 3>>
+				all three limbs
+			<<elseif getLimbCount($activeSlave) === 2>>
+				both limbs
+			<<else>>
+			 	$his limb
+			<</if>>
+			behind $him, secure them together, and hoist $him up to the ceiling on a rope. $He hangs up there like a sex slave chandelier<<if $activeSlave.boobs >= 650>>, breasts swaying in a lovely way whenever $he struggles<</if>>. Periodically you let $him down to stretch $his aching <<if ((!hasAnyArms($activeSlave) && !hasBothLegs($activeSlave)) || (!hasBothArms($activeSlave) && !hasAnyLegs($activeSlave)))>>limb<<else>>limbs<</if>>, but whenever you put your decoration back up you add some clips with little bells on them: first the nose, then the nipples, and finally the <<if $activeSlave.dick != 0>>dickhead<<else>>pussylips<</if>>. By the end of the day your work is accompanied by the sweet sounds of ringing bells and @@.gold;agonized pleas@@ for mercy in $his <<if $activeSlave.voice == 3>>high, girlish<<elseif $activeSlave.voice == 2>>feminine<<else>>deep<</if>> voice. $He will remember @@.mediumorchid;what you can do to $him.@@
+		<</replace>>
+		<<set $activeSlave.devotion -= 5>>
+		<<set $activeSlave.trust -= 10>>
+	<</link>>
+<</if>>
+
+<<if $cumSlaves > 3>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Fill $him with cum">>
+		<<replace "#introResult">>
+			You securely restrain your new slave<<if $dairyRestraintsSetting > 1>> in a milking stall<</if>>. A quick finger check of $his holes allows you to choose wisely from a selection of hollow phalluses, which push into your helpless new slave's
+			mouth,
+			<<set $activeSlave.counter.oral += 1>>
+			<<set $oralTotal += 1>>
+			<<if ($activeSlave.vagina > 0)>>
+				vagina,
+				<<set $activeSlave.counter.vaginal += 1>>
+				<<set $vaginalTotal += 1>>
+			<</if>>
+			<<if $activeSlave.anus > 0>>
+				and squeeze into $his ass,
+				<<set $activeSlave.counter.anal += 1>>
+				<<set $analTotal += 1>>
+			<</if>>
+			with no room to spare.
+			Your choices attach to long tubes, and with a fiendish smile you turn a valve. The lines run white with a mixture of fluids from your other slaves, and your newest slave begins to fill.
+			<<if $activeSlave.devotion > 20>>
+				<<if $activeSlave.fetish == "cumslut">>
+					<<if $activeSlave.fetishKnown == 0>>
+						$He seems genuinely eager to hold as much of the fluid as $he can. @@.green;$He's a cum fetishist!@@
+						<<set $activeSlave.fetishKnown = 1>>
+					<<else>>
+						$He groans with guilty pleasure, feeling $his muscles ache and $his torso swell. Before long, $he reaches a quivering orgasm.
+					<</if>>
+					As you release $him $he swings up with difficulty, but @@.hotpink;$he seems very pleased@@ to stay plugged for now.
+					<<set $activeSlave.devotion += 5>>
+				<<else>>
+					<<if !hasBothEyes($activeSlave)>>$His face swells<<else>>$His eyes swell<</if>> with shock, but $he does not flinch or make a sound. When $he seems full enough, you shut off the valve, deciding to leave $him plugged for now. $He waddles off @@.hotpink;without apparent resentment@@ of this treatment.
+					<<set $activeSlave.devotion += 4>>
+				<</if>>
+			<<else>>
+				<<if $activeSlave.fetish == "cumslut">>
+					<<if $activeSlave.fetishKnown == 0>>
+						<<if !hasBothEyes($activeSlave)>>$His face swells<<else>>$His eyes swell<</if>> with profound horror at the realization of what is happening, and begin to leak tears as $he realizes that having $his body swell with semen is getting $him horny. @@.green;$He's a cum fetishist!@@
+						<<set $activeSlave.fetishKnown = 1>>
+					<<else>>
+						$He groans with guilty pleasure, feeling $his muscles ache and $his torso swell. $He does not orgasm from $his "meal," but feels much more pleasure than $he's willing to admit.
+					<</if>>
+					When you let $him up, $he's sobbing, more from humiliation than discomfort. However, $he @@.hotpink;submits@@ to an uncomfortable groping of $his stomach, which is pleasingly taut from the inflation. You decide to leave $him plugged for a few hours, impressing on $him still more that $his fate is out of $his control.
+					<<set $activeSlave.devotion += 4>>
+				<<else>>
+					$He gasps in horror, and starts to struggle frantically against $his bonds. However, as the fluid reaches $him $he seems to resign $himself to $his fate. Once $he reaches a fullness you like you let $him up, @@.gold;fearful@@ due to the humiliation rather than the swelling. $He limps off to $his new duties as quickly as $he can, before you can unplug $him. Oh well!
+					<<set $activeSlave.trust -= 4>>
+				<</if>>
+			<</if>>
+			$His first day promises to be a full one!
+		<</replace>>
+	<</link>>
+<</if>>
+
+<<if hasAnyArms($activeSlave)>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Put a shock collar on $him and force $him to rape $himself">>
+		<<set $activeSlave.collar = "shock punishment">>
+		<<replace "#introResult">>
+			You put a shock collar on $him. Its function isn't immediately obvious, at least until you test it on the lowest power setting, making $him jump and look at you fearfully. This concern is compounded when you throw a big dildo at $him and tell $him to rape $himself. $He gapes at you incredulously until you give $him a stronger jolt and peremptorily tell $him to
+			<<if $activeSlave.vagina > 0>>
+				pick it up and pound $his own pussy. @@.mediumorchid;Reluctantly,@@ $he reaches down shakily, seats $himself, and slowly pushes the uncomfortably big phallus inside $his womanhood. $He starts to fuck $himself. Harder, you command. Wincing, $he works $his cunt faster. Harder, you repeat, giving $him another shock. @@.gold;$He begins to cry,@@ but obeys, sawing the big fake cock in and out, really raping $himself.
+				<<set $activeSlave.counter.vaginal += 1>>
+				<<set $vaginalTotal += 1>>
+			<<elseif $activeSlave.anus > 0>>
+				pick it up and pound $his own ass. @@.mediumorchid;Reluctantly,@@ $he reaches down shakily, seats $himself, and gradually shoves the already-lubricated phallus into $his ass. It's uncomfortably big for $his butt, but $he can manage it, and slowly starts to sodomize $himself. Harder, you command. Wincing, $he fucks $his ass faster. Harder, you repeat, giving $him another shock. @@.gold;$He begins to cry,@@ but obeys, sawing the big fake cock in and out, really assraping $himself.
+				<<set $activeSlave.counter.anal += 1>>
+				<<set $analTotal += 1>>
+			<<else>>
+				pick it up and facefuck $himself. @@.mediumorchid;Reluctantly,@@ $he reaches down shakily, seats $himself, and slowly swallows the uncomfortably big phallus. $He has to start over several times as $his gag reflex kicks in, but $he finally manages to hilt it. Harder, you command. Eyes rolling fearfully, $he withdraws it a few <<if $showInches == 2>>inches<<else>>centimeters<</if>> and shoves it down $his throat again. Harder, you repeat, giving $him another shock. @@.gold;$He begins to weep and gag,@@ but obeys, sawing the big fake cock in and out, really molesting $himself.
+				<<set $activeSlave.counter.oral += 1>>
+				<<set $oralTotal += 1>>
+			<</if>>
+			<<set $activeSlave.trust -= 10>>
+			<<set $activeSlave.devotion -= 5>>
+		<</replace>>
+	<</link>>
+<</if>>
+
+
+<<if ($dairy > 0) && ($dairyRestraintsSetting > 1) && ($seeExtreme == 1)>>
+	<br>//...in the Industrial Dairy//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Threaten $him with the Industrial Dairy">>
+		<<setNonlocalPronouns $seeDicks>>
+		<<replace "#introResult">>
+			You tell $him that it's in $his interests to be a good $girl. $He does not react immediately, perhaps wondering if you think such a trite statement will have a real impact, but then you <<if canSee($activeSlave)>>point at<<else>>direct $him towards<</if>> a wallscreen behind $him. $He turns, and beholds a live feed from the Industrial Dairy.
+			<<if canSee($activeSlave)>>
+				$He gazes spellbound at the interleaved row of bodies intertwined with machines in embraces far more intimate than any lover could hope to match. The gently heaving masses of breastflesh hold $his fascinated and horrified attention until one of the machines fortuitously chooses this moment to cycle its occupant's anal hydration regimen.
+			<<elseif canHear($activeSlave)>>
+				$He listens entranced by the steady rhythm of the machines collecting their occupants' bodily fluids. The muffled moans and groans of the restrained slaves hold $his fascinated and horrified attention until one of the machines fortuitously chooses this moment to cycle its occupant's anal hydration regimen.
+			<<else>>
+				Such a broadcast would normally be pointless for a senseless slave like $activeSlave.slaveName, but you've taken precautions to accommodate such slaves. The wallscreen is connected to the heating, air conditioning, and sprinkler systems in order to accurately replicate the aura of an industrial slave dairy, so $he is fully immersed in the scene when one of the machines fortuitously chooses this moment to cycle its occupant's anal hydration regimen.
+			<</if>>
+			It withdraws its horse-sized phallus from the slave's anus, leaving _hisU gape pulsing gently as it awaits the resumption of the endless assrape. $activeSlave.slaveName lets out a huge sob and turns to you, @@.gold;fear suffusing $him@@ as $he promises to @@.hotpink;be a good $girl.@@
+		<</replace>>
+		<<set $activeSlave.devotion += 10>>
+		<<set $activeSlave.trust -= 10>>
+	<</link>>
+	<<if ($activeSlave.lactation > 0 || (($dairySlimMaintainUpgrade == 0 || $dairySlimMaintain == 0) && ($activeSlave.boobs > 300 || $activeSlave.dick == 0 || $dairyImplantsSetting == 1) && $dairyImplantsSetting != 2)) || ($activeSlave.balls > 0)>>
+		<<if ($dairyPrepUpgrade == 1) && ($dairy > $DairyiIDs.length+$bioreactorsXY+$bioreactorsXX+$bioreactorsHerm+$bioreactorsBarren)>>
+			| <<link "Send $him straight to the Industrial Dairy">>
+				<<set $activeSlave.choosesOwnAssignment = 0>>
+				<<set $activeSlave.anus = Math.clamp($activeSlave.anus, 3, 4)>>
+				<<if $activeSlave.vagina > -1>><<set $activeSlave.vagina = Math.clamp($activeSlave.vagina, 3, 4)>><</if>>
+				<<set $activeSlave.counter.anal += 10, $analTotal += 10>>
+				<<= assignJob($activeSlave, "dairy")>>
+				<<replace "#introResult">>
+					You order <<if $HeadGirl == 0>>another slave<<else>>$HeadGirl.slaveName<</if>> to get $activeSlave.slaveName set up in $dairyName. The new slave does not know what $dairyName is, not really, and $he doesn't know what being set up there means, either. If $he knew that you are able to send $him there so blithely only because it is equipped with a special preparatory raper that will seize $him, <<if $activeSlave.vagina > -1>>mercilessly fuck $his pussy and ass until both are gaped<<else>>ream $his anus until it's cavernously gaped<</if>>, and then consign $him to constant fucking by gargantuan machine phalli, $he might resist. But $he doesn't, so $he does not.
+				<</replace>>
+			<</link>>
+		<</if>>
+		<<if $dairy > $DairyiIDs.length+$bioreactorsXY+$bioreactorsXX+$bioreactorsHerm+$bioreactorsBarren>>
+			| <<link "Break $him in for the Industrial Dairy">>
+				<<set $activeSlave.choosesOwnAssignment = 0>>
+				<<set $activeSlave.anus = Math.clamp($activeSlave.anus, 3, 4)>>
+				<<if $activeSlave.vagina > -1>>
+					<<set $activeSlave.vagina = Math.clamp($activeSlave.vagina, 3, 4)>>
+					<<set $activeSlave.counter.vaginal += 10>>
+					<<set $vaginalTotal += 10>>
+				<</if>>
+				<<set $activeSlave.counter.anal += 10, $analTotal += 10>>
+				<<= assignJob($activeSlave, "dairy")>>
+				<<replace "#introResult">>
+					Making use of <<if ($activeSlave.trust < -20) || ($activeSlave.devotion > 20)>>$his obedience<<else>>the compliance systems<</if>>, you restrain $him on one of the chairs in your office in an approximation of the position $he'll occupy in $dairyName. Then you put a mask on $him, like the ones the machines there feature, and turn it on, watching the slave squirm against $his restraints under the sudden bombardment of garish hardcore porn. Finally, you add a dildo gag, both to mimic the dildo that will feed $him, and to keep your office reasonably quiet. Then, for the rest of the day, you use $his vulnerable <<if $activeSlave.vagina > -1>>holes<<else>>asshole<</if>> as an outlet for your sexual energy. You are not gentle; in fact, the point of the whole exercise is to gape $him. By the evening $he's been fucked so hard that $he's stopped jerking against the chair when you pound <<if $PC.dick != 0>>your huge cock<<else>>a huge strap-on<</if>> in and out of $him, so you're obliged to get creative, sliding fingers in alongside <<if $PC.dick != 0>>yourself<<else>>it<</if>> to really blow $him out. Once that gets too easy, you start adding dildos for double <<if $activeSlave.vagina > -1>>and triple <</if>>penetration. By nighttime $he's properly prepared to take $dairyName's giant phalli, and you're bored, so you consign $him to $his fate. $He might have some opinion on how $he's spent $his day, but it's unlikely $he'll remember it by tomorrow, what with the forearm-sized dildos sliding in and out of $his throat<<if $activeSlave.vagina > -1>>, cunt,<</if>> and asshole.
+				<</replace>>
+			<</link>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $dairyPiping == 1>>
+	<<if (($cumPipeline > 88 && $cumPipeline != 0) || $arcologies[0].FSPastoralistLaw == 1) && $activeSlave.preg < 1 && $activeSlave.inflation == 0 && $activeSlave.bellyImplant <= 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<link "Give $him all the cum $he can drink">>
+			<<replace "#introResult">>
+				You securely restrain your new slave; for both $his own safety and so $he can't object to $his meal. You reassure $him <<if hasAnyEyes($activeSlave)>> and order $him to close $his eyes <</if>> and open wide for a treat. <<if canSee($activeSlave)>>Since $his eyes are contentedly closed<<else>>Blind as $he is<</if>>, $he doesn't see you reach for one of the phallus-tipped feeding tubes located throughout your penthouse. Before $he knows what's happening, you've forced the cocktube firmly into $his gaping maw and anchored it to $his head, causing $his entire body to tense up <<if $activeSlave.devotion <= 20>>in panic <</if>>once more.
+				<br><br>
+				You pause to examine the tap, making sure it is set to cum, before releasing the valve and unleashing a steady flow. The feeder bucks against $his face as thick, white liquid rushes downward towards the helpless slave.
+				<<if $activeSlave.devotion > 20>>
+					<<if $activeSlave.fetish == "cumslut">>
+						<<if $activeSlave.fetishKnown == 0>>
+							Stunningly, once $he gets over the impact of the wave of fresh semen, $he seems genuinely eager to hold as much of the fluid as $he can, stretching contentedly to $his reasonable limit. @@.green;$He's a cum fetishist!@@
+							<<set $activeSlave.fetishKnown = 1>>
+						<<else>>
+							$His belly steadily swells from a few months of apparent pregnancy, to "spent too much time at the buffet", until it finally stops wobbling, grows taut and forces $his belly button into an outie. Your cow groans not only with the weight and mounting pressure, but with guilt as well. Before long, $he reaches a quivering orgasm.
+						<</if>>
+						You stroke $his gurgling stomach slowly, before turning off the valve, unfastening $his binds and leaving your @@.hotpink;very pleased@@ cum balloon to savor $his meal. You'll make sure to set aside enough cum from your cumslaves for $him to drink $himself stupid with, and, glancing over your shoulder, find $him eagerly masturbating to $his cum filled gut. $He'll probably intend to keep $himself filled to the brim, which is fine by you.
+						<<set $activeSlave.devotion += 5>>
+					<<else>>
+						<<if !hasBothEyes($activeSlave)>>$His face swells<<else>>$His eyes swell<</if>> with horror, but $he does not flinch or make a sound. $His belly also swells, from a few months of apparent pregnancy, to 'spent too much time at the buffet', till it finally stops wobbling, grows taut and forces $his belly button into an outie. Satisfied, you shut off the valve, deciding to leave $him to consider $his cum filled middle. Time passes. $His <<if canSee($activeSlave)>>eyes are glazed over<<else>>blind face is distant<</if>>, but $he tolerates you slowly stroking $his stomach @@.hotpink;without apparent resentment.@@ You'll make sure to keep $him like this for the time being.
+						<<set $activeSlave.devotion += 4>>
+					<</if>>
+				<<else>>
+					<<if $activeSlave.fetish == "cumslut">>
+						<<if $activeSlave.fetishKnown == 0>>
+							<<if !hasBothEyes($activeSlave)>>$His face tenses<<else>>$His eyes swell<</if>> with profound horror at the realization of what is filling $him with a constant irresistible pressure, and $he begins to leak tears as $he realizes that $his rapidly swelling body is getting $him horny. @@.green;$He's a cum fetishist!@@
+							<<set $activeSlave.fetishKnown = 1>>
+						<<else>>
+							$His belly steadily swells from a few months of apparent pregnancy, to "spent too much time at the buffet", till it finally stops wobbling, grows taut and forces $his belly button into an outie. Your cow groans not only with the weight and quickly mounting pressure, but with guilt as well. $He does not orgasm from $his gluttonous "meal," but feels much more pleasure than $he's willing to admit.
+						<</if>>
+						Time passes, marked only by the slowing growth of $his waistline and the gurgling deep within $him. However, $he @@.hotpink;submits@@ to an uncomfortable groping of $his fluid distended stomach, which is pleasingly taut from $his massive cum meal. You decide to make it abundantly clear that if a single drop of cum leaves $his gullet, $he's getting the hose again, impressing on $him still more that $his fate is out of $his control.
+						<<set $activeSlave.devotion += 4>>
+					<<else>>
+						$He gasps in horror, and starts to struggle frantically against $his bonds, <<if $activeSlave.voice != 0>>struggling to scream in panic.<<else>>$his whole body begging to scream.<</if>> However, as the fluid reaches $him, $he seems to despair and resigns $himself to $his fate. As $his belly swells, you find yourself comparing $him first to a binge eater, then some of the chubbier citizens you've seen, a large pregnancy, and finally a water balloon ready to burst. You stop the flow, and rest a hand on $his heaving stomach. $His @@.gold;terrified@@ breathing and distant expression are clearly due to the pain, not lust, but it's also now quite clear to $him who is in charge here. You have little intent on letting $his stomach empty and will be setting aside enough cum to keep $him bloated into submission.
+						<<set $activeSlave.trust -= 4>>
+					<</if>>
+				<</if>>
+				<<set $activeSlave.inflation = 3, $activeSlave.inflationType = "cum", $activeSlave.inflationMethod = 1>>
+				<<run SetBellySize($activeSlave)>>
+			<</replace>>
+		<</link>>
+	<</if>>
+	<<if (($milkPipeline > 88 && $milkPipeline != 0) || $arcologies[0].FSPastoralistLaw == 1) && $activeSlave.preg < 1 && $activeSlave.inflation == 0 && $activeSlave.bellyImplant <= 0>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<link "Give $him all the milk $he can drink">>
+			<<replace "#introResult">>
+				You securely restrain your new slave; for both $his own safety and so $he can't object to $his meal. You reassure $him <<if hasAnyEyes($activeSlave)>> and order $him to close $his eyes <</if>> and open wide for a treat. <<if canSee($activeSlave)>>Since $his eyes are contentedly closed<<else>>Blind as $he is<</if>>, $he doesn't see you reach for one of the phallus-tipped feeding tubes located throughout your penthouse. Before $he knows what's happening, you've forced the cocktube firmly into $his gaping maw and anchored it to $his head, causing $his entire body to tense up <<if $activeSlave.devotion <= 20>>in panic <</if>>once more.
+				<br><br>
+				You pause to examine the tap, making sure it is set to milk, before releasing the valve and unleashing a steady flow. The feeder bucks against $his face as creamy, white liquid rushes downward towards the helpless slave.
+				<<if $activeSlave.behavioralFlaw == "gluttonous">>
+					<<if !hasBothEyes($activeSlave)>>$His face swells<<else>>$His eyes swell<</if>> with horror, but $he does not flinch or make a sound. $His belly also swells, from a few months of apparent pregnancy, to "spent too much time at the buffet", till it finally stops wobbling, grows taut and forces $his belly button into an outie. Satisfied, you shut off the valve, deciding to leave $him to consider $his milk filled middle. Time passes. $His<<if canSee($activeSlave)>> eyes are glazed over<<else>> blind face is distant<</if>>, but $he tolerates you slowly stroking $his stomach @@.hotpink;without apparent resentment.@@ You'll make sure to keep $him like this for the time being.
+					<<set $activeSlave.devotion += 5>>
+				<<else>>
+					$He gasps in horror, and starts to struggle frantically against $his bonds, <<if $activeSlave.voice != 0>>struggling to scream in panic.<<else>>$his whole body begging to scream.<</if>> However, as the fluid reaches $him, $he seems to despair and resigns $himself to $his fate. As $his belly swells, you find yourself comparing $him first to a binge eater, then some of the chubbier citizens you've seen, a large pregnancy, and finally a water balloon ready to burst. You stop the flow, and rest a hand on $his heaving stomach. $His @@.gold;terrified@@ breathing and distant expression are clearly due to the pain, not lust, but it's also now quite clear to $him who is in charge here. You have little intent on letting $his stomach empty and will be setting aside enough milk to keep $him bloated into submission.
+					<<set $activeSlave.trust -= 3>>
+				<</if>>
+				<<set $activeSlave.inflation = 3, $activeSlave.inflationType = "milk", $activeSlave.inflationMethod = 1>>
+				<<run SetBellySize($activeSlave)>>
+			<</replace>>
+		<</link>>
+	<</if>>
+<</if>>
+
+<<if ($arcade > 0) && ($seeExtreme == 1)>>
+	<br>//...in the Arcade//
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<link "Threaten $him with the Arcade">>
+		<<setNonlocalPronouns $seeDicks>>
+		<<replace "#introResult">>
+			You tell $him that it's in $his best interests to be a good $girl. $He does not react immediately, perhaps wondering if you think such a trite statement will have a real impact, but then you <<if canSee($activeSlave)>>point at<<else>>direct $him towards<</if>> a wallscreen behind $him. $He turns, and beholds a live feed from $arcadeName.
+			<<if canSee($activeSlave)>>
+				$He gazes at the row of butts sticking out of the wall at dick height, not quite realizing what $he's seeing. Then $he notices that there are citizens pumping away in front of two of the butts, and $he understands.
+			<<elseif canHear($activeSlave)>>
+				$He listens to the wet sounds of flesh on flesh, not quite realizing what $he's hearing. Then $he picks out the sound of your citizens grunting and moaning as they pound away, and $he understands.
+			<<else>>
+				Such a broadcast would normally be pointless for a senseless slave like $activeSlave.slaveName, but you've taken precautions to accommodate such slaves. The wallscreen is connected to the heating, air conditioning, and sprinkler systems in order to accurately replicate the feeling of standing in front of a row of restrained public sex slaves, so the meaning of the scene in front of $him is not lost.
+			<</if>>
+			As $he <<if canSee($activeSlave)>>watches<<elseif canHear($activeSlave)>>listens<<else>>stands there<</if>>, terrified, first one citizen and then the other finishes and steps away. The first arcade inmate's <<if $seeDicks != 100>>pussy<<else>>butt<</if>> is left looking sore until $arcadeName's systems cover _himU for a quick cleaning, and the second inmate's asshole <<if $seeDicks != 0>>has obviously seen severe use, since the poor _girlU doesn't have a pussy to spread the load<<else>>is loose enough that the machines have to clean up the cum it drools onto the floor<</if>>. $activeSlave.slaveName lets out a huge sob and turns to you, @@.gold;fear suffusing $him@@ as $he promises to @@.hotpink;be a good $girl.@@
+		<</replace>>
+		<<set $activeSlave.devotion += 10>>
+		<<set $activeSlave.trust -= 10>>
+	<</link>>
+
+	<<if ($arcade > $ArcadeiIDs.length) || ($arcadeUpgradeFuckdolls == 2)>>
+		| <<link "Send $him straight to the Arcade">>
+			<<set $activeSlave.assignment = "be confined in the arcade">>
+			<<set $activeSlave.choosesOwnAssignment = 0>>
+			<<replace "#introResult">>
+				You order <<if $HeadGirl == 0>>another slave<<else>>$HeadGirl.slaveName<</if>> to get $activeSlave.slaveName set up in $arcadeName. The new slave does not know what $arcadeName is, not really, and $he doesn't know what being set up there means, either. $He'll be confined inside a small space, not too different from the indignities $he's suffered already. It's only when the restraints lock into place that $he'll understand $his doom. $His mouth will be forced open and presented at one wall of $arcadeName, and $his ass will protrude from its other side, $his holes available for public relief at both ends. $He'll probably refuse to believe the truth, until the first cockhead enters $his mouth<<if $activeSlave.vagina > -1>>, parts $his pussylips,<</if>> or presses against $his poor anus.
+				<<if ($arcade <= $ArcadeiIDs.length)>>Mere <<if $showInches == 2>>yards<<else>>meters<</if>> away, preparations to convert the least appealing Arcade slave into a Fuckdoll begin. As $activeSlave.slaveName is broken in by $his first customers, $he's blissfully unaware that $he's $arcade new slaves away from the same fate.<</if>>
+			<</replace>>
+		<</link>>
+	<</if>>
+<</if>>
+
+</p>
+
+<</if>>
+</p>
+<<= IncreasePCSkills('trading', 0.1)>>
+<<if $PC.skill.slaving < 100 && random($PC.skill.slaving,100) > 50>> <<= IncreasePCSkills('slaving', 0.5)>> <<else>> <<= IncreasePCSkills('slaving', 0.1)>> <</if>>

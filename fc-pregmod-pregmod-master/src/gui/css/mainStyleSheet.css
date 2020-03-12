@@ -1,0 +1,402 @@
+body {
+	overflow-x: hidden;
+}
+
+/* makes HR colorflip compatible */
+hr {
+	background:#ccc;
+	border:0;
+}
+
+/* clears SugarCube's default transition */
+.passage {
+	transition: none;
+	-webkit-transition: none;
+}
+
+.passage-in {
+	opacity: 1 !important;
+}
+
+/* default is 54em */
+#passages {
+	max-width: 100%;
+}
+
+/* small trick to hide broken images */
+img {
+	text-indent: -10000px;
+}
+
+.imageColumn { /* TODO: this is mostly a copy of imageRef to get its flex features working properly. They can probably be removed from imageRef at some point */
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	position: relative;
+	float: right;
+}
+
+.imageRef {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	position: relative;
+	background-color: rgba(80, 80, 80, 0.5);
+	margin: 2px;
+}
+
+.tinyImg {
+	height: 120px;
+	width: 120px;
+	float: left;
+}
+
+.smlImg {
+	height: 150px;
+	width: 150px;
+	float: left;
+}
+
+.smlImg > img, .smlImg > video {
+	height: auto;
+}
+
+.medImg {
+	height: 300px;
+	width: 300px;
+	float: right;
+}
+
+.medImg > img, .medImg > video {
+	height: auto;
+}
+
+.lrgRender {
+	height: 531px;
+	width: 531px;
+	margin-right: -50px;
+	margin-left: -50px;
+	float: right;
+	z-index: -1;
+}
+
+.lrgVector {
+	height: 600px;
+	width: 600px;
+	margin-right: -125px;
+	margin-left: -125px;
+	float: right;
+	z-index: -1;
+}
+
+.lrgRender > div.mask {
+	width: 150px;
+	height: 100%;
+	background: linear-gradient(90deg, rgba(17,17,17,1), rgba(17,17,17,0.8) 60%, rgba(17,17,17,0));
+	z-index: 1;
+	/*position: absolute;*/
+}
+
+.lrgRender > img, .lrgRender > video {
+	margin-left: -150px;
+	height: 531px;
+	width: auto;
+}
+
+.lrgVector > div.mask {
+	width: 150px;
+	height: 100%;
+	background: linear-gradient(90deg, rgba(17,17,17,1), rgba(17,17,17,0.8) 60%, rgba(17,17,17,0));
+	z-index: 1;
+}
+
+.lrgVector > img, .lrgVector > video {
+	margin-left: -150px;
+	height: 600px;
+	width: auto;
+}
+
+.lrgVector svg {
+	width: 336px;
+}
+
+object {
+	object-fit: scale-down;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+img.paperdoll {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin-left: 0;
+}
+
+span.plusButton {
+	display: inline-block;
+	line-height: 25px;
+	width: 20px;
+	text-align: center;
+	border: 1px solid rgba(0, 139, 0, 0.3);
+	background: rgba(0, 139, 0, 0.2);
+	margin: 2px 0;
+}
+
+span.minusButton {
+	display: inline-block;
+	line-height: 25px;
+	width: 20px;
+	text-align: center;
+	border: 1px solid rgba(184, 0, 0, 0.3);
+	background: rgba(184, 0, 0, 0.2);
+	margin: 2px 0;
+}
+
+span.zeroButton {
+	display: inline-block;
+	line-height: 25px;
+	width: 20px;
+	text-align: center;
+	border: 1px solid rgba(0, 0, 255, 0.3);
+	background: rgba(0, 0, 255, 0.2);
+	margin: 2px 0;
+}
+
+span.plusButton:hover { background: rgba(0, 139, 0, 0.4); }
+span.minusButton:hover { background: rgba(184, 0, 0, 0.4); }
+span.zeroButton:hover { background: rgba(0, 0, 255, 0.4); }
+
+span.plusButton > a { display: block; }
+span.minusButton > a { display: block; }
+span.zeroButton > a { display: block; }
+
+span.plusButton > a:hover { text-decoration: none; }
+span.minusButton > a:hover { text-decoration: none; }
+span.zeroButton > a:hover { text-decoration: none; }
+
+/* Colors are made as css classes, to allow them to be changed for a light color scheme (for example). */
+/* a version is for this case: <span class="-.."><a>text</a></span> */
+.link, .link a { color: #68D } /* link color */
+.aquamarine, .aquamarine a, .skill, .skill a { color: aquamarine }
+.coral, .coral a, .fetish.loss, .fetish.loss a { color: coral }
+.cyan, .cyan a { color: cyan } /* used for aphrodisiac & neighbor arcs */
+.darkgoldenrod, .darkgoldenrod a, .trust.extremely-terrified, .trust.extremely-terrified a { color: darkgoldenrod }
+.darkred, .darkred a, .defiant.full, .defiant.full a { color: darkred }
+.darkviolet, .darkviolet a, .devotion.hateful, .devotion.hateful a { color: darkviolet }
+.deeppink, .deeppink a, .devotion.devoted, .devotion.devoted a { color: deeppink } /* used for devotion once & agent */
+.steelblue, .steelblue a { color: steelblue }
+.deepskyblue, .deepskyblue a, .intelligent, .intelligent a { color: deepskyblue }
+.dodgerblue, .dodgerblue a { color: dodgerblue }
+.blue, .blue a { color: blue }
+.gold, .gold a, .trust.dec, .trust.dec a, .trust.frightened, .trust.frightened a { color: gold }
+.goldenrod, .goldenrod a, .trust.terrified, .trust.terrified a { color: goldenrod }
+.gray, .gray a { color: gray }
+.green, .green a, .reputation.inc, .reputation.inc a, .improvement, .improvement a, .flaw.break, .flaw.break a, .skill.inc, .skill.inc a { color: green }
+.hotpink, .hotpink a, .devotion.inc, .devotion.inc a, .devotion.accept, .devotion.accept a { color: hotpink }
+.lawngreen, .lawngreen a { color: lawngreen }
+.lightblue, .lightblue a { color: lightblue }
+.lightcoral, .lightcoral a, .fetish.gain, .fetish.gain a { color: lightcoral } /* compare pink for fetish */
+.lightgreen, .lightgreen a, .relationship, .relationship a { color: lightgreen }
+.lightpink, .lightpink a { color: lightpink }
+.lightsalmon, .lightsalmon a, .fetish.inc, .fetish.inc a { color: lightsalmon }
+.lime, .lime a, .change.positive, .change.positive a, .virginity.loss, .virginity.loss a, .pregnant, .pregnant a { color: lime } /* tight orifices, breast changes, take virginity, not sure on good aliases */
+.limegreen, .limegreen a { color: limegreen } /* multiple questionable uses */
+.magenta, .magenta a, .devotion.worship, .devotion.worship a { color: magenta }
+.mediumaquamarine, .mediumaquamarine a, .trust.inc, .trust.inc a, .trust.careful, .trust.careful a  { color: mediumaquamarine }
+.mediumorchid, .mediumorchid a, .devotion.dec, .devotion.dec a, .devotion.resistant, .devotion.resistant a { color: mediumorchid }
+.mediumseagreen, .mediumseagreen a, .trust.trusting, .trust.trusting a { color: mediumseagreen }
+.orange, .orange a, .stupid, .stupid a, .change.negative, .change.negative a, .defiant.careful, .defiant.careful a, .intro.question { color: orange } /* generally between red and green, and a lot of other places */
+.orangered, .orangered a, .defiant.inc, .defiant.inc a, .defiant.bold, .defiant.bold, .education.neg a { color: orangered }
+.orchid, .orchid a { color: orchid } /* used once (wrong? */
+.pink, .pink a, .slave.name.simple { color: pink } /* also fetish start ??? , and a lot of other stuff */
+.red, .red a, .health.dec, .health.dec a, .cash.dec, .cash.dec a, .flaw.gain, .flaw.gain a, .error, .error a, .elites.loss, .elites.loss a, .reputation.dec, .reputation.dec a, .warning, .warning a { color: red } /* also generally bad stuff */
+/* note: .error is for unexpected behaviour, .warning for player feedback */
+.seagreen, .seagreen a, .trust.prof-trusting, .trust.prof-trusting a { color: seagreen }
+.springgreen, .springgreen a, .skill.player, .skill.player a { color: springgreen }
+.tan, .tan a { color: tan } /* some ethnicity */
+.chocolate, .chocolate a { color: chocolate }
+.saddlebrown, .saddlebrown a { color: saddlebrown }
+.teal, .teal a { color: teal }
+.yellow, .yellow a, .noteworthy, .noteworthy a, .devotion.ambivalent, .devotion.ambivalent a, .trust.fearful, .trust.fearful a { color: yellow }
+.yellowgreen, .yellowgreen a, .cash.inc, .cash.inc a, .cash, .cash a { color: yellowgreen }
+
+/*! <<checkvars>> macro for SugarCube 2.x */
+#ui-dialog-body.checkvars{padding:1em}#ui-dialog-body.checkvars h1{font-size:1em;margin-top:0}#ui-dialog-body.checkvars table{border-collapse:collapse;border-spacing:0}#ui-dialog-body.checkvars thead tr{border-bottom:2px solid #444}#ui-dialog-body.checkvars tr:not(:first-child){border-top:1px solid #444}#ui-dialog-body.checkvars td,#ui-dialog-body.checkvars th{padding:.25em 1em}#ui-dialog-body.checkvars td:first-child,#ui-dialog-body.checkvars th:first-child{padding-left:.5em;border-right:1px solid #444}#ui-dialog-body.checkvars td:last-child,#ui-dialog-body.checkvars th:last-child{padding-right:.5em}#ui-dialog-body.checkvars th:first-child{text-align:center}#ui-dialog-body.checkvars td:first-child{font-weight:700;text-align:right}#ui-dialog-body.checkvars td{font-family:monospace,monospace;vertical-align:top;white-space:pre-wrap}#ui-dialog-body.checkvars .scroll-pad{margin:0;padding:0}
+
+/*! <<bugreport>> macro for SugarCube 2.x */
+#ui-dialog-body.bugreport #bugreport-info{margin-bottom:1em}#ui-dialog-body.bugreport #bugreport-data{display:block;overflow:auto;font-family:monospace,monospace;background-color:transparent;border:1px solid #444;margin:0;padding:6px;height:auto;min-height:200px;white-space:normal}#ui-dialog-body.bugreport .scroll-pad{margin:0;padding:0}
+
+div.output{
+width: 100%;
+width: 100vw;
+max-width: 100%;
+word-break: break-all;
+white-space: normal;
+}
+/* css rules for rules assistant */
+.rajs-listitem {
+	display: inline-block;
+	color: #68D;
+	margin-right: 1em;
+}
+.rajs-listitem.selected {
+	color: gray;
+	text-decoration: none;
+}
+.rajs-listitem:last-of-type { margin-right: 0; }
+.rajs-listitem:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+.rajs-listitem.selected:hover {
+	cursor: default;
+	text-decoration: none;
+}
+.rajs-list strong:first-of-type, .rajs-list input {
+	margin-right: 2em;
+}
+.rajs-listitem input {
+	margin: 0.25em;
+}
+.rajs-section h1 {
+	border-bottom: 1px solid white;
+	cursor: pointer;
+}
+.rajs-section h1:hover { text-decoration: underline; }
+
+.scroll {
+	overflow: auto;
+}
+
+h1, h2, h3 {
+	margin-bottom: 0;
+	margin-top: 0.25em;
+}
+.founding {
+	font-size: 0.8em;
+	margin-top: -0.8em;
+	margin-left: 0.5em;
+	font-style: italic;
+}
+table.corporate {
+	border: 3px darkgreen double;
+	border-collapse: collapse;
+	min-width: 33%;
+}
+table.corporate tbody tr:nth-child(even) {
+	background-color: rgb(0, 30, 0);
+}
+table.corporate tbody tr:nth-child(odd) {
+	background-color: rgb(15, 40, 15);
+}
+table.corporate td {
+	vertical-align: top;
+}
+.minor-note {
+	font-size: 0.75em;
+	font-style: italic;
+}
+.majorText {
+	margin-top: 0.5em;
+	margin-bottom: 1.5em;
+}
+.tab {
+	margin-left: 2em;
+}
+div.indent, p.indent {
+	text-indent: 2em;
+}
+div.double-indent, p.double-indent {
+	text-indent: 4em;
+}
+div.choices, p.choices {
+	margin-left: 2em;
+}
+div.double-choices, p.double-choices {
+	margin-left: 4em;
+}
+
+/* setting at the beginning of a scene / subscene */
+.scene-intro {
+	font-style: italic;
+}
+
+/* adds detail to an option: Do something. <span class="detail">Sentence that explains the effect/conditions */
+.detail {
+	font-style: italic;
+}
+
+/* additional information not related to a specific option */
+.note {
+	font-style: italic;
+}
+
+.story-label {
+	text-decoration: underline;
+}
+
+/* Note: Do not do a linebreak after span in HTML, because it will underline the automatic space it inserts: "Matilda_is a cow" */
+.slave-name {
+	color: pink;
+	font-weight: bold;
+	text-decoration: underline;
+	text-decoration-color: white;
+}
+
+.name {
+	font-weight: bold;
+}
+
+div.cheat-menu {
+	font-style: italic;
+	position: absolute;
+	right: 50px;
+}
+
+h1 + p {
+	margin-top: 0;
+}
+h2 + p {
+	margin-top: 0;
+}
+h3 + p {
+	margin-top: 0;
+}
+
+.main-fcnn {
+	text-align: center;
+	margin: 0 auto;
+}
+
+.major-link {
+	font-weight: bold;
+}
+
+.clear-formatting {
+	color: white;
+	font-weight: normal;
+	font-style: normal;
+}
+
+.hotkey {
+	color: cyan;
+}
+
+.major-warning {
+	font-weight: bold;
+	color: red;
+}
+
+div.center {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+div.flex-container {
+	display: flex;
+}

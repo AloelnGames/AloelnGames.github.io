@@ -1,0 +1,151 @@
+:: RE relationship advice [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "Next Week", $activeSlave = $eventSlave>>
+<<run Enunciate($activeSlave)>>
+<<setLocalPronouns $activeSlave>>
+
+<<set _i = $slaveIndices[$activeSlave.relationshipTarget]>>
+<<set $subSlave = $slaves[_i]>>
+<<setLocalPronouns $subSlave 2>>
+
+<<set _clothesTemp = $activeSlave.clothes, $activeSlave.clothes = "no clothing">>
+<span id="artFrame">
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<div class="imageColumn">
+		<div class="imageRef medImg">
+			<<= SlaveArt($activeSlave, 2, 0)>>
+		</div>
+		<div class="imageRef medImg">
+			<<= SlaveArt($subSlave, 2, 0)>>
+		</div>
+	</div>
+<</if>>
+/* 000-250-006 */
+</span>
+<<set $activeSlave.clothes = _clothesTemp>>
+
+<<= App.UI.slaveDescriptionDialog($activeSlave)>> is standing for an inspection. $He's a good $girl, and is cooperating, but $he seems preoccupied. After ignoring it for a while, you give in to curiosity and flatly ask $him what's going on. "I'm <<s>>orry, <<Master>>," $he <<if SlaveStatsChecker.checkForLisp($activeSlave)>>lisp<<else>>mutter<</if>>s, biting $his lip. "It'<<s>> <<= App.UI.slaveDescriptionDialog($subSlave)>>."
+$He hesitates, so you prompt $him, asking if $he's having trouble with $his
+<<if $activeSlave.relationship == 2>>
+	friend.
+<<elseif $activeSlave.relationship == 3>>
+	friend with benefits.
+<<elseif $activeSlave.relationship == 4>>
+	lover.
+<</if>>
+$He quickly shakes $his head no. "N-no, <<Master>>, it's ju<<s>>t —" $He subsides into silence again, blushing and staring <<if !canSee($activeSlave)>>blankly <</if>><<if hasBothLegs($activeSlave)>>at $his feet<<else>>downwards<</if>>. Comprehension dawning, you ask $him if
+<<if $activeSlave.relationship == 2>>
+	$he wants to be more than friends with $subSlave.slaveName.
+<<elseif $activeSlave.relationship == 3>>
+	$he's wanting to bring emotions into relationship with $subSlave.slaveName, rather than keep it friendly and sexual.
+<<elseif $activeSlave.relationship == 4>>
+	$he wants to make an honest _woman2 out of $subSlave.slaveName.
+<</if>>
+$He nods $his head quickly, still staring <<if !canSee($activeSlave)>>blankly <</if>><<if hasBothLegs($activeSlave)>>at $his feet<<else>>downwards<</if>>. $He shuts $his eyes tight and waits for you to weigh in on the situation.
+
+<span id="result">
+<br><<link "Break them up">>
+	<<replace "#result">>
+	<br><br>
+	In a cold tone of voice, you admit your irritation with this school<<= $girl>> nonsense, and tell $him $he's to stop spending time with $subSlave.slaveName. $He's unable to prevent $his eyes from flicking up at you in @@.mediumorchid;shock and horror,@@ but $he instantly lowers them again, the tears coming fast. You dismiss $him, and $he turns to go, but is so discombobulated by anguish that $he trips over $his own feet and falls with a slap of naked $activeSlave.skin flesh against the floor. Their relationship @@.lightsalmon;is over.@@
+
+	<<set $activeSlave.devotion -= 5>>
+	<<set $activeSlave.relationship = 0>>
+	<<set $activeSlave.relationshipTarget = 0>>
+	<<set $slaves[_i].relationship = 0>>
+	<<set $slaves[_i].relationshipTarget = 0>>
+	<</replace>>
+<</link>>
+<br><<link "Build $his confidence">>
+	<<replace "#result">>
+	<br><br>
+	In a warm tone of voice, you tell $him you approve of $his relationship with $subSlave.slaveName. $He raises $his chin and looks at you with @@.hotpink;growing adoration@@ as you point out how lucky $subSlave.slaveName is to have $him. You tell $him that you're not planning to intervene personally, but that you think $he really ought to pursue the relationship, that they're good for each other, and that you're confident $subSlave.slaveName feels the same way. $He thanks you prettily and leaves at a flat run, in a hurry to tell $his
+	<<if $activeSlave.relationship == 2>>
+		sexy friend
+	<<elseif $activeSlave.relationship == 3>>
+		friend with benefits
+	<<elseif $activeSlave.relationship == 4>>
+		dear lover
+	<</if>>
+	how $he feels about _him2.
+	<<if $activeSlave.relationship == 2>>
+		The next time you see them together, they're looking like they've been getting a little less sleep lately, but @@.lightgreen;can't seem to keep their hands off each other.@@ $activeSlave.slaveName mouths a silent thanks to you when $subSlave.slaveName isn't looking.
+	<<elseif $activeSlave.relationship == 3>>
+		The next time you see them together, they're @@.lightgreen;holding hands at breakfast,@@ looking almost ashamed of themselves, but not letting go. $activeSlave.slaveName mouths a silent thanks to you when $subSlave.slaveName isn't looking.
+	<<elseif $activeSlave.relationship == 4>>
+		$He comes running right back, a happy $subSlave.slaveName <<if canWalk($subSlave)>>running in with $him<<else>>being helped in by _his2 lover<</if>>. You @@.lightgreen;marry them@@ solemnly, and they embrace tightly, hugging each other close. $activeSlave.slaveName comes to face you over $his _wife2's shoulder, and $he mouths a silent, tearful thanks to you.
+	<</if>>
+
+	<<set $activeSlave.devotion += 5>>
+	<<set $activeSlave.relationship += 1>>
+	<<set $slaves[_i].relationship += 1>>
+	<</replace>>
+<</link>>
+<br><<link "Bring the other _girl2 in">>
+	<<replace "#result">>
+	<br><br>
+	You tell $activeSlave.slaveName to wait, and page $subSlave.slaveName up to your office. $activeSlave.slaveName looks terrified, but tries to conceal $his emotions behind a happy greeting for $his
+	<<if $activeSlave.relationship == 2>>
+		friend
+	<<elseif $activeSlave.relationship == 3>>
+		friend with benefits
+	<<elseif $activeSlave.relationship == 4>>
+		lover
+	<</if>>
+	when _he2 comes in. $subSlave.slaveName knows $him well enough to detect $his inner turmoil, and asks $him what's wrong. $activeSlave.slaveName flinches and looks to you in desperation, but you just nod at $him to spit it out. After two false starts, $he manages to say,
+	"$subSlave.slaveName, I really want
+	<<if $activeSlave.relationship == 2>>
+		<<if ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "buttslut")>>
+			to fuck your butt." $subSlave.slaveName looks relieved that that's all it is, and <<if ($subSlave.voice != 0)>>says, "Okay!"<<else>>nods.<</if>> _He2 kisses $activeSlave.slaveName and then grinds _his2 ass against $activeSlave.slaveName's crotch.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "cumslut")>>
+			to <<if ($subSlave.vagina != -1)>>eat you out<<else>>blow you<</if>>." $subSlave.slaveName looks relieved that that's all it is, and <<if ($subSlave.voice != 0)>>says, "Okay!"<<else>>nods.<</if>> _He2 <<if ($subSlave.vagina != -1)>>offers _his2 pussy<<else>>flops _his2 dick at $activeSlave.slaveName<</if>> comically.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "humiliation")>>
+			to fuck you in public." $subSlave.slaveName looks relieved that that's all it is, and <<if ($subSlave.voice != 0)>>says, "Okay!"<<else>>nods.<</if>>
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "masochist")>>
+			you to hurt me. Like, really hurt me." $subSlave.slaveName looks relieved that that's all it is, and <<if ($subSlave.voice != 0)>>says, "Okay!"<<else>>nods.<</if>> _He2 pinches one of $activeSlave.slaveName's nipples experimentally.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "sadist")>>
+			to hold you down." $subSlave.slaveName looks relieved that that's all it is, and <<if ($subSlave.voice != 0)>>says, "Okay!"<<else>>nods.<</if>> _He2 steps in close to $activeSlave.slaveName, takes $activeSlave.slaveName's hand<<if hasBothArms($activeSlave)>>s<</if>>, and places them around _his2 own throat.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "dom")>>
+			to be your top." $subSlave.slaveName looks relieved that that's all it is, and <<if ($subSlave.voice != 0)>>says, "Okay!"<<else>>nods.<</if>> _He2 sidles up to $activeSlave.slaveName, looking up at $him submissively.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "submissive")>>
+			to be your bottom." $subSlave.slaveName looks relieved that that's all it is, and says, <<if ($subSlave.voice != 0)>>says, "Okay!"<<else>>nods.<</if>> _He2 takes $activeSlave.slaveName's face in _his2 hand<<if hasBothArms($subSlave)>>s<</if>> and kisses $him dominantly.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "boobs")>>
+			to fuck your boob<<s>>." $subSlave.slaveName looks relieved that that's all it is, and says, <<if ($subSlave.voice != 0)>>says, "Okay!"<<else>>nods.<</if>> _He2 takes $activeSlave.slaveName's <<if hasBothArms($activeSlave)>>hands and places them<<else>>hand and places it<</if>> right on _his2 breasts.
+		<<else>>
+			to fuck you." $subSlave.slaveName looks relieved that that's all it is, and <<if ($subSlave.voice != 0)>>says, "Okay!"<<else>>nods.<</if>> _He2 takes $activeSlave.slaveName's <<if hasBothArms($activeSlave)>>hands and places them<<else>>hand and places it<</if>> right on _his2 breasts.
+		<</if>>
+		$activeSlave.slaveName bursts out laughing. They're now @@.lightgreen;friends with benefits.@@
+	<<elseif $activeSlave.relationship == 3>>
+		t-to b-be your <<= $girl>>friend." $He takes a deep breath. "It'<<s>> fun, ju<<s>>t
+		<<if ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "buttslut")>>
+			fucking your butt.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "cumslut")>>
+			to <<if ($subSlave.vagina != -1)>>eating you out<<else>>blowing you<</if>>.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "humiliation")>>
+			fucking you in public.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "masochist")>>
+			having you hurt me.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "sadist")>>
+			holding you down.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "dom")>>
+			topping you.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "submissive")>>
+			being your bottom.
+		<<elseif ($activeSlave.fetishKnown == 1) && ($activeSlave.fetish == "boobs")>>
+			fucking your boob<<s>>.
+		<<else>>
+			having <<s>>e<<x>> with you.
+		<</if>>
+		But I — I really like you." $subSlave.slaveName looks relieved, and <<if $subSlave.voice != 0>>says, "I really like you too. And you're really cute! I'd love to be your <<= _girl2>>friend." _He2<<else>>lovingly<</if>> takes $activeSlave.slaveName's hands in _hers2, and then kisses $him on the cheek. $activeSlave.slaveName crushes $subSlave.slaveName in a hug, pressing a squeak out of _him2. They're now @@.lightgreen;lovers.@@
+	<<elseif $activeSlave.relationship == 4>>
+		- " $He stops $himself. "No, I want to do thi<<s>> right." $He takes $subSlave.slaveName's hand, and then drops to one knee. After a moment of uncomprehending shock, $subSlave.slaveName begins to cry. "Will you marry me?" $subSlave.slaveName turns to you and<<if !canTalk($subSlave)>> wordlessly<</if>> asks if it's all right with you; you nod, and _he2 turns back to $activeSlave.slaveName. <<if !canTalk($subSlave)>>_He2 gestures distractedly that $activeSlave.slaveName is being silly, and of course _he2'll marry $him, because _he2 loves $him.<<else>><<run Enunciate($subSlave)>>"O-of cour<<s>>e I'll m-marry you, <<s>>illy $girl. I love you."<</if>> $activeSlave.slaveName jumps up and crushes $subSlave.slaveName in a hug, kissing _him2 frantically through $his tears. You @@.lightgreen;marry them@@ solemnly, and they embrace tightly, hugging each other close. $activeSlave.slaveName comes to face you over $his _wife2's shoulder, and $he mouths a silent thanks to you.
+	<</if>>
+	If $activeSlave.slaveName had doubts about you, @@.mediumaquamarine;they've been addressed.@@
+
+	<<set $activeSlave.trust += 10>>
+	<<set $activeSlave.relationship += 1>>
+	<<set $slaves[_i].relationship += 1>>
+	<</replace>>
+<</link>>
+</span>

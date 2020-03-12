@@ -1,0 +1,119 @@
+.optionMacro {
+	margin-top: 8px;
+	display: flex;
+}
+
+.optionDescription {
+	display: inline-block;
+	width: 50%;
+	margin-right: 10px;
+	text-align: right;
+}
+
+@media only screen and (max-width: 1200px) {
+	.optionDescription {
+		display: block;
+		width: unset;
+		text-align: left;
+	}
+
+	.optionMacro {
+		margin-top: 30px;
+	}
+
+}
+
+.optionMacroOption {
+	border: #555 solid 0.5px;
+	border-top-width: 0;
+	vertical-align: top;
+	-moz-user-select: none;
+	min-width: 79px; /* 80px - 1px for border */
+	max-height: 30px;
+	display: inline-block;
+	text-align: center;
+}
+
+.optionComment {
+	vertical-align: top;
+	color: gray;
+}
+
+/* But don't add the | after the last one */
+.optionMacroOption:last-child {
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+	border-right-width: 0;
+}
+
+.optionMacroOption:first-child {
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+}
+
+.optionMacroOption a {
+	padding: 0 10px;
+	box-sizing: border-box;
+	width: 100%;
+	display: block;
+}
+
+.optionMacroOption:hover {
+	background: #2F2F2F;
+}
+
+body.lightTheme .optionMacroOption:hover {
+	background: #DDDDDD;
+}
+
+body.lightTheme .optionMacroSelected {
+	background: #DDDDDD;
+}
+
+.optionMacroSelected {
+	background: #2F2F2F;
+	padding: 0 10px;
+	min-width: 80px;
+	cursor: pointer;
+	box-sizing: border-box;
+}
+
+.optionValue {
+	display: inline-flex;
+	flex-wrap: wrap;
+}
+
+.optionValue input {
+	padding: 3px 3px 3px 10px;
+	background: transparent;
+	border: #555 solid 0.5px;
+	border-top-width: 0;
+	min-width: unset;
+	width: 140px;
+	height: 22px;
+}
+
+.optionMacroNumber input {
+	width: 50px;
+}
+
+.optionValue input:last-child {
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+	border-right-width: 0;
+}
+
+.optionValue input:first-child {
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+}
+
+.optionMacroSelected.optionMacroEnable {
+	color: rgb(230,255,230);
+	background-image: linear-gradient(rgba(0, 255,0, 0.12), transparent);
+}
+
+.optionMacroSelected.optionMacroDisable {
+	color: rgb(255,240,240);
+	background-image: linear-gradient(rgba(255, 100, 0, 0.2), transparent);
+}

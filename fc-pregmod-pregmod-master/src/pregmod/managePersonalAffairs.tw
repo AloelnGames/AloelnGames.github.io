@@ -1,0 +1,804 @@
+:: Manage Personal Affairs [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Main", $showEncyclopedia = 0>>
+<<run PCTitle()>>
+
+<<set _ML = $marrying.length>>
+
+<<if $cheatMode == 1>>
+	<div class="cheat-menu">[[Cheat Edit Player|PCCheatMenu][$cheater = 1]]</div>
+<</if>>
+
+<h1>Personal Affairs</h1>
+
+<h2>Appearance</h2>
+
+<p>
+	<div>
+		You pause for a moment from your busy day to day life to return to <<if $masterSuite != 0>>$masterSuiteName<<else>>your room<</if>> to consider some things about yourself.
+	</div>
+	<div>
+		You take yourself in a full length mirror. You are <<= addA($PC.race)>> <<if $PC.dick != 0 && $PC.vagina != -1>>futanari<<elseif $PC.dick != 0>>man<<else>>woman<</if>> with<<if $PC.markings == "freckles">> freckled<<elseif $PC.markings == "heavily freckled">> heavily freckled<</if>> <<print $PC.skin>> skin, $PC.hColor hair, <<print App.Desc.eyesColor($PC)>> and a perfect $PC.faceShape face.
+		<<if $PC.actualAge >= 65>>
+			You're @@.orange;$PC.actualAge@@ and definitely feeling it.<<if $PC.visualAge > $PC.actualAge>> You've taken measures to @@.lime;look an older $PC.visualAge,@@ though perhaps it might be time to undo it.<<elseif $PC.visualAge < $PC.actualAge>> You've taken measures to @@.lime;look a younger $PC.visualAge,@@ now if only your body agreed with your looks.<</if>>
+		<<elseif $PC.actualAge >= 50>>
+			You're @@.orange;$PC.actualAge@@ and starting to feel it.<<if $PC.visualAge > $PC.actualAge>> You've taken measures to @@.lime;look an older $PC.visualAge.@@<<elseif $PC.visualAge < $PC.actualAge>> You've taken measures to @@.lime;look a younger $PC.visualAge.@@<</if>>
+		<<elseif $PC.actualAge >= 35>>
+			You're @@.orange;$PC.actualAge@@ and strong.<<if $PC.visualAge > $PC.actualAge>> You've taken measures to @@.lime;look an older $PC.visualAge@@ and reap the respect that comes with it.<<elseif $PC.visualAge < $PC.actualAge>> You've taken measures to @@.lime;look a younger $PC.visualAge@@ recapturing your youth.<</if>>
+		<<else>>
+			You're @@.orange;$PC.actualAge@@ and full of vigor.<<if $PC.visualAge > $PC.actualAge>> You've taken measures to @@.lime;look an older $PC.visualAge@@ and reap the respect that comes with it.<<elseif $PC.visualAge < $PC.actualAge>> You've taken measures to @@.lime;look a younger $PC.visualAge,@@ even though society may find your looks uncomfortable.<</if>>
+		<</if>>
+		<<if ($playerAging != 0)>>Your birthday is <<if $PC.birthWeek == 51>>next week<<else>>in <<print 52-$PC.birthWeek>> weeks<</if>>.<</if>>
+		Looking down,
+		<<PlayerBoobs>>
+		<<PlayerBelly>>
+		<<if $PC.prostate > 2 && $PC.belly < 10000>> Your pubic mound bulges outward noticeably thanks to your massive prostate.<<elseif $PC.prostate == 2 && $PC.belly < 5000>> Your pubic mound swells outward slightly due to your oversized prostate.<</if>>
+		Beneath all that,
+		<<PlayerCrotch>>
+		Around back,
+		<<PlayerButt>>
+	</div>
+
+	<div>
+		<<if $playerSurgery == 0>>[[Visit your plastic surgeon.|Elective Surgery][$playerSurgery = 4]]<<elseif $playerSurgery == 1>>Your favorite plastic surgeon is booked solid for the next week.<<else>>Your favorite plastic surgeon is booked solid for the next $playerSurgery weeks.<</if>>
+	</div>
+	<div>
+		You have a number of contact lenses in various colors available.
+		You current eye color is <<print App.Desc.eyeColor($PC)>>.
+
+		/* This a simplified version of the slave code in salon.tw, when adding missing/glass eyes, copy the code from there */
+		/* remove lenses */
+		<<set _n = 0>>
+		<<if getLeftEyeColor($PC) !== getGeneticEyeColor($PC, "left")>>
+			<<set _n++>>
+			[[Remove left lens|Manage Personal Affairs][resetEyeColor($PC, "left")]]
+		<</if>>
+		<<if getRightEyeColor($PC) !== getGeneticEyeColor($PC, "right")>>
+			<<set _n++>>
+			<<if _n > 0>>|<</if>>
+			[[Remove right lens|Manage Personal Affairs][resetEyeColor($PC, "right")]]
+		<</if>>
+		<<if _n === 2>>
+			| [[Remove both lenses|Manage Personal Affairs][resetEyeColor($PC, "both")]]
+		<</if>>
+
+		<span class="note">Change what your eyes look like:</span>
+	</div>
+
+	<div class="double-indent">
+		Side:
+		[[Left|Manage Personal Affairs][$artificialEyeSide = "left"]]
+		| [[Right|Manage Personal Affairs][$artificialEyeSide = "right"]]
+		| [[Both|Manage Personal Affairs][$artificialEyeSide = "both"]]
+	</div>
+
+	<div class="double-indent">
+		Iris:
+		[[Amber|Manage Personal Affairs][$artificialEyeColor = "amber"]]
+		| [[Black|Manage Personal Affairs][$artificialEyeColor = "black"]]
+		| [[Blue|Manage Personal Affairs][$artificialEyeColor = "blue"]]
+		| [[Brown|Manage Personal Affairs][$artificialEyeColor = "brown"]]
+		| [[Green|Manage Personal Affairs][$artificialEyeColor = "green"]]
+		| [[Hazel|Manage Personal Affairs][$artificialEyeColor = "hazel"]]
+		| [[Orange|Manage Personal Affairs][$artificialEyeColor = "orange"]]
+		| [[Pale-Grey|Manage Personal Affairs][$artificialEyeColor = "pale-grey"]]
+		| [[Pink|Manage Personal Affairs][$artificialEyeColor = "pink"]]
+		| [[Red|Manage Personal Affairs][$artificialEyeColor = "red"]]
+		| [[Sky-Blue|Manage Personal Affairs][$artificialEyeColor = "sky-blue"]]
+		| [[Turquoise|Manage Personal Affairs][$artificialEyeColor = "turquoise"]]
+		| [[White|Manage Personal Affairs][$artificialEyeColor = "white"]]
+		| [[Yellow|Manage Personal Affairs][$artificialEyeColor = "yellow"]]
+	</div>
+
+	<div class="double-indent">
+		Pupil:
+		[[Circular|Manage Personal Affairs][$artificialEyeShape = "circular"]]
+		| [[Almond-Shaped|Manage Personal Affairs][$artificialEyeShape = "almond-shaped"]]
+		| [[Bright|Manage Personal Affairs][$artificialEyeShape = "bright"]]
+		| [[Catlike|Manage Personal Affairs][$artificialEyeShape = "catlike"]]
+		| [[Demonic|Manage Personal Affairs][$artificialEyeShape = "demonic"]]
+		| [[Devilish|Manage Personal Affairs][$artificialEyeShape = "devilish"]]
+		| [[Goat-Like|Manage Personal Affairs][$artificialEyeShape = "goat-like"]]
+		| [[Heart-Shaped|Manage Personal Affairs][$artificialEyeShape = "heart-shaped"]]
+		| [[Hypnotic|Manage Personal Affairs][$artificialEyeShape = "hypnotic"]]
+		| [[Serpent-Like|Manage Personal Affairs][$artificialEyeShape = "serpent-like"]]
+		| [[Star-Shaped|Manage Personal Affairs][$artificialEyeShape = "star-shaped"]]
+		| [[Teary|Manage Personal Affairs][$artificialEyeShape = "teary"]]
+		| [[Vacant|Manage Personal Affairs][$artificialEyeShape = "vacant"]]
+		| [[Wide-Eyed|Manage Personal Affairs][$artificialEyeShape = "wide-eyed"]]
+	</div>
+
+	<div class="double-indent">
+		Sclera:
+		[[White|Manage Personal Affairs][$artificialEyeFill = "white"]]
+		| [[Amber|Manage Personal Affairs][$artificialEyeFill = "amber"]]
+		| [[Black|Manage Personal Affairs][$artificialEyeFill = "black"]]
+		| [[Blue|Manage Personal Affairs][$artificialEyeFill = "blue"]]
+		| [[Brown|Manage Personal Affairs][$artificialEyeFill = "brown"]]
+		| [[Green|Manage Personal Affairs][$artificialEyeFill = "green"]]
+		| [[Hazel|Manage Personal Affairs][$artificialEyeFill = "hazel"]]
+		| [[Orange|Manage Personal Affairs][$artificialEyeFill = "orange"]]
+		| [[Pale-Grey|Manage Personal Affairs][$artificialEyeFill = "pale-grey"]]
+		| [[Pink|Manage Personal Affairs][$artificialEyeFill = "pink"]]
+		| [[Red|Manage Personal Affairs][$artificialEyeFill = "red"]]
+		| [[Sky-Blue|Manage Personal Affairs][$artificialEyeFill = "sky-blue"]]
+		| [[Turquoise|Manage Personal Affairs][$artificialEyeFill = "turquoise"]]
+		| [[Yellow|Manage Personal Affairs][$artificialEyeFill = "yellow"]]
+	</div>
+
+	<<if ndef $artificialEyeColor>>
+		<<set $artificialEyeColor = "", $artificialEyeShape = "", $artificialEyeFill = "">>
+	<</if>>
+
+	<<if $artificialEyeSide != "" && $artificialEyeColor != "">>
+		<div class="indent">
+			<<link "Take" "Manage Personal Affairs">>
+				/* apply modifications */
+				<<run setEyeColorFull($PC, $artificialEyeColor, $artificialEyeShape, $artificialEyeFill, $artificialEyeSide)>>
+				<<run cashX(forceNeg($modCost), "PCmedical")>>
+
+				/* reset variables */
+				<<set $artificialEyeSide = "", $artificialEyeColor = "", $artificialEyeShape = "", $artificialEyeFill = "">>
+			<</link>>
+
+			/* make the following easier to read */
+			<<set _both = $artificialEyeSide === "both">>
+
+			<<if _both>>
+				$artificialEyeColor lenses
+			<<else>>
+				a $artificialEyeColor lens
+			<</if>>
+			<<if $artificialEyeShape != "" || $artificialEyeFill != "">>
+				with
+				<<if $artificialEyeShape != "" >>
+					$artificialEyeShape <<if _both>> pupils <<else>> pupil <</if>>
+				<</if>>
+				<<if $artificialEyeShape != "" && $artificialEyeFill != "">>
+					and
+				<</if>>
+				<<if $artificialEyeFill != "" >>
+					$artificialEyeFill <<if _both>> sclerae <<else>> sclera <</if>>
+				<</if>>
+			<</if>>?
+		</div>
+	<</if>>
+
+	<div>
+		You have a selection of hair dyes available:
+	</div>
+	<div class="indent">
+		<<if $PC.origHColor == $PC.hColor>>Your hair is its natural color.<<else>>[[Remove dye|Manage Personal Affairs][$PC.hColor = $PC.origHColor]]<</if>>
+		<<if $PC.origHColor != "auburn">>| [[Auburn|Manage Personal Affairs][$PC.hColor = "auburn"]]<</if>>
+		<<if $PC.origHColor != "black">>| [[Hazel|Manage Personal Affairs][$PC.hColor = "black"]]<</if>>
+		<<if $PC.origHColor != "blonde">>| [[Blonde|Manage Personal Affairs][$PC.hColor = "blonde"]]<</if>>
+		<<if $PC.origHColor != "blue">>| [[Blue|Manage Personal Affairs][$PC.hColor = "blue"]]<</if>>
+		<<if $PC.origHColor != "blue-violet">>| [[Blue-Violet|Manage Personal Affairs][$PC.hColor = "blue-violet"]]<</if>>
+		<<if $PC.origHColor != "brown">>| [[Brown|Manage Personal Affairs][$PC.hColor = "brown"]]<</if>>
+		<<if $PC.origHColor != "burgundy">>| [[Burgundy|Manage Personal Affairs][$PC.hColor = "burgundy"]]<</if>>
+		<<if $PC.origHColor != "chestnut">>| [[Chestnut|Manage Personal Affairs][$PC.hColor = "chestnut"]]<</if>>
+		<<if $PC.origHColor != "chocolate brown">>| [[Chocolate|Manage Personal Affairs][$PC.hColor = "chocolate brown"]]<</if>>
+		<<if $PC.origHColor != "copper">>| [[Copper|Manage Personal Affairs][$PC.hColor = "copper"]]<</if>>
+		<<if $PC.origHColor != "crimson">>| [[Crimson|Manage Personal Affairs][$PC.hColor = "crimson"]]<</if>>
+		<<if $PC.origHColor != "dark blue">>| [[Dark Blue|Manage Personal Affairs][$PC.hColor = "dark blue"]]<</if>>
+		<<if $PC.origHColor != "dark brown">>| [[Dark Brown|Manage Personal Affairs][$PC.hColor = "dark brown"]]<</if>>
+		<<if $PC.origHColor != "dark orchid">>| [[Blue-Violet|Manage Personal Affairs][$PC.hColor = "dark orchid"]]<</if>>
+		<<if $PC.origHColor != "ginger">>| [[Ginger|Manage Personal Affairs][$PC.hColor = "ginger"]]<</if>>
+		<<if $PC.origHColor != "golden">>| [[Golden|Manage Personal Affairs][$PC.hColor = "golden"]]<</if>>
+		<<if $PC.origHColor != "green">>| [[Green|Manage Personal Affairs][$PC.hColor = "green"]]<</if>>
+		<<if $PC.origHColor != "green-yellow">>| [[Green-Yellow|Manage Personal Affairs][$PC.hColor = "green-yellow"]]<</if>>
+		<<if $PC.origHColor != "grey">>| [[Grey|Manage Personal Affairs][$PC.hColor = "grey"]]<</if>>
+		<<if $PC.origHColor != "hazel">>| [[Hazel|Manage Personal Affairs][$PC.hColor = "hazel"]]<</if>>
+		<<if $PC.origHColor != "jet black">>| [[Jet Black|Manage Personal Affairs][$PC.hColor = "jet black"]]<</if>>
+		<<if $PC.origHColor != "pink">>| [[Pink|Manage Personal Affairs][$PC.hColor = "pink"]]<</if>>
+		<<if $PC.origHColor != "platinum blonde">>| [[Platinum Blonde|Manage Personal Affairs][$PC.hColor = "platinum blonde"]]<</if>>
+		<<if $PC.origHColor != "purple">>| [[Purple|Manage Personal Affairs][$PC.hColor = "purple"]]<</if>>
+		<<if $PC.origHColor != "red">>| [[Red|Manage Personal Affairs][$PC.hColor = "red"]]<</if>>
+		<<if $PC.origHColor != "sea green">>| [[Sea Green|Manage Personal Affairs][$PC.hColor = "sea green"]]<</if>>
+		<<if $PC.origHColor != "silver">>| [[Silver|Manage Personal Affairs][$PC.hColor = "silver"]]<</if>>
+		<<if $PC.origHColor != "strawberry-blonde">>| [[Strawberry-Blonde|Manage Personal Affairs][$PC.hColor = "strawberry-blonde"]]<</if>>
+		<<if $PC.origHColor != "white">>| [[White|Manage Personal Affairs][$PC.hColor = "white"]]<</if>>
+	</div>
+</p>
+
+<<if $weddingPlanned > 0>>
+	<h2>Wedding</h2>
+
+	<p>
+		<<set _slave1 = getSlave($marrying[0])>>
+		<<if _ML > 1>>
+			<<if _ML >= 2>>
+				<<set _slave2 = getSlave($marrying[1])>>
+			<</if>>
+			<<if _ML >= 3>>
+				<<set _slave3 = getSlave($marrying[2])>>
+			<</if>>
+			<<if _ML == 4>>
+				<<set _slave4 = getSlave($marrying[3])>>
+			<</if>>
+		<</if>>
+
+		/* yes, I am aware this looks horrendous - if you can find a way to clean this up, by all means */
+		You have a wedding planned for this weekend; you are <<if $weddingPlanned == 1>>marrying<<elseif $weddingPlanned == 2>>sharing<<elseif $weddingPlanned == 3>>knocking up<</if>> <<print "[[SlaveFullName(_slave1)|Slave Interact][$activeSlave = _slave1]]">><<if _ML > 2>>, <<elseif _ML == 2>> and <<print "[[SlaveFullName(_slave2)|Slave Interact][$activeSlave = _slave2]]">><</if>><<if _ML > 2>><<print "[[SlaveFullName(_slave2)|Slave Interact][$activeSlave = _slave2]]">><<if _ML == 3>> and <<else>>, <</if>><<print "[[SlaveFullName(_slave3)|Slave Interact][$activeSlave = _slave3]]">><<if _ML == 4>> and <<print "[[SlaveFullName(_slave4)|Slave Interact][$activeSlave = _slave4]]">><</if>> <<if $weddingPlanned == 2>>with your honored guests<</if>><</if>>.
+		[[Cancel it|Manage Personal Affairs][$weddingPlanned = -1, $marrying = []]]
+	</p>
+<</if>>
+
+<<if $FCTVreceiver > 0>>
+	<h2>FCTV</h2>
+
+	<p>
+		<<if $FCTVrate == 1>>
+			You make sure to tune in to FCTV at least once a week. [[Watch every other week|Manage Personal Affairs][$FCTVrate = 2]] | [[Watch once a month|Manage Personal Affairs][$FCTVrate = 4]] | [[Ignore it|Manage Personal Affairs][$FCTVrate = -1]]
+		<<elseif $FCTVrate == 2>>
+			You make sure to tune in to FCTV at least every two weeks. [[Watch every week|Manage Personal Affairs][$FCTVrate = 1]] | [[Watch once a month|Manage Personal Affairs][$FCTVrate = 4]] | [[Ignore it|Manage Personal Affairs][$FCTVrate = -1]]
+		<<elseif $FCTVrate == 4>>
+			You make sure to check in on FCTV at least once a month. [[Watch every week|Manage Personal Affairs][$FCTVrate = 1]] | [[Watch every other week|Manage Personal Affairs][$FCTVrate = 2]] | [[Ignore it|Manage Personal Affairs][$FCTVrate = -1]]
+		<<else>>
+			You don't watch FCTV. [[Watch every week|Manage Personal Affairs][$FCTVrate = 1]] | [[Watch every other week|Manage Personal Affairs][$FCTVrate = 2]] | [[Watch once a month|Manage Personal Affairs][$FCTVrate = 4]]
+		<</if>>
+		<<if $saveImported > 0 && $FCTVremote == 0>>
+			<div>
+				You know TVs should have a remote. [[Buy one yourself|Manage Personal Affairs][$FCTVremote = 1, cashX(forceNeg(100*$upgradeMultiplierTrade), "capEx")]]
+			</div>
+		<</if>>
+	</p>
+<</if>>
+
+<span id="reminder"></span>
+<<script>>
+	$(document).one(':passagedisplay', () => {
+		$('#reminder').append(
+			App.Reminders.fullDisplay()
+		);
+	});
+<</script>>
+
+<h2>Personal Skills</h2>
+
+<p>
+	You ponder what skills may be useful in running your arcology.
+	<div>
+		Trading:
+		<<if $PC.skill.trading >= 100>>
+			You are a master at economics and trading.
+		<<elseif $PC.skill.trading >= 80>>
+			You are an expert at economics and trading.
+		<<elseif $PC.skill.trading >= 60>>
+			You are skilled in economics and trading.
+		<<elseif $PC.skill.trading >= 40>>
+			You know some things about economics and trading.
+		<<elseif $PC.skill.trading >= 20>>
+			You are a beginner in economics.
+		<<elseif $PC.skill.trading >= 0>>
+			You know only the basics of trading.
+		<<elseif $PC.skill.trading >= -20>>
+			You know how to haggle a little.
+		<<elseif $PC.skill.trading >= -40>>
+			You know how to shop around.
+		<<elseif $PC.skill.trading >= -60>>
+			You know not to pay sticker price.
+		<<elseif $PC.skill.trading >= -80>>
+			People always give you discounts, but you never save any money.
+		<<else>>
+			They said it was a bear market, so where are the bears?
+		<</if>>
+	</div>
+	<div>
+		Warfare:
+		<<if $PC.skill.warfare >= 100>>
+			You are a master of warfare.
+		<<elseif $PC.skill.warfare >= 80>>
+			You are an expert at tactics and strategy.
+		<<elseif $PC.skill.warfare >= 60>>
+			You are skilled in combat.
+		<<elseif $PC.skill.warfare >= 40>>
+			You know some things about combat.
+		<<elseif $PC.skill.warfare >= 20>>
+			You are a beginner in tactics and strategy.
+		<<elseif $PC.skill.warfare >= 0>>
+			You know only the basics of fighting.
+		<<elseif $PC.skill.warfare >= -20>>
+			You know how to hold a gun.
+		<<elseif $PC.skill.warfare >= -40>>
+			You know how to stab with a knife.
+		<<elseif $PC.skill.warfare >= -60>>
+			Go for the throat?
+		<<elseif $PC.skill.warfare >= -80>>
+			Just kick them in the balls, right?
+		<<else>>
+			People like you are usually the first raped in a war.
+		<</if>>
+	</div>
+	<div>
+		Slaving:
+		<<if $PC.skill.slaving >= 100>>
+			You are a master slaver.
+		<<elseif $PC.skill.slaving >= 80>>
+			You are an expert at enslaving.
+		<<elseif $PC.skill.slaving >= 60>>
+			You are skilled in slaving.
+		<<elseif $PC.skill.slaving >= 40>>
+			You know some things about getting slaves.
+		<<elseif $PC.skill.slaving >= 20>>
+			You are a beginner in slaving.
+		<<elseif $PC.skill.slaving >= 0>>
+			You know only the basics of slaving.
+		<<elseif $PC.skill.slaving >= -20>>
+			You know how to avoid becoming a slave.
+		<<elseif $PC.skill.slaving >= -40>>
+			You know to read contracts before you sign them.
+		<<elseif $PC.skill.slaving >= -60>>
+			You know to be careful.
+		<<elseif $PC.skill.slaving >= -80>>
+			You know better than to trust anyone.
+		<<else>>
+			It would be easy to enslave you.
+		<</if>>
+	</div>
+	<div>
+		Engineering:
+		<<if $PC.skill.engineering >= 100>>
+			You are a master engineer.
+		<<elseif $PC.skill.engineering >= 80>>
+			You are an expert at engineering.
+		<<elseif $PC.skill.engineering >= 60>>
+			You are skilled in engineering.
+		<<elseif $PC.skill.engineering >= 40>>
+			You know some things about engineering.
+		<<elseif $PC.skill.engineering >= 20>>
+			You are a beginner in engineering.
+		<<elseif $PC.skill.engineering >= 0>>
+			You know only the basics of engineering.
+		<<elseif $PC.skill.engineering >= -20>>
+			You can build a gingerbread house that doesn't collapse.
+		<<elseif $PC.skill.engineering >= -40>>
+			You can tie a tight knot, does that count?
+		<<elseif $PC.skill.engineering >= -60>>
+			Glue is your friend; lots of it.
+		<<elseif $PC.skill.engineering >= -80>>
+			You know better than to even try to build something.
+		<<else>>
+			You can cook; that's sort of like building something, right?
+		<</if>>
+	</div>
+	<div>
+		Medicine:
+		<<if $PC.skill.medicine >= 100>>
+			You are a master surgeon.
+		<<elseif $PC.skill.medicine >= 80>>
+			You are an expert at medicine and surgery.
+		<<elseif $PC.skill.medicine >= 60>>
+			You are skilled in surgery.
+		<<elseif $PC.skill.medicine >= 40>>
+			You know some things about medicine.
+		<<elseif $PC.skill.medicine >= 20>>
+			You are a beginner in medicine.
+		<<elseif $PC.skill.medicine >= 0>>
+			You know the basics of treating injuries.
+		<<elseif $PC.skill.medicine >= -20>>
+			You can stop a wound from getting infected.
+		<<elseif $PC.skill.medicine >= -40>>
+			Gauze is your friend. Just keep wrapping.
+		<<elseif $PC.skill.medicine >= -60>>
+			You know how to apply a band-aid.
+		<<elseif $PC.skill.medicine >= -80>>
+			Cure-alls are wonderful. Why aren't they sold in stores, though?
+		<<else>>
+			Alcohol makes pain go away, right?
+		<</if>>
+	</div>
+	<div>
+		Hacking:
+		<<if $PC.skill.hacking >= 100>>
+			You are a master of hacking.
+		<<elseif $PC.skill.hacking >= 80>>
+			You are an expert at hacking.
+		<<elseif $PC.skill.hacking >= 60>>
+			You are skilled in hacking.
+		<<elseif $PC.skill.hacking >= 40>>
+			You know some things about hacking.
+		<<elseif $PC.skill.hacking >= 20>>
+			You are a beginner in hacking.
+		<<elseif $PC.skill.hacking >= 0>>
+			You know only the basics of hacking.
+		<<elseif $PC.skill.hacking >= -20>>
+			You know how to click a mouse.
+		<<elseif $PC.skill.hacking >= -40>>
+			Enter does something?
+		<<elseif $PC.skill.hacking >= -60>>
+			Where is the "any" key?
+		<<elseif $PC.skill.hacking >= -80>>
+			You can push the power button, good job.
+		<<else>>
+			This black box thingy is magical.
+		<</if>>
+	</div>
+</p>
+
+<h2>Reputation</h2>
+<h3>Name</h3>
+
+<p>
+	On formal occasions, you are announced as $PCTitle. By slaves, however, you prefer to be called <<= properMaster()>>.
+	<div>
+		<span id="result">
+			<<if ndef $PC.customTitle>>
+				<<link "Set a custom title for slaves to address you">>
+					<<replace "#result">>
+						Custom title: <<textbox "$PC.customTitle" $PC.customTitle>>
+						<<link "Apply">>
+							<<replace "#result">>
+								Your title is now $PC.customTitle.
+								<<set $PC.customTitleLisp = lispReplace($PC.customTitle)>>
+							<</replace>>
+						<</link>>
+					<</replace>>
+				<</link>>
+			<<else>>
+				Your custom title is <<textbox "$PC.customTitle" $PC.customTitle>>
+				<<link "Apply">>
+					<<replace "#result">>
+						Your title is now $PC.customTitle.
+						<<set $PC.customTitleLisp = lispReplace($PC.customTitle)>>
+					<</replace>>
+				<</link>> |
+				<<link "Stop using a custom title">>
+					<<replace "#result">>
+						You stop using a custom title
+						<<set $PC.customTitle = undefined>>
+						<<set $PC.customTitleLisp = undefined>>
+					<</replace>>
+				<</link>>
+			<</if>>
+		</span>
+	</div>
+
+	<div>
+		<span id="nameResult">
+			<<link "Rename yourself">>
+				<<replace "#nameResult">>
+				New name: <<textbox "_PCNamet" $PC.slaveName>>
+					<<link "Apply">>
+						<<run repX(-500, "event")>>
+						<<replace "#nameResult">>
+							<<set $PC.slaveName = _PCNamet>>
+							You will now be known as <<= PlayerName()>>.
+						<</replace>>
+					<</link>>
+				<</replace>>
+			<</link>> <span class="detail">Will cost you some reputation.</span>
+		</span>
+	</div>
+</p>
+
+<<if $PC.degeneracy > 0>>
+	<h3>Rumors</h3>
+
+	<p>
+		<<if $PC.degeneracy > 100>>
+			There are severe and devastating rumors about you spreading across the arcology.
+		<<elseif $PC.degeneracy > 75>>
+			There are severe rumors about you spreading across the arcology.
+		<<elseif $PC.degeneracy > 50>>
+			There are bad rumors about you spreading across the arcology.
+		<<elseif $PC.degeneracy > 25>>
+			There are rumors about you spreading across the arcology.
+		<<elseif $PC.degeneracy > 10>>
+			There are minor rumors about you spreading across the arcology.
+		<<else>>
+			The occasional rumor about you can be heard throughout the arcology.
+		<</if>>
+	</p>
+<</if>>
+
+<<if $familyTesting == 1>>
+	<h3>Family</h3>
+	<p>
+		<span id="family">
+			<div id="familyTree">
+			</div>
+			<span id="familyTreeLink">
+				<<link "Pull up the file on your family tree.">>
+					<<replace #familyTreeLink>>
+						<<run renderFamilyTree($slaves, -1)>>
+					<</replace>>
+				<</link>>
+			</span>
+		</span>
+		<<if totalPlayerRelatives($PC) > 0 || ($showMissingSlaves && ($PC.mother in $missingTable || $PC.father in $missingTable))>>
+			<div>
+				<<PlayerFamily>>
+			</div>
+		<</if>>
+	</p>
+<</if>>
+
+<<if $PC.vagina != -1>>
+<h2>Contraceptives and Fertility</h2>
+
+<p>
+	<span id="miniscene">
+		<<if $PC.preg < 6 && $PC.pregKnown == 1>>
+			Your period is late, so the first thing you do is test yourself for a potential pregnancy: @@.lime;you are pregnant.@@
+			<<if ($arcologies[0].FSRestart == "unset" || $eugenicsFullControl == 1 || ($PC.pregSource != -1 && $PC.pregSource != -6))>>
+				<<link "Abort your child">><<replace "#miniscene">><<run TerminatePregnancy($PC)>><<print "You take a syringe filled with abortifacients and make yourself comfortable. Injecting the vial through your belly into your womb, your close your eyes and wait for what is coming. Once you feel it is over, you clean yourself up and go on your way, child free.">><</replace>><</link>>
+			<</if>>
+		<<elseif $PC.labor == 1>>
+			You are beginning to feel contractions; you'll be giving birth soon.
+		<<elseif $PC.preg >= 39>>
+			Your due date is looming, but your <<if $PC.pregType > 1>>children don't<<else>>child doesn't<</if>> seem to be interested in coming out just yet. [[Induce childbirth|Manage Personal Affairs][$PC.labor = 1]]
+		<<elseif $PC.pregKnown == 1>>
+			You're pregnant, something rather unbecoming for an arcology owner.
+			<<if ($arcologies[0].FSRestart == "unset" || $eugenicsFullControl == 1 || ($PC.pregSource != -1 && $PC.pregSource != -6))>>
+				<<link "Abort your child">><<replace "#miniscene">><<run TerminatePregnancy($PC)>><<print "You take a syringe filled with abortifacients and make yourself comfortable. Injecting the vial through your belly into your womb, your close your eyes and wait for what is coming. Once you feel it is over, you clean yourself up and go on your way, child free.">><</replace>><</link>>
+			<</if>>
+		<</if>>
+	</span>
+</p>
+
+<p>
+	<<if $PC.counter.birthsTotal > 0>>
+		<div>
+			In total, you have given birth to:
+			<<if $PC.counter.birthElite > 0>>
+				<div>
+					<<print $PC.counter.birthElite>> bab<<if $PC.counter.birthElite > 1>>ies<<else>>y<</if>> for the Societal Elite.
+				</div>
+			<</if>>
+			<<if $PC.counter.birthMaster > 0>>
+				<div>
+					<<print $PC.counter.birthMaster>> bab<<if $PC.counter.birthMaster > 1>>ies<<else>>y<</if>> for your former Master.
+				</div>
+			<</if>>
+			<<if $PC.counter.birthClient > 0>>
+				<div>
+					<<print $PC.counter.birthClient>> bab<<if $PC.counter.birthClient > 1>>ies<<else>>y<</if>> from clients you've slept with.
+				</div>
+			<</if>>
+			<<if $PC.counter.birthDegenerate > 0>>
+				<div>
+					<<print $PC.counter.birthDegenerate>> bastard<<if $PC.counter.birthDegenerate > 1>>s<</if>> from getting fucked by slaves.
+				</div>
+			<</if>>
+			<<if $PC.counter.birthArcOwner > 0>>
+				<div>
+					<<print $PC.counter.birthArcOwner>> bab<<if $PC.counter.birthArcOwner > 1>>ies<<else>>y<</if>> from your time with male arcology owners.
+				</div>
+			<</if>>
+			<<if $PC.counter.birthCitizen > 0>>
+				<div>
+					<<print $PC.counter.birthCitizen>> bab<<if $PC.counter.birthCitizen > 1>>ies<<else>>y<</if>> from sex with arcology citizens.
+				</div>
+			<</if>>
+			<<if $PC.counter.birthOther > 0>>
+				<div>
+					<<print $PC.counter.birthOther>> bab<<if $PC.counter.birthOther > 1>>ies<<else>>y<</if>> from sources you can't quite recall.
+				</div>
+			<</if>>
+			<<if $PC.counter.birthSelf > 0>>
+				<div>
+					<<print $PC.counter.birthSelf>> bab<<if $PC.counter.birthSelf > 1>>ies<<else>>y<</if>> that <<if $PC.counter.birthSelf > 1>>are<<else>>is<</if>> literally all you.
+				</div>
+			<</if>>
+			<<if $PC.counter.birthLab > 0>>
+				<div>
+					<<print $PC.counter.birthLab>> bab<<if $PC.counter.birthLab > 1>>ies<<else>>y<</if>> specially designed in the lab.
+				</div>
+			<</if>>
+		</div>
+	<</if>>
+	<<if $PC.counter.slavesKnockedUp > 0>>
+		<div>
+			<<if $PC.dick > 0>>
+				You've knocked up <<print num($PC.counter.slavesKnockedUp)>> fertile slave girl<<if $PC.counter.slavesKnockedUp > 1>>s<</if>><<if $PC.counter.slavesFathered > 0>> and fathered <<print num($PC.counter.slavesFathered)>> new slave<<if $PC.counter.slavesFathered > 1>>s<</if>><</if>> as an arcology owner so far.
+			<<else>>
+				Before your sex change, you knocked up <<print num($PC.counter.slavesKnockedUp)>> fertile slave girl<<if $PC.counter.slavesKnockedUp > 1>>s<</if>><<if $PC.counter.slavesFathered > 0>> and fathered <<print num($PC.counter.slavesFathered)>> new slave<<if $PC.counter.slavesFathered > 1>>s<</if>><</if>>.
+			<</if>>
+		</div>
+	<<else>>
+		<<if $PC.counter.slavesFathered > 0>>
+			<div>
+				<<if $PC.dick != 0>>
+					You've fathered <<print num($PC.counter.slavesFathered)>> new slave<<if $PC.counter.slavesFathered > 1>>s<</if>> as an arcology owner so far.
+				<<else>>
+					Before your sex change, you fathered <<print num($PC.counter.slavesFathered)>> new slave<<if $PC.counter.slavesFathered > 1>>s<</if>>.
+				<</if>>
+			</div>
+		<</if>>
+	<</if>>
+
+	<div>
+		<<if $PC.preg >= 8>>
+			You're currently <<print $PC.preg>> week<<if $PC.preg > 1>>s<</if>> pregnant, so contraception doesn't matter right now.
+		<<elseif $PC.preg >= 6>>
+			You're having morning sickness.
+		<<elseif $PC.preg > 1>>
+			You've missed your period. This could be bad.
+		<<elseif $PC.preg > 0>>
+			Your fertile pussy has been thoroughly seeded; there is a chance you are pregnant.
+			<<if ($arcologies[0].FSRestart == "unset" || $eugenicsFullControl == 1 || ($PC.pregSource != -1 && $PC.pregSource != -6))>>
+				<<link "Pop some morning after pills">><<set WombFlush($PC)>><<goto "Manage Personal Affairs">><</link>>
+			<</if>>
+		<<elseif $PC.pregWeek < 0>>
+			You're still recovering from your recent pregnancy.
+		<<elseif $PC.preg == -2>>
+			You're menopausal. Your time to bear children has passed.
+		<<elseif $PC.preg == -1>>
+			You're currently on birth control.
+			[[Stop taking it|Manage Personal Affairs][$PC.preg = 0]]
+		<<elseif $PC.preg == 0>>
+			You're currently fertile.
+			[[Start taking birth control|Manage Personal Affairs][$PC.preg = -1, $PC.fertDrugs = 0]]
+			<<set _toSearch = $PC.refreshment.toLowerCase(), _fertRefresh = 0>>
+			<<if _toSearch.indexOf("fertility") != -1>>
+				<<set _fertRefresh = 1>>
+			<</if>>
+			<div>
+			<<if $PC.fertDrugs == 1>>
+				You are currently taking fertility supplements<<if _fertRefresh == 1>>on top of the <<print $PC.refreshment>>s.<<else>>.<<if $PC.forcedFertDrugs > 0>> You feel a strange eagerness whenever you think of bareback sex.<</if>><</if>> [[Stop taking fertility drugs|Manage Personal Affairs][$PC.fertDrugs = 0]]
+			<<else>>
+				You are not on any fertility supplements<<if _fertRefresh == 1>>, other than the $PC.refreshment, of course.<<else>>.<<if $PC.forcedFertDrugs > 0>> You feel a strange eagerness whenever you think of bareback sex.<</if>><</if>> [[Start taking fertility drugs|Manage Personal Affairs][$PC.fertDrugs = 1]]
+			<</if>>
+			</div>
+		<</if>>
+	</div>
+	<<if ($PC.preg > 0 && $pregnancyMonitoringUpgrade == 1)>>
+		<div>
+			[[Inspect pregnancy|Analyze PC Pregnancy]]
+		</div>
+	<</if>>
+	<<if $PC.preg >= 0 && $PC.ovaries == 1 && $PC.ovaryAge < 47>>
+		<div>
+			[[Harvest and implant an egg|Surrogacy Workaround][$donatrix = $PC, $impregnatrix = "Undecided", $receptrix = "Undecided", $nextLink = "Manage Personal Affairs"]]
+		</div>
+	<</if>>
+</p>
+
+<<if $arcologies[0].FSRestartDecoration >= 100>>
+	<p>
+		<<if $playerBred == 0>>
+			You are currently not bearing children for the Societal Elite.
+			[[List your womb as available|Manage Personal Affairs][$playerBred = 1, $playerBredTube = 0]] | [[Sign up for artificial insemination|Manage Personal Affairs][$playerBred = 1, $playerBredTube = 1]]
+		<<else>>
+			Your womb is dedicated to carrying the Societal Elites' children.
+			<<if $PC.counter.birthElite > 0>>
+				[[List your womb as unavailable|Manage Personal Affairs][$playerBred = 0]]
+			<<else>>
+				<span class="note">You must bear at least one child for the Societal Elite before removing yourself from the breeding program.</span>
+			<</if>>
+		<</if>>
+	</p>
+<</if>>
+
+<<if $PC.preg == 0 && $PC.pregWeek == 0>>
+	<<if $dairyPiping == 1 && ($cumSlaves > 0 || $arcologies[0].FSPastoralistLaw == 1)>>
+		<p>
+			<<if $PC.skill.cumTap == 0>>
+				The tap connected to $dairyName has a variety of attachments, one of which being a very tantalizing dick-shaped nozzle. It looks like it would be a perfect fit for you, if you were curious, that is.
+				<div>[[No one is looking...|FSelf]]</div>
+			<<else>>
+				The tap connected to $dairyName is calling to you. Begging to let it fill you with cum again. If you wanted to try and go bigger, that is.
+				<div>[[Sounds fun!|FSelf]]</div>
+				<div><<link "You only want to get pregnant." "Manage Personal Affairs">><<set $PC.preg = 1, $PC.pregWeek = 1, $PC.pregSource = 0, $PC.pregKnown = 1>><<set $PC.pregType = setPregType($PC)>><<set WombImpregnate($PC, $PC.pregType, 0, 1)>><</link>></div>
+			<</if>>
+		</p>
+	<</if>>
+	<<if $PC.vagina >= 1 && $PC.dick != 0>>
+		<p>
+			<<if $PC.counter.birthSelf > 0>>
+				Who better to impregnate you than you? [[Impregnate yourself.|MpregSelf]]
+			<<else>>
+				You have an empty vagina, a working set of balls, and a strong craving for a hot creampie. Who better to give it to you than you? [[Grab an extra syringe.|MpregSelf]]
+			<</if>>
+		</p>
+	<</if>>
+<</if>>
+
+<<else>> /* no vagina */
+<p>
+
+<<if $PC.counter.births > 0>>
+	<div>
+		Before your sex change, you had given birth to:
+		<<if $PC.counter.birthElite > 0>>
+			<div>
+				<<print num($PC.counter.birthElite)>> bab<<if $PC.counter.birthElite > 1>>ies<<else>>y<</if>> for the Societal Elite.
+			</div>
+		<</if>>
+		<<if $PC.counter.birthMaster > 0>>
+			<div>
+				<<print num($PC.counter.birthMaster)>> bab<<if $PC.counter.birthMaster > 1>>ies<<else>>y<</if>> for your former Master.
+			</div>
+		<</if>>
+		<<if $PC.counter.birthClient > 0>>
+			<div>
+				<<print num($PC.counter.birthClient)>> bab<<if $PC.counter.birthClient > 1>>ies<<else>>y<</if>> from clients you've slept with.
+			</div>
+		<</if>>
+		<<if $PC.counter.birthDegenerate > 0>>
+			<div>
+				<<print num($PC.counter.birthDegenerate)>> bastard<<if $PC.counter.birthDegenerate > 1>>s<</if>> from getting fucked by slaves.
+			</div>
+		<</if>>
+		<<if $PC.counter.birthArcOwner > 0>>
+			<div>
+				<<print num($PC.counter.birthArcOwner)>> bab<<if $PC.counter.birthArcOwner > 1>>ies<<else>>y<</if>> from your time with male arcology owners.
+			</div>
+		<</if>>
+		<<if $PC.counter.birthCitizen > 0>>
+			<div>
+				<<print num($PC.counter.birthCitizen)>> bab<<if $PC.counter.birthCitizen > 1>>ies<<else>>y<</if>> from sex with arcology citizens.
+			</div>
+		<</if>>
+		<<if $PC.counter.birthFutaSis > 0>>
+			<div>
+				<<print num($PC.counter.birthFutaSis)>> bab<<if $PC.counter.birthFutaSis > 1>>ies<<else>>y<</if>> conceived during orgies with the Futanari Sisters.
+			</div>
+		<</if>>
+		<<if $PC.counter.birthOther > 0>>
+			<div>
+				<<print num($PC.counter.birthOther)>> bab<<if $PC.counter.birthOther > 1>>ies<<else>>y<</if>> from sources you can't quite recall.
+			</div>
+		<</if>>
+		<<if $PC.counter.birthSelf > 0>>
+			<div>
+				<<print num($PC.counter.birthSelf)>> bab<<if $PC.counter.birthSelf > 1>>ies<<else>>y<</if>> that <<if $PC.counter.birthSelf > 1>>were<<else>>was<</if>> literally all you.
+			</div>
+		<</if>>
+		<<if $PC.counter.birthLab > 0>>
+			<div>
+				<<print $PC.counter.birthLab>> bab<<if $PC.counter.birthLab > 1>>ies<<else>>y<</if>> specially designed in the lab.
+			</div>
+		<</if>>
+	</div>
+<</if>>
+<div>
+	<<if $PC.counter.slavesKnockedUp > 0>>
+		You've knocked up <<print num($PC.counter.slavesKnockedUp)>> fertile slave girl<<if $PC.counter.slavesKnockedUp > 1>>s<</if>><<if $PC.counter.slavesFathered > 0>> and fathered <<print num($PC.counter.slavesFathered)>> new slave<<if $PC.counter.slavesFathered > 1>>s<</if>><</if>> as an arcology owner so far.
+	<<else>>
+		<<if $PC.counter.slavesFathered > 0>>
+			You've fathered <<print num($PC.counter.slavesFathered)>> new slave<<if $PC.counter.slavesFathered > 1>>s<</if>> as an arcology owner so far.
+		<</if>>
+	<</if>>
+</div>
+
+</p>
+<</if>> /* vagina check */
+
+<<if $PC.lactation == 1>>
+	<h2>Lactation</h2>
+	<p>
+		Your breasts are laden with milk.
+		<<if $PC.rules.lactation == "sell">>
+			You are spending time with the penthouse milkers and making a quick ¤ from your efforts. [[Stop milking yourself|Manage Personal Affairs][$PC.rules.lactation = "none"]] | [[Stop using the milkers|Manage Personal Affairs][$PC.rules.lactation = "maintain"]]
+		<<elseif $PC.rules.lactation == "maintain">>
+			You are taking the time to keep yourself lactating. [[Stop milking yourself|Manage Personal Affairs][$PC.rules.lactation = "none"]]<<if $servantMilkers == 1>> | [[Use the penthouse milkers|Manage Personal Affairs][$PC.rules.lactation = "sell"]]<</if>>
+		<<else>>
+			You are currently letting nature run its course. [[Keep yourself milked|Manage Personal Affairs][$PC.rules.lactation = "maintain"]]<<if $servantMilkers == 1>> | [[Use the penthouse milkers|Manage Personal Affairs][$PC.rules.lactation = "sell"]]<</if>>
+		<</if>>
+	</p>
+<</if>>
+
+<h2>Drugs</h2>
+
+<p>
+	<<if $PC.staminaPills == 1>>
+		You are currently taking stamina enhancing pills in order to enjoy more slaves per week. [[Stop taking stamina enhancing drugs|Manage Personal Affairs][$PC.staminaPills = 0]]
+	<<else>>
+		You are not on any stamina enhancers. [[More stamina means more sex|Manage Personal Affairs][$PC.staminaPills = 1]]
+	<</if>>
+</p>
+
+<<if $propOutcome == 1 && $arcologies[0].FSRestart != "unset">>
+	<h2>Elite Breeder Qualifications</h2>
+
+	<p>
+		<<if ndef $activeStandard>>
+			<<InitStandards>>
+		<<else>>
+			<<UpdateStandards>>
+			<<BreedingStandards>>
+		<</if>>
+	</p>
+<</if>>

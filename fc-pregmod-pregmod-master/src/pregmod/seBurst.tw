@@ -1,0 +1,327 @@
+:: SE Burst [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Scheduled Event">>
+
+<<for _b = 0; _b < $slaves.length; _b++>>
+<<if $slaves[_b].burst == 1>>
+
+	<<if (($slaves[_b].belly > ($slaves[_b].pregAdaptation*3200)) || $slaves[_b].bellyPreg > 600000)>>
+
+		<<set $slaves[_b].curBabies = WombBirth($slaves[_b], $slaves[_b].pregData.minLiveBirth)>>
+		<<set $slaves[_b].curStillBirth = 0 >>
+		<<set _curBabies = $slaves[_b].curBabies.length>> /*just to improve speed and usability here.*/
+		<<set $birthsTotal += _curBabies>>
+
+		<<set _others = 0, _PC = 0, _citizens = 0, _oldMaster = 0, _arcOwner = 0, _clients = 0, _elite = 0, _lab = 0, _futaS = 0, _fathers = [], _babyFatherLink = []>>
+		<<for _cb = 0; _cb < $slaves[_b].curBabies.length; _cb++>>
+			<<if $slaves[_b].curBabies[_cb].fatherID == 0>>
+				<<set _others++>>
+				<<set _fathers.push("some man's")>>
+			<<elseif $slaves[_b].curBabies[_cb].fatherID == -1>>
+				<<set $PC.counter.slavesFathered++>>
+				<<set _PC++>>
+				<<set _fathers.push("your")>>
+			<<elseif $slaves[_b].curBabies[_cb].fatherID == -2>>
+				<<set _citizens++>>
+				<<set _fathers.push("a citizen's")>>
+			<<elseif $slaves[_b].curBabies[_cb].fatherID == -3>>
+				<<set _oldMaster++>>
+				<<set _fathers.push("your former Master's")>>
+			<<elseif $slaves[_b].curBabies[_cb].fatherID == -4>>
+				<<set _arcOwner++>>
+				<<set _fathers.push("another arcology owner's")>>
+			<<elseif $slaves[_b].curBabies[_cb].fatherID == -5>>
+				<<set _clients++>>
+				<<set _fathers.push("your client's")>>
+			<<elseif $slaves[_b].curBabies[_cb].fatherID == -6>>
+				<<set _elite++>>
+				<<set _fathers.push("the Societal Elite's")>>
+			<<elseif $slaves[_b].curBabies[_cb].fatherID == -7>>
+				<<set _lab++>>
+				<<set _fathers.push("the gene lab's")>>
+			<<elseif $slaves[_b].curBabies[_cb].fatherID == -9>>
+				<<set _futaS++>>
+				<<set _fathers.push("a Futanari Sister's")>>
+			<<else>>
+				<<set _babyDaddy = findFather($slaves[_b].curBabies[_cb].fatherID)>>
+				<<if def _babyDaddy>>
+					<<if _babyDaddy.ID == $slaves[_b].ID>>
+						<<set _fathers.push(String($his + " own"))>>
+						<<for _cb2 = 0; _cb2 < _babyFatherLink.length; _cb2++>>
+							<<if _babyFatherLink[_cb2].string == String($his + " own")>>
+								<<set _babyFatherLink[_cb2].count++>>
+							<<else>>
+								<<set _babyFatherLink[_cb2] = {string: String($his + " own"), count: 1}>>
+							<</if>>
+						<</for>>
+					<<else>>
+						<<set _fathers.push(String(_babyDaddy.slaveName+ "'s"))>>
+						<<for _cb2 = 0; _cb2 < _babyFatherLink.length; _cb2++>>
+							<<if _babyFatherLink[_cb2].string == String(_babyDaddy.slaveName+ "'s")>>
+								<<set _babyFatherLink[_cb2].count++>>
+							<<else>>
+								<<set _babyFatherLink[_cb2] = {string: String(_babyDaddy.slaveName+ "'s"), count: 1}>>
+							<</if>>
+						<</for>>
+					<</if>>
+					<<set _adjust = _babyDaddy.counter.slavesFathered++>>
+					<<set adjustFatherProperty(_babyDaddy, "slavesFathered", _adjust)>>
+				<<else>>
+					<<set _others++>>
+					<<set _fathers.push("some man's")>>
+				<</if>>
+			<</if>>
+		<</for>>
+		<<set _fathersReduced = removeDuplicates(_fathers)>>
+		<<for _cb = 0; _cb < _fathersReduced.length; _cb++>>
+			<<set _num = 0>>
+			<<if _fathersReduced[_cb] == "some man's">>
+				<<set _num = _others>>
+			<<elseif _fathersReduced[_cb] == "your">>
+				<<set _num = _PC>>
+			<<elseif _fathersReduced[_cb] == "a citizen's">>
+				<<set _num = _citizens>>
+			<<elseif _fathersReduced[_cb] == "your former Master's">>
+				<<set _num = _oldMaster>>
+			<<elseif _fathersReduced[_cb] == "another arcology owner's">>
+				<<set _num = _arcOwner>>
+			<<elseif _fathersReduced[_cb] == "your client's">>
+				<<set _num = _clients>>
+			<<elseif _fathersReduced[_cb] == "the Societal Elite's">>
+				<<set _num = _elite>>
+			<<elseif _fathersReduced[_cb] == "the gene lab's">>
+				<<set _num = _lab>>
+			<<elseif _fathersReduced[_cb] == "a Futanari Sister's">>
+				<<set _num = _futaS>>
+			<<else>>
+				<<set _cb2 = _babyFatherLink.findIndex(function(s) {_fathersReduced[_cb] == _babyFatherLink[s].string; })>>
+				<<if _cb2 != -1>>
+					<<set _num = _babyFatherLink[_cb2].count>>
+				<</if>>
+			<</if>>
+			<<if _num == 1>>
+				<<set _fathersReduced[_cb] += " baby">>
+			<<elseif _num >= 40>>
+				<<set _fathersReduced[_cb] += String(" massive brood of " + _num + " babies")>>
+			<<elseif _num >= 20>>
+				<<set _fathersReduced[_cb] += String(" brood of " + _num + " babies")>>
+			<<elseif _num >= 10>>
+				<<set _fathersReduced[_cb] += String(" impressive group of " + _num + " babies")>>
+			<<else>>
+				<<set _fathersReduced[_cb] += String(" " + pregNumberName(_num, 2))>>
+			<</if>>
+		<</for>>
+
+		<<if $slaves[_b].broodmother < 1>>
+			<<set $slaves[_b].curStillBirth = $slaves[_b].womb.length>>
+			<<set WombFlush($slaves[_b])>>
+		<</if>>
+
+		<<set _incubated = 0>>
+		<<set _cToIncub = 0, _cToNursery = 0>>
+		<<for _csec = 0; _csec < _curBabies; _csec++>>
+			<<if $slaves[_b].curBabies[_csec].reserve === "incubator">>
+				<<set _cToIncub++>>
+			<<elseif $slaves[_b].curBabies[_csec].reserve === "nursery">>
+				<<set _cToNursery++>>
+			<</if>>
+		<</for>>
+
+		/* ------------------------------------------------ */
+
+		$slaves[_b].slaveName's straining womb finally gave out and burst, taking $his
+
+		<<if _curBabies > 0>>
+			life, but not <<if _curBabies <= 1>>that of $his child<<else>>those of all $his children<</if>>;
+			<<if _fathersReduced.length > 2>>
+				<<for _cb = 0; _cb < _fathersReduced.length; _cb++>>
+					<<if _cb < _fathersReduced.length-1>>
+						_fathersReduced[_cb],
+					<<else>>
+						and _fathersReduced[_cb]
+					<</if>>
+				<</for>>
+			<<elseif _fathersReduced.length > 1>>
+				_fathersReduced[0] and _fathersReduced[1]
+			<<else>>
+				_fathersReduced[0]
+			<</if>>
+
+			<<if _curBabies <= 1>>has<<else>>have<</if>>
+			promptly been
+
+			<<set _incubated = 0>>
+			<<if _cToIncub == _curBabies>>
+				taken to $incubatorName.
+			<<elseif _cToIncub < _curBabies && _cToIncub > 0>>
+				split between $incubatorName and
+				<<if _cToNursery > 0>>
+					<<if _cToNursery == _curBabies-_cToIncub && _incubated > 0>>
+						$nurseryName.
+					<<elseif _cToNursery < _curBabies-_cToIncub && _cToNursery > 0>>
+						$nurseryName, and the medical suite.
+					<</if>>
+				<<else>>
+					the medical suite.
+				<</if>>
+			<<elseif _cToNursery == _curBabies>>
+				taken to $nurseryName.
+			<<elseif _cToNursery < _curBabies && _cToNursery > 0>>
+				split between $nurseryName and the medical suite.
+			<<else>>
+				taken to the medical suite.
+			<</if>>
+
+			<<if _cToIncub > 0 || _cToNursery > 0>>
+				<<for _cb = 0; _cb < _curBabies; _cb++>> /* if there is no reserved children, code in loop will not trigger */
+					<<if $slaves[_b].curBabies[_cb].reserve == "incubator">>
+						<<set $activeChild = generateChild($slaves[_b], $slaves[_b].curBabies[_cb], 1)>>
+						<<include "Incubator Workaround">>
+						<<run $slaves[_b].curBabies.splice($slaves[_b].curBabies[_cb], 1)>>
+						<<set _cb--, _curBabies-->>
+					<<elseif $slaves[_b].curBabies[_cb].reserve == "nursery">>
+						<<set $activeChild = generateChild($slaves[_b], $slaves[_b].curBabies[_cb])>>
+						<<include "Nursery Workaround">>
+						<<run $slaves[_b].curBabies.splice($slaves[_b].curBabies[_cb], 1)>>
+						<<set _cb--, _curBabies-->>
+					<</if>>
+				<</for>>
+			<</if>>
+		<<else>>
+			life and <<if _curBabies <= 1>>that of $his child<<else>>those of $his children<</if>>.
+		<</if>>
+
+		<<set _curBabies = $slaves[_b].curBabies.length>>
+
+		<<if _curBabies > 0>>
+			<br><br>
+			<<span $dispositionId>>
+			<<if $arcologies[0].FSRestart != "unset" && $slaves[_b].breedingMark == 1 && $propOutcome == 1 && ($slaves[_b].pregSource == -1 || $slaves[_b].pregSource == -6)>>
+				From there, $his child<<if _curBabies > 1>>ren are<<else>> is<</if>> collected by the Societal Elite to be raised into upstanding members of the new society.
+			<<elseif $slaves[_b].breedingMark == 1 && $propOutcome == 1 && ($slaves[_b].pregSource == -1 || $slaves[_b].pregSource == -6) && $DefaultBirthDestination == "the market">>
+				<<set _babyCost = random(2000,4500)>>
+				$His <<if _curBabies > 1>>babies were<<else>>baby was<</if>> purchased by the Societal Elite for @@.yellowgreen;<<print cashFormat(_curBabies*(_babyCost))>>.@@
+				<<run cashX((_curBabies*(_babyCost)), "babyTransfer")>>
+			<<elseif $slaves[_b].pregSource == -9 && $DefaultBirthDestination == "the market">>
+				<<set _babyCost = random(1000,2500)>>
+				$His <<if _curBabies > 1>>babies were<<else>>baby was<</if>> purchased by the Futanari Sisters for @@.yellowgreen;<<print cashFormat(_curBabies*(_babyCost))>>.@@
+				<<run cashX((_curBabies*(_babyCost)), "babyTransfer")>>
+			<<elseif $DefaultBirthDestination == "individually decided fates">>
+				Unless you provide otherwise, the child<<if _curBabies > 1>>ren<</if>> will be remanded to one of $arcologies[0].name's slave orphanages.
+				<<set $slaveOrphanageTotal += _curBabies>>
+				<<capture $i, $dispositionId, _curBabies>>
+				<br>
+				<<if $arcologies[0].FSRepopulationFocus > 40>>
+					<br><<link "Send them to a breeder school">>
+						<<replace `"#" + $dispositionId`>>
+							The child<<if _curBabies > 1>>ren are<<else>> is<</if>> sent to one of $arcologies[0].name's future minded schools, to be administered fertility and virility treatments as well as be brought up to take pride in reproduction. Hopefully there they will be trained to not suffer the same fate.
+							<<set $breederOrphanageTotal += _curBabies, $slaveOrphanageTotal -= _curBabies>>
+						<</replace>>
+					<</link>>
+					//Will cost a one-time <<print cashFormat(50)>>// |
+				<</if>>
+				<br><<link "Send them to a citizen school">>
+					<<replace `"#" + $dispositionId`>>
+						The child<<if _curBabies > 1>>ren are<<else>> is<</if>> sent to one of $arcologies[0].name's citizen schools, to be brought up coequal with the arcology's other young people.
+						<<set $citizenOrphanageTotal += _curBabies, $slaveOrphanageTotal -= _curBabies>>
+					<</replace>>
+				<</link>>
+				//Will cost <<print cashFormat(100)>> weekly//
+				<<if $activeSlave.breedingMark == 1 && ($activeSlave.pregSource == -1 || $activeSlave.pregSource == -6) && $propOutcome == 1>>
+					<br><<link "Give them to the Societal Elite.">>
+						<<replace `"#" + $dispositionId`>>
+							The child<<if _curBabies > 1>>ren are<<else>> is<</if>> sent to be raised by the Societal Elite, to be brought up as <<if _curBabies > 1>>future members<<else>>a future member<</if>> of their vision of the world.
+							<<set $slaveOrphanageTotal -= _curBabies>>
+						<</replace>>
+						<<set $nextButton = "Back">><<UpdateNextButton>> /* unlock Continue button */
+					<</link>>
+				<</if>>
+				<<if $slaves[_b].pregSource == -9>>
+					<br><<link "Give them to the Futanari Sisters">>
+						<<replace #dispositionId>>
+							The child<<if _curBabies > 1>>ren are<<else>> is<</if>> handed off to be raised by their father, the Futanari Sisters. You recommend they take it easy for a while before any more burst into kids.
+							<<set $slaveOrphanageTotal -= _curBabies>>
+						<</replace>>
+					<</link>>
+				<</if>>
+				<br><<link "Have them raised privately">>
+					<<replace `"#" + $dispositionId`>>
+						The child<<if _curBabies > 1>>ren are<<else>> is<</if>> sent to be privately raised, to be brought up as <<if _curBabies > 1>>future high class citizens<<else>>a future high class citizen<</if>>.
+						<<set $privateOrphanageTotal += _curBabies, $slaveOrphanageTotal -= _curBabies>>
+					<</replace>>
+				<</link>>
+				//Will cost <<print cashFormat(500)>> weekly//
+				<<if $Cash4Babies == 1>>
+					<br><<link "Send them to auction">>
+						<<replace `"#" + $dispositionId`>>
+							<<if $activeSlave.prestige > 1 || $activeSlave.porn.prestige > 2>>
+								<<set _babyCost = random(-12,100)>>
+								<<if $activeSlave.prematureBirth > 0>><<set _babyCost = random(-32,40)>><</if>>
+							<<else>>
+								<<set _babyCost = random(-12,12)>>
+								<<if $activeSlave.prematureBirth > 0>><<set _babyCost = -45>><</if>>
+							<</if>>
+							$His <<if _curBabies > 1>>babies were<<else>>baby was<</if>> sold for <<if _curBabies > 1>>a total of <</if>><<if $slaves[_b].prematureBirth == 1>>@@.yellowgreen;<<print cashFormat(_curBabies*(50+_babyCost))>>,@@ a low price, due to the added costs of caring for them.<<else>>@@.yellowgreen;<<print cashFormat(_curBabies*(50+_babyCost))>>.@@<</if>>
+							<<run cashX((_curBabies*(50+_babyCost)), "babyTransfer")>>
+							<<set $slaveOrphanageTotal -= _curBabies>>
+						<</replace>>
+					<</link>>
+				<</if>>
+				<</capture>>
+			<<else>>
+				<<switch $DefaultBirthDestination>>
+				<<case "an orphanage">>
+					The child<<if _curBabies > 1>>ren<</if>> will be remanded to one of $arcologies[0].name's slave orphanages.
+					<<set $slaveOrphanageTotal += _curBabies>>
+				<<case "a citizen school">>
+					The child<<if _curBabies > 1>>ren are<<else>> is<</if>> sent to one of $arcologies[0].name's citizen schools, to be brought up coequal with the arcology's other young people.
+					<<set $citizenOrphanageTotal += _curBabies, $slaveOrphanageTotal -= _curBabies>>
+				<<case "a private school">>
+					The child<<if _curBabies > 1>>ren are<<else>> is<</if>> sent to be privately raised, to be brought up as <<if _curBabies > 1>>future high class citizens<<else>>a future high class citizen<</if>>.
+					<<set $privateOrphanageTotal += _curBabies, $slaveOrphanageTotal -= _curBabies>>
+				<<case "breeder schools">>
+					The child<<if _curBabies > 1>>ren are<<else>> is<</if>> sent to one of $arcologies[0].name's future minded schools, to be administered fertility and virility treatments as well as be brought up to take pride in reproduction. Hopefully there they will be trained to not suffer the same fate.
+					<<set $breederOrphanageTotal += _curBabies, $slaveOrphanageTotal -= _curBabies>>
+				<<case "the market">>
+					<<if $slaves[$_b].prestige > 1 || $slaves[$_b].porn.prestige > 2>>
+						<<set _babyCost = random(-12,100)>>
+						<<if $slaves[$_b].prematureBirth > 0>><<set _babyCost = random(-32,40)>><</if>>
+					<<else>>
+						<<set _babyCost = random(-12,12)>>
+						<<if $slaves[$_b].prematureBirth > 0>><<set _babyCost = -45>><</if>>
+					<</if>>
+					$His <<if _curBabies > 1>>babies were<<else>>baby was<</if>> sold for <<if _curBabies > 1>>a total of <</if>><<if $slaves[$_b].prematureBirth == 1>>@@.yellowgreen;<<print cashFormat(_curBabies*(50+_babyCost))>>,@@ a low price, due to the added costs of caring for them.<<else>>@@.yellowgreen;<<print cashFormat(_curBabies*(50+_babyCost))>>.@@<</if>>
+					<<run cashX(_curBabies*(50+_babyCost), "babyTransfer")>>
+				<</switch>>
+			<</if>>
+			<</span>>
+		<</if>>
+
+		<<if $arcologies[0].FSRestart != "unset" && _curBabies > 0>>
+			<br><br>
+			<<if $slaves[_b].breedingMark == 1 && ($slaves[_b].pregSource == -1 || $slaves[_b].pregSource == -6) && $propOutcome == 1>>
+				The Societal Elite @@.green;are pleased@@ at the new additions to their class, despite it claiming a promising breeder.
+				<<set $failedElite -= _curBabies>>
+			<<elseif $eugenicsFullControl != 1>>
+				The Societal Elite @@.red;are disappointed@@ that you would allow subhuman filth to dirty society under your watch. Society @@.red;frowns@@ on the unwelcome addition of more subhumans into the world. At least the "birth" claimed the wretched $girl's life.
+				<<set $failedElite += (5*_curBabies)>>
+				<<run repX(forceNeg(10*_curBabies), "babyTransfer")>>
+			<</if>>
+		<</if>>
+
+		<<set $reservedChildren = FetusGlobalReserveCount("incubator")>>
+		<<set $reservedChildrenNursery = FetusGlobalReserveCount("nursery")>>
+
+	<<elseif $slaves[_b].inflation != 0>>
+		<<pop $slaves[_b]>>
+	<</if>>
+
+	<<set $activeSlave = $slaves[_b]>>
+	<<= removeActiveSlave() >>
+
+	<br><br><hr style="margin:0"><br>
+<</if>>
+<</for>>
+
+<<set $burstee = 0>>
+<<set $burst = 0>>

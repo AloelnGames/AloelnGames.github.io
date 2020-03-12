@@ -1,0 +1,378 @@
+:: Brothel Assignment Scene [nobr]
+
+<<set $nextButton = "Continue", $nextLink = $returnTo>>
+<<run Enunciate($activeSlave)>>
+<<setLocalPronouns $activeSlave>>
+
+<span id="artFrame">
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<<if $imageChoice == 1>>
+			<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+		<<else>>
+			<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+		<</if>>
+	<</if>>
+	/* 000-250-006 */
+</span>
+
+You could direct $assistant.name to relay your orders to $activeSlave.slaveName, but you've decided to avoid relying too much on machine assistance. So, $he is merely directed to report to your office. The
+<<if $activeSlave.devotion > 95>>
+	worshipful $girl <<if hasAnyLegs($activeSlave)>>hurries in as soon as $he possibly can<<else>>comes in as soon as $he can get another slave to carry $him in<</if>>, happy $his beloved <<= WrittenMaster($activeSlave)>> is taking an interest in $him.
+<<elseif $activeSlave.devotion > 50>>
+	devoted $girl <<if hasAnyLegs($activeSlave)>>hurries in promptly<<else>>comes in as soon as $he can get another slave to carry $him in<</if>>, eager to do whatever you demand of $him.
+<<elseif $activeSlave.devotion > 20>>
+	$girl, broken to your will, <<if hasAnyLegs($activeSlave)>>comes in promptly<<else>>comes in as soon as $he can get another slave to carry $him in<</if>>, clearly ready to follow orders.
+<<elseif ($activeSlave.trust < -20) && ($activeSlave.devotion > -10)>>
+	fearful slave <<if hasAnyLegs($activeSlave)>>comes in promptly<<else>>comes in as soon as $he can get another slave to carry $him in<</if>>, afraid of what will happen to $him if $he doesn't.
+<<elseif ($activeSlave.trust < -50)>>
+	terrified slave <<if hasAnyLegs($activeSlave)>>comes in hurriedly<<else>>comes in as soon as $he can get another slave to carry $him in<</if>>, almost paralyzed by terror of what will happen to $him if $he doesn't.
+<<else>>
+	rebellious slave <<if hasAnyLegs($activeSlave)>>comes in slowly, having decided that $he can always decide to resist once $he hears what you want<<else>>comes in as soon as you order another slave to carry $him in, since $he can't exactly resist this without <<if isAmputee($activeSlave)>>limbs<<else>>legs<</if>><</if>>.
+<</if>>
+You tell $him $he's to report to <<if $Madam != 0>>$Madam.slaveName immediately, to serve in $brothelName<<else>>$brothelName immediately, to serve there<</if>> until further notice.
+
+<br><br>
+<<if $activeSlave.devotion > 50>>
+
+	<<if ($activeSlave.fetishKnown == 1) && ($activeSlave.fetishStrength > 60) && ($activeSlave.fetish != "none")>>
+		$He looks excited.
+		<<if canTalk($activeSlave)>>
+			"<<Master>>, I hoped you would <<s>>end me down there <<s>>ometime!
+			<<switch $activeSlave.fetish>>
+			<<case "submissive">>
+				I mean, I'll have to do whatever the cu<<s>>tomer<<s>> pay for, right?" $His eyes go a little unfocused. "And, they'll hold me down..." $He trails off.
+			<<case "masochist">>
+				I mean, it'<<s>> hard being a brothel whore, right? And when I get tired or <<s>>ore, I'll <<s>>till be <<s>>old. Even when it hurt<<s>> me to fuck any more." $His eyes glow with an unhealthy light.
+			<<case "cumslut">>
+				I mean," $he licks $his lips unconsciously,
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					"I hear there are <<s>>ome ni<<c>>e ladie<<s>> that go there for lunchtime cunnilingu<<s>>."
+				<<else>>
+					"the blowjob<<s>>. Ju<<s>>t, the blowjob<<s>>. That'<<s>> all."
+				<</if>>
+			<<case "humiliation">>
+				There'<<s>> a window that fa<<c>>e<<s>> the hallway there, right? <<if $Madam != 0>>Do you think $Madam.slaveName would let me<<else>>Could I<</if>> get fucked there? Where everyone could <<s>>ee me being fucked for money?"
+			<<case "buttslut">>
+				I mean," and $he shifts $his weight, $his mind obviously on $his backdoor,
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					"there have to be ladie<<s>> who want to buttfuck a whore, right? At lea<<s>>t, I really hope there are."
+				<<else>>
+					"the other <<s>>lave<<s>> tell me that whore<<s>> there get fucked up the a<<ss>> all day and all night. <<S>>ound<<s>> like fun to me."
+				<</if>>
+			<<case "boobs">>
+				I mean," and $he sticks out $his chest a little,
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					"I hear from the other <<s>>lave<<s>> there'<<s>> thi<<s>> ni<<c>>e lady who goe<<s>> there every morning and pay<<s>> to have a whore <<s>>uck her nipple<<s>> for, like, an hour. I," $he licks $his lips, "could do that."
+				<<else>>
+					"the other <<s>>lave<<s>> tell me that whore<<s>> there get tittyfucked all the time. <<S>>ound<<s>> like fun to me."
+				<</if>>
+			<<case "pregnancy">>
+				I mean," $he says meditatively,
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					"I hear from the other <<s>>lave<<s>> there'<<s>> thi<<s>> pregnant lady who goe<<s>> there every night and pay<<s>> to have a whore cuddle her. Ju<<s>>t cuddle, all night. That would be kind of hard, ju<<s>>t cuddling, but I could do it."
+				<<elseif $activeSlave.vagina == -1>>
+					"<<s>>in<<c>>e it'<<s>> all bareback, I'm going to have a fuckton of cum in me. I wonder how much cum it take<<s>> to get a butthole pregnant? I'm gonna try, anyway."
+				<<elseif isFertile($activeSlave)>>
+					"<<s>>in<<c>>e it'<<s>> all bareback, I'm going to have a fuckton of cum in me. I wonder how much cum it would take to get my poor womb pregnant?"
+				<<elseif $activeSlave.pregKnown == 1>>
+					"I'm going to be a pregnant whore. That'<<s>> pretty fucking <<s>>e<<x>>y."
+				<<elseif $activeSlave.preg > 0>>
+					"<<s>>in<<c>>e it'<<s>> all bareback, I'm going to have a fuckton of cum in me. I wonder how much cum it would take to get my poor womb pregnant?"
+				<<elseif $activeSlave.ovaries == 1 && $activeSlave.pubertyXX == 0>>
+					"I can't wait till I can get pregnant. That'd be pretty fucking <<s>>e<<x>>y."
+				<<else>>
+					"I hear from the other <<s>>lave<<s>> there'<<s>> thi<<s>> pregnant lady who goe<<s>> there every night and pay<<s>> to have a whore cuddle her. Ju<<s>>t cuddle, all night. That would be kind of hard, ju<<s>>t cuddling, but I could do it."
+				<</if>>
+			<<case "dom">>
+				I heard from the other <<s>>lave<<s>> that <<s>>ome <<c>>iti<<z>>en<<s>> bring their girl<<s>> there. Ju<<s>>t to make them take it from a whore."
+			<<case "sadist">>
+				I heard from the other <<s>>lave<<s>> that <<s>>ome <<c>>iti<<z>>en<<s>> bring their girl<<s>> there. Becau<<s>>e nobody know<<s>> how to hurt a bitch like a whore doe<<s>>." $He shivers.
+			<</switch>>
+		<<else>>
+			<<switch $activeSlave.fetish>>
+			<<case "submissive">>
+				$He gestures that $he'll be at the mercy of $his customers. $His eyes go a little unfocused as $he clearly begins to fantasize.
+			<<case "masochist">>
+				$He gestures that $he'll probably get roughed up by some of $his customers and that there will be no breaks for $his sore holes. $His eyes glow with an unhealthy light as $he clearly begins to fantasize.
+			<<case "cumslut">>
+				$He licks $his lips unconsciously and motions
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					tounging a clit.
+				<<else>>
+					sucking cock.
+				<</if>>
+			<<case "humiliation">>
+				$He gestures if $he could be fucked in public there.
+			<<case "buttslut">>
+				$He shifts $his weight, $his mind obviously on $his backdoor, and gestures
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					if any girls would want to buttfuck $him.
+				<<else>>
+					that $he knows whores take it up the ass there and can't wait to join them.
+				<</if>>
+			<<case "boobs">>
+				$He sticks out $his chest a little and gestures
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					that $he's heard a woman comes by each day just to have her nipples sucked. $He licks $his lips, clearly savoring the thought.
+				<<else>>
+					that $he knows tittyfucking is popular there and can't wait to give $his pair up for sale.
+				<</if>>
+			<<case "pregnancy">>
+				$He gestures
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					that $he's heard that a pregnant woman has been coming every night to pay for a whore to cuddle her. $He asks if $he could be that $girl.
+				<<elseif $activeSlave.vagina == -1>>
+					how much $he wishes $he could get pregnant from all the cum loads $he's going to get shot up $his rear.
+				<<elseif isFertile($activeSlave)>>
+					that $he knows all the sex is bareback. By the look in $his eyes, you can tell $he is wondering how long it will take for some guys seed to take root in $him.
+				<<elseif $activeSlave.pregKnown == 1>>
+					how sexy $he thinks pregnant whores are.
+				<<elseif $activeSlave.preg > 0>>
+					that $he knows all the sex is bareback. By the look in $his eyes, you can tell $he is wondering how long it will take for some guys seed to take root in $him.
+				<<elseif $activeSlave.ovaries == 1 && $activeSlave.pubertyXX == 0>>
+					how excited $he is for the day $he starts $his menstrual cycle. Will $he even see $his first period, or will every egg $he makes get fertilized?
+				<<else>>
+					that $he's heard a pregnant woman has been coming every night to pay for a whore to cuddle her. $He hopes that one day $he'll be chosen.
+				<</if>>
+			<<case "dom">>
+				$He gestures that $he knows citizens sometimes bring their toys there just to let them get pushed around by a whore. $He'd like that to be true. A lot.
+			<<case "sadist">>
+				$He gestures that $he knows citizens sometimes bring their toys there for punishment. $He shivers with anticipation.
+			<</switch>>
+		<</if>>
+	<<else>>
+		$He looks
+		<<if canTalk($activeSlave)>>
+			determined. "<<Master>>, I will do my be<<s>>t to be a good whore, and get lot<<s>> of <<c>>iti<<z>>en<<s>> to pay good money for my body."
+		<<else>>
+			determined and gestures that $he'll do $his best to get lots of citizens to pay to use $him.
+		<</if>>
+	<</if>>
+
+<<elseif ($activeSlave.devotion > 20) || (($activeSlave.devotion >= -20) && ($activeSlave.trust < -20) && ($activeSlave.trust >= -50))>>
+	<<if canTalk($activeSlave)>>
+		<<if ($activeSlave.fetishKnown == 1) && ($activeSlave.fetishStrength > 60) && ($activeSlave.fetish != "none")>>
+			$He looks cautiously excited. "<<Master>>,
+			<<switch $activeSlave.fetish>>
+			<<case "submissive">>
+				I'll have to do whatever the cu<<s>>tomer<<s>> pay for, right?" $His eyes go a little unfocused. "And, they'll hold me down..." $He trails off.
+			<<case "masochist">>
+				it'<<s>> hard being a brothel whore, right? And when I get tired or <<s>>ore, I'll <<s>>till be <<s>>old. Even when it hurt<<s>> me to fuck any more." $His eyes glow with an unhealthy light.
+			<<case "cumslut">>
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					"I hear there are <<s>>ome ni<<c>>e ladie<<s>> that go there for lunchtime cunnilingu<<s>>."
+				<<else>>
+					"the blowjob<<s>>. Ju<<s>>t, the blowjob<<s>>. That'<<s>> all."
+				<</if>>
+			<<case "humiliation">>
+				there'<<s>> a window that fa<<c>>e<<s>> the hallway there, right? <<if $Madam != 0>>Do you think $Madam.slaveName would let me<<else>>Could I<</if>> get fucked there? Where everyone could <<s>>ee me being fucked for money?"
+			<<case "buttslut">>
+
+				uh," and $he shifts $his weight, $his mind obviously on $his backdoor,
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					"there have to be ladie<<s>> who want to buttfuck a whore, right? At lea<<s>>t, I really hope there are."
+				<<else>>
+					"the other <<s>>lave<<s>> tell me that whore<<s>> there get fucked up the a<<ss>> all day and all night. <<S>>ound<<s>> like fun to me."
+				<</if>>
+			<<case "boobs">>
+				$He sticks out $his chest a little and gestures
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					that $he's heard a woman comes by each day just to have her nipples sucked. $He licks $his lips, clearly savoring the thought.
+				<<else>>
+					that $he knows tittyfucking is popular there and can't wait to give $his pair up for sale.
+				<</if>>
+			<<case "pregnancy">>
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					I hear from the other <<s>>lave<<s>> there'<<s>> thi<<s>> pregnant lady who goe<<s>> there every night and pay<<s>> to have a whore cuddle her. Ju<<s>>t cuddle, all night. That would be kind of hard, ju<<s>>t cuddling, but I could do it."
+				<<elseif $activeSlave.vagina == -1>>
+					<<s>>in<<c>>e it'<<s>> all bareback, I'm going to have a fuckton of cum in me. I wonder how much cum it take<<s>> to get a butthole pregnant? I'm gonna try, anyway."
+				<<elseif isFertile($activeSlave)>>
+					<<s>>in<<c>>e it'<<s>> all bareback, I'm going to have a fuckton of cum in me. I wonder how much cum it would take to get my poor womb pregnant?"
+				<<elseif $activeSlave.pregKnown == 1>>
+					"I'm going to be a pregnant whore. That'<<s>> pretty fucking <<s>>e<<x>>y."
+				<<elseif $activeSlave.preg > 0>>
+					"<<s>>in<<c>>e it'<<s>> all bareback, I'm going to have a fuckton of cum in me. I wonder how much cum it would take to get my poor womb pregnant?"
+				<<elseif $activeSlave.ovaries == 1 && $activeSlave.pubertyXX == 0>>
+					"I can't wait till I can get pregnant. That'd be pretty fucking <<s>>e<<x>>y."
+				<<else>>
+					"I hear from the other <<s>>lave<<s>> there'<<s>> thi<<s>> pregnant lady who goe<<s>> there every night and pay<<s>> to have a whore cuddle her. Ju<<s>>t cuddle, all night. That would be kind of hard, ju<<s>>t cuddling, but I could do it."
+				<</if>>
+			<<case "dom">>
+				I heard from the other <<s>>lave<<s>> that <<s>>ome <<c>>iti<<z>>en<<s>> bring their girl<<s>> there. Ju<<s>>t to make them take it from a whore."
+			<<case "sadist">>
+				I heard from the other <<s>>lave<<s>> that <<s>>ome <<c>>iti<<z>>en<<s>> bring their girl<<s>> there. Becau<<s>>e nobody know<<s>> how to hurt a bitch like a whore doe<<s>>." $He shivers.
+			<</switch>>
+		<<elseif $activeSlave.sexualFlaw != "none">>
+			"Ye<<s>>, <<Master>>," $he says obediently. $He hesitates, looking concerned.
+			<<switch $activeSlave.sexualFlaw>>
+			<<case "hates oral">>
+				"I — I'm going to h-have to <<s>>uck a lot of dick there, aren't I." $He swallows nervously. $His lower lip quivers, and $he does $his best not to cry in front of you.
+			<<case "hates anal">>
+				"C-cu<<s>>tomer<<s>> are really going to ream me up the butt hole, aren't they." $He <<if !hasAnyArms($activeSlave)>>shifts uncomfortably, unconsciously trying to shield $his rear as best $he can manage without <<if isAmputee($activeSlave)>>limbs<<else>>hands<</if>><<else>>unconsciously reaches around behind $himself, not quite shielding $his anus with $his hand<<if hasBothArms($activeSlave)>>s<</if>><</if>>. $His lower lip quivers, and $he does $his best not to cry in front of you.
+			<<case "hates penetration">>
+				"C-cu<<s>>tomer<<s>> are really going to fuck me <<s>>ore, aren't they." $He <<if !hasAnyArms($activeSlave)>>shifts uncomfortably, unconsciously trying to shield $his rear as best $he can manage without <<if isAmputee($activeSlave)>>limbs<<else>>hands<</if>><<elseif $activeSlave.vagina > 0>>unconsciously lets $his hand<<if hasBothArms($activeSlave)>>s<</if>> fall to $his crotch, but catches $himself and doesn't quite shield $his pussy<<else>>unconsciously reaches around behind $himself, not quite shielding $his anus with $his hand<<if hasBothArms($activeSlave)>>s<</if>><</if>>. $His lower lip quivers, and $he does $his best not to cry in front of you.
+			<<case "repressed">>
+				"Being a whore i<<s>> a <<s>>in," $he <<say>>s quietly, half to $himself. "I'm going t-to b-be <<s>>o dirty. I'm going to h-hell." $He starts to cry quietly. "<<S>>-<<s>>orry, <<Master>>. I'll do my be<<s>>t."
+			<<case "idealistic">>
+				"I'm going to be <<s>>old for <<s>>e<<x>>," $he <<say>>s quietly, half to $himself. "Men are going to pay, and then they're g-going to <<s>>tick their dick<<s>> in me, and then they're going to leave." $He starts to cry quietly. "<<S>>-<<s>>orry, <<Master>>. I'll do my be<<s>>t."
+			<<case "shamefast">>
+				"I'm going to be meat in a brothel," $he <<say>>s quietly, half to $himself. "I'm going to <<s>>tand there naked with the other <<s>>lave<<s>>, and men will pick me and then u<<s>>e my body. Over and over." $He starts to cry quietly. "<<S>>-<<s>>orry, <<Master>>. I'll do my be<<s>>t."
+			<<case "apathetic">>
+				"I gue<<ss>> I'll lie there," $he sighs quietly, half to $himself. "A man will pay and then he'll come into my room where I'm lying on the bed, and he'll <<s>>tick hi<<s>> cock in me and cum and leave. And then the ne<<x>>t man will come in." $He starts to cry quietly. "<<S>>-<<s>>orry, <<Master>>. I'll do my be<<s>>t."
+			<<case "crude">>
+				"Okay," $he <<say>>s, thinking. "My poor cornhole i<<s>> going to be <<s>>uch a <<s>>eminal <<s>>ewer." $He looks doubtful. "<<Sh>>ould I not have <<s>>aid that, <<Master>>?"
+			<<case "judgemental">>
+				"Gro<<ss>>," $he <<say>>s curtly. "Well, no more hand<<s>>ome boy<<s>> for me, then. Fat pathetic guy<<s>> who patroni<<z>>e whore<<s>>, all the way down. Fuck."
+			<</switch>>
+		<<else>>
+			$He tries to be brave. "<<Master>>, I will do my be<<s>>t to be a good whore." Then, half to $himself, $he adds in a small voice, "I can do thi<<s>>."
+		<</if>>
+	<<else>>
+		<<if ($activeSlave.fetishKnown == 1) && ($activeSlave.fetishStrength > 60) && ($activeSlave.fetish != "none")>>
+			$He looks cautiously excited.
+			<<switch $activeSlave.fetish>>
+			<<case "submissive">>
+				$His eyes go a little unfocused before $he snaps back to attention and gestures that $he'll have to do whatever they want. $His attention wavers once more.
+			<<case "masochist">>
+				$He gestures if brothel whores get breaks when they get sore. Before you can tell $him no, $his eyes glow with an unhealthy light and $he expresses that $he'd like it more if it hurt.
+			<<case "cumslut">>
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					$He gestures that $he heard a rumor that some ladies swing by during lunchtime for a quick eating out.
+				<<else>>
+					As drool starts to leak from $his mouth, it's pretty obvious $he can't wait to start sucking.
+				<</if>>
+			<<case "humiliation">>
+				$He asks if there is a window that $he could be stationed in for all to see.
+			<<case "buttslut">>
+				$He shifts $his weight, $his mind obviously on $his backdoor, and gestures
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					if any girls would want to buttfuck $him.
+				<<else>>
+					that $he knows whores take it up the ass there and can't wait to join them.
+				<</if>>
+			<<case "boobs">>
+				er," and $he sticks out $his chest a little,
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					"I hear from the other <<s>>lave<<s>> there'<<s>> thi<<s>> ni<<c>>e lady who goe<<s>> there every morning and pay<<s>> to have a whore <<s>>uck her nipple<<s>> for, like, an hour. I," $he licks $his lips, "could do that."
+				<<else>>
+					"the other <<s>>lave<<s>> tell me that whore<<s>> there get tittyfucked all the time. <<S>>ound<<s>> like fun to me."
+				<</if>>
+			<<case "pregnancy">>
+				$He gestures
+				<<if $activeSlave.attrXX > $activeSlave.attrXY>>
+					that $he's heard that a pregnant woman has been coming every night to pay for a whore to cuddle her. $He asks if $he could be that $girl.
+				<<elseif $activeSlave.vagina == -1>>
+					how much $he wishes $he could get pregnant from all the cum loads $he's going to get shot up $his rear.
+				<<elseif isFertile($activeSlave)>>
+					that $he knows all the sex is bareback. By the look in $his eyes, you can tell $he is wondering how long it will take for some guys seed to take root in $him.
+				<<elseif $activeSlave.pregKnown == 1>>
+					how sexy $he thinks pregnant whores are.
+				<<elseif $activeSlave.preg > 0>>
+					that $he knows all the sex is bareback. By the look in $his eyes, you can tell $he is wondering how long it will take for some guys seed to take root in $him.
+				<<elseif $activeSlave.ovaries == 1 && $activeSlave.pubertyXX == 0>>
+					how excited $he is for the day $he starts $his menstrual cycle. Will $he even see $his first period, or will every egg $he makes get fertilized?
+				<<else>>
+					that $he's heard a pregnant woman has been coming every night to pay for a whore to cuddle her. $He hopes that one day $he'll be chosen.
+				<</if>>
+			<<case "dom">>
+				$He gestures that $he knows citizens sometimes bring their toys there just to let them get pushed around by a whore. $He'd like that to be true. A lot.
+			<<case "sadist">>
+				$He gestures that $he knows citizens sometimes bring their toys there for punishment. $He shivers with anticipation.
+			<</switch>>
+		<<elseif $activeSlave.sexualFlaw != "none">>
+			$He nods obediently before hesitating with a concerned look on $his face.
+			<<switch $activeSlave.sexualFlaw>>
+			<<case "hates oral">>
+				$He slowly gestures if blowjobs are popular there while swallowing nervously. $His lower lip starts to quiver, and $he does $his best not to cry in front of you.
+			<<case "hates anal">>
+				$He slowly gestures if anal is popular there and <<if !hasAnyArms($activeSlave)>>shifts uncomfortably, unconsciously trying to shield $his rear as best $he can manage without <<if isAmputee($activeSlave)>>limbs<<else>>hands<</if>><<else>>unconsciously reaches around behind $himself, not quite shielding $his anus with $his hand<<if hasBothArms($activeSlave)>>s<</if>><</if>>. $His lower lip quivers, and $he does $his best not to cry in front of you.
+			<<case "hates penetration">>
+				$He slowly gestures that $he understands that customers will expect to fuck $him and <<if !hasAnyArms($activeSlave)>>shifts uncomfortably, unconsciously trying to shield $his rear as best $he can manage without <<if isAmputee($activeSlave)>>limbs<<else>>hands<</if>><<elseif $activeSlave.vagina > 0>>unconsciously lets $his hand<<if hasBothArms($activeSlave)>>s<</if>> fall to $his crotch, but catches $himself and doesn't quite shield $his pussy<<else>>unconsciously reaches around behind $himself, not quite shielding $his anus with $his hand<<if hasBothArms($activeSlave)>>s<</if>><</if>>. $His lower lip quivers, and $he does $his best not to cry in front of you.
+			<<case "repressed">>
+				$He shakily gestures that $he'll be a sinner, but if that's what you want, $he'll do it. $He starts to cry quietly.
+			<<case "idealistic">>
+				$He shakily gestures that $he'll do $his best to please any men that use $him. $He starts to cry quietly.
+			<<case "shamefast">>
+				$He shakily gestures that $he'll do $his best to use $his naked body to attract men and entice passersby. $He starts to cry quietly.
+			<<case "apathetic">>
+				$He shakily gestures that $he'll do $his best to take cock. $He starts to cry quietly.
+			<<case "crude">>
+				$He gestures that $his body is going to become so foul after a day's worth of fucks. $He pauses for a moment, doubtful over whether $he should have said that or not.
+			<<case "judgemental">>
+				$He gestures $his disappointment that only the most pathetic of losers will be fucking $him now. $He pauses for a moment, doubtful over whether $he should have said that or not.
+			<</switch>>
+		<<else>>
+			$He puts on a brave face and gestures that $he'll do $his best. As you send $him off, you catch sight of $him trying to reassure $himself.
+		<</if>>
+	<</if>>
+
+<<elseif ($activeSlave.trust < -20)>>
+
+	<<if canTalk($activeSlave)>>
+		<<if $activeSlave.sexualFlaw != "none">>
+			"Yes, <<Master>>," $he says automatically. $He's badly frightened, and says in a small voice, half to $himself,
+			<<switch $activeSlave.sexualFlaw>>
+			<<case "hates oral">>
+				"I — I'm going to h-have to <<s>>uck a lot of dick, aren't I." $He swallows and tries to control $himself out of fear, but finally gasps out, "Oh God, I'm <<s>>cared," and bursts into tears.
+			<<case "hates anal">>
+				"C-cu<<s>>tomer<<s>> are really going to ream me up the butt hole, aren't they." $He <<if !hasAnyArms($activeSlave)>>shifts uncomfortably, unconsciously trying to shield $his rear as best $he can manage without <<if isAmputee($activeSlave)>>limbs<<else>>hands<</if>><<else>>unconsciously reaches around behind $himself, not quite shielding $his anus with $his hand<<if hasBothArms($activeSlave)>>s<</if>><</if>>. $His lower lip quivers and $he tries to control $himself out of fear, but finally gasps out, "Oh God, I'm <<s>>cared," and bursts into tears.
+			<<case "hates penetration">>
+				"C-cu<<s>>tomer<<s>> are really going to fuck me <<s>>ore, aren't they." $He <<if !hasAnyArms($activeSlave)>>shifts uncomfortably, unconsciously trying to shield $his rear as best $he can manage without <<if isAmputee($activeSlave)>>limbs<<else>>hands<</if>><<elseif $activeSlave.vagina > 0>>unconsciously lets $his hand<<if hasBothArms($activeSlave)>>s<</if>> fall to $his crotch, but catches $himself and doesn't quite shield $his pussy<<else>>unconsciously reaches around behind $himself, not quite shielding $his anus with $his hand<<if hasBothArms($activeSlave)>>s<</if>><</if>>. $His lower lip quivers, and $he tries to control $himself out of fear, but finally gasps out, "Oh God, I'm <<s>>cared," and bursts into tears.
+			<<case "repressed">>
+				"Being a whore i<<s>> a <<s>>in," $he <<say>>s quietly, half to $himself. "I'm going t-to b-be <<s>>o dirty. I'm going to h-hell." $He starts to cry quietly. $He tries to get $himself back under control, out of fear, but finally wails, "Oh God, I'm <<s>>orry, p-plea<<s>>e forgive me God," and dissolves into sobbing.
+			<<case "idealistic">>
+				"I'm going to be <<s>>old for <<s>>e<<x>>," $he <<say>>s quietly, half to $himself. "Men are going to pay, and then they're g-going to <<s>>tick their dick<<s>> in me, and then they're going to leave." $He starts to cry openly. "<<S>>-<<s>>orry, <<Master>>. P-plea<<s>>e don't beat me. I'll do it."
+			<<case "shamefast">>
+				"I'm going to be meat in a brothel," $he <<say>>s quietly, half to $himself. "I'm going to <<s>>tand there naked with the other <<s>>lave<<s>>, and men will pick me and then u<<s>>e my body. Over and over." $He starts to cry openly. "<<S>>-<<s>>orry, <<Master>>. P-plea<<s>>e don't beat me. I'll do it."
+			<<case "apathetic">>
+				"I gue<<ss>> I'll lie there," $he sighs quietly, half to $himself. "A man will pay and then he'll come into my room where I'm lying on the bed, and he'll <<s>>tick his cock in me and cum and leave. And then the ne<<x>>t man will come in." $He starts to cry quietly. "<<S>>-<<s>>orry, <<Master>>. P-plea<<s>>e don't beat me. I'll let it happen."
+			<<case "crude">>
+				"Okay," $he <<say>>s, thinking. "My poor cornhole i<<s>> going to be <<s>>uch a <<s>>eminal <<s>>ewer." $He looks doubtful. "<<Sh>>ould I not have <<s>>aid that, <<Master>>?"
+			<<case "judgemental">>
+				"Gro<<ss>>," $he <<say>>s curtly. "Well, no more hand<<s>>ome boy<<s>> for me, then. Fat pathetic guy<<s>> who patroni<<z>>e whore<<s>>, all the way down. Fuck."
+			<</switch>>
+		<<else>>
+			$He does $his best to control $himself and avoid punishment. "<<Master>>, I will." $He holds $himself together until you dismiss $him; as $he turns away to go, the tears come fast, and $he almost runs into the door frame on $his way out, blind with weeping.
+		<</if>>
+	<<else>>
+		<<if $activeSlave.sexualFlaw != "none">>
+			$He automatically gestures consent. $He's badly frightened, and gingerly continues
+			<<switch $activeSlave.sexualFlaw>>
+			<<case "hates oral">>
+				by asking if $he'll have to suck a lot of dick. $He swallows and tries to control $himself out of fear, but finally loses composure and bursts into tears.
+			<<case "hates anal">>
+				by asking if $he'll be assfucked a lot. $He <<if !hasAnyArms($activeSlave)>>shifts uncomfortably, unconsciously trying to shield $his rear as best $he can manage without <<if isAmputee($activeSlave)>>limbs<<else>>hands<</if>><<else>>unconsciously reaches around behind $himself, not quite shielding $his anus with $his hand<<if hasBothArms($activeSlave)>>s<</if>><</if>>. $His lower lip quivers and $he tries to control $himself out of fear, but finally loses composure and bursts into tears.
+			<<case "hates penetration">>
+				by asking if $he's going to be constantly fucked. $He <<if !hasAnyArms($activeSlave)>>shifts uncomfortably, unconsciously trying to shield $his rear as best $he can manage without <<if isAmputee($activeSlave)>>limbs<<else>>hands<</if>><<elseif $activeSlave.vagina > 0>>unconsciously lets $his hand<<if hasBothArms($activeSlave)>>s<</if>> fall to $his crotch, but catches $himself and doesn't quite shield $his pussy<<else>>unconsciously reaches around behind $himself, not quite shielding $his anus with $his hand<<if hasBothArms($activeSlave)>>s<</if>><</if>>. $His lower lip quivers, and $he tries to control $himself out of fear, but finally loses composure and bursts into tears.
+			<<case "repressed">>
+				that being a whore is a sin. $He starts to cry quietly. $He tries to get $himself back under control, out of fear, but finally wails and dissolves into prayers intermixed with sobbing.
+			<<case "idealistic">>
+				that sex should be with the one you love, not random men. $He starts to cry openly while begging you not to beat $him.
+			<<case "shamefast">>
+				that $he doesn't want to be naked in a line up for men to choose from. $He starts to cry openly while begging you not to beat $him.
+			<<case "apathetic">>
+				that all $he has to do is lie there and take it. $He starts to cry quietly.
+			<<case "crude">>
+				by asking if men enjoy fucking a thoroughly seeded hole. $He pauses for a moment, doubtful over whether $he should have said that or not.
+			<<case "judgemental">>
+				by expressing $his disappointment with the type of men that frequent brothels.
+			<</switch>>
+		<<else>>
+			$He does $his best to control $himself and avoid punishment. "<<Master>>, I will." $He holds $himself together until you dismiss $him; as $he turns away to go, the tears come fast, and $he almost runs into the door frame on $his way out, blind with weeping.
+		<</if>>
+	<</if>>
+
+<<else>>
+
+	$He manages to
+	<<if canTalk($activeSlave)>>
+		get "Oh fuck n-" out
+	<<elseif hasAnyArms($activeSlave)>>
+		flip you an incredibly rude gesture
+	<<else>>
+		get an incredibly rude gesture out
+	<</if>>
+	before the compliance systems activate and $he's poleaxed to the ground. Anticipating this, you had <<if $Madam != 0>>$Madam.slaveName <<else>>another, more obedient slave<</if>> standing by to haul $him away. It'll take a couple of hundred customers, but being sold in a brothel for rape should knock the resistance out of $him.
+
+<</if>> /* CLOSES DEVOTION */

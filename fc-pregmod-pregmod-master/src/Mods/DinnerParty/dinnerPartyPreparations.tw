@@ -1,0 +1,41 @@
+:: Dinner Party Preparations [nobr]
+
+<<set $nextButton = "Cancel The Event", $nextLink = "Main">>
+
+Hosting of high society dinner parties will increase your prestige significantly and it is expected for someone of your station. Since there is a lack of animal meat, human meat is served at these events to illustrate the wealth and power of the host. The success of the evening is judged by how well the human offering is prepared. Guests to these events are encouraged to rate the dishes and special dishes are expected. If the host receives 5 stars on all the dishes, they will receive the coveted title "<<if $PC.title == 1>>Master<<else>>Mistress<</if>> of The Culinary Arts". You ask $assistant.name to show you a list of cooking instructions for those dishes.
+
+
+<h1>Cooking Instructions and Recipes:</h1>
+
+''Roast Long Pig'' – Made with the meat of a human roasted on a spit. Young meat is better than old meat. There should be some amount of fat to make the meat juicy, but not too much fat that makes the meat greasy. Muscles affect the texture of the meat. Meat without muscles lacks texture while an excess will be tough and hard to chew. Remember that you can't eat silicone, and virgin meat is highly sought after.<<if $seePreg != 0>> If the human is pregnant, a veal dish can also be made from the fetus.<</if>>
+
+<br><br>
+''Dicky Roll'' – An erect penis made into a spring roll. For best results, harvest the penis at the moment of ejaculation. The size of the penis and the amount of accumulated ejaculate all affect the quality of the dish. Too big of a dick and too thin of semen can both ruin a dish.
+
+<br><br>
+''Testy Meat Balls'' – Testicles made into meat balls served with a sauce. Size matters.
+
+<br><br>
+''Titty Tartare'' – Made from finely chopped breasts, mixed with onions, capers, and seasonings, and served raw. Big breasts make the best quality meat for this dish. To add a hint of creamy taste, make sure the breasts are lactating. Remember that you can't eat silicone.
+
+<br><br>
+''Camel Toe à l'Orange'' – Pussy grilled like a steak. A big clit and big labia will improve the quality of the dish.
+
+<br><br>
+
+Your assistant will take care of the invitations and all the arrangements; all you need to do is pick the meat.
+
+<br><br>
+
+__Select Your Meat:__
+<br><br>
+<<= App.UI.SlaveList.slaveSelectionList(
+		s => assignmentVisible(s) && s.fuckdoll === 0,
+		App.UI.SlaveList.SlaveInteract.stdInteract,
+		null,
+		(s, i) => {
+			const p = getPronouns(s);
+			return App.UI.DOM.passageLink(`Make ${p.him} the main course`, "Dinner Party Execution",
+				() => { App.Utils.setActiveSlaveByIndex(i); })
+		}
+	)>>

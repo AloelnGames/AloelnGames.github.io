@@ -1,0 +1,537 @@
+:: Manage Arcology [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Main">>
+<<set $showEncyclopedia = 0>>
+
+<<if $cheatMode == 1>>
+	<div class="cheat-menu">[[Cheat Edit Arcology|MOD_Edit Arcology Cheat][$cheater = 1]]</div>
+<</if>>
+
+<div>
+	<span id="building"></span>
+	<<script>>
+		$(document).one(':passageend', () => {
+			$('#building').append(
+				V.building.render(),
+			);
+		});
+	<</script>>
+	<div id="arcDesc"></div>
+	<<script>>
+		$(document).one(':passageend', () => {
+			$('#arcDesc').append(
+				App.Desc.playerArcology(App.UI.DOM.combineNodes("| ",
+					App.UI.DOM.passageLink("Hide", "Main", () => {V.seeArcology = 0})))
+			);
+		});
+	<</script>>
+</div>
+
+<h2>Arcology Ownership</h2>
+
+<p>
+	<div>
+		<<run App.Arcology.updateOwnership()>>
+		<<= ownershipReport({sidebar: false})>>
+	</div>
+</p>
+
+<<if $FSAnnounced > 0>>
+	<<if $FSCredits > 0>>
+		<p class="noteworthy">
+			$arcologies[0].name's society is ready to begin accepting a new societal direction.
+		</p>
+	<</if>>
+<</if>>
+
+<h2>Construction</h2>
+
+<p>
+	<div>
+	<<if $arcologyUpgrade.drones != 1>>
+		<span class="note">
+			The first major upgrade needed is the installation of a drone security system so higher-class citizens will feel safe and protected should they choose to immigrate. This upgrade will cost <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>>.
+		</span>
+		<<link "Install drone security system" "Manage Arcology">>
+			<<run cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx")>>
+			<<set $arcologyUpgrade.drones = 1, $PC.skill.engineering += 1>>
+			<<if $secExpEnabled == 1>>
+				<<run App.SecExp.Check.general()>>
+				<<set $secBots.active = 1, $secBots.troops = $secBots.maxTroops = 30>>
+			<</if>>
+		<</link>>
+	<<elseif $arcologyUpgrade.hydro != 1>>
+		<span class="note">
+			The next major upgrade needed is the installation of a better water reclamation system so your residents will have access to cheaper water and hydroponically grown food. This upgrade will cost <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology))>>.
+		</span>
+		[[Upgrade water reclamation system|Manage Arcology][cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierArcology)), "capEx"), $arcologyUpgrade.hydro = 1, $PC.skill.engineering += 1]]
+	<<elseif $arcologyUpgrade.apron != 1>>
+		<span class="note">
+			The next major upgrade needed is the installation of a broader apron at the bottom of the arcology to increase its surface area and gather more solar energy. Right now, tenants that use a lot of power have to import it from outside. This upgrade will cost <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>>.
+		</span>
+		[[Install solar apron|Manage Arcology][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "capEx"), $arcologyUpgrade.apron = 1, $PC.skill.engineering += 1]]
+	<<elseif $arcologyUpgrade.grid != 1>>
+		<span class="note">
+			The next major upgrade needed is an improvement of the arcology's electrical transmission lines to make efficient use of the additional power from the solar apron. This upgrade will cost <<print cashFormat(Math.trunc(50000*$upgradeMultiplierArcology))>>.
+		</span>
+		[[Upgrade transmission lines|Manage Arcology][cashX(forceNeg(Math.trunc(50000*$upgradeMultiplierArcology)), "capEx"), $arcologyUpgrade.grid = 1, $PC.skill.engineering += 1]]
+	<<elseif $arcologyUpgrade.spire != 1>>
+		<span class="note">
+			The next major upgrade needed is the addition of a spire at the top of the arcology to increase the space available for the wealthiest citizens to own whole floors. This huge project will cost <<print cashFormat(Math.trunc(250000*$upgradeMultiplierArcology))>>.
+		</span>
+		[[Add spire|Manage Arcology][cashX(forceNeg(Math.trunc(250000*$upgradeMultiplierArcology)), "capEx"), $arcologyUpgrade.spire = 1, $building.sections.push(new App.Arcology.Section("spire", [[new App.Arcology.Cell.Apartment(1, 2), new App.Arcology.Cell.Apartment(1, 2)], [new App.Arcology.Cell.Apartment(1, 2), new App.Arcology.Cell.Apartment(1, 2)]])), $PC.skill.engineering += 1]]
+	<<else>>
+		<span class="note">
+			The arcology's public areas are fully upgraded.
+		</span>
+	<</if>>
+	</div>
+
+	<div>
+	<<if $weatherCladding == 0>>
+		<span class="note">
+			Extreme weather is becoming common worldwide. The arcology's exterior can be hardened to reduce damage in case of heavy weather, but this will reduce its beauty somewhat and will cost <<print cashFormat(Math.trunc(50000*$upgradeMultiplierArcology))>>.
+			Your citizens are
+			<<if $weatherAwareness == 0>>
+				likely to disapprove of this measure as alarmism.
+			<<else>>
+				<span class="noteworthy">concerned that this measure has not been taken already.</span>
+			<</if>>
+		</span>
+		[[Apply weather cladding|Manage Arcology][cashX(forceNeg(Math.trunc(50000*$upgradeMultiplierArcology)), "capEx"), $weatherCladding = 1, $PC.skill.engineering += 1]]
+	<<elseif $weatherCladding == 1 && $arcologyUpgrade.spire == 1>>
+		The arcology's exterior is jacketed with unsightly but sturdy weather cladding. Your arcology is so prosperous that remodeling the cladding into something beautiful is within the realm of possibility. This massive project will cost <<print cashFormat(Math.trunc(3500000*$upgradeMultiplierArcology))>> and without a doubt render your arcology one of the wonders of the world.
+		[[Remodel weather cladding|Manage Arcology][cashX(forceNeg(Math.trunc(3500000*$upgradeMultiplierArcology)), "capEx"), $weatherCladding = 2, $PC.skill.engineering += 1]]
+	<<elseif $weatherCladding == 1>>
+		<span class="note">
+			The arcology's exterior is jacketed with unsightly but sturdy weather cladding.
+		</span>
+	<<elseif $weatherCladding == 2>>
+		<span class="note">
+			The arcology's exterior is jacketed with gorgeously sculpted and fully functional weather cladding.
+		</span>
+	<</if>>
+	</div>
+
+	<div>
+	<<if ($receiverAvailable == 1) && ($FCTVenable != 0) && ($FCTVreceiver == 0)>>
+		You have not installed an FCTV receiver.
+		Installing this receiver yourself will cost <<print cashFormat(Math.trunc(25000*$upgradeMultiplierArcology*$HackingSkillMultiplier))>>.
+		You can have your citizens pay for the fiberoptic upgrades, reducing the cost to <<print cashFormat(Math.trunc(20000*$upgradeMultiplierArcology*$HackingSkillMultiplier))>>.
+		You can also have them heavily subsidize installation, they will be upset about it, but it will only cost <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology*$HackingSkillMultiplier))>>.
+
+		[[No subsidy|Manage Arcology][cashX(forceNeg(Math.trunc(25000*$upgradeMultiplierArcology*$HackingSkillMultiplier)), "capEx"), $FCTVreceiver = 1, $receiverAvailable = $week, repX(500, "capEx"), $PC.skill.hacking += 1]] | [[Light subsidy|Manage Arcology][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology*$HackingSkillMultiplier)), "capEx"), $FCTVreceiver = 1, $receiverAvailable = $week, $PC.skill.hacking += 1]] | [[Heavy subsidy|Manage Arcology][cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierArcology*$HackingSkillMultiplier)), "capEx"), $FCTVreceiver = 1, $receiverAvailable = $week, repX(-1500, "capEx"), $PC.skill.hacking += 1]]
+	<<elseif ($FCTVreceiver == 3)>>
+		You have installed the FCTV receiver and have access to the full range of FCTV's programs. High viewership rates amongst your citizens makes it easier to pursue your societal goals.
+	<<elseif ($FCTVreceiver == 2)>>
+		You have installed the FCTV receiver and have access to the full range of FCTV's programs. Decent viewership rates amongst your citizens makes it somewhat easier to pursue your societal goals.
+	<<elseif ($FCTVreceiver == 1)>>
+		You have installed the FCTV receiver and have access to the full range of FCTV's programs. Low viewership rates amongst your citizens limits the impact of FCTV on your societal goals.
+	<</if>>
+	</div>
+
+	<<if ($PC.skill.engineering >= 100) || ($PC.career == "arcology owner")>>
+		<div class="note">
+			Arcology upgrades are less expensive due to your
+			<span class="player skill">
+				<<if $PC.career == "arcology owner">>experience in the Free Cities<<else>>arcology engineering training<</if>>.
+			</span>
+		</div>
+	<</if>>
+</p>
+
+<<if $secExpEnabled == 0>>
+	<<if $weatherAwareness > 0>>
+		<p>
+		<<if $antiWeatherFreeze == 0>>
+			The extreme weather hurts your arcology's ability to function. Reinforcing your passenger terminals increase the weather range at which they can operate.
+			<div>
+				Reinforcing passenger terminals costs <<print cashFormat(50000)>> and increase upkeep. [[Reinforce|Manage Arcology][$antiWeatherFreeze = 1, cashX(-50000, "capEx")]]
+			</div>
+		<<elseif $antiWeatherFreeze == 1>>
+			You have reinforced your passenger terminals to function even during bad weather. You can invest into all-weather transportation to remain functional no matter what.
+			<div>
+				Investing in all-weather transportation costs <<print cashFormat(100000)>> and increase upkeep. [[Invest|Manage Arcology][$antiWeatherFreeze = 2, cashX(-100000, "capEx")]]
+			</div>
+		<<elseif $antiWeatherFreeze == 2>>
+			Your arcology's passenger terminals remain fully operational even during the most extreme weather.
+		<</if>>
+		</p>
+	<</if>>
+<</if>>
+
+<<if $secExpEnabled == 1>>
+	<h2>Security</h2>
+
+	<p>
+		<div>
+		<<if $SecExp.buildings.propHub.active == 0>>
+			[[Set up the propaganda Hub|Manage Arcology][cashX(forceNeg(Math.trunc((5000*$upgradeMultiplierArcology*$HackingSkillMultiplier))), "capEx"), $SecExp.buildings.propHub.active = 1, $PC.skill.engineering += 1, $PC.skill.hacking += 1, App.SecExp.Check.general()]]
+			<span class="detail">
+				Costs <<print cashFormat(Math.trunc((5000*$upgradeMultiplierArcology*$HackingSkillMultiplier)))>>.
+				<div class="indent">Building specialized in the management of authority.</div>
+			</span>
+		<<else>>
+			The [[Propaganda Hub|propagandaHub]] is ready to manipulate reality on your command.
+		<</if>>
+		</div>
+
+		<div>
+		<<if $secHQ == 0>>
+			[[Set up the security headquarters|Manage Arcology][cashX(forceNeg(Math.trunc((5000*$upgradeMultiplierArcology*$HackingSkillMultiplier))), "capEx"), $secHQ = 1, $PC.skill.engineering += 1, $PC.skill.hacking += 1]]
+			<span class="detail">
+				Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology*$HackingSkillMultiplier))>>.
+				<div class="indent">Building specialized in the management of security and crime.</div>
+			</span>
+		<<else>>
+			The [[security HQ|securityHQ]] is constantly working to protect your arcology.
+		<</if>>
+		</div>
+
+		<div>
+		<<if $SecExp.buildings.barracks.active == 0>>
+			[[Set up the barracks|Manage Arcology][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $SecExp.buildings.barracks.active = 1, $PC.skill.engineering += 1, App.SecExp.Check.general()]]
+			<span class="detail">
+				Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>>
+				<div class="indent">Building specialized in the management of armed forces.</div>
+			</span>
+		<<else>>
+			The [[barracks|secBarracks]] patiently await your orders.
+		<</if>>
+		</div>
+
+		<div>
+		<<if $riotCenter == 0 && $SecExp.settings.rebellion.enabled == 1>>
+			[[Set up the riot control center|Manage Arcology][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $riotCenter = 1, $PC.skill.engineering += 1]]
+			<span class="detail">
+				Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>>
+				<div class="indent">Building specialized in the management and suppression of rebellions.</div>
+			</span>
+		<<elseif $SecExp.settings.rebellion.enabled == 1>>
+			The [[Riot Control Center|riotControlCenter]] stands ready for action.
+		<</if>>
+		</div>
+	</p>
+<</if>>
+
+<<if $difficultySwitch == 1>>
+	<h2>Disaster Response</h2>
+
+	<p>
+		<<if $econWeatherDamage > 0>>
+			The recent terrible weather has damaged the local infrastructure. It is <span class="warning">reducing the local economy score by <<print $econWeatherDamage>>.</span>
+			<div>
+			<<if $disasterResponse == 0>>
+				Locals will do their best to repair the damage on their own, but setting up a disaster response unit will improve the recovery of infrastructure critical for keeping goods, people and information flowing smoothly in and out of your arcology.
+				<div>
+					Creating the unit will cost <<print cashFormat(50000)>> and incur upkeep. [[Create Disaster Response Unit|Manage Arcology][cashX(-50000, "capEx"), $disasterResponse = 1]]
+				</div>
+			<<elseif $disasterResponse == 1>>
+				You are sending your disaster response unit to repair critical infrastructure. They are doing what they can.
+				<div>
+					The unit can be made more effective with an additional investment of <<print cashFormat(100000)>>. This will also increase upkeep. [[Improve Disaster Response Unit|Manage Arcology][cashX(-100000, "capEx"), $disasterResponse = 2]]
+				</div>
+			<<else>>
+				Your highly capable disaster response unit is rapidly repairing the weather damage.
+			<</if>>
+			</div>
+		<<elseif $disasterResponse > 0>>
+			Your disaster response unit is idle. It will not cost you any upkeep this week.
+		<</if>>
+	</p>
+<</if>>
+
+<<if $foodMarket > 0>>
+	<h2>Food Management</h2>
+	<p>
+		<<include "Food Market">>
+	</p>
+<</if>>
+
+<h2>Sexual Service Policies</h2>
+
+<p>
+	<div>
+		If so desired, your assistant can help you manipulate the business environment within your arcology.
+	</div>
+	<div>
+		Currently outside parties are providing <<print $NPCMarketShare.lowerClass/10>>%, <<print $NPCMarketShare.middleClass/10>>%, <<print $NPCMarketShare.upperClass/10>>% and <<print $NPCMarketShare.topClass/10>>% of the sexual services for the lower, middle, upper and top class respectively.
+	</div>
+</p>
+
+<p>
+	<div>
+	<<if $sexSubsidies.lowerClass == 0>>
+		You can provide a minor subsidy for those selling sexual services to the lower class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Minor Subsidy|Manage Arcology][$sexSubsidies.lowerClass = 1]]
+	<<elseif $sexSubsidies.lowerClass == 1>>
+		You are providing a minor subsidy for those selling sexual services to the lower class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Cancel Subsidy|Manage Arcology][$sexSubsidies.lowerClass = 0]] | [[Moderate Subsidy|Manage Arcology][$sexSubsidies.lowerClass = 2]]
+	<<elseif $sexSubsidies.lowerClass == 2>>
+		You are providing a moderate subsidy for those selling sexual services to the lower class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Minor Subsidy|Manage Arcology][$sexSubsidies.lowerClass = 1]] | [[Substantial Subsidy|Manage Arcology][$sexSubsidies.lowerClass = 3]]
+	<<elseif $sexSubsidies.lowerClass == 3>>
+		You are providing a substantial subsidy for those selling sexual services to the lower class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Moderate Subsidy|Manage Arcology][$sexSubsidies.lowerClass = 2]] | [[Gratuitous Subsidy|Manage Arcology][$sexSubsidies.lowerClass = 4]]
+	<<else>>
+		You are providing a gratuitous subsidy for those selling sexual services to the lower class. <span class="note">Upkeep is relative to the amount of sex provided by other parties</span> [[Substantial Subsidy|Manage Arcology][$sexSubsidies.lowerClass = 3]]
+	<</if>>
+	</div>
+	<div>
+	<<if $sexSupplyBarriers.lowerClass == 0>>
+		You can make things more difficult for those supplying sexual services in the lower class segment if you are willing to spend 1000 reputation and pay a flat upkeep of <span class="cash"><<print cashFormat(1000)>>.</span> <<if $rep > 1000>>[[Create Bureaucracy|Manage Arcology][$sexSupplyBarriers.lowerClass = 1, repX(-1000, "policies")]] <<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<elseif $sexSupplyBarriers.lowerClass == 1>>
+		You have forced some unneeded bureaucracy on those selling sexual services to the lower class making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. Increasing the bureaucracy further will cost a flat upkeep of <span class="cash"><<print cashFormat(5000)>>.</span> <<if $rep > 1000>>[[Abolish Bureaucracy|Manage Arcology][$sexSupplyBarriers.lowerClass = 0, repX(-1000, "policies")]] | [[Increase Bureaucracy|Manage Arcology][$sexSupplyBarriers.lowerClass = 2, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<elseif $sexSupplyBarriers.lowerClass == 2>>
+		You have forced considerable bureaucracy on those selling sexual services to the lower class making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. Increasing the bureaucracy further will cost a flat upkeep of <span class="cash"><<print cashFormat(20000)>>.</span> <<if $rep > 1000>>[[Reduce Bureaucracy|Manage Arcology][$sexSupplyBarriers.lowerClass = 1, repX(-1000, "policies")]] | [[Increase Bureaucracy|Manage Arcology][$sexSupplyBarriers.lowerClass = 3, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<elseif $sexSupplyBarriers.lowerClass == 3>>
+		You have forced stifling bureaucracy on those selling sexual services to the lower class making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. Increasing the bureaucracy further will cost a flat upkeep of <span class="cash"><<print cashFormat(60000)>>.</span> <<if $rep > 1000>>[[Reduce Bureaucracy|Manage Arcology][$sexSupplyBarriers.lowerClass = 2, repX(-1000, "policies")]] | [[Increase Bureaucracy|Manage Arcology][$sexSupplyBarriers.lowerClass = 4, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<else>>
+		You have forced suffocating bureaucracy on those selling sexual services to the lower class making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. <<if $rep > 1000>>[[Reduce Bureaucracy|Manage Arcology][$sexSupplyBarriers.lowerClass = 3, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<</if>>
+	</div>
+</p>
+
+<p>
+	<div>
+	<<if $sexSubsidies.middleClass == 0>>
+		You can provide a minor subsidy for those selling sexual services to the middle class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Minor Subsidy|Manage Arcology][$sexSubsidies.middleClass = 1]]
+	<<elseif $sexSubsidies.middleClass == 1>>
+		You are providing a minor subsidy for those selling sexual services to the middle class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Cancel Subsidy|Manage Arcology][$sexSubsidies.middleClass = 0]] | [[Moderate Subsidy|Manage Arcology][$sexSubsidies.middleClass = 2]]
+	<<elseif $sexSubsidies.middleClass == 2>>
+		You are providing a moderate subsidy for those selling sexual services to the middle class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Minor Subsidy|Manage Arcology][$sexSubsidies.middleClass = 1]] | [[Substantial Subsidy|Manage Arcology][$sexSubsidies.middleClass = 3]]
+	<<elseif $sexSubsidies.middleClass == 3>>
+		You are providing a substantial subsidy for those selling sexual services to the middle class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Moderate Subsidy|Manage Arcology][$sexSubsidies.middleClass = 2]] | [[Gratuitous Subsidy|Manage Arcology][$sexSubsidies.middleClass = 4]]
+	<<else>>
+		You are providing a gratuitous subsidy for those selling sexual services to the middle class. <span class="note">Upkeep is relative to the amount of sex provided by other parties</span> [[Substantial Subsidy|Manage Arcology][$sexSubsidies.middleClass = 3]]
+	<</if>>
+	</div>
+	<div>
+	<<if $sexSupplyBarriers.middleClass == 0>>
+		You can make things more difficult for those supplying sexual services in the middle class segment if you are willing to spend 1000 reputation and pay a flat upkeep of <span class="cash"><<print cashFormat(1000)>>.</span> <<if $rep > 1000>>[[Create Bureaucracy|Manage Arcology][$sexSupplyBarriers.middleClass = 1, repX(-1000, "policies")]] <<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<elseif $sexSupplyBarriers.middleClass == 1>>
+		You have forced some unneeded bureaucracy on those selling sexual services to the middle class making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. Increasing the bureaucracy further will cost a flat upkeep of <span class="cash"><<print cashFormat(5000)>>.</span> <<if $rep > 1000>>[[Abolish Bureaucracy|Manage Arcology][$sexSupplyBarriers.middleClass = 0, repX(-1000, "policies")]] | [[Increase Bureaucracy|Manage Arcology][$sexSupplyBarriers.middleClass = 2, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<elseif $sexSupplyBarriers.middleClass == 2>>
+		You have forced considerable bureaucracy on those selling sexual services to the middle class making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. Increasing the bureaucracy further will cost a flat upkeep of <span class="cash"><<print cashFormat(20000)>>.</span> <<if $rep > 1000>>[[Reduce Bureaucracy|Manage Arcology][$sexSupplyBarriers.middleClass = 1, repX(-1000, "policies")]] | [[Increase Bureaucracy|Manage Arcology][$sexSupplyBarriers.middleClass = 3, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<elseif $sexSupplyBarriers.middleClass == 3>>
+		You have forced stifling bureaucracy on those selling sexual services to the middle class making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. Increasing the bureaucracy further will cost a flat upkeep of <span class="cash"><<print cashFormat(60000)>>.</span> <<if $rep > 1000>>[[Reduce Bureaucracy|Manage Arcology][$sexSupplyBarriers.middleClass = 2, repX(-1000, "policies")]] | [[Increase Bureaucracy|Manage Arcology][$sexSupplyBarriers.middleClass = 4, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<else>>
+		You have forced suffocating bureaucracy on those selling sexual services to the middle class making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. <<if $rep > 1000>>[[Reduce Bureaucracy|Manage Arcology][$sexSupplyBarriers.middleClass = 3, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<</if>>
+	</div>
+</p>
+
+<p>
+	<div>
+	<<if $sexSubsidies.upperClass == 0>>
+		You can provide a minor subsidy for those selling sexual services to the upper class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Minor Subsidy|Manage Arcology][$sexSubsidies.upperClass = 1]]
+	<<elseif $sexSubsidies.upperClass == 1>>
+		You are providing a minor subsidy for those selling sexual services to the upper class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Cancel Subsidy|Manage Arcology][$sexSubsidies.upperClass = 0]] | [[Moderate Subsidy|Manage Arcology][$sexSubsidies.upperClass = 2]]
+	<<elseif $sexSubsidies.upperClass == 2>>
+		You are providing a moderate subsidy for those selling sexual services to the upper class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Minor Subsidy|Manage Arcology][$sexSubsidies.upperClass = 1]] | [[Substantial Subsidy|Manage Arcology][$sexSubsidies.upperClass = 3]]
+	<<elseif $sexSubsidies.upperClass == 3>>
+		You are providing a substantial subsidy for those selling sexual services to the upper class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Moderate Subsidy|Manage Arcology][$sexSubsidies.upperClass = 2]] | [[Gratuitous Subsidy|Manage Arcology][$sexSubsidies.upperClass = 4]]
+	<<else>>
+		You are providing a gratuitous subsidy for those selling sexual services to the upper class. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Substantial Subsidy|Manage Arcology][$sexSubsidies.upperClass = 3]]
+	<</if>>
+	</div>
+	<div>
+	<<if $sexSupplyBarriers.upperClass == 0>>
+		You can make things more difficult for those supplying sexual services in the upper class segment if you are willing to spend 1000 reputation and pay a flat upkeep of <span class="cash"><<print cashFormat(1000)>>.</span> <<if $rep > 1000>>[[Create Bureaucracy|Manage Arcology][$sexSupplyBarriers.upperClass = 1, repX(-1000, "policies")]] <<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<elseif $sexSupplyBarriers.upperClass == 1>>
+		You have forced some unneeded bureaucracy on those selling sexual services to the upper class making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. Increasing the bureaucracy further will cost a flat upkeep of <span class="cash"><<print cashFormat(5000)>>.</span> <<if $rep > 1000>>[[Abolish Bureaucracy|Manage Arcology][$sexSupplyBarriers.upperClass = 0, repX(-1000, "policies")]] | [[Increase Bureaucracy|Manage Arcology][$sexSupplyBarriers.upperClass = 2, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough</span><</if>>
+	<<elseif $sexSupplyBarriers.upperClass == 2>>
+		You have forced considerable bureaucracy on those selling sexual services to the upper class making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. Increasing the bureaucracy further will cost a flat upkeep of <span class="cash"><<print cashFormat(20000)>>.</span> <<if $rep > 1000>>[[Reduce Bureaucracy|Manage Arcology][$sexSupplyBarriers.upperClass = 1, repX(-1000, "policies")]] | [[Increase Bureaucracy|Manage Arcology][$sexSupplyBarriers.upperClass = 3, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<elseif $sexSupplyBarriers.upperClass == 3>>
+		You have forced stifling bureaucracy on those selling sexual services to the upper class making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. Increasing the bureaucracy further will cost a flat upkeep of <span class="cash"><<print cashFormat(60000)>>.</span> <<if $rep > 1000>>[[Reduce Bureaucracy|Manage Arcology][$sexSupplyBarriers.upperClass = 2, repX(-1000, "policies")]] | [[Increase Bureaucracy|Manage Arcology][$sexSupplyBarriers.upperClass = 4, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<else>>
+		You have forced suffocating bureaucracy on those selling sexual services to the upper class making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. <<if $rep > 1000>>[[Reduce Bureaucracy|Manage Arcology][$sexSupplyBarriers.upperClass = 3, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<</if>>
+	</div>
+</p>
+
+<p>
+	<div>
+	<<if $sexSubsidies.topClass == 0>>
+		You can provide a minor subsidy for those selling sexual services to the millionaires. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Minor Subsidy|Manage Arcology][$sexSubsidies.topClass = 1]]
+	<<elseif $sexSubsidies.topClass == 1>>
+		You are providing a minor subsidy for those selling sexual services to the millionaires. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Cancel Subsidy|Manage Arcology][$sexSubsidies.topClass = 0]] | [[Moderate Subsidy|Manage Arcology][$sexSubsidies.topClass = 2]]
+	<<elseif $sexSubsidies.topClass == 2>>
+		You are providing a moderate subsidy for those selling sexual services to the millionaires. <span class="note">Upkeep is relative to the amount of sex provided by other parties.</span> [[Minor Subsidy|Manage Arcology][$sexSubsidies.topClass = 1]] | [[Substantial Subsidy|Manage Arcology][$sexSubsidies.topClass = 3]]
+	<<elseif $sexSubsidies.topClass == 3>>
+		You are providing a substantial subsidy for those selling sexual services to the millionaires. <span class="note">Upkeep is relative to the amount of sex provided by other parties</span> [[Moderate Subsidy|Manage Arcology][$sexSubsidies.topClass = 2]] | [[Gratuitous Subsidy|Manage Arcology][$sexSubsidies.topClass = 4]]
+	<<else>>
+		You are providing a gratuitous subsidy for those selling sexual services to the millionaires. <span class="note">Upkeep is relative to the amount of sex provided by other parties</span> [[Substantial Subsidy|Manage Arcology][$sexSubsidies.topClass = 3]]
+	<</if>>
+	</div>
+	<div>
+	<<if $sexSupplyBarriers.topClass == 0>>
+		You can make things more difficult for those supplying sexual services in the millionaires segment if you are willing to spend 1000 reputation and pay a flat upkeep of <span class="cash"><<print cashFormat(1000)>>.</span> <<if $rep > 1000>>[[Create Bureaucracy|Manage Arcology][$sexSupplyBarriers.topClass = 1, repX(-1000, "policies")]] <<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<elseif $sexSupplyBarriers.topClass == 1>>
+		You have forced some unneeded bureaucracy on those selling sexual services to the millionaires making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. Increasing the bureaucracy further will cost a flat upkeep of <span class="cash"><<print cashFormat(5000)>>.</span> <<if $rep > 1000>>[[Abolish Bureaucracy|Manage Arcology][$sexSupplyBarriers.topClass = 0, repX(-1000, "policies")]] | [[Increase Bureaucracy|Manage Arcology][$sexSupplyBarriers.topClass = 2, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<elseif $sexSupplyBarriers.topClass == 2>>
+		You have forced considerable bureaucracy on those selling sexual services to the millionaires making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. Increasing the bureaucracy further will cost a flat upkeep of <span class="cash"><<print cashFormat(20000)>>.</span> <<if $rep > 1000>>[[Reduce Bureaucracy|Manage Arcology][$sexSupplyBarriers.topClass = 1, repX(-1000, "policies")]] | [[Increase Bureaucracy|Manage Arcology][$sexSupplyBarriers.topClass = 3, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough</span><</if>>
+	<<elseif $sexSupplyBarriers.topClass == 3>>
+		You have forced stifling bureaucracy on those selling sexual services to the millionaires making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. Increasing the bureaucracy further will cost a flat upkeep of <span class="cash"><<print cashFormat(60000)>>.</span> <<if $rep > 1000>>[[Reduce Bureaucracy|Manage Arcology][$sexSupplyBarriers.topClass = 2, repX(-1000, "policies")]] | [[Increase Bureaucracy|Manage Arcology][$sexSupplyBarriers.topClass = 4, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough.</span><</if>>
+	<<else>>
+		You have forced suffocating bureaucracy on those selling sexual services to the millionaires making things a little more difficult. If you are willing to spend 1000 reputation you can change this policy. <<if $rep > 1000>>[[Reduce Bureaucracy|Manage Arcology][$sexSupplyBarriers.topClass = 3, repX(-1000, "policies")]]<<else>><span class="note">You are not reputable enough</span><</if>>
+	<</if>>
+	</div>
+</p>
+
+<h2>Population and Rent</h2>
+
+<p>
+	<<print $arcologies[0].name>> is home to the following;
+	<<set _percACitizens = Math.trunc(($ACitizens / ($ACitizens + $ASlaves)) * 1000) / 10,
+	_percASlaves = Math.trunc(($ASlaves / ($ACitizens + $ASlaves)) * 1000) / 10,
+	_percLowerClass = Math.trunc(($lowerClass / ($ACitizens + $ASlaves)) * 1000) / 10,
+	_percMiddleClass = Math.trunc(($middleClass / ($ACitizens + $ASlaves)) * 1000) / 10,
+	_percUpperClass = Math.trunc(($upperClass / ($ACitizens + $ASlaves)) * 1000) / 10,
+	_percTopClass = Math.trunc(($topClass / ($ACitizens + $ASlaves)) * 1000) / 10,
+	_rentLowerClass = Math.trunc($rent.lowerClass * (1 + (5 - $baseDifficulty) / 20) / 0.25) / 100,
+	_rentMiddleClass = Math.trunc($rent.middleClass * (1 + (5 - $baseDifficulty) / 20) / 0.25) / 100,
+	_rentUpperClass = Math.trunc($rent.upperClass * (1 + (5 - $baseDifficulty) / 20) / 25),
+	_rentTopClass = Math.trunc($rent.topClass * (1 + (5 - $baseDifficulty) / 20) / 25)>>
+	<div>
+	Lower Class Citizens | $lowerClass | <<print _percLowerClass>>% | Rent <span class="cash"><<print cashFormat(_rentLowerClass)>></span>
+	<<if $rent.lowerClass > $rentDefaults.lowerClass * 1.5>>
+		<span class="note">Very High</span> | [[Decrease|Manage Arcology][$rent.lowerClass = $rentDefaults.lowerClass * 1.5, $rentEffectL = 0.94, $whoreBudget.lowerClass *= 9 / 8]]
+	<<elseif $rent.lowerClass > $rentDefaults.lowerClass>>
+		<span class="note">High</span> | [[Increase|Manage Arcology][$rent.lowerClass = $rentDefaults.lowerClass * 2, $rentEffectL = 0.85, $whoreBudget.lowerClass *= 8 / 9]] | [[Decrease|Manage Arcology][$rent.lowerClass = $rentDefaults.lowerClass, $rentEffectL = 1, $whoreBudget.lowerClass *= 10 / 9]]
+	<<elseif $rent.lowerClass > $rentDefaults.lowerClass * 0.5>>
+		<span class="note">Average</span> | [[Increase|Manage Arcology][$rent.lowerClass = $rentDefaults.lowerClass * 1.5, $rentEffectL = 0.94, $whoreBudget.lowerClass *= 9 / 10]] | [[Decrease|Manage Arcology][$rent.lowerClass = $rentDefaults.lowerClass * 0.5, $rentEffectL = 1.04, $whoreBudget.lowerClass *= 11 / 10]]
+	<<elseif $rent.lowerClass > 0>>
+		<span class="note">Low</span> | [[Increase|Manage Arcology][$rent.lowerClass = $rentDefaults.lowerClass, $rentEffectL = 1, $whoreBudget.lowerClass *= 10 / 11]] | [[Free Rent|Manage Arcology][$rent.lowerClass = 0, $rentEffectL = 1.1, $whoreBudget.lowerClass *= 12 / 11]]
+	<<else>>
+		<span class="note">Free</span> | [[Increase|Manage Arcology][$rent.lowerClass = $rentDefaults.lowerClass * 0.5, $rentEffectL = 1.04, $whoreBudget.lowerClass *= 11 / 12]]
+	<</if>>
+	</div>
+	<div>
+	Middle Class Citizens | $middleClass | <<print _percMiddleClass>>% | Rent <span class="cash"><<print cashFormat(_rentMiddleClass)>></span>
+	<<if $rent.middleClass > $rentDefaults.middleClass * 1.5>>
+		<span class="note">Very High</span> | [[Decrease|Manage Arcology][$rent.middleClass = $rentDefaults.middleClass * 1.5, $rentEffectM = 0.94, $whoreBudget.middleClass *= 9 / 8]]
+	<<elseif $rent.middleClass > $rentDefaults.middleClass>>
+		<span class="note">High</span> | [[Increase|Manage Arcology][$rent.middleClass = $rentDefaults.middleClass * 2, $rentEffectM = 0.85, $whoreBudget.middleClass *= 8 / 9]] | [[Decrease|Manage Arcology][$rent.middleClass = $rentDefaults.middleClass, $rentEffectM = 1, $whoreBudget.middleClass *= 10 / 9]]
+	<<elseif $rent.middleClass > $rentDefaults.middleClass * 0.5>>
+		<span class="note">Average</span> | [[Increase|Manage Arcology][$rent.middleClass = $rentDefaults.middleClass * 1.5, $rentEffectM = 0.94, $whoreBudget.middleClass *= 9 / 10]] | [[Decrease|Manage Arcology][$rent.middleClass = $rentDefaults.middleClass * 0.5, $rentEffectM = 1.04, $whoreBudget.middleClass *= 11 / 10]]
+	<<elseif $rent.middleClass > 0>>
+		<span class="note">Low</span> | [[Increase|Manage Arcology][$rent.middleClass = $rentDefaults.middleClass, $rentEffectM = 1, $whoreBudget.middleClass *= 10 / 11]] | [[Free Rent|Manage Arcology][$rent.middleClass = 0, $rentEffectM = 1.1, $whoreBudget.middleClass *= 12 / 11]]
+	<<else>>
+		<span class="note">Free</span> | [[Increase|Manage Arcology][$rent.middleClass = $rentDefaults.middleClass * 0.5, $rentEffectM = 1.04, $whoreBudget.middleClass *= 11 / 12]]
+	<</if>>
+	</div>
+	<div>
+	Upper Class Citizens | $upperClass | <<print _percUpperClass>>% | Rent <span class="cash"><<print cashFormat(_rentUpperClass)>></span>
+	<<if $rent.upperClass > $rentDefaults.upperClass * 1.5>>
+		<span class="note">Very High</span> | [[Decrease|Manage Arcology][$rent.upperClass = $rentDefaults.upperClass * 1.5, $rentEffectU = 0.94, $whoreBudget.upperClass *= 9 / 8]]
+	<<elseif $rent.upperClass > $rentDefaults.upperClass>>
+		<span class="note">High</span> | [[Increase|Manage Arcology][$rent.upperClass = $rentDefaults.upperClass * 2, $rentEffectU = 0.85, $whoreBudget.upperClass *= 8 / 9]] | [[Decrease|Manage Arcology][$rent.upperClass = $rentDefaults.upperClass, $rentEffectU = 1, $whoreBudget.upperClass *= 10 / 9 ]]
+	<<elseif $rent.upperClass > $rentDefaults.upperClass * 0.5>>
+		<span class="note">Average</span> | [[Increase|Manage Arcology][$rent.upperClass = $rentDefaults.upperClass * 1.5, $rentEffectU = 0.94, $whoreBudget.upperClass *= 9 / 10]] | [[Decrease|Manage Arcology][$rent.upperClass = $rentDefaults.upperClass * 0.5, $rentEffectU = 1.04, $whoreBudget.upperClass *= 11 / 10]]
+	<<elseif $rent.upperClass > 0>>
+		<span class="note">Low</span> | [[Increase|Manage Arcology][$rent.upperClass = $rentDefaults.upperClass, $rentEffectU = 1, $whoreBudget.upperClass *= 10 / 11]] | [[Free Rent|Manage Arcology][$rent.upperClass = 0, $rentEffectU = 1.1, $whoreBudget.upperClass *= 12 / 11]]
+	<<else>>
+		<span class="note">Free</span> | [[Increase|Manage Arcology][$rent.upperClass = $rentDefaults.upperClass * 0.5, $rentEffectU = 1.04, $whoreBudget.upperClass *= 11 / 12]]
+	<</if>>
+	</div>
+	<div>
+	Millionaires | $topClass | <<print _percTopClass>>% | Rent <span class="cash"><<print cashFormat(_rentTopClass)>></span>
+	<<if $rent.topClass > $rentDefaults.topClass * 1.5>>
+		<span class="note">Very High</span> | [[Decrease|Manage Arcology][$rent.topClass = $rentDefaults.topClass * 1.5, $rentEffectT = 0.94, $whoreBudget.topClass *= 9 / 8]]
+	<<elseif $rent.topClass > $rentDefaults.topClass>>
+		<span class="note">High</span> | [[Increase|Manage Arcology][$rent.topClass = $rentDefaults.topClass * 2, $rentEffectT = 0.85, $whoreBudget.topClass *= 8 / 9]] | [[Decrease|Manage Arcology][$rent.topClass = $rentDefaults.topClass, $rentEffectT = 1, $whoreBudget.topClass *= 10 / 9]]
+	<<elseif $rent.topClass > $rentDefaults.topClass * 0.5>>
+		<span class="note">Average</span> | [[Increase|Manage Arcology][$rent.topClass = $rentDefaults.topClass * 1.5, $rentEffectT = 0.94, $whoreBudget.topClass *= 9 / 10]] | [[Decrease|Manage Arcology][$rent.topClass = $rentDefaults.topClass * 0.5, $rentEffectT = 1.04, $whoreBudget.topClass *= 11 / 10]]
+	<<elseif $rent.topClass > 0>>
+		<span class="note">Low</span> | [[Increase|Manage Arcology][$rent.topClass = $rentDefaults.topClass, $rentEffectT = 1, $whoreBudget.topClass *= 10 / 11]] | [[Free Rent|Manage Arcology][$rent.topClass = 0, $rentEffectT = 1.1, $whoreBudget.topClass *= 12 / 11]]
+	<<else>>
+		<span class="note">Free</span> | [[Increase|Manage Arcology][$rent.topClass = $rentDefaults.topClass * 0.5, $rentEffectT = 1.04, $whoreBudget.topClass *= 11 / 12]]
+	<</if>>
+	</div>
+	<div>
+		Slaves | $ASlaves | <<print _percASlaves>>%
+	</div>
+</p>
+
+<h2>Language</h2>
+
+<p>
+	The lingua franca of the arcology is <strong>$language</strong>.
+	<<link "Language options">><<set $seed = $language>><<goto "Change Language">><</link>>
+</p>
+
+<h2>Special Arcology Upgrades</h2>
+
+<p class="indent">
+	<<if ($personalArms == 0) && ($mercenaries == 0) && ($assistant.personality == 0)>>
+		<span class="note">$arcologies[0].name has no special upgrades.</span>
+	<</if>>
+
+	<<if ($personalArms == 1)>>
+		You own a prototype powered exoskeleton that mounts armor and a smart mortar system, and has rifles mounted into its forearms.
+	<<elseif ($personalArms > 1)>>
+		You own a prototype powered exoskeleton that mounts armor and a smart mortar system, and has rifles mounted into its forearms. Furthermore, your security drones can rearm with small-caliber guns if necessary.
+	<</if>>
+
+	<<if ($mercenaries > 0)>>
+		<<if ($mercenaries == 1)>>
+			A squad of mercenaries is permanently quartered in $arcologies[0].name. They are grim men and women, heavily armed and armored.
+		<<elseif ($mercenaries < 5)>>
+			A full platoon of mercenaries is permanently quartered in $arcologies[0].name. They are grim men and women, heavily armed and armored.
+		<<elseif ($mercenaries >= 5)>>
+			You have permanently settled a full company of mercenaries in $arcologies[0].name as your $mercenariesTitle. They are grim men and women who appreciate their luxurious life here and train hard to keep their skills with their prototype armor sharp.
+		<</if>>
+	<</if>>
+
+	<<if $assistant.personality > 0>>
+		<<setAssistantPronouns>>
+		<<= capFirstChar($assistant.name)>> is using an alternative personality setting, speaking in a sultry, sexual voice, and talking as though the penthouse's sex toys are _hisA body.
+		<<if $assistant.personality > 1>>
+			_HeA also has charge of all smart piercings in the arcology, and is using _hisA adaptations to sexual duties to improve their effectiveness.
+		<</if>>
+	<</if>>
+</p>
+
+<p>
+	Your slaves have participated in approximately <<print num($oralTotal+$vaginalTotal+$analTotal)>> sexual encounters: <<print num($oralTotal)>> primarily oral, <<print num($vaginalTotal)>> vanilla, <<print num($mammaryTotal)>> mammary, <<print num($analTotal)>> anal, and <<print num($penetrativeTotal)>> with the slave penetrating another. They have produced about <<print num($milkTotal)>> liters of marketable milk, <<if $seeDicks != 0>>about <<print num($cumTotal)>> deciliters of marketable cum, <</if>>and have given birth <<print num($birthsTotal)>> times.
+
+	<<if $pitKillsTotal > 0>>
+		$pitKillsTotal slaves have died in your fighting pit.
+	<</if>>
+	<<if $fuckdollsSold > 0>>
+		$fuckdollsSold mindbroken arcade slaves have been converted into Fuckdolls and sold.
+	<</if>>
+</p>
+
+<<if $secExpEnabled == 1 && $SecExp.settings.battle.enabled == 1>>
+	<p>
+	<<if $SF.Toggle === 0||$SF.Active === 0>>
+		Your army counts <<print num($militiaEmployedManpower + $slavesEmployedManpower + $mercEmployedManpower)>> total soldiers.
+	<<elseif $SF.Toggle && $SF.Active >= 1>>
+		Your army counts <<print num($militiaEmployedManpower + $slavesEmployedManpower + $mercEmployedManpower + $SF.Squad.Troops)>> total soldiers of which <<print num($SF.Squad.Troops)>> under the special force command and the rest under your direct control.
+	<</if>>
+	<<if $hasFoughtOnce == 1>>
+		Your troops were involved in <<print num($battlesCount)>> battles of which <<print num($majorBattlesCount)>> were major engagements. You won
+		<<if $battlesCount == $PCvictories>>
+			all of them.
+		<<elseif $battlesCount == $PClosses>>
+			none of them.
+		<<else>>
+			<<print num($PCvictories)>> of them, while the enemy managed to gain the upper hand in the other <<print num($PClosses)>>.
+		<</if>>
+	<</if>>
+
+	<<if $rebellionsCount >= 1>>
+		Your arcology was involved in <<print num($rebellionsCount)>> rebellions. You won <<print num($PCrebWon)>> of them, while the rebels defeated your forces in <<print num($PCrebLoss)>>.
+	<</if>>
+
+	During all battles you lost a total of <<print num($militiaTotalCasualties + $slavesTotalCasualties + $mercTotalCasualties)>> men, while scoring a total of <<print num($totalKills)>> kills.
+	</p>
+<</if>>
+
+<p>
+	Your arcology is named <<textbox "$arcologies[0].name" $arcologies[0].name "Manage Arcology">>
+</p>
+
+<<if $experimental.dinnerParty == 1 && $seeExtreme == 1>>
+	<p>
+		[[Host Dinner Party|Dinner Party Preparations]]
+	</p>
+<</if>>

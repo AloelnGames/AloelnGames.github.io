@@ -1,0 +1,175 @@
+:: Trick Shot Night [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "RIE Eligibility Check", $returnTo = "RIE Eligibility Check">>
+
+<<setAssistantPronouns>>
+
+<<if $PC.skill.warfare == -100>>
+	<<set _shootChance = 5>>
+<<elseif $PC.skill.warfare <= -75>>
+	<<set _shootChance = 10>>
+<<elseif $PC.skill.warfare <= -50>>
+	<<set _shootChance = 15>>
+<<elseif $PC.skill.warfare <= -25>>
+	<<set _shootChance = 20>>
+<<elseif $PC.skill.warfare == 0>>
+	<<set _shootChance = 25>>
+<<elseif $PC.skill.warfare <= 25>>
+	<<set _shootChance = 45>>
+<<elseif $PC.skill.warfare <= 50>>
+	<<set _shootChance = 60>>
+<<elseif $PC.skill.warfare <= 75>>
+	<<set _shootChance = 85>>
+<<elseif $PC.skill.warfare >= 100>>
+	<<set _shootChance = 90>>
+<</if>>
+
+Despite your direct elevator, interaction with the majority of your security force is relatively scarce. Aside from mutually exchanged nods in the firebase and the occasional briefing, your $SF.Lower enjoy a degree of autonomy.
+
+<br><br>On a particularly lackadaisical evening, you find yourself alerted to a message alert by $assistant.name.
+<<if $assistant.personality > 0>>
+	"<<= properMaster()>>, a message from $SF.Lower." _HeA pauses before continuing. "It seems they're asking if you'd like to join their trick shot night."
+<<else>>
+	It informs you that $SF.Lower have sent a message asking you to join them at their trick shot night.
+<</if>>
+
+<br><br>
+<span id="result"> <<link "Politely decline">>
+	<<replace "#result">>
+		You inform $SF.Lower that you aren't planning to attend. A short while later, you receive a message from them stating that their invitation is an open one and that you're welcome to join in another night.
+	<</replace>>
+<</link>>
+
+<<if $cash < 50000>>
+	<br>//You lack the necessary funds to attend.//
+<<else>> /* cash >= 50000 */
+
+	<br><<link "Attend the trick shot night">>
+		<<replace "#result">>
+			You instruct $assistant.name to inform $SF.Lower that you will be attending their trick shot night, and after settling your affairs in the penthouse you head down to the firebase. The atmosphere in the firebase is casual, especially in comparison to the usual situations you meet them, though your security force still maintain some measure of decorum towards you as their employer. Eventually, you settle in at the table with a handful of $SF.Lower officers and turn your @@.yellowgreen;<<print cashFormat(50000)>>@@ into bullets. All that remains is to decide your strategy for the night.
+			<br><br>
+			<span id="bountyresult">
+
+			<<link "Play it safe">>
+				<<replace "#bountyresult">>
+					<<if random(1,100) > _shootChance>>
+						Despite your attempts to mitigate risk and play the safest shots possible, it seems lady luck has conspired against you this evening. However, even when your last bullet is shot, your security force pitch you a few bullets to keep you in the game for the rest of the night. You may have lost most of your ¤, but it seems you've @@.green;made some friends.@@
+						<<run repX(5000, "event")>>
+						<<run cashX(-25000, "event")>>
+					<<else>>
+						While a careful eye for accuracy has buoyed you through the evening, ultimately lady luck is the decider in handing you the win in a number of close shots. Unfortunately your meticulous play limited your chance at a larger payout, and you only come away from the evening with @@.yellowgreen;<<print cashFormat(100000)>>@@ more than you arrived with and @@.green;the respect of your security force.@@
+						<<run repX(5000, "event")>>
+						<<run cashX(100000, "event")>>
+					<</if>>
+				<</replace>>
+			<</link>>
+
+			<<if random(1,100) < _shootChance>>
+				<br> <<link "Up the ante">>
+					<<replace "#bountyresult">>
+						<<set $activeSlaveOneTimeMinAge = 25>>
+						<<set $activeSlaveOneTimeMaxAge = 35>>
+						<<set $one_time_age_overrides_pedo_mode = 1>>
+						<<set $oneTimeDisableDisability = 1>>
+						<<if $arcologies[0].FSSupremacistLawME == 1>>
+							<<set $fixedRace = $arcologies[0].FSSupremacistRace>>
+						<<elseif $arcologies[0].FSSubjugationistLawME == 1>>
+							<<set _races = setup.filterRacesLowercase.filter(race => race !== $arcologies[0].FSSubjugationistRace)>>
+							<<set $fixedRace = _races.random()>>
+						<</if>>
+						<<if $seeDicks != 100>>
+							<<set $activeSlave = GenerateNewSlave("XX")>>
+						<<else>>
+							<<set $activeSlave = GenerateNewSlave("XY")>>
+						<</if>>
+						<<set $activeSlave.origin = "$He put $himself up as collateral at a trick shot game, and lost.">>
+						<<set $activeSlave.career = "a soldier">>
+						<<set $activeSlave.indentureRestrictions = 2>>
+						<<set $activeSlave.indenture = 52>>
+						<<set $activeSlave.devotion = random(45,60)>>
+						<<set $activeSlave.trust = random(55,65)>>
+						<<run setHealth($activeSlave, jsRandom(60, 80), 0, undefined, 0, jsRandom(10, 30))>>
+						<<set $activeSlave.muscles = 60>>
+						<<if $activeSlave.weight > 130>>
+							<<set $activeSlave.weight -= 100>>
+							<<set $activeSlave.waist = random(-10,50)>>
+						<</if>>
+						<<set $activeSlave.anus = 0>>
+						<<set $activeSlave.skill.anal = 0>>
+						<<set $activeSlave.skill.whoring = 0>>
+						<<set $activeSlave.skill.combat = 1>>
+						<<set $activeSlave.accent = random(0,1)>>
+						<<set $activeSlave.behavioralFlaw = "arrogant">>
+						<<set $activeSlave.hLength = 1>>
+						<<set $activeSlave.hStyle = "buzzcut">>
+						<<set $activeSlave.clothes = "a military uniform">>
+						<<setLocalPronouns $activeSlave>>
+						<span id="artFrame">
+						/* 000-250-006 */
+						<<if $seeImages == 1>>
+							<<if $imageChoice == 1>>
+								<div class="imageRef medImg"><<= SlaveArt($activeSlave, 2, 0)>></div>
+							<<else>>
+								<div class="imageRef medImg"><<= SlaveArt($activeSlave, 2, 0)>></div>
+							<</if>>
+						<</if>>
+						/* 000-250-006 */
+						</span>
+						Some aggressive play and an eye for riling up your fellow players has resulted in an immense payout, and all but one of your adversaries have folded as the situation has escalated. The only player still in contention is a wily old mercenary, the veteran of $his fair share of battles on the battlefield and at the firing range. $He's short on bullets, however, and $he'll have to buy in with something else as collateral.
+						<br><br>
+						<span id="aliveresult">
+
+							<<link "A year of servitude">>
+								<<set $activeSlave.clothes = "no clothing">>
+								<<replace "#aliveresult">>
+									<<if random(1,100) > _shootChance>>
+										For all your skillful maneuvering to reach this position, ultimately the win comes down to chance. This time, however, luck was not on your side. As the victor sweeps up $his spoils, the other security force clap you on the back and offer their condolences for your defeat. Though you may have lost your ¤, it seems you've @@.green;made some friends.@@
+										<<run repX(5000, "event")>>
+										<<run cashX(-50000, "event")>>
+									<<else>>
+										<<replace "#artFrame">>
+											<span id="artFrame">
+											/* 000-250-006 */
+											<<if $seeImages == 1>>
+												<<if $imageChoice == 1>>
+													<div class="imageRef medImg"><<= SlaveArt($activeSlave, 2, 0)>></div>
+												<<else>>
+													<div class="imageRef medImg"><<= SlaveArt($activeSlave, 2, 0)>></div>
+												<</if>>
+											<</if>>
+											/* 000-250-006 */
+											</span>
+										<</replace>>
+										For all your skillful maneuvering to reach this position, ultimately the win comes down to chance. This time, however, luck has rendered you the victor. A silence falls over the room as the result is declared, but after some time your opponent breaks the hush by joking that life as your slave is probably easier than fighting for $arcologies[0].name. After some awkward laughter the night continues, and at the end your former mercenary joins you on your trip back to the penthouse to submit to processing and to begin $his new life as your sexual servant. $He's not young, but $he's tough and not distrusting of you due to $his service in $SF.Lower.
+										<br>
+										<<include "New Slave Intro">>
+									<</if>>
+									<<= IncreasePCSkills('warfare', 1)>>
+								<</replace>>
+							<</link>>
+
+							<br> <<link "Dock $his wages">>
+								<<replace "#aliveresult">>
+									<<if random(1,100) > _shootChance>>
+										For all your skillful maneuvering to reach this position, ultimately the win comes down to chance. This time, however, luck was not on your side. As the victor sweeps up $his spoils, the other security force members clap you on the back and offer their condolences for your defeat. Though you may have lost your ¤, it seems you've @@.green;made some friends.@@
+										<<run repX(5000, "event")>>
+										<<run cashX(-50000, "event")>>
+									<<else>>
+										For all your skillful maneuvering to reach this position, ultimately the win comes down to chance. This time, however, luck has rendered you the victor. Your opponent accepts $his defeat with grace and jokes to $his comrades that $he'll be fighting in $his underwear for the next few months, and their uproar of laughter fills the room. Though you take the lion's share of the ¤, your security force also @@.green;had a good time fraternizing with you.@@
+										<<run repX(10000, "event")>>
+										<<run cashX(50000, "event")>>
+									<</if>>
+									<<= IncreasePCSkills('warfare', 1)>>
+								<</replace>>
+							<</link>>
+
+						</span>
+					<</replace>>
+				<</link>>
+			<</if>>
+
+			</span>
+		<</replace>>
+	<</link>> // It will cost <<print cashFormat(50000)>> to participate in the trick shot night.//
+<</if>>
+</span>

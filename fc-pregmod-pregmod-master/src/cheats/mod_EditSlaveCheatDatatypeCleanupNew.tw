@@ -1,0 +1,233 @@
+:: MOD_Edit Slave Cheat Datatype Cleanup New [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "Slave Interact">>
+/* Cancel Option Check */
+<<if $tempSlave == "unset">>
+	<<unset $tempSlave>>
+	<<goto "Slave Interact">>
+<</if>>
+
+<<if $customEvalCode>>
+	<<if $customEvalCode.charAt(0) != "(" || $nextLink == ")">> /* second condition is only there for sanityCheck */
+		<<set $customEvalCode = "(" + $customEvalCode + ")">>
+	<</if>>
+	<<if typeof eval($customEvalCode) === "function">>
+		<<run (eval($customEvalCode))($tempSlave)>>
+	<</if>>
+<</if>>
+<<unset $customEvalCode>>
+
+<<set $rep = Number($rep) || 0>>
+<<set $cash = Number($cash) || 0>>
+<<set $week = Number($week) || 1>>
+<<set $tempSlave.preg = Number($tempSlave.preg) || 0>>
+<<set $tempSlave.pregType = Number($tempSlave.pregType) || 0>>
+<<if $tempSlave.broodmother == 0>>
+	<<set WombInit($tempSlave)>> /* just to make sure */
+	<<set $tempSlave.womb.length = 0>> /* simple way to delete all fetuses */
+	<<set WombImpregnate($tempSlave, $tempSlave.pregType, $tempSlave.pregSource, $tempSlave.preg)>> /* recreates fetuses */
+<<else>>
+	<<set WombNormalizePreg($tempSlave)>>
+<</if>>
+<<set $tempSlave.pregWeek = Number($tempSlave.pregWeek) || Math.max($tempSlave.preg, 0)>>
+<<if $tempSlave.preg <= 0>>
+	<<set $tempSlave.pregKnown = 0>>
+<<elseif $tempSlave.preg > 0>>
+	<<set $tempSlave.pregKnown = 1>>
+<</if>>
+<<set $tempSlave.pregAdaptation = Number($tempSlave.pregAdaptation) || 0>>
+<<if $tempSlave.pregAdaptation <= 0>>
+	<<if $tempSlave.genes === "XY">> /* copied from GenerateXYPregAdaptation */
+		<<if slave.physicalAge <= 6>>
+			<<set $tempSlave.pregAdaptation = 5>>
+		<<elseif $tempSlave.physicalAge <= 11>>
+			<<set $tempSlave.pregAdaptation = $tempSlave.physicalAge - 1>>
+		<<elseif $tempSlave.physicalAge <= 15>>
+			<<set $tempSlave.pregAdaptation = 2 * ($tempSlave.physicalAge - 12) + 12>>
+		<<else>>
+			<<set $tempSlave.pregAdaptation = 20>>
+		<</if>>
+	<<else>> /* copied from GenerateXXPregAdaptation */
+		<<if $tempSlave.physicalAge <= 6>>
+			<<set $tempSlave.pregAdaptation = 5>>
+		<<elseif $tempSlave.physicalAge <= 11>>
+			<<set $tempSlave.pregAdaptation = $tempSlave.physicalAge - 1>>
+		<<elseif $tempSlave.physicalAge <= 14>>
+			<<set $tempSlave.pregAdaptation = 4 * ($tempSlave.physicalAge - 12) + 14>>
+		<<elseif $tempSlave.physicalAge <= 15>>
+			<<set $tempSlave.pregAdaptation = 28>>
+		<<elseif $tempSlave.physicalAge <= 16>>
+			<<set $tempSlave.pregAdaptation = 34>>
+		<<elseif $tempSlave.physicalAge <= 17>>
+			<<set $tempSlave.pregAdaptation = 42>>
+		<<else>>
+			<<set $tempSlave.pregAdaptation = 50>>
+		<</if>>
+	<</if>>
+<</if>>
+<<run SlaveDatatypeCleanup($tempSlave)>> /* will break cheated pregnancies if run before the above block of code */
+
+/* Dependency Check */
+<br>
+<<if ($tempSlave.relationshipTarget == $tempSlave.ID) && ($tempSlave.relationship > 0)>>
+	<<set $tempSlave.relationshipTarget = 0>>
+	<<set $tempSlave.relationship = -1>>
+	<<print "Slave was in a relation with $himself, reset to emotional slut">><br>
+<</if>>
+<<if ($tempSlave.rivalryTarget == $tempSlave.ID) && ($tempSlave.rivalry > 0)>>
+	<<set $tempSlave.rivalryTarget = 0>>
+	<<set $tempSlave.rivalry = 0>>
+	<<print "Slave was $his own rival, reset to no rivalry">><br>
+<</if>>
+<<if ($tempSlave.ageImplant == 1) && ($tempSlave.visualAge < 25)>>
+	<<print "Slave's visual age is smaller than 25, reset to no lifting">><br>
+	<<set $tempSlave.ageImplant = 0>>
+<</if>>
+<<if ($tempSlave.voice == 0) && ($tempSlave.voiceImplant != 0)>>
+	<<print "Slave is mute, voice surgery reset" >><br>
+	<<set $tempSlave.voiceImplant = 0>>
+<</if>>
+<<if ($tempSlave.voice == 3) && ($tempSlave.voiceImplant < 0)>>
+	<<print "Voice surgery too low, voice surgery reset" >><br>
+	<<set $tempSlave.voiceImplant = 0>>
+<</if>>
+<<if ($tempSlave.voice == 1) && ($tempSlave.voiceImplant > 0)>>
+	<<print "Voice surgery too high, voice surgery reset" >><br>
+	<<set $tempSlave.voiceImplant = 0>>
+<</if>>
+<<if $tempSlave.earImplant == 1 && !isProstheticAvailable($tempSlave, "cochlear")>><<run addProsthetic($tempSlave, "cochlear")>><</if>>
+<<if $tempSlave.electrolarynx == 1 && !isProstheticAvailable($tempSlave, "electrolarynx")>><<run addProsthetic($tempSlave, "electrolarynx")>><</if>>
+<<if $tempSlave.eye.right != null>>
+	<<if $tempSlave.eye.right.type == 3 && !isProstheticAvailable($tempSlave, "ocular")>><<run addProsthetic($tempSlave, "ocular")>><</if>>
+<</if>>
+<<if $tempSlave.eye.left != null>>
+	<<if $tempSlave.eye.left.type == 3 && !isProstheticAvailable($tempSlave, "ocular")>><<run addProsthetic($tempSlave, "ocular")>><</if>>
+<</if>>
+<<if $tempSlave.arm.left != null >>
+	<<run configureLimbs($tempSlave, "left arm", $tempSlave.arm.left.type)>>
+<</if>>
+<<if $tempSlave.arm.right != null >>
+	<<run configureLimbs($tempSlave, "right arm", $tempSlave.arm.right.type)>>
+<</if>>
+<<if $tempSlave.leg.left != null >>
+	<<run configureLimbs($tempSlave, "left leg", $tempSlave.leg.left.type)>>
+<</if>>
+<<if $tempSlave.leg.right != null >>
+	<<run configureLimbs($tempSlave, "right leg", $tempSlave.leg.right.type)>>
+<</if>>
+<<if $tempSlave.PLimb == 2 && !isProstheticAvailable($tempSlave, "interfaceP2")>><<run addProsthetic($tempSlave, "interfaceP2")>>
+<<elseif $tempSlave.PLimb == 1 && !isProstheticAvailable($tempSlave, "interfaceP1")>><<run addProsthetic($tempSlave, "interfaceP1")>>
+<</if>>
+<<if hasAllNaturalLimbs($tempSlave) && ($tempSlave.PLimb > 0)>>
+	<<print "Slave has normal limbs, limb interface reset to 0 (no interface)">><br>
+	<<set $tempSlave.PLimb = 0>>
+<</if>>
+<<if $tempSlave.PLimb === 0 && hasAnyProstheticLimbs($tempSlave)>>
+	<<print "Slave has no prosthetic limb interface, remove all prosthetic limbs">>
+	<<if getLeftArmID($tempSlave) > 1>>
+		<<run removeLimbs($tempSlave, "left arm")>>
+	<</if>>
+	<<if getRightArmID($tempSlave) > 1>>
+		<<run removeLimbs($tempSlave, "right arm")>>
+	<</if>>
+	<<if getLeftLegID($tempSlave) > 1>>
+		<<run removeLimbs($tempSlave, "left leg")>>
+	<</if>>
+	<<if getRightLegID($tempSlave) > 1>>
+		<<run removeLimbs($tempSlave, "right leg")>>
+	<</if>>
+<</if>>
+<<if !hasAnyLegs($tempSlave)>>
+	<<set $tempSlave.heels = 0>>
+	<<set $tempSlave.heightImplant = 0>>
+<</if>>
+<<if !hasAnyArms($tempSlave)>>
+	<<set $tempSlave.nails = 0>>
+<</if>>
+<<if $tempSlave.PTail == 1 && !isProstheticAvailable($tempSlave, "interfaceTail")>><<run addProsthetic($tempSlave, "interfaceTail")>><</if>>
+<<if $tempSlave.PTail == 0 && $tempSlave.tail != "none">><br>
+	<<print "No tail interface installed: Tail got removed">><br>
+	<<set $tempSlave.tail = "none">>
+<<elseif $tempSlave.tail == "sex" && !isProstheticAvailable($tempSlave, "sexT")>><<run addProsthetic($tempSlave, "sexT")>>
+<<elseif $tempSlave.tail == "combat" && !isProstheticAvailable($tempSlave, "combatT")>><<run addProsthetic($tempSlave, "combatT")>>
+<<elseif $tempSlave.tail == "mod">>
+	<<if !isProstheticAvailable($tempSlave, "modT")>><<run addProsthetic($tempSlave, "modT")>><</if>>
+	<<if $tempSlave.tailShape == "none">><<print "Tailshape was missing: set to Cat">><<set $tempSlave.tailShape = "neko">><br><</if>>
+	<<if $tempSlave.tailColor == "none">><<print "Tailcolor was missing: set to original haircolor">><<set $tempSlave.tailColor = $tempSlave.origHColor>><br><</if>>
+<</if>>
+<<if (ndef $tempSlave.pubertyXX) && ($tempSlave.physicalAge >= $tempSlave.pubertyAgeXX)>>
+	<<set $tempSlave.pubertyXX = 1>>
+<<elseif (ndef $tempSlave.pubertyXX) && ($tempSlave.physicalAge < $tempSlave.pubertyAgeXX)>>
+	<<set $tempSlave.pubertyXX = 0>>
+<</if>>
+<<if $tempSlave.dick == 0>>
+	<<set $tempSlave.dickTat = 0>>
+<</if>>
+<<if ($tempSlave.vagina == -1) >>
+	<<set $tempSlave.labia = 0>>
+	<<set $tempSlave.clit = 0>>
+	<<set $tempSlave.cervixImplant = 0>>
+	<<set $tempSlave.ovaries = 0>>
+<</if>>
+<<if ($tempSlave.cervixImplant == 1) && ($tempSlave.ovaries == 0)>>
+	<<print "Slave has no ovaries, cervix implant reset to 0 (not implanted)">><br>
+	<<set $tempSlave.cervixImplant = 0>>
+<</if>>
+<<if ($tempSlave.cervixImplant == 1) && ($tempSlave.preg == -2)>>
+	<<print "Slave is sterile, cervix implant reset to 0 (not implanted)">><br>
+	<<set $tempSlave.cervixImplant = 0>>
+<</if>>
+<<if ($tempSlave.clit > 0) && ($tempSlave.dick > 0 )>>
+	<<print "No giant clit when dick is present, reset clit to 0 (normal)">><br>
+	<<set $tempSlave.clit = 0>>
+<</if>>
+<<if ($tempSlave.ovaries == 0) && ($tempSlave.mpreg == 0) && ($tempSlave.preg > 0)>>
+	<<print "Slave has no ovaries and no anal womb, pregnancy reset to 0">><br>
+	<<run WombFlush($tempSlave)>>
+<</if>>
+<<if ($tempSlave.pubertyXX != 1) && ($tempSlave.physicalAge >= $tempSlave.pubertyAgeXX)>>
+	<<print "Slave's physical age is equal to or higher than female puberty age, puberty set to 1 (post-puberty)">><br>
+	<<set $tempSlave.pubertyXX = 1>>
+<</if>>
+<<if ($tempSlave.ovaries == 1) && ($tempSlave.mpreg == 1)>>
+	<<print "Slave has a working vagina, anal womb removed">><br>
+	<<set $tempSlave.mpreg = 0>>
+<</if>>
+<<if ($tempSlave.pubertyXX == 0) && ($tempSlave.preg > 0)>>
+	<<print "Slave is not fertile (pre-puberty) and has no anal womb, pregnancy aborted">><br>
+	<<run WombFlush($tempSlave)>>
+<</if>>
+<<if (ndef $tempSlave.pubertyXY) && ($tempSlave.physicalAge >= $tempSlave.pubertyAgeXY)>>
+	<<set $tempSlave.pubertyXY = 1>>
+<<elseif (ndef $tempSlave.pubertyXY) && ($tempSlave.physicalAge < $tempSlave.pubertyAgeXY)>>
+	<<set $tempSlave.pubertyXY = 0>>
+<</if>>
+<<if ($tempSlave.physicalAge >= $tempSlave.pubertyAgeXY) && ($tempSlave.pubertyXY != 1)>>
+	<<print "Slave's physical age is equal to or higher than male puberty age, puberty set to 1 (post-puberty)" >><br>
+	<<set $tempSlave.pubertyXY = 1>>
+<</if>>
+<<if $tempSlave.breedingMark == 1 && $propOutcome == 1 && $eugenicsFullControl != 1 && $arcologies[0].FSRestart != "unset" && ["be a subordinate slave", "be confined in the arcade", "be the DJ", "be the Madam", "live with your Head Girl", "serve in the club", "serve the public", "whore", "work a glory hole", "work in the brothel", "work in the dairy"].includes($tempSlave.assignment)>>
+	<<print "Eugenics breeding marked slave detected in questionable use, defaulting slave assignment to 'rest'">><br>
+	<<= assignJob($tempSlave, "rest")>>
+<</if>>
+<<if $tempSlave.lactation > 0 && $tempSlave.lactationDuration == 0>>
+	<<set $tempSlave.lactationDuration = 2>>
+<<elseif $tempSlave.lactation == 0 && $tempSlave.lactationDuration > 0>>
+	<<set $tempSlave.lactationDuration = 0>>
+<</if>>
+<<run SetBellySize($tempSlave)>>
+<<if $tempSlave.geneticQuirks.albinism === 2 && $activeSlave.albinismOverride === null>>
+	<<run induceAlbinism($tempSlave, 2)>>
+<</if>>
+
+<br>
+You perform the dark rituals, pray to the dark gods, and sell your soul for the power to change and mold slaves to your will.
+
+<br><br>This slave has been changed forever and you have lost a bit of your soul, YOU CHEATER!
+
+<<set $activeSlave = clone($tempSlave)>>
+<<unset $tempSlave>>
+<<set _escn = $slaveIndices[$activeSlave.ID]>>
+<<if def _escn>>
+	<<set $slaves[_escn] = clone($activeSlave)>>
+<</if>>

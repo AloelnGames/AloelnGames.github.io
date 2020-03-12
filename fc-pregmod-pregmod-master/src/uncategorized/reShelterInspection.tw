@@ -1,0 +1,529 @@
+:: RE shelter inspection [nobr]
+
+<<set $nextButton = " ", $nextLink = "RIE Eligibility Check">>
+
+<<set $activeSlaveOneTimeMinAge = 36>>
+<<set $activeSlaveOneTimeMaxAge = 42>>
+<<set $one_time_age_overrides_pedo_mode = 1>>
+<<set $oneTimeDisableDisability = 1>>
+<<if $arcologies[0].FSSupremacistLawME == 1>>
+	<<set $fixedRace = $arcologies[0].FSSupremacistRace>>
+<<elseif $arcologies[0].FSSubjugationistLawME == 1>>
+	<<set _races = setup.filterRacesLowercase.filter(race => race !== $arcologies[0].FSSubjugationistRace)>>
+	<<set $fixedRace = _races.random()>>
+<</if>>
+<<set _ContractCost = 10000>>
+<<set $activeSlave = GenerateNewSlave("XX")>>
+<<set $activeSlave.origin = "$He was once an inspector for the Shelter, but you put a stop to that.">>
+<<set $activeSlave.career = "a charity worker">>
+<<set $activeSlave.devotion = random(-90,-75)>>
+<<set $activeSlave.trust = random(75,90)>>
+<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+<<set $activeSlave.oldTrust = $activeSlave.trust>>
+<<run setHealth($activeSlave, jsRandom(30, 50), 0, 0, 0)>>
+<<set $activeSlave.skill.anal = 0>>
+<<set $activeSlave.skill.oral = 0>>
+<<set $activeSlave.skill.whoring = 0>>
+<<set $activeSlave.skill.vaginal = 0>>
+<<set $activeSlave.skill.entertainment = 0>>
+<<set $activeSlave.butt = random(4,6)>>
+<<set $activeSlave.boobs = 100*random(12,18)>>
+<<set $activeSlave.weight = random(20,80)>>
+<<set $activeSlave.face = -20>>
+<<set $activeSlave.voice = 1>>
+<<set $activeSlave.hColor = "graying">>
+<<set $activeSlave.override_H_Color = 1>>
+<<set $activeSlave.hLength = 40>>
+<<set $activeSlave.hStyle = "up">>
+<<set $activeSlave.energy = random(5,50)>>
+<<set $activeSlave.behavioralQuirk = either("gluttonous", "hates men", "hates women", "liberated")>>
+<<set $activeSlave.sexualQuirk = either("apathetic", "idealistic")>>
+<<set $activeSlave.clothes = either("conservative clothing", "nice business attire")>>
+
+<<set _slave = $shelterGirlsIDs.random()>>
+<<set _Inspectee = getSlave(_slave)>>
+<<set _originSlave = $genePool.find(function(s) { return s.ID == _slave; })>>
+/*
+* this check is currently unnecessary but if in the future the shelter girl IDs list is changed to updated only when acquiring shelter girls, this should be enabled
+*
+<<if (ndef _Inspectee)>>
+	<<set $shelterGirlsIDs.delete(_slave)>>
+	<<goto "Random Nonindividual Event">>
+<</if>>
+*/
+
+<<setLocalPronouns _Inspectee>>
+<<setLocalPronouns $activeSlave 2>>
+<<setAssistantPronouns>>
+<<setPlayerPronouns>>
+<<run Enunciate($activeSlave)>>
+<<setSpokenLocalPronouns _Inspectee $activeSlave>>
+
+<span id="artFrame">
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<div class="imageColumn">
+		<div class="imageRef medImg">
+			<<= SlaveArt($activeSlave, 2, 0)>>
+		</div>
+		<div class="imageRef medImg">
+			<<= SlaveArt(_Inspectee, 2, 0)>>
+		</div>
+	</div>
+<</if>>
+/* 000-250-006 */
+</span>
+
+Your assistant announces a visitor in the entryway of your penthouse, and adds<<if $assistant.personality > 0>> with disapproval<</if>> that it's an inspector from the Slave Shelter.
+<<if $assistant.personality > 0>>
+	<<switch $assistant.appearance>>
+	<<case "monstergirl">>
+		_HisA avatar's cocks and tentacle hair are all hanging limply; _heA's a dejected little picture of a cockblocked monster<<= _girlA>>.
+	<<case "shemale">>
+		_HisA avatar's cock is (shockingly) flaccid; _heA's a dejected little picture of a cockblocked shemale.
+	<<case "hypergoddess">>
+		_HisA avatar places _hisA arms on _hisA wide hips and makes a face like _heA wants to scold someone.
+	<<case "loli" "preggololi">>
+		_HisA avatar glances away with a sullen look on _hisA face.
+	<<case "amazon">>
+		_HisA avatar throws itself down into a sitting position and sulks, playing idly with _hisA bone necklace.
+	<<case "businesswoman">>
+		_HisA avatar taps a toe and tsks, looking reprovingly over the tops of _hisA eyeglasses.
+	<<case "fairy" "pregnant fairy">>
+		_HisA avatar buzzes around angrily.
+	<<case "angel">>
+		_HisA avatar slumps _hisA shoulders and sighs. "Good luck."
+	<<case "cherub">>
+		_HisA avatar flutters around angrily.
+	<<case "incubus">>
+		_HisA avatar is completely flaccid and grumbling angrily; _heA's a dejected little picture of a cockblocked incubus.
+	<<case "succubus">>
+		_HisA avatar is grumbling angrily; _heA's a dejected little picture of a horny _girlA denied _hisA favorite toy.
+	<<case "imp">>
+		_HisA avatar flaps around angrily while blowing a long raspberry.
+	<<case "witch">>
+		_HisA avatar attempts to vanish, succeeding only in removing _hisA clothes and gluing _hisA feet to the floor.
+	<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+		_HisA avatar is visibly twitching in a very unnatural way.
+	<<case "goddess">>
+		_HisA avatar crosses _hisA arms over _hisA chest (barely) and makes a face like _heA wants to scold someone.
+	<<case "schoolgirl">>
+		_HisA avatar throws a little school<<= _girlA>> fit, sticking out _hisA tongue and blowing a raspberry.
+	<<default>>
+		_HisA avatar turns a reproving blue and shrinks a little.
+	<</switch>>
+<</if>>
+Not waiting to be greeted, the inspector looks up at the nearest camera and demands to be let in. _He2's an older _woman2 with graying hair up in a bun, holding a tablet against _his2 chest like a shield. "I'm here to in<<s>>pect _originSlave.slaveName,<<if _originSlave.slaveName != _Inspectee.slaveName>> or a<<s>> you call $him, _Inspectee.slaveName,<</if>>" _he2 bellows up at the camera.
+
+<br><br>
+
+<span id="result">
+<<link "Amusing. Enslave _him2">>
+	<<run cashX(forceNeg(_ContractCost), "slaveTransfer", $activeSlave)>>
+	<<replace "#result">>
+	$assistant.name ushers _him2 into your penthouse and keeps _him2 busy for the few minutes you need to circumvent the Shelter's various legal and contractual defenses to prevent slaveowners from doing exactly what you're doing. Fortunately, you're cleverer and richer than most, and you succeed. You have _him2 brought into your office, and you are pleased to see _him2. _He2's not young and _he2's not pretty, but _his2 suit cannot disguise _his2 big bottom, and _he2's using the tablet _he2 has clasped protectively against _his2 chest to conceal a huge pair of mature breasts. _He2 knows exactly what's happened, and fixes you with a gimlet stare. "In a couple of month<<s>>," _he2 says with venom, "when you've filled me full of hormone<<s>> and drug<<s>> and training, and I'm begging you to <<if $PC.dick != 0>><<s>>tick your tiny little dick up<<else>>fi<<s>>t<</if>> my a<<ss>>hole, remember thi<<s>>. It'll be conditioning and <<s>>elf-pre<<s>>ervation and <<S>>tockholm <<S>>yndrome talking, not me. I think you're a <<if $PC.title == 1>><<s>>ad ba<<s>>tard<<else>>vile cunt<</if>>, and I alway<<s>> will."
+	<<set $shelterAbuse += 10>>
+	<<set $nextButton = "Continue">><<UpdateNextButton>> /* unlock Continue button */
+	<<include "New Slave Intro">>
+	<</replace>>
+<</link>> //This will cost <<print cashFormat(_ContractCost)>>//
+<<if $Bodyguard != 0 || $mercenaries > 1 || ($SF.Toggle && $SF.Active >= 1)>>
+	<br><<link "Escort _him2 off your property">>
+	<<replace "#result">>
+		You along with
+		<<if $Bodyguard != 0>>
+			your bodyguard <<print SlaveFullName($Bodyguard)>>
+			<<if $mercenaries > 1 || ($SF.Toggle && $SF.Active >= 1)>>
+				and
+			<</if>>
+		<</if>>
+		<<if $mercenaries > 1 && ($SF.Toggle && $SF.Active >= 1)>>
+			a squad of both $mercenariesTitle and $SF.Lower
+		<<elseif $($SF.Toggle && $SF.Active >= 1)>>
+			a squad of $SF.Lower
+		<<elseif $mercenaries > 1>>
+			a squad of $mercenariesTitle
+		<</if>>
+		forcefully escort the inspector off your property. You barely make it back to the penthouse before the message deeming you permanently banned from the Slave Shelter arrives.
+		<<set $shelterAbuse += 100>>
+		<<set $nextButton = "Continue">><<UpdateNextButton>> /* unlock Continue button */
+	<</replace>>
+	<</link>>
+<</if>>
+<<if ($dairy > 0) && ($dairyRestraintsSetting > 1) && (_Inspectee.assignment == "work in the dairy")>>
+	<br><<link "The slave is attached to a milking machine in $dairyName, and so will be the inspector">>
+		<<= assignJob($activeSlave, "work in the dairy")>>
+		<<set $activeSlave.lactation = 1, $activeSlave.lactationDuration = 2>>
+		<<set $activeSlave.clothes = "no clothing">>
+		<<run cashX(forceNeg(_ContractCost/2), "slaveTransfer", $activeSlave)>>
+		<<replace "#result">>
+		_Inspectee.slaveName is attached to a milking machine, so it would be extremely unwise to let the inspector report on _Inspectee.slaveName's industrial fate in all its gorgeous productivity. So, you greet _him2 politely, and bring _him2 down to $dairyName to show _him2 _Inspectee.slaveName. The inspector has a single moment to stiffen in shock at the sight before _he2 stiffens involuntarily due to the security drone tasing _him2 unconscious. It takes a few credits here and there to circumvent the Shelter's various legal and contractual defenses to prevent slaveowners from doing exactly what you're doing, but you finish the day richer by one more big-boobed milk producer. You leave the inspector's drug dosage low to start, so _he2 can appreciate _his2 situation for a while. When the inspector awakes, _his2 visor is set to show an overhead view of _his2 bay in $dairyName. _He2 sees _his2 breasts, already larger than _he2 remembers, gently swaying with the pumping of the milkers.<<if $dairyFeedersSetting > 1>> _He2 sees the huge phallus occupying _his2 mouth, and feels nutrition sliding down _his2 throat.<</if>><<if $dairyPregSetting > 1>> _He2 sees _his2 vagina drooling as it's fucked in preparation for pregnancy.<</if>><<if $dairyPregSetting > 1>> _He2 sees a massive piston moving slowly back and forth beneath _his2 buttocks, and understands what the ache of impossible fullness in _his2 bottom is.<</if>> _His2 hands ball into fists.
+		<<set $shelterAbuse += 10>>
+		<<set $nextButton = "Continue">><<UpdateNextButton>> /* unlock Continue button */
+		<<run newSlave($activeSlave)>> /* skip New Slave Intro */
+		<</replace>>
+	<</link>> //This will cost <<print cashFormat(_ContractCost/2)>>//
+<<elseif ($arcade > 0) && (_Inspectee.assignment == "be confined in the arcade")>>
+	<br><<link "The slave is little more than a hole in $arcadeName, and so will be the inspector">>
+		<<= assignJob($activeSlave, "be confined in the arcade")>>
+		<<set $activeSlave.clothes = "no clothing">>
+		<<run cashX(forceNeg(_ContractCost/2), "slaveTransfer", $activeSlave)>>
+		<<replace "#result">>
+		_Inspectee.slaveName is sealed in a box and currently in use, so it would be extremely unwise to let the inspector report on _Inspectee.slaveName's permanent position in the service industry. So, you greet _him2 politely, and bring _him2 down to $arcadeName to show _him2 _Inspectee.slaveName. The inspector has a single moment to stiffen in shock at the sight before _he2 stiffens involuntarily due to the security drone tasing _him2 unconscious. It takes a few credits here and there to circumvent the Shelter's various legal and contractual defenses to prevent slaveowners from doing exactly what you're doing, but you finish the day richer by three more fuckable holes. When the inspector awakes to a dick intruding _his2 body, the pitch blackness and sound proofing disorientates _him2.
+		<<if $arcadeUpgradeInjectors == 2>>
+			_He2 gasps as a needle breaks _his2 skin, filling _his2 veins with a potent mixture of aphrodisiacs to help _him2 better service the cock in _his2 cunt. _He2 attempts to defy, but a strong shock forces _him2 to tighten and bring _his2 partner to climax.
+		<<elseif $arcadeUpgradeInjectors == 1>>
+			_He2 attempts to defy, but a strong shock forces _him2 to tighten and bring _his2 partner to climax.
+		<<elseif $arcadeUpgradeCollectors == 1>>
+			_He2 groans at the feeling of something sucking away at _his2 milkless tits, but it does nothing to distract from _his2 rape. _He2 struggles to resist in any way _he2 can, but _he2 is too firmly anchored to move.
+		<<else>>
+			_He2 struggles to resist in any way _he2 can, but _he2 is too firmly anchored to move.
+		<</if>>
+		Before _he2 gets the chance to swear defiance against you, another patron rams his dick down _his2 throat, putting a stop to that notion. _His2 hands ball into fists as _he2 endures _his2 first spitroasting.
+		<<set $shelterAbuse += 15>>
+		<<set $nextButton = "Continue">><<UpdateNextButton>> /* unlock Continue button */
+		<<run newSlave($activeSlave)>> /* skip New Slave Intro */
+		<</replace>>
+	<</link>> //This will cost <<print cashFormat(_ContractCost/2)>>//
+<<elseif (_Inspectee.assignment == "be your agent") || (_Inspectee.assignment == "live with your agent")>>
+	<br><<link "Your slave is in another arcology">>
+		<<replace "#result">>
+		_Inspectee.slaveName is now a guiding force in another of the Free City's arcologies, so it would be disruptive to $his work to be called away like this. You simply pass along $his new address and send the inspector on _his2 way. _He2 stands there dumbfounded before hastily writing notes on _his2 tablet. _He2 seems quite pleased by _Inspectee.slaveName's progress.
+		<<set $shelterAbuse -= 15>>
+		<<set $nextButton = "Continue">><<UpdateNextButton>> /* unlock Continue button */
+		<</replace>>
+	<</link>>
+<<elseif _Inspectee.fuckdoll > 0>>
+	<br><<link "The slave is little more than a latex wrapped doll, and so will be the inspector">>
+		<<run cashX(forceNeg(_ContractCost/2), "slaveTransfer", $activeSlave)>>
+		<<replace "#result">>
+		You have _him2 ushered up to your office, and order _Inspectee.slaveName brought in. The inspector has a single moment to stiffen in shock at the sight before _he2 stiffens involuntarily due to the security drone tasing _him2 unconscious. It takes a few credits here and there to circumvent the Shelter's various legal and contractual defenses to prevent slaveowners from doing exactly what you're doing, but you finish the day richer by one more Fuckdoll. Odds are _he2 wants to be defiant, but the suit works perfectly and leaves _him2 no outlet to make _his2 thoughts known.
+		<<run beginFuckdoll($activeSlave)>>
+		<<set $shelterAbuse += 10>>
+		<<set $nextButton = "Continue">><<UpdateNextButton>> /* unlock Continue button */
+		<<run newSlave($activeSlave)>> /* skip New Slave Intro */
+		<</replace>>
+	<</link>> //This will cost <<print cashFormat(_ContractCost/2)>>//
+<<elseif ($dairyRestraintsSetting < 2) || (_Inspectee.assignment != "work in the dairy")>>
+	<br><<link "Allow the inspection">>
+		<<replace "#result">>
+		<<set _inspectionContinues = 1, _inspectionResult = 0>>
+		You have _him2 ushered up to your office, and order _Inspectee.slaveName brought in.
+		<br><br>
+		/*
+		<<if isAmputee(_Inspectee) && !isAmputee(_originSlave)>>
+			You may have lopped off the poor $girl's arms and legs, a fact not lost on the inspector. _He2 can barely conceal _his2 terror as _he2 makes lengthy notes on _his2 tablet before practically running out of the penthouse.
+			<<set $shelterAbuse += 10>>
+		<<elseif _Inspectee.fetish == "mindbroken">>
+			<<if _Inspectee.origin == "You got $him at the Slave Shelter. $He has never communicated anything about $his background, since $he arrived at the shelter with a broken mind.">>
+				Of course, the poor $girl is just as mindbroken as ever. The inspector asks some cursory questions and gives up. "Don't worry," _he2 says. "I know <<he>> wa<<s>> like thi<<s>> when you got $him. Ju<<s>>t — ju<<s>>t keep trying, would you?" _He2 leaves, looking bitter.
+			<<elseif _Inspectee.origin == "You got $him at the Slave Shelter. $He was found unresponsive in the lower arcology with a gaping pussy and deflated belly. It is unclear what happened to $him.">>
+				Of course, the poor $girl is just as mindbroken as ever. The inspector asks some cursory questions and gives up. "Don't worry," _he2 says. "I know <<he>> wa<<s>> like thi<<s>> when you got $him. Ju<<s>>t — ju<<s>>t keep trying, would you?"
+				<<if _Inspectee.pussy > 3 && _Inspectee.bellySag > 1>>
+					_He2 gropes the slave's sagging middle before inspecting $his ruined pussy. "<<S>>till ruined, I <<s>>ee."
+				<<elseif _Inspectee.pussy <= 3 && _Inspectee.bellySag > 1>>
+					_He2 gropes the slave's sagging middle before inspecting $his pussy. "Apart from the belly, <<his>> pu<<ss>>y ha<<s>> recovered ni<<c>>ely."
+				<<elseif _Inspectee.pussy > 3 && _Inspectee.bellySag <= 1>>
+					_He2 gropes the slave's middle before inspecting $his ruined pussy. "<<His>> <<s>>tomach <<s>>eem<<s>> to have recovered; <<sh>>ame you did nothing for <<his>> poor vagina."
+				<<else>>
+					_He2 runs _his2 hand across the slave's restored midriff, before inspecting $his pussy. "<<He>> i<<s>> looking much better, phy<<s>>ically, though. That'<<s>> worth noting."
+					<<set $shelterAbuse-->>
+				<</if>>
+				_He2 leaves, looking bitter.
+			<<else>>
+				Of course, the poor $girl is mindbroken now. The inspector is horrified, though _he2 tries to conceal it. _He2 makes lengthy notes on _his2 tablet, and almost runs out of the penthouse.
+				<<set $shelterAbuse += 5>>
+			<</if>>
+			<<set _inspectionContinues = 0>>
+		<</if>>
+
+		<<if _inspectionContinues == 1>>
+			<<switch _Inspectee.origin>>
+			<<case "You got $him at the Slave Shelter. $He has never communicated anything about $his background, since $he arrived at the shelter with a broken mind.">>
+				The inspector asks some cursory questions and is shocked when $he responds. "<<He>> came back?" _he2 mutters, "You re<<s>>tored <<his>> mind; I can't believe it. Thi<<s>> i<<s>> incredible." _He2 carries on while writing notes on _his2 tablet, "You're more than welcome to adopt <<s>>lave<<s>> from our <<sh>>elter." You swear _he2 seems in much better spirits as _he2 leaves your penthouse.
+				<<set _inspectionContinues = 0>>
+				<<set $shelterAbuse -= 5>>
+			<<case "You got $him at the Slave Shelter. It's not clear why $his previous owner cut $his arms and legs off.">>
+				<<if _Inspectee.amp == _originSlave.amp>>
+					Unsurprisingly, the poor $girl still lacks arms and legs, so the inspector just carries on.
+				<<else>>
+					The inspector stares, dumbfounded, at pair of limbs now supporting _Inspectee.slaveName. "Mo<<s>>t owner<<s>> wouldn't go through the trouble... I think I've <<s>>een enough to know you're welcome to come back and take in another <<s>>lave any time." _He2 leaves your penthouse in much better spirits than _he2 arrived in.
+					<<set _inspectionContinues = 0>>
+					<<set $shelterAbuse -= 3>>
+				<</if>>
+			<<case "$His owner purposely deafened $him by piercing $his eardrums with knitting needles.">>
+				The inspector gestures for _Inspectee.slaveName to turn away from _him2 and, once $he has done so, asks "Can you hear me, _Inspectee.slaveName?"
+				<<if _Inspectee.hears > _originSlave.hears>>
+					<<if canTalk(_Inspectee)>>
+						<<run Enunciate(_Inspectee)>>
+						<<if _Inspectee.hears < 0>>
+							$He nods and responds "It'<<s>> <<s>>till hard, but I can."
+						<<else>>
+							$He nods and responds "Loud and clear."
+						<</if>>
+					<<else>>
+						<<if _Inspectee.hears < 0>>
+							$He cocks $his head to listen, and nods slowly.
+						<<else>>
+							$He nods confidently.
+						<</if>>
+					<</if>>
+					<<run Enunciate($activeSlave)>>
+					The inspector's expression softens, and _he2 pauses a moment before jotting down more notes on _his2 tablet. "Thank you, _Inspectee.slaveName, that will be all." _He2 turns to you and says "You're more than welcome to adopt <<s>>lave<<s>> from our <<sh>>elter." You swear _he2 seems in much better spirits as _he2 leaves your penthouse.
+					<<set _inspectionContinues = 0>>
+					<<set $shelterAbuse-->>
+				<<else>>
+					Unable to hear _him2, $he does not respond. "Pity," the inspector says.
+				<</if>>
+			<<case "You got $him at the Slave Shelter. $His owner purposely blinded $him by dumping boiling water into $his eyes.">>
+				"I wi<<sh>> the <<s>>carring wa<<s>>n't so bad, that way people wouldn't <<s>>tare so much."
+				<<if _Inspectee.eyes > _originSlave.eyes>>
+					<<if canTalk(_Inspectee)>>
+						<<run Enunciate(_Inspectee)>>
+						_Inspectee.slaveName quickly retorts with "But I like <<s>>eeing their eye<<s>>..."
+					<<else>>
+						_Inspectee.slaveName shakes $his head in response.
+					<</if>>
+					<<run Enunciate($activeSlave)>>
+					The inspector gasps at the realization that $he can see again. "They look ju<<s>>t like <<his>> old photo<<s>> too..." A tear comes to _his2 weary eye as _he2 writes out notes on _his2 tablet. "You're more than welcome to adopt <<s>>lave<<s>> from our <<sh>>elter." You swear _he2 seems in much better spirits as _he2 leaves your penthouse.
+					<<set _inspectionContinues = 0>>
+					<<set $shelterAbuse-->>
+				<</if>>
+			<<case "You got $him at the Slave Shelter. $He was found unresponsive in the lower arcology with a gaping pussy and deflated belly. It is unclear what happened to $him.">>
+				The inspector asks some cursory questions and is shocked when $he responds. "<<He>> came back?" _he2 mutters, "You re<<s>>tored <<his>> mind; I can't believe it. Thi<<s>> i<<s>> incredible." _He2 carries on while writing notes on _his2 tablet, "You're more than welcome to adopt <<s>>lave<<s>> from our <<sh>>elter." You swear _he2 seems in much better spirits as _he2 leaves your penthouse, even though _he2 forgot to check $his pussy.
+				<<set _inspectionContinues = 0>>
+				<<set $shelterAbuse -= 5>>
+
+			<<case "You got $him at the Slave Shelter. $His previous owner forced $him to cut off $his dick and balls and cook them.">>
+				<<if _Inspectee.dick > _originSlave.dick>>
+					"I <<s>>ee that you've given $him a repla<<c>>ement tool," _he2 says as _he2 reaches down and gives it an exploratory fondle,
+					<<if canAchieveErection(_Inspectee)>>
+						"It even work<<s>>, that'<<s>> lovely." The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<else>>
+						"It <<s>>eem<<s>> to be non-functional, but it'<<s>> a ni<<c>>e ge<<s>>ture at lea<<s>>t." The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<</if>>
+					<<set _inspectionResult-->>
+				<</if>>
+				<<if _Inspectee.balls > _originSlave.balls && _Inspectee.scrotum>>
+					<<if _Inspectee.dick > _originSlave.dick>>
+						"And the<<s>>e work too, right?" _he2 asks as _he2 points to $his dangling balls. "<<S>>o <<he>> ha<<s>> been fully re<<s>>tored; that'<<s>> <<s>>omething." The inspector adds another positive note to the inspection.
+						<<set _inspectionResult-->>
+					<<else>>
+						"I take it the<<s>>e te<<s>>ticle<<s>> are more than ju<<s>>t an implant? I'm <<s>>ure <<he>> appre<<c>>iate<<s>> the ge<<s>>ture, though what good are they without a peni<<s>>?" The inspector shakes _his2 head and notes your attempt to undo the damages to _Inspectee.slaveName.
+					<</if>>
+				<</if>>
+
+				<<if !["apathetic", "neglectful"].includes(_Inspectee.sexualFlaw) && !["anorexic", "odd"].includes(_Inspectee.behavioralFlaw) && !["none", "masochist"].includes(_Inspectee.fetish)>>
+					The inspector can see that $his personality is much better than before. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 3>>
+				<</if>>
+
+			<<case "You got $him at the Slave Shelter. $His previous owner forced $him to cut off $his breasts and cook them.">>
+				<<if _Inspectee.boobs > $genePool[_Arrival].boobs>>
+					The inspector can see that $he has a new set of breasts. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 2>>
+				<</if>>
+				<<if !["apathetic", "neglectful", "self hating"].includes(_Inspectee.sexualFlaw) && !["anorexic", "odd"].includes(_Inspectee.behavioralFlaw) && !["none", "masochist"].includes(_Inspectee.fetish)>>
+					The inspector can see that $his personality is much better than before. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 3>>
+				<</if>>
+
+			<<case "You got $him at the Slave Shelter. $He is an enslaved Daughter of Liberty, caught some weeks after the failed coup. $His previous owner used $him as a punching bag and dart board, then when he was bored of $him tattooed obscenities all over $his body and threw $him away.">>
+				<<if _Inspectee.slaveName != $genePool[_Arrival].slaveName>>
+					The inspector notices _Inspectee.birthName's new name. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse-->>
+				<</if>>
+
+			<<case "You got $him at the Slave Shelter. $His previous owner gelded $him and used $him for anal abuse.">>
+				<<if _Inspectee.anus < $genePool[_Arrival].anus>>
+					The inspector can see that $his anus is better. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse-->>
+				<</if>>
+				<<if _Inspectee.dick > $genePool[_Arrival].dick>>
+					The inspector can see that $he has a new dick. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse-->>
+				<</if>>
+
+			<<case "You got $him at the Slave Shelter. $His background is obscure, but seems to have involved terrible abuse of $his huge cock and balls.">>
+				<<if _Inspectee.energy > $genePool[_Arrival].energy>>
+					The inspector notices that _Inspectee.birthName has more energy. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse-->>
+				<</if>>
+
+			<<case "You got $him at the Slave Shelter. $His holes were cruelly stretched by constant plug use.">>
+				<<if _Inspectee.vagina < $genePool[_Arrival].vagina && _Inspectee.anus < $genePool[_Arrival].anus>>
+					The inspector notices that _Inspectee.birthName's holes are tighter. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse-->>
+				<</if>>
+
+			<<case "You got $him at the Slave Shelter. $His previous owner discarded $him after many pregnancies.">>
+				<<if _Inspectee.vagina < $genePool[_Arrival].vagina>>
+					The inspector notices that _Inspectee.birthName's vagina is tighter. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse-->>
+				<</if>>
+
+			<<case "You got $him at the Slave Shelter. $He was worn out by twenty years of brothel service.">>
+				<<if _Inspectee.vagina < $genePool[_Arrival].vagina && _Inspectee.anus < $genePool[_Arrival].anus>>
+					The inspector notices that _Inspectee.birthName's holes are tighter. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse-->>
+				<</if>>
+
+			<<case "You got $him at the Slave Shelter. $He was discarded after suffering a terrible reaction to growth hormone treatment.">>
+				<<if _Inspectee.chem < $genePool[_Arrival].chem>>
+					Upon scanning _Inspectee.birthName, the inspector finds that $his chem damage has been reduced. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse-->>
+				<<else>>
+					The inspector scans _Inspectee.birthName and finds that $his chem damage has been increased. The inspector is horrified, though _he2 tries to conceal it.
+					<<set $shelterAbuse++>>
+				<</if>>
+				<<if _Inspectee.dick < $genePool[_Arrival].dick>>
+					The inspector measures _Inspectee.birthName's dick and finds that it has been reduced. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse-->>
+				<<else>>
+					The inspector measures _Inspectee.birthName's dick and finds that it has increased. The inspector is horrified, though _he2 tries to conceal it.
+					<<set $shelterAbuse++>>
+				<</if>>
+				<<if _Inspectee.balls < $genePool[_Arrival].balls>>
+					The inspector measures _Inspectee.birthName's balls and finds they have been reduced. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse-->>
+				<<else>>
+					The inspector measures _Inspectee.birthName's balls and finds they have been increased. The inspector is horrified, though _he2 tries to conceal it.
+					<<set $shelterAbuse++>>
+				<</if>>
+				<<if _Inspectee.fetish != $genePool[_Arrival].fetish>>
+					The inspector measures _Inspectee.birthName's balls and finds they have been reduced. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse-->>
+				<<else>>
+					The inspector is happy that _Inspectee.birthName's balls and finds they have been increased. The inspector is horrified, though _he2 tries to conceal it.
+					<<set $shelterAbuse++>>
+				<</if>>
+			<</switch>>
+		<</if>>
+		*/
+
+		<<if _Inspectee.origin == "You got $him at the Slave Shelter. $He has never communicated anything about $his background, since $he arrived at the shelter with a broken mind.">>
+			<<if _Inspectee.fetish == "mindbroken">>
+				Of course, the poor $girl is just as mindbroken as ever. The inspector asks some cursory questions and gives up. "Don't worry," _he2 says. "I know <<he>> wa<<s>> like thi<<s>> when you got $him. Ju<<s>>t — ju<<s>>t keep trying, would you?" _He2 leaves, looking bitter.
+			<<else>>
+				The inspector asks some cursory questions and is shocked when $he responds. "<<He>> came back?" _he2 mutters, "You re<<s>>tored <<his>> mind; I can't believe it. Thi<<s>> i<<s>> incredible." _He2 carries on while writing notes on _his2 tablet, "You're more than welcome to adopt <<s>>lave<<s>> from our <<sh>>elter." You swear _he2 seems in much better spirits as _he2 leaves your penthouse.
+				<<set $shelterAbuse -= 5>>
+			<</if>>
+		<<elseif _Inspectee.origin == "You got $him at the Slave Shelter. $He was found unresponsive in the lower arcology with a gaping pussy and deflated belly. It is unclear what happened to $him.">>
+			<<if _Inspectee.fetish == "mindbroken">>
+				Of course, the poor $girl is just as mindbroken as ever. The inspector asks some cursory questions and gives up. "Don't worry," _he2 says. "I know <<he>> wa<<s>> like thi<<s>> when you got $him. Ju<<s>>t — ju<<s>>t keep trying, would you?"
+				<<if _Inspectee.pussy > 3 && _Inspectee.bellySag > 1>>
+					_He2 gropes the slave's sagging middle before inspecting $his ruined pussy. "<<S>>till ruined, I <<s>>ee."
+				<<elseif _Inspectee.pussy <= 3 && _Inspectee.bellySag > 1>>
+					_He2 gropes the slave's sagging middle before inspecting $his pussy. "Apart from the belly, <<his>> pu<<ss>>y ha<<s>> recovered ni<<c>>ely."
+				<<elseif _Inspectee.pussy > 3 && _Inspectee.bellySag <= 1>>
+					_He2 gropes the slave's middle before inspecting $his ruined pussy. "<<His>> <<s>>tomach <<s>>eem<<s>> to have recovered; <<sh>>ame you did nothing for <<his>> poor vagina."
+				<<else>>
+					_He2 runs _his2 hand across the slave's restored midriff, before inspecting $his pussy. "<<He>> i<<s>> looking much better, phy<<s>>ically, though. That'<<s>> worth noting."
+					<<set $shelterAbuse-->>
+				<</if>>
+				_He2 leaves, looking bitter.
+			<<else>>
+				The inspector asks some cursory questions and is shocked when $he responds. "<<He>> came back?" _he2 mutters, "You re<<s>>tored <<his>> mind; I can't believe it. Thi<<s>> i<<s>> incredible." _He2 carries on while writing notes on _his2 tablet, "You're more than welcome to adopt <<s>>lave<<s>> from our <<sh>>elter." You swear _he2 seems in much better spirits as _he2 leaves your penthouse, even though _he2 forgot to check $his pussy.
+				<<set $shelterAbuse -= 5>>
+			<</if>>
+		<<elseif _Inspectee.fetish == "mindbroken">>
+			Of course, the poor $girl is mindbroken now. The inspector is horrified, though _he2 tries to conceal it. _He2 makes lengthy notes on _his2 tablet, and almost runs out of the penthouse.
+			<<set $shelterAbuse += 5>>
+		<<elseif _Inspectee.trust < -20>>
+			$He is sufficiently afraid of you that $he tells the inspector whatever $he thinks you'd want $him to say. The inspector, experienced at this, is not amused. _He2 offers you a few choice words, makes notes on _his2 tablet, and storms out.
+		<<elseif _Inspectee.anus > 2>>
+			$He cooperates with the inspector, who pulls on a pair of latex gloves and performs a complete examination. When _he2 pulls the $girl's buttocks apart and probes the slave's asshole, _he2 pulls _his2 hand away as if scalded. "Oh my God," _he2 says. "_Inspectee.birthName, what happened to your anu<<s>>?"
+			<br><br>
+			<<run Enunciate(_Inspectee)>>
+			<<if (_Inspectee.devotion < 10)>>
+				<<if (_Inspectee.buttplug == "large plug") || (_Inspectee.buttplug == "huge plug") || (_Inspectee.buttplug == "long, large plug") || (_Inspectee.buttplug == "long, huge plug")>>
+					"W-well," $he says, "I wear a buttplug." The inspector frowns.
+					<<run Enunciate($activeSlave)>>
+					"A buttplug <<sh>>ouldn't do that!"
+					<<run Enunciate(_Inspectee)>>
+					The slave looks worried and replies, "It'<<s>> kinda big? And I wear it all the time. B-but I like it! It d-doe<<s>>n't hurt. Well, anymore." The inspector is not amused. _He2 offers you a few choice words, makes notes on _his2 tablet, and storms out.
+				<<elseif (_Inspectee.assignment == "whore") || (_Inspectee.assignment == "work in the brothel") || (_Inspectee.assignment == "serve the public") || (_Inspectee.assignment == "serve in the club")>>
+					"W-well," $he says, "I get fucked there at work." The inspector frowns. "How often!?" The slave looks worried and replies, "L-let me think. Four time<<s>> today? After the third time, it u<<s>>ually <<s>>top<<s>> clo<<s>>ing up again between cock<<s>>." The inspector is not amused. _He2 offers you a few choice words, makes notes on _his2 tablet, and storms out.
+				<<elseif (_Inspectee.fetish == "buttslut") && (_Inspectee.fetishKnown == 1)>>
+					"Hey," $he protests, "that'<<s>> normal." The inspector looks incredulous. "What!?" The slave looks insulted and replies, "I love anal <<s>>e<<x>>! Don't judge me. I want cock up that hole right now, you bitch. I'm going to beg for butt<<s>>e<<x>> the moment you leave." $He defiantly sticks $his rump out at you. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 1>>
+				<<elseif (_Inspectee.energy > 95) && (_Inspectee.fetishKnown == 1)>>
+					"Hey," $he protests, "that'<<s>> normal." The inspector looks incredulous. "What!?" The slave looks insulted and replies, "I love <<s>>e<<x>>! Don't judge me. I take cock in all my hole<<s>>, and I like it. I'm going to beg for butt<<s>>e<<x>> the moment you leave, you bitch." $He defiantly sticks $his rump out at you. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 1>>
+				<<else>>
+					"W-well," $he says, "I'm a <<s>>lave." The inspector frowns.
+					<<run Enunciate($activeSlave)>>
+					"What doe<<s>> that have to do with it?"
+					<<run Enunciate(_Inspectee)>>
+					The slave looks worried and replies, "I-it'<<s>> a hole, right? I get fucked in all my hole<<s>>." The inspector is not amused. _He2 offers you a few choice words, makes notes on _his2 tablet, and storms out.
+				<</if>>
+			<<else>>
+				<<if (_Inspectee.buttplug == "large plug") || (_Inspectee.buttplug == "huge plug") || (_Inspectee.buttplug == "long, large plug") || (_Inspectee.buttplug == "long, huge plug")>>
+					"I wear a buttplug!" $he says confidently. The inspector frowns.
+					<<run Enunciate($activeSlave)>>
+					"A buttplug <<sh>>ouldn't do that!"
+					<<run Enunciate(_Inspectee)>>
+					The slave looks worried and replies, "It'<<s>> really big, and I wear it all the time. I like it! It keep<<s>> my hole ready for anything." The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 1>>
+				<<elseif (_Inspectee.assignment == "whore") || (_Inspectee.assignment == "work in the brothel") || (_Inspectee.assignment == "serve the public") || (_Inspectee.assignment == "serve in the club")>>
+					"I get fucked there at work!" $he says confidently. The inspector frowns. "How often!?" The slave thinks for a moment and replies, "Four time<<s>> today. After the third time, it u<<s>>ually <<s>>top<<s>> clo<<s>>ing up again between cock<<s>>. I'm good at my job!" The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 1>>
+				<<elseif (_Inspectee.fetish == "buttslut") && (_Inspectee.fetishKnown == 1)>>
+					"Hey," $he protests, "that'<<s>> normal." The inspector looks incredulous. "What!?" The slave looks insulted and replies, "I love anal <<s>>e<<x>>! Don't judge me. I want cock up that hole right now, you bitch. I'm going to beg for butt<<s>>e<<x>> the moment you leave." $He defiantly sticks $his rump out at you. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 1>>
+				<<elseif (_Inspectee.energy > 95) && (_Inspectee.fetishKnown == 1)>>
+					"Hey," $he protests, "that'<<s>> normal." The inspector looks incredulous. "What!?" The slave looks insulted and replies, "I love <<s>>e<<x>>! Don't judge me. I take cock in all my hole<<s>>, and I like it. I'm going to beg for butt<<s>>e<<x>> the moment you leave, you bitch." $He defiantly sticks $his rump out at you. The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 1>>
+				<<else>>
+					"I'm a <<s>>lave," $he says confidently. The inspector frowns.
+					<<run Enunciate($activeSlave)>>
+					"What doe<<s>> that have to do with it?"
+					<<run Enunciate(_Inspectee)>>
+					The slave beams and replies, "It'<<s>> a hole. I'm a good $girl, <<s>>o I get fucked in all my hole<<s>>." The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 1>>
+				<</if>>
+			<</if>>
+		<<elseif _Inspectee.devotion <= 20>>
+			$He does not like you and isn't particularly terrified of you, so $he is not flattering. $He's not stupid enough to really criticize you, but $he is honest and makes no effort to conceal troubling particulars. The inspector takes copious notes. _He2 offers you a few choice words, makes notes on _his2 tablet, and storms out.
+		<<else>>
+			The inspector asks, "What do you do for work, _Inspectee.birthName?"
+			<br><br>
+			<<switch _Inspectee.assignment>>
+			<<case "whore" "work in the brothel">>
+				<<if (_Inspectee.fetishStrength > 95) || (_Inspectee.energy > 95)>>
+					_Inspectee.slaveName says happily, "I'm a whore!" The inspector makes a 'go on' gesture, and the slave continues, "It'<<s>> awe<<s>>ome. Nothing but cock, every day." The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 1>>
+				<<else>>
+					_Inspectee.slaveName says confidently, "I'm a whore!" The inspector makes a 'go on' gesture, and the slave continues, "It'<<s>> hard work <<s>>ometime<<s>>, but I'm okay. I'm much happier with my current owner, thank you." The inspector looks pleased, and says _he2'll put out a @@.green;good word@@ about you.
+					<<run repX(500, "event", _Inspectee)>>
+					<<set $shelterAbuse -= 1>>
+				<</if>>
+			<<case "serve the public" "serve in the club">>
+				<<if (_Inspectee.fetishStrength > 95) || (_Inspectee.energy > 95)>>
+					_Inspectee.slaveName says happily, "I'm a <<s>>lut!" The inspector makes a 'go on' gesture, and the slave continues, "It'<<s>> awe<<s>>ome. Nothing but cute boy<<s>> and girl<<s>>, every day." The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 1>>
+				<<else>>
+					_Inspectee.slaveName says confidently, "I'm a <<s>>lut!" The inspector makes a 'go on' gesture, and the slave continues, "It'<<s>> not bad. I'm much happier with my current owner, thank you." The inspector looks pleased, and says _he2'll put out a @@.green;good word@@ about you.
+					<<run repX(500, "event", _Inspectee)>>
+					<<set $shelterAbuse -= 1>>
+				<</if>>
+			<<case "get milked" "work in the dairy">>
+				<<if _Inspectee.lactation > 0>>
+					_Inspectee.slaveName says happily, "I'm a milk cow!" The inspector arches an eyebrow skeptically, and the slave continues, "I give milk. <<S>>ee?" $He expresses a squirt of milk from one nipple. It'<<s>> a ni<<c>>e life. I'm much happier with my current owner, thank you." The inspector looks pleased, and says _he2'll put out a @@.green;good word@@ about you.
+					<<run repX(500, "event", _Inspectee)>>
+					<<set $shelterAbuse -= 1>>
+				<<else>>
+					_Inspectee.slaveName says happily, "I get cockmilked!" The inspector arches an eyebrow skeptically, and the slave continues, "I give cum. It'<<s>> actually lot<<s>> of fun!" $He shakes $his penis for emphasis. "The machine feel<<s>> <<s>>o good. And when I'm almo<<s>>t empty, I get buttfucked to get the la<<s>>t drop out of me!" $He shivers. "It'<<s>> really ni<<c>>e..." The inspector looks deflated, and reluctantly makes a positive note on _his2 tablet.
+					<<set $shelterAbuse -= 1>>
+				<</if>>
+			<<default>>
+				_Inspectee.slaveName <<say>>s flatly, "Whatever my beloved <<Master>> require<<s>>. I have a good life now, and I would appre<<c>>iate it if you would <<s>>upport me by doing everything you can for _himP." Taken aback, the inspector says _he2'll put out a @@.green;good word@@ about you.
+				<<run repX(500, "event", _Inspectee)>>
+				<<set $shelterAbuse -= 1>>
+			<</switch>>
+		<</if>>
+		<<set $nextButton = "Continue">><<UpdateNextButton>> /* unlock Continue button */
+		<</replace>>
+	<</link>>
+<</if>>
+</span>

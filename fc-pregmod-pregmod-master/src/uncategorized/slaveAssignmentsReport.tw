@@ -1,0 +1,1101 @@
+:: Slave Assignments Report [nobr]
+
+<<set $nextLink = "Economics", $nextButton = "Continue", _SL = $slaves.length>>
+
+<h1> $arcologies[0].name Weekly Slave Report - Week $week</h1>
+
+/*Spa room*/
+<<if $spa > 0>>
+	<<set $spaSpots = ($spa - $SpaiIDs.length) * 20>>
+	<<if $Attendant != 0>>
+		<<set $spaSpots = Math.trunc($spaSpots * (1 + ($Attendant.skill.attendant / 400)))>> /*A skilled attendant improves available space by 25%*/
+	<</if>>
+<</if>>
+
+/** silent pass for any reassignments before generating reports */
+<<for $i = 0; $i < _SL; $i++>>
+	<<set $slaves[$i].health.illness = 0, $slaves[$i].health.tired = 0>> /* temp */
+	<<if $slaves[$i].choosesOwnAssignment == 1>>
+		<<silently>>
+			<<include "SA chooses own job">>
+		<</silently>>
+	<</if>>
+<</for>>
+
+/*Sexual services demand per class*/
+/*We can add milk etc. to this as well, though this is a good that can be traded beyond the arcology and also needs its own market much like the slavemarket. TODO*/
+/*In the default scenario these numbers indicate the amount of money each individual citizen of a particular class is looking to spend on sex (and milk) every week
+Depending on the conditions they may derive more or less 'utility' out of their credits spent
+i.e. a highly paternalist arcology with little choice for its lower class but Fuckdolls may still put money into them but not get the same satisfaction out of it*/
+/*Low rent increases demand/available money for sexual services, high rent decreases it*/
+<<set _lowerClassSexDemand = Math.trunc($lowerClass * $whoreBudget.lowerClass) * 2,
+_lowerClassSexDemandRef = Math.max(_lowerClassSexDemand, 1),
+_visitorsSexDemand = Math.trunc($visitors) * 40,
+_middleClassSexDemand = Math.trunc($middleClass * $whoreBudget.middleClass + _visitorsSexDemand * 0.5) * 2,
+_middleClassSexDemandRef = Math.max(_middleClassSexDemand, 1),
+_upperClassSexDemand = Math.trunc($upperClass * $whoreBudget.upperClass + _visitorsSexDemand * 0.5) * 2,
+_upperClassSexDemandRef = Math.max(_upperClassSexDemand, 1),
+_topClassSexDemand = Math.trunc($topClass * $whoreBudget.topClass) * 2,
+_topClassSexDemandRef = Math.max(_topClassSexDemand, 1),
+_arcadeSupply = {lowerClass: 0, middleClass: 0, upperClass: 0},
+_clubSupply = {lowerClass: 0, middleClass: 0},
+$whorePriceAdjustment = {lowerClass: 0, middleClass: 0, upperClass: 0, topClass: 0},
+$NPCMarketShare = {lowerClass: 0, middleClass: 0, upperClass: 0, topClass: 0},
+$sexDemandResult = {lowerClass: 0, middleClass: 0, upperClass: 0, topClass: 0},
+$slaveJobValues = slaveJobValues(_lowerClassSexDemandRef, _middleClassSexDemandRef, _upperClassSexDemandRef, _topClassSexDemandRef)>>
+
+/*Arcade Specific Demand for Degradationists to give it higher priority*/
+<<if $arcologies[0].FSDegradationist != "unset">>
+	<<set _lowerClassArcadeSexDemand = Math.trunc(_lowerClassSexDemand * $arcologies[0].FSDegradationist * 0.0015),
+	_middleClassArcadeSexDemand = Math.trunc(_middleClassSexDemand * $arcologies[0].FSDegradationist * 0.0002),
+	_upperClassArcadeSexDemand = Math.trunc(_upperClassSexDemand * $arcologies[0].FSDegradationist * 0.000025),
+	_arcadeDemandDeg = _lowerClassArcadeSexDemand + _middleClassArcadeSexDemand + _upperClassArcadeSexDemand>>
+	<<if $arcologies[0].FSDegradationistLaw == 1>>
+		<<set _arcadeDemandDeg += $ASlaves * 3>>
+	<</if>>
+	<<if $slaveJobValues.arcade < _arcadeDemandDeg>>
+		<<if _arcadeDemandDeg > 20000 || $arcologies[0].FSDegradationist > 50>>
+			<<set _degradationistPenalty = ((_arcadeDemandDeg - $slaveJobValues.arcade) / _arcadeDemandDeg),
+			$arcologies[0].FSDegradationist -= Math.trunc(5 * _degradationistPenalty)>>
+			<<run repX(forceNeg(100 * _degradationistPenalty), "futureSocieties")>>
+			<<if _degradationistPenalty > 0.5>>
+				<<set $arcadeDemandDegResult = 1>>
+			<<else>>
+				<<set $arcadeDemandDegResult = 2>>
+			<</if>>
+		<<else>>
+			<<set $arcadeDemandDegResult = 3>>
+		<</if>>
+		<<set _arcadeSupply.lowerClass += Math.trunc(1.15 * $slaveJobValues.arcade * (_lowerClassArcadeSexDemand / _arcadeDemandDeg)),
+		_lowerClassSexDemand -= _arcadeSupply.lowerClass,
+		_arcadeSupply.middleClass += Math.trunc(1.15 * $slaveJobValues.arcade * (_middleClassArcadeSexDemand / _arcadeDemandDeg)),
+		_middleClassSexDemand -= _arcadeSupply.middleClass,
+		_arcadeSupply.upperClass += Math.trunc(1.15 * $slaveJobValues.arcade * (_upperClassArcadeSexDemand / _arcadeDemandDeg)),
+		_upperClassSexDemand -= _arcadeSupply.upperClass>> /*There's a 15% satisfaction bonus from getting release in a societally approved way*/
+	<<else>>
+		<<if $slaveJobValues.arcade >= _arcadeDemandDeg * 1.5>>
+			<<set $arcologies[0].FSDegradationist += 2,
+			$arcadeDemandDegResult = 4>>
+			<<run repX(500, "futureSocieties")>>
+		<<else>>
+			<<set $arcadeDemandDegResult = 5>>
+		<</if>>
+		<<set _arcadeSupply.lowerClass += Math.trunc(1.15 * _lowerClassArcadeSexDemand),
+		_lowerClassSexDemand -= _arcadeSupply.lowerClass,
+		_arcadeSupply.middleClass += Math.trunc(1.15 * _middleClassArcadeSexDemand),
+		_middleClassSexDemand -= _arcadeSupply.middleClass,
+		_arcadeSupply.upperClass += Math.trunc(1.15 * _upperClassArcadeSexDemand),
+		_upperClassSexDemand -= _arcadeSupply.upperClass>>
+	<</if>>
+<<else>>
+	<<set _arcadeDemandDeg = 0>>
+<</if>>
+
+/*Public slut sex supply. Top and upper class won't partake*/
+<<set _clubDemand = _lowerClassSexDemand + _middleClassSexDemand,
+_lowerClassClubRatio = _lowerClassSexDemand / _clubDemand,
+_middleClassClubRatio = _middleClassSexDemand / _clubDemand>>
+<<if $slaveJobValues.club * $slaveJobValues.clubSP < _clubDemand>>
+	<<set _lowerClassSexDemand -= Math.trunc($slaveJobValues.club * $slaveJobValues.clubSP * _lowerClassClubRatio),
+	_middleClassSexDemand -= Math.trunc($slaveJobValues.club * $slaveJobValues.clubSP * _middleClassClubRatio)>>
+<<else>>
+	<<set _lowerClassSexDemand = 0,
+	_middleClassSexDemand = 0>>
+<</if>>
+<<set _clubSupply.lowerClass = Math.trunc($slaveJobValues.club * $slaveJobValues.clubSP * _lowerClassClubRatio),
+_clubSupply.middleClass = Math.trunc($slaveJobValues.club * $slaveJobValues.clubSP * _middleClassClubRatio)>>
+
+/*Brothel or street whore sex supply*/
+<<if _lowerClassSexDemand < $slaveJobValues.brothel.lowerClass>>
+	<<set $whorePriceAdjustment.lowerClass = Math.max(Math.pow(_lowerClassSexDemand / ($slaveJobValues.brothel.lowerClass + $NPCSexSupply.lowerClass), 1.513), 0.3),
+	_lowerClassSexDemand = 0>> /*This accounts for people having too much choice and getting more picky how they spend their money*/
+<<else>>
+	<<set $whorePriceAdjustment.lowerClass = Math.pow(_lowerClassSexDemand / ($slaveJobValues.brothel.lowerClass + $NPCSexSupply.lowerClass), 0.5),
+	_lowerClassSexDemand -= $slaveJobValues.brothel.lowerClass>> /* People are willing to pay more for a scarce good, but within reason */
+<</if>>
+<<if _middleClassSexDemand < $slaveJobValues.brothel.middleClass>>
+	<<set $whorePriceAdjustment.middleClass = Math.max(Math.pow((_middleClassSexDemand * 1.1) / ($slaveJobValues.brothel.middleClass + $NPCSexSupply.middleClass), 1.513), 0.33),
+	_middleClassSexDemand = 0>>
+<<else>>
+	<<set $whorePriceAdjustment.middleClass = Math.pow((_middleClassSexDemand * 1.1) / ($slaveJobValues.brothel.middleClass + $NPCSexSupply.middleClass), 0.5),
+	_middleClassSexDemand -= $slaveJobValues.brothel.middleClass>>
+<</if>>
+<<if _upperClassSexDemand < $slaveJobValues.brothel.upperClass>>
+	<<set $whorePriceAdjustment.upperClass = Math.max(Math.pow((_upperClassSexDemand * 1.21) / ($slaveJobValues.brothel.upperClass + $NPCSexSupply.upperClass), 1.513), 0.363),
+	_upperClassSexDemand = 0>>
+<<else>>
+	<<set $whorePriceAdjustment.upperClass = Math.pow((_upperClassSexDemand * 1.21) / ($slaveJobValues.brothel.upperClass + $NPCSexSupply.upperClass), 0.5),
+	_upperClassSexDemand -= $slaveJobValues.brothel.upperClass>>
+<</if>>
+<<if _topClassSexDemand < $slaveJobValues.brothel.topClass>>
+	<<set $whorePriceAdjustment.topClass = Math.max(Math.pow((_topClassSexDemand * 1.331) / ($slaveJobValues.brothel.topClass + $NPCSexSupply.topClass), 1.513), 0.3993),
+	_topClassSexDemand = 0>>
+<<else>>
+	<<set $whorePriceAdjustment.topClass = Math.pow((_topClassSexDemand * 1.331) / ($slaveJobValues.brothel.topClass + $NPCSexSupply.topClass), 0.5),
+	_topClassSexDemand -= $slaveJobValues.brothel.topClass>>
+<</if>>
+
+/*Price for sex in the arcade or at a glory hole*/
+<<if $arcologies[0].FSPaternalist != "unset">>
+	<<set _arcadeDemand = Math.max((_arcadeDemandDeg + _lowerClassSexDemand) * (1 - $arcologies[0].FSPaternalist / 50), 0)>> /*Paternalists sap demand for the arcade*/
+<<else>>
+	<<set _arcadeDemand = _arcadeDemandDeg + _lowerClassSexDemand>>
+<</if>>
+<<if $slaveJobValues.arcade + $NPCSexSupply.lowerClass > 0>>
+	<<set $arcadePrice = Math.clamp(Math.pow((_arcadeDemand / ($slaveJobValues.arcade + $NPCSexSupply.lowerClass)), 0.5), 0.5, 3)>> /*This calculates the price charged per fuck*/
+<<else>>
+	<<set $arcadePrice = 0.5>> /*minimum price no matter what*/
+<</if>>
+
+/*Arcade usage beyond degradationist demand*/
+<<if $arcologies[0].FSDegradationist != "unset">>
+	<<if $slaveJobValues.arcade > _arcadeDemandDeg>>
+		<<set $slaveJobValues.arcade -= _arcadeDemandDeg>>
+	<<else>>
+		<<set $slaveJobValues.arcade = 0>>
+	<</if>>
+<</if>>
+<<if $slaveJobValues.arcade > _lowerClassSexDemand>>
+	<<set _lowerClassSexDemand = 0>>
+<<else>>
+	<<set _lowerClassSexDemand -= $slaveJobValues.arcade>>
+<</if>>
+<<set _arcadeSupply.lowerClass += $slaveJobValues.arcade>>
+
+/*NPC sex supply*/
+<<set $NPCSexSupply = NPCSexSupply(_lowerClassSexDemand, _lowerClassSexDemandRef, _middleClassSexDemand, _middleClassSexDemandRef, _upperClassSexDemand, _upperClassSexDemandRef, _topClassSexDemand, _topClassSexDemandRef),
+$NPCMarketShare.lowerClass = Math.trunc(($NPCSexSupply.lowerClass * 1000) / _lowerClassSexDemandRef),
+$NPCMarketShare.middleClass = Math.trunc(($NPCSexSupply.middleClass * 1000) / _middleClassSexDemandRef),
+$NPCMarketShare.upperClass = Math.trunc(($NPCSexSupply.upperClass * 1000) / _upperClassSexDemandRef),
+$NPCMarketShare.topClass = Math.trunc(($NPCSexSupply.topClass * 1000) / _topClassSexDemandRef)>>
+<<if _lowerClassSexDemand < $NPCSexSupply.lowerClass>>
+	<<set _lowerClassSexDemand = 0>>
+<<else>>
+	<<set _lowerClassSexDemand -= $NPCSexSupply.lowerClass>>
+<</if>>
+
+<<if _middleClassSexDemand < $NPCSexSupply.middleClass>>
+	<<set _middleClassSexDemand = 0>>
+<<else>>
+	<<set _middleClassSexDemand -= $NPCSexSupply.middleClass>>
+<</if>>
+
+<<if _upperClassSexDemand < $NPCSexSupply.upperClass>>
+	<<set _upperClassSexDemand = 0>>
+<<else>>
+	<<set _upperClassSexDemand -= $NPCSexSupply.upperClass>>
+<</if>>
+
+<<if _topClassSexDemand < $NPCSexSupply.topClass>>
+	<<set _topClassSexDemand = 0>>
+<<else>>
+	<<set _topClassSexDemand -= $NPCSexSupply.topClass>>
+<</if>>
+
+<<if ($cheatMode == 1) || ($debugMode == 1)>>
+
+	<br>Slave services supply and demand this week:
+
+	<table class="finance" border ="1">
+		<tr align="center"> /*title row */
+			<th align="right">Client's class</th>
+			<th>Lower</th>
+			<th>Middle</th>
+			<th>Upper</th>
+			<th>Top</th>
+		</tr>
+
+		<tr align="right">
+			<td>
+				Demand
+			</td>
+			<td>
+				<<print commaNum(_lowerClassSexDemandRef)>>
+			</td>
+			<td>
+				<<print commaNum(_middleClassSexDemandRef)>>
+			</td>
+			<td>
+				<<print commaNum(_upperClassSexDemandRef)>>
+			</td>
+			<td>
+				<<print commaNum(_topClassSexDemandRef)>>
+			</td>
+		</tr>
+
+		<tr align="right">
+			<td>
+				Brothel Supply
+			</td>
+			<td>
+				<<print commaNum($slaveJobValues.brothel.lowerClass)>>
+			</td>
+			<td>
+				<<print commaNum($slaveJobValues.brothel.middleClass)>>
+			</td>
+			<td>
+				<<print commaNum($slaveJobValues.brothel.upperClass)>>
+			</td>
+			<td>
+				<<print commaNum($slaveJobValues.brothel.topClass)>>
+			</td>
+		</tr>
+
+		<<if (_clubSupply.lowerClass || _clubSupply.middleClass)>>
+			<tr align="right">
+				<td>
+					Club Supply
+				</td>
+				<td>
+					<<print commaNum(_clubSupply.lowerClass)>>
+				</td>
+				<td>
+					<<print commaNum(_clubSupply.middleClass)>>
+				</td>
+				<td>
+					N/A
+				</td>
+				<td>
+					N/A
+				</td>
+			</tr>
+		<</if>>
+
+		<<if (_arcadeSupply.lowerClass || _arcadeSupply.middleClass || _arcadeSupply.upperClass)>>
+			<tr align="right">
+				<td>
+					Arcade Supply
+				</td>
+				<td>
+					<<print commaNum(_arcadeSupply.lowerClass)>>
+				</td>
+				<td>
+					<<print commaNum(_arcadeSupply.middleClass)>>
+				</td>
+				<td>
+					<<print commaNum(_arcadeSupply.upperClass)>>
+				</td>
+				<td>
+					N/A
+				</td>
+			</tr>
+		<</if>>
+
+		<<if ($cheatMode == 1) || ($debugMode == 1)>>
+			<tr align="right">
+				<td>
+					NPC Supply
+				</td>
+				<td>
+					<<print commaNum($NPCSexSupply.lowerClass)>>
+				</td>
+				<td>
+					<<print commaNum($NPCSexSupply.middleClass)>>
+				</td>
+				<td>
+					<<print commaNum($NPCSexSupply.upperClass)>>
+				</td>
+				<td>
+					<<print commaNum($NPCSexSupply.topClass)>>
+				</td>
+			</tr>
+		<</if>>
+
+		<tr align="right">
+			<td>
+				Unsatisfied
+			</td>
+			<td>
+				<<print commaNum(_lowerClassSexDemand)>>
+			</td>
+			<td>
+				<<print commaNum(_middleClassSexDemand)>>
+			</td>
+			<td>
+				<<print commaNum(_upperClassSexDemand)>>
+			</td>
+			<td>
+				<<print commaNum(_topClassSexDemand)>>
+			</td>
+		</tr>
+	</table>
+<</if>>
+
+/*Sexual satisfaction effects*/
+<<set $sexDemandResult.lowerClass = Math.trunc((($NPCSexSupply.lowerClass + $slaveJobValues.brothel.lowerClass + _clubSupply.lowerClass + _arcadeSupply.lowerClass) * 1000) / _lowerClassSexDemandRef),
+$sexDemandResult.middleClass = Math.trunc((($NPCSexSupply.middleClass + $slaveJobValues.brothel.middleClass + _clubSupply.middleClass + _arcadeSupply.middleClass) * 1000) / _middleClassSexDemandRef),
+$sexDemandResult.upperClass = Math.trunc((($NPCSexSupply.upperClass + $slaveJobValues.brothel.upperClass + _arcadeSupply.upperClass) * 1000) / _upperClassSexDemandRef),
+$sexDemandResult.topClass = Math.trunc((($NPCSexSupply.topClass + $slaveJobValues.brothel.topClass) * 1000) / _topClassSexDemandRef)>>
+<<if $sexDemandResult.lowerClass < 400>> /*You are providing < 40% of their desired amount of sex*/
+	<<if $week <= 30>>
+		<<set $classSatisfied.lowerClass = 0>>
+	<<else>>
+		<<set $classSatisfied.lowerClass = -1>>
+	<</if>>
+<<elseif $sexDemandResult.lowerClass < 600>> /*You are providing between 40 and 60% of their desired amount of sex*/
+	<<if $week <= 40>>
+		<<set $classSatisfied.lowerClass = 1>>
+	<<elseif $week <= 60>>
+		<<set $classSatisfied.lowerClass = 0>>
+	<<else>>
+		<<set $classSatisfied.lowerClass = -1>>
+	<</if>>
+<<elseif $sexDemandResult.lowerClass < 800>> /*You are providing between 60 and 80% of their desired amount of sex*/
+	<<if $week <= 50>>
+		<<set $classSatisfied.lowerClass = 1>>
+	<<else>>
+		<<set $classSatisfied.lowerClass = 0>>
+	<</if>>
+<<elseif $sexDemandResult.lowerClass == 1000>> /*You are providing 100% or more of their desired amount of sex*/
+	<<set $classSatisfied.lowerClass = 2>>
+<<else>> /*You are providing > 80% of their desired amount of sex*/
+	<<set $classSatisfied.lowerClass = 1>>
+<</if>>
+
+<<if $sexDemandResult.middleClass < 400>> /*You are providing < 40% of their desired amount of sex*/
+	<<if $week <= 30>>
+		<<set $classSatisfied.middleClass = 0>>
+	<<else>>
+		<<set $classSatisfied.middleClass = -1>>
+	<</if>>
+<<elseif $sexDemandResult.middleClass < 600>> /*You are providing between 40 and 60% of their desired amount of sex*/
+	<<if $week <= 40>>
+		<<set $classSatisfied.middleClass = 1>>
+	<<elseif $week <= 60>>
+		<<set $classSatisfied.middleClass = 0>>
+	<<else>>
+		<<set $classSatisfied.middleClass = -1>>
+	<</if>>
+<<elseif $sexDemandResult.middleClass < 800>> /*You are providing between 60 and 80% of their desired amount of sex*/
+	<<if $week <= 50>>
+		<<set $classSatisfied.middleClass = 1>>
+	<<else>>
+		<<set $classSatisfied.middleClass = 0>>
+	<</if>>
+<<elseif $sexDemandResult.middleClass == 1000>> /*You are providing 100% or more of their desired amount of sex*/
+	<<set $classSatisfied.middleClass = 2>>
+<<else>> /*You are providing > 80% of their desired amount of sex*/
+	<<set $classSatisfied.middleClass = 1>>
+<</if>>
+
+<<if $sexDemandResult.upperClass < 400>> /*You are providing < 40% of their desired amount of sex*/
+	<<if $week <= 30>>
+		<<set $classSatisfied.upperClass = 0>>
+	<<else>>
+		<<set $classSatisfied.upperClass = -1>>
+	<</if>>
+<<elseif $sexDemandResult.upperClass < 600>> /*You are providing between 40 and 60% of their desired amount of sex*/
+	<<if $week <= 40>>
+		<<set $classSatisfied.upperClass = 1>>
+	<<elseif $week <= 60>>
+		<<set $classSatisfied.upperClass = 0>>
+	<<else>>
+		<<set $classSatisfied.upperClass = -1>>
+	<</if>>
+<<elseif $sexDemandResult.upperClass < 800>> /*You are providing between 60 and 80% of their desired amount of sex*/
+	<<if $week <= 50>>
+		<<set $classSatisfied.upperClass = 1>>
+	<<else>>
+		<<set $classSatisfied.upperClass = 0>>
+	<</if>>
+<<elseif $sexDemandResult.upperClass == 1000>> /*You are providing 100% or more of their desired amount of sex*/
+	<<set $classSatisfied.upperClass = 2>>
+<<else>> /*You are providing > 80% of their desired amount of sex*/
+	<<set $classSatisfied.upperClass = 1>>
+<</if>>
+
+<<if $sexDemandResult.topClass < 400>> /*You are providing < 40% of their desired amount of sex*/
+	<<if $week <= 30>>
+		<<set $classSatisfied.topClass = 0>>
+	<<else>>
+		<<set $classSatisfied.topClass = -1>>
+	<</if>>
+<<elseif $sexDemandResult.topClass < 600>> /*You are providing between 40 and 60% of their desired amount of sex*/
+	<<if $week <= 40>>
+		<<set $classSatisfied.topClass = 1>>
+	<<elseif $week <= 60>>
+		<<set $classSatisfied.topClass = 0>>
+	<<else>>
+		<<set $classSatisfied.topClass = -1>>
+	<</if>>
+<<elseif $sexDemandResult.topClass < 800>> /*You are providing between 60 and 80% of their desired amount of sex*/
+	<<if $week <= 50>>
+		<<set $classSatisfied.topClass = 1>>
+	<<else>>
+		<<set $classSatisfied.topClass = 0>>
+	<</if>>
+<<elseif $sexDemandResult.topClass == 1000>> /*You are providing 100% or more of their desired amount of sex*/
+	<<set $classSatisfied.topClass = 2>>
+<<else>> /*You are providing > 80% of their desired amount of sex*/
+	<<set $classSatisfied.topClass = 1>>
+<</if>>
+
+<br><br>
+
+<<for $i = 0; $i < _SL; $i++>>
+
+<<if ndef $slaves[$i].skill.whoring>>
+	@@.yellow;Reset bad whore skill for $slaves[$i].slaveName.@@ Report this as a bug if it reoccurs.<br>
+	<<set $slaves[$i].skill.whoring = 0>>
+<</if>>
+<<if ndef $slaves[$i].skill.entertainment>>
+	@@.yellow;Reset bad entertain skill for $slaves[$i].slaveName.@@ Report this as a bug if it reoccurs.<br>
+	<<set $slaves[$i].skill.entertainment = 0>>
+<</if>>
+<<if ndef $slaves[$i].skill.vaginal>>
+	@@.yellow;Reset bad vaginal skill for $slaves[$i].slaveName.@@ Report this as a bug if it reoccurs.<br>
+	<<set $slaves[$i].skill.vaginal = 0>>
+<</if>>
+<<if ndef $slaves[$i].skill.anal>>
+	@@.yellow;Reset bad anal skill for $slaves[$i].slaveName.@@ Report this as a bug if it reoccurs.<br>
+	<<set $slaves[$i].skill.anal = 0>>
+<</if>>
+<<if ndef $slaves[$i].skill.oral>>
+	@@.yellow;Reset bad skill for $slaves[$i].slaveName.@@ Report this as a bug if it reoccurs.<br>
+	<<set $slaves[$i].skill.oral = 0>>
+<</if>>
+
+<<if ($seeDicks > 0) && canPenetrate($slaves[$i]) && App.Utils.hasNonassignmentSex($slaves[$i])>>
+	<<set $averageDick += $slaves[$i].dick, $slavesWithWorkingDicks++>>
+<</if>>
+
+<<if ($slaves[$i].lactation == 1)>>
+	<<set $slaves[$i].lactationDuration-->>
+<</if>>
+
+<<switch $slaves[$i].assignment>>
+<<case "be your Head Girl">>
+	<<set $HeadGirl = $slaves[$i]>>
+	<<if $HeadGirl.fetish == "mindbroken">>
+		<span class='slave-name'>$HeadGirl.slaveName</span> is mindbroken @@.yellow;and cannot serve as your Head Girl any more.@@<br>
+		<<set $HeadGirl = 0>>
+	<<elseif !canTalk($HeadGirl)>>
+		<span class='slave-name'>$HeadGirl.slaveName</span> can't give slaves verbal orders @@.yellow;and cannot serve as your Head Girl any more.@@<br>
+		<<set $HeadGirl = 0>>
+	<<elseif !canWalk($HeadGirl)>>
+		<span class='slave-name'>$HeadGirl.slaveName</span> is no longer independently mobile @@.yellow;and cannot serve as your Head Girl any more.@@<br>
+		<<set $HeadGirl = 0>>
+	<<elseif !canHold($HeadGirl)>>
+		<span class='slave-name'>$HeadGirl.slaveName</span> is no longer able to handle your slaves @@.yellow;and cannot serve as your Head Girl any more.@@<br>
+		<<set $HeadGirl = 0>>
+	<<elseif !canSee($HeadGirl)>>
+		<span class='slave-name'>$HeadGirl.slaveName</span> can no longer see @@.yellow;and cannot serve as your Head Girl any more.@@<br>
+		<<set $HeadGirl = 0>>
+	<<elseif !canHear($HeadGirl)>>
+		<span class='slave-name'>$HeadGirl.slaveName</span> can no longer hear @@.yellow;and cannot serve as your Head Girl any more.@@<br>
+		<<set $HeadGirl = 0>>
+	<<elseif $HeadGirl.preg > 37 && $HeadGirl.broodmother == 2>>
+		<span class='slave-name'>$HeadGirl.slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your Head Girl any longer.@@
+		<<set $HeadGirl = 0>>
+	<<elseif $HeadGirl.devotion <= 20>>
+		<span class='slave-name'>$HeadGirl.slaveName</span> is no longer even accepting of you, @@.yellow;and cannot serve as your Head Girl any more.@@<br>
+		<<set $HeadGirl = 0>>
+	<</if>>
+	<<if $HeadGirl != 0>>
+		<<set $HGEnergy++>>
+		<<if $personalAttention == "HG">>
+			<<set $HGEnergy++>>
+			<<if $HeadGirl.trust > 95>>
+				<<set $HGEnergy++>>
+			<</if>>
+		<</if>>
+		<<if $arcologies[0].FSChineseRevivalistLaw == 1>>
+			<<set $HGEnergy++>>
+		<</if>>
+		<<if $HeadGirl.health.tired > 90>>
+			<<set $HGEnergy-->>
+		<</if>>
+		<<if canAchieveErection($HeadGirl)>>
+			<<set $HGCum = 2+Math.trunc(($HeadGirl.balls/5)+($HeadGirl.energy/95)+($HeadGirl.health.condition/95)+($HeadGirl.devotion/95)+($reproductionFormula*5))>>
+		<</if>>
+	<<else>>
+		<<= removeJob($slaves[$i], "be your Head Girl")>>
+	<</if>>
+<<case "live with your Head Girl">>
+	<<if $slaves[$i].devotion >= random(-30,20)>>
+		<<set $HGSlaveSuccess++, $HGEnergy++>>
+	<<else>>
+		<<set $HGSlaveSuccess-->>
+	<</if>>
+<<case "recruit girls">>
+	<<set $Recruiter = $slaves[$i]>>
+	<<if $Recruiter.fetish == "mindbroken">>
+		<span class='slave-name'>$Recruiter.slaveName</span> is mindbroken @@.yellow;and cannot serve as your recruiter any more.@@<br>
+		<<set $Recruiter = 0>>
+	<<elseif !canTalk($Recruiter)>>
+		<span class='slave-name'>$Recruiter.slaveName</span> can't verbally entice marks @@.yellow;and cannot serve as your recruiter any more.@@<br>
+		<<set $Recruiter = 0>>
+	<<elseif $Recruiter.preg > 37 && $Recruiter.broodmother == 2>>
+		<span class='slave-name'>$Recruiter.slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your recruiter any longer.@@
+		<<set $Recruiter = 0>>
+	<<elseif !canWalk($Recruiter)>>
+		<span class='slave-name'>$Recruiter.slaveName</span> is no longer independently mobile @@.yellow;and cannot serve as your recruiter any more.@@<br>
+		<<set $Recruiter = 0>>
+	<<elseif !canSee($Recruiter)>>
+		<span class='slave-name'>$Recruiter.slaveName</span> can no longer see @@.yellow;and cannot serve as your recruiter any more.@@<br>
+		<<set $Recruiter = 0>>
+	<<elseif !canHear($Recruiter)>>
+		<span class='slave-name'>$Recruiter.slaveName</span> can no longer hear @@.yellow;and cannot serve as your Recruiter any more.@@<br>
+		<<set $Recruiter = 0>>
+	<</if>>
+	<<if $Recruiter == 0>>
+		<<= removeJob($slaves[$i], "recruit girls")>>
+	<</if>>
+<<case "be the Madam">>
+	<<if $unMadam == 1>>
+		<span class='slave-name'>$Madam.slaveName</span> can't give whores verbal orders @@.yellow;and cannot serve as your Madam any more.@@<br>
+	<<elseif $unMadam == 2>>
+		<span class='slave-name'>$Madam.slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your Madam any longer.@@
+	<<elseif $unMadam == 3>>
+		<span class='slave-name'>$Madam.slaveName</span> is mindbroken @@.yellow;and cannot serve as your Madam any more.@@<br>
+	<<elseif $unMadam == 4>>
+		<span class='slave-name'>$Madam.slaveName</span> is no longer independently mobile @@.yellow;and cannot serve as your Madam any more.@@<br>
+	<<elseif $unMadam == 5>>
+		<span class='slave-name'>$Madam.slaveName</span> can no longer see @@.yellow;and cannot serve as your Madam any more.@@<br>
+	<<elseif $unMadam == 6>>
+		<span class='slave-name'>$Madam.slaveName</span> can no longer hear @@.yellow;and cannot serve as your Madam any more.@@<br>
+	<<elseif $unMadam == 7>>
+		<span class='slave-name'>$Madam.slaveName</span> can no longer handle $his underlings @@.yellow;and cannot serve as your Madam any more.@@<br>
+	<</if>>
+	<<if $Madam == 0>>
+		<<= removeJob($slaves[$i], "be the Madam")>>
+	<</if>>
+<<case "be the DJ">>
+	<<if $unDJ == 1>>
+		<span class='slave-name'>$slaves[$i].slaveName</span> can't speak @@.yellow;and cannot serve as your DJ any more.@@<br>
+	<<elseif $unDJ == 2>>
+		<span class='slave-name'>$slaves[$i].slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your DJ any longer@@.<br>
+	<<elseif $unDJ == 3>>
+		<span class='slave-name'>$slaves[$i].slaveName</span> is mindbroken @@.yellow;and cannot serve as your DJ any more.@@<br>
+	<<elseif $unDJ == 4>>
+		<span class='slave-name'>$slaves[$i].slaveName</span> is no longer independently mobile @@.yellow;and cannot serve as your DJ any more.@@<br>
+	<<elseif $unDJ == 5>>
+		<span class='slave-name'>$slaves[$i].slaveName</span> can no longer hear @@.yellow;and cannot serve as your DJ any more.@@<br>
+	<</if>>
+	<<if $DJ == 0>>
+		<<= removeJob($slaves[$i], "be the DJ")>>
+	<</if>>
+<<case "be the Milkmaid">>
+	<<set $Milkmaid = $slaves[$i]>>
+	<<if $Milkmaid.fetish == "mindbroken">>
+		<span class='slave-name'>$Milkmaid.slaveName</span> is mindbroken @@.yellow;and cannot serve as your Milkmaid any more.@@<br>
+		<<set $Milkmaid = 0>>
+	<<elseif $Milkmaid.preg > 37 && $Milkmaid.broodmother == 2>>
+		<span class='slave-name'>$Milkmaid.slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your Milkmaid any longer.@@
+		<<set $Milkmaid = 0>>
+	<<elseif !canWalk($Milkmaid)>>
+		<span class='slave-name'>$Milkmaid.slaveName</span> is no longer independently mobile @@.yellow;and cannot serve as your Milkmaid any more.@@<br>
+		<<set $Milkmaid = 0>>
+	<<elseif !canHold($Milkmaid)>>
+		<span class='slave-name'>$Milkmaid.slaveName</span> can no longer handle nor milk your slaves @@.yellow;and cannot serve as your Milkmaid any more.@@<br>
+		<<set $Milkmaid = 0>>
+	<<elseif !canSee($Milkmaid)>>
+		<span class='slave-name'>$Milkmaid.slaveName</span> can no longer see @@.yellow;and cannot serve as your Milkmaid any more.@@<br>
+		<<set $Milkmaid = 0>>
+	<<elseif !canHear($Milkmaid)>>
+		<span class='slave-name'>$Milkmaid.slaveName</span> can no longer hear @@.yellow;and cannot serve as your Milkmaid any more.@@<br>
+		<<set $Milkmaid = 0>>
+	<</if>>
+	<<if $Milkmaid == 0>>
+		<<= removeJob($slaves[$i], "be the Milkmaid")>>
+	<</if>>
+<<case "be the Farmer">>
+	<<set $Farmer = $slaves[$i]>>
+	<<if $Farmer.fetish == "mindbroken">>
+		<span class='slave-name'>$Farmer.slaveName</span> is mindbroken @@.yellow;and cannot serve as your Farmer any more.@@<br>
+		<<set $Farmer = 0>>
+	<<elseif $Farmer.preg > 37 && $Farmer.broodmother == 2>>
+		<span class='slave-name'>$Farmer.slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your Farmer any longer.@@
+		<<set $Farmer = 0>>
+	<<elseif !canWalk($Farmer)>>
+		<span class='slave-name'>$Farmer.slaveName</span> is no longer independently mobile @@.yellow;and cannot serve as your Farmer any more.@@<br>
+		<<set $Farmer = 0>>
+	<<elseif !canHold($Farmer)>>
+		<span class='slave-name'>$Farmer.slaveName</span> can no longer grip things @@.yellow;and cannot serve as your Farmer any more.@@<br>
+		<<set $Farmer = 0>>
+	<<elseif !canSee($Farmer)>>
+		<span class='slave-name'>$Farmer.slaveName</span> can no longer see @@.yellow;and cannot serve as your Farmer any more.@@<br>
+		<<set $Farmer = 0>>
+	<<elseif !canHear($Farmer)>>
+		<span class='slave-name'>$Farmer.slaveName</span> can no longer hear @@.yellow;and cannot serve as your Farmer any more.@@<br>
+		<<set $Farmer = 0>>
+	<</if>>
+	<<if $Farmer == 0>>
+		<<= removeJob($slaves[$i], "be the Farmer")>>
+	<</if>>
+<<case "be the Stewardess">>
+	<<set $Stewardess = $slaves[$i]>>
+	<<if !canTalk($Stewardess)>>
+		<span class='slave-name'>$Stewardess.slaveName</span> can't give servants verbal orders @@.yellow;and cannot serve as your Stewardess any more.@@<br>
+		<<set $Stewardess = 0>>
+	<<elseif $Stewardess.preg > 37 && $Stewardess.broodmother == 2>>
+		<span class='slave-name'>$Stewardess.slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your Stewardess any longer.@@
+		<<set $Stewardess = 0>>
+	<<elseif $Stewardess.fetish == "mindbroken">>
+		<span class='slave-name'>$Stewardess.slaveName</span> is mindbroken @@.yellow;and cannot serve as your Stewardess any more.@@<br>
+		<<set $Stewardess = 0>>
+	<<elseif !canWalk($Stewardess)>>
+		<span class='slave-name'>$Stewardess.slaveName</span> is no longer independently mobile @@.yellow;and cannot serve as your Stewardess any more.@@<br>
+		<<set $Stewardess = 0>>
+	<<elseif !canHold($Stewardess)>>
+		<span class='slave-name'>$Stewardess.slaveName</span> can no longer handle $his underlings nor effectively clean @@.yellow;and cannot serve as your Stewardess any more.@@<br>
+		<<set $Stewardess = 0>>
+	<<elseif !canSee($Stewardess)>>
+		<span class='slave-name'>$Stewardess.slaveName</span> can no longer see @@.yellow;and cannot serve as your Stewardess any more.@@<br>
+		<<set $Stewardess = 0>>
+	<<elseif !canHear($Stewardess)>>
+		<span class='slave-name'>$Stewardess.slaveName</span> can no longer hear @@.yellow;and cannot serve as your Stewardess any more.@@<br>
+		<<set $Stewardess = 0>>
+	<</if>>
+	<<if $Stewardess == 0>>
+		<<= removeJob($slaves[$i], "be the Stewardess")>>
+	<</if>>
+<<case "be the Schoolteacher">>
+	<<set $Schoolteacher = $slaves[$i]>>
+	<<if !canTalk($Schoolteacher)>>
+		<span class='slave-name'>$Schoolteacher.slaveName</span> can't give verbal instruction @@.yellow;and cannot serve as your Schoolteacher any more.@@<br>
+		<<set $Schoolteacher = 0>>
+	<<elseif $Schoolteacher.preg > 37 && $Schoolteacher.broodmother == 2>>
+		<span class='slave-name'>$Schoolteacher.slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your Schoolteacher any longer.@@
+		<<set $Schoolteacher = 0>>
+	<<elseif $Schoolteacher.fetish == "mindbroken">>
+		<span class='slave-name'>$Schoolteacher.slaveName</span> is mindbroken @@.yellow;and cannot serve as your Schoolteacher any more.@@<br>
+		<<set $Schoolteacher = 0>>
+	<<elseif !canSee($Schoolteacher)>>
+		<span class='slave-name'>$Schoolteacher.slaveName</span> can no longer see @@.yellow;and cannot serve as your Schoolteacher any more.@@<br>
+		<<set $Schoolteacher = 0>>
+	<<elseif !canHear($Schoolteacher)>>
+		<span class='slave-name'>$Schoolteacher.slaveName</span> can no longer hear @@.yellow;and cannot serve as your Schoolteacher any more.@@<br>
+		<<set $Schoolteacher = 0>>
+	<</if>>
+	<<if $Schoolteacher == 0>>
+		<<= removeJob($slaves[$i], "be the Schoolteacher")>>
+	<</if>>
+<<case "be the Wardeness">>
+	<<set $Wardeness = $slaves[$i]>>
+	<<if !canWalk($Wardeness)>>
+		<span class='slave-name'>$Wardeness.slaveName</span> is no longer independently mobile @@.yellow;and cannot serve as your Wardeness any more.@@<br>
+		<<set $Wardeness = 0>>
+	<<elseif !canHold($Wardeness)>>
+		<span class='slave-name'>$Wardeness.slaveName</span> can no longer handle $his charges @@.yellow;and cannot serve as your Wardeness any more.@@<br>
+		<<set $Wardeness = 0>>
+	<<elseif $Wardeness.preg > 37 && $Wardeness.broodmother == 2>>
+		<span class='slave-name'>$Wardeness.slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your Wardeness any longer.@@
+		<<set $Wardeness = 0>>
+	<<elseif !canSee($Wardeness)>>
+		<span class='slave-name'>$Wardeness.slaveName</span> can no longer see @@.yellow;and cannot serve as your Wardeness any more.@@<br>
+		<<set $Wardeness = 0>>
+	<<elseif !canHear($Wardeness)>>
+		<span class='slave-name'>$Wardeness.slaveName</span> can no longer hear @@.yellow;and cannot serve as your Wardeness any more.@@<br>
+		<<set $Wardeness = 0>>
+	<</if>>
+	<<if $Wardeness == 0>>
+		<<= removeJob($slaves[$i], "be the Wardeness")>>
+	<</if>>
+<<case "be the Attendant">>
+	<<set $Attendant = $slaves[$i]>>
+	<<if $Attendant.fetish == "mindbroken">>
+		<span class='slave-name'>$Attendant.slaveName</span> is mindbroken @@.yellow;and cannot serve as your Attendant any more.@@<br>
+		<<set $Attendant = 0>>
+	<<elseif $Attendant.preg > 37 && $Attendant.broodmother == 2>>
+		<span class='slave-name'>$Attendant.slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your Attendant any longer.@@
+		<<set $Attendant = 0>>
+	<<elseif !canWalk($Attendant)>>
+		<span class='slave-name'>$Attendant.slaveName</span> is no longer independently mobile @@.yellow;and cannot serve as your Attendant any more.@@<br>
+		<<set $Attendant = 0>>
+	<<elseif !canHold($Attendant)>>
+		<span class='slave-name'>$Attendant.slaveName</span> can no longer support $his charges @@.yellow;and cannot serve as your Attendant any more.@@<br>
+		<<set $Attendant = 0>>
+	<<elseif !canHear($Attendant)>>
+		<span class='slave-name'>$Attendant.slaveName</span> can no longer hear @@.yellow;and cannot serve as your Attendant any more.@@<br>
+		<<set $Attendant = 0>>
+	<</if>>
+	<<if $Attendant == 0>>
+		<<= removeJob($slaves[$i], "be the Attendant")>>
+	<</if>>
+<<case "be the Matron">>
+	<<set $Matron = $slaves[$i]>>
+	<<if $Matron.fetish == "mindbroken">>
+		<span class='slave-name'>$Matron.slaveName</span> is mindbroken @@.yellow;and cannot serve as your Matron any more.@@<br>
+		<<set $Matron = 0>>
+	<<elseif $Matron.preg > 37 && $Matron.broodmother == 2>>
+		<span class='slave-name'>$Matron.slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your Matron any longer.@@
+		<<set $Matron = 0>>
+	<<elseif !canWalk($Matron)>>
+		<span class='slave-name'>$Matron.slaveName</span> is no longer independently mobile @@.yellow;and cannot serve as your Matron any more.@@<br>
+		<<set $Matron = 0>>
+	<<elseif !canHold($Matron)>>
+		<span class='slave-name'>$Matron.slaveName</span> can no longer hold infants @@.yellow;and cannot serve as your Matron any more.@@<br>
+		<<set $Matron = 0>>
+	<<elseif !canHear($Matron)>>
+		<span class='slave-name'>$Matron.slaveName</span> can no longer hear @@.yellow;and cannot serve as your Matron any more.@@<br>
+		<<set $Matron = 0>>
+	<<elseif !canSee($Matron)>>
+		<span class='slave-name'>$Matron.slaveName</span> can no longer see @@.yellow;and cannot serve as your Matron any more.@@<br>
+		<<set $Matron = 0>>
+	<</if>>
+	<<if $Matron == 0>>
+		<<= removeJob($slaves[$i], "be the Matron")>>
+	<</if>>
+<<case "be the Nurse">>
+	<<set $Nurse = $slaves[$i]>>
+	<<if $Nurse.fetish == "mindbroken">>
+		<span class='slave-name'>$Nurse.slaveName</span> is mindbroken @@.yellow;and cannot serve as your Nurse any more.@@<br>
+		<<set $Nurse = 0>>
+	<<elseif $Nurse.preg > 37 && $Nurse.broodmother == 2>>
+		<span class='slave-name'>$Nurse.slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your Nurse any longer.@@
+		<<set $Nurse = 0>>
+	<<elseif !canWalk($Nurse)>>
+		<span class='slave-name'>$Nurse.slaveName</span> is no longer independently mobile @@.yellow;and cannot serve as your Nurse any more.@@<br>
+		<<set $Nurse = 0>>
+	<<elseif !canHold($Nurse)>>
+		<span class='slave-name'>$Nurse.slaveName</span> can no longer hold onto patients @@.yellow;and cannot serve as your Nurse any more.@@<br>
+		<<set $Nurse = 0>>
+	<<elseif !canSee($Nurse)>>
+		<span class='slave-name'>$Nurse.slaveName</span> can no longer see @@.yellow;and cannot serve as your Nurse any more.@@<br>
+		<<set $Nurse = 0>>
+	<<elseif !canHear($Nurse)>>
+		<span class='slave-name'>$Nurse.slaveName</span> can no longer hear @@.yellow;and cannot serve as your Nurse any more.@@<br>
+		<<set $Nurse = 0>>
+	<</if>>
+	<<if $Nurse == 0>>
+		<<= removeJob($slaves[$i], "be the Nurse")>>
+	<</if>>
+<<case "guard you">>
+	<<set $Bodyguard = $slaves[$i]>>
+	<<if $Bodyguard.fetish == "mindbroken">>
+		<span class='slave-name'>$Bodyguard.slaveName</span> is mindbroken @@.yellow;and cannot safely serve as your bodyguard any more.@@<br>
+		<<set $Bodyguard = 0>>
+	<<elseif !canWalk($Bodyguard)>>
+		<span class='slave-name'>$Bodyguard.slaveName</span> is no longer independently mobile @@.yellow;and cannot serve as your bodyguard any more.@@<br>
+		<<set $Bodyguard = 0>>
+	<<elseif !canHold($Bodyguard)>>
+		<span class='slave-name'>$Bodyguard.slaveName</span> is no longer able to hold a weapon @@.yellow;and cannot serve as your bodyguard any more.@@<br>
+		<<set $Bodyguard = 0>>
+	<<elseif $Bodyguard.preg > 37 && $Bodyguard.broodmother == 2>>
+		<span class='slave-name'>$Bodyguard.slaveName</span> spends so much time giving birth and laboring that @@.yellow;$he cannot effectively serve as your bodyguard any longer.@@
+		<<set $Bodyguard = 0>>
+	<<elseif !canSee($Bodyguard)>>
+		<span class='slave-name'>$Bodyguard.slaveName</span> can no longer see @@.yellow;and cannot serve as your Bodyguard any more.@@<br>
+		<<set $Bodyguard = 0>>
+	<<elseif !canHear($Bodyguard)>>
+		<span class='slave-name'>$Bodyguard.slaveName</span> can no longer hear @@.yellow;and cannot serve as your Bodyguard any more.@@<br>
+		<<set $Bodyguard = 0>>
+	<</if>>
+	<<if $Bodyguard == 0>>
+		<<= removeJob($slaves[$i], "guard you")>>
+	<</if>>
+<<case "be your Concubine">>
+	<<set $Concubine = $slaves[$i], $fuckSlaves++>>
+<<case "serve in the master suite" "please you">>
+	<<set $fuckSlaves++>>
+<</switch>>
+
+<<if $Lurcher>>
+	<<if $slaves[$i].ID == $Lurcher.ID>>
+		<<set $Lurcher = $slaves[$i]>>
+		<<if !canWalk($Lurcher)>>
+			<span class='slave-name'>$Lurcher.slaveName</span> is no longer able to run @@.yellow;and cannot course as a lurcher.@@<br>
+			<<set $Lurcher = 0>>
+		<<elseif !canHold($Lurcher)>>
+			<span class='slave-name'>$Lurcher.slaveName</span> is no longer able to catch the hares @@.yellow;and cannot course as a lurcher.@@<br>
+			<<set $Lurcher = 0>>
+		<<elseif !canHear($Lurcher) && !canSee($Lurcher)>>
+			<span class='slave-name'>$Lurcher.slaveName</span> is no longer able to track the hares @@.yellow;and cannot course as a lurcher.@@<br>
+			<<set $Lurcher = 0>>
+		<<elseif $Lurcher.bellyPreg >= 60000>>
+			<span class='slave-name'>$Lurcher.slaveName</span> is too pregnant to run @@.yellow;and cannot course as a lurcher.@@
+			<<set $Lurcher = 0>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $Stud>>
+	<<if $slaves[$i].ID == $Stud.ID>>
+		<<set $Stud = $slaves[$i]>>
+		<<if $slaves[$i].balls == 0>>
+			<span class='slave-name'>$Stud.slaveName</span> no longer has sperm @@.yellow;and cannot serve as a Stud any more.@@<br>
+			<<set $Stud = 0>>
+		<<elseif slave.ballType == "sterile">>
+			<span class='slave-name'>$Stud.slaveName</span> no longer produces potent sperm @@.yellow;and cannot serve as a Stud any more.@@<br>
+			<<set $Stud = 0>>
+		<<elseif $slaves[$i].pubertyXY != 1>>
+			<span class='slave-name'>$Stud.slaveName</span> no longer produces mature sperm @@.yellow;and cannot serve as a Stud any more.@@<br>
+			<<set $Stud = 0>>
+		<<elseif $slaves[$i].vasectomy == 1>>
+			<span class='slave-name'>$Stud.slaveName</span> shoots blanks due to a vasectomy @@.yellow;and cannot serve as a Stud any more.@@<br>
+			<<set $Stud = 0>>
+		<</if>>
+		<<if $Stud == 0>>
+			<<set $slaves[$i].subTarget = 0>>
+		<<else>>
+			<<set $StudCum = 2+Math.trunc(($Stud.balls/5)+($Stud.energy/95)+($Stud.health.condition/95)+($Stud.devotion/95)+($reproductionFormula*5)-($Stud.tired/25))>>
+			<<if $Stud.drugs == "hyper testicle enhancement">>
+				<<set $StudCum += 3>>
+			<<elseif $Stud.drugs == "testicle enhancement">>
+				<<set $StudCum += 1>>
+			<</if>>
+			<<if $Stud.diet == "cum production">>
+				<<set $StudCum += 1>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $fighterIDs.includes($slaves[$i])>>
+	<<if !canWalk($slaves[$i])>>
+		<span class='slave-name'>$slaves[$i].slaveName</span> is no longer independently mobile @@.yellow;and cannot fight any more.@@ $He has been removed from $pitName roster<br>.
+		<<set $fighterIDs.delete($slaves[$i].ID)>>
+	<<elseif !canHold($slaves[$i])>>
+		<span class='slave-name'>$slaves[$i].slaveName</span> is no longer able to strike @@.yellow;and cannot fight any more.@@ $He has been removed from $pitName roster<br>.
+		<<set $fighterIDs.delete($slaves[$i].ID)>>
+	<</if>>
+<</if>>
+
+<<if isShelterSlave($slaves[$i])>>
+	<<set $shelterGirlsIDs.push($slaves[$i].ID)>>
+<</if>>
+
+<<if $slaves[$i].bellyPain != 0>>
+	<<set $slaves[$i].bellyPain = 0>>
+<</if>>
+
+/* preg speed and advance*/
+
+<<if $slaves[$i].preg > 0>>
+	<<set _pregSpeed = 1>> /*base speed is normal*/
+	<<if $slaves[$i].pregControl == "slow gestation">>
+		<<set _pregSpeed = 0.5>>
+	<<elseif $slaves[$i].pregControl == "speed up">>
+		<<set _pregSpeed = 2>>
+	<</if>>
+
+	<<if $slaves[$i].broodmother == 1 && $slaves[$i].broodmotherOnHold != 1>> /* broodmother advance block */
+		<<if ($week / $slaves[$i].broodmotherFetuses == Math.round($week / $slaves[$i].broodmotherFetuses)) && $slaves[$i].broodmotherFetuses < 1>>
+			/*one fetus in few week - selection and adding*/
+			<<set WombImpregnate($slaves[$i], 1, $slaves[$i].pregSource, 0)>>
+		<<else>>
+			/*one or more fetuses in one week*/
+			<<set WombImpregnate($slaves[$i], Math.floor($slaves[$i].broodmotherFetuses), $slaves[$i].pregSource, 0)>> /* really 0, it's will be advanced right few lines down.*/
+		<</if>>
+		<<if $slaves[$i].ovaryAge >= 47>>
+			<<set $slaves[$i].broodmotherOnHold = 1 >>
+			<<set $slaves[$i].broodmotherCountDown = 37 - WombMinPreg($slaves[$i])>>
+		<</if>>
+	<</if>>
+
+	<<set WombProgress($slaves[$i], _pregSpeed, 1)>> /* drugs can affect speed of gestation, but not a real time */
+
+	<<set $slaves[$i].pregKnown = 1>>
+	<<set $slaves[$i].pregWeek++>>
+<</if>>
+<<if $slaves[$i].pregWeek < 0 >> /*postpartum state*/
+	<<set $slaves[$i].pregWeek++>>
+<</if>>
+
+<<run SetBellySize($slaves[$i])>> /* here will be also set through WombGetVolume .bellyPreg, .pregType, to current values. */
+
+/* end of preg speed and advance*/
+
+/* set up sexual need */
+<<if $slaves[$i].devotion >= -50>>
+	<<if $slaves[$i].energy > 20>>
+		<<if $slaves[$i].physicalAge < $slaves[$i].pubertyAgeXY && $slaves[$i].genes == "XY" && $slaves[$i].energy <= 80>>
+			<<set $slaves[$i].need = $slaves[$i].energy/3>>
+		<<elseif $slaves[$i].physicalAge < $slaves[$i].pubertyAgeXX && $slaves[$i].genes == "XX" && $slaves[$i].energy <= 80>>
+			<<set $slaves[$i].need = $slaves[$i].energy/3>>
+		<<elseif $slaves[$i].physicalAge < 50>>
+			<<set $slaves[$i].need = $slaves[$i].energy>>
+		<<else>>
+			<<set $slaves[$i].need = $slaves[$i].energy/5>>
+		<</if>>
+		<<if $slaves[$i].balls > 0 && $slaves[$i].pubertyXY == 1 && $slaves[$i].physicalAge <= ($slaves[$i].pubertyAgeXY + 1) && ($slaves[$i].physicalAge > $slaves[$i].pubertyAgeXY) && $slaves[$i].physicalAge < 18>>
+			<<set $slaves[$i].need = ($slaves[$i].need*1.25)>>
+		<</if>>
+		<<if ($slaves[$i].ovaries == 1 || $slaves[$i].mpreg == 1) && $slaves[$i].pubertyXX == 1 && $slaves[$i].physicalAge <= ($slaves[$i].pubertyAgeXX + 1) && ($slaves[$i].physicalAge > $slaves[$i].pubertyAgeXX) && $slaves[$i].physicalAge < 18>>
+			<<set $slaves[$i].need = ($slaves[$i].need*1.25)>>
+		<</if>>
+		<<if $slaves[$i].diet == "fertility">>
+			<<set $slaves[$i].need += 10>>
+		<</if>>
+		<<if $slaves[$i].aphrodisiacs == -1>>
+			<<set $slaves[$i].need = ($slaves[$i].need*0.5)>>
+		<<elseif $slaves[$i].aphrodisiacs == 1>>
+			<<set $slaves[$i].need = ($slaves[$i].need*1.5)>>
+		<<elseif $slaves[$i].aphrodisiacs == 2>>
+			<<set $slaves[$i].need = ($slaves[$i].need*2)>>
+		<</if>>
+		<<run poorHealthNeedReduction($slaves[$i])>>
+		<<set $slaves[$i].need = Math.round($slaves[$i].need)>>
+		<<set $slaves[$i].needCap = $slaves[$i].need>>
+	<</if>>
+<</if>>
+
+<<if $slaves[$i].fetish == "mindbroken" && $slaves[$i].relationship == -3>>
+	<<if (def $slaves[$i].kindness) && $slaves[$i].kindness > 0>>
+		<<set $slaves[$i].kindness-->>
+	<</if>>
+<</if>>
+
+<<if $slaves[$i].assignment == "be your agent" || $slaves[$i].assignment == "live with your agent">>
+	<<include "SA agent">>
+<</if>>
+
+<</for>>
+
+<<if $averageDick > 0>><<set $averageDick = $averageDick/$slavesWithWorkingDicks>><</if>>
+<<set $freeSexualEnergy = $PC.sexualEnergy-$fuckSlaves>>
+<<if $freeSexualEnergy > 0>>
+	<<if $freeSexualEnergy > $slavesVisible/2>>
+		<<set $freeSexualEnergy = 3>>
+	<<elseif $freeSexualEnergy > $slavesVisible/4>>
+		<<set $freeSexualEnergy = 2>>
+	<<else>>
+		<<set $freeSexualEnergy = 1>>
+	<</if>>
+<</if>>
+
+<<if $HeadGirl>>
+	<<set _HGPossibleSlaves = [[], [], [], [], [], []]>>
+	<<for $i = 0; $i < _SL; $i++>>
+		<<set _Slave = $slaves[$i]>>
+		<<if !assignmentVisible(_Slave) || _Slave.fuckdoll == 1 || _Slave.ID == $Bodyguard.ID || _Slave.ID == $HeadGirl.ID || _Slave.fetish == "mindbroken">>
+			<<continue>>
+		<<elseif Array.isArray($personalAttention) && $personalAttention.findIndex(function(s) { return s.ID == _Slave.ID; }) != -1>>
+			<<continue>>
+		<</if>>
+
+		<<if ($headGirlTrainsHealth && _Slave.health.condition < -20)>>
+			<<set _HGPossibleSlaves[0].push({ID: _Slave.ID, training: "health"})>>
+			<<continue>>
+		<</if>>
+
+		<<if _Slave.health.tired < 50>>
+			<<set _hasParaphilia = (["abusive", "anal addict", "attention whore", "breast growth", "breeder", "cum addict", "malicious", "neglectful", "self hating"].includes(_Slave.sexualFlaw))>>
+			<<if ($headGirlTrainsParaphilias && _hasParaphilia)>>
+				<<set _HGPossibleSlaves[1].push({ID: _Slave.ID, training: "paraphilia"})>>
+				<<continue>>
+			<</if>>
+
+			<<if $headGirlTrainsFlaws || $headGirlSoftensFlaws>>
+				<<if _Slave.behavioralFlaw != "none" || (_Slave.sexualFlaw != "none" && !_hasParaphilia)>>
+					<<if $headGirlSoftensFlaws>>
+						<<if _Slave.devotion > 20>>
+							<<if (_Slave.behavioralFlaw != "none" && _Slave.behavioralQuirk == "none") || (_Slave.sexualFlaw != "none" && _Slave.sexualQuirk == "none" && !_hasParaphilia)>>
+								<<set _HGPossibleSlaves[3].push({ID: _Slave.ID, training: "soften"})>>
+							<<else>>
+								<<set _HGPossibleSlaves[3].push({ID: _Slave.ID, training: "flaw"})>>
+							<</if>>
+							<<continue>>
+						<</if>>
+					<<elseif $headGirlTrainsFlaws>>
+						<<set _HGPossibleSlaves[2].push({ID: _Slave.ID, training: "flaw"})>>
+						<<continue>>
+					<</if>>
+				<</if>>
+			<</if>>
+
+			<<if ($headGirlTrainsObedience && _Slave.devotion <= 20 && _Slave.trust >= -20)>>
+				<<set _HGPossibleSlaves[4].push({ID: _Slave.ID, training: "obedience"})>>
+				<<continue>>
+			<</if>>
+
+			<<if ($headGirlTrainsSkills)>>
+				<<if (_Slave.skill.oral < $HeadGirl.skill.oral)>>
+					<<set _HGPossibleSlaves[5].push({ID: _Slave.ID, training: "oral skill"})>>
+				<<elseif (_Slave.skill.vaginal < $HeadGirl.skill.vaginal) && (_Slave.vagina > 0) && (canDoVaginal(_Slave))>>
+					<<set _HGPossibleSlaves[5].push({ID: _Slave.ID, training: "fuck skill"})>>
+				<<elseif (_Slave.skill.anal < $HeadGirl.skill.anal) && (_Slave.anus > 0) && (canDoAnal(_Slave))>>
+					<<set _HGPossibleSlaves[5].push({ID: _Slave.ID, training: "anal skill"})>>
+				<<elseif (_Slave.skill.whoring < $HeadGirl.skill.whoring)>>
+					<<set _HGPossibleSlaves[5].push({ID: _Slave.ID, training: "whore skill"})>>
+				<<elseif (_Slave.skill.entertainment < $HeadGirl.skill.entertainment) && !isAmputee(_Slave)>>
+					<<set _HGPossibleSlaves[5].push({ID: _Slave.ID, training: "entertain skill"})>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</for>>
+	<<set $HGTrainSlavesIDs = _HGPossibleSlaves.flatten().slice(0, $HGEnergy)>>
+<<else>>
+	<<set $HGTrainSlavesIDs = []>>
+<</if>>
+
+/**
+* Accordion
+* @version 0.7RC
+* @author 000-250-006
+*
+* @param array _facListArr $args
+*	Multidimensional temporary array
+*	0: The passage name for the facility's report
+*	1: The facility name capitalized (@see todo)
+*	2: max number of slaves allowed in facility - > 0 implies open
+*	3: number of slaves assigned to facility
+*	4: ID of the slave assigned to run the facility ("Boss")
+*	5: Text title of the Boss
+*
+* @todo This is a proof of concept construct, if it works and cuts overhead, intended to create an object
+*	for deeper use in multiple locations, including streamlining reports/facilities code to one widget
+* @todo Figure out if this would be better as an object rather than an array for overhead
+*	StoryInit also?
+* @todo Figure out why we're not using ndef/-1 for a bunch of these story variables. Leaky conditionals
+* @todo Figure out why we're using variable space with capitalized facility names when we can parse it from true name
+*/
+
+<<set _facListArr = [
+	["Arcade Report", $arcadeNameCaps, $arcade, $ArcadeiIDs.length, -1, -1],
+	["Brothel Report", $brothelNameCaps, $brothel, $BrothiIDs.length, $Madam, "Madam"],
+	["Cellblock Report", $cellblockNameCaps, $cellblock, $CellBiIDs.length, $Wardeness, "Wardeness"],
+	["Clinic Report", $clinicNameCaps, $clinic, $CliniciIDs.length, $Nurse, "Nurse"],
+	["Club Report", $clubNameCaps, $club, $ClubiIDs.length, $DJ, "DJ"],
+	["Dairy Report", $dairyNameCaps, $dairy, $DairyiIDs.length, $Milkmaid, "Milkmaid"],
+	["Farmyard Report", $farmyardNameCaps, $farmyard, $FarmyardiIDs.length, $Farmer, "Farmer"],
+	["Schoolroom Report", $schoolroomNameCaps, $schoolroom, $SchlRiIDs.length, $Schoolteacher, "Schoolteacher"],
+	["Spa Report", $spaNameCaps, $spa, $SpaiIDs.length, $Attendant, "Attendant"],
+	["Nursery Report", $nurseryNameCaps, $nurseryNannies, $NurseryiIDs.length, $Matron, "Matron"],
+	["Servants' Quarters Report", $servantsQuartersNameCaps, $servantsQuarters, $ServQiIDs.length, $Stewardess, "Stewardess"],
+	["Children Report", "Nursery Children", $nursery, $nurseryBabies, -1, -1],
+	["Incubator Report", $incubatorNameCaps, $incubator, $incubatorSlaves, -1, -1],
+	["Master Suite Report", $masterSuiteNameCaps, $masterSuite, $MastSiIDs.length, $Concubine, "Concubine"],
+	["Penthouse Report", "The Penthouse", 1, $slavesVisible, -1, -1],
+	["Rules Assistant Report", "Rules Assistant", $rulesAssistantAuto, 1, -1, -1] /** should be last — may reassign slaves **/
+]>>
+
+<<for _ii = 0; _ii < _facListArr.length; _ii++>>
+	<<set _facSubArr = _facListArr[_ii], _accText = "", _disTxt = " disabled='disabled'">> /** Chunk the row from our array we're working on to make reading code easier, null some text vars we'll need */
+	<<set _str = _facSubArr[0].replace(/\W+/g, '-').toLowerCase()>> /** Normalize the passage name to use as an element ID */
+	<<if _facSubArr[2] > 0>> /** Do we have one of these facilities? */
+		<<if $useAccordion > 0>> <<set _accText = " accordion", _disTxt = "">> <</if>> /** Is Accordion turned on? */
+		<<if (_facSubArr[3] == 0) && (_facSubArr[4] <= 0)>> /** Is there anyone inside the facility? */
+			''_facSubArr[1] Report''<hr style="margin:0"> /** No — it's empty, so we display the heading without a button and with a thinner bar under it */
+			@@.gray;_facSubArr[1] is currently empty.@@
+			<br><br>
+			/** Old code: <<= '<div id="button-' + _str + '" class="unStaffed">' + _facSubArr[1] + ' is currently unstaffed</div>'>> */
+		<<else>>
+			<<if _facSubArr[1] == "Rules Assistant">>
+				<<= '<button type="button"' + _disTxt + ' id="button-' + _str + '" class="buttonBar' + _accText + '" data-after="' + '">' + _facSubArr[1] + ' Report</button>'>> /** Yes, display the bar with information */
+			<<else>>
+				<<= '<button type="button"' + _disTxt + ' id="button-' + _str + '" class="buttonBar' + _accText + '" data-after="' + _facSubArr[3] + ' slaves in ' + _facSubArr[1] + '">' + _facSubArr[1] + ' Report</button>'>> /** Yes, display the bar with information */
+			<</if>>
+			<<if $useAccordion == 0>>
+				<br>
+				<<include `_facSubArr[0]`>> /** not using accordion — just include the report under the disabled button above */
+				<br>
+			<</if>>
+		<</if>>
+		<div class="accHidden">
+			<<if $useAccordion == 1>>
+				<<include `_facSubArr[0]`>> /** OK, we're done with the pretty stuff, go get the guts and collapse it into the accordion */
+			<</if>>
+		</div>
+	<</if>>
+	<<unset _facSubArr>>
+<</for>>
+
+/* IMPORTANT FOR REASONS!!! */
+<<unset _ii>>
+/** /Accordion */
+
+<<if ($researchLab.level > 0)>>
+	<<include "Lab Report">><br><br>
+<</if>>

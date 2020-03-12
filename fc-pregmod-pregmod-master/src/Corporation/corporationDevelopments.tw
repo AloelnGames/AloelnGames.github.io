@@ -1,0 +1,99 @@
+:: Corporation Developments [nobr]
+
+/*Main Corporation Pass*/
+
+<<if App.Corporate.cash < 0>>
+	<<set App.Corporate.cash = Math.trunc(App.Corporate.cash * 1.02)>> /*2% weekly interest rate on negative cash*/
+<</if>>
+
+<h1>Corporation Management</h1>
+<h2>Operational Results</h2>
+/*Divisions doing their thing*/
+<<set _weekLedger = App.Corporate.endWeek()>>
+/* TODO: I would like to move some of the following loop into a new loop. It should go Process -> Transfer -> Sell -> Buy (most expensive to least) to give the best chance of auto-buy having enough money to make purchases. */
+<<for _d range _weekLedger.divisionLedgers>>
+	<<set _div = _d.division>>
+	/* Reporting on number of slaves being processed or completed processing */
+	<br><<= _div.name>>: The division <<= _div.message_endWeek_Slaves(_d) >>.
+	<<if _d.market.originalBuy != null>>
+		<br>
+		<<if _d.market.buy == 0>>
+			It couldn't purchase <<= numberWithPlural(_d.market.originalBuy, "slave") >> to replenish its stock from the market because it couldn't afford to purchase price.
+		<<else>>
+			It needed to replenish its slave stock of <<= numberWithPlural(_d.market.originalBuy, "slave")>>, but couldn't afford to buy all of them. It bought <<= numberWithPlural(_d.market.buy, _div.nounSlaveFromMarket)>> for <<= cashFormatColor(_d.market.finalPurchase, true) >>.
+		<</if>>
+	<<elseif _d.market.buy > 0>>
+		<br>It replenished its slave stock and bought <<= numberWithPlural(_d.market.buy, _div.nounSlaveFromMarket) >> from the market for <<= cashFormatColor(_d.market.finalPurchase, true) >>.
+	<</if>>
+	<<if _d.transfer.total > 0>>
+		<<for _nextDivLedger range _d.transfer.divisions>>
+			<<set _nextDiv = _nextDivLedger.division>>
+			<<set _slavesToNext = _nextDivLedger.fill>>
+
+			It moved <<= numberWithPlural(_slavesToNext, "slave")>> to the <<= _nextDiv.name>> Division.
+		<</for>>
+	<</if>>
+	<<if _div.toMarket>>
+		<<if _div.heldSlaves == 0>>
+			<<if _d.market.sell > 0>>
+				It immediately sold <<= numberWithPlural(_d.market.sell, _div.nounFinishedSlave) >> to the market and made <<= cashFormatColor(_d.market.finalSale)>>.
+			<</if>>
+		<<else>>
+			It holds @@.green;<<= numberWithPlural(_div.heldSlaves, _div.nounFinishedSlave)>>@@ at the end of the
+			<<if _d.market.sell > 0>>
+				 week, but it ran out of storage space and had to sell @@.red;<<= numberWithPlural(_d.market.sell, "slave")>>@@ and made <<= cashFormatColor(_d.market.finalSale)>>.
+			<<else>>
+				 week.
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if _d.revenue.value > 0>>
+		It earned <<= cashFormatColor(_d.revenue.value)>> in revenue.
+	<</if>>
+<</for>>
+
+/*Aggregate Corporation Results*/
+<<set _ledger = App.Corporate.ledger.current>>/*Note: You can't just pass the object directly into a widget. */
+<<CorporateLedger _ledger $week>>
+
+/*Division Expansion Tokens*/
+<<if _weekLedger.canExpandNow>>
+	<div class="majorText">Your corporation is ready to start an additional division!</div>
+<</if>>
+
+/*Specializations tokens*/
+<<if _weekLedger.canSpecializeNow>>
+	<div class="majorText">Your corporation is ready to specialize its slaves further!</div>
+<</if>>
+
+/*Calculating cash set aside for dividend*/
+<h2>Dividend</h2>
+<div>
+<<if App.Corporate.dividendRatio > 0>>
+	The corporation is currently reserving <<= Math.floor(App.Corporate.dividendRatio * 100)>>% of its profit to be paid out as dividends.
+<<else>>
+	The corporation is currently not reserving a portion of its profit to be paid out as dividends.
+<</if>>
+<<if App.Corporate.payoutCash>>
+	It is putting aside unused cash reserves to be paid out as dividends.
+<</if>>
+</div>
+<div>
+<<if App.Corporate.dividend > 0>>
+	<<if _weekLedger.hasDividend>>
+		It reserved <<print cashFormatColor(_weekLedger.dividend)>> this week.
+	<</if>>
+	A total of <<print cashFormatColor(App.Corporate.dividend)>> has been put aside for its shareholders.
+<</if>>
+</div>
+<<if _weekLedger.hasPayout>>
+	<div>This week the dividends were paid out, you received <<print cashFormatColor(_weekLedger.payout)>>.</div>
+<</if>>
+
+/*Bankrupted the Corporation*/
+<<if App.Corporate.value < 0>>
+	<<run App.Corporation.Dissolve()>>
+	<br>@@.red;Your corporation went bankrupt.@@
+<</if>>
+/*This needs to be at the very end of the financials*/
+<<run App.Corporate.ledger.swap()>>

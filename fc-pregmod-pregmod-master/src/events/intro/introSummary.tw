@@ -1,0 +1,1359 @@
+:: Intro Summary [nobr]
+
+<<set $neighboringArcologies = variableAsNumber($neighboringArcologies, 0, 8, 3)>>
+<<set $FSCreditCount = variableAsNumber($FSCreditCount, 4, 7, 5)>>
+<<set $PC.actualAge = variableAsNumber($PC.actualAge, 14, 80, 35)>>
+<<set $PC.birthWeek = variableAsNumber($PC.birthWeek, 0, 51, 0)>>
+
+<p>
+	You may review your settings before clicking "Continue" to begin.
+</p>
+
+<<set $minimumSlaveAge = variableAsNumber($minimumSlaveAge, 3, 18, 18)>>
+<<set $retirementAge = variableAsNumber($retirementAge, 25, 120, 45)>>
+<<set $fertilityAge = variableAsNumber($fertilityAge, 3, 18, 13)>>
+<<set $potencyAge = variableAsNumber($potencyAge, 3, 18, 13)>>
+<<set $PC.mother = Number($PC.mother)>>
+<<set $PC.father = Number($PC.father)>>
+<<if $freshPC == 1 || $saveImported == 0>>
+	<<set $PC.origRace = $PC.race>>
+	<<set $PC.origSkin = $PC.skin>>
+	<<set $PC.origEye = $PC.eye.right.iris>> /* needed for compatibility */
+	<<set $PC.origHColor = $PC.hColor>>
+<</if>>
+
+<h2 align="center">UI Settings</h2>
+
+<<options $tooltipsEnabled>>
+	Help tooltips are
+	<<option 1 "Enable">>
+	@@.cyan;ENABLED.@@
+	<<option 0 "Disable">>
+	@@.red;DISABLED.@@
+	<<comment>>
+	This is mostly for new players. @@.exampleTooltip.noteworthy;Colored text@@ can have tooltips.
+<</options>>
+
+/* Accordion 000-250-006 */
+<<options $useAccordion>>
+	Accordion effects on weekly reports are
+	<<option 1 "Enable">>
+		@@.cyan;ENABLED.@@
+	<<option 0 "Disable">>
+		@@.red;DISABLED.@@
+<</options>>
+/* Accordion 000-250-006 */
+
+<<options $useTabs>>
+	Economic Tabs on weekly reports are
+	<<option 1 "Enable">>
+		@@.cyan;ENABLED.@@
+	<<option 0 "Disable">>
+		@@.red;DISABLED.@@
+<</options>>
+
+<h2 align="center">World Settings</h2>
+
+<<set $localEcon = $economy>>
+<<options $baseDifficulty>>
+	Economic climate:
+	<<option 1 "Very Easy" "$economy = 200">>
+		''not truly dire. Not yet.'' //Very Easy//
+	<<option 2 "Easy" "$economy = 125">>
+		''getting a touch dire.'' //Easy//
+	<<option 3 "Default Difficulty" "$economy = 100">>
+		''serious risks.'' //Default Difficulty//
+	<<option 4 "Hard" "$economy = 80">>
+		''ugly.'' //Hard//
+	<<option 5 "Very Hard" "$economy = 67">>
+		''this is the last dance.'' //Very Hard//
+<</options>>
+<<if $difficultySwitch == 1>><<set $econAdvantage = -2>><</if>>
+<<if $difficultySwitch == 0>><<set $econRate = 0>><</if>>
+
+<<options $econRate>>
+	Economic forecast:
+	<<option 0 "Vanilla" "$difficultySwitch = 0">>
+	''no change.'' //Vanilla -- Some economic content requires this to be set to harder than vanilla//
+	<<option 1 "Easy" "$difficultySwitch = 1">>
+	''slow decline''. //Easy//
+	<<option 2 "Default" "$difficultySwitch = 1">>
+	''noticeable deterioration'' //Default Difficulty//
+	<<option 4 "Hard" "$difficultySwitch = 1">>
+	''going to hell in a handbasket''. //Hard//
+<</options>>
+
+/* Not functional yet
+All the things you need to run your arcology are getting more expensive
+<<if $incomeMod == 0>>
+	while all forms of income ''remain static''.
+		[[Easier|Intro Summary][$incomeMod = 1]]
+<<elseif $incomeMod == 1>>
+	while all forms of income ''rise but cannot keep pace''.
+	[[Harder|Intro Summary][$incomeMod = 0]] | [[Easier|Intro Summary][$incomeMod = 2]]
+<<else>>
+	but luckily all forms of income ''rise in lockstep''.
+	[[Harder|Intro Summary][$incomeMod = 1]]
+<</if>>
+*/
+
+<<set $foodCost = Math.trunc(2500/$economy)>>
+<<set $drugsCost = Math.trunc(10000/$economy)>>
+<<set $rulesCost = Math.trunc(10000/$economy)>>
+<<set $modCost = Math.trunc(5000/$economy)>>
+<<set $surgeryCost = Math.trunc(30000/$economy)>>
+
+<<if ndef $customVariety>>
+	<<options>>
+		You are using standardized slave trading channels.
+		<<option>>
+			[[Customize the slave trade...|Customize Slave Trade][$customVariety = 1, $customWA = 0]]
+	<</options>>
+
+	<<options $internationalTrade>>
+		<<option 1 "Allow intercontinental trade">>
+			The slave trade is ''international,'' so a wider variety of slaves will be available.
+		<<option 0 "Restrict the trade to continental">>
+			The slave trade is ''continental,'' so a narrower variety of slaves will be available.
+	<</options>>
+
+	<<if $internationalTrade == 1>>
+		<<options $internationalVariety>>
+			International slave variety is
+			<<option 1 "Normalized national variety">>
+				''normalized,'' so small nations will appear nearly as much as large ones.
+			<<option 0 "Semi-realistic national variety">>
+				''semi-realistic,'' so more populous nations will be more common.
+		<</options>>
+	<</if>>
+<<else>>
+	Current nationality distributions are [[Adjust the slave trade|Customize Slave Trade][$customWA = 0, $customVariety = 1]] | [[Stop customizing|Intro Summary][delete $customVariety]]
+	<<if ndef $nationalitiescheck>> /* NGP: regenerate $nationalitiescheck from previous game's $nationalities array */
+		<div id="SilentlyButWithStyle" style="display: none;"><<include "Customize Slave Trade">></div>
+	<</if>>
+	<br style="clear:both"><hr style="margin:0">
+	<<set _len = Object.keys($nationalitiescheck).length>>
+	<<set _j = 0>>
+	<<for _nation, _i range $nationalitiescheck>>
+		<<print _nation>> @@.orange;<<print (($nationalities[_nation]/hashSum($nationalities))*100).toFixed(2)>>%@@
+		<<set _j++>>
+		<<if _j < _len>> | <</if>>
+	<</for>>
+	<br style="clear:both"><hr style="margin:0">
+<</if>> /* closes $customVariety is defined */
+
+<<options $plot>>
+	<<option 1 "Enable non-erotic events">>
+		Game mode: ''two-handed''. Includes non-erotic events concerning the changing world.
+	<<option 0 "Disable non-erotic events">>
+		Game mode: ''one-handed''. No non-erotic events concerning the changing world.
+<</options>>
+
+<h2 align="center">General slave settings</h2>
+
+<<options $verboseDescriptions>>
+	<<option 1 "Enable">>
+		Your master suite ''will'' detail slave changes.
+	<<option 0 "Disable">>
+		Your master suite ''will not'' detail slave changes.
+<</options>>
+
+<<options $newDescriptions>>
+	<<option 1 "Enable">>
+		Slaves ''will'' have alternate titles.
+	<<option 0 "Disable">>
+		Slaves ''will not'' have alternate titles.
+<</options>>
+
+<<options $seeRace>>
+	<<option 1 "Enable mentions of race">>
+		Ethnicity will ''occasionally'' be mentioned.
+	<<option 0 "Disable most mentions of race">>
+		Ethnicity will ''almost never'' be mentioned.
+<</options>>
+
+<<options $seeNationality>>
+	<<option 1 "Enable mentions of nationality">>
+		Nationality will ''occasionally'' be mentioned.
+	<<option 0 "Disable most mentions of nationality">>
+		Nationality will ''almost never'' be mentioned.
+<</options>>
+
+<<options $realRoyalties>>
+	<<option 1 "Historical dynasties">>
+		When getting an event for enslaving the members of the royalty, they will have nationalities and surnames of the real royalties.
+	<<option 0 "Random dynasties">>
+		When getting an event for enslaving the members of the royalty, their nationalities and surnames will be random.
+<</options>>
+
+<<options $allowMaleSlaveNames>>
+	<<option false "Only use female names">>
+		Slaves will ''always generate with female names''.
+	<<option true "Allow male names">>
+		Slaves ''can generate with male names''.
+		<<comment>>
+			This only affects slave generation and not your ability to name your slaves.
+<</options>>
+
+<<options $surnameOrder>>
+	<<option 0 "Allow nationality name order">>
+		Order names ''based on country of origin''.
+	<<option 1 "Force name surname">>
+		Names will always be ''Name Surname''.
+	<<option 2 "Force surname name">>
+		Names will always be ''Surname Name''.
+<</options>>
+
+<<options $familyTesting>>
+	<<option 1 "Enable extended families">>
+		Slaves ''can'' have extended families instead of just a single relative.
+		//May cause lag.//
+	<<option 0 "Disable extended families">>
+		Slaves ''cannot'' have extended families, just a single relative. //Vanilla Mode.//
+	<<comment>>
+		Extended family mode must be on for the incubation facility to be enabled.
+<</options>>
+
+<<if $familyTesting == 1>>
+	<<options $showDistantRelatives>>
+		<<option 1 "Enable distant relatives">>
+			Distant relatives ''will'' be tracked.
+		<<option 0 "Disable distant relatives">>
+			Distant relatives ''will not'' be tracked.
+	<</options>>
+
+	<<options $inbreeding>>
+		<<option 1 "Enable inbreeding damage">>
+			Successive breeding ''will'' result in sub-average slaves.
+		<<option 0 "Disable inbreeding damage">>
+			Successive breeding ''will not'' result in sub-average slaves.
+	<</options>>
+
+	<<options $allowFamilyTitles>>
+		<<option 1 "Enable family titles">>
+			Your relatives ''will'' use family titles.
+		<<option 0 "Disable family titles">>
+			Your relatives ''will not'' use family titles.
+	<</options>>
+<</if>>
+
+<<options $weightAffectsAssets>>
+	<<option 1 "Enable">>
+		Interactions between slaves' weight and asset size are ''enabled''.
+	<<option 0 "Disable">>
+		Interactions between slaves' weight and asset size are ''disabled''.
+<</options>>
+
+<<options $curativeSideEffects>>
+	<<option 1 "Enable">>
+		Curative side effects are ''enabled''.
+	<<option 0 "Disable">>
+		Curative side effects are ''disabled''.
+<</options>>
+
+/% Begin mod section: toggle whether slaves lisp. %/
+
+<<options $disableLisping>>
+ <<option 0 "Enable Lisping">>
+		Lisping: ''slaves with fat lips or heavy oral piercings will lisp''.
+ <<option 1 "Disable Lisping">>
+		Lisping: ''slaves will not lisp''.
+<</options>>
+
+/% End mod section: toggle whether slaves lisp. %/
+
+<h2 align="center">Slave age settings</h2>
+
+<<options $seeAge>>
+	<<option 1 "Enable aging">>
+		Slaves will ''age naturally.''
+	<<option 2 "Semi aging">>
+		Slaves ''will'' celebrate birthdays, but ''not age.''
+	<<option 0 "Disable aging">>
+		Slaves will ''not age,'' and not experience birthdays.
+	<<comment>>
+		This option cannot be changed during the game.
+<</options>>
+
+<<options $pedo_mode>>
+	<<option 1 "Loli mode" "$minimumSlaveAge = 5">>
+		Nearly all randomly generated slaves will be under the age of 18, although custom slaves and slaves related to specific events may be older.
+	<<option 0 "Normal mode">>
+		Randomly generated slaves will generate normally.
+<</options>>
+
+<<if $minimumSlaveAge < 3>>
+	<<set $minimumSlaveAge = 3>>
+<<elseif $minimumSlaveAge < 18>>
+	/% OK %/
+<<else>>
+	/% Either out of range or not a number. %/
+	<<set $minimumSlaveAge = 18>>
+<</if>>
+<<options>>
+	Girls appearing in the game will be no younger than:
+	<<option>>
+		<<textbox2 "$minimumSlaveAge" $minimumSlaveAge "Intro Summary">>
+<</options>>
+
+<<options $extremeUnderage>>
+	<<option 1 "Allow">>
+		Molestation of slaves younger than $minimumSlaveAge is ''permitted''.
+	<<option 0 "Deny">>
+		Molestation of slaves younger than $minimumSlaveAge is ''forbidden''.
+<</options>>
+
+<<if $retirementAge <= $minimumSlaveAge>>
+	<<set $retirementAge = $minimumSlaveAge+1>>
+<<elseif $retirementAge <= 120>>
+	/% OK %/
+<<else>>
+	/% Either out of range or not a number. %/
+	<<set $retirementAge = 45>>
+<</if>>
+<<options>>
+	Initial retirement age will be at:
+	<<option>>
+		<<textbox2 "$retirementAge" $retirementAge "Intro Summary">>
+	<<comment>>
+		May cause issues with New Game and initial slaves if set below 45.
+<</options>>
+
+<<if $fertilityAge < 3>>
+	<<set $fertilityAge = 3>>
+<<elseif $fertilityAge < 18>>
+	/% OK %/
+<<else>>
+	/% Either out of range or not a number. %/
+	<<set $fertilityAge = 18>>
+<</if>>
+<<options>>
+	Girls will not be able to become pregnant if their age is under:
+	<<option>>
+		<<textbox2 "$fertilityAge" $fertilityAge "Intro Summary">>
+<</options>>
+
+<<if $potencyAge < 3>>
+	<<set $potencyAge = 3>>
+<<elseif $potencyAge < 18>>
+	/% OK %/
+<<else>>
+	/% Either out of range or not a number. %/
+	<<set $potencyAge = 18>>
+<</if>>
+<<options>>
+	Girls will not be able to impregnate others if their age is under:
+	<<option>>
+		<<textbox2 "$potencyAge" $potencyAge "Intro Summary">>
+<</options>>
+
+<<options $precociousPuberty>>
+	<<option 1 "Enable precocious puberty">>
+		Girls ''can'' experience precocious puberty. (Under certain conditions they can become pregnant or inseminate others younger then normal age - $fertilityAge, though they may also experience delayed puberty).
+	<<option 0 "Disable precocious puberty">>
+		Girls ''cannot'' experience precocious puberty. (Unable to become pregnant or inseminate others younger than normal puberty age - $fertilityAge).
+<</options>>
+
+<h2 align="center">Slave age effects</h2>
+
+<<options $AgePenalty>>
+	<<option 1 "Enable age penalties">>
+		Girls ''will'' receive job and career penalties due to age.
+	<<option 0 "Disable age penalties">>
+		Girls ''will not'' receive job and career penalties due to age.
+<</options>>
+
+<<options $loliGrow>>
+	<<option 1 "Enable Growth">>
+		Children ''will'' grow as they age.
+	<<option 0 "Disable Growth">>
+		Children ''will not'' grow as they age.
+<</options>>
+
+<h2 align="center">Content settings</h2>
+
+<<options $seeDicks>>
+	<<option 0 "None" "" "(0%)">>
+		''None'' of the slave girls will have dicks.
+	<<option 10 "A few" "" "(10%)">>
+		''A few'' of the slave girls will have dicks.
+	<<option 25 "Some" "" "(25%)">>
+		''Some'' of the slave girls will have dicks.
+	<<option 50 "Half" "" "(50%)">>
+		''Half'' of the slave girls will have dicks.
+	<<option 75 "Most" "" "(75%)">>
+		''Most'' of the slave girls will have dicks.
+	<<option 90 "Almost all" "" "(90%)">>
+		''Almost all'' of the slave girls will have dicks.
+	<<option 100 "All" "" "(100%)">>
+		''All'' of the slave girls will have dicks.
+<</options>>
+
+<<if $seeDicks == 0>>
+	<<options $makeDicks>>
+		&nbsp;&nbsp;&nbsp;&nbsp;Should you be able to surgically attach a penis to your female slaves and starting girls?
+		<<option 1 "Yes">>
+		<<option 0 "No">>
+	<</options>>
+<</if>>
+
+<<options $seeIllness>>
+	<<option 1 "Enable">>
+		Slaves ''will'' be able to get sick.
+	<<option 0 "Disable">>
+		Slaves ''will not'' be able to get sick.
+<</options>>
+
+<<options $seePreg>>
+	<<option 1 "Enable">>
+		Pregnancy related content is ''enabled''.
+	<<option 0 "Disable">>
+		Most pregnancy related content is ''disabled''.
+<</options>>
+
+<<options $seeDicksAffectsPregnancy>>
+	<<option 1 "Yes">>
+		Children born in game strictly adhere to dick content settings.
+	<<option 0 "No">>
+		Children born in game do not adhere to dick content settings.
+<</options>>
+
+<<if $seeDicksAffectsPregnancy == 0>>
+	<<options $adamPrinciple>>
+		<<option 1 "Enable">>
+			XX slaves only fathering daughters is ''enabled''.
+		<<option 0 "Disable">>
+			XX slaves only fathering daughters is ''disabled''.
+	<</options>>
+<</if>>
+
+<<options $seeHyperPreg>>
+	<<option 1 "Enable">>
+		Extreme pregnancy content like broodmothers is ''enabled''.
+	<<option 0 "Disable">>
+		Extreme pregnancy content like broodmothers is ''disabled''.
+<</options>>
+
+<<options $dangerousPregnancy>>
+	<<option 1 "Enable">>
+		Advanced pregnancy complications such as miscarriage and premature birth are currently ''enabled''.
+	<<option 0 "Disable">>
+		Advanced pregnancy complications such as miscarriage and premature birth are currently ''disabled''.
+<</options>>
+
+<<options $seeExtreme>>
+	<<option 1 "Enable">>
+		Extreme content like amputation is ''enabled''.
+	<<option 0 "Disable">>
+		Extreme content like amputation is ''disabled''.
+<</options>>
+
+<<options $seeBestiality>>
+	<<option 1 "Enable">>
+		Bestiality content is ''enabled''.
+	<<option 0 "Disable">>
+		Bestiality content is ''disabled''.
+<</options>>
+
+<<options $seePee>>
+	<<option 1 "Enable">>
+		Watersports content is ''enabled''.
+	<<option 0 "Disable">>
+		Watersports content is ''disabled''.
+<</options>>
+
+<<options $seeIncest>>
+	<<option 1 "Enable">>
+		Incest is ''enabled''.
+	<<option 0 "Disable">>
+		Incest is ''disabled''.
+<</options>>
+
+<<if $seeDicks != 0>>
+	<<options $seeCircumcision>>
+		<<option 1 "Enable">>
+			Circumcision is ''enabled''.
+		<<option 0 "Disable">>
+			Circumcision is ''disabled''.
+	<</options>>
+<</if>>
+
+<h2 align="center">The Free City</h2>
+
+<<options>>
+	The Free City features ''$neighboringArcologies'' arcologies in addition to your own.
+	<<option>>
+		<<textbox2 "$neighboringArcologies" $neighboringArcologies "Intro Summary">>
+	<<comment>>
+		Setting this to 0 will disable most content involving the rest of the Free
+		City.
+<</options>>
+
+<<if $targetArcology.type == "New">>
+	<<options $terrain>>
+		The Free City is located on ''$terrain'' terrain.
+		<<option "urban" "Urban">>
+		<<option "rural" "Rural">>
+		<<option "ravine" "Ravine">>
+		<<option "marine" "Marine">>
+		<<option "oceanic" "Oceanic">>
+	<</options>>
+
+	<<if $terrain != "oceanic">>
+		<<if $freshPC == 1 || $saveImported == 0>>
+			<<options $continent>>
+				The Free City is located in ''$continent''.
+				<<option "North America" "North America" "$language = 'English'">>
+				<<option "South America" "South America" "$language = 'Spanish'">>
+				<<option "Brazil" "Brazil" "$language = 'Portuguese'">>
+				<<option "Europe" "Europe" "$language = 'English'">>
+				<<option "the Middle East" "The Middle East" "$language = 'Arabic'">>
+				<<option "Africa" "Africa" "$language = 'Arabic'">>
+				<<option "Asia" "Asia" "$language = 'Chinese'">>
+				<<option "Australia" "Australia" "$language = 'English'">>
+				<<option "Japan" "Japan" "$language = 'Japanese', $PC.race = 'asian', $PC.nationality = 'Japanese', $PC.hColor = 'black', $PC.eye.origColor = 'brown', resetEyeColor($PC)">>
+			<</options>>
+		<<else>>
+			<<options $continent>>
+				The Free City is located in ''$continent''.
+				<<option "North America" "North America" "$language = 'English'">>
+				<<option "South America" "South America" "$language = 'Spanish'">>
+				<<option "Brazil" "Brazil" "$language = 'Portuguese'">>
+				<<option "Europe" "Europe" "$language = 'English'">>
+				<<option "the Middle East" "The Middle East" "$language = 'Arabic'">>
+				<<option "Africa" "Africa" "$language = 'Arabic'">>
+				<<option "Asia" "Asia" "$language = 'Chinese'">>
+				<<option "Australia" "Australia" "$language = 'English'">>
+				<<option "Japan" "Japan" "$language = 'Japanese'">>
+			<</options>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if !["ArabianRevivalist", "AztecRevivalist", "ChineseRevivalist", "EdoRevivalist", "EgyptianRevivalist", "RomanRevivalist"].includes($targetArcology.type)>>
+	<<options $language>>
+		The lingua franca of your arcology is:
+		<<option "English" "English">>
+		<<option "Spanish" "Spanish">>
+		<<option "Arabic" "Arabic">>
+		<<option>>
+			<<textbox2 "$language" $language "Intro Summary">>
+	<</options>>
+<</if>>
+
+<<options $FSCreditCount>>
+	The Free City could develop as many as ''$FSCreditCount'' future societies.
+	<<option>>
+		<<textbox2 "$FSCreditCount" $FSCreditCount "Intro Summary">>
+	<<comment>>
+		5 is default, 4 behaves the same as pre-patch 0.9.9.0, max is 7.
+		<div>This option cannot be changed during the game</div>
+<</options>>
+
+<h2 align="center">Player Character</h2>
+<<if $freshPC == 1 || $saveImported == 0>>
+
+	<<if ndef $PCCreationSex>>
+		<<if $PC.title == 1>>
+			<<set $PCCreationSex = "masculine ''Master''">>
+		<<else>>
+			<<set $PCCreationSex = "feminine ''Mistress''">>
+		<</if>>
+	<</if>>
+
+	<<options $PC.title>>
+		You are a $PCCreationSex. Change to:
+		<<option 1 "Masculine Master" "$PC.genes = 'XY', $PCCreationSex = \"masculine ''Master''\"">>
+		<<option 0 "Feminine Mistress" "$PC.genes = 'XX', $PCCreationSex = \"feminine ''Mistress''\"">>
+	<</options>>
+
+	<div style="display:flex">
+		<span style="flex:50%; text-align:right">
+			Everyone calls you ''<<= PlayerName()>>.''
+		</span>
+		<span style="flex:50%">
+		</span>
+	</div>
+
+	<<options>>
+		&nbsp;&nbsp;With your given name as:
+		<<option>>
+			<<textbox2 "$PC.slaveName" $PC.slaveName>>
+	<</options>>
+
+	<<if $PC.slaveSurname == 0>>
+		<<options $PC.slaveSurname>>
+			&nbsp;&nbsp;And no surname.
+			<<option "Anon" "Add a surname">>
+			<<comment>>
+				Surnames cannot be changed during the game outside of special circumstances.
+		<</options>>
+	<<else>>
+		<<options $PC.slaveSurname>>
+			&nbsp;&nbsp;And your surname is:
+			<<option>>
+				<<textbox2 "$PC.slaveSurname" $PC.slaveSurname>>
+			<<option 0 "Go by a single name">>
+		<</options>>
+	<</if>>
+
+	<<set $PC.physicalAge = $PC.actualAge, $PC.visualAge = $PC.actualAge>>
+	<<options>>
+		You are ''$PC.actualAge'' years old which is
+		<<if $PC.actualAge >= 65>>
+			''old''.
+		<<elseif $PC.actualAge >= 50>>
+			''well into middle age''.
+		<<elseif $PC.actualAge >= 35>>
+			''entering middle age''.
+		<<else>>
+			''surprisingly young''.
+		<</if>>
+		<<option>>
+			<<textbox2 "$PC.actualAge" $PC.actualAge "Intro Summary">>
+	<</options>>
+
+	<<options>>
+		Your birthday was ''$PC.birthWeek'' weeks ago.
+		<<option>>
+			<<textbox2 "$PC.birthWeek" $PC.birthWeek "Intro Summary">>
+	<</options>>
+
+	<<options $playerAging>>
+		<<option 2 "Enable aging">>
+			and you ''age naturally''.
+		<<option 1 "Semi aging">>
+			and you ''will'' celebrate birthdays, but ''not age''.
+		<<option 0 "Disable aging">>
+			and you will ''not age,'' nor experience birthdays.
+		<<comment>>
+			This option cannot be changed during the game
+	<</options>>
+
+	<<if def $PC.customTitle>>
+		<<options>>
+			Your custom title is:
+			<<option>>
+				<<textbox2 "$PC.customTitle" $PC.customTitle "Intro Summary">>
+		<</options>>
+
+		<<options>>
+			and when lisped it is:
+			<<option>>
+				<<textbox2 "$PC.customTitleLisp" $PC.customTitleLisp "Intro Summary">>
+			<<comment>>
+				If using a custom title, select Master or Mistress to set the gender of your title.
+				Make sure to replace your "s"s with "th"s to have working lisps in your lisped title.
+		<</options>>
+	<<else>>
+		<<options $PC.customTitle>>
+			You have no custom title:
+			<<option "Master" "Set custom title" "$PC.customTitleLisp = 'Mather'">>
+			<<comment>>
+				If using a custom title, select Master or Mistress to set the gender of your title.
+				Make sure to replace your "s"s with "th"s to have working lisps in your lisped title.
+		<</options>>
+	<</if>>
+
+	<<options>>
+		Your nationality is:
+		<<option>>
+			<<textbox2 "$PC.nationality" $PC.nationality "Intro Summary">>
+		<<comment>>
+			Capitalize it
+	<</options>>
+
+	<<options $PC.race>>
+		Your race is:
+		<<option "white" "White">>
+		<<option "asian" "Asian">>
+		<<option "latina" "Latina">>
+		<<option "middle eastern" "Middle Eastern">>
+		<<option "black" "Black">>
+		<<option "semitic" "Semitic">>
+		<<option "southern european" "Southern European">>
+		<<option "indo-aryan" "Indo-Aryan">>
+		<<option "amerindian" "Amerindian">>
+		<<option "pacific islander" "Pacific Islander">>
+		<<option "malay" "Malay">>
+		<<option "mixed race" "Mixed Race">>
+		<<option>>
+			<<textbox2 "$PC.race" $PC.race "Intro Summary">>
+	<</options>>
+
+	<<options $PC.skin>>
+		Your skin tone is:
+		<<option "pure white" "Pure White" >>
+		<<option "ivory" "Ivory" >>
+		<<option "white" "White" >>
+		<<option "extremely pale" "Extremely Pale" >>
+		<<option "very pale" "Very Pale" >>
+		<<option "pale" "Pale" >>
+		<<option "extremely fair" "Extremely Fair" >>
+		<<option "very fair" "Very Fair" >>
+		<<option "fair" "Fair" >>
+		<<option "light" "Light" >>
+		<<option "light olive" "Light Olive" >>
+		<<option "tan" "Tan" >>
+		<<option "olive" "Olive" >>
+		<<option "bronze" "Bronze" >>
+		<<option "dark olive" "Dark Olive" >>
+		<<option "dark" "Dark" >>
+		<<option "light beige" "Light Beige" >>
+		<<option "beige" "Beige" >>
+		<<option "dark beige" "Dark Beige" >>
+		<<option "light brown" "Light Brown" >>
+		<<option "brown" "Brown" >>
+		<<option "dark brown" "Dark Brown" >>
+		<<option "black" "Black" >>
+		<<option "ebony" "Ebony" >>
+		<<option "pure black" "Pure Black" >>
+		<<option>>
+			<<textbox2 "$PC.skin" $PC.skin "Intro Summary">>
+	<</options>>
+
+	<<options $PC.markings>>
+		<<option "none" "None">>
+			Your body ''is clear of blemishes''.
+		<<option "freckles" "Light">>
+			Your body ''has light freckling''.
+		<<option "heavily freckled" "Heavy">>
+			Your body ''has heavy freckling''.
+	<</options>>
+
+	<<options>>
+		Your eyes are:
+		<<option>>
+			<<textbox2 "$PC.eye.origColor" $PC.eye.origColor "Intro Summary">>
+	<</options>>
+
+	<<options>>
+	Your hair is:
+		<<option>>
+			<<textbox2 "$PC.hColor" $PC.hColor "Intro Summary">>
+	<</options>>
+
+	<<options $PC.faceShape>>
+		<<option "normal" "Normal">>
+			Your face is ''normal''.
+		<<option "androgynous" "Androgynous">>
+			Your face is ''androgynous''.
+		<<option "masculine" "Masculine">>
+			Your face is ''masculine''.
+		<<option "cute" "Cute">>
+			Your face is ''cute''.
+		<<option "sensual" "Sensual">>
+			Your face is ''sensual''.
+		<<option "exotic" "Exotic">>
+			Your face is ''exotic''.
+	<</options>>
+
+	<<options $PC.refreshment>>
+		Your preferred refreshment is:
+		<<option "cigar" "Cigars" "$PC.refreshmentType = 0">>
+		<<option "whiskey" "Whiskey" "$PC.refreshmentType = 1">>
+		<<option>>
+			<<textbox2 "$PC.refreshment" $PC.refreshment "Intro Summary">>
+	<</options>>
+
+	<<options $PC.refreshmentType>>
+		Which you
+		<<option 0 "Smoke">>
+			smoke.
+		<<option 1 "Drink">>
+			drink.
+		<<option 2 "Eat">>
+			eat.
+		<<option 3 "Snort">>
+			snort.
+		<<option 4 "Inject">>
+			inject.
+		<<option 5 "Pop">>
+			pop.
+		<<option 6 "Orally Dissolve">>
+			orally dissolve.
+	<</options>>
+
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<<if ($PC.refreshmentType == 0) && ($PC.refreshmentType != 0) >>//"Smoked" must fit into the following sentence: "I smoked a $PC.refreshment" to fit events properly
+	<<elseif $PC.refreshmentType == 5>>//"Popped" must fit into the following sentence: "I shook the bottle of $PC.refreshment" to fit events properly
+	<<elseif $PC.refreshmentType == 6>>//"Orally Dissolved" must fit into the following sentence: "I placed a tab of $PC.refreshment under my tongue" to fit events properly
+	<</if>>
+
+	<<switch $PC.career>>
+	<<case "capitalist">>
+		<<set _PCCreationCareer = "a business leader">>
+		<<set _PCSecExpCareer = "@@.yellowgreen;The propaganda hub's upgrades will be cheaper.@@">>
+	<<case "mercenary">>
+		<<set _PCCreationCareer = "a mercenary">>
+		<<set _PCSecExpCareer = "@@.green;Easier to maintain security@@ and @@.yellowgreen;the security HQ's upgrades will be cheaper.@@">>
+	<<case "slaver">>
+		<<set _PCCreationCareer = "a slaver">>
+		<<set _PCSecExpCareer = "@@.green;Easier to maintain authority@@ and @@.yellowgreen;the security HQ's upgrades will be cheaper.@@">>
+	<<case "engineer">>
+		<<set _PCCreationCareer = "an engineer">>
+		<<set _PCSecExpCareer = "@@.yellowgreen;construction and upgrade of facilities will be cheaper.@@">>
+	<<case "medicine">>
+		<<set _PCCreationCareer = "a doctor">>
+		<<set _PCSecExpCareer = "@@.yellowgreen;Drug upgrades will be cheaper.@@">>
+	<<case "celebrity">>
+		<<set _PCCreationCareer = "a minor celebrity">>
+		<<set _PCSecExpCareer = "@@.yellowgreen;The propaganda hub's upgrades will be cheaper.@@">>
+	<<case "escort">>
+		<<set _PCCreationCareer = "an escort">>
+		<<set _PCSecExpCareer = "@@.red;Harder to maintain authority.@@">>
+	<<case "servant">>
+		<<set _PCCreationCareer = "a servant">>
+		<<set _PCSecExpCareer = "@@.red;Harder to maintain authority.@@">>
+	<<case "gang">>
+		<<set _PCCreationCareer = "a gang leader">>
+		<<set _PCSecExpCareer = "@@.green;Easier to maintain authority@@ and @@.yellowgreen;the security HQ's upgrades will be cheaper.@@">>
+	<<case "BlackHat">>
+		<<set _PCCreationCareer = "an incursion specialist">>
+		<<set _PCSecExpCareer = "@@.red;Harder to maintain authority.@@">>
+	<<default>>
+		<<set _PCCreationCareer = "a member of the idle wealthy">>
+		<<set _PCSecExpCareer = "@@.red;Harder to maintain authority,@@ but @@.yellowgreen;the propaganda hub's upgrades will be cheaper.@@">>
+	<</switch>>
+
+	<<if $PC.career == "arcology owner">>
+		Before you came to the Free Cities, you were ''_PCCreationCareer''.
+	<<else>>
+		<<options $PC.career>>
+			Before you came to the Free Cities, you were ''_PCCreationCareer'':
+			<<option "wealth" "Member of the idle wealthy">>
+			<<option "capitalist" "Business leader">>
+			<<option "mercenary" "Mercenary">>
+			<<option "slaver" "Slaver">>
+			<<option "engineer" "Engineer">>
+			<<option "medicine" "Doctor">>
+			<<option "BlackHat" "Hacker">>
+			<<option "celebrity" "Minor celebrity">>
+			<<option "escort" "Escort">>
+			<<option "servant" "Servant">>
+			<<option "gang" "Gang leader">>
+		<</options>>
+		<<if $secExpEnabled > 0>>
+			<div>
+				Security Expansion bonus: _PCSecExpCareer
+			</div>
+		<</if>>
+	<</if>>
+
+	<<options $PC.rumor>>
+		It is rumored that you acquired your arcology through ''$PC.rumor'':
+		<<option "wealth" "Wealth">>
+		<<option "diligence" "Hard work">>
+		<<option "force" "Force">>
+		<<option "social engineering" "Social engineering">>
+		<<option "luck" "Blind luck">>
+	<</options>>
+
+	<<if $PC.vagina != -1 && $PC.dick != 0>>
+		<<set _vagina_penis = 2>>
+	<<elseif $PC.vagina != -1>>
+		<<set _vagina_penis = 1>>
+	<<else>>
+		<<set _vagina_penis = 0>>
+	<</if>>
+
+	<<options _vagina_penis>>
+		You have a
+		<<option 0 "Penis" "$PC.preg=0, $PC.pregType=0, $PC.dick=4, $PC.balls=3, $PC.scrotum=3, $PC.prostate=1, $PC.vagina=-1, $PC.ovaries=0">>
+			''penis''. Standard sex scenes; easiest reputation maintenance.
+		<<option 1 "Vagina" "$PC.dick=0, $PC.balls=0, $PC.prostate=0, $PC.scrotum=0, $PC.vagina=1, $PC.ovaries=1">>
+			''vagina''. Sex scene variations; most difficult reputation maintenance.
+		<<option 2 "Penis and Vagina" "$PC.dick=4, $PC.balls=3, $PC.scrotum=3, $PC.prostate=1, $PC.vagina=1, $PC.ovaries=1">>
+			''penis and vagina''. Sex scene variations; more difficult reputation maintenance; some unique opportunities, especially with breasts.
+	<</options>>
+
+	<<if $PC.vagina != -1>>
+		<<if $PC.preg == -1>>
+			<<options $PC.preg>>
+				You are taking contraceptives. You ''can't'' get pregnant, however there
+				will be a slight increase to living expenses.
+				<<option -1 "Taking contraceptives">>
+				<<option 0 "Do not take contraceptives">>
+			<</options>>
+		<<elseif $PC.preg == 0>>
+			<<options $PC.preg>>
+				You are ''not'' on contraceptives. You ''can'' get pregnant.
+				<<option -1 "Take contraceptives">>
+				<<option 0  "Not taking contraceptives">>
+				<<option 16 "Too late for that!" "$PC.pregType = 1">>
+			<</options>>
+		<<elseif $PC.preg > 42>>
+			<<options $PC.preg>>
+				You are ''<<print $PC.preg>> weeks pregnant with octuplets'' and your
+				water just broke.
+				<<option 0 "Not pregnant" "$PC.pregType = 0, $PC.labor = 0">>
+			<</options>>
+		<<elseif $PC.preg > 37>>
+			<<options $PC.preg>>
+				You are ''<<print $PC.preg>> weeks pregnant'' and going to go into labor soon.
+				<<option 0 "Not pregnant" "$PC.pregType = 0, $PC.labor = 0">>
+				<<option 43 "Stuffed to capacity" "$PC.pregType = 8, $PC.labor = 1">>
+			<</options>>
+		<<elseif $PC.preg > 0>>
+			<<options $PC.preg>>
+				You are ''<<print $PC.preg>> weeks pregnant'' so there is no need to
+				worry about contraceptives.
+				<<option 0 "Not pregnant" "$PC.pregType = 0">>
+				<<option 40 "Ready to drop">>
+				<<option 43 "Stuffed to capacity" "$PC.pregType = 8, $PC.labor = 1">>
+			<</options>>
+		<</if>>
+
+		<<if $PC.counter.birthsTotal > 0>>
+			<div>
+				You have given birth to ''$PC.counter.birthsTotal'' babies.
+			</div>
+		<</if>>
+
+		<<options $PC.pregMood>>
+			Your hormones
+			<<option 0 "Not affected">>
+				do not affect you. Vanilla setting.
+			<<option 1 "Caring and motherly">>
+				influence you to be ''caring and motherly''. Sex scene alterations;
+				slaves will trust you more, but may try to take advantage of your mercy.
+			<<option 2 "Aggressive and domineering">>
+				influence you to be ''aggressive and domineering''. Sex scene alterations; slaves will fear you more, but will become more submissive to you.
+		<</options>>
+	<</if>>
+
+	<<switch $PC.boobs>>
+	<<case 400>>
+		<<set _PCCreationBoobSize = "small B-cups">>
+	<<case 500>>
+		<<set _PCCreationBoobSize = "unnoticeable C-cups">>
+	<<case 700>>
+		<<set _PCCreationBoobSize = "unremarkable D-cups">>
+	<<case 1100>>
+		<<set _PCCreationBoobSize = "noticeable F-cups">>
+	<<case 1300>>
+		<<set _PCCreationBoobSize = "huge G-cups">>
+	<<case 1500>>
+		<<set _PCCreationBoobSize = "massive H-cups">>
+	<<default>>
+		<<set _PCCreationBoobSize = "average DD-cups">>
+	<</switch>>
+
+	<<if $PC.boobsImplant>>
+		<<set _PCCreationBreast = "fake">>
+	<<else>>
+		<<set _PCCreationBreast = "all natural">>
+	<</if>>
+
+	<<if $PC.boobs > 300>>
+		<<options $PC.boobs>>
+			Your breasts are ''_PCCreationBoobSize'' and ''_PCCreationBreast''.
+			<<option 500 "C-cup" "$PC.boobsImplant = 0">>
+			<<option 900  "DD-cup" "$PC.boobsImplant = 0">>
+			<<option 1100  "F-cup" "$PC.boobsImplant = 0">>
+			<<option 1300  "G-cup" "$PC.boobsImplant = 0">>
+			<<option 1300  "G-cup implants" "$PC.boobsImplant = 400">>
+			<<option 0  "Remove them" "$PC.boobs = 100, $PC.boobsImplant = 0">>
+		<</options>>
+	<<else>>
+		<<if $PC.title == 1>>
+			<<options $PC.boobs>>
+				Your chest is ''manly.''
+				<<option 500 "Add breasts">>
+			<</options>>
+		<<else>>
+			<<options $PC.boobs>>
+				You are ''flat chested.''
+				<<option 500 "Grow breasts">>
+			<</options>>
+		<</if>>
+	<</if>>
+<<else>>
+
+	You are a
+	<<if $PC.title == 1>>
+		masculine ''Master''
+	<<else>>
+		feminine ''Mistress'
+	<</if>>
+	and everyone that matters calls you <<= PlayerName()>>.
+
+	You are $PC.actualAge years old which is
+	<<if $PC.actualAge >= 65>>
+		''old''.
+	<<elseif $PC.actualAge >= 50>>
+		''well into middle age''.
+	<<elseif $PC.actualAge >= 35>>
+		''entering middle age''.
+	<<else>>
+		''surprisingly young''.
+	<</if>>
+
+	<<options $playerAging>>
+		Your birthday will be in $PC.birthWeek weeks
+		<<option 2 "Enable aging">>
+			and you ''age naturally''.
+		<<option 1 "Semi aging">>
+			and you ''will'' celebrate birthdays, but ''not age''.
+		<<option 0 "Disable aging">>
+			and you will ''not age,'' nor experience birthdays.
+		<<comment>>
+		This option cannot be changed during the game
+	<</options>>
+	<p>
+		Your custom title is ''<<textbox2 "$PC.customTitle" $PC.customTitle "Intro Summary">>''
+		and when lisped it is ''<<textbox2 "$PC.customTitleLisp" $PC.customTitleLisp "Intro Summary">>''.
+		//If using a custom title, select Master or Mistress to set the gender of your title.//
+		//Make sure to replace your "s"s with "th"s to have working lisps in your lisped title.//
+	</p>
+
+	<p>
+		You are a $PC.nationality $PC.race with <<if $PC.markings == "heavily freckled">>heavily freckled<<elseif $PC.markings == "freckles">>lightly freckled<<else>>clear<</if>> $PC.skin skin, $PC.hColor hair and <<print App.Desc.eyesColor($PC)>>. You have a $PC.faceShape face.
+	</p>
+
+	<p>
+		Your preferred refreshment is <<textbox2 "$PC.refreshment" $PC.refreshment "Intro Summary">> [[Cigars|Intro Summary][$PC.refreshment = "cigar",$PC.refreshmentType = 0]] | [[Whiskey|Intro Summary][$PC.refreshment = "whiskey",$PC.refreshmentType = 1]]
+	</p>
+
+	<p>
+		and you consume it by ''<<if $PC.refreshmentType == 0>>Smoking<<elseif $PC.refreshmentType == 1>>Drink<<elseif $PC.refreshmentType == 2>>Eating<<elseif $PC.refreshmentType == 3>>Snorting<<elseif $PC.refreshmentType == 4>>Injection<<elseif $PC.refreshmentType == 5>>Popping<<else>>Orally Dissolving<</if>>''.
+	</p>
+	[[Smoked|Intro Summary][$PC.refreshmentType = 0]] | [[Drank|Intro Summary][$PC.refreshmentType = 1]] | [[Eaten|Intro Summary][$PC.refreshmentType = 2]] | [[Snorted|Intro Summary][$PC.refreshmentType = 3]] | [[Injected|Intro Summary][$PC.refreshmentType = 4]] | [[Popped|Intro Summary][$PC.refreshmentType = 5]] | [[Orally Dissolved|Intro Summary][$PC.refreshmentType = 6]]
+
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<<if $PC.refreshmentType == 0>>//"Smoked" must fit into the following sentence: "I smoked a $PC.refreshment" to fit events properly
+	<<elseif $PC.refreshmentType == 5>>//"Popped" must fit into the following sentence: "I shook the bottle of $PC.refreshment" to fit events properly
+	<<elseif $PC.refreshmentType == 6>>//"Orally Dissolved" must fit into the following sentence: "I placed a tab of $PC.refreshment under my tongue" to fit events properly
+	<</if>>
+
+	<<switch $PC.career>>
+	<<case "wealth">>
+		Prior to being an arcology owner, you were a member of the idle wealthy.
+	<<case "capitalist">>
+		Prior to being an arcology owner, you were a business leader.
+	<<case "mercenary">>
+		Prior to being an arcology owner, you were a mercenary.
+	<<case "slaver">>
+		Prior to being an arcology owner, you were a slaver.
+	<<case "engineer">>
+		Prior to being an arcology owner, you were an engineer.
+	<<case "medicine">>
+		Prior to being an arcology owner, you were a surgeon.
+	<<case "celebrity">>
+		Prior to being an arcology owner, you were a minor celebrity.
+	<<case "BlackHat">>
+		Prior to being an arcology owner, you specialized in cracking databases and making mockeries of cyber security.
+	<<case "arcology owner">>
+		Being an arcology owner defines your life now.
+	<<case "escort">>
+		Prior to being an arcology owner, you knew how to survive off your looks and body.
+	<<case "servant">>
+		Prior to being an arcology owner, you served a well-off master<<if $PC.counter.birthMaster >= 2>> and bore him several children<</if>>.
+	<<case "gang">>
+		Prior to being an arcology owner, you were the leader of a ruthless gang.
+	<</switch>>
+
+	Word in the arcology is you acquired it through
+	<<switch $PC.rumor>>
+	<<case "wealth">>
+		a rather ridiculous amount of money.
+	<<case "diligence">>
+		sheer effort.
+	<<case "force">>
+		brutal force.
+	<<case "social engineering">>
+		clever social manipulation.
+	<<case "luck">>
+		blind luck.
+	<</switch>>
+
+	You have a
+	<<if $PC.vagina != -1 && $PC.dick != 0>>
+		penis and vagina
+	<<elseif $PC.dick != 0>>
+		penis.
+	<<elseif $PC.vagina != -1>>
+		vagina
+	<</if>>
+	<<if $PC.vagina != -1>>
+		and are
+		<<if $PC.pregWeek < 0>>
+			recovering from your last pregnancy.
+		<<elseif $PC.preg == -2>>
+			infertile.
+		<<elseif $PC.preg == -1>>
+			taking contraceptives.
+		<<elseif $PC.preg == 0>>
+			fertile.
+		<<elseif $PC.preg > 37>>
+			extremely pregnant.
+		<<elseif $PC.preg > 0>>
+			pregnant.
+		<</if>>
+		<<if $PC.preg > 20 || $PC.counter.birthsTotal > 0>>
+			<<if $PC.pregMood == 1>>
+				You tend to be caring and motherly when you're pregnant.
+				[[Change to no change|Intro Summary][$PC.pregMood = 0]] | [[Change to aggressive|Intro Summary][$PC.pregMood = 2]]
+			<<elseif $PC.pregMood == 0>>
+				Pregnancy doesn't really affect your mood.
+				[[Change to motherly|Intro Summary][$PC.pregMood = 1]] | [[Change to aggressive|Intro Summary][$PC.pregMood = 2]]
+			<<else>>
+				You tend to be very demanding and aggressive when you're pregnant.
+				[[Change to no change|Intro Summary][$PC.pregMood = 0]] | [[Change to motherly|Intro Summary][$PC.pregMood = 1]]
+			<</if>>
+		<<else>>
+			<<if $PC.pregMood == 1>>
+				You tend to be caring and motherly when you're hormonal.
+				[[Change to no change|Intro Summary][$PC.pregMood = 0]] | [[Change to aggressive|Intro Summary][$PC.pregMood = 2]]
+			<<elseif $PC.pregMood == 0>>
+				Your mood isn't tied to your hormones.
+				[[Change to motherly|Intro Summary][$PC.pregMood = 1]] | [[Change to aggressive|Intro Summary][$PC.pregMood = 2]]
+			<<else>>
+				You tend to be very demanding and aggressive when you're hormonal.
+				[[Change to no change|Intro Summary][$PC.pregMood = 0]] | [[Change to motherly|Intro Summary][$PC.pregMood = 1]]
+			<</if>>
+		<</if>>
+		<<if $PC.counter.birthsTotal > 0>>
+			You have given birth to $PC.counter.birthsTotal babies.
+		<</if>>
+	<</if>>
+
+	<<if $PC.boobs >= 300>>
+		You have a <<if $PC.title > 0>>masculine<<else>>feminine<</if>> body with
+		<<if $PC.boobs >= 1400>>
+			giant<<if $PC.boobsImplant != 0>>, fake<</if>> cow tits.
+		<<elseif $PC.boobs >= 1200>>
+			huge <<if $PC.boobsImplant != 0>>fake <</if>>breasts.
+		<<elseif $PC.boobs >= 1000>>
+			big <<if $PC.boobsImplant != 0>>fake <</if>>breasts.
+		<<elseif $PC.boobs >= 800>>
+			noticeable breasts.
+		<<elseif $PC.boobs >= 650>>
+			unremarkable breasts.
+		<<elseif $PC.boobs >= 500>>
+			average breasts.
+		<<else>>
+			small breasts.
+		<</if>>
+	<<else>>
+		<<if $PC.title > 0>>
+			You have a manly chest.
+		<<else>>
+			You are flat as a board.
+		<</if>>
+	<</if>>
+<</if>>
+
+<h2 align="center">Image display</h2>
+
+<<options $seeImages>>
+	Currently
+	<<option 1 "Enable">>
+		''Enabled''.
+	<<option 0 "Disable">>
+		''Disabled''.
+<</options>>
+
+<<set _exampleSlave = BaseSlave()>>
+<<if $seeImages == 1>>
+	<<options $imageChoice>>
+		Using
+		<<option 0 "Rendered">>
+			''Rendered imagepack by Shokushu''.
+		<<option 1 "Vector — embedded">>
+			''Vector art by NoX/Deepmurk — embedded''.
+			<br><span class="red">Git compiled only, no exceptions.</span>
+		<<option 2 "Vector — non-embedded">>
+			''Vector art by NoX/Deepmurk — non-embedded''.
+		<<option 3 "Vector revamp">>
+			''Vector art revamp''.
+			<br><span class="red">Git compiled only, no exceptions.</span>
+		<<comment>>
+			"Vector — embedded" is the most up to date and supports the most content.  Ironically, revamp has not been touched in a long time.
+	<</options>>
+	<<if $imageChoice == 1>>
+		<div style="position:relative;width:200px;height:200px;margin:0 auto;">
+			<<= SlaveArt(_exampleSlave, 0, 0)>>
+		</div>
+		<<options $seeFaces>>
+			Face art
+			<<option 1 "Enable">>
+				@@.cyan;ENABLED.@@
+			<<option 0 "Disable">>
+				@@.red;DISABLED.@@
+		<</options>>
+
+		<<options $seeVectorArtHighlights>>
+			Highlights on shiny clothing
+			<<option 1 "Enable">>
+				@@.cyan;ENABLED.@@
+			<<option 0 "Disable">>
+				@@.red;DISABLED.@@
+		<</options>>
+
+		<<options $seeHeight>>
+			Height scaling
+			<<option 2 "Enable for all images">>
+				@@.cyan;ENABLED@@ on all images.
+			<<option 1 "Enable only for small images">>
+				@@.yellow;ENABLED@@ on small images.
+			<<option 0 "Disable">>
+				@@.red;DISABLED.@@
+		<</options>>
+	<<elseif $imageChoice == 2>>
+		<div style="position:relative;width:200px;height:200px;margin:0 auto;">
+			<<= SlaveArt(_exampleSlave, 0, 0)>>
+		</div>
+	<<elseif $imageChoice == 3>>
+		<div style="position:relative;width:200px;height:200px;margin:0 auto;">
+			<<= SlaveArt(_exampleSlave, 0, 0)>>
+		</div>
+		<<options $seeVectorArtHighlights>>
+			Highlights on shiny clothing
+			<<option 1 "Enable">>
+				@@.cyan;ENABLED.@@
+			<<option 0 "Disable">>
+				@@.red;DISABLED.@@
+		<</options>>
+	<<elseif $imageChoice == 0>>
+		<div style="width:200px; height:200px; margin: auto; position: relative;">
+			You need to <a href="https://mega.nz/#!upoAlBaZ!EbZ5wCixxZxBhMN_ireJTXt0SIPOywO2JW9XzTIPhe0">download the image pack</a>
+			and put the 'renders' folder into the resources/ folder where this
+			html file is.
+			<img src="resources/renders/female big soft obedient.png"
+			title="Example image" alt="Failed to load image"
+		style="position:absolute;top:0;left:0;width:100%;background:#111;color:red;">
+		</div>
+		<<options $seeMainFetishes>>
+			Slave summary fetish images
+			<<option 1 "Enable">>
+				''enabled''.
+			<<option 0 "Disable">>
+				''disabled''.
+		<</options>>
+	<</if>>
+
+	<<options $seeAvatar>>
+		PA avatar images are
+		<<option 1 "Enable">>
+			''enabled''.
+		<<option 0 "Disable">>
+			''disabled''.
+	<</options>>
+
+	<<options $seeSummaryImages>>
+		Slave images in lists are
+		<<option 1 "Enable">>
+			''enabled''.
+		<<option 0 "Disable">>
+			''disabled''.
+	<</options>>
+
+	<<options $seeReportImages>>
+		Slave images in the weekly report are
+		<<option 1 "Enable">>
+			''enabled''.
+		<<option 0 "Disable">>
+			''disabled''.
+	<</options>>
+<</if>>
+
+<h2 align="center">Mods</h2>
+
+<<options $SF.Toggle>>
+	The Special Force Mod is
+	<<option 1 "Enable">>
+		''enabled''.
+	<<option 0 "Disable">>
+		''disabled''.
+	<<comment>>
+		This mod is initially from anon1888 but expanded by SFanon offers a lategame special (started out as security but changed to special in order to try and reduce confusion with CrimeAnon's separate Security Expansion (SecExp) mod) force, that is triggered after week 80. It is non-canon where it conflicts with canonical updates to the base game.
+<</options>>
+	/*The support facility is
+	<<if $SF.Facility.Toggle < 1>>
+			@@.red;DISABLED.@@ [[Enable|Intro Summary][$SF.Facility.Toggle = 1]]
+	<<else>>
+			@@.cyan;ENABLED.@@ [[Disable|Intro Summary][$SF.Facility.Toggle = 0]]
+	<</if>> //Prep for future content.*/
+
+<<options $secExpEnabled>>
+	The Security Expansion Mod is
+	<<option 1 "Enable">>
+		''enabled''.
+	<<option 0 "Disable">>
+		''disabled''.
+	<<comment>>
+		This mod introduces security and crime in the arcology, as well as attacks and battles.
+<</options>>
+
+<<link "Continue" "init Nationalities">>
+	<<if $freshPC == 1 || $saveImported == 0>>
+		<<switch $PC.career>>
+		<<case "wealth">>
+			<<if $PC.vagina == 1>>
+				<<set $PC.vagina = 2>>
+			<</if>>
+		<<case "capitalist">>
+			<<set $PC.skill.trading = 100>>
+		<<case "mercenary">>
+			<<set $PC.skill.warfare = 100>>
+		<<case "slaver">>
+			<<set $PC.skill.slaving = 100>>
+		<<case "engineer">>
+			<<set $PC.skill.engineering = 100>>
+		<<case "medicine">>
+			<<set $PC.skill.medicine = 100>>
+		<<case "celebrity">>
+			<<if $PC.vagina == 1>>
+				<<set $PC.vagina = 2>>
+			<</if>>
+		<<case "BlackHat">>
+			<<set $PC.skill.hacking = 100>>
+		<<case "arcology owner">>
+			<<set $PC.skill.trading = 100, $PC.skill.warfare = 100, $PC.skill.hacking = 100, $PC.skill.slaving = 100, $PC.skill.engineering = 100, $PC.skill.medicine = 100>>
+		<<case "escort">>
+			<<if $PC.vagina == 1>>
+				<<set $PC.vagina = 4>>
+			<</if>>
+			<<set $PC.anus = 1>>
+			<<set $PC.clothes = "a slutty outfit">>
+			<<set $PC.education = 15>>
+			<<set $PC.skill.trading = 50, $PC.skill.warfare = -100, $PC.skill.slaving = -100, $PC.skill.engineering = -100, $PC.skill.medicine = 10, $PC.skill.hacking = 10>>
+		<<case "servant">>
+			<<set $PC.clothes = "a nice maid outfit">>
+			<<set $PC.education = 0>>
+			<<if $PC.vagina == 1>>
+				<<set $PC.vagina = 4>>
+			<</if>>
+			<<set $PC.skill.trading = -100, $PC.skill.warfare = -100, $PC.skill.slaving = -100, $PC.skill.engineering = -100, $PC.skill.medicine = -100, $PC.skill.hacking = -100>>
+		<<case "gang">>
+			<<if $PC.vagina == 1>>
+				<<set $PC.vagina = 2>>
+			<</if>>
+			<<set $PC.skill.trading = 50, $PC.skill.warfare = 50, $PC.skill.slaving = 50, $PC.skill.engineering = -100, $PC.skill.medicine = 0, $PC.skill.hacking = 50>>
+		<</switch>>
+	<</if>>
+	<<if $saveImported == 1 && $freshPC == 0 && $PC.rules.living != "luxurious">>
+		<<if $PC.rules.living == "spare">>
+			<<set $PC.rules.living = "normal">>
+		<<else>>
+			<<set $PC.rules.living = "luxurious">>
+		<</if>>
+	<<elseif $PC.career == "wealth" || $PC.career == "celebrity">>
+		<<set $PC.rules.living = "normal">>
+	<<else>>
+		<<set $PC.rules.living = "spare">>
+	<</if>>
+	<<if $secExpEnabled > 0>>
+		<<set $wasToggledBefore = 1>>
+	<</if>>
+	<<run resetEyeColor($PC)>>
+<</link>>
+
+<<if ($economy != 100) || ($seeDicks != 25) || ($continent != "North America") || ($internationalTrade != 1) || ($internationalVariety != 1) || ($seeRace != 1) || ($seeNationality != 1) || ($seeExtreme != 0) || ($seeCircumcision != 1) || ($seeAge != 1) || ($plot != 1)>>
+	| [[restore defaults|Intro Summary][$seeDicks = 25, $economy = 100, $continent = "North America", $internationalTrade = 1, $internationalVariety = 1, $seeRace = 1, $seeNationality = 1, $seeExtreme = 0, $seeCircumcision = 1, $seeAge = 1, $plot = 1]]
+<</if>>
+<p>
+	[[Cheat Start|init Nationalities][cashX(1000000, "cheating"), $PC.rules.living = "luxurious",repX(20000, "cheating"), $dojo += 1, $cheatMode = 1, $seeDesk = 0, $seeFCNN = 0, $sortSlavesBy = "devotion", $sortSlavesOrder = "descending", $sortSlavesMain = 0, $rulesAssistantMain = 1, $abbreviateDevotion = 1, $abbreviateRules = 1, $abbreviateClothes = 2, $abbreviateHealth = 1, $abbreviateDiet = 1, $abbreviateDrugs = 1, $abbreviateRace = 1, $abbreviateNationality = 1, $abbreviateGenitalia = 1, $abbreviatePhysicals = 1, $abbreviateSkills = 1, $abbreviateMental = 2, $PC.skill.trading = 100, $PC.skill.warfare = 100, $PC.skill.slaving = 100, $PC.skill.engineering = 100, $PC.skill.medicine = 100, $PC.skill.hacking = 100, resetEyeColor($PC)]] | //Intended for debugging: may have unexpected effects//
+</p>
+

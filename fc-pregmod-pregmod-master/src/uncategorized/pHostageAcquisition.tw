@@ -1,0 +1,595 @@
+:: P hostage acquisition [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Scheduled Event", $returnTo = "Scheduled Event">>
+
+<<set $hostageRescued = 0>>
+<<set $activeSlave = $hostage>>
+<<set $activeSlave.ID += 55555>>
+<<set $activeSlave.weekAcquired = $week>>
+<<run Enunciate($activeSlave)>>
+<<setLocalPronouns $activeSlave>>
+
+<span id="artFrame">
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<<if $imageChoice == 1>>
+			<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+		<<else>>
+			<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+		<</if>>
+	<</if>>
+	/* 000-250-006 */
+</span>
+
+<<= SlaveFullName($activeSlave)>>, once
+<<switch $PC.career>>
+<<case "wealth">>
+	a popular party $girl
+<<case "capitalist">>
+	a bright young manager
+<<case "mercenary">>
+	a logistics officer
+<<case "engineer">>
+	an arcology sales<<= $woman>>
+<<case "medicine">>
+	a surgical nurse
+<<case "slaver">>
+	an abusive pens guard
+<<case "celebrity">>
+	a popular groupie
+<<case "escort">>
+	an expensive escort
+<<case "gang">>
+	a gang member
+<<case "servant">>
+	a maid
+<<case "BlackHat">>
+	a brilliant code breaker
+<<default>>
+	a prominent Free Cities citizen
+<</switch>>
+of your acquaintance from before you were an arcology owner, and then a pawn in your rival arcology owner's campaign of psychological warfare against you, is now one of your slaves.
+Your hired mercenaries are en route now with your precious cargo.
+
+<<switch $rivalryFS>>
+<<case "Racial Subjugationism">>
+	<<if $activeSlave.preg > 0>>
+		<<run WombFatherRace($activeSlave, $arcologies[0].FSSubjugationistRace)>>
+	<</if>>
+	<<run setHealth($activeSlave, 50, $activeSlave.health.shortDamage, $activeSlave.health.longDamage, undefined, undefined)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They kept trying to rape me with $arcologies[0].FSSubjugationistRace <<s>>lave<<s>>!" You gently wrap your arms around $him in a comforting embrace. $He's nearly the same as you remember $him, albeit a bit more hateful towards $arcologies[0].FSSubjugationistRace people.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "They raped me with $arcologies[0].FSSubjugationistRace <<s>>lave<<s>>!" $He's nearly the same as you remember $him, albeit with a slight $arcologies[0].FSSubjugationistRace fetish.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he asks "Can I <<s>>pend <<s>>ome time with the $arcologies[0].FSSubjugationistRace <<s>>lave<<s>>?" While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he bluntly asks "Can I get fucked by <<s>>ome $arcologies[0].FSSubjugationistRace <<s>>tud<<s>>?" While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "This one's got quite some spunk in $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "Why do you hate $arcologies[0].FSSubjugationistRace people <<s>>o much?! They are a great ra<<c>>e, capable of the mo<<s>>t <<s>>ublime love! How dare you ta-"
+		The mercenary captain quickly gags $him. "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, I'd hate for anything to happen to my best employer," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future.
+	<</if>>
+<<case "Racial Supremacism">>
+	<<if $seePreg != 0>>
+		<<set $activeSlave.pregType = setPregType($activeSlave)>>
+		<<set WombInit($activeSlave)>>
+		<<if $arcologies[0].FSSubjugationistRace != 0>>
+			<<set _notSupreme = $arcologies[0].FSSubjugationistRace>>
+		<<else>>
+			<<set _races = setup.filterRacesLowercase.filter(race => race !== $arcologies[0].FSSupremacistRace)>>
+			<<set _notSupreme = _races.random()>>
+		<</if>>
+		<<run WombFatherRace($activeSlave, _notSupreme)>>
+	<</if>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "Thank you... Thank you..." You gently wrap your arms around $him in a comforting embrace. $He's nearly the same as you remember $him, albeit acting slightly odd and covered in scars.
+		<<set $activeSlave.weight = 0>>
+		<<set $activeSlave.muscles = 0>>
+		<<if $activeSlave.health.health > -20>>
+			<<run setHealth($activeSlave, 0, Math.max($activeSlave.health.shortDamage, 10), Math.max($activeSlave.health.longDamage, 10))>>
+		<</if>>
+		<<set $activeSlave.custom.tattoo = "$He has slight scarring from being beaten under your rival's rule.">>
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName walks into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "T-thank you... T-thank you..." You gently draw $his thin body into a comforting embrace. $He's nearly the same as you remember $him, albeit thinner, acting odd and covered in many scars.
+		<<set $activeSlave.weight = -20>>
+		<<set $activeSlave.muscles = -20>>
+		<<if $activeSlave.health.health > -40>>
+			<<run setHealth($activeSlave, 0, Math.max($activeSlave.health.shortDamage, 20), Math.max($activeSlave.health.longDamage, 20))>>
+		<</if>>
+		<<set $activeSlave.custom.tattoo = "$He has noticeable scarring from being beaten under your rival's rule.">>
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shuffles into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "T-thank you..." You gently draw $his rail thin body into a comforting embrace, though you can't help but feel $his <<if $seePreg != 0>>swollen<<else>>caved-in<</if>> belly pressing into your own. $He's nearly the same as you remember $him, albeit thinner,<<if $seePreg != 0>> pregnant,<</if>> acting very odd, and heavily covered in scars.
+		<<set $activeSlave.weight = -50>>
+		<<set $activeSlave.muscles = -50>>
+		<<if $activeSlave.health.health > -60>>
+			<<run setHealth($activeSlave, -10, 25, Math.max($activeSlave.health.longDamage, 25))>>
+		<</if>>
+		<<set $activeSlave.custom.tattoo = "$He has heavy scarring from being beaten under your rival's rule.">>
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName attempts to stumble into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> but only makes it several pained steps before collapsing to the ground. You gently pick up $his frail, <<if $seePreg != 0>>bloated<<else>>sickly<</if>> body and hold it in a comforting embrace. a short "T-thank you..." escapes $his tired lips. $He's nearly the same as you remember $him, albeit emaciated,<<if $seePreg != 0>> pregnant,<</if>> acting very odd and completely covered in scars.
+		<<set $activeSlave.weight = -100>>
+		<<set $activeSlave.muscles = -75>>
+		<<if $activeSlave.health.health > -80>>
+			<<run setHealth($activeSlave, -20, 30, Math.max($activeSlave.health.longDamage, 30), 1)>>
+		<</if>>
+		<<set $activeSlave.custom.tattoo = "$He has heavy scarring all over $his body from being beaten under your rival's rule.">>
+	<<else>>
+		Your mercenaries radio you upon arrival. "VIP recovered but... $He isn't all there."
+		Upon seeing $him, it's obvious $activeSlave.slaveName has been completely broken. You beckon to the mercenary captain to give $him to you. Holding $him in your arms, it's clear that the poor $girl is barely clinging to life.
+		The mercenary captain apologizes again. "My apologies, we found $him like that. I'm sorry," he says as he and his group exit your penthouse, leaving you with the comatose $activeSlave.slaveName. $He looks the same as you remember, albeit emaciated, battered, <<if $seePreg != 0>>broken, and very pregnant<<else>>and broken<</if>>. Although, if $he pulls through this, $he'll be devoted to you forever.
+		<<set $activeSlave.weight = -100>>
+		<<set $activeSlave.muscles = -100>>
+		<<if $activeSlave.health.health > -100>>
+			<<run setHealth($activeSlave, -40, 30, Math.max($activeSlave.health.longDamage, 30), 2)>>
+		<</if>>
+		<<set $activeSlave.custom.tattoo = "$He has intense scarring all over $his body from being beaten under your rival's rule.">>
+	<</if>>
+<<case "Repopulation Focus">>
+	<<run setHealth($activeSlave, 50, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<set WombFlush($activeSlave)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They took my egg<<s>> away!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember, though a medical scan reveals that $his ovaries contain absolutely zero egg cells.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "They took my fertility away!" $He's exactly as you remember, though a medical scan reveals that $his ovaries contain absolutely zero egg cells.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he says "You don't have to worry about knocking me up, I'm <<s>>terile!" with a wink. While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he bluntly says "I won't let you ruin my body with a child!" While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "This one's got quite a lip on $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick freak! My body i<<s>> undefiled by child and never will be! I know your type! All you want to do i<<s>> watch my belly <<s>>well with —"
+		The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, especially given $his hatred for pregnancy.
+	<</if>>
+<<case "Eugenics">>
+	<<run setHealth($activeSlave, 50, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $seeHyperPreg != 1>>
+		<<if $rivalryDuration <= 5>>
+			Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They filled me with cum! I think I'm pregnant!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember, though a medical scan reveals that $he is carrying <<print pregNumberName($activeSlave.pregType, 2)>>.
+		<<elseif $rivalryDuration <= 10>>
+			Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears, $his rounded middle pressing into your own. "They knocked me up!" $He's exactly as you remember, though a medical scan reveals that $he is carrying <<print pregNumberName($activeSlave.pregType, 2)>>.
+		<<elseif $rivalryDuration <= 15>>
+			Upon seeing you, $activeSlave.slaveName shifts $his gravid bulk back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he says "Plea<<s>>e don't take them from me, I love them..." While $he looks the same as you remember, albeit rather pregnant, $he certainly doesn't think the same anymore.
+		<<elseif $rivalryDuration <= 20>>
+			Upon seeing you, $activeSlave.slaveName shifts $his gravid bulk back and forth, unsure of what to make of you. As you step forward, $he carefully steps back. After several steps, $he bluntly says "I won't let you hurt them!" as $he covers $his pregnant belly. While $he looks the same as you remember, albeit very pregnant, $he definitely doesn't think the same anymore.
+		<<else>>
+			<<set $activeSlave.trust = 80>>
+			Your mercenaries radio you upon arrival. "This one's got quite a lip on $him, you better ready yourself. We're coming in now."
+			Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! How dare you <<s>>teal a woman'<<s>> purpo<<s>>e away from her! I'll fucking kill you if you try to touch my bab-"
+			The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, especially when $he realizes $his babies didn't follow $him here.
+		<</if>>
+	<<else>>
+		<<if $rivalryDuration <= 5>>
+			Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They filled me with cum! I think I'm pregnant!" You gently wrap your arms around $him in a comforting embrace, yet you can't help but notice how distended $his belly is. $He's exactly as you remember, maybe a little heftier, but a medical scan reveals, horrifyingly, that $he is carrying over two dozen babies in $his womb.
+		<<elseif $rivalryDuration <= 10>>
+			Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You try to pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>>, but $his huge pregnant belly prevents you. As $he breaks down in tears, $he moans "My womb is <<s>>oo full..." $He's nearly the same as you remember $him, save for $his huge pregnant belly, which a medical scan reveals contains over two dozen children.
+		<<elseif $rivalryDuration <= 15>>
+			Upon seeing you, $activeSlave.slaveName shifts $his super gravid bulk back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough for $his monstrous belly to bump into your own, $he says "It feel<<s>> so good to be <<s>>tuffed completely full of life. You'll let me enjoy thi<<s>>, won't you?" While $he looks the same as you remember, albeit grossly pregnant, $he certainly doesn't think the same anymore. A medical exam, much to $his enjoyment, reveals $his overfilled womb contains nearly two dozen children.
+		<<elseif $rivalryDuration <= 20>>
+			Upon seeing you, $activeSlave.slaveName shifts $his hyper gravid bulk back and forth, unsure of what to make of you. As you step forward, $he carefully steps back. After several steps, $he bluntly says "Unle<<ss>> you want to put more babie<<s>> in me, get back!" as $he attempts to cover $his super-sized pregnant belly. While $he looks the same as you remember, albeit grotesquely pregnant, $he certainly doesn't think the same anymore. A medical exam, much to $his delight, reveals $his near bursting womb contains nearly two dozen children.
+		<<else>>
+			<<set $activeSlave.trust = 80>>
+			Your mercenaries radio you upon arrival. "This one's got quite a lip on $him, you better ready yourself. We're coming in now."
+			Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! How dare you <<s>>teal a woman'<<s>> purpo<<s>>e away from her! I'll <<sh>>ow you! I hope my new pregnan<<c>>y makes me bur<<s>>t all over your fucking off-"
+			The mercenary captain quickly gags $him. "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid. Also when we raided that arcology, we saw some shit. Girls looking like they were pregnant with elephants or with bellies coated with lumps and bumps. $He might be carrying something terrifying in $his womb, just lettin' you know," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, save for $his notable pot belly, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, especially if $he is telling the truth about what lurks in $his womb.
+		<</if>>
+	<</if>>
+<<case "Gender Radicalism">>
+	<<run setHealth($activeSlave, 60, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They acted <<s>>o weird!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember, if not slightly more attached to you.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "Will you be a<<s>> kind to me a<<s>> they were?" $He's exactly as you remember, if not slightly more attached to you.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he asks "Will you love me too?" While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he bluntly shouts "<<S>>tay away from me you rapi<<s>>t!" While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "This one's got quite some spunk in $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! Vagina<<s>> are for <<s>>e<<x>>, not a<<ss>>hole<<s>>! Don't you dare come near my a<<ss>> —"
+		The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, given $his views on a $girl's place in society.
+	<</if>>
+<<case "Gender Fundamentalism">>
+	<<run setHealth($activeSlave, 20, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They did <<s>>uch terrible thing<<s>> to my butt!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember, if not a little curious about anal.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "They broke my butthole!" $He's exactly as you remember, minus $his loose rear.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he says "Do you want to fuck my butt?<<if $seeDicks != 0>> Maybe touch my peni<<s>>?<</if>>" While $he looks the same as you remember, minus $his very loose butthole<<if $seeDicks != 0>> and minuscule dick<</if>>, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		<<set $activeSlave.trust = 60>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he bluntly says "Pi<<ss>> off vagina fucker, <<s>>lave<<s>>' a<<ss>>e<<s>> are for pounding!" before swinging around revealing $his gaping butthole. While $he looks the same as you remember, minus $his gaping anus<<if $seeDicks != 0>>, tiny cock, and testicles<</if>>, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "This one's quite lively, you better ready yourself.<<if $seeDicks != 0>> $He's been rock hard the entire way here, we think $he might have something crammed up $his rear. What ever it is, it isn't dangerous.<</if>> We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! A<<ss>>hole<<s>> are the <<s>>uperior <<s>>e<<x>> organ!"<<if $seeDicks != 0>> $He quickly flexes $his Kegels several times and blows a load of cum across your shoes<<else>> $He spits on your shoes<</if>>.
+		The mercenary captain quickly pulls $him back, "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember<<if $seeDicks != 0>>, save for $his working cock and balls<</if>>, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, given $his penchant for sticking things in butts.
+	<</if>>
+<<case "Paternalism">>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "Thank you... Thank you..." You gently wrap your arms around $him in a comforting embrace. $He's nearly the same as you remember $him, albeit acting slightly odd and covered in piercings and tattoos.
+		<<set $activeSlave.weight = 0>>
+		<<if $activeSlave.health.health > -20>>
+			<<run setHealth($activeSlave, 0, Math.max($activeSlave.health.shortDamage, 10), Math.max($activeSlave.health.longDamage, 10))>>
+		<</if>>
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName tries to crawl to you. You help $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he sobs "T-thank you... T-thank you..." You gently draw $his thin body into a comforting embrace. $He's nearly the same as you remember $him, albeit thinner, acting odd and covered in piercings and tattoos.
+		<<set $activeSlave.weight = -20>>
+		<<set $activeSlave.muscles = -20>>
+		<<if $activeSlave.health.health > -40>>
+			<<run setHealth($activeSlave, 0, Math.max($activeSlave.health.shortDamage, 20), Math.max($activeSlave.health.longDamage, 20))>>
+		<</if>>
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName tries to crawl to you. You help $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he sobs. You gently draw $his rail thin body into a comforting embrace, though you can't help but notice several of $his ribs are broken. $He's barely recognizable; being much thinner, acting very odd and covered in piercings and tattoos.
+		<<set $activeSlave.weight = -50>>
+		<<set $activeSlave.muscles = -50>>
+		<<if $activeSlave.health.health > -60>>
+			<<run setHealth($activeSlave, -10, 25, Math.max($activeSlave.health.longDamage, 25))>>
+		<</if>>
+	<<elseif $rivalryDuration <= 20>>
+		Upon being placed in your office, $activeSlave.slaveName curls into a fetal position and begins sobbing. You help $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he pitifully struggles. You gently draw $his emaciated body into a comforting embrace and call out $his name, having realized $he is blind. $He immediately calms down and moves closer to you. $He's barely recognizable; being skin and bone, acting very odd and covered in piercings and tattoos.
+		<<set $activeSlave.weight = -100>>
+		<<set $activeSlave.muscles = -80>>
+		<<if $activeSlave.health.health > -80>>
+			<<run setHealth($activeSlave, -20, 30, Math.max($activeSlave.health.longDamage, 30), 1)>>
+		<</if>>
+	<<else>>
+		Your mercenaries radio you upon arrival. "VIP recovered but... I'm so sorry..."
+		You immediately wretch from the smell that follows the merc troop into your office. You rise to shout at them for tracking it in when you realize what the source of the smell is. A crate containing the twisted, mutilated, inked and pierced body of $activeSlave.slaveName. The mercenaries see themselves out as you carefully take a biometric scan of the inert, limbless body before you. $He is alive, but barely, and a brain scan shows few signs of activity. You call for some servants to clean $him up, hoping that maybe it will draw $him out of $his stupor. Deep down, you understand the $girl you used to know has been twisted and broken completely; never to be the same again.
+		<<if $activeSlave.health.health > -100>>
+			<<run setHealth($activeSlave, -40, 30, Math.max($activeSlave.health.longDamage, 30), 2)>>
+		<</if>>
+		<<set $activeSlave.weight = -100>>
+		<<set $activeSlave.muscles = -100>>
+	<</if>>
+<<case "Degradationism">>
+	<<run setHealth($activeSlave, 60, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They acted <<s>>o weird!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember, if not slightly more attached to you.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "Will you be a<<s>> kind to me a<<s>> they were?" $He's exactly as you remember, if not slightly more attached to you.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he asks "Will you love me too?" While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he bluntly says "<<S>>tay away from me you rapi<<s>>t!" While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 100>>
+		Your mercenaries radio you upon arrival. "This one's got quite some spunk in $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! I've <<s>>een what you do to your $girl<<s>>! You're <<s>>ick! <<S>>ICK! Don't you —"
+		The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember,<<if $seePreg != 0>> minus $his rounded belly,<</if>> but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, seeing as $he intends to undermine you at every turn.
+	<</if>>
+<<case "Body Purism">>
+	<<run setHealth($activeSlave, 0, Math.max($activeSlave.health.shortDamage, 15), Math.max($activeSlave.health.longDamage, 15))>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName attempts to dive into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>>. The weight of $his huge <<print $activeSlave.boobs>>cc fake tits knocks the wind out of you. You embrace $him as best you can as $he sobs "Look what they did to my che<<s>>t! They ruined it!" $He looks similar to how you remember, minus $his huge chest of course.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $his massive <<print $activeSlave.boobs>>cc fake tits into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "Why do the<<s>>e tit balloon<<s>> feel so good?!" $He looks similar to how you remember, minus $his massive chest of course.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his massive weight back and forth, unsure of what to make of you. As you step forward, $he attempts to move closer, only to fall to the ground under the weight of $his obscene <<print $activeSlave.boobs>>cc fake tits. You kneel beside $him, a hand on $his huge fake ass, as $he asks "Do you like them? I think they <<sh>>ould be bigger..." The $girl you used to know is barely recognizable under those implants and $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		$activeSlave.slaveName's impressive bulk is placed in your office. Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth atop $his <<print $activeSlave.boobs>>cc implants, unsure of what to make of you. As you step forward, $he screams "Don't pop my implant<<s>>!" The $girl you used to know is barely recognizable under those implants and $he certainly doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "We got a problem sir. $He, um, isn't going to fit... We could try bringing $him in through the penthouse balcony, but I'd worry about breaking things."
+		Once $activeSlave.slaveName's immense form is safely in the penthouse, you finally get a good look at $him. Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he begins to let out a low growl. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! Flat girl<<s>> are tra<<sh>>! Real men like big fake tit<<s>> and a<<ss>>e<<s>>! You're <<s>>ick! <<S>>ICK! Don't you-"
+		The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful." He pats $his grotesque breast, adding "'Least $he won't be going anywhere." He and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. The $girl you used to know is barely recognizable under those implants and $he certainly doesn't think the same anymore. Odds are high that $he'll cause problems for you in the future, assuming you can find a doctor to remove those ridiculous implants from $his once flat chest. Or you could leave $him as an immobile ornament, though implants are definitely out of style.
+	<</if>>
+<<case "Transformation Fetishism">>
+	<<run setHealth($activeSlave, 60, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They told me <<s>>uch horrible thing<<s>> about you!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "You aren't going to for<<c>>e implant<<s>> into me, are you?" While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he states "Plea<<s>>e don't make me into a blow up doll..." While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he screams "Keep away from me! I don't want balloon<<s>> on my che<<s>>t!" While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "This one's got quite some spunk in $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! I've <<s>>een what you do to your girl<<s>>! Filling them with <<s>>ilicone and implant<<s>> and <<sh>>it! Don't you ever THINK abou-"
+		The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, given $his hatred for implants.
+	<</if>>
+<<case "Youth Preferentialism">>
+	<<run setHealth($activeSlave, 60, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "Thi<<s>> old woman tried to make me her pet!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "They made me make out with an old lady!" $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he asks "<<if $PC.visualAge >= 50>>Were you alway<<s>> that attractive?<<else>>Can I hang out with some MILF<<s>>?<</if>>" While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		<<set $activeSlave.trust = 40>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he says "<<if $PC.visualAge >= 50>>You know, you're <<s>>oo much older than me... I like that," with a wink.<<elseif $PC.visualAge < 35>>Ew, you're <<s>>oo young. Keep your hand<<s>> off me!<<else>>Can you hook me up with a ni<<c>>e MILF?<</if>>" While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<run setHealth($activeSlave, 80, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+		Your mercenaries radio you upon arrival. "This one's got quite some spunk in $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "How fucking DARE you <<s>>plit me up from my MILFy wife! I <<s>>aw your arcology on the way in, and it'<<s>> <<S>>ICK. <<S>>o many young girl<<s>>, you're <<s>>ick, you hear me!? <<S>>I-"
+		The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, given $his hatred for young people.
+	<</if>>
+<<case "Maturity Preferentialism">>
+	<<run setHealth($activeSlave, 60, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "Thi<<s>> young girl kept mole<<s>>ting me!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "They made me make out with <<s>>ome young harlot!" $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he asks "<<if $PC.visualAge < 35>>Were you alway<<s>> that attractive?<<else>>Can I hang out with the re<<s>>t of the young ladie<<s>>?<</if>>" While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		<<set $activeSlave.trust = 40>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he says "<<if $PC.visualAge < 35>>You know, you're <<s>>oo young... I like that," with a wink.<<elseif $PC.visualAge >= 50>>Ew, you're <<s>>oo old. Keep your hand<<s>> off me!<<else>>Can you hook me up with a ni<<c>>e young girl?<</if>>". While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "This one's got quite some spunk in $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "How fucking DARE you <<s>>plit me up from my youthful wife! I <<s>>aw your arcology on the way in, and it'<<s>> <<S>>ICK. <<S>>o many old ladie<<s>>, you're <<s>>ick, you hear me!? <<S>>I-"
+		The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, given $his hatred for older people.
+	<</if>>
+<<case "Slimness Enthusiasm">>
+	<<run setHealth($activeSlave, -30, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<set $activeSlave.chem = 100>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName attempts to dive into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>>. The weight of $his huge <<print $activeSlave.boobs>>cc tits knocks the wind out of you. You embrace $him as best you can, you hands sinking into $his soft butt, as $he sobs "Look what they did to my che<<s>>t and a<<ss>>! They ruined them!" $He looks similar to how you remember, minus $his huge assets of course.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $his massive <<print $activeSlave.boobs>>cc breasts into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "Why do the<<s>>e meat balloon<<s>> feel <<s>>o good?!" $He looks similar to how you remember, minus $his massive assets of course.
+	<<elseif $rivalryDuration <= 15>>
+		$activeSlave.slaveName's impressive bulk is placed in your office. Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth atop $his <<print $activeSlave.boobs>>cc breasts, causing $his chubby body and fat ass to jiggle, unsure of what to make of you. As you step forward, $he asks "Can you make my tit<<s>> bigger?" The $girl you used to know is barely recognizable under those massive tits and $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		$activeSlave.slaveName's impressive bulk is placed in your office. Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth atop $his <<print $activeSlave.boobs>>cc implants, causing $his plump body and huge ass to jiggle, unsure of what to make of you. As you step forward, $he screams "Don't take my brea<<s>>t<<s>> away!" The $girl you used to know is barely recognizable under those immense tits and $he certainly doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "We got a problem sir. $He, um, isn't going to fit... We could try bringing $him in through the penthouse balcony, but I'd worry about breaking things."
+		Once $activeSlave.slaveName's immense form is safely in the penthouse, you finally get a good look at $him. Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he begins to let out a low growl. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! Flat girl<<s>> are tra<<sh>>! Real men like big tit<<s>> and a<<ss>>e<<s>>! You're <<s>>ick! <<S>>ICK! Don't you —"
+		The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful." He pats $his grotesque breast, adding "'Least $he won't be going anywhere." He and his group exit your penthouse, leaving you with the enraged and struggling $activeSlave.slaveName. You sigh at the amount of motion running through $his absurd tits, mountainous ass, and obese body. The $girl you used to know is barely recognizable under all that flesh and $he certainly doesn't think the same anymore. Odds are high that $he'll cause problems for you in the future, once $his body sheds the weight. Or you could leave $him as an immobile ornament, though assets of that size are definitely out of style.
+	<</if>>
+<<case "Asset Expansionism">>
+	<<run setHealth($activeSlave, 60, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They told me <<s>>uch horrible thing<<s>> about you!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "You aren't going to make my tit<<s>> huge, are you?" While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he pleads "Plea<<s>>e don't turn me into a big boobed freak..." While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he screams "Keep away from me! I don't want tit<<s>> bigger than my body!" While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "This one's got quite some spunk in $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! I've <<s>>een what you do to your girl<<s>>! Filling them up with growth drug<<s>>! Don't you ever THINK abou-"
+		The mercenary captain quickly gags $him. "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, given $his hatred for huge assets.
+	<</if>>
+<<case "Pastoralism">>
+	<<run setHealth($activeSlave, 60, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "I've never had to e<<x>>er<<c>>i<<s>>e <<s>>o much; I'm exhau<<s>>ted!" You gently wrap your arms around $his soft body in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>>, feeling the muscles under $his chubby body, as $he breaks down in tears. "You aren't going to make me pump iron, are you?" While $he's thinner than you remember, and a little more muscular, $his personality is exactly the same.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he says "I don't want to ever be <<s>>o heavy again..." $He is noticeably thinner and much more muscular than you remember; $he certainly doesn't think the same anymore, either.
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he screams "Keep away from me! I don't want ever want to be a fat cow again!" $He is thin and extremely muscular, a stark difference from the soft, chubby $girl you used to know; $he certainly doesn't think the same anymore, either.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "We have a problem, sir. This one is a fighter, $he already broke one of our guy's jaw. We think $he is tranq'd and restrained enough to bring in. Please be ready."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! I'll never be a cow again. DON'T YOU DARE TOUCH ME!"
+		The mercenary captain is thrown back as $he explodes out of $his restraints, having been preparing to gag $him. The rest of the troop center their weapons on $him, forcing $him to back down. $He glares at you as the captain picks himself up and exits your penthouse, leaving you with the enraged $activeSlave.slaveName. $He grunts as $he exits the office for the slave quarters, stopping in the doorway. "I'll be your <<s>>lave, but you're going to be <<s>>orry." With a hand on each door frame, $he rips it out of the wall. $He lets out a single laugh while scowling at you. $He is thin and extremely muscular, a stark difference from the soft, chubby $girl you used to know; $he certainly doesn't think the same anymore, either. Odds are high that $he'll cause problems for you in the future, given $his hatred for you and $his frightening strength.
+	<</if>>
+<<case "Cummunism">>
+	<<run setHealth($activeSlave, -30, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName attempts to dive into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>>. The weight of $his huge <<print $activeSlave.boobs>>cc tits knocks the wind out of you. You embrace $him as best you can, you hands sinking into $his soft butt, as $he sobs "They made me fat! My nipple<<s>> won't <<s>>top leaking milk!" $He looks similar to how you remember, minus $his huge milky assets of course.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $his massive <<print $activeSlave.boobs>>cc milky breasts into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "Why did they make me into a cow, I don't under<<s>>tand..." $He looks similar to how you remember, minus $his massive assets of course.
+	<<elseif $rivalryDuration <= 15>>
+		$activeSlave.slaveName's impressive bulk is placed in your office. Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth atop $his <<print $activeSlave.boobs>>cc breasts, causing $his chubby body and fat ass to jiggle, unsure of what to make of you. As you step forward, $he asks "Can you milk me?" The $girl you used to know is barely recognizable under all that fat and $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		<<set $activeSlave.trust = 40>>
+		$activeSlave.slaveName's impressive bulk is placed in your office. Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth atop $his <<print $activeSlave.boobs>>cc breasts, causing $his fat body and huge ass to jiggle, unsure of what to make of you. As you step forward, $he asks "I hear a baby will make my milk better, would you like to try?" The $girl you used to know is barely recognizable under those immense tits and obese body; $he certainly doesn't think the same anymore, either.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "We got a problem sir. $He, um, isn't going to fit... We could try bringing $him in through the penthouse balcony, but I'd worry about breaking things."
+		Once $activeSlave.slaveName's immense form is safely in the penthouse, you finally get a good look at $him. Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he begins to let out a low growl. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! Fit girl<<s>> are tra<<sh>>! Real men like big <<s>>oft bodie<<s>>! You're <<s>>ick! <<S>>ICK! Don't you —"
+		The mercenary captain quickly gags $him. "My apologies, I did warn you $he was a handful." He pats $his grotesque breast, adding "'Least $he won't be going anywhere." He and his group exit your penthouse, leaving you with the enraged and struggling $activeSlave.slaveName. You sigh at the amount of motion running through $his absurd tits, mountainous ass, and obese body. The $girl you used to know is barely recognizable under all that flesh and $he certainly doesn't think the same anymore. Odds are high that $he'll cause problems for you in the future, once $his body sheds the weight. Or you could leave $him as an immobile ornament, though assets of that size are definitely out of style.
+	<</if>>
+<<case "Physical Idealism">>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>>, $his added heft knocking the wind out of you. You gently wrap your arms around $him in a comforting embrace, your arms gently sinking into $his soft flesh, as $he sobs, "They made me fat! I'm <<s>>o glad tho<<s>>e guy<<s>> let me puke up all that food; I don't even want to think how big I'd be otherwi<<s>>e!" $He looks similar to how you remember, thanks to the pudge, though that can be easily rectified.
+		<<run setHealth($activeSlave, 0, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $his meaty body into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "Why did they make me into a <<s>>ow, I don't under<<s>>tand..." $He looks similar to how you remember, minus $his added weight of course.
+		<<run setHealth($activeSlave, -10, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth causing $his plump body, big breasts and fat ass to jiggle, unsure of what to make of you. As you step forward, $he asks "Can I have <<s>>ome food?" The $girl you used to know is barely recognizable under all that fat and $he certainly doesn't think the same anymore.
+		<<run setHealth($activeSlave, -30, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth causing $his fat body to jiggle, unsure of what to make of you. As you step forward, $he stumbles back. After several steps, $he screams "Keep away from me! I don't want to work out! <<S>>tuffing my fa<<c>>e and hole<<s>> whenever I plea<<s>>e i<<s>> too much fun!" The $girl you used to know is barely recognizable under that obese body; $he certainly doesn't think the same anymore, either.
+		<<run setHealth($activeSlave, -50, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "We got a problem sir. $He, um, is rather heavy and can't walk well... We're working our way up, but, do you have a freight elevator by chance?"
+		Once $activeSlave.slaveName's hugely fat ass is safely in the penthouse, you finally get a good look at $him. Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he begins to let out a low growl. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! Fit girl<<s>> are tra<<sh>>! Real men like big <<s>>oft bodie<<s>>! You're <<s>>ick! <<S>>ICK! Don't you —"
+		The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful." He pats $his fat coated shoulder, to which $he immediately sits down. Several mercs join their captain in trying to pull $him back to $his feet. A load crack and a groan of pain escapes the captain as he drops to the ground clutching his back. His comrades quickly help him from the penthouse, leaving you to deal with the scowling blob of fat and flesh. $He is intent on not budging from that spot and you aren't interested in breaking anything, though you're certain $he'll be begging for food within an hour and easily manipulated. $He is massively fat, a stark difference from the fit, thin $girl you used to know; $he certainly doesn't think the same anymore, either. Odds are high that $he'll cause problems for you in the future, be it breaking furniture or getting stuck in doors, though given $his rather laid back life up until this point, $he is likely to be quite malleable. Though $he is wheezing quite a lot considering $he is just sitting there.
+		<<run setHealth($activeSlave, -80, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<</if>>
+<<case "Hedonistic Decadence">>
+	<<run setHealth($activeSlave, 60, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "I've never had to e<<x>>er<<c>>i<<s>>e <<s>>o much, I'm exhau<<s>>ted!" You gently wrap your arms around $his soft body in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>>, feeling the muscles under $his chubby body, as $he breaks down in tears. "You aren't going to make me pump iron, are you?" While $he's thinner than you remember, and a little more muscular, $his personality is exactly the same.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he says "I don't want to ever be <<s>>o heavy again..." $He is noticeably thinner and much more muscular than you remember; $he certainly doesn't think the same anymore, either.
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he screams "Keep away from me! I don't want ever want to be a fat <<s>>ow again!" $He is thin and extremely muscular, a stark difference from the soft, chubby $girl you used to know; $he certainly doesn't think the same anymore, either.
+	<<else>>
+		<<set $activeSlave.trust = 100>>
+		Your mercenaries radio you upon arrival. "We have a problem, sir. This one is a fighter, $he already broke one of our guy's jaw. We think $he is tranq'd and restrained enough to bring in. Please be ready."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "<<S>>tay away from me, you <<s>>ick fuck! I'll never be a cow again. DON'T YOU DARE TOUCH ME!"
+		The mercenary captain is thrown back as $he explodes out of $his restraints, having been preparing to gag $him. The rest of the troop center their weapons on $him, forcing $him to back down. $He glares at you as the captain picks himself up and exits your penthouse, leaving you with the enraged $activeSlave.slaveName. $He grunts as $he exits the office for the slave quarters, stopping in the doorway. "I'll be your <<s>>lave, but you're going to be <<s>>orry." With a hand on each door frame, $he rips it out of the wall. $He lets out a single laugh while scowling at you. $He is thin and extremely muscular, a stark difference from the soft, chubby $girl you used to know; $he certainly doesn't think the same anymore, either. Odds are high that $he'll cause problems for you in the future, given $his hatred for you and $his frightening strength.
+	<</if>>
+<<case "Chattel Religionism">>
+	<<run setHealth($activeSlave, 50, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They told me <<s>>uch horrible thing<<s>> about you!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "You aren't trying to make <<s>>ome cra<<z>>y religion, are you?" While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he pleads "Plea<<s>>e don't turn me into a di<<sc>>iple of your religion..." While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he screams "Keep away from me! I don't want to be part of your cult!" While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "This one's got quite some spunk in $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "<<S>>tay away from me, you cra<<z>>y <<ps>>ycho! Making your own religion, bla<<s>>phemou<<s>>! You think your<<s>>elf a proph-"
+		The mercenary captain quickly gags $him. "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says, as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future.
+	<</if>>
+<<case "Multiculturalism">>
+	<<run setHealth($activeSlave, 60, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They <<s>>aid <<s>>uch cra<<z>>y thing<<s>>!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "They made me pray for your arcology; why i<<s>> that?" $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he prays "Plea<<s>>e pardon thi<<s>> arcology..." While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		<<set $activeSlave.trust = 40>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he drops to $his <<if hasBothLegs($activeSlave)>>$his knees<<else>>the ground<</if>> and begins praying "Plea<<s>>e pardon thi<<s>> arcology'<<s>> <<s>>in<<s>>! They know naught what they do!" While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "This one's got quite a mouth on $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a mercy. As you step forward, $he stands $his ground. After several steps, $he shouts "Be <<s>>till, I'll lead your arcology to <<s>>alvation. Pla<<c>>e your faith in me and be <<s>>av-"
+		The mercenary captain quickly gags $him. "My apologies, I did warn you about that mouth. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the disappointed $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, trying to preach $his new faith.
+	<</if>>
+<<case "Intellectual Dependency">>
+	<<run setHealth($activeSlave, 80, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They tried to teach me the mo<<s>>t ob<<sc>>ene thing<<s>>!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "They made me a whore. I feel <<s>>o di<<s>>gu<<s>>ting..." $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 15>>
+		<<set $activeSlave.devotion = 40>>
+		<<set $activeSlave.trust = 40>>
+		Upon seeing you, $activeSlave.slaveName stiffens up and waits for you to make a move. $He holds completely still, even as you place a hand on $his shoulder. $He stutters out a quiet "<<Master>>? W-what may I do f-for you?" While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		<<set $activeSlave.devotion = 65>>
+		<<set $activeSlave.trust = 65>>
+		Upon seeing you, $activeSlave.slaveName graciously bows, giving you a lovely view down $his cleavage. $He holds this position, before stating "My body i<<s>> your<<s>> to u<<s>>e." While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.devotion = 100>>
+		<<set $activeSlave.trust = 100>>
+		Upon seeing you, $activeSlave.slaveName graciously bows, giving you a lovely view down $his cleavage, before resuming $his perfect stance. "I am your property now and any thought<<s>> of my previou<<s>> owner are no longer relevant. Any feeling<<s>> I may have had have been left behind and will not influen<<c>>e me. I am your<<s>> to u<<s>>e a<<s>> you plea<<s>>e, no matter what the outcome may be. How may I <<s>>ervi<<c>>e you, <<Master>>?" While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<</if>>
+<<case "Slave Professionalism">>
+	<<run setHealth($activeSlave, 60, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They did thing<<s>> to me! My head hurt<<s>> <<s>>o much..." You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "I can barely remember thing<<s>> anymore; who were you again? I hate to a<<s>>k, but... I need a good fuck right now..." While $he looks the same as you remember, $he certainly can't think the same anymore.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he bounces into your arms. "Wanna do it?" While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName wastes no time in <<if $PC.dick != 0>>unbuckling your pants<<else>>slipping under your skirt<</if>> and going to town. While $he looks the same as you remember<<if $seePreg != 0>>, albeit a little pregnant<</if>>, $he definitely doesn't think the same anymore.
+	<<else>>
+		Your mercenaries radio you upon arrival. "This one's got one thing $his mind, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with excitement. As you step forward, $he struggles against $his bindings, desperately trying to get loose. The mercenary captain yanks $him back. "My apologies, the only thing left of $his mind is a libido it feels like. Please be careful when you unbind $him, $he's nothing more than a horny idiot now." he says as he and his group exit your penthouse, leaving you with the dripping $activeSlave.slaveName. $He looks the same as you remember<<if $seePreg != 0>>, albeit a little pregnant<</if>>, but $he acts nothing like the $girl you used to know. $He's probably too dumb to manage to cause any trouble, but is likely to be high maintenance given $his ineptitude and nymphomania.
+	<</if>>
+<<case "Petite Admiration">>
+	<<run setHealth($activeSlave, 60, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "Thi<<s>> giant woman tried to make me her pet!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "They made me make out with a giant!" $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he asks
+		/* player height check here */
+		"Can I hang out with someone taller than me?"
+		While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		<<set $activeSlave.trust = 40>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he says
+		/* player height check here */
+		"Can you hook me up with someone ni<<c>>e and tall?"
+		While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "This one's got quite some spunk in $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "How fucking DARE you <<s>>plit me up from my sweet giant! I <<s>>aw your arcology on the way in, and it'<<s>> <<S>>ICK. <<S>>o many little girl<<s>>, you're <<s>>ick, you hear me!? <<S>>I-"
+		The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, given $his hatred for the short.
+	<</if>>
+<<case "Statuesque Glorification">>
+	<<run setHealth($activeSlave, 60, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "Thi<<s>> midget kept mole<<s>>ting me!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears. "They made me get on <<if hasBothLegs($activeSlave)>>my knee<<s>><<else>>the ground<</if>> and make out with <<s>>ome tiny harlot!" $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he asks
+		/* player height check here */
+		"I<<s>> there anyone <<sh>>orter I can hang out with around here?"
+		While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		<<set $activeSlave.trust = 40>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he says
+		/* player height check here */
+		"Can you hook me up with <<s>>omeone on the <<sh>>ort <<s>>ide? I didn't really noti<<c>>e anyone on the way in..."
+		While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "This one's got quite some spunk in $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "How fucking DARE you <<s>>plit me up from my tiny wife! There wa<<s>> more love in her tiny body than in your entire arcology! To think that you fuck<<s>> pla<<c>>e everything on hei-"
+		The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future, given $his hatred for tall people.
+	<</if>>
+<<default>>
+	<<run setHealth($activeSlave, 40, $activeSlave.health.shortDamage, $activeSlave.health.longDamage)>>
+	<<if $rivalryDuration <= 5>>
+		Upon seeing you, $activeSlave.slaveName dives into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> sobbing "They told me <<s>>uch horrible thing<<s>> about you!" You gently wrap your arms around $him in a comforting embrace. $He's exactly as you remember.
+	<<elseif $rivalryDuration <= 10>>
+		Upon seeing you, $activeSlave.slaveName gingerly approaches, uncertain if $he should. You pull $him into your <<if $PC.boobs >= 650>>ample bust<<else>>chest<</if>> as $he breaks down in tears.
+		<<if $rivalryFS != 0>>
+			"You aren't trying to make <<s>>ome cra<<z>>y old-timey <<s>>o<<c>>iety, are you?"
+		<<else>>
+			"You aren't going to try to make me... do thing<<s>> to you, right?"
+		<</if>>
+		While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 15>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he hesitatingly approaches. Once $he is close enough $he says
+		<<if $rivalryFS != 0>>
+			"Plea<<s>>e don't make me play along..."
+		<<else>>
+			"I don't want to be your plaything..."
+		<</if>>
+		While $he looks the same as you remember, $he certainly doesn't think the same anymore.
+	<<elseif $rivalryDuration <= 20>>
+		Upon seeing you, $activeSlave.slaveName shifts $his weight back and forth, unsure of what to make of you. As you step forward, $he quickly steps back. After several steps, $he screams "Keep away from me! I don't want to be part of your cra<<z>>y <<s>>o<<c>>iety!" While $he looks the same as you remember, $he definitely doesn't think the same anymore.
+	<<else>>
+		<<set $activeSlave.trust = 80>>
+		Your mercenaries radio you upon arrival. "This one's got quite some spunk in $him, you better ready yourself. We're coming in now."
+		Upon seeing you, $activeSlave.slaveName's eyes fill with a distinct hatred. As you step forward, $he stands $his ground. After several steps, $he shouts "<<S>>tay away from me, you cra<<z>>y <<ps>>ycho!
+		<<if $rivalryFS != 0>>
+			Remaking a fallen empire, madne<<ss>>! You think your<<s>>elf a king —"
+		<<else>>
+			You think you can ju<<s>>t take whatever you want from people — Fuck, I don't even know if you even THINK of them a<<s>> people anymore! How dare you even think I —"
+		<</if>>
+		The mercenary captain quickly gags $him, "My apologies, I did warn you $he was a handful. Please be careful when you unbind $him, $he may try to do something stupid," he says as he and his group exit your penthouse, leaving you with the enraged $activeSlave.slaveName. $He looks the same as you remember, but $he acts nothing like the $girl you used to know. Odds are high that $he'll cause problems for you in the future.
+	<</if>>
+<</switch>>
+
+<<if $rivalryDuration <= 10 || ($rivalryFS == "Racial Supremacism" && $rivalryDuration <= 20) || ($rivalryFS == "Paternalism" && $rivalryDuration <= 20)>>
+	$He considers you $his rescuer, since $his previous owner subjected $him to unremitting horror in an attempt to offend your philosophy of $rivalryFS. $He's overjoyed to be your slave.
+<<elseif ($rivalryFS == "Racial Supremacism" && $rivalryDuration > 20) || ($rivalryFS == "Paternalism" && $rivalryDuration > 20)>>
+	$His mind and body were destroyed in an attempt to offend your philosophy of $rivalryFS. If $he ever recovers, $he'd consider you $his savior and be overjoyed to be your slave.
+<<elseif $rivalryFS == "Slave Professionalism">>
+	$His mind was ravaged and perverted by rampant use of psychosuppressants and aphrodisiacs. There is no coming back from the damages done.
+<<elseif $rivalryFS == "Intellectual Dependency">>
+	$He has undergone so much slave training that $he considers this turn of events ultimately meaningless. You are just $his new owner and $he will serve you to the best of $his abilities; as a slave should.
+<<elseif $rivalryDuration > 20>>
+	You took everything from $him and $he hates you as much as $he possibly can for it. You ripped $him away from heaven to sentence $him to a living hell, and $he swears to do everything $he can to hurt you.
+<<else>>
+	$He is horrified by this turn of events. Your rival taught $him a great deal about slave life in your arcology and indulged $his deepest fantasies. $activeSlave.slaveName considers becoming your slave little better than a condemnation to purgatory.
+<</if>>
+
+<br><br>
+<<include "New Slave Intro">>

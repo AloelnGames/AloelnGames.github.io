@@ -1,0 +1,614 @@
+:: Buy Slaves [nobr]
+
+<<set $nextButton = "Back">>
+<<set $nextLink = "Main">>
+<<set _minimumFive = $minimumSlaveCost * 5>>
+<<set _minimumTen = $minimumSlaveCost * 10>>
+
+<h2>The Market</h2>
+<div>
+	//There are many different organizations to purchase slaves from, but many of them are selective about their customers and will only sell to you if you are reputable.//
+</div>
+
+<h3>Market status</h3>
+<div>
+	<<if ($slaveCostFactor > 1.1)>>
+		@@.yellow;There is a bull market for slaves; the price of slaves is very high.@@
+	<<elseif ($slaveCostFactor > 1)>>
+		@@.yellow;The slave market is bullish; the price of slaves is high.@@
+	<<elseif ($slaveCostFactor < 0.9)>>
+		@@.yellow;There is a bear market for slaves; the price of slaves is very low.@@
+	<<elseif ($slaveCostFactor < 1)>>
+		@@.yellow;The slave market is bearish; the price of slaves is low.@@
+	<<else>>
+		The slave market is stable; the price of slaves is average.
+	<</if>>
+</div>
+
+<h2>Sex Slave Purchase Options</h2>
+<div>
+	<<if $corp.Incorporated == 1>>
+		[[Corporate Market][$slavesSeen += 1]] |
+		<<if $cash > _minimumFive>>
+			[[(x5)|Bulk Slave Generate][$slaveMarket = "corporate", $introType = "bulk", $numSlaves = 5]] |
+		<</if>>
+		<<if $cash > _minimumTen>>
+			[[(x10)|Bulk Slave Generate][$slaveMarket = "corporate", $introType = "bulk", $numSlaves = 10]] |
+		<</if>>
+		 <<if $corp.Market == 1>>//Slaves from your corporation purchased at a discounted rate.//<<else>>//Slaves from your corporation//<</if>>
+	<</if>>
+</div>
+
+<div>
+	[[The Flesh Heap|Slave Markets][$slaveMarket = "heap", $slavesSeen += 1]] | //Broken and discarded slaves. Near useless, but cheap. No longer does bulk orders after complaints.//
+</div>
+
+<div>
+	<<if $bodyswapAnnounced == 1>>
+		[[Order a custom husk slave from the Flesh Heap|Husk Slave]] | //Will need to be used on arrival.//
+	<</if>>
+</div>
+
+<div>
+	<<if ($rep > 500)>>
+		[[Kidnappers' Market|Slave Markets][$slaveMarket = "kidnappers", $slavesSeen += 1]] |
+		<<if $cash > _minimumFive>>
+			[[(x5)|Bulk Slave Generate][$slaveMarket = "kidnappers", $introType = "bulk", $numSlaves = 5]] |
+		<</if>>
+		<<if $cash > _minimumTen>>
+			[[(x10)|Bulk Slave Generate][$slaveMarket = "kidnappers", $introType = "bulk", $numSlaves = 10]] |
+		<</if>>
+		//Slaves will tend to be low quality and resistant.//
+	<</if>>
+</div>
+
+<div>
+	''Neighboring Arcologies:'' //The arcology's prosperity and culture will affect slaves who have lived there.//
+</div>
+<<for _i = 0; _i < $arcologies.length; _i++>>
+	<<if $arcologies[_i].direction != 0>>
+		<div class="indent">
+			<<capture _i>>[[Slaves from|Slave Markets][$slaveMarket = "neighbor", $numArcology = _i]]<</capture>>
+			'' $arcologies[_i].name''
+			<<if $cash > _minimumFive>>
+				| <<capture _i>>[[(x5)|Bulk Slave Generate][$slaveMarket = "neighbor", $introType = "bulk", $numSlaves = 5, $numArcology = _i]]<</capture>>
+			<</if>>
+			<<if $cash > _minimumTen>>
+				| <<capture _i>>[[(x10)|Bulk Slave Generate][$slaveMarket = "neighbor", $introType = "bulk", $numSlaves = 10, $numArcology = _i]]<</capture>>
+			<</if>>
+		</div>
+	<</if>>
+<</for>>
+
+<div>
+	<<if ($rep > 1000)>>
+		[[Runaway Hunters' Market|Slave Markets][$slaveMarket = "hunters", $slavesSeen += 1]] |
+		<<if $cash > _minimumFive>>
+			[[(x5)|Bulk Slave Generate][$slaveMarket = "hunters", $introType = "bulk", $numSlaves = 5]] |
+		<</if>>
+		<<if $cash > _minimumTen>>
+			[[(x10)|Bulk Slave Generate][$slaveMarket = "hunters", $introType = "bulk", $numSlaves = 10]] |
+		<</if>>
+		//Slaves will tend to be skilled but rebellious.//
+	<</if>>
+</div>
+
+<div>
+	<<if ($rep > 1500)>>
+		[[Indentures Market|Slave Markets][$slaveMarket = "indentures", $slavesSeen += 1]] |
+		<<if $cash > _minimumFive>>
+			[[(x5)|Bulk Slave Generate][$slaveMarket = "indentures", $introType = "bulk", $numSlaves = 5]] |
+		<</if>>
+		<<if $cash > _minimumTen>>
+			[[(x10)|Bulk Slave Generate][$slaveMarket = "indentures", $introType = "bulk", $numSlaves = 10]] |
+		<</if>>
+		//Temporary enslavement and restrictions on treatment.//
+	<</if>>
+</div>
+
+<div>
+	<<if ($rep > 2000)>>
+		[[Raiders' Market|Slave Markets][$slaveMarket = "raiders", $slavesSeen += 1]] |
+		<<if $cash > _minimumFive>>
+			[[(x5)|Bulk Slave Generate][$slaveMarket = "raiders", $introType = "bulk", $numSlaves = 5]] |
+		<</if>>
+		<<if $cash > _minimumTen>>
+			[[(x10)|Bulk Slave Generate][$slaveMarket = "raiders", $introType = "bulk", $numSlaves = 10]] |
+		<</if>>
+		//Slaves will always be sold immediately upon reaching majority.//
+	<</if>>
+</div>
+
+<div>
+	<<if ($pedo_mode == 1 || ($minimumSlaveAge <= 13 && $minimumSlaveAge <= $fertilityAge)) && ($rep > 3000)>>
+		[[Raiders' Black Market|Slave Markets][$slaveMarket = "underage raiders", $slavesSeen += 1]] |
+		<<if $cash > _minimumFive>>
+			[[(x5)|Bulk Slave Generate][$slaveMarket = "underage raiders", $introType = "bulk", $numSlaves = 5]] |
+		<</if>>
+		<<if $cash > _minimumTen>>
+			[[(x10)|Bulk Slave Generate][$slaveMarket = "underage raiders", $introType = "bulk", $numSlaves = 10]] |
+		<</if>>
+		//Very young slaves.//
+	<</if>>
+</div>
+
+<<if ($rep > 4000)>>
+	<div>
+		[[Trainers' Market|Slave Markets][$slaveMarket = "trainers", $slavesSeen += 1]] |
+		<<if $cash > _minimumFive>>
+			[[(x5)|Bulk Slave Generate][$slaveMarket = "trainers", $introType = "bulk", $numSlaves = 5]] |
+		<</if>>
+		<<if $cash > _minimumTen>>
+			[[(x10)|Bulk Slave Generate][$slaveMarket = "trainers", $introType = "bulk", $numSlaves = 10]] |
+		<</if>>
+		//Slaves will tend to be good quality and obedient.//
+	</div>
+
+	<div>
+		<<if $arcologies[0].FSPaternalist == "unset">>
+			[[Wetware CPUs|Slave Markets][$slaveMarket = "wetware", $slavesSeen += 1]] |
+			<<if $cash > _minimumFive>>
+				[[(x5)|Bulk Slave Generate][$slaveMarket = "wetware", $introType = "bulk", $numSlaves = 5]] |
+			<</if>>
+			<<if $cash > _minimumTen>>
+				[[(x10)|Bulk Slave Generate][$slaveMarket = "wetware", $introType = "bulk", $numSlaves = 10]] |
+			<</if>>
+			//Ruined bodies but keen minds. Requires some TLC, but offers outstanding training at a discount.//
+		<<else>>
+			//The paternalistic nature of your society blocks the abusive Wetware CPU manufactures from operating within your arcology.//
+		<</if>>
+	</div>
+<</if>>
+
+<div>
+	<<if ($rep > 5000)>>
+		<<set $weeklyMarket = $prisonCircuit[$prisonCircuitIndex]>>
+		[[Prisoner Sale|Criminal Market][$slavesSeen += 1]] |
+		<<if $cash > _minimumFive>>
+			[[(x5)|Bulk Slave Generate][$slaveMarket = $weeklyMarket, $introType = "bulk", $numSlaves = 5]] |
+		<</if>>
+		<<if $cash > _minimumTen>>
+			[[(x10)|Bulk Slave Generate][$slaveMarket = $weeklyMarket, $introType = "bulk", $numSlaves = 10]] |
+		<</if>>
+		This week
+		<<switch $weeklyMarket>>
+		<<case "low tier criminals">>
+			a minor prison is selling inmates.
+			//Slaves will tend to be low to mid quality with few redeeming factors.//
+		<<case "gangs and smugglers">>
+			a major prison is selling hardened criminals.
+			//Slaves will tend to be low quality and difficult but may prove useful once broken.//
+		<<case "white collar">>
+			a white collar prison is selling inmates.
+			//Slaves will tend to be medium to high quality with a variety of useful backgrounds.//
+		<<case "military prison">>
+			a military prison is selling inmates.
+			//Slaves will tend to be high quality but defiant.//
+		<</switch>>
+	<</if>>
+</div>
+
+<<if ($rep > 6000)>>
+	<div>
+		''Slave Schools:'' //High prices; will be young and healthy.//
+	</div>
+	<<if ($seeDicks != 100)>>
+		<div class="indent">
+			[[The Slavegirl School][$slavesSeen += 1]] |
+			<<if $cash > _minimumFive>>
+				[[(x5)|Bulk Slave Generate][$slaveMarket = "TSS", $introType = "bulk", $numSlaves = 5]] |
+			<</if>>
+			<<if $cash > _minimumTen>>
+				[[(x10)|Bulk Slave Generate][$slaveMarket = "TSS", $introType = "bulk", $numSlaves = 10]] |
+			<</if>>
+			//Straightforward slaves with good training.//<<if $TSS.schoolSale == 1>> //@@.yellow;Offering your first purchase at half price this week.@@//<</if>>
+		</div>
+
+		<div class="indent">
+			[[Growth Research Institute][$slavesSeen += 1]] |
+			<<if $cash > _minimumFive>>
+				[[(x5)|Bulk Slave Generate][$slaveMarket = "GRI", $introType = "bulk", $numSlaves = 5]] |
+			<</if>>
+			<<if $cash > _minimumTen>>
+				[[(x10)|Bulk Slave Generate][$slaveMarket = "GRI", $introType = "bulk", $numSlaves = 10]] |
+			<</if>>
+			//Poorly trained slaves with huge assets.//<<if $GRI.schoolSale == 1>> //@@.yellow;Offering your first purchase at half price this week.@@//<</if>>
+		</div>
+
+		<div class="indent">
+			[[St. Claver Preparatory][$slavesSeen += 1]] |
+			<<if $cash > _minimumFive>>
+				[[(x5)|Bulk Slave Generate][$slaveMarket = "SCP", $introType = "bulk", $numSlaves = 5]] |
+			<</if>>
+			<<if $cash > _minimumTen>>
+				[[(x10)|Bulk Slave Generate][$slaveMarket = "SCP", $introType = "bulk", $numSlaves = 10]] |
+			<</if>>
+			//Slaves with basic training and solid implants.//<<if $SCP.schoolSale == 1>> //@@.yellow;Offering your first purchase at half price this week.@@//<</if>>
+		</div>
+
+		<div class="indent">
+			[[The Cattle Ranch][$slavesSeen += 1]] |
+			<<if $cash > _minimumFive>>
+				[[(x5)|Bulk Slave Generate][$slaveMarket = "TCR", $introType = "bulk", $numSlaves = 5]] |
+			<</if>>
+			<<if $cash > _minimumTen>>
+				[[(x10)|Bulk Slave Generate][$slaveMarket = "TCR", $introType = "bulk", $numSlaves = 10]] |
+			<</if>>
+			//Mentally conditioned free-range cowgirls.//<<if $TCR.schoolSale == 1>> //@@.yellow;Offering your first purchase at half price this week.@@//<</if>>
+		</div>
+
+		<div class="indent">
+			[[The Hippolyta Academy][$slavesSeen += 1]] |
+			<<if $cash > _minimumFive>>
+				[[(x5)|Bulk Slave Generate][$slaveMarket = "HA", $introType = "bulk", $numSlaves = 5]] |
+			<</if>>
+			<<if $cash > _minimumTen>>
+				[[(x10)|Bulk Slave Generate][$slaveMarket = "HA", $introType = "bulk", $numSlaves = 10]] |
+			<</if>>
+			//High quality slaves of powerful physique and refined skills.//<<if $HA.schoolSale == 1>> //@@.yellow;Offering your first purchase at half price this week.@@//<</if>>
+		</div>
+	<</if>>
+	<<if ($seeDicks != 0)>>
+		<div class="indent">
+			[[L'École des Enculées][$slavesSeen += 1]] |
+			<<if $cash > _minimumFive>>
+				[[(x5)|Bulk Slave Generate][$slaveMarket = "LDE", $introType = "bulk", $numSlaves = 5]] |
+			<</if>>
+			<<if $cash > _minimumTen>>
+				[[(x10)|Bulk Slave Generate][$slaveMarket = "LDE", $introType = "bulk", $numSlaves = 10]] |
+			<</if>>
+			//Slaves optimized and trained for anal.//<<if $LDE.schoolSale == 1>> //@@.yellow;Offering your first purchase at half price this week.@@//<</if>>
+		</div>
+
+		<div class="indent">
+			[[The Gymnasium-Academy][$slavesSeen += 1]] |
+			<<if $cash > _minimumFive>>
+				[[(x5)|Bulk Slave Generate][$slaveMarket = "TGA", $introType = "bulk", $numSlaves = 5]] |
+			<</if>>
+			<<if $cash > _minimumTen>>
+				[[(x10)|Bulk Slave Generate][$slaveMarket = "TGA", $introType = "bulk", $numSlaves = 10]] |
+			<</if>>
+			//Well trained slaves with dicks.//<<if $TGA.schoolSale == 1>> //@@.yellow;Offering your first purchase at half price this week.@@//<</if>>
+		</div>
+
+		<div class="indent">
+			[[The Futanari Sisters][$slavesSeen += 1]] |
+			<<if $cash > _minimumFive>>
+				[[(x5)|Bulk Slave Generate][$slaveMarket = "TFS", $introType = "bulk", $numSlaves = 5]] |
+			<</if>>
+			<<if $cash > _minimumTen>>
+				[[(x10)|Bulk Slave Generate][$slaveMarket = "TFS", $introType = "bulk", $numSlaves = 10]] |
+			<</if>>
+			//Highly skilled, highly feminine hermaphrodites.//<<if $TFS.schoolSale == 1>> //@@.yellow;Offering your first purchase at half price this week.@@//<</if>>
+		</div>
+	<</if>>
+	<div class="indent">
+		[[Nueva Universidad de Libertad][$slavesSeen += 1]] |
+		<<if $cash > _minimumFive>>
+			[[(x5)|Bulk Slave Generate][$slaveMarket = "NUL", $introType = "bulk", $numSlaves = 5]] |
+		<</if>>
+		<<if $cash > _minimumTen>>
+			[[(x10)|Bulk Slave Generate][$slaveMarket = "NUL", $introType = "bulk", $numSlaves = 10]] |
+		<</if>>
+		//Androgynous slaves lacking genitalia.//<<if $NUL.schoolSale == 1>> //@@.yellow;Offering your first purchase at half price this week.@@//<</if>>
+	</div>
+<</if>>
+
+<div>
+	<<if ($arcologies[0].FSDegradationist != "unset")>>
+		//The Slave Shelter does not place slaves into Degradationist arcologies.//
+	<<elseif ($shelterAbuse > 10)>>
+		//The Slave Shelter has banned you due to dark rumors about you.//
+	<<elseif ($shelterAbuse > 5)>>
+		//The Slave Shelter has banned you due to rumors that you resell its slaves.//
+	<<elseif ($shelterSlaveBought == 1)>>
+		>//The Slave Shelter will not offer another slave for placement until next week.//
+	<<elseif ($rep > 7000)>>
+		[[Take in a shelter slave|Slave Shelter]] | //Presents charity cases for a nominal fee.//
+	<</if>>
+</div>
+
+<div>
+	<<if ($rep > 8000)>>
+		[[Consult the household liquidator|Household Liquidator][$slavesSeen += 2]] | //Offers slaves close to one another at a very high price.//
+	<</if>>
+</div>
+
+<<if ($rep > 1000)>>
+	<div>[[Place a special order|Custom Slave]] | //Customizable but very expensive.//</div>
+	<div>[[Place a fulfillment order|JobFulfillmentCenterOrder]] | //Fills leaderships roles for a price.//</div>
+<</if>>
+
+<<if ($rep > 12000)>>
+	<div>[[Attend an auction of a prestigious slave|Prestigious Slave]] | //Variable and expensive.//</div>
+<</if>>
+
+<<if ($propOutcome == 1)>>
+	<div>[[Attend an auction of other Elite's stock|Elite Slave]] | //Limited and very expensive.//</div>
+<</if>>
+
+<<if ($rep > 14000)>>
+	<div>[[Acquire other slaveowners' stock|Special Slave]] | //Variable and expensive.//</div>
+<</if>>
+
+<div>
+	<<if ($rep <= 500)>>
+		//You are not reputable enough to buy kidnapped slaves.//
+	<<elseif ($rep <= 1000)>>
+		//You are not reputable enough to buy recaptured slaves.//
+	<<elseif ($rep <= 1500)>>
+		//You are not reputable enough to buy indentured servants.//
+	<<elseif ($rep <= 2000)>>
+		//You are not reputable enough to buy teenaged slaves.//
+	<<elseif ($pedo_mode == 1 || ($minimumSlaveAge <= 13 && $minimumSlaveAge <= $fertilityAge)) && ($rep <= 3000)>>
+		//You are not reputable enough to buy underaged slaves.//
+	<<elseif ($rep <= 4000)>>
+		//You are not reputable enough to buy trained slaves.//
+	<<elseif ($rep <= 5000)>>
+		//You are not reputable enough to buy prison slaves.//
+	<<elseif ($rep <= 6000)>>
+		//You are not reputable enough to acquire fresh school slaves.//
+	<<elseif ($rep <= 7000)>>
+		//You are not reputable enough to take in Shelter slaves.//
+	<<elseif ($rep <= 8000)>>
+		//You are not reputable enough to consult the household liquidator.//
+	<<elseif ($rep <= 1000)>>
+		//You are not reputable enough to order custom slaves.//
+	<<elseif ($rep <= 12000)>>
+		//You are not reputable enough to bid on prestigious slaves.//
+	<<elseif ($rep <= 14000)>>
+		//You are not reputable enough to acquire other slaveowners' stock.//
+	<<else>>
+		You are so reputable that you can access all of the Free Cities' slaving markets.
+	<</if>>
+</div>
+
+
+ <h2>Selling slaves</h2>
+ <div>
+	While you are at the market, you may want to [[look at your own underperforming slaves|Underperforming Slaves]].
+ </div>
+
+<h2>Menial Slaves</h2>
+
+<div>
+	Slave demand is
+	<<if $menialDemandFactor <= -35000>>
+		@@.red;''extremely low''@@
+	<<elseif $menialDemandFactor <= -20000>>
+		@@.red;''very low''@@
+	<<elseif $menialDemandFactor <= 0>>
+		@@.yellow;''weak''@@
+	<<elseif $menialDemandFactor >= 35000>>
+		@@.green;''extremely high''@@
+	<<elseif $menialDemandFactor >= 20000>>
+		@@.green;''very high''@@
+	<<else>>
+		@@.yellow;''strong''@@
+	<</if>>
+	<<if $deltaDemand > 0>>
+		and @@.green;''improving''@@
+	<<elseif $deltaDemand < 0>>
+		and @@.red;''decreasing''@@
+	<</if>>
+	<<if $deltaDemand != 0>>
+		<<if $demandTimer - $elapsedDemandTimer < 3>>
+			but it might change soon
+		<</if>>
+	<</if>>
+	<<if ($cheatMode) && ($cheatModeM)>>
+		<span id="menialDemandFactor">
+			@@.yellowgreen;Slave Demand@@
+			| <<print $menialDemandFactor>>
+		</span>
+		<<set _TmenialDemandFactor = $menialDemandFactor>>
+		<<textbox "_TmenialDemandFactor" _TmenialDemandFactor>>
+		<<link "Apply">>
+			<<set $menialDemandFactor = Math.clamp(Math.trunc(Number(_TmenialDemandFactor)),-50000,50000) || $menialDemandFactor, $cheater = 1>>
+			<<replace "#menialDemandFactor">>
+				@@.yellowgreen; Slave Demand@@
+				| <<print $menialDemandFactor>>
+			<</replace>>
+		<</link>>
+	<</if>>
+</div>
+
+<div>
+	Slave supply is
+	<<if $menialSupplyFactor <= -35000>>
+		@@.green;''extremely low''@@
+	<<elseif $menialSupplyFactor <= -20000>>
+		@@.green;''very low''@@
+	<<elseif $menialSupplyFactor <= 0>>
+		@@.yellow;''weak''@@
+	<<elseif $menialSupplyFactor >= 35000>>
+		@@.red;''extremely high''@@
+	<<elseif $menialSupplyFactor >= 20000>>
+		@@.red;''very high''@@
+	<<else>>
+		@@.yellow;''strong''@@
+	<</if>>
+	<<if $deltaSupply > 0>>
+		and @@.red;''improving''@@
+	<<elseif $deltaSupply < 0>>
+		and @@.green;''decreasing''@@
+	<</if>>
+	<<if $deltaSupply != 0>>
+		<<if $supplyTimer - $elapsedDemandTimer < 3>>
+			but it might change soon
+		<</if>>
+	<</if>>
+	<<if ($cheatMode) && ($cheatModeM)>>
+		<span id="menialSupplyFactor">
+			@@.yellowgreen;Slave Supply@@
+			| <<print $menialSupplyFactor>>
+		</span>
+		<<set _TmenialSupplyFactor = $menialSupplyFactor>>
+		<<textbox "_TmenialSupplyFactor" _TmenialSupplyFactor>>
+		<<link "Apply">>
+			<<set $menialSupplyFactor = Math.clamp(Math.trunc(Number(_TmenialSupplyFactor)),-50000,50000) || $menialSupplyFactor, $cheater = 1>>
+			<<replace "#menialSupplyFactor">>
+				@@.yellowgreen; Slave Supply@@
+				| <<print $menialSupplyFactor>>
+			<</replace>>
+		<</link>>
+	<</if>>
+</div>
+
+<div>
+	<<= MenialPopCap()>>
+	The parts of your arcology you own can house a total of <<= num($PopCap)>> menial slaves.
+</div>
+
+<<set _menialPrice = menialSlaveCost()>>
+<<set _bulkMax = $PopCap-$menials-$fuckdolls-$menialBioreactors>>
+
+<div>
+	<<if $menials > 1>>
+		You own <<print num(Math.trunc($menials))>> menial slaves.
+	<<elseif $menials > 0>>
+		You own one menial slave.
+	<<else>>
+		You do not own any menial slaves.
+	<</if>>
+	The market price of menials is <<print cashFormat(_menialPrice)>>.
+	<<set _optionsBreak = 0>>
+	<<if _bulkMax > 0 && $cash > _menialPrice>>
+		[[Buy|Buy Slaves][$menials+=1,$menialSupplyFactor-=1,cashX(forceNeg(_menialPrice), "menialTransfer")]]
+		<<if $cash > (menialSlaveCost(10))*10>>
+			[[(x10)|Buy Slaves][$menials+=10,$menialSupplyFactor-=10,cashX(forceNeg((menialSlaveCost(10))*10), "menialTransfer")]]
+		<</if>>
+		<<if $cash > (menialSlaveCost(100))*100>>
+			[[(x100)|Buy Slaves][$menials+=100,$menialSupplyFactor-=100,cashX(forceNeg((menialSlaveCost(100))*100), "menialTransfer")]]
+		<</if>>
+		<<if $cash > (_menialPrice+1)*2>>
+			<<set _menialBulkPremium = Math.trunc(1 + Math.clamp($cash/_menialPrice,0,_bulkMax)/400)>>
+			[[(max)|Buy Slaves][$menials+=Math.trunc(Math.clamp($cash/(_menialPrice+_menialBulkPremium),0,_bulkMax)),$menialSupplyFactor-=Math.trunc(Math.clamp($cash/(_menialPrice+_menialBulkPremium),0,_bulkMax)),cashX(forceNeg(Math.trunc(Math.clamp($cash/(_menialPrice+_menialBulkPremium),0,_bulkMax))*(_menialPrice+_menialBulkPremium)), "menialTransfer")]]
+		<</if>>
+		//Bulk transactions may require offering a premium.//
+		<<set _optionsBreak = 1>>
+	<</if>>
+	<<if $menials >= 1>>
+		<<if _optionsBreak>>|<</if>>
+		[[Sell|Buy Slaves][$menials-=1,$menialDemandFactor-=1,cashX(_menialPrice, "menialTransfer")]]
+		<<if $menials >= 10>>
+			[[(x10)|Buy Slaves][$menials-=10,$menialDemandFactor-=10,cashX(((menialSlaveCost(-10))*10), "menialTransfer")]]
+			<<if $menials >= 100>>
+				[[(x100)|Buy Slaves][$menials-=100,$menialDemandFactor-=100,cashX(((menialSlaveCost(-100))*100), "menialTransfer")]]
+			<</if>>
+		<</if>>
+		[[(all)|Buy Slaves][cashX(($menials*(menialSlaveCost(-$menials))), "menialTransfer"),$menialDemandFactor-=$menials,$menials = 0]]
+		<<if $arcologies[0].FSPaternalist == "unset">>
+			<<if $arcadeUpgradeFuckdolls > 0>>
+				<<set _fconvertCost = 100>>
+				<div class="indent">
+					[[Convert to Fuckdoll|Buy Slaves][$menials-=1,$fuckdolls+=1,cashX(forceNeg(_fconvertCost), "menialTransfer")]]
+					<<if $menials >= 10>>
+						[[(x10)|Buy Slaves][$menials-=10,$fuckdolls+=10,cashX(forceNeg(10*(_fconvertCost)), "menialTransfer")]]
+						<<if $menials >= 100>>
+							[[(x100)|Buy Slaves][$menials-=100,$fuckdolls+=100,cashX(forceNeg(100*(_fconvertCost)), "menialTransfer")]]
+						<</if>>
+					<</if>>
+					[[(all)|Buy Slaves][$fuckdolls+=$menials,cashX(forceNeg((_fconvertCost)*($menials)), "menialTransfer"),$menials=0]]
+					//Conversion costs <<print cashFormat(_fconvertCost)>> each//
+				</div>
+			<</if>>
+			<<if $dairyFeedersUpgrade > 0>>
+				<div class="indent">
+					[[Convert to Bioreactor|Buy Slaves][$menials-=1,$menialBioreactors+=1,cashX(-100, "menialTransfer")]]
+					<<if $menials >= 10>>
+						[[(x10)|Buy Slaves][$menials-=10,$menialBioreactors+=10,cashX(-1000, "menialTransfer")]]
+						<<if $menials >= 100>>
+							[[(x100)|Buy Slaves][$menials-=100,$menialBioreactors+=100,cashX(-10000, "menialTransfer")]]
+						<</if>>
+					<</if>>
+					[[(all)|Buy Slaves][$menialBioreactors+=$menials,cashX(forceNeg(500*$menials), "menialTransfer"),$menials=0]]
+					//Conversion costs <<print cashFormat(500)>> each//
+				</div>
+			<</if>>
+		<</if>>
+	<</if>>
+</div>
+
+<div>
+	<<if $fuckdolls > 1>>
+		You own <<print num(Math.trunc($fuckdolls))>> standard Fuckdolls.
+	<<elseif $fuckdolls > 0>>
+		You own one standard Fuckdoll.
+	<<elseif $arcologies[0].FSPaternalist == "unset">>
+		You do not own any standard Fuckdolls.
+	<</if>>
+	<<if ($fuckdolls > 0) || ($arcologies[0].FSPaternalist == "unset")>>
+		The market price of standard Fuckdolls is <<print cashFormat(_menialPrice)>>.
+		<<set _optionsBreak = 0>>
+		<<if _bulkMax > 0>>
+			<<if $arcologies[0].FSPaternalist == "unset" && $cash > _menialPrice>>
+				[[Buy|Buy Slaves][$fuckdolls+=1,$menialSupplyFactor-=1,cashX(forceNeg(_menialPrice), "fuckdollsTransfer")]]
+				<<if $cash > menialSlaveCost(10)*10>>
+					[[(x10)|Buy Slaves][$fuckdolls+=10,$menialSupplyFactor-=10,cashX(forceNeg(menialSlaveCost(10)*10), "fuckdollsTransfer")]]
+				<</if>>
+				<<if $cash > menialSlaveCost(100)*100>>
+					[[(x100)|Buy Slaves][$fuckdolls+=100,$menialSupplyFactor-=100,cashX(forceNeg(menialSlaveCost(100)*100), "fuckdollsTransfer")]]
+				<</if>>
+				<<if $cash > ((_menialPrice+1)*2)>>
+					[[(max)|Buy Slaves][$fuckdolls+=Math.trunc(Math.clamp($cash/_menialPrice,0,_bulkMax)),$menialSupplyFactor-=Math.trunc(Math.clamp($cash/_menialPrice,0,_bulkMax)),cashX(forceNeg(Math.trunc(Math.clamp($cash/_menialPrice,0,_bulkMax))*_menialPrice), "fuckdollsTransfer")]]
+				<</if>>
+				//Bulk transactions may require offering a premium.//
+				<<set _optionsBreak = 1>>
+			<</if>>
+		<</if>>
+		<<if $fuckdolls >= 1>>
+			<<if _optionsBreak>>|<</if>>
+			[[Sell|Buy Slaves][$fuckdolls-=1,$menialDemandFactor-=1,cashX(_menialPrice, "fuckdollsTransfer")]]
+		<<if $fuckdolls >= 10>>
+			[[(x10)|Buy Slaves][$fuckdolls-=10,$menialDemandFactor-=10,cashX((menialSlaveCost(-10)*10), "fuckdollsTransfer")]]
+			<<if $fuckdolls >= 100>>
+				[[(x100)|Buy Slaves][$fuckdolls-=100,$menialDemandFactor-=100,cashX((menialSlaveCost(-100)*100), "fuckdollsTransfer")]]
+			<</if>>
+		<</if>>
+		[[(all)|Buy Slaves][cashX($fuckdolls*(menialSlaveCost(-$fuckdolls)), "fuckdollsTransfer"),$menialDemandFactor-=$fuckdolls,$fuckdolls = 0]]
+		<</if>>
+	<</if>>
+</div>
+
+<div>
+	<<if $menialBioreactors > 1>>
+		You own <<print num(Math.trunc($menialBioreactors))>> standard bioreactors.
+	<<elseif $menialBioreactors > 0>>
+		You own one standard bioreactor.
+	<<elseif $arcologies[0].FSPaternalist == "unset">>
+		You do not own any standard bioreactors.
+	<</if>>
+	<<if ($menialBioreactors > 0) || ($arcologies[0].FSPaternalist == "unset")>>
+		The market price of standard bioreactors is <<print cashFormat((_menialPrice-100))>>.
+		<<set _optionsBreak = 0>>
+		<<if _bulkMax > 0>>
+			<<if $arcologies[0].FSPaternalist == "unset" && $cash > _menialPrice+100>>
+				[[Buy|Buy Slaves][$menialBioreactors+=1,$menialSupplyFactor-=1,cashX(forceNeg(_menialPrice+100), "menialBioreactors")]]
+				<<if $cash > (menialSlaveCost(10)-100)*10>>
+					[[(x10)|Buy Slaves][$menialBioreactors+=10,$menialSupplyFactor-=10,cashX(forceNeg((menialSlaveCost(10)-100)*10), "menialBioreactors")]]
+				<</if>>
+				<<if $cash > (menialSlaveCost(100)-100)*100>>
+					[[(x100)|Buy Slaves][$menialBioreactors+=100,$menialSupplyFactor-=100,cashX(forceNeg((menialSlaveCost(100)-100)*100), "menialBioreactors")]]
+				<</if>>
+				<<if $cash > (_menialPrice-99)*2>>
+					<<set _bioreactorBulkPremium = Math.trunc(1+ Math.clamp($cash/(_menialPrice-99),0,_bulkMax)/400)>>
+					[[(max)|Buy Slaves][$menialBioreactors+=Math.trunc(Math.clamp($cash/(_menialPrice-99+_bioreactorBulkPremium),0,_bulkMax)),$menialSupplyFactor-=Math.trunc(Math.clamp($cash/(_menialPrice-99+_bioreactorBulkPremium),0,_bulkMax)),cashX(forceNeg(Math.trunc(Math.clamp($cash/(_menialPrice-99+_bioreactorBulkPremium),0,_bulkMax))*(_menialPrice-99+_bioreactorBulkPremium)), "menialBioreactors")]]
+				<</if>>
+				//Bulk transactions may require offering a premium.//
+				<<set _optionsBreak = 1>>
+			<</if>>
+		<</if>>
+		<<if $menialBioreactors >= 1>>
+			<<if _optionsBreak>>|<</if>>
+			[[Sell|Buy Slaves][$menialBioreactors-=1,$menialDemandFactor-=1,cashX((_menialPrice-100), "menialBioreactors")]]
+			<<if $menialBioreactors >= 10>>
+				[[(x10)|Buy Slaves][$menialBioreactors-=10,$menialDemandFactor-=10,cashX(((menialSlaveCost(-10)-100)*10), "menialBioreactors")]]
+				<<if $menialBioreactors >= 100>>
+					[[(x100)|Buy Slaves][$menialBioreactors-=100,$menialDemandFactor-=100,cashX(((menialSlaveCost(-100)-100)*100), "menialBioreactors")]]
+				<</if>>
+			<</if>>
+			[[(all)|Buy Slaves][cashX(($menialBioreactors*(menialSlaveCost(-$menialBioreactors)-100)), "menialBioreactors"),$menialDemandFactor-=$menialBioreactors,$menialBioreactors = 0]]
+		<</if>>
+	<</if>>
+</div>

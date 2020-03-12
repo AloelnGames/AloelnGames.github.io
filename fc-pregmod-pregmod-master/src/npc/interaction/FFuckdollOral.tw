@@ -1,0 +1,36 @@
+:: FFuckdollOral [nobr]
+
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+
+<<set getSlave($AS).counter.oral++, $oralTotal++>>
+You decide to use the Fuckdoll's <<if getSlave($AS).lips > 95>>facepussy<<else>>face hole<</if>>.
+<<if getSlave($AS).fuckdoll <= 10>>
+    Since $he is not well adapted to life as a living sex toy yet, $he won't respond to position commands. So, you simply <<if hasBothLegs(getSlave($AS))>>shove $him into a kneeling position<<else>>set $him on the couch<</if>> and straddle $his face.
+<<elseif getSlave($AS).fuckdoll <= 80>>
+    $He can follow intermediate commands, so you order $him into a position for use of $his face hole. $He obediently <<if hasBothLegs(getSlave($AS))>>gets to $his knees<<else>>cranes $his neck up<</if>> and sticks $his tongue out as far as it will go, wiggling it invitingly. You straddle $his face.
+<<else>>
+    $He can follow advanced commands, so you order $him into a position for use of $his face hole. $He instantly <<if hasAnyLegs(getSlave($AS))>><<if $PC.dick != 0>>bends at the waist and turns $his head upward, placing $his throat horizontally and at waist height.<<else>>gets to $his knees and turns $his head upward at just the right angle for a pussy to ride $his face hole.<</if>><<else>>cranes $his neck up and sticks $his tongue out as far as it will go, wiggling it invitingly.<</if>> You straddle $his face.
+<</if>>
+<<if getSlave($AS).fuckdoll <= 20>>
+    $He's not fully used to being surprised with face rape, so $he struggles, and $his difficulty breathing <<if $PC.dick != 0>>makes $his throat spasm around your dickhead<<else>>feels lovely on your cunt<</if>>.
+<<elseif getSlave($AS).fuckdoll <= 50>>
+    Aware that $he is supposed to relax and let you rape $his face, $he does $his best to let you <<if $PC.dick != 0>>fuck $his throat<<else>>ride $his face<</if>>.
+<<else>>
+    You command $him to <<if $PC.dick != 0>>milk your dick, and $he begins to suck with almost frightening force<<else>>pleasure your cunt, and $he begins to eat you out with almost frightening hunger<</if>>.
+<</if>>
+<<if getSlave($AS).fuckdoll <= 60>>
+    <<if getSlave($AS).energy > 80>>Denied any other outlet for $his extreme sex drive, $he orgasms from nothing more than oral stimulation.<</if>>
+<<else>>
+    $He's so perfectly tuned that $he begins to orgasm from nothing more than oral stimulation, and $he continues to shiver with repeated orgasms as $he sucks.
+<</if>>
+You climax, <<if $PC.dick != 0>>blowing your load down $his throat<<else>>giving $him a good amount of femcum to swallow<</if>>, and return $him to <<if hasAnyLegs(getSlave($AS))>>a standing position<<else>>where $he was resting<</if>>.
+<<if $PC.dick != 0>>
+    <<if getSlave($AS).lips > 95>>$He gives sloppy blowjobs, $his lips being too big for much control, and strings of your cum beribbon $his suit. The Fuckdoll will be cleaned by another slave.
+    <<else>>$He swallows repeatedly as $he returns to $his resting posture.
+    <</if>>
+<</if>>
+
+<<if passage() != "Slave Interact">>
+    <<set $slaves[$slaveIndices[getSlave($AS).ID]] = getSlave($AS)>>
+<</if>>

@@ -1,0 +1,204 @@
+:: RE busy master suite [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "RIE Eligibility Check">>
+
+/* figure out how each slave will be participating in the train */
+<<set _msSlaves = $slaves.filter((s) => s.fuckdoll === 0 && s.assignment === "serve in the master suite")
+	.map((s) => {
+		let options = [];
+		if (canDoAnal(s) && s.anus > 0) {
+			options.push("anal");
+		}
+		if (canDoVaginal(s) && s.vagina > 0) {
+			options.push("vaginal");
+		}
+		if (options.length === 0) {
+			options.push("none");
+		}
+		return {slave: s, mode: options.pluck()};
+	});>>
+<<set _bottomSlave = _msSlaves.find((s) => s.mode !== "none").slave>>
+
+/* insufficient participants */
+<<set _participantCount = _msSlaves.filter((s) => s.mode !== "none").length>> /* SC <<if>> parser is stupid and can't deal with lambdas, so stuff it in a temporary */
+<<if _participantCount < 3>>
+	<<goto "RIE Eligibility Check">>
+<<else>>
+
+<<setLocalPronouns $Concubine>>
+<<setLocalPronouns _bottomSlave 2>>
+
+<p>You have an extended meeting with a prominent citizen planned, from the start of business in the morning until you're done. That's likely to be in the late evening, since he's probably going to get into technical business proposals, and $Concubine.slaveName knows it. $He is surprised, therefore, when a minor business emergency calls your would-be interlocutor away, canceling the meeting and sending you home hours earlier than you'd planned. $He <<if canTalk($Concubine)>>giggles helplessly<<else>>signs humorously<</if>> at the surprise when you walk into your suite. Apparently, $he decided to while away the hours until you got back by having some truly grandiose group sex with all the slaves you have in the suite.</p>
+
+<p>$He had to turn to greet you as you entered, since $he was facing away from the entry, and the reason why is rather obvious. Up near the opposite wall, _bottomSlave.slaveName is on the floor with _his2 face down and _his2 ass up.
+
+/* build the train from all participating slaves */
+<<print _msSlaves.filter((s) => s.mode !== "none").reduce((acc, cur, i, arr) => {
+	let r = ``;
+	const {mode, slave} = cur;
+	const nextSlave = (i+1 >= arr.length) ? V.Concubine : arr[i+1].slave;
+	let hole = () => {
+		if (mode === "vaginal") {
+			if (slave.vagina > 2) {
+				return "loose pussy";
+			} else if (slave.vagina > 1) {
+				return "pussy";
+			} else {
+				return "tight pussy";
+			}
+		} else if (mode === "anal") {
+			if (slave.anus > 2) {
+				return "asspussy";
+			} else if (slave.anus > 1) {
+				return "asshole";
+			} else {
+				return "tight butt";
+			}
+		}
+	};
+	let penetrator = () => {
+		let t = ``;
+		if (canPenetrate(nextSlave)) {
+			t += nextSlave.slaveName + "'s ";
+			if (nextSlave.dick > 3) {
+				t += "painfully big";
+			} else {
+				t = "hard";
+			}
+			t += "dick";
+		} else {
+			t += "a ";
+			const size = (mode === "vaginal" ? slave.vagina : slave.anus);
+			if (size > 2) {
+				t += "huge";
+			} else if (size > 1) {
+				t += "big";
+			} else {
+				t += "moderate";
+			}
+			t += " strap-on worn by " + nextSlave.slaveName;
+		}
+		return t;
+	};
+
+	if (i === 0) {
+		return r; /* bottom slave already accounted for */
+	} else if (i !== arr.length-1) {
+		/* middle slaves */
+		r += `${slave.slaveName}'s ${hole()} ` + "is" /* FUCK SUGARCUBE */ + ` filled by ${penetrator()}, `;
+		if (nextSlave.belly >= 150000) {
+			r += `whose middle is so obscenely distented that ${slave.slaveName} is struggling to support it.`;
+		} else if (nextSlave.belly >= 10000 || nextSlave.weight >= 160) {
+			r += `whose middle is resting on ${slave.slaveName}'s ${slave.skin} back.`;
+		} else if (nextSlave.boobs > 10000) {
+			r += `whose tits are so unreasonably large they're resting on ${slave.slaveName}'s ${slave.skin} back.`;
+		} else if (slave.butt > 4) {
+			r += `well cushioned by ${slave.slaveName}'s huge ass.`;
+		} else if (nextSlave.nipples === "huge") {
+			r += `who is bending to rub ${getPronouns(nextSlave).his} enormous hard nipples across ${slave.slaveName}'s ${slave.skin} back.`;
+		} else if (nextSlave.lips > 40) {
+			r += `who is bending forward to nibble along ${slave.slaveName}'s ${slave.skin} neck.`;
+		} else if (hasAnyArms(nextSlave)) {
+			r += `who is reaching around to grope ${slave.slaveName}'s ${slave.skin} chest.`;
+		} else {
+			r += `who is propped up against ${slave.slaveName}'s ${slave.skin} butt.`;
+		}
+	} else {
+		/* top slave */
+		r += `Finally, ${slave.slaveName}'s ${hole()} ` + "is" /* FUCK SUGARCUBE */ + ` filled by ${penetrator()}, `;
+		r += "who has paused $his thrusting to issue a preemptory order to the slaves to stay where they are, before turning to greet you cheerfully.";
+	}
+	seX(nextSlave, "penetrative", slave, mode, 1);
+	return acc + ` ` + r;
+}, ``)>></p>
+
+/* and now describe what the non-participating slaves are doing */
+<<set _nonparticipants = _msSlaves.filter((s) => s.mode === "none").map((s) => s.slave)>>
+<<if _nonparticipants.length > 0>>
+	<p>
+		<<print _nonparticipants.map((s) => s.slaveName).reduce((res, ch, i, arr) => res + (i === arr.length - 1 ? ' and ' : ', ') + ch)>> can't participate in the train, so $Concubine.slaveName has them busy lying under the slaves who are, offering what oral stimulation they can manage.
+	</p>
+	<<run _nonparticipants.forEach((s) => actX(s, "oral"))>>
+<</if>>
+
+<<set _top = _msSlaves.slice().reverse().find((s) => s.mode !== "none")>>
+
+<<set _concubineMode = "none">>
+<<if canDoAnal($Concubine) && $Concubine.anus > 0>>
+	<<set _concubineMode = "anal">>
+	<<if ($Concubine.anus > 2)>><<set _concubineHole = "loose anus">><<elseif ($Concubine.anus > 1)>><<set _concubineHole = "asshole">><<else>><<set _concubineHole = "tight little asshole">><</if>>
+<<elseif canDoVaginal($Concubine) && $Concubine.vagina > 0>>
+	<<set _concubineMode = "vaginal">>
+	<<if ($Concubine.vagina > 2)>><<set _concubineHole = "loose pussy">><<elseif ($Concubine.vagina > 1)>><<set _concubineHole = "pussy">><<else>><<set _concubineHole = "tight little pussy">><</if>>
+<</if>>
+<span id="result">
+<<if _concubineMode !== "none">>
+	<<link "Slide in behind the concubine for some action">>
+		<<replace "#result">>
+		<<setLocalPronouns _top.slave 2>>
+		$Concubine.slaveName anticipates you, and is already sliding $himself partway out of _top.slave.slaveName and cocking $his hips to spread $his
+		<<if $activeSlave.butt > 15>>
+			immeasurable
+		<<elseif $activeSlave.butt > 10>>
+			expansive
+		<<elseif $activeSlave.butt > 7>>
+			enormous
+		<<elseif ($Concubine.butt > 5)>>
+			huge
+		<<elseif ($Concubine.butt > 2)>>
+			healthy
+		<<else>>
+			trim
+		<</if>>
+		buttocks as wide as $he can without disentangling $himself from the sex train. Up on the bed $he's at just the right height, and $he winks $his _concubineHole invitingly<<if canTalk($Concubine)>>, laughing at the sheer decadence of it<</if>>. <<if ($PC.dick == 0)>>You pull on a strap-on and push it<<else>>You push yourself<</if>> home with some force, your concubine's extreme state of arousal leaving $his ass very relaxed and welcoming; the thrust shoves $him forward to hilt $himself in _top.slave.slaveName, and so on down the line, producing more giggling, some squealing, and much scrabbling for balance. It takes a while to find the rhythm, and while you wait for the inevitable tangles to be fixed you decide to challenge yourself. You reach around and <<if ($Concubine.boobs > 10000)>>sink your hands into $Concubine.slaveName's massive boobs<<elseif ($Concubine.boobs > 1000)>>heft $Concubine.slaveName's heavy boobs<<elseif ($Concubine.boobs > 300)>>tease $Concubine.slaveName's healthy breasts<<else>>massage $Concubine.slaveName's flat chest<</if>>, nibbling $his $Concubine.skin neck, and generally torturing $him with stimulation until $he climaxes to $his beloved <<= WrittenMaster($Concubine)>>. When $he does, you extract yourself and pull $him unceremoniously off _top.slave.slaveName, replacing $him in _top.slave.slaveName's <<if _top.mode === "anal">>butt<<else>>pussy<</if>>. You work your way down the line, orgasm by orgasm, delaying your own climax until the exhausted _bottomSlave.slaveName manages yet another orgasm by heroic efforts, and you're done. As you roll off _him2, panting, there is scattered applause and much congratulation from your harem of @@.mediumaquamarine;trusting slaves.@@
+		<<set getSlave($Concubine.ID).trust += 5>>
+		<<run seX($PC, "penetrative", getSlave($Concubine.ID), _concubineMode)>>
+		<<run _msSlaves.forEach((s) => {
+			s.slave.trust += 1;
+			seX($PC, "penetrative", s.slave, s.mode);
+		})>>
+		<<if canImpreg(_bottomSlave, $PC)>>
+			<<= knockMeUp(_bottomSlave, 10, 1, $PC.ID, 1)>>
+		<</if>>
+		<</replace>>
+	<</link>>
+<</if>>
+<br><<link "Slide in up at the head of the bed for some oral">>
+	<<replace "#result">>
+	<<setLocalPronouns _bottomSlave 2>>
+	_bottomSlave.slaveName's <<= App.Desc.eyesColor(_bottomSlave)>> widen when you push _him2 upright for a moment and slide in under _him2, but _he2 wraps _his2
+	<<if (_bottomSlave.lips > 95)>>
+		facepussy
+	<<elseif (_bottomSlave.lips > 70)>>
+		dick sucking lips
+	<<elseif (_bottomSlave.lips > 20)>>
+		pretty lips
+	<<else>>
+		lips
+	<</if>>
+	around your <<if ($PC.dick == 0)>>clit<<else>>cock<<if $PC.vagina != -1>> and starts stroking your pussy<</if>><</if>> eagerly enough, even as _msSlaves[1].slave.slaveName goes back to fucking _him2. The sex train is fairly gentle, since anything too fast would disintegrate the gymnastic arrangement, but _bottomSlave.slaveName is still getting enough stimulation that _he2 whimpers quietly into your <<if ($PC.vagina != -1)>>pussy<<else>>dick<</if>>, a nice feeling. The blowjob is <<if (_bottomSlave.skill.oral >= 100)>>masterful, despite the distraction<<elseif (_bottomSlave.skill.oral > 10)>>serviceable, despite the distraction<<else>>only mediocre, but serviceable enough<</if>>, so you let _him2 work for a while before gently shoving _him2 off the side of the bed and telling _him2 to get to the back of the line. The slaves all shuffle forward awkwardly, and inadvertently block your view so that you hear rather than see _bottomSlave.slaveName start groping your concubine $Concubine.slaveName's
+	<<if $activeSlave.butt > 15>>
+		immeasurable
+	<<elseif $activeSlave.butt > 10>>
+		expansive
+	<<elseif $activeSlave.butt > 7>>
+		enormous
+	<<elseif ($Concubine.butt > 5)>>
+		huge
+	<<elseif ($Concubine.butt > 2)>>
+		healthy
+	<<else>>
+		trim
+	<</if>>
+	ass down near the foot of the bed. You climax, on occasion, but are enjoying yourself so immensely that you let the slaves continue the rotation until you're entirely spent, and they're entirely exhausted. You reach for a tablet to get some work done, in the center of a pile of sweaty, tired slaves, all of whom are resting with at least one body part in contact with their @@.hotpink;beloved@@ <<= properMaster()>>.
+	<<set getSlave($Concubine.ID).devotion += 5>>
+	<<run seX($PC, "penetrative", getSlave($Concubine.ID), "oral")>>
+	<<run _msSlaves.forEach((s) => {
+		s.slave.devotion += 1;
+		seX($PC, "penetrative", s.slave, "oral", 2);
+	})>>
+	<</replace>>
+<</link>>
+</span>
+
+<</if>> /* closes eligibility check */

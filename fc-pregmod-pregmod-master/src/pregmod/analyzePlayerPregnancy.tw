@@ -1,0 +1,334 @@
+:: Analyze PC Pregnancy [nobr]
+
+<<if lastVisited("Incubator") === 1>>
+	<<set $storedLink = "Incubator">>
+<<elseif lastVisited("Manage Personal Affairs") === 1>>
+	<<set $storedLink = "Manage Personal Affairs">>
+<</if>>
+<<set $nextButton = "Continue", $nextLink = $storedLink>>
+
+<<set _WL = $PC.womb.length, _incubatorReservations = WombReserveCount($PC, "incubator"), _nurseryReservations = WombReserveCount($PC, "nursery")>>
+
+<<if _WL == 0>>
+	<<goto "Manage Personal Affairs">>
+<<else>>
+	<p class="scene-intro">
+		You make yourself comfortable and prep your stomach for examination. <<PlayerBelly>>
+	</p>
+
+	<p>
+		<h2>Furthest developed pregnancy</h2>
+		<div class="indent">
+			Fetal development week: $PC.preg
+		</div>
+	</p>
+
+	<<if $incubator + $nursery > 0>>
+	<p>
+		<<if $incubator > 0>>
+			<<if _incubatorReservations > 0>>
+				<<link "Remove all of your children from $incubatorName" "Analyze PC Pregnancy">>
+					<<run WombChangeReserveType($PC, "incubator", "")>>
+					<<set $reservedChildren -= _incubatorReservations>>
+				<</link>> |
+			<</if>>
+			<<if _incubatorReservations < _WL && ($reservedChildren + _WL - _incubatorReservations <= $freeTanks)>>
+				<<link "Keep all of your children in $incubatorName" "Analyze PC Pregnancy">>
+					<<run WombChangeReserveType($PC, "nursery", "incubator")>>
+					<<run WombChangeReserveType($PC, "", "incubator")>>
+					<<set $reservedChildrenNursery -= _nurseryReservations>>
+					<<set $reservedChildren += _WL - _incubatorReservations>>
+				<</link>>
+			<<elseif _incubatorReservations < _WL>>
+				There is not enough free space in $incubatorName for the rest of your children.
+			<</if>>
+		<</if>>
+	</p>
+
+	<p>
+		<<if $nursery > 0>>
+			<<if _nurseryReservations > 0>>
+				<<link "Remove all of your children from $nurseryName" "Analyze PC Pregnancy">>
+					<<run WombChangeReserveType($PC, "nursery", "")>>
+					<<set $reservedChildrenNursery -= _nurseryReservations>>
+				<</link>> |
+			<</if>>
+			<<if _nurseryReservations < _WL && ($reservedChildrenNursery + _WL - _nurseryReservations <= $freeCribs)>>
+				<<link "Keep all of your children in $nurseryName" "Analyze PC Pregnancy">>
+					<<run WombChangeReserveType($PC, "incubator", "nursery")>>
+					<<run WombChangeReserveType($PC, "", "nursery")>>
+					<<set $reservedChildren -= _incubatorReservations>>
+					<<set $reservedChildrenNursery += _WL - _nurseryReservations>>
+				<</link>>
+			<<elseif _nurseryReservations < _WL>>
+				There is not enough free space in $nurseryName for the rest of your children.
+			<</if>>
+		<</if>>
+	</p>
+	<</if>>
+
+	<p>
+		<h2>Deep scan</h2>
+		<<for _ap = 0; _ap < _WL; _ap++>>
+		<hr style="margin:0">
+		<<capture _ap>>
+			<<if $PC.womb[_ap].age >=2 >>
+				<div class="indent">
+					Ova: $PC.womb[_ap].genetics.name
+				</div>
+
+				<<if $geneticMappingUpgrade >= 1>>
+					<div class="indent">
+						Gender: $PC.womb[_ap].genetics.gender
+					</div>
+					<div class="indent">
+						Father ID: $PC.womb[_ap].genetics.father
+					</div>
+					<div class="indent">
+						Father Name:
+						<<if ndef $PC.womb[_ap].genetics.fatherName>>
+							name not registered
+						<<else>>
+							$PC.womb[_ap].genetics.fatherName
+						<</if>>
+					</div>
+
+					<div class="indent">
+						Mother ID: $PC.womb[_ap].genetics.mother
+					</div>
+					<div class="indent">
+						Mother Name:
+						<<if ndef $PC.womb[_ap].genetics.motherName>>
+							name not registered
+						<<else>>
+							$PC.womb[_ap].genetics.motherName
+						<</if>>
+					</div>
+					<div class="indent">
+						Nationality: $PC.womb[_ap].genetics.nationality
+					</div>
+					<div class="indent">
+						Race: $PC.womb[_ap].genetics.race
+					</div>
+					<div class="indent">
+						Skin tone: $PC.womb[_ap].genetics.skin
+					</div>
+					<div class="indent">
+						Intelligence index: $PC.womb[_ap].genetics.intelligence out of 100
+					</div>
+					<div class="indent">
+						Face index: $PC.womb[_ap].genetics.face out of 100
+					</div>
+					<div class="indent">
+						Eye Color: $PC.womb[_ap].genetics.eyeColor
+					</div>
+					<div class="indent">
+						Hair Color: $PC.womb[_ap].genetics.hColor
+					</div>
+					<<if $PC.womb[_ap].genetics.underArmHStyle == "hairless" && $PC.womb[_ap].genetics.pubicHStyle == "hairless">>
+						<div class="indent">
+							Body hair: none
+						</div>
+					<<elseif $PC.womb[_ap].genetics.underArmHStyle == "hairless">>
+						<div class="indent">
+							Body hair: lacks underarm hair
+						</div>
+					<<elseif $PC.womb[_ap].genetics.pubicHStyle == "hairless">>
+						<div class="indent">
+							Body hair: lacks pubic hair
+						</div>
+					<</if>>
+					<<if $PC.womb[_ap].genetics.markings == "freckles" || $PC.womb[_ap].genetics.markings == "heavily freckled">>
+						<div class="indent">
+							Markings: $PC.womb[_ap].genetics.markings
+						</div>
+					<</if>>
+					<div class="indent">
+						Detected abnormalities:
+						<<if $PC.womb[_ap].genetics.geneticQuirks.albinism == 2>>
+							@@.green;alb@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.albinism == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;alb@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.gigantism == 2>>
+							@@.red;gnt@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.gigantism == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;gnt@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.dwarfism == 2>>
+							@@.red;dwrf@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.dwarfism == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;dwrf@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.heterochromia == 2>>
+							@@.green;hetchrom@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.heterochromia == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;hetchrom@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.androgyny == 2>>
+							@@.red;andr@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.androgyny == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;andr@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.pFace == 2>>
+							@@.green;pfce@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.pFace == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;pfce@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.uFace == 2>>
+							@@.red;ufce@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.uFace == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;ufce@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.fertility == 2>>
+							@@.green;fert@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.fertility == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;fert@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.hyperFertility == 2>>
+							@@.green;hfert@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.hyperFertility == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;hfert@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.superfetation == 2>>
+							@@.green;supfet@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.superfetation == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;supfet@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.macromastia >= 2>>
+							@@.red;mmast@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.macromastia == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;mast@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.gigantomastia >= 2>>
+							@@.red;gmast@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.gigantomastia == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;gmast@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.wellHung == 2>>
+							@@.green;bigd@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.wellHung == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;bigd@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.rearLipedema == 2>>
+							@@.red;lipe@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.rearLipedema == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;lipe@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.wGain == 2>>
+							@@.red;lepti+@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.wGain == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;lepti+@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.wLoss == 2>>
+							@@.red;lepti-@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.wLoss == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;lepti-@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.mGain == 2>>
+							@@.red;myot+@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.mGain == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;myot+@@
+						<</if>>
+						<<if $PC.womb[_ap].genetics.geneticQuirks.mLoss == 2>>
+							@@.red;myot-@@
+						<<elseif $PC.womb[_ap].genetics.geneticQuirks.mLoss == 1 && $geneticMappingUpgrade >= 2>>
+							@@.yellow;myot-@@
+						<</if>>
+					</div>
+				<<else>>
+					<<if $PC.womb[_ap].age > 13>>
+						<div class="indent">
+							Gender: $PC.womb[_ap].genetics.gender
+						</div>
+					<</if>>
+					<<if $PC.womb[_ap].age > 5>>
+						<div class="indent">
+							Father ID: $PC.womb[_ap].genetics.father
+						</div>
+						<div class="indent">
+							Father Name: $PC.womb[_ap].genetics.fatherName
+						</div>
+						<div class="indent">
+							Mother ID: $PC.womb[_ap].genetics.mother
+						</div>
+						<div class="indent">
+							Mother Name: $PC.womb[_ap].genetics.motherName
+						</div>
+					<</if>>
+				<</if>>
+				<<if $incubator > 0 || $nursery > 0>>
+					<div class="indent">
+						Reserved: $PC.womb[_ap].reserve
+					</div>
+				<</if>>
+
+				<div class="indent">
+					Rename: <<textbox "_tempName" _tempName >> [[Apply | Analyze PC Pregnancy][$PC.womb[_ap].genetics.name = _tempName]]
+				</div>
+				<<if $PC.womb[_ap].age < 4 && ($arcologies[0].FSRestart == "unset" || $eugenicsFullControl == 1 || ($PC.womb[_ap].fatherID != -1 && $PC.womb[_ap].fatherID != -6))>>
+					<div class="indent">
+						<<link "Terminate ovum" "Analyze PC Pregnancy">><<run WombRemoveFetus($PC, _ap)>><</link>>
+						<<if $surgeryUpgrade == 1>>
+							| [[Transplant ovum|Ova Transplant Workaround][$donatrix = $PC, $wombIndex = _ap, $nextLink = "Analyze PC Pregnancy"]]
+						<</if>>
+					</div>
+				<</if>>
+				<<if $incubator > 0>>
+					<div class="indent">
+						<<if $PC.womb[_ap].reserve === "incubator">>
+							<<link "Don't keep this child $incubatorName" "Analyze PC Pregnancy">>
+								<<set $PC.womb[_ap].reserve = "">>
+								<<set $reservedChildren-->>
+							<</link>>
+						<<elseif $freeTanks - $reservedChildren > 0>>
+							<<link "Keep this child in $incubatorName" "Analyze PC Pregnancy">>
+								<<if $PC.womb[_ap].reserve === "nursery">>
+									<<set $reservedChildrenNursery-->>
+								<</if>>
+								<<set $PC.womb[_ap].reserve = "incubator">>
+								<<set $reservedChildren++>>
+							<</link>>
+						<<else>>
+							There is not enough free space to keep this child in $incubatorName.
+						<</if>>
+					</div>
+				<</if>>
+				<<if $nursery > 0>>
+					<div class="indent">
+						<<if $PC.womb[_ap].reserve === "nursery">>
+							<<link "Don't keep this child in $nurseryName" "Analyze PC Pregnancy">>
+								<<set $PC.womb[_ap].reserve = "">>
+								<<set $reservedChildrenNursery-->>
+							<</link>>
+						<<elseif $freeCribs - $reservedChildrenNursery > 0>>
+							<<link "Keep this child in $nurseryName" "Analyze PC Pregnancy">>
+								<<if $PC.womb[_ap].reserve === "incubator">>
+									<<set $reservedChildren-->>
+								<</if>>
+								<<set $PC.womb[_ap].reserve = "nursery">>
+								<<set $reservedChildrenNursery++>>
+							<</link>>
+						<<else>>
+							There is not enough free space to keep this child in $nurseryName.
+						<</if>>
+					</div>
+				<</if>>
+			<<else>>
+				<div class="indent">
+					Unidentified ova found, no detailed data available.
+				</div>
+				<div class="indent">
+					Age: too early for scan.
+				</div>
+				<div class="indent">
+					<<link "Terminate ovum" "Analyze PC Pregnancy">><<run WombRemoveFetus($PC, _ap)>><</link>>
+					<<if $surgeryUpgrade == 1>>
+						| [[Transplant ovum|Ova Transplant Workaround][$donatrix = $PC, $wombIndex = _ap, $nextLink = "Analyze PC Pregnancy"]]
+					<</if>>
+				</div>
+			<</if>>
+		<</capture>>
+		<</for>>
+	</p>
+<</if>>

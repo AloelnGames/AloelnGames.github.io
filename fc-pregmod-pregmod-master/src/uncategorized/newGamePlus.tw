@@ -1,0 +1,59 @@
+:: New Game Plus [nobr]
+
+<<set $ui = "start">> <<unset $SlaveSummaryFiler>>
+<<if ndef $slavesToImport>>
+	<<silently>><<include "Backwards Compatibility">><</silently>>
+<</if>>
+<<if ndef $slavesToImport>><<set $slavesToImport = 0>><</if>>
+<<if ndef $slavesToImportMax>><<set $slavesToImportMax = 5>><</if>>
+
+<<set _fee = 50000+($slavesToImportMax*10000)>>
+<<run setupLastWeeksCash()>>
+<<run setupLastWeeksRep()>>
+
+You have decided to start over and will be able to take a few things with you: a few slaves, a small fraction of your current reserves of money, and possibly even your experience as an arcology owner, which will give you a very powerful career background. Many of your other customizations and settings will be carried over as the defaults for your new game, but can be revised freely.
+
+<br><br>
+
+You <<if $cash >= _fee>>have<<else>>lack<</if>> the funds to bring more than $slavesToImportMax slaves with you (or your equivalent) to a new arcology. It will cost @@.yellowgreen;<<print cashFormat(_fee)>>@@ to insure another slave's safe transfer.
+<<if $cash >= _fee>>
+	You have @@.yellowgreen;<<print cashFormat($cash)>>@@ to spend.
+	<br>[[Increase slave import capacity by 1.|New Game Plus][cashX(forceNeg(_fee), "capEx"), $slavesToImportMax++]]
+<</if>>
+
+<br>
+
+<<if $freshPC == 0>>
+	<<if $retainCareer == 1 && $PC.career != "arcology owner">>
+		<<if $week > 52 || ($PC.skill.slaving >= 100 && $PC.skill.trading >= 100 && $PC.skill.warfare >= 100 && $PC.skill.engineering >= 100 && $PC.skill.medicine >= 100 && $PC.skill.hacking >= 100)>>
+			You have acquired a fair amount of knowledge regarding arcologies and their day-to-day management in your time spent as one's owner qualifying you as an @@.orange;"arcology owner"!@@ Benefits include:
+			<br>@@.lime;20% reduced cost of construction.@@
+			<br>@@.lime;Free additional starting rep along with easy rep maintenance.@@
+			<br>@@.lime;Reduced mercenary costs.@@
+			<br>@@.lime;An eye for gingered slaves.@@
+			<br>@@.lime;An edge in all things data.@@
+			<br>
+			<<set $oldCareer = $PC.career>>
+			<<if $retainCareer === 1>>
+				[[Change career.|New Game Plus][$retainCareer = 0,$PC.career = "arcology owner"]]
+			<</if>>
+		<<else>>
+			You lack the experience needed to qualify for a career change to "arcology owner".
+		<</if>>
+	<</if>>
+	<<if $retainCareer === 0 && $PC.career === "arcology owner">>
+		[[Don't change career.|New Game Plus][$retainCareer = 1,$PC.career = $oldCareer]]
+	<</if>>
+	<br>[[Start over with a new player character.|New Game Plus][$freshPC = 1, $retainCareer = 1]]
+<<else>>
+	[[Use existing player character.|New Game Plus][$freshPC = 0]]
+<</if>>
+
+<br><br>
+
+<<if $cheatMode == 1>> <<link "DEBUG: Add all slaves to import list" "New Game Plus">> <<for _ngi = 0; _ngi < $slaves.length; _ngi++>> <<= assignJob($slaves[_ngi], "be imported")>> <</for>> <</link>> <br> <</if>>
+
+Select up to $slavesToImportMax slaves to be imported into a new game and then click [[here.|init][$saveImported = 1,$oldCareer = "undefined",$slavesToImport = 0]]
+
+<br>
+<<print App.UI.SlaveList.listNGPSlaves()>>

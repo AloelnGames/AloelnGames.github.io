@@ -1,0 +1,146 @@
+:: P snatch and grab result [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event", $returnTo = "Random Nonindividual Event", $PSnatch = 0>>
+
+<<if $pedo_mode == 1>>
+
+<<set $activeSlaveOneTimeMaxAge = $minimumSlaveAge>>
+<<set $oneTimeDisableDisability = 1>>
+<<set $activeSlave = GenerateNewSlave("XX")>>
+<<set $activeSlave.origin = "$He is your share of a raid on an illegal laboratory by your mercenaries.">>
+<<set $activeSlave.career = "a slave">>
+<<set $activeSlave.devotion = 100>>
+<<set $activeSlave.trust = 100>>
+<<run setHealth($activeSlave, 250, 0, 0, 0, 0)>>
+<<set $activeSlave.face = 15>>
+<<set $activeSlave.faceShape = "exotic">>
+<<set $activeSlave.anus = 0>>
+<<if $seeDicks != 100>>
+	<<set $activeSlave.vagina = 0>>
+	<<set $activeSlave.ovaries = 1>>
+<</if>>
+<<if $seeDicks == 0>>
+	<<set $activeSlave.dick = 0>>
+	<<set $activeSlave.balls = 0>>
+	<<set $activeSlave.scrotum = 0>>
+<<elseif $seeDicks > 75>>
+	<<set $activeSlave.dick = 2>>
+	<<if $activeSlave.foreskin > 0>><<set $activeSlave.foreskin = $activeSlave.dick>><</if>>
+	<<set $activeSlave.balls = 1>>
+	<<set $activeSlave.scrotum = $activeSlave.balls>>
+<<else>>
+	<<set $activeSlave.dick = 1>>
+	<<set $activeSlave.foreskin = 1>>
+	<<set $activeSlave.balls = 1>>
+	<<set $activeSlave.scrotum = $activeSlave.balls>>
+<</if>>
+<<set $activeSlave.boobs += 6000>>
+<<set $activeSlave.boobShape = "saggy">>
+<<set $activeSlave.nipples = "partially inverted">>
+<<set $activeSlave.areolae = 3>>
+<<set $activeSlave.butt += 2>>
+<<set $activeSlave.lips = 15>>
+<<set $activeSlave.skill.vaginal = 0>>
+<<set $activeSlave.skill.oral = 0>>
+<<set $activeSlave.skill.anal = 0>>
+<<set $activeSlave.skill.whoring = 0>>
+<<set $activeSlave.skill.entertainment = 0>>
+<<set $activeSlave.birthWeek = 0>>
+<<set $activeSlave.voice = 2>>
+<<set $activeSlave.weight = 60>>
+<<set $activeSlave.muscles = 0>>
+<<set $activeSlave.shoulders = -2>>
+<<set $activeSlave.hips = 0>>
+<<set $activeSlave.waist = 10>>
+<<set $activeSlave.hStyle = "shaved bald">>
+<<set $activeSlave.hLength = 0>>
+<<set $activeSlave.custom.desc = "$His skin is unnaturally perfect, totally without blemishes. $He radiates unnatural health and resilience.">>
+<<set $activeSlave.custom.tattoo = "$He has a barcode tattooed on the top of $his head.">>
+<<set $activeSlave.behavioralFlaw = "odd">>
+<<set $activeSlave.fetish = "none">>
+<<set $activeSlave.energy = 100>>
+<<set $activeSlave.fetishKnown = 1>>
+<<set $activeSlave.attrKnown = 1>>
+<<if $activeSlave.physicalAge >= 12>>
+	<<set $activeSlave.teeth = "normal">>
+<</if>>
+<<set $activeSlave.pubicHStyle = "hairless">>
+<<set $activeSlave.underArmHStyle = "hairless">>
+
+<<else>>
+
+<<set $activeSlaveOneTimeMaxAge = 18>>
+<<set $oneTimeDisableDisability = 1>>
+<<set $activeSlave = GenerateNewSlave("XX")>>
+<<set $activeSlave.origin = "$He is your share of a raid on an illegal laboratory by your mercenaries.">>
+<<set $activeSlave.career = "a slave">>
+<<set $activeSlave.devotion = 100>>
+<<set $activeSlave.trust = 100>>
+<<run setHealth($activeSlave, 250, 0, 0, 0, 0)>>
+<<set $activeSlave.face = 15>>
+<<set $activeSlave.faceShape = "androgynous">>
+<<set $activeSlave.anus = 0>>
+<<if $seeDicks != 100>>
+	<<set $activeSlave.vagina = 0>>
+	<<set $activeSlave.ovaries = 1>>
+<</if>>
+<<if $seeDicks == 0>>
+	<<set $activeSlave.dick = 0>>
+	<<set $activeSlave.balls = 0>>
+	<<set $activeSlave.scrotum = $activeSlave.balls>>
+<<elseif $seeDicks > 75>>
+	<<set $activeSlave.dick = 6>>
+	<<if $activeSlave.foreskin > 0>><<set $activeSlave.foreskin = $activeSlave.dick>><</if>>
+	<<set $activeSlave.balls = 1>>
+	<<set $activeSlave.scrotum = $activeSlave.balls>>
+<<else>>
+	<<set $activeSlave.dick = 1>>
+	<<set $activeSlave.foreskin = 1>>
+	<<set $activeSlave.balls = 1>>
+	<<set $activeSlave.scrotum = $activeSlave.balls>>
+<</if>>
+<<set $activeSlave.boobs += 200>>
+<<set $activeSlave.butt += 1>>
+<<if $activeSlave.lips < 10>>
+	<<set $activeSlave.lips += 5>>
+<</if>>
+<<set $activeSlave.skill.vaginal = 0>>
+<<set $activeSlave.skill.oral = 0>>
+<<set $activeSlave.skill.anal = 0>>
+<<set $activeSlave.skill.whoring = 0>>
+<<set $activeSlave.skill.entertainment = 0>>
+<<set $activeSlave.birthWeek = 0>>
+<<set $activeSlave.height = Math.round(Height.random($activeSlave, {skew: 1, limitMult: [0, 2]}))>>
+<<set $activeSlave.weight = 0>>
+<<set $activeSlave.muscles = 20>>
+<<set $activeSlave.waist = -75>>
+<<set $activeSlave.hStyle = "shaved bald">>
+<<set $activeSlave.hLength = 0>>
+<<set $activeSlave.custom.desc = "$His skin is unnaturally perfect, totally without blemishes. $He radiates unnatural health and resilience.">>
+<<set $activeSlave.custom.tattoo = "$He has a barcode tattooed on the top of $his head.">>
+<<set $activeSlave.behavioralFlaw = "odd">>
+<<set $activeSlave.fetish = "none">>
+<<set $activeSlave.energy = 100>>
+<<set $activeSlave.fetishKnown = 1>>
+<<set $activeSlave.attrKnown = 1>>
+<<if $activeSlave.physicalAge >= 12>>
+	<<set $activeSlave.teeth = "normal">>
+<</if>>
+<<set $activeSlave.pubicHStyle = "hairless">>
+<<set $activeSlave.underArmHStyle = "hairless">>
+
+<</if>>
+
+<<setLocalPronouns $activeSlave>>
+<<set $activeSlave.slaveCost = -10000>>
+
+In the middle of the night, there is a polite knock on your penthouse door. You are alerted by $assistant.name, who observes <<if $assistant.personality == 1>>with some irritation <</if>>that the mercenary who knocked has gone, has left a large case outside the door, and has satisfied the security systems that the case contains nothing hazardous.
+
+The case prompts you for a handprint code; your hand works just fine. It contains a naked, hairless, perfectly healthy young body in the fetal position. This person awakens as the case opens, looks you confidently in the eye, and says "Are you my <<if $PC.title != 0>>Master<<else>>Mistress<</if>>?"
+
+When you state that, apparently, you are, $he climbs out of the case, prostrates $himself in the hall before you, and says reverentially into the floor, "I love you, <<if $PC.title != 0>>Master<<else>>Mistress<</if>>."
+
+<br><br>
+<<set $saleDescription = 0, $applyLaw = 0>><<include "Long Slave Description">>
+
+<br><<include "New Slave Intro">>

@@ -1,0 +1,26 @@
+/* Nicked off greyelf, works for replace textboxes */
+window.setReplaceTextboxMaxLength = function(storyVarName, maxLength) {
+	const textboxId = `#textbox-${Util.slugify(storyVarName)}`;
+	$(textboxId)
+		.attr("maxlength", maxLength)
+		.css({
+			"min-width": "initial",
+			"width": `${maxLength}em`,
+			"padding": "3px 2px"
+		});
+};
+
+/* Nicked off TheMadExile, works for non-replace textboxes */
+window.setTextboxMaxLength = function(storyVarName, maxLength) {
+	const textboxId = `#textbox-${Util.slugify(storyVarName)}`;
+	postdisplay[`${textboxId}-maxlength`] = function(taskName) {
+		delete postdisplay[taskName];
+		$(textboxId)
+			.attr("maxlength", maxLength)
+			.css({
+				"min-width": "initial",
+				"width": `${maxLength}em`,
+				"padding": "3px 2px"
+			});
+	};
+};

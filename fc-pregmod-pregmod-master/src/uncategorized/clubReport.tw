@@ -1,0 +1,263 @@
+:: Club Report [nobr]
+
+<span id="clubstats">
+</span>
+
+<<SlaveIDSort $ClubiIDs>>
+<<set _DL = $ClubiIDs.length, _SL = $slaves.length, $clubBonuses = 0, $legendaryEntertainerID = 0, _FLsFetish = 0>>
+<<set $legendaryWombID = 0>>
+<<set _minBonus = 50, _maxBonus = 150>>
+
+<!-- Statistics gathering; income is rep boosts in numbers, and profit will be rep per cash unit, or cash unit per rep -->
+<<set $facility = $facility || {}, $facility.club = initFacilityStatistics($facility.club)>>
+
+<<if $DJ != 0>>
+	<<set _FLs = $slaveIndices[$DJ.ID]>>
+
+	<<if ($slaves[_FLs].health.condition < -80)>>
+		<<run improveCondition($slaves[_FLs], 20)>>
+	<<elseif $slaves[_FLs].health.condition < -40>>
+		<<run improveCondition($slaves[_FLs], 15)>>
+	<<elseif $slaves[_FLs].health.condition < 0>>
+		<<run improveCondition($slaves[_FLs], 10)>>
+	<<elseif $slaves[_FLs].health.condition < 90>>
+		<<run improveCondition($slaves[_FLs], 7)>>
+	<</if>>
+	<<if $slaves[_FLs].devotion <= 60>>
+		<<set $slaves[_FLs].devotion += 5>>
+	<</if>>
+	<<if $slaves[_FLs].trust < 60>>
+		<<set $slaves[_FLs].trust += 3>>
+	<</if>>
+	<<if $slaves[_FLs].fetishStrength <= 95>>
+		<<if $slaves[_FLs].fetish != "humiliation">>
+			<<if fetishChangeChance($slaves[_FLs]) > random(0,100)>>
+				<<set _FLsFetish = 1, $slaves[_FLs].fetishKnown = 1, $slaves[_FLs].fetish = "humiliation">>
+			<</if>>
+		<<elseif $slaves[_FLs].fetishKnown == 0>>
+			<<set _FLsFetish = 1, $slaves[_FLs].fetishKnown = 1>>
+		<<else>>
+			<<set _FLsFetish = 2, $slaves[_FLs].fetishStrength += 4>>
+		<</if>>
+	<</if>>
+	<<if $slaves[_FLs].rules.living != "luxurious">>
+		<<set $slaves[_FLs].rules.living = "luxurious">>
+	<</if>>
+	/% Make sure we have registered living expenses as for any other slave %/
+	<<run getSlaveStatisticData($DJ, $facility.club)>>
+	<<set $DJ = $slaves[_FLs]>>
+	<<setLocalPronouns $DJ>>
+	&nbsp;&nbsp;&nbsp;&nbsp;<<= SlaveFullName($DJ)>> is performing as the DJ.
+	<<if $DJ.relationship == -3 && $DJ.devotion > 50>>
+		$He tries $his best to be your energetic, cheerful $wife.
+	<</if>>
+	<<if (_FLsFetish == 1)>>
+		$He's expected to be the innovative, beautiful DJ spinning beats one minute, and come out of $his booth to grind on the floor the next; $he enjoys the interplay, and finds greater @@.lightcoral;pleasure in exhibitionism.@@
+	<<elseif (_FLsFetish == 2)>>
+		Every day $he gets to enjoy hundreds of stares on $his skin, and @@.lightsalmon;becomes more of an exhibitionist.@@
+	<</if>>
+	<<if getBestVision($DJ) === 0>>
+		$His lack of eyesight doesn't slow $him down; rather, it strengthens $his other senses. $His tracks have a distinct sound, since $he experiences noise as $his sight.
+	<</if>>
+	<<if ($DJ.skill.entertainment <= 10)>>
+		Though $DJ.slaveName does $his best to lead on the club, with $his lack of skill $he can do little.
+	<<elseif ($DJ.skill.entertainment <= 30)>>
+		$DJ.slaveName's basic skills marginally @@.green;improve@@ the atmosphere in $clubName.
+	<<elseif ($DJ.skill.entertainment <= 60)>>
+		$DJ.slaveName's skills @@.green;improve@@ the atmosphere in $clubName.
+	<<elseif ($DJ.skill.entertainment < 100)>>
+		$DJ.slaveName's skills greatly @@.green;improve@@ the atmosphere in $clubName.
+	<<elseif ($DJ.skill.entertainment >= 100)>>
+		$DJ.slaveName's mastery immensely @@.green;improves@@ the atmosphere in $clubName.
+	<</if>>
+	<<if ($DJ.muscles > 5) && ($DJ.muscles <= 95)>>
+		$His toned body helps $him lead $his fellow club sluts by letting $him dance all night.
+	<</if>>
+	<<if ($DJ.intelligence+$DJ.intelligenceImplant > 15)>>
+		$He's smart enough to make an actual contribution to the music, greatly enhancing the entire experience.
+	<</if>>
+	<<if ($DJ.face > 95)>>
+		$His great beauty is a further draw, even when $he's in $his DJ booth, but especially when $he comes out to dance.
+	<</if>>
+	<<if setup.DJCareers.includes($DJ.career)>>
+		$He has musical experience from $his life before $he was a slave, a grounding that gives $his tracks actual depth.
+	<<elseif $DJ.skill.DJ >= $masteredXP>>
+		$He has musical experience from working for you, giving $his tracks actual depth.
+	<<else>>
+		<<set $slaves[_FLs].skill.DJ += random(1,Math.ceil(($DJ.intelligence+$DJ.intelligenceImplant)/15) + 8)>>
+	<</if>>
+	<<if (_DL + $clubSlavesGettingHelp < 10)>>
+		<<set $i = _FLs>> /* apply following SA passages to facility leader */
+		<<if ($legendaryEntertainerID == 0) && ($slaves[_FLs].prestige == 0) && ($slaves[_FLs].skill.entertainment >= 100) && ($slaves[_FLs].devotion > 50)>>
+			<<set $legendaryEntertainerID = $slaves[_FLs].ID>>
+		<</if>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;Since $he doesn't have enough sluts in $clubName to make it worthwhile for $him to be on stage 24/7, $he spends $his extra time slutting it up $himself. $He has sex with $slaves[$i].sexAmount citizens, @@.green;pleasing them immensely,@@ since it's more appealing to fuck the DJ than some club slut.
+		<<if $showEWD != 0>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;$He <<= saServeThePublic($slaves[$i])>>
+		<<else>>
+			<<run saServeThePublic($slaves[$i])>>
+		<</if>>
+	<</if>>
+	<<if (_DL > 0)>><br><br><</if>>
+<</if>>
+
+<<if (_DL > 0)>>
+	<<set _possibleBonuses = 0>>
+	&nbsp;&nbsp;&nbsp;&nbsp;<<if (_DL != 1)>>''The _DL slaves pleasing citizens in $clubName''<<else>>''The one slave pleasing citizens in $clubName''<</if>> worked hard to @@.green;increase your reputation@@ this week.
+<</if>>
+
+<<if ($DJ != 0)>>
+	<<set $i = _FLs>> /* apply following SA passages to facility leader */
+	<<if $showEWD != 0>>
+		<br><br>
+		/* 000-250-006 */
+		<<if $seeImages && $seeReportImages>>
+		<div class="imageRef tinyImg">
+			<<= SlaveArt($slaves[_FLs], 0, 0)>>
+		</div>
+		<</if>>
+		/* 000-250-006 */
+		<span class='slave-name'><<= SlaveFullName($slaves[_FLs])>></span> is performing as the DJ in $clubName.
+		<br>&nbsp;&nbsp;&nbsp;
+		<<= saChoosesOwnClothes($slaves[$i])>>
+		<<run tired($slaves[$i])>>
+		<<include "SA rules">>
+		<<include "SA diet">>
+		<<include "SA long term effects">>
+		<<= saDrugs($slaves[$i])>>
+		<<include "SA relationships">>
+		<<include "SA rivalries">>
+		<br><<include "SA devotion">>
+	<<else>>
+		<<silently>>
+		<<run saChoosesOwnClothes($slaves[$i])>>
+		<<run tired($slaves[$i])>>
+		<<include "SA rules">>
+		<<include "SA diet">>
+		<<include "SA long term effects">>
+		<<run saDrugs($slaves[$i])>>
+		<<include "SA relationships">>
+		<<include "SA rivalries">>
+		<<include "SA devotion">>
+		<</silently>>
+	<</if>>
+	<<set $DJ = $slaves[_FLs]>>
+<</if>>
+
+<<if (_DL > 0)>>
+	<<for _dI = 0; _dI < _DL; _dI++>>
+		<<set $i = $slaveIndices[$ClubiIDs[_dI]]>>
+		<<setLocalPronouns $slaves[$i]>>
+		<<if ($legendaryEntertainerID == 0) && ($slaves[$i].prestige == 0) && ($slaves[$i].skill.entertainment >= 100) && ($slaves[$i].devotion > 50)>>
+			<<set $legendaryEntertainerID = $slaves[$i].ID>>
+		<</if>>
+		<<if ($legendaryWombID == 0) && (!isAmputee($slaves[$i])) && ($slaves[$i].preg > $slaves[$i].pregData.normalBirth/1.33) && ($slaves[$i].broodmother == 0) && ($slaves[$i].eggType == "human") && ($slaves[$i].counter.births > 10) && ($slaves[$i].devotion > 50) && ($slaves[$i].prestige == 0)>>
+			<<set $legendaryWombID = $slaves[$i].ID>>
+		<</if>>
+		<<if ($slaves[$i].devotion <= 20) && ($slaves[$i].trust >= -20)>>
+			<<set $slaves[$i].devotion -= 5, $slaves[$i].trust -= 5>>
+		<<elseif ($slaves[$i].devotion < 45)>>
+			<<set $slaves[$i].devotion += 4>>
+		<<elseif ($slaves[$i].devotion > 50)>>
+			<<set $slaves[$i].devotion -= 4>>
+		<</if>>
+
+		<<if ($slaves[$i].trust < 30)>>
+			<<set $slaves[$i].trust += 5>>
+		<</if>>
+
+		<<if ($slaves[$i].health.condition < -80)>>
+			<<run improveCondition($slaves[$i], 20)>>
+		<<elseif ($slaves[$i].health.condition < -40)>>
+			<<run improveCondition($slaves[$i], 15)>>
+		<<elseif ($slaves[$i].health.condition < 0)>>
+			<<run improveCondition($slaves[$i], 10)>>
+		<<elseif ($slaves[$i].health.condition < 90)>>
+			<<run improveCondition($slaves[$i], 7)>>
+		<</if>>
+
+		<<if $slaves[$i].rules.living != "normal">>
+			<<set $slaves[$i].rules.living = "normal">>
+		<</if>>
+
+		<<if $showEWD != 0>>
+			<br><br>
+			/* 000-250-006 */
+			<<if $seeImages && $seeReportImages>>
+			<div class="imageRef tinyImg">
+				<<= SlaveArt($slaves[$i], 0, 0)>>
+			</div>
+			<</if>>
+			/* 000-250-006 */
+			<span class='slave-name'><<= SlaveFullName($slaves[$i])>></span>
+			<<if $slaves[$i].choosesOwnAssignment == 2>>
+				<<include "SA chooses own job">>
+			<<else>>
+				is serving in $clubName.
+			<</if>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;$He <<= saServeThePublic($slaves[$i])>>
+			<br>&nbsp;&nbsp;&nbsp;
+			<<= saChoosesOwnClothes($slaves[$i])>>
+			<<include "SA rules">>
+			<<include "SA diet">>
+			<<include "SA long term effects">>
+			<<= saDrugs($slaves[$i])>>
+			<<include "SA relationships">>
+			<<include "SA rivalries">>
+			<br><<include "SA devotion">>
+		<<else>>
+			<<silently>>
+			<<include "SA chooses own job">>
+			<<run saServeThePublic($slaves[$i])>>
+			<<run saChoosesOwnClothes($slaves[$i])>>
+			<<include "SA rules">>
+			<<include "SA diet">>
+			<<include "SA long term effects">>
+			<<run saDrugs($slaves[$i])>>
+			<<include "SA relationships">>
+			<<include "SA rivalries">>
+			<<include "SA devotion">>
+			<</silently>>
+		<</if>>
+	<</for>>
+	<p>
+		<<= App.Ads.report("club")>>
+	</p>
+	
+	<!-- Record statistics gathering -->
+	<<script>>
+		var b = State.variables.facility.club;
+		b.whoreIncome = 0;
+		b.customers = 0;
+		b.whoreCosts = 0;
+		b.rep = 0;
+		for (var si of b.income.values()) {
+			b.whoreIncome += si.income;
+			b.customers += si.customers;
+			b.whoreCosts += si.cost;
+			b.rep += si.rep;
+		}
+		b.adsCosts = State.variables.clubAdsSpending;
+		b.maintenance = State.variables.club * State.variables.facilityCost * (1.0 + 0.2 * State.variables.clubUpgradePDAs);
+		b.totalIncome = b.whoreIncome + b.adsIncome;
+		b.totalExpenses = b.whoreCosts + b.adsCosts + b.maintenance;
+		b.profit = b.totalIncome / b.totalExpenses;
+	<</script>>
+	<<if $clubDecoration != "standard">>
+		<p>
+			$clubNameCaps's customers enjoy @@.green;having sex in $clubDecoration surroundings.@@
+		</p>
+	<</if>>
+
+	<!-- Statistics output -->
+	<<ClubStatistics 0>>
+	<<timed 50ms>>
+		<<replace #clubstats>>
+			<<ClubStatistics 1>>
+		<</replace>>
+	<</timed>>
+<</if>>
+
+<<if _DL > 0 || $DJ != 0>>
+	<br><br>
+<</if>>

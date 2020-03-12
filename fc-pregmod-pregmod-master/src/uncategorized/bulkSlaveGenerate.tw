@@ -1,0 +1,147 @@
+:: Bulk Slave Generate [nobr]
+
+<<set $newSlaves = [], $returnTo = "Main", $newSlavesDone = 0, $spent = 0, $newSlaveIndex = 0>>
+
+<<if ndef $numSlaves>>
+	<<set $numSlaves = 5>>
+<</if>>
+
+/* Discount calculation. Gives 5% on top of slave school discount */
+<<set $discount = 475>>
+<<switch $slaveMarket>>
+<<case "TSS">>
+	<<if $TSS.schoolUpgrade != 0>>
+		<<set $discount = 375>>
+	<</if>>
+
+<<case "GRI">>
+	<<if $GRI.schoolUpgrade != 0>>
+		<<set $discount = 375>>
+	<</if>>
+
+<<case "SCP">>
+	<<if $SCP.schoolUpgrade != 0>>
+		<<set $discount = 375>>
+	<</if>>
+
+<<case "LDE">>
+	<<if $LDE.schoolUpgrade != 0>>
+		<<set $discount = 375>>
+	<</if>>
+
+<<case "TGA">>
+	<<if $TGA.schoolUpgrade != 0>>
+		<<set $discount = 375>>
+	<</if>>
+
+<<case "HA">>
+	<<if $HA.schoolUpgrade != 0>>
+		<<set $discount = 375>>
+	<</if>>
+
+<<case "NUL">>
+	<<if $NUL.schoolUpgrade != 0>>
+		<<set $discount = 375>>
+	<</if>>
+
+<<case "TCR">>
+	<<if $TCR.schoolUpgrade != 0>>
+		<<set $discount = 375>>
+	<</if>>
+
+<<case "TFS">>
+	<<if $TFS.schoolUpgrade != 0>>
+		<<set $discount = 300>>
+	<<else>>
+		<<set $discount = 380>>
+	<</if>>
+
+<<case "corporate">>
+	<<if $corp.Market == 1>>
+		<<set $discount = 350>>
+	<</if>>
+
+<<case "neighbor">>
+	<<if $numArcology >= $arcologies.length>>
+		<<set $numArcology = 1>>
+	<</if>>
+	<<set _opinion = arcologyOpinion($arcologies[0], $arcologies[$numArcology])>>
+	<<set _opinion = Math.trunc(_opinion/20)>>
+	<<set _opinion = Math.clamp(_opinion, -10, 10)>>
+	<<set $discount -= (_opinion * 25)>>
+
+<</switch>>
+
+/* Determine if Law Compliance effects must be applied to this transaction */
+<<switch $slaveMarket>>
+<<case "gangs and smugglers" "GRI" "HA" "heap" "indentures" "LDE" "low tier criminals" "military prison" "neighbor" "NUL" "SCP" "TCR" "TFS" "TGA" "TSS" "wetware" "white collar">> /* these markets are exempt from law compliance */
+	<<set $applyLaw = 0>>
+<<default>> /* all other markets are not exempt: corporate, hunters, kidnappers, raiders, trainers */
+	<<set $applyLaw = 1>>
+<</switch>>
+
+<<for _i = 0; _i < $numSlaves; _i++>>
+	<<run generateMarketSlave($slaveMarket, $numArcology)>>
+	<<set $slavesSeen++>>
+	<<if $applyLaw == 0>>
+		<<set _slaveCost = slaveCost($activeSlave)>>
+	<<else>>
+		<<set _backup = $activeSlave>> /* backup newly generated slave */
+		<<silently>>
+			<<include "Law Compliance">> /* includes CheckForGingering — slave stats may change, affecting price */
+		<</silently>>
+		<<set _slaveCost = slaveCost($activeSlave)>>
+		<<run removeGingering()>> /* remove gingered state, if applied, so we can apply it again later */
+		<<set $activeSlave = _backup>> /* restore backup so we can apply Law Compliance again later */
+	<</if>>
+
+	/* Adjust _slaveCost according to $slavesSeen */
+	<<if $slavesSeen > $slaveMarketLimit>>
+		<<set _slaveCost += _slaveCost*(($slavesSeen-$slaveMarketLimit)*0.1)>>
+		<<if $introType == "inStock">>
+			<<break>>
+		<</if>>
+	<</if>>
+
+	/* Apply discount modifier */
+	<<set _slaveCost = $discount*Math.trunc(_slaveCost/500)>>
+
+	/* Charge the Player for the slave, or break out if cannot afford */
+	<<if $cash < _slaveCost>>
+		<<set _i = $numSlaves>>
+		<<break>>
+	<<else>>
+		<<run cashX(forceNeg(_slaveCost), "slaveTransfer", $activeSlave)>>
+		<<set $newSlaves.push($activeSlave)>>
+		<<set $spent += _slaveCost>>
+	<</if>>
+<</for>>
+
+/* Max Buy clean-up */
+<<if $numSlaves == 9999>>
+	<<set $numSlaves = $newSlaves.length>>
+<</if>>
+
+/* increment Slave school purchase counts if needed */
+<<switch $slaveMarket>>
+<<case "TSS">>
+	<<set $TSS.studentsBought += $newSlaves.length>>
+<<case "GRI">>
+	<<set $GRI.studentsBought += $newSlaves.length>>
+<<case "SCP">>
+	<<set $SCP.studentsBought += $newSlaves.length>>
+<<case "LDE">>
+	<<set $LDE.studentsBought += $newSlaves.length>>
+<<case "TGA">>
+	<<set $TGA.studentsBought += $newSlaves.length>>
+<<case "HA">>
+	<<set $HA.studentsBought += $newSlaves.length>>
+<<case "TCR">>
+	<<set $TCR.studentsBought += $newSlaves.length>>
+<<case "TFS">>
+	<<set $TFS.studentsBought += $newSlaves.length>>
+<<case "NUL">>
+	<<set $NUL.studentsBought += $newSlaves.length>>
+<</switch>>
+
+<<goto "Bulk Slave Intro">>

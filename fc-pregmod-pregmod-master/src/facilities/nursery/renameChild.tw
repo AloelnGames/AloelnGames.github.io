@@ -1,0 +1,142 @@
+:: Rename Child [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Slave Interact">>
+
+<<if $activeChild.slaveName === $oldName && $activeChild.slaveSurname === $oldSurname>>
+	<<goto "Slave Interact">>
+<<else>>
+/* First time renaming reaction */
+<<if $activeChild.slaveName === "" || ndef $activeChild.slaveName>>
+	$oldName needs to be called something on the records, so $oldName $he stays.
+	<<set $activeChild.slaveName = $oldName>>
+<<elseif $activeChild.fetish == "mindbroken">>
+	$activeChild.slaveName doesn't even recognize that $he's been renamed. It simply does not register.
+<<elseif ($oldName != $activeChild.birthName && $oldSurname != $activeChild.birthSurname) && ($activeChild.slaveName == $activeChild.birthName || $activeChild.slaveSurname == $activeChild.birthSurname)>>
+	$activeChild.slaveName
+	<<if $activeChild.devotion > 50>>
+		cheerfully accepts $his old name back.
+	<<elseif $activeChild.devotion >= -20>>
+		obediently accepts $his old name back.
+	<<elseif $activeChild.devotion >= -50>>
+		happily accepts $his original name.
+	<<elseif $activeChild.trust > 20>>
+		scoffs at the notion that $he was ever anything other than <<= SlaveFullBirthName($activeChild)>>, @@.orangered;weakening your control over $him.@@
+		<<set $activeChild.trust += 5>>
+	<<else>>
+		cautiously accepts the return of $his name.
+	<</if>>
+<<elseif $oldName == $activeChild.birthName || $oldSurname == $activeChild.birthSurname>>
+	$activeChild.slaveName
+	<<if $activeChild.devotion > 50>>
+		accepts $his new name cheerfully. This attachment to you @@.hotpink; increases $his devotion.@@
+		<<set $activeChild.devotion += 4>>
+	<<elseif $activeChild.devotion >= -20>>
+		obediently accepts $his new name. This surrender to you @@.hotpink; increases $his obedience.@@
+		<<set $activeChild.devotion += 4>>
+	<<elseif $activeChild.devotion >= -50>>
+		reluctantly accepts $his new name.
+	<<else>>
+		angrily tries to resist $his new name, insisting that $his name is <<= SlaveFullBirthName($activeChild)>>. This resistance @@.mediumorchid; increases $his rebelliousness.@@
+		<<set $activeChild.devotion -= 5>>
+	<</if>>
+<<else>>
+	Since $activeChild.slaveName has already had a new name <<if $activeChild.devotion > 20>>given to<<else>>forced on<</if>> $him before, the mere fact of having it changed again doesn't really affect $him.
+<</if>>
+
+<<set _insultingName = 0>>
+<<if $oldName != $activeChild.slaveName && typeof $activeChild.slaveName == "string">>
+	<<set _toSearch = $activeChild.slaveName.toLowerCase()>>
+	<<for $i = 0; $i < setup.badWords.length; $i++>>
+		<<if _toSearch.indexOf(setup.badWords[$i]) != -1>>
+			<<set _insultingName = 1>>
+			<<break>>
+		<</if>>
+	<</for>>
+<</if>>
+<<if !_insultingName>>
+	<<if $oldSurname != $activeChild.slaveSurname && typeof $activeChild.slaveSurname == "string">>
+		<<set _toSearch = $activeChild.slaveSurname.toLowerCase()>>
+		<<for $i = 0; $i < setup.badWords.length; $i++>>
+			<<if _toSearch.indexOf(setup.badWords[$i]) != -1>>
+				<<set _insultingName = 1>>
+				<<break>>
+			<</if>>
+		<</for>>
+	<</if>>
+<</if>>
+<<if _insultingName == 1>>
+	<<if $activeChild.fetish == "mindbroken">>
+		$His new name would be insulting to a normal $girl, but $he dully accepts that it is an accurate description and goes about $his duties.
+	<<elseif $activeChild.devotion < -50>>
+		Being given such a degrading name @@.mediumorchid;further increases $his hatred@@ of you.
+		<<set $activeChild.devotion -= 5>>
+	<<elseif $activeChild.devotion <= 50>>
+		Being given such a degrading name @@.gold;terrifies $him,@@ since $he thinks it's fair warning for what $he'll suffer in the future.
+		<<set $activeChild.trust -= 5>>
+	<</if>>
+<</if>>
+
+/* Wife's surname reaction */
+<<if $oldSurname != $activeChild.slaveSurname>>
+	<<if $activeChild.relationship >= 5>>
+		<<set _i = $slaveIndices[$activeChild.relationshipTarget]>>
+		<<if ndef _i>>@@.red;Error, relationshipTarget not found.@@<</if>>
+			<<if $slaves[_i].slaveSurname>>
+			<<if $activeChild.slaveSurname == $slaves[_i].slaveSurname>>
+				$He's touched that $he now shares a surname with $his wife $slaves[_i].slaveName $slaves[_i].slaveSurname, and is @@.mediumaquamarine;more confident than ever@@ that you intend to keep them together in marital bliss.
+				<<set $activeChild.trust += 5>>
+			<<elseif $oldSurname == $slaves[_i].slaveSurname>>
+				$He's concerned that $he no longer shares a surname with $his wife $slaves[_i].slaveName $slaves[_i].slaveSurname, and is @@.gold;very worried@@ that you might be considering splitting them up.
+				<<set $activeChild.trust -= 5>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+/* PC's surname reaction */
+<<if $oldSurname != $activeChild.slaveSurname>>
+	<<if $activeChild.relationship == -3>>
+		<<if $PC.slaveSurname>>
+			<<if $activeChild.fetish == "mindbroken">>
+				Names are meaningless to $him and it is unlikely $he'll remember it.
+			<<elseif $activeChild.devotion+$activeChild.trust >= 175>>
+				<<if $activeChild.slaveSurname == $PC.slaveSurname>>
+					<<if hasAnyArms($activeChild)>>
+						When you tell $him that $he's to be known as $activeChild.slaveName $activeChild.slaveSurname now, $he starts to cry. $He tries to get $himself under control and thank you as best $he can, wiping at the tears running down $his $activeChild.skin cheeks, but $he can't seem to stop weeping as $he thanks you over and over. $He's a sex slave, your property, and it's understandable that some doubts about the permanence of $his place as your slave wife. This has @@.mediumaquamarine;helped reassure $him,@@ and explains the strength of $his emotional reaction. The next time you make love to $him, $he @@.hotpink;presses $himself as close to you as $he can,@@ eager to drink in as much of your presence as $he can get.
+					<<else>>
+						$He's @@.hotpink;deeply touched@@ that $he now shares a surname with you, and has @@.mediumaquamarine;an additional source of confidence@@ that $he'll remain your amputee slave wife.
+					<</if>>
+					<<set $activeChild.devotion += 5, $activeChild.trust += 5>>
+				<<elseif $oldSurname == $PC.slaveSurname>>
+					$He's devastated that you'd rename $him something other than your name. $He's @@.gold;terrified@@ that you intend to discard $him as your slave wife, and @@.mediumorchid;saddened@@ that you would take away something that was precious to $him.
+					<<set $activeChild.devotion -= 5, $activeChild.trust -= 5>>
+				<</if>>
+			<<elseif $activeChild.devotion < -20 && $activeChild.trust > 20>>
+				<<if $activeChild.slaveSurname == $PC.slaveSurname>>
+					When you tell $him that $he's to be known as $activeChild.slaveName $activeChild.slaveSurname now, $he shows no reaction. You already took everything from $him, what's a name at this point?
+				<<elseif $oldSurname == $PC.slaveSurname>>
+					$He doesn't care about losing your surname at first, but it quickly sets in that $he may have @@.gold;pushed $his position too far.@@
+					<<set $activeChild.trust -= 20>>
+				<</if>>
+			<<elseif $activeChild.devotion < -20>>
+				<<if $activeChild.slaveSurname == $PC.slaveSurname>>
+					When you tell $him that $he's to be known as $activeChild.slaveName $activeChild.slaveSurname now, $he pleads with you not to steal $his name. It matters little to you, and $he is forced to @@.hotpink;accept your will.@@
+					<<set $activeChild.devotion += 5>>
+				<<elseif $oldSurname == $PC.slaveSurname>>
+					$He's @@.mediumorchid;happy@@ to no longer have to share a name with $his tormentor, but the bliss doesn't last long as @@.gold;dread@@ quickly sets in about what this may mean.
+					<<set $activeChild.devotion += 5, $activeChild.trust -= 10>>
+				<</if>>
+			<<else>>
+				<<if $activeChild.slaveSurname == $PC.slaveSurname>>
+					When you tell $him that $he's to be known as $activeChild.slaveName $activeChild.slaveSurname now, $he nods with approval feeling @@.mediumaquamarine;that $he may hold at least some value in your eyes.@@
+					<<set $activeChild.trust += 5>>
+				<<elseif $oldSurname == $PC.slaveSurname>>
+					$He accepts that you'd rename $him something other than your name. $He's @@.gold;a little scared@@ that you intend to discard $him as your slave wife, or worse, but realizes this was not only a possibility, but likely.
+					<<set $activeChild.trust -= 5>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<</if>> /* close new name check */

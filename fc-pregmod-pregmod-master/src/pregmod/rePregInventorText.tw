@@ -1,0 +1,197 @@
+:: RE Preg Inventor Text [nobr]
+
+		<<setNonlocalPronouns $seeDicks>>
+		The interview starts about halfway into a special episode of "Husbandry with Millie." The show's host is introducing a who's who of important figures in the slave breeding community. As you turn on the show, Millie seems to have just completed another interview.
+		<br><br>
+		"Everybody, give one last round of applause for renowned breakout porn star 'Twinner Jennie'!" she says. "Who'd have thought an eighteen year old slave could be pregnant with their own eighteen year old cloned sister? Quite a world — thank you again for that fascinating interview! Our next guest on 'Husbandry with Millie' is a clever 'broodmother' class breeding slave and mother of <<= num($activeSlave.counter.birthsTotal)>> children from the $continent arcology of '$arcologies[0].name.' Everybody, please give a hearty welcome to <<= SlaveFullName($activeSlave)>>!"
+		<br><br>
+		The first thing that the audience sees of your slave is a colossal $activeSlave.skin orb pressing forward through an inadequate looking faux doorway at the rear of the set. "Husbandry with Millie" is a show about breeders and for breeders, and the host, Millie, has seen pregnant slaves of innumerable sizes and descriptions. Despite this, she does a clear double take as your slave enters, and enters, and enters stage right, $his grossly distorted belly seeming to go on forever as it precedes $him. $He is always growing, and you are constantly increasing the size of $his menial entourage to ensure $his unhindered mobility. As a result, a veritable platoon of masked menials can be seen throwing themselves into your overladen babyfactory before $his
+		<<if ($activeSlave.boobs >= 20000)>>
+			debilitatingly enormous, mind boggling breasts
+		<<elseif ($activeSlave.boobs >= 3000)>>
+			enormous breasts
+		<<elseif ($activeSlave.boobsImplant/$activeSlave.boobs) >= .60>>
+			implant inflated tits
+		<<else>>
+			upper body
+		<</if>>
+		and
+		<<if $activeSlave.face > 80>>
+			gorgeous face
+		<<elseif $activeSlave.face > 40>>
+			cute face
+		<<elseif $activeSlave.face > 1>>
+			unassuming face
+		<<else>>
+			homely face
+		<</if>>
+		come into view.
+		<br><br>
+		Your slave smiles,
+		<<if hasBothArms($activeSlave)>>
+			rubbing the side of $his belly with one hand while waving at the audience with the other.
+		<<elseif hasAnyArms($activeSlave)>>
+			alternating between rubbing the side of $his belly and waving at the audience.
+		<<else>>
+			pushing one arm stump into the side of $his belly while waving the other at the studio audience.
+		<</if>>
+		After $he has entered and taken $his place next to the interview couch — rolling forward to lay on $his belly so that $he can speak at eye level with $his interviewer while reclined in relative comfort — more menials enter the stage, carrying portable versions of the specialized maternity swing and moisturizing pool that $he has developed.
+		<br><br>
+		"Wow!" Millie says, "You're just about ready to pop, aren't you?"
+		<br><br>
+		<<if canTalk($activeSlave)>>
+			"Mmm," your slave <<say>>s,
+		<<else>>
+			Your slave nods,
+		<</if>>
+		<<if hasAnyLegs($activeSlave)>>
+			crossing $his leg<<if hasBothLegs($activeSlave)>>s<</if>> over the rearmost swell of $his belly,
+		<<else>>
+			bobbling $his leg stumps against the rearmost swell of $his belly,
+		<</if>>
+		<<if canTalk($activeSlave)>>
+			"and I'm more and more ready to pop every day."
+		<<elseif hasAnyArms($activeSlave)>>
+			motioning toward $his belly to emphasize the truth of the host's statement.
+		<<else>>
+			waving $his stumps at $his belly to emphasize the truth of the host's statement.
+		<</if>>
+		<br><br>
+		"I have to admit, $activeSlave.slaveName," Millie says, "you might just be the most heavily pregnant breeder I've ever seen." She motions at your slave's replete body and says: "— May I?"
+		<br><br>
+		<<if canTalk($activeSlave)>>
+			"Plea<<s>>e do," your slave <<say>>s.
+		<<elseif hasAnyArms($activeSlave)>>
+			Your slave invites the host to touch by patting $his belly and then grinning.
+		<<else>>
+			Your slave nods.
+		<</if>>
+		$He
+		<<if hasAnyArms($activeSlave)>>
+			<<if ($activeSlave.boobs >= 20000)>>
+				rubs the bases of $his gargantuan breasts in hungry anticipation.
+			<<elseif ($activeSlave.boobs >= 3000)>>
+				rubs the sides of $his enormous breasts in hungry anticipation.
+			<<elseif ($activeSlave.boobsImplant/$activeSlave.boobs) >= .60>>
+				rubs the sides of $his fat, implanted tits in hungry anticipation.
+			<<else>>
+				<<if $activeSlave.nipples != "fuckable">>tweaks<<else>>fingers<</if>> $his nipples through the sheer fabric of $his pretty slave gown while regarding the host with a look of hungry anticipation.
+			<</if>>
+		<<else>>
+			<<if ($activeSlave.boobs >= 20000)>>
+				pushes $his arm stubs into what little of the sides of $his gargantuan breasts $he can reach, a look of hungry anticipation on $his face.
+			<<elseif ($activeSlave.boobs >= 3000)>>
+				pushes $his arm stubs into the sides of $his enormous breasts, a look of hungry anticipation on $his face.
+			<<elseif ($activeSlave.boobsImplant/$activeSlave.boobs) >= .60>>
+				pushes $his arm stubs into the sides of $his fat, implanted tits, a look of hungry anticipation on $his face.
+			<<else>>
+				rubs $his arm stubs against $his nipples through $his pretty slave gown, a look of hungry anticipation on $his face.
+			<</if>>
+		<</if>>
+		<br><br>
+		Millie places an appreciative hand on your slave's silk clad flank. The poor $girl is so packed full of children that $his brood can be seen pressed in outline along the full swell of $his belly, and Millie's hand rests on the embossed figure of one such child. The camera zooms in as its form can be clearly made out pushing through the skin of your slave and against the host's touch. It turns over, allowing her to cup its back in her palm. Your slave flexes $his
+		<<if hasAnyLegs($activeSlave)>>
+			leg<<if hasBothLegs($activeSlave)>>s<</if>>
+		<<else>>
+			back
+		<</if>>
+		and parts $his
+		<<if ($activeSlave.lips > 95)>>
+			swollen mouth pussy,
+		<<elseif ($activeSlave.lips > 70)>>
+			swollen lips,
+		<<elseif ($activeSlave.lips > 20)>>
+			lips,
+		<<else>>
+			thin lips,
+		<</if>>
+		making no noise. You know $him well enough to understand that the combined pleasure and pain from the talk show host's uncareful touch has caused $him to experience one of $his "secret little orgasms," and you savor the sight of $him squirming as $he tries not to let on.
+		<br><br>
+		"So, $activeSlave.slaveName," Millie says, not taking her eyes off of the slave's incredibly fecund figure, "why don't you tell us about your inventions?"
+		<br><br>
+		Your slave bites $his lip and gives the talk show host a meaningful look.
+		<<if canTalk($activeSlave)>>
+			"How about I give you a 'hand<<s>>-on' demon<<s>>tration in<<s>>tead?" $he asks.
+		<<elseif hasAnyArms($activeSlave)>>
+			$He signs that $he'd like to give her a "hands-on demonstration" instead.
+		<<else>>
+			One of $his menials pushes _hisU body into the breeder's enormous stomach in a possessive manner, then turns to regard Millie. "My <<if getPronouns($activeSlave).noun == "girl">>mistress<<else>>master<</if>> would like to give you a 'hands-on' demonstration, instead," _heU says.
+		<</if>>
+		<br><br>
+		The host quirks an eyebrow, then nods. "Alright," she says. "How about we start with that pool of yours?" She then strips her outer layer of clothing, showing off her own famously heavily pregnant figure in an inadequate bra and panties. She makes her way to the curative jelly filled pool, after your slave has been situated within it. Millie dips a toe into the substance and giggles. "Oh my, it tingles!"
+		<br><br>
+		<<if canTalk($activeSlave)>>
+			"Ju<<s>>t wait till you feel it on your belly," your slave <<say>>s. "It feel<<s>> //<<s>>oooo// good."
+		<<elseif hasAnyArms($activeSlave)>>
+			$He signs that the host should get into the pool entirely to feel what it's like on the rest of her swollen body, as well.
+		<<else>>
+			The slave's menial asks the host to get in and feel what it's like on the rest of her swollen body, as well.
+		<</if>>
+		<br><br>
+		Millie slips into the pool and the camera zooms in as she slowly sidles along its outer edge while being crushed up against your slave's capacious belly. When she's finally seated next to the breeder's vestigial-looking core body, a microphone attached to a boom descends to allow the audience to listen as they continue the interview.
+		<br><br>
+		"This feels great," Millie says. "I've been feeling a bit stretched thin, lately, but I can feel all the tension in my belly just slipping away."
+		<br><br>
+		<<if canTalk($activeSlave)>>
+			"Thi<<s>> pool i<<s>> de<<s>>igned to allow <<s>>lave<<s>> to care for their bodie<<s>> no matter how large they inflate," your slave <<say>>s. "— Are you alright?" $he asks, wearing a look of mock concern on $his face.
+		<<elseif hasAnyArms($activeSlave)>>
+			Using the hand farthest from Millie, and with the other conspicuously hidden under the goo, your slave signs that the pool is designed to allow slaves to care for their bodies no matter how large they grow. $He then signs a request regarding the host's wellbeing, wearing a look of mocking concern on $his face.
+		<<else>>
+			Your slave's speaking assistant explains that the pool is designed to allow slaves and women to care for their bodies no matter how large they inflate. Meanwhile, your slave has been slowly rotating in the pool until $he is pressed conspicuously close to the host. The assistant asks if the host is feeling well, a look of mock concern on _hisU face.
+		<</if>>
+		<br><br>
+		"Ah! Um, yes — yep! I'm feeling just fine," Millie says. She's blushing furiously and squirming, and you can just make out the outline of your slave performing some form of teasing shenanigans under the distorting effect of the pool's goo. "So — oooh, yes... $activeSlave.slaveName, how did you, um, come up with the idea for this pool?"
+		<br><br>
+		<<if canTalk($activeSlave)>>
+			"I'm alway<<s>> trying to think of way<<s>> to keep my<<s>>elf pretty for — oh! — my <<Master>>," your slave <<say>>s, suddenly squirming $himself. Millie has slouched down into the pool and is grinning wickedly as she apparently gets revenge. "Thi<<s>> wa<<s>> ju<<s>>t the be<<s>>t — um — I mean — the be<<s>>t — oh //fuck, keep// — I mean, the be<<s>>t method I could think of for doing that."
+		<<elseif hasAnyArms($activeSlave)>>
+			Your slave signs that this was the best method $he could think of to keep $himself pretty for you, given $his size, then starts moaning as a grinning Millie seems to have started enacting her revenge.
+		<<else>>
+			Your slave's speaker explains that this was the best method the broodmother could think of to keep $himself pretty for you, given $his size. The baby laden breeder starts moaning in the middle of $his assistant's description as a grinning Millie seems to have taken this opportunity to start enacting her revenge.
+		<</if>>
+		Millie has turned her body sideways and snaked an arm between
+		<<if ($activeSlave.boobs >= 20000)>>
+			your slave's astoundingly enormous, slimed up cleavage, pumping it up and down to get their unfathomable mass jiggling while she nibbles at and whispers into the squirming baby machine's ear, just loud enough for the mic to pick it up.
+		<<elseif ($activeSlave.boobs >= 3000)>>
+			your slave's massive, slimed up tits, lewdly abusing one breast while she nibbles at and whispers into the squirming baby machine's ear, just loud enough for the mic to pick it up.
+		<<elseif ($activeSlave.boobsImplant/$activeSlave.boobs) >= .60>>
+			your slave's fat, implanted tits, pumping it up and down to get their tightly packed mass bobbing while she nibbles and whispers into the baby machine's ear, just loud enough for the mic to pick it up.
+		<<else>>
+			your slave's breasts, rubbing it up and down one of $his pert nipples while she simultaneously toys with the ridge of one of the baby machine's ears and both nibbles on and whispers into the other, just loud enough for the mic to pick it up.
+		<</if>>
+		<br><br>
+		"That's quite something," Millie whispers. "I don't know about you, $activeSlave.slaveName, but I think I speak for everyone watching today when I say that now seems like a //really good time// to try out that other invention of yours."
+		<br><br>
+		They both exit the pool, dripping clear, slippery gel onto the wood floor of "Husbandry with Millie"'s set. Without a thorough rinsing, your slave's slathered up belly will be dripping for an hour or more, and $he seems to know that as $he motions to stop $his assistants from wiping $him off before strapping $him into $his aerial gymnastics maternity swing. As a result, when the two visibly panting preggos are strapped into the machine and elevated several <<if $showInches == 2>>feet<<else>>meters<</if>> above the now-visible studio audience, your slave drips a steady stream of goop onto their craning heads.
+		<br><br>
+		"Oops!" Millie says. "Looks like we should have warned our audience about a wet zone for this episode. So, $activeSlave.slaveName, why don't we show off all the things this advanced maternity swing of yours can do?"
+		<br><br>
+		<<if canTalk($activeSlave)>>
+			"Ye<<s>>, plea<<s>>e," your slave <<say>>s. $He's visibly worked up and ready to go.
+		<<elseif hasAnyArms($activeSlave)>>
+			$He signs, indicating fervent interest.
+		<<else>>
+			The mute, limbless slave can only moan inchoately in response, but it's clear $he's more than ready.
+		<</if>>
+		<br><br>
+		The two then approach each other in mid air, settling into heavy petting and making out before transition into mechanically assisted scissoring. Your hyperbroodmother's unfathomable belly is hanging sideways and down, jiggling madly mere <<if $showInches == 2>>inches<<else>>centimeters<</if>> above the heads of the studio audience. One particularly adventurous audience member reaches up to place a hand on the slave's stomach to feel it bounce in their hands as $he gets fucked, and soon other members of the audience are also reaching up to feel the massive organ. The swing slowly rotates the coupling lovers back and forth over the length of the audience's seats, in a circle, and a wave of eager hands reach up as it does so, caressing your breeder's shaking belly as $he gets fucked by the show's moaning host. When Millie and your slave finally convulse in mutual orgasm, the camera zooms in on Millie's face for a close-up. She seems exhausted, but she smiles for it anyway.
+		<<set $activeSlave.counter.vaginal++>>
+		<br><br>
+		"That was //fantastic//. I'm going to remember that experience for quite some time, and I'm sure our viewers here and at home will, too! Any last things you would like to say before we cut for break?"
+		<br><br>
+		The camera rotates to focus on your slave and $he shakes $himself, apparently regathering $his wits.
+		<br><br>
+		<<if $arcologies[0].FSRepopulationFocus != "unset">>
+			<<if canTalk($activeSlave)>>
+				"My <<Master>>, <<if SlaveStatsChecker.checkForLisp($activeSlave)>><<= lispReplace(PlayerName())>><<else>><<= PlayerName()>><</if>>, ha<<s>> a vi<<s>>ion for a beautiful future where baby-laden broodmother<<s>> like me aren't the e<<x>><<c>>eption in Free <<C>>itie<<s>> <<s>>o<<c>>iety, but the norm. We both hope that everyone here will <<s>>upport u<<s>>, and <<s>>o we've hidden <<c>>ertificate<<s>> for free pool<<s>> and <<s>>wing<<s>> under everyone'<<s>> <<s>>eat<<s>> — everybody look! If you like what you've <<s>>een today a<<s>> much a<<s>> we hope you have, my <<Master>> and I both hope you'll be filling the<<s>>e invention<<s>> with your own <<s>>lave<<s>>' <<s>>wollen bodie<<s>>, <<s>>oon. And we hope that, <<s>>ome day, everyone watching at home will feel thi<<s>> way, a<<s>> well!"
+			<<else>>
+				Since your slave is unable to speak, $he signals the show's video crew to start playing a pre-recorded video in which you explain your vision for a future where specialized hyper-swollen breeding slaves can be found in Free Cities across the world. You then open your arms wide, in the video, and declare that vouchers for free pools and swings have been hidden under the audience's chairs.
+			<</if>>
+		<<else>>
+			<<if canTalk($activeSlave)>>
+				"My <<Master>>, <<if SlaveStatsChecker.checkForLisp($activeSlave)>><<= lispReplace(PlayerName())>><<else>><<= PlayerName()>><</if>>, ha<<s>> a vi<<s>>ion for a beautiful future where baby-laden broodmother<<s>> like me are all able to enjoy <<s>>e<<x>> with their owner<<s>> and client<<s>>. We both hope that everyone here will <<s>>upport u<<s>>, and <<s>>o we've hidden <<c>>ertificate<<s>> for free pool<<s>> and <<s>>wing<<s>> under everyone'<<s>> <<s>>eat<<s>> — everybody look! If you like what you've <<s>>een today a<<s>> much a<<s>> we hope you have, my <<Master>> and I both hope you'll be filling the<<s>>e invention<<s>> with your own <<s>>lave<<s>>' <<s>>wollen bodie<<s>>, <<s>>oon. And we hope that, <<s>>ome day, everyone watching at home will enjoy hyperpregnant <<s>>e<<x>> with our new toy<<s>>, too!"
+			<<else>>
+				Since your slave is unable to speak, $he signals the show's video crew to start playing a pre-recorded video in which you explain your vision for a future where specialized hyper-swollen breeding slaves aren't just a sexual novelty, but enjoyable to fuck in their own right. You then open your arms wide, in the video, and declare that vouchers for free pools and swings have been hidden under the audience's chairs.
+			<</if>>
+		<</if>>
+		The camera zooms out for a nice panning shot of the audience exclaiming and fawning over the vouchers they've found taped to the bottom of their chairs. Finally, it fades to black.

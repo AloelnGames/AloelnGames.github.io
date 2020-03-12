@@ -1,0 +1,6 @@
+:: Nursery Workaround [nobr]
+
+<<if $cribs.length < $nursery>>
+	<<run App.Facilities.Nursery.newChild($activeChild)>>
+	/*<<= App.Facilities.Nursery.nameChild($activeChild)>>*/
+<</if>>

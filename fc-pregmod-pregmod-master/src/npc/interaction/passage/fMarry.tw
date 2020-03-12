@@ -1,0 +1,814 @@
+:: FMarry [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Slave Interact">>
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+<<run Enunciate(getSlave($AS))>>
+<<set _belly = bellyAdjective(getSlave($AS))>>
+
+<<setAssistantPronouns>>
+<<setPlayerPronouns>>
+
+<<if getSlave($AS).relationship > 0>>
+	<<set _m = $slaveIndices[getSlave($AS).relationshipTarget]>>
+	<<if def _m>>
+		<<setLocalPronouns $slaves[_m] 2>>
+		<<setSpokenLocalPronouns getSlave($AS) $slaves[_m]>>
+		<<if SlaveStatsChecker.checkForLisp(getSlave($AS))>>
+			<<set _name = lispReplace($slaves[_m].slaveName)>>
+		<<else>>
+			<<set _name = $slaves[_m].slaveName>>
+			/* Use the modified "L"isp variables when they are speaking, just in case. */
+		<</if>>
+	<<else>>
+		@@.red;Error, relationshipTarget not found.@@
+	<</if>>
+<</if>>
+<<if SlaveStatsChecker.checkForLisp(getSlave($AS))>>
+	<<set _myName = lispReplace(getSlave($AS).slaveName)>>
+	<<set _playerSurname = lispReplace($PC.slaveSurname)>>
+<<else>>
+	<<set _myName = getSlave($AS).slaveName>>
+	<<set _playerSurname = $PC.slaveSurname>>
+<</if>>
+
+You tell <<= getSlave($AS).slaveName>> that you're going to marry $him. (A proposal, of course, would be inappropriate, even in so enlightened a place as your arcology.)
+<<if getSlave($AS).fetish == "mindbroken">>
+	$He doesn't react.
+	<<set _reactionType = 0>>
+<<elseif getSlave($AS).devotion+getSlave($AS).trust >= 175>>
+	You're not exactly lacking in ways to make <<if getSlave($AS).physicalAge > 30>>$women<<else>><<= $girl>>s<</if>> burst into tears, but this one is unusually effective. When $he's gotten $himself under control again, <<if !hasAnyArms(getSlave($AS))>>looking somewhat embarrassed that $he can't wipe $his own tears<<else>>distractedly cuffing away $his tears<</if>> and consciously breathing deeply,
+	<<if canTalk(getSlave($AS))>>
+		$he <<say>>s,
+		<<if getSlave($AS).relationship != 0>>
+			<<if getSlave($AS).relationship == -1>>
+				"I promi<<s>>e I'll try to <<s>>top <<s>>leeping around <<s>>o much."
+			<<elseif getSlave($AS).relationship == 4>>
+				"I'll have to break up with _name... I'll try to let _him2 down gently, <<he 2>>'ll under<<s>>tand."
+			<<elseif getSlave($AS).relationship == 3>>
+				"_name will mi<<ss>> having <<s>>e<<x>> with me, but <<he 2>>'ll under<<s>>tand."
+			<<elseif getSlave($AS).relationship > 0>>
+				"I'll have to <<s>>top hanging out with _name; I'm <<s>>ure <<he 2>>'ll under<<s>>tand."
+			<<else>>
+				"I've been waiting for thi<<s>> day! I'm <<s>>o happy!"
+			<</if>>
+			$He continues,
+		<</if>>
+		"Thank you, <<Master>>. I am going to do my be<<s>>t to be a
+		<<setSpokenLocalPronouns getSlave($AS) getSlave($AS)>>
+		<<if (getSlave($AS).fetishKnown == 1) && (getSlave($AS).fetishStrength > 60)>>
+			<<if (getSlave($AS).fetish == "submissive")>>
+				perfect <<s>>ubmi<<ss>>ive <<wife>> to you,
+			<<elseif (getSlave($AS).fetish == "cumslut")>>
+				perfect oral <<wife>>,
+			<<elseif (getSlave($AS).fetish == "humiliation")>>
+				hot <<wife>> for you,
+			<<elseif (getSlave($AS).fetish == "buttslut")>>
+				perfect little anal <<wife>>,
+			<<elseif (getSlave($AS).fetish == "boobs")>>
+				<<if getSlave($AS).boobs > 800>>perfect big-boobed<<else>>perfect-boobed<</if>> <<wife>>
+			<<elseif (getSlave($AS).fetish == "pregnancy")>>
+				perfect barefoot breeding <<wife>>,
+			<<elseif (getSlave($AS).fetish == "dom")>>
+				perfect, you know, <<sh>>aring <<wife>> with other <<s>>lave<<s>>,
+			<<elseif (getSlave($AS).fetish == "sadist")>>
+				perfect <<wife>> to u<<s>>e on other <<s>>lave<<s>>,
+			<<elseif (getSlave($AS).fetish == "masochist")>>
+				good, beaten <<wife>>,
+			<<else>>
+				good <<wife>>,
+			<</if>>
+		<<else>>
+			good <<wife>>,
+		<</if>>
+		<<Master>>. Oh, thank you, <<Master>>," $he blubbers, and starts crying again.
+	<<elseif !hasAnyArms(getSlave($AS))>>
+		$he painstakingly mouths $his thanks, since $he cannot speak or use hands to sign.
+		<<if getSlave($AS).relationship != 0>>
+			$He struggles to tell you
+			<<if getSlave($AS).relationship == -1>>
+				that $he'll try to be less of a slut.
+			<<elseif getSlave($AS).relationship == 4>>
+				that $he'll try to let $his lover $slaves[_m].slaveName down gently.
+			<<elseif getSlave($AS).relationship == 3>>
+				that $he'll try to let $his FWB $slaves[_m].slaveName down gently.
+			<<elseif getSlave($AS).relationship > 0>>
+				that $he'll have to stop hanging around $slaves[_m].slaveName.
+			<<else>>
+				that $he has never been happier.
+			<</if>>
+		<</if>>
+	<<else>>
+		$he shakily signs $his thanks twice in a row before breaking down again.
+		<<if getSlave($AS).relationship != 0>>
+			$He regains composure enough to continue signing out
+			<<if getSlave($AS).relationship == -1>>
+				that $he'll try to be less of a slut.
+			<<elseif getSlave($AS).relationship == 4>>
+				that $he'll try to let $his lover $slaves[_m].slaveName down gently.
+			<<elseif getSlave($AS).relationship == 3>>
+				that $he'll try to let $his FWB $slaves[_m].slaveName down gently.
+			<<elseif getSlave($AS).relationship > 0>>
+				that $he'll have to stop hanging around $slaves[_m].slaveName.
+			<<else>>
+				that $he has never been happier.
+			<</if>>
+		<</if>>
+	<</if>>
+	Despite $his devotion and trust, $he is still a slave, and probably knows that $his position could always change. This brings $him one step closer to true permanence, and $he knows it.
+	<<set _reactionType = 1>>
+<<elseif getSlave($AS).devotion < -20 && getSlave($AS).trust > 20>>
+	You're not exactly lacking in ways to make <<if getSlave($AS).physicalAge > 30>>$women<<else>><<= $girl>>s<</if>> burst into tears, but this one is surprisingly effective. It seems <<= getSlave($AS).slaveName>> does not want to marry you, if $his prolonged, anguished sobbing is anything to go by. However, $he would have to be a fool to think there's any way out of it.
+	<<if canTalk(getSlave($AS))>>
+		$He <<say>>s, "Plea<<s>>e <<Master>>, I don't want to
+		<<if (getSlave($AS).fetishKnown == 1) && (getSlave($AS).fetishStrength > 60)>>
+			<<if (getSlave($AS).fetish == "submissive")>>
+				be your little <<s>>ubmi<<ss>>ive fucktoy,
+			<<elseif (getSlave($AS).fetish == "cumslut")>>
+				be your cum <<s>>ucker,
+			<<elseif (getSlave($AS).fetish == "humiliation")>>
+				be <<s>>tripped bare and <<sh>>own off,
+			<<elseif (getSlave($AS).fetish == "buttslut")>>
+				have thing<<s>> <<sh>>oved up my butt,
+			<<elseif (getSlave($AS).fetish == "boobs")>>
+				have my tit<<s>> tea<<s>>ed every night,
+			<<elseif (getSlave($AS).fetish == "pregnancy")>>
+				<<if canGetPregnant(getSlave($AS))>>
+					get knocked up by you,
+				<<else>>
+					be your pregnant toy,
+				<</if>>
+			<<elseif (getSlave($AS).fetish == "dom")>>
+				have to rule your <<s>>i<<ss>>y dick,
+			<<elseif (getSlave($AS).fetish == "sadist")>>
+				<<s>>pank your a<<ss>>,
+			<<elseif (getSlave($AS).fetish == "masochist")>>
+				get beaten by you,
+			<<else>>
+				<<s>>tay in your ni<<c>>e room,
+			<</if>>
+		<<else>>
+			<<s>>tay in your ni<<c>>e room,
+		<</if>>
+		<<Master>>. You're a terrible per<<s>>on, <<Master>>," $he blubbers, and starts crying again.
+		<<if getSlave($AS).relationship != 0>>
+			<<if getSlave($AS).relationship == -1>>
+				"I'll never be <<s>>ati<<s>>fied by ju<<s>>t you!"
+			<<elseif getSlave($AS).relationship == 4>>
+				"I love _name, not you <<Master>>! You'll never be a<<s>> good a<<s>> _him2!"
+			<<elseif getSlave($AS).relationship == 3>>
+				"But I like having <<s>>e<<x>> with _name, not you <<Master>>! You'll never be a<<s>> good as _him2!"
+			<<elseif getSlave($AS).relationship > 0>>
+				"But I like <<s>>pending time with _name, <<he 2>>'<<s>> <<s>>o much ni<<c>>er to be around than you, <<Master>>.
+			<<else>>
+				"I need you in my life, <<Master>>, <<s>>o why don't you bend down like the bitch you are and <<if getSlave($AS).dick > 0>><<s>>uck my dick<<elseif getSlave($AS).vagina > -1>>eat me out<<else>>lick my a<<ss>><</if>>, <<Master>>?"
+			<</if>>
+		<</if>>
+	<<elseif !hasAnyArms(getSlave($AS))>>
+		$he painstakingly mouths $his displeasure, since $he cannot speak or use hands to sign.
+		<<if getSlave($AS).relationship != 0>>
+			<<if getSlave($AS).relationship == -1>>
+				$He desperately tries to explain that you'll never satisfy $him.
+			<<elseif getSlave($AS).relationship == 4>>
+				$He desperately tries to explain that $his love, $slaves[_m].slaveName, is better than you'll ever be.
+			<<elseif getSlave($AS).relationship == 3>>
+				$He desperately tries to explain that $his lover, $slaves[_m].slaveName, satisfies $his far better than you can.
+			<<elseif getSlave($AS).relationship > 0>>
+				$He desperately tries to explain $his friend, $slaves[_m].slaveName, is so much more enjoyable to be around than you.
+			<<else>>
+				$He wiggles $his nethers at you, as if trying to tell you to do something.
+			<</if>>
+		<</if>>
+	<<else>>
+		$he shakily makes a rather rude hand gesture before crying more.
+		<<if getSlave($AS).relationship != 0>>
+			<<if getSlave($AS).relationship == -1>>
+				$He also makes it clear that you'll never satisfy $him.
+			<<elseif getSlave($AS).relationship == 4>>
+				$He also makes it clear that $his love, $slaves[_m].slaveName, is better than you'll ever be.
+			<<elseif getSlave($AS).relationship == 3>>
+				$He also makes it clear that $his lover, $slaves[_m].slaveName, satisfies $him far better than you can.
+			<<elseif getSlave($AS).relationship > 0>>
+				$He also makes it clear $his friend, $slaves[_m].slaveName, is so much more enjoyable to be around than you.
+			<<else>>
+				On top of the prior gesturing, $he adds another, lewder one involving you and $his crotch.
+			<</if>>
+		<</if>>
+	<</if>>
+	Despite $his "fortune", $he is still a slave, and undoubtedly knows that $his position could easily change should you tire of $him. $His tears may not all be genuine either, you have a feeling $he may be trying to take advantage of you.
+	<<set _reactionType = 2>>
+<<elseif getSlave($AS).devotion < -20>>
+	You're not exactly lacking in ways to make <<if getSlave($AS).physicalAge > 30>>$women<<else>><<= $girl>>s<</if>> burst into tears, but this one is unusually effective. It seems <<= getSlave($AS).slaveName>> does not want to marry you, if $his prolonged, anguished sobbing is anything to go by. However, $he would have to be a fool to think there's any way out of it. You lean in and whisper that
+	<<if (getSlave($AS).fetishKnown == 1) && (getSlave($AS).fetishStrength > 60)>>
+		<<if (getSlave($AS).fetish == "submissive")>>
+			$he'll make the perfect submissive $wife for you dominate.
+		<<elseif (getSlave($AS).fetish == "cumslut")>>
+			$he'll make the perfect oral $wife for your <<if $PC.dick > 0 && $PC.vagina >= 0>>dick and pussy<<elseif $PC.dick > 0>>cock<<else>>pussy<</if>> to enjoy.
+		<<elseif (getSlave($AS).fetish == "humiliation")>>
+			$he'll make a hot $wife for you to parade around naked.
+		<<elseif (getSlave($AS).fetish == "buttslut")>>
+			$he'll make the perfect little anal $wife <<if $PC.dick > 0>>to keep your dick warm<<else>>stick things in<</if>>.
+		<<elseif (getSlave($AS).fetish == "boobs")>>
+			$he'll make the <<if getSlave($AS).boobs > 800>>perfect big-boobed<<else>>perfect-boobed<</if>> $wife for you to bury your head into.
+		<<elseif (getSlave($AS).fetish == "pregnancy")>>
+			$he'll make the perfect barefoot breeding $wife.<<if $PC.dick > 0 && canGetPregnant(getSlave($AS))>> You poke $him with your erection, letting $him know what $he's in for.<</if>>
+		<<elseif (getSlave($AS).fetish == "dom")>>
+			$he'll make the perfect dominant $wife to force upon $his closest friends.
+		<<elseif (getSlave($AS).fetish == "sadist")>>
+			$he'll make the perfect cruel $wife to force upon $his closest friends.
+		<<elseif (getSlave($AS).fetish == "masochist")>>
+			$he'll make a good, beaten $wife.
+		<<else>>
+			$he'll make a good $wife.
+		<</if>>
+	<<else>>
+		$he'll make a good $wife.
+	<</if>>
+	<<if canTalk(getSlave($AS))>>
+		"<<Master>>. Plea<<s>>e, <<Master>>, don't make me do thi<<s>>. I don't want thi<<s>>!" $he blubbers, and starts crying again.
+		<<if getSlave($AS).relationship != 0>>
+			<<if getSlave($AS).relationship == -1>>
+				"I need a new dick in me every night! How can I be <<s>>ati<<s>>fied like thi<<s>>?!"
+			<<elseif getSlave($AS).relationship == 4>>
+				"I love _name! Plea<<s>>e don't <<s>>plit u<<s>> up <<Master>>! I'll be a good $girl, <<Master>>, plea<<s>>e!"
+			<<elseif getSlave($AS).relationship == 3>>
+				"I love playing around with _name! Plea<<s>>e don't <<s>>plit u<<s>> up <<Master>>! I'll be a good $girl, <<Master>>, plea<<s>>e!"
+			<<elseif getSlave($AS).relationship > 0>>
+				"But I like <<s>>pending time with _name! Plea<<s>>e don't <<s>>plit u<<s>> up <<Master>>! I'll be a good $girl, <<Master>>, plea<<s>>e!"
+			<<else>>
+				"I need you in my life, <<Master>>, but not like thi<<s>>, plea<<s>>e?"
+			<</if>>
+		<</if>>
+	<<elseif !hasAnyArms(getSlave($AS))>>
+		$He painstakingly pleads with you, since $he cannot speak or use hands to sign.
+		<<if getSlave($AS).relationship != 0>>
+			<<if getSlave($AS).relationship == -1>>
+				$He desperately tries to explain that $he needs multiple partners.
+			<<elseif getSlave($AS).relationship == 4>>
+				$He desperately begs you to not separate $him from $his love, $slaves[_m].slaveName.
+			<<elseif getSlave($AS).relationship == 3>>
+				$He desperately begs you to not separate $him from $his lover, $slaves[_m].slaveName.
+			<<elseif getSlave($AS).relationship > 0>>
+				$He desperately begs you to not separate $him from $his friend, $slaves[_m].slaveName.
+			<<else>>
+				$He desperately begs you to not marry $him, despite $his emotional connection with you.
+			<</if>>
+		<</if>>
+	<<else>>
+		$He desperately struggles to plead with you before breaking down again.
+		<<if getSlave($AS).relationship != 0>>
+			<<if getSlave($AS).relationship == -1>>
+				$He tries to explain that $he needs multiple partners.
+			<<elseif getSlave($AS).relationship == 4>>
+				$He begs you to not separate $him from $his love, $slaves[_m].slaveName.
+			<<elseif getSlave($AS).relationship == 3>>
+				$He begs you to not separate $him from $his lover, $slaves[_m].slaveName.
+			<<elseif getSlave($AS).relationship > 0>>
+				$He begs you to not separate $him from $his friend, $slaves[_m].slaveName.
+			<<else>>
+				$He begs you to not marry $him, despite $his emotional connection with you.
+			<</if>>
+		<</if>>
+	<</if>>
+	You leave $him to weep and consider $his fate. Despite $his "fortune", $he is still a slave, and undoubtedly knows that $his position could easily change should you tire of $him.
+	<<set _reactionType = 2>>
+<<else>>
+	$He doesn't really react to this. By no means does $he want to be your $wife, but $he's obedient enough to know that you are in charge. You leave $him to $his business, and go back to yours.
+	<<if getSlave($AS).relationship != 0>>
+		<<if getSlave($AS).relationship == -1>>
+			$He sighs at the realization that $he won't be allowed to be so promiscuous and will have to learn to focus $his attention on you.
+		<<elseif getSlave($AS).relationship == 4>>
+			$He sighs at the realization that $he'll have to stop seeing $his love, $slaves[_m].slaveName.
+		<<elseif getSlave($AS).relationship == 3>>
+			$He sighs at the realization that $he'll have to stop spending so much time with $his lover, $slaves[_m].slaveName.
+		<<elseif getSlave($AS).relationship > 0>>
+			$He sighs at the realization that $he'll have to stop spending so much time with $his friend, $slaves[_m].slaveName.
+		<<else>>
+			Deep down, $he dreamed of this. But now that it's happening $he can't shake the feeling of regret.
+		<</if>>
+	<</if>>
+	<<set _reactionType = 3>>
+<</if>>
+<br><br>
+<<= capFirstChar($assistant.name)>> prompts you for wedding
+<<if $assistant.personality == 0>>
+	instructions.
+<<else>>
+	instructions, _hisA
+	<<if $assistant.appearance == "monstergirl">>
+		monster<<= _girlA>> avatar appearing in a surprisingly conventional surplice that covers _himA up decently. All except for _hisA horns, which protrude from under the headpiece.
+	<<elseif $assistant.appearance == "shemale">>
+		shemale avatar appears in a collar patterned to look like a minister's, and absolutely nothing else, stroking _himselfA with anticipation.
+	<<elseif $assistant.appearance == "amazon">>
+		amazon avatar wearing a tribal shaman's cape and carrying a medicine stick adorned with all sorts of little charms and baubles.
+	<<elseif $assistant.appearance == "businesswoman">>
+		business<<= _womanA>> avatar looking rather severe in a minister's collar.
+	<<elseif $assistant.appearance == "fairy">>
+		fairy avatar looking incredibly silly, dressed in an oversized, disheveled priest's robes and looking rather smug about it.
+	<<elseif $assistant.appearance == "pregnant fairy">>
+		fairy avatar looking incredibly silly, dressed in an oversized, disheveled priest's robes stretched tight by _hisA pregnant belly and looking rather smug about it.
+	<<elseif $assistant.appearance == "goddess">>
+		goddess avatar completely unchanged, since _heA considers _hisA usual form perfectly appropriate for a marriage.
+	<<elseif $assistant.appearance == "hypergoddess">>
+		goddess avatar completely unchanged, since _heA considers _hisA usual form perfectly appropriate for a marriage.
+	<<elseif $assistant.appearance == "loli">>
+		_loliA avatar looking surprisingly mature in a minister's collar. Though, _heA would rather be the flower _girlA in this wedding.
+	<<elseif $assistant.appearance == "preggololi">>
+		_loliA avatar looking surprisingly mature in a minister's collar. Though, _heA would rather be the flower _girlA in this wedding.
+	<<elseif $assistant.appearance == "schoolgirl">>
+		school<<= _girlA>> avatar looking willfully absurd in a minister's collar and _hisA usual short plaid skirt.
+	<<elseif $assistant.appearance == "angel">>
+		angelic avatar looking, well, angelic in _hisA usual garb with an added minister's collar.
+	<<elseif $assistant.appearance == "cherub">>
+		angelic avatar looking absurd in _hisA oversized robe, complete with wing-holes, and minister's collar.
+	<<elseif $assistant.appearance == "incubus">>
+		demonic avatar completely unchanged, since _heA considers _hisA usual form perfectly appropriate for a marriage, though _heA has made sure to be fully erect for the wedding.
+	<<elseif $assistant.appearance == "succubus">>
+		demonic avatar wearing nothing but a minister's collar. _HeA has brought several marital aids along with _himA to tease the bride and groom with.
+	<<elseif $assistant.appearance == "imp">>
+		demonic avatar looking absurd in _hisA oversized robe, complete with wing-holes, and minister's collar.
+	<<elseif $assistant.appearance == "witch">>
+		witchy avatar looking rather formal in a fine robe and minister's collar.
+	<<elseif $assistant.appearance == "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+		twitching avatar completely unchanged, sans a bulbous ring of flesh around _hisA neck that sort of resembles a minister's collar.
+	<<else>>
+		symbol appearing in white.
+	<</if>>
+<</if>>
+
+<br>
+<span id="result">
+<br><<link "Just redesignate $him as your slave $wife">>
+	<<replace "#result">>
+	You order $assistant.name to simply redesignate <<= getSlave($AS).slaveName>> as your slave $wife.
+	<<if $assistant.personality == 0>>
+		"Slave redesignated," it responds immediately. The thing is done.
+	<<else>>
+		<<if $assistant.appearance == "monstergirl">>
+			_HisA avatar snaps _hisA fingers and shrugs off _hisA surplice, revealing _hisA tentacle hair, pale skin, and cocks once more.
+		<<elseif $assistant.appearance == "shemale">>
+			_HisA avatar snaps _hisA fingers and starts to masturbate more energetically.
+		<<elseif $assistant.appearance == "amazon">>
+			_HisA avatar gives _hisA medicine stick a shake.
+		<<elseif $assistant.appearance == "businesswoman">>
+			_HisA avatar snaps _hisA fingers.
+		<<elseif $assistant.appearance.includes("fairy")>>
+			_HisA avatar claps _hisA hands twice, looking a bit disappointed at the lack of celebration.
+		<<elseif $assistant.appearance.includes("goddess")>>
+			_HisA avatar makes a complex hand gesture, looking beatific.
+		<<elseif $assistant.appearance.includes("loli")>>
+			_HisA avatar claps _hisA hands together.
+		<<elseif $assistant.appearance == "schoolgirl">>
+			_HisA avatar snaps _hisA fingers and gives a little twirl.
+		<<elseif $assistant.appearance == "angel">>
+			_HisA avatar spreads _hisA wings and arms and emits a flash of light.
+		<<elseif $assistant.appearance == "cherub">>
+			_HisA avatar claps _hisA hands together, emitting a burst of light.
+		<<elseif $assistant.appearance == "incubus">>
+			_HisA avatar flicks the tip of _hisA penis and blows _hisA load towards the both of you.
+		<<elseif $assistant.appearance == "succubus">>
+			_HisA avatar starts to masturbate furiously and orgasms lewdly.
+		<<elseif $assistant.appearance == "imp">>
+			_HisA avatar claps _hisA hands together, emitting a burst of darkness.
+		<<elseif $assistant.appearance == "witch">>
+			_HisA avatar pulls out _hisA spell book and attempts a spell to bind you two; _heA manages to conjure a large ring around _himselfA, pinning _hisA arms to _hisA sides.
+		<<elseif $assistant.appearance == "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+			_HisA avatar splits open to reveal a number of tentacles and wraps them around each other.
+		<<else>>
+			_HisA symbol flashes.
+		<</if>>
+		"Done," _heA says.
+	<</if>>
+	<<if getSlave($AS).relationship > 0>>
+		<<set getSlave($AS).relationshipTarget = 0>>
+		<<set $slaves[_m].relationship = 0, $slaves[_m].relationshipTarget = 0>>
+	<</if>>
+	<<if getSlave($AS).devotion+getSlave($AS).trust >= 175>>
+		<<if getSlave($AS).relationship > 0>>
+			Both $him and $his ex are @@.mediumorchid;disappointed@@ that their relationship had to end and @@.gold;worry@@ for each other's future.
+			<<if getSlave($AS).relationship == 4>>
+				<<set $slaves[_m].devotion -= 5, $slaves[_m].trust -= 5>>
+			<<elseif getSlave($AS).relationship == 3>>
+				<<set $slaves[_m].devotion -= 3, $slaves[_m].trust -= 3>>
+			<<else>>
+				<<set $slaves[_m].devotion -= 1, $slaves[_m].trust -= 1>>
+			<</if>>
+		<</if>>
+	<<elseif getSlave($AS).devotion < -20>>
+		<<if getSlave($AS).relationship == -1>>
+			$He @@.mediumorchid;hates@@ that $he has to be yours only and @@.gold;fears@@ what will happen if $he strays.
+			<<set getSlave($AS).devotion -= 40, getSlave($AS).trust -= 40>>
+		<<elseif getSlave($AS).relationship == 4>>
+			Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future.
+			<<set $slaves[_m].devotion -= 40, $slaves[_m].trust -= 40>>
+			<<set getSlave($AS).devotion -= 40, getSlave($AS).trust -= 40>>
+		<<elseif getSlave($AS).relationship == 3>>
+			Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future.
+			<<set $slaves[_m].devotion -= 30, $slaves[_m].trust -= 30>>
+			<<set getSlave($AS).devotion -= 30, getSlave($AS).trust -= 30>>
+		<<elseif getSlave($AS).relationship > 0>>
+			Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future.
+			<<set $slaves[_m].devotion -= 20, $slaves[_m].trust -= 20>>
+			<<set getSlave($AS).devotion -= 20, getSlave($AS).trust -= 20>>
+		<</if>>
+	<<else>>
+		<<if getSlave($AS).relationship == -1>>
+			$He @@.mediumorchid;dislikes@@ that $he has to be yours only and @@.gold;worries@@ what will happen if $he strays.
+			<<set getSlave($AS).devotion -= 10, getSlave($AS).trust -= 10>>
+		<<elseif getSlave($AS).relationship == 4>>
+			Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;worry@@ for each other.
+			<<set $slaves[_m].devotion -= 20, $slaves[_m].trust -= 20>>
+			<<set getSlave($AS).devotion -= 20, getSlave($AS).trust -= 20>>
+		<<elseif getSlave($AS).relationship == 3>>
+			Both $him and $his ex are @@.mediumorchid;are saddened@@ that their relationship had to end and @@.gold;worry@@ for each other.
+			<<set $slaves[_m].devotion -= 10, $slaves[_m].trust -= 10>>
+			<<set getSlave($AS).devotion -= 10, getSlave($AS).trust -= 10>>
+		<<elseif getSlave($AS).relationship > 0>>
+			Both $him and $his ex are @@.mediumorchid;are disappointed@@ that their relationship had to end and @@.gold;worry@@ for each other.
+			<<set $slaves[_m].devotion -= 5, $slaves[_m].trust -= 5>>
+			<<set getSlave($AS).devotion -= 5, getSlave($AS).trust -= 5>>
+		<</if>>
+	<</if>>
+	<<set getSlave($AS).relationship = -3>>
+	<<if $PC.slaveSurname && getSlave($AS).slaveSurname != $PC.slaveSurname>>
+		<br><br><span id="surnaming">
+		<<link "Give $him your surname">>
+			<<replace "#surnaming">>
+				<<set getSlave($AS).slaveSurname = $PC.slaveSurname>>
+				You also command $assistant.name to rename your new slave $wife <<= getSlave($AS).slaveName>> getSlave($AS).slaveSurname.
+				<<if getSlave($AS).fetish == "mindbroken">>
+					The new Mrs. getSlave($AS).slaveSurname <<if canHear(getSlave($AS))>>hears<<else>>understands<</if>> this, of course, and shows no reaction. Like many things, names mean nothing to $him now.
+				<<elseif getSlave($AS).devotion+getSlave($AS).trust >= 175>>
+					The new Mrs. getSlave($AS).slaveSurname <<if canHear(getSlave($AS))>>hears<<else>>understands<</if>> this, of course, and breaks down again. Being brusquely redesignated as your slave $wife was such a sterile experience that $he wasn't sure it was real, and hearing that $he's to take your surname @@.mediumaquamarine;reassures $him@@ that it is. Not to mention, $he might be a $desc, but $he's still a $girl, and hearing that $he wouldn't get a decent wedding did disappoint $him, but this makes up for it. You might not be all that expressive, but @@.hotpink;$he's your $wife,@@ and that's what matters to $him.
+					<<set getSlave($AS).devotion += 5, getSlave($AS).trust += 5>>
+				<<elseif getSlave($AS).devotion < -20 && getSlave($AS).trust > 20>>
+					The new Mrs. getSlave($AS).slaveSurname <<if canHear(getSlave($AS))>>hears<<else>>understands<</if>> this, of course, and scoffs audibly. @@.mediumorchid;$He'll remember $his name, even if you try to take it away.@@ $He can't hide @@.mediumorchid;$his annoyance@@ that you couldn't even spring for a fancy wedding.
+					<<set getSlave($AS).devotion -= 10>>
+				<<elseif getSlave($AS).devotion < -20>>
+					The new Mrs. getSlave($AS).slaveSurname <<if canHear(getSlave($AS))>>hears<<else>>understands<</if>> this, of course, and breaks down again. Not only have you taken $his hand, but now also $his name; @@.hotpink;$he's yours now,@@ nothing $he thinks can change that.
+					<<set getSlave($AS).devotion += 5>>
+				<<else>>
+					The new Mrs. getSlave($AS).slaveSurname <<if canHear(getSlave($AS))>>hears<<else>>understands<</if>> this, of course, and nods acceptingly. Being trusted with your surname @@.mediumaquamarine;reassures $him@@ that $he must mean something to you, though $he is a @@.mediumorchid;little disappointed@@ by the lack of a wedding, however.
+					<<set getSlave($AS).devotion--, getSlave($AS).trust += 5>>
+				<</if>>
+			<</replace>>
+		<</link>>
+		</span>
+	<</if>>
+	<</replace>>
+<</link>>
+<br><<link "Have your assistant marry $him to you">>
+	<<replace "#result">>
+	You order <<= getSlave($AS).slaveName>> to go change into bridal lingerie.
+	<<if _reactionType == 0>>
+		<<if canWalk(getSlave($AS))>>
+			$He hurries off, still crying. When $he returns, $he's wearing
+		<<else>>
+			$He is helped out, still crying. When $he is returned, $he's wearing
+		<</if>>
+	<<elseif _reactionType == 1>>
+		$He is helped out, completely unaware of $his pending marriage. When $he is returned, $he's wearing
+	<<elseif _reactionType == 2>>
+		<<if canWalk(getSlave($AS))>>
+			$He shuffles off, still sobbing. When $he returns, $he's wearing
+		<<else>>
+			$He is helped out, still sobbing. When $he is returned, $he's wearing
+		<</if>>
+	<<else>>
+		<<if canWalk(getSlave($AS))>>
+			$He hurries off to fulfill your orders. When $he returns, $he's wearing
+		<<else>>
+			$He is helped out to get dressed. When $he is returned, $he's wearing
+		<</if>>
+	<</if>>
+	<<if (getSlave($AS).vagina == 0)>>
+		white, since $he's a virgin.
+	<<elseif (getSlave($AS).pregKnown == 1)>>
+		light pink, since $he is pregnant.
+	<<elseif (getSlave($AS).vagina < 0) && (getSlave($AS).anus == 0)>>
+		white, since $he's an anal virgin.
+	<<elseif (getSlave($AS).vagina < 0) && (getSlave($AS).boobs > 500)>>
+		electric blue, since $he's a shemale.
+	<<elseif (getSlave($AS).vagina < 0)>>
+		pale blue, since $he's a sissy slave.
+	<<elseif (getSlave($AS).dick > 0)>>
+		hot pink, since $he's a futa slave.
+	<<else>>
+		light pink, since $he's an experienced sex slave.
+	<</if>>
+	A flimsy veil covers $his head and shoulders.
+	<<if (getSlave($AS).boobs > 4000)>>
+		On such short notice, no bridal bra for boobs of $his size was available, so $he's topless. Not a tragedy.
+	<<elseif (getSlave($AS).boobs > 1200)>>
+		$His lacy bridal bra just barely restrains $his huge boobs, leaving the tops of $his areolae visible.
+	<<elseif (getSlave($AS).boobs > 400)>>
+		$His lacy bridal bra flatters $his pretty breasts.
+	<<else>>
+		$His lacy bridal bra flatters $his pretty chest.
+	<</if>>
+	<<if getSlave($AS).bellyPreg >= 600000>>
+		$His expansive, squirming pregnant belly makes $his bridal wear particularly obscene.
+	<<elseif (getSlave($AS).bellyPreg >= 1500)>>
+		$His _belly pregnant belly protrudes out the front of $his bridal wear.
+	<<elseif (getSlave($AS).bellyImplant >= 1500)>>
+		$His _belly <<print getSlave($AS).bellyImplant>>cc belly implant protrudes $his middle out the front of $his bridal wear.
+	<<elseif (getSlave($AS).bellyFluid >= 10000)>>
+		$His hugely bloated, <<print getSlave($AS).inflationType>>-filled belly protrudes out the front of $his bridal wear.
+	<<elseif (getSlave($AS).bellyFluid >= 5000)>>
+		$His bloated, <<print getSlave($AS).inflationType>>-stuffed belly protrudes out the front of $his bridal wear.
+	<<elseif (getSlave($AS).bellyFluid >= 1500)>>
+		$His distended, <<print getSlave($AS).inflationType>>-belly protrudes out the front of $his bridal wear.
+	<</if>>
+	<<if getSlave($AS).chastityPenis == 1>>
+		$His slave dick is hidden by its chastity cage.
+	<<elseif canAchieveErection(getSlave($AS))>>
+		<<if (getSlave($AS).dick > 4) && (getSlave($AS).belly >= 5000)>>
+			$He's hugely erect, with $his lacy g-string only serving to hold $his dick agonizingly pressed against the bottom of $his _belly <<if getSlave($AS).bellyPreg >= 3000>>pregnant <</if>>belly.
+		<<elseif getSlave($AS).dick > 4>>
+			$He's hugely erect, with $his lacy g-string only serving to hold $his dick upright along $his belly.
+		<<else>>
+			$His erection tents the front of $his lacy g-string.
+		<</if>>
+	<<elseif (getSlave($AS).dick > 0)>>
+		<<if getSlave($AS).dick > 10>>
+			$His huge soft cock is allowed to dangle freely as no g-string could hope to contain it.
+		<<elseif getSlave($AS).dick > 4>>
+			$His big soft cock forms a lewd mass, stuffed into $his lacy g-string.
+		<<else>>
+			$His lacy g-string perfectly conceals $his soft dick.
+		<</if>>
+	<<else>>
+		<<if getSlave($AS).clit > 1>>
+			$His huge clit is quite hard, making $him shift uncomfortably as $his lacy g-string stimulates it.
+		<<else>>
+			$His lacy g-string is starting to look a bit moist in front.
+		<</if>>
+	<</if>>
+	<<= capFirstChar($assistant.name)>> marries $him to you in a brief ceremony adapted for slaves and their owners. You place a
+	<<if hasAnyArms(getSlave($AS))>>
+		simple steel ring on $his finger;
+	<<else>>
+		chain with a simple steel ring around $his neck;
+	<</if>>
+	$he does not reciprocate, since this marriage does not bind you.
+	<<if $assistant.personality == 0>>
+		"The marriage protocol now requires you to <<if $PC.dick != 0>>fellate<<if $PC.vagina != -1>> and <</if>><</if>><<if $PC.vagina != -1>>perform cunnilingus on<</if>> the <<if $PC.title == 1>>groom<<else>>the bride<</if>>," $assistant.name orders $him, and $he <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>.
+	<<else>>
+		<<if $assistant.appearance == "monstergirl">>
+			"To consecrate the ceremony," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you will now <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s dick<<if $PC.vagina != -1>> and eat _hisP pussy<</if>><<else>>eat the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s pussy<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. Pleased by the sight, $assistant.name's avatar begins to play with _hisA dicks.
+		<<elseif $assistant.appearance == "shemale">>
+			"To get this marriage started," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you will now <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s dick<<if $PC.vagina != -1>> and eat _hisP pussy<</if>><<else>>eat the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s pussy<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. Pleased by the sight, $assistant.name's avatar starts to jill off.
+		<<elseif $assistant.appearance == "amazon">>
+			"To complete this ritual," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you will now <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s dick<<if $PC.vagina != -1>> and eat _hisP pussy<</if>><<else>>eat the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s pussy<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. Pleased by the sight, $assistant.name's avatar starts to jill off.
+		<<elseif $assistant.appearance == "businesswoman">>
+			"To consecrate the marriage," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you will now <<if $PC.dick != 0>>fellate<<else>>perform cunnilingus on<</if>> the <<if $PC.title == 1>>groom<<else>>the bride<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. Pleased by the sight, $assistant.name's avatar sneaks a hand down _hisA suit skirt, blushing furiously.
+		<<elseif $assistant.appearance == "fairy">>
+			"To seal the deal," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you gotta drink the <<if $PC.title == 1>>groom's <<else>>bride's <</if>><<if $PC.dick != 0>>semen<<if $PC.vagina != -1>> and pussy juices<</if>><<else>>pussy juices<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. Pleased by the sight, $assistant.name's avatar spreads _hisA legs while still hovering in the air and masturbates eagerly through _hisA half-worn robes.
+		<<elseif $assistant.appearance == "pregnant fairy">>
+			"To seal the deal," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you gotta drink the <<if $PC.title == 1>>groom's <<else>>bride's <</if>><<if $PC.dick != 0>>semen<<if $PC.vagina != -1>> and pussy juices<</if>><<else>>pussy juices<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. Pleased by the sight, $assistant.name's pregnant avatar curls while still hovering in the air and masturbates eagerly around _hisA large belly.
+		<<elseif $assistant.appearance == "goddess">>
+			"To consummate the marriage," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you must now <<if $PC.dick != 0>>drink the <<if $PC.title == 1>>groom<<else>>the bride<</if>>'s seed<<else>>drink the <<if $PC.title == 1>>groom<<else>>the bride<</if>>'s female juices<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. $assistant.name's avatar looks on approvingly, cradling _hisA perpetual pregnancy.
+		<<elseif $assistant.appearance == "hypergoddess">>
+			"To consummate the marriage," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you must now <<if $PC.dick != 0>>drink the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s seed<<else>>drink the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s female juices<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. $assistant.name's avatar looks on approvingly, cradling _hisA massive perpetual pregnancy.
+		<<elseif $assistant.appearance == "loli">>
+			"To consummate the marriage," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you should now <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>the bride<</if>>'s cock<<if $PC.vagina != -1>>and lick _hisP cunny.<</if>><<else>>lick the <<if $PC.title == 1>>groom<<else>>the bride<</if>>'s cunny<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. $assistant.name's avatar sneaks a hand down _hisA dress, blushing furiously.
+		<<elseif $assistant.appearance == "preggololi">>
+			"To consummate the marriage," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you should now <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>the bride<</if>>'s lovely cock<<if $PC.vagina != -1>>and eat out _hisP cunt.<</if>><<else>>lick the <<if $PC.title == 1>>groom<<else>>the bride<</if>>'s cunt<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. $assistant.name's avatar attempts to sneak a hand down _hisA dress, but is thwarted by _hisA belly. _HeA instead openly rubs _hisA crotch through the front of _hisA dress, blushing furiously.
+		<<elseif $assistant.appearance == "schoolgirl">>
+			"To get this marriage started," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, the rules say you should now <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s dick<<if $PC.vagina != -1>> and eat _hisP pussy<</if>><<else>>eat the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s pussy<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. Pleased by the sight, $assistant.name's avatar starts to jill off.
+		<<elseif $assistant.appearance == "angel">>
+			"To consummate the marriage," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you must now join <<= PlayerName()>> in their bedroom and consummate this marriage." The slave <<if _reactionType == 0>>stares blankly<<else>>looks confused<</if>>. "After the wedding ends, would be the time." $assistant.name says, covering _hisA face in embarrassment at the thought.
+		<<elseif $assistant.appearance == "cherub">>
+			"To consummate the marriage," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you should <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>the bride<</if>>'s cock<<if $PC.vagina != -1>>and lick _hisP pussy,<</if>><<else>>lick the <<if $PC.title == 1>>groom<<else>>the bride<</if>>'s pussy<</if>>, in the privacy of <<= PlayerName()>>'s bedroom, of course." $assistant.name hides _hisA face in _hisA hands at the thought.
+		<<elseif $assistant.appearance == "incubus">>
+			"To get this marriage started," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you will now <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s dick<<if $PC.vagina != -1>> and eat _hisP pussy<</if>><<else>>eat the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s pussy<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. Enjoying the sight, $assistant.name's avatar begins to furiously stroke its shaft.
+		<<elseif $assistant.appearance == "succubus">>
+			"To get this marriage started," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you will now <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s dick<<if $PC.vagina != -1>> and eat _hisP pussy<</if>><<else>>eat the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s pussy<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. Pleased by the sight, $assistant.name's avatar pulls out a large dildo and begins ramming it into _hisA own pussy.
+		<<elseif $assistant.appearance == "imp">>
+			"To get this marriage started," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you will now <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s dick<<if $PC.vagina != -1>> and eat _hisP pussy<</if>><<else>>eat the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s pussy<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. Pleased by the sight, $assistant.name's avatar hikes _hisA robe and vigorously rubs _hisA pussy.
+		<<elseif $assistant.appearance == "witch">>
+			"To get this marriage started," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you will now <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s dick<<if $PC.vagina != -1>> and eat _hisP pussy<</if>><<else>>eat the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s pussy<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. $assistant.name's avatar begins to fidget at the sight, having summoned a vibrator beforehand and accidentally linked it to your pleasure.
+		<<elseif $assistant.appearance == "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+			"To get this marriage started," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, you will now <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s dick<<if $PC.vagina != -1>> and eat _hisP pussy<</if>><<else>>eat the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s pussy<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. $assistant.name's avatar begins to swell, drawing all its gained mass to its midsection. Its gravid middles splits vertically, allowing a new mass of flesh to fall to the floor, which quickly grows and reshapes itself into a spitting image of yourself. Meanwhile, the original twists into an image of <<= getSlave($AS).slaveName>>. $assistant.name's two avatars begin copying you and <<= getSlave($AS).slaveName>>'s actions perfectly.
+		<<else>>
+			"To get this marriage started," $assistant.name concludes, "<<= getSlave($AS).slaveName>>, the rules say you should now <<if $PC.dick != 0>>suck the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s dick<<if $PC.vagina != -1>> and eat _hisP pussy<</if>><<else>>eat the <<if $PC.title == 1>>groom<<else>>bride<</if>>'s pussy<</if>>." The slave <<if _reactionType == 0>>only starts when you push $his head to your crotch<<elseif _reactionType == 1>>eagerly complies<<elseif _reactionType == 2>>reluctantly obeys<<else>>hurries to obey<</if>>. With only a symbol to express _hisA approval, $assistant.name is forced to content _himselfA with spinning the symbol and making it glow in time with your new slave $wife's efforts.
+		<</if>>
+		"Done," _heA says when you climax. "Enjoy your
+		<<if (getSlave($AS).fetishKnown == 1) && (getSlave($AS).fetishStrength > 60)>>
+			<<if (getSlave($AS).fetish == "submissive")>>
+				submissive slave $wife!"
+			<<elseif (getSlave($AS).fetish == "cumslut")>>
+				slave $wife's mouth!"
+			<<elseif (getSlave($AS).fetish == "humiliation")>>
+				exhibitionist slave $wife!"
+			<<elseif (getSlave($AS).fetish == "buttslut")>>
+				slave $wife's butthole!"
+			<<elseif (getSlave($AS).fetish == "boobs")>>
+				slave $wife's boobs!"
+			<<elseif (getSlave($AS).fetish == "pregnancy")>>
+				breeder $wife!"
+			<<elseif (getSlave($AS).fetish == "dom")>>
+				slave $wife's aggression!"
+			<<elseif (getSlave($AS).fetish == "sadist")>>
+				slave $wife's sadistic tendencies!"
+			<<elseif (getSlave($AS).fetish == "masochist")>>
+				slave $wife's pain!"
+			<<else>>
+				slave $wife!"
+			<</if>>
+		<<else>>
+			slave $wife!"
+		<</if>>
+	<</if>>
+	<<if getSlave($AS).relationship > 0>>
+		<<set getSlave($AS).relationshipTarget = 0>>
+		<<set $slaves[_m].relationship = 0, $slaves[_m].relationshipTarget = 0>>
+		<<setLocalPronouns $slaves[_m] 2>>
+	<</if>>
+	<<if getSlave($AS).devotion+getSlave($AS).trust >= 175>>
+		<<if getSlave($AS).relationship > 0>>
+			$His ex is @@.mediumorchid;disappointed@@ that their relationship had to end and @@.gold;worries@@ for _his2 love's future.
+			<<if getSlave($AS).relationship == 4>>
+				<<set $slaves[_m].devotion -= 5, $slaves[_m].trust -= 5>>
+			<<elseif getSlave($AS).relationship == 3>>
+				<<set $slaves[_m].devotion -= 3, $slaves[_m].trust -= 3>>
+			<<else>>
+				<<set $slaves[_m].devotion -= 1, $slaves[_m].trust -= 1>>
+			<</if>>
+		<</if>>
+	<<elseif getSlave($AS).devotion < -20>>
+		<<if getSlave($AS).relationship == -1>>
+			$He @@.mediumorchid;hates@@ that $he has to be yours only and @@.gold;fears@@ what will happen if $he strays.
+			<<set getSlave($AS).devotion -= 40, getSlave($AS).trust -= 40>>
+		<<elseif getSlave($AS).relationship == 4>>
+			Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future.
+			<<set $slaves[_m].devotion -= 40, $slaves[_m].trust -= 40>>
+			<<set getSlave($AS).devotion -= 40, getSlave($AS).trust -= 40>>
+		<<elseif getSlave($AS).relationship == 3>>
+			Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future.
+			<<set $slaves[_m].devotion -= 30, $slaves[_m].trust -= 30>>
+			<<set getSlave($AS).devotion -= 30, getSlave($AS).trust -= 30>>
+		<<elseif getSlave($AS).relationship > 0>>
+			Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future.
+			<<set $slaves[_m].devotion -= 20, $slaves[_m].trust -= 20>>
+			<<set getSlave($AS).devotion -= 20, getSlave($AS).trust -= 20>>
+		<</if>>
+	<<else>>
+		<<if getSlave($AS).relationship == -1>>
+			$He @@.mediumorchid;dislikes@@ that $he has to be yours only and @@.gold;worries@@ what will happen if $he strays.
+			<<set getSlave($AS).devotion -= 10, getSlave($AS).trust -= 10>>
+		<<elseif getSlave($AS).relationship == 4>>
+			Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;worry@@ for each other.
+			<<set $slaves[_m].devotion -= 20, $slaves[_m].trust -= 20>>
+			<<set getSlave($AS).devotion -= 20, getSlave($AS).trust -= 20>>
+		<<elseif getSlave($AS).relationship == 3>>
+			Both $him and $his ex are @@.mediumorchid;are saddened@@ that their relationship had to end and @@.gold;worry@@ for each other.
+			<<set $slaves[_m].devotion -= 10, $slaves[_m].trust -= 10>>
+			<<set getSlave($AS).devotion -= 10, getSlave($AS).trust -= 10>>
+		<<elseif getSlave($AS).relationship > 0>>
+			Both $him and $his ex are @@.mediumorchid;are disappointed@@ that their relationship had to end and @@.gold;worry@@ for each other.
+			<<set $slaves[_m].devotion -= 5, $slaves[_m].trust -= 5>>
+			<<set getSlave($AS).devotion -= 5, getSlave($AS).trust -= 5>>
+		<</if>>
+	<</if>>
+	<<set getSlave($AS).relationship = -3>>
+	<<if $PC.slaveSurname && getSlave($AS).slaveSurname != $PC.slaveSurname>>
+		<br><br><span id="surnaming">
+		<<link "Give $him your surname">>
+			<<replace "#surnaming">>
+				<<set getSlave($AS).slaveSurname = $PC.slaveSurname>>
+				You also command $assistant.name to rename your new slave $wife <<= getSlave($AS).slaveName>> getSlave($AS).slaveSurname.
+				<<if getSlave($AS).fetish == "mindbroken">>
+					Before you get too distracted, you tell your lovely new $wife that $he's now to be known as <<= getSlave($AS).slaveName>> getSlave($AS).slaveSurname. You are uncertain if it sunk in or not.
+				<<elseif getSlave($AS).devotion+getSlave($AS).trust >= 175>>
+					Before you get too distracted, you tell your lovely new $wife that $he's now to be known as <<= getSlave($AS).slaveName>> getSlave($AS).slaveSurname. It would be an understatement to say $he's delighted. $He's a good $desc, but even $he has to retain a kernel of doubt about whether a marriage between an owner and a piece of property is really worth much. This @@.mediumaquamarine;reassures $him@@ that it is. $His special day probably wasn't exactly like $he might once have imagined it, but $he obviously thinks it's been @@.hotpink;very nice,@@ all things considered.
+					<<if canTalk(getSlave($AS))>>"_myName _playerSurname," $he murmurs to $himself occasionally, smiling.<</if>>
+					<<set getSlave($AS).devotion += 5, getSlave($AS).trust += 5>>
+				<<elseif getSlave($AS).devotion < -20 && getSlave($AS).trust > 20>>
+					Before you get too distracted, you tell your lovely new $wife that $he's now to be known as <<= getSlave($AS).slaveName>> getSlave($AS).slaveSurname. @@.mediumorchid;$He'll remember $his name, even if you try to take it away.@@
+					<<if canTalk(getSlave($AS))>>"_myName _playerSurname," $he mutters to $himself occasionally; their is a distinct distaste to the way $he says it.<</if>>
+					<<set getSlave($AS).devotion -= 10>>
+				<<elseif getSlave($AS).devotion < -20>>
+					Before you get too distracted, you tell your quivering new $wife that $he's now to be known as <<= getSlave($AS).slaveName>> getSlave($AS).slaveSurname. $He nods in terror. Not only have you taken $his hand, but now also $his name; @@.hotpink;$he's yours now,@@ nothing $he thinks can change that.
+					<<if canTalk(getSlave($AS))>>"_myName _playerSurname," $he mutters to $himself occasionally, $his voice wavering as $he struggles to hold back the tears.<</if>>
+					<<set getSlave($AS).devotion += 5>>
+				<<else>>
+					Before you get too distracted, you tell your lovely new $wife that $he's now to be known as <<= getSlave($AS).slaveName>> getSlave($AS).slaveSurname. $He nods acceptingly. $He's a good $desc, but $he has doubts about whether a marriage between an owner and a piece of property is really worth much. That doesn't matter, @@.mediumaquamarine;it's worth something to $him.@@
+					<<if canTalk(getSlave($AS))>>"_myName _playerSurname," $he murmurs to $himself occasionally<<if canHear(getSlave($AS))>>, listening to how it sounds<</if>>.<</if>>
+					<<set getSlave($AS).trust += 5>>
+				<</if>>
+			<</replace>>
+		<</link>>
+		</span>
+	<</if>>
+	<</replace>>
+<</link>>
+<<if $cash > 10000>>
+	<<if $weddingPlanned > 0>>
+		<<if $weddingPlanned == 1>>
+			<br>Invite prominent citizens to a wedding:
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<<link "Straightforward ceremony">>
+				<<replace "#result">>
+				You order $assistant.name to invite deserving citizens to a straightforward ceremony for a slave being married to a slaveowner, and to make the arrangement. The wedding will take place during the upcoming week.
+				<<set $weddingPlanned = 1>>
+				<<set $marrying.push(getSlave($AS).ID)>>
+				<<run cashX(-10000, "event", getSlave($AS))>>
+				<</replace>>
+			<</link>> //This will cost <<print cashFormat(10000)>>//
+		<<else>>
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			//You are already hosting//
+			<<if $weddingPlanned == 2>>
+				//an orgiastic ceremony//
+			<<elseif $weddingPlanned == 3>>
+				//an impregnation ceremony//
+			<</if>>
+			//and cannot host a straightforward ceremony//
+		<</if>>
+		<<if (getSlave($AS).vagina != 0) && (getSlave($AS).anus != 0)>>
+			<<if $weddingPlanned == 2>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;
+				<<link "Orgiastic ceremony">>
+					<<replace "#result">>
+					You order $assistant.name to invite deserving citizens to an orgiastic ceremony for a slave being married to a slaveowner, and to make the arrangements. The wedding orgy will take place during the upcoming week.
+					<<set $weddingPlanned = 2>>
+					<<set $marrying.push(getSlave($AS).ID)>>
+					<<run cashX(-10000, "event", getSlave($AS))>>
+					<</replace>>
+				<</link>> //This will involve the slave having sex with a very large number of citizens, and will cost <<print cashFormat(10000)>>//
+			<<else>>
+				<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				//You are already hosting//
+				<<if $weddingPlanned == 1>>
+					//a straightforward ceremony//
+				<<elseif $weddingPlanned == 3>>
+					//an impregnation ceremony//
+				<</if>>
+				//and cannot host an orgiastic ceremony//
+			<</if>>
+		<</if>>
+		<<if isFertile(getSlave($AS)) && ($PC.dick != 0)>>
+			<<if $weddingPlanned == 3>>
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;
+				<<link "Impregnation ceremony">>
+					<<replace "#result">>
+					You order $assistant.name to invite deserving citizens to a ceremony for a fertile slave being married to a slaveowner, and to make the arrangements. The wedding will take place during the upcoming week.
+					<<set $weddingPlanned = 3>>
+					<<set $marrying.push(getSlave($AS).ID)>>
+					<<run cashX(-10000, "event", getSlave($AS))>>
+					<</replace>>
+				<</link>> //This will involve you impregnating the slave, and will cost <<print cashFormat(10000)>>//
+				<br>
+			<<else>>
+				<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				//You are already hosting//
+				<<if $weddingPlanned == 1>>
+					//a straightforward ceremony//
+				<<elseif $weddingPlanned == 2>>
+					//an orgiastic ceremony//
+				<</if>>
+				//and cannot host an impregnation ceremony//
+			<</if>>
+		<</if>>
+	<<else>>
+		<br>Invite prominent citizens to a wedding:
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		<<link "Straightforward ceremony">>
+			<<replace "#result">>
+			You order $assistant.name to invite deserving citizens to a straightforward ceremony for a slave being married to a slaveowner, and to make the arrangement. The wedding will take place during the upcoming week.
+			<<set $weddingPlanned = 1>>
+			<<set $marrying.push(getSlave($AS).ID)>>
+			<<run cashX(-10000, "event", getSlave($AS))>>
+			<</replace>>
+		<</link>> //This will cost <<print cashFormat(10000)>>//
+		<<if (getSlave($AS).vagina != 0) && (getSlave($AS).anus != 0)>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<<link "Orgiastic ceremony">>
+				<<replace "#result">>
+				You order $assistant.name to invite deserving citizens to an orgiastic ceremony for a slave being married to a slaveowner, and to make the arrangements. The wedding orgy will take place during the upcoming week.
+				<<set $weddingPlanned = 2>>
+				<<set $marrying.push(getSlave($AS).ID)>>
+				<<run cashX(-10000, "event", getSlave($AS))>>
+				<</replace>>
+			<</link>> //This will involve the slave having sex with a very large number of citizens, and will cost <<print cashFormat(10000)>>//
+		<</if>>
+		<<if isFertile(getSlave($AS)) && ($PC.dick != 0)>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<<link "Impregnation ceremony">>
+				<<replace "#result">>
+				You order $assistant.name to invite deserving citizens to a ceremony for a fertile slave being married to a slaveowner, and to make the arrangements. The wedding will take place during the upcoming week.
+				<<set $weddingPlanned = 3>>
+				<<set $marrying.push(getSlave($AS).ID)>>
+				<<run cashX(-10000, "event", getSlave($AS))>>
+				<</replace>>
+			<</link>> //This will involve you impregnating the slave, and will cost <<print cashFormat(10000)>>//
+		<</if>>
+	<</if>>
+<<else>>
+	//You cannot afford an elaborate ceremony//
+<</if>>
+</span>

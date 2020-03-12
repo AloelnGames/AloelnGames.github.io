@@ -1,0 +1,40 @@
+:: CheatEdit [nobr]
+
+<<set $nextButton = "Back to $SF.Lower's Firebase", $nextLink = "Firebase", $returnTo = "Firebase">>
+<<= App.SF.Count()>>__Upgrades__: $SF.Size/_max(<<print ($SF.Size/_max).toFixed(2)>>%)
+<br><br>''Firebase:'' <<textbox "$SF.Squad.Firebase" $SF.Squad.Firebase "CheatEdit">>/_FU
+<br>''Armory:'' <<textbox "$SF.Squad.Armoury" $SF.Squad.Armoury "CheatEdit">>/_AU
+<br>''Drug Lab:'' <<textbox "$SF.Squad.Drugs" $SF.Squad.Drugs "CheatEdit">>/_DrugsU
+<<if $SF.Squad.Firebase >= 2>>
+	<br>''Drone Bay:'' <<textbox "$SF.Squad.Drones" $SF.Squad.Drones "CheatEdit">>/_DU
+<</if>>
+
+<<if $SF.Squad.Firebase >= 1 && $terrain != "oceanic">> <br><br>''Garage:''
+	<br>&nbsp;''Vehicles:''
+	<br>&nbsp;&nbsp;''Attack:'' <<textbox "$SF.Squad.AV" $SF.Squad.AV "CheatEdit">>/_AVU
+	<br>&nbsp;&nbsp;''Transport:'' <<textbox "$SF.Squad.TV" $SF.Squad.TV "CheatEdit">>/_TVU
+	<<if _T1>>
+		<br>&nbsp;''Prototype Goliath Tank:'' <<textbox "$SF.Squad.PGT" $SF.Squad.PGT "CheatEdit">>/_PGTU
+	<</if>>
+<</if>>
+
+<<if $SF.Squad.Firebase >= 4>> <br><br>''Hangar:''
+	<br>&nbsp;''Aircraft:''
+	<br>&nbsp;&nbsp;''Attack:'' <<textbox "$SF.Squad.AA" $SF.Squad.AA "CheatEdit">>/_AAU
+	<br>&nbsp;&nbsp;''Transport:'' <<textbox "$SF.Squad.TA" $SF.Squad.TA "CheatEdit">>/_TAU
+	<<if _T1>>
+		<br>&nbsp;''Spaceplane'': <<textbox "$SF.Squad.SpacePlane" $SF.Squad.SpacePlane "CheatEdit">>/_SPU
+		<br>&nbsp;''Gunship:'' <<textbox "$SF.Squad.GunS" $SF.Squad.GunS "CheatEdit">>/_GunSU
+		<br><br>''Launch Bay:''
+		<br>&nbsp;''Satellite:'' <<textbox "$SF.Squad.Satellite.lv" $SF.Squad.Satellite.lv "CheatEdit">>/_SatU
+		<<if $terrain != "oceanic">>
+			<br>&nbsp;''Giant Robot:'' <<textbox "$SF.Squad.GiantRobot" $SF.Squad.GiantRobot "CheatEdit">>/_GRU
+		<</if>>
+		<br>&nbsp;''Cruise Missile:'' <<textbox "$SF.Squad.MissileSilo" $SF.Squad.MissileSilo "CheatEdit">>/_MSU
+		<<if $terrain == "oceanic" || $terrain == "marine">> <br><br>''Naval Yard:''
+			<br>&nbsp;''Aircraft Carrier:'' <<textbox "$SF.Squad.AircraftCarrier" $SF.Squad.AircraftCarrier "CheatEdit">>/_ACU
+			<br>&nbsp;''Submarine:'' <<textbox "$SF.Squad.Sub" $SF.Squad.Sub "CheatEdit">>/_SubU
+			<br>&nbsp;''Amphibious Transport:'' <<textbox "$SF.Squad.HAT" $SF.Squad.HAT "CheatEdit">>/_HATU
+		<</if>>
+	<</if>>
+<</if>>

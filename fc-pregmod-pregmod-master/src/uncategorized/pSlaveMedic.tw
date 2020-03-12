@@ -1,0 +1,129 @@
+:: P slave medic [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event", $returnTo = "Random Nonindividual Event">>
+
+<<set $slaveMedic = 0>>
+
+<<set $oneTimeDisableDisability = 1>>
+<<if $pedo_mode == 1>>
+	<<set $activeSlaveOneTimeMinAge = $minimumSlaveAge>>
+	<<set $activeSlaveOneTimeMaxAge = 18>>
+<<else>>
+	<<set $activeSlaveOneTimeMinAge = 25>>
+	<<set $activeSlaveOneTimeMaxAge = 42>>
+<</if>>
+<<if $seeDicks >= 100>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+	<<set $activeSlave.dick = 5>>
+	<<set $activeSlave.foreskin = 0>>
+	<<set $activeSlave.balls = 3>>
+	<<set $activeSlave.scrotum = 3>>
+	<<set $activeSlave.butt = 3>>
+	<<set $activeSlave.attrXY = 70>>
+<<else>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+	<<set $activeSlave.vagina = 2>>
+	<<set $activeSlave.preg = -1>>
+	<<set $activeSlave.ovaries = 1>>
+	<<set $activeSlave.skill.vaginal = 35>>
+<</if>>
+<<if $pedo_mode == 1>>
+	<<set $activeSlave.sexualQuirk = "caring">>
+	<<set $activeSlave.intelligenceImplant = 15>>
+	<<if $activeSlave.physicalAge >= 12>>
+		<<set $activeSlave.teeth = "cosmetic braces">>
+	<</if>>
+	<<if $seeDicks < 100>>
+		<<set $activeSlave.hips = 1>>
+		<<set $activeSlave.boobs = 2000>>
+		<<set $activeSlave.boobShape = "perky">>
+		<<set $activeSlave.geneticQuirks.macromastia = 2>>
+		<<set $activeSlave.butt = 4>>
+		<<set $activeSlave.voice = 3>>
+	<<else>>
+		<<set $activeSlave.geneticQuirks.wellHung = 2>>
+	<</if>>
+<<else>>
+	<<set $activeSlave.anusTat = "bleached">>
+	<<set $activeSlave.height = random(165,190)>>
+	<<set $activeSlave.intelligenceImplant = 30>>
+	<<set $activeSlave.teeth = "normal">>
+	<<if $seeDicks < 100>>
+		<<set $activeSlave.boobs += 400>>
+		<<set $activeSlave.butt += 1>>
+		<<set $activeSlave.stampTat = either("flowers", "tribal patterns")>>
+	<</if>>
+<</if>>
+<<set $activeSlave.origin = "$He was captured while caring for those injured in a failed attack on the Free City.">>
+<<set $activeSlave.career = "a nurse">>
+<<set $activeSlave.custom.desc = "$He has a faint air of fatigue about $him, and strength too: that of a survivor.">>
+<<set $activeSlave.sexualFlaw = "none">>
+<<set $activeSlave.behavioralFlaw = "none">>
+<<set $activeSlave.devotion = random(30,40)>>
+<<set $activeSlave.trust = $activeSlave.devotion-20>>
+<<set $activeSlave.oldDevotion = $activeSlave.devotion>>
+<<set $activeSlave.muscles = random(20,50)>>
+<<set $activeSlave.skill.oral = 35>>
+<<set $activeSlave.skill.anal = 15>>
+<<set $activeSlave.skill.whoring = 0>>
+<<set $activeSlave.skill.entertainment = 15>>
+<<set $activeSlave.intelligence = random(51,95)>>
+<<set $activeSlave.anus = 2>>
+<<set $activeSlave.hStyle = "neat">>
+<<set $activeSlave.hLength = 35>>
+<<run setHealth($activeSlave, jsRandom(20, 40))>>
+<<if $mercenaries >= 3>>
+	<<set $activeSlave.counter.publicUse += 39>>
+<<else>>
+	<<set $activeSlave.counter.publicUse += 13>>
+<</if>>
+
+<span id="artFrame">
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<<if $imageChoice == 1>>
+			<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+		<<else>>
+			<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+		<</if>>
+	<</if>>
+	/* 000-250-006 */
+</span>
+
+<<setLocalPronouns $activeSlave>>
+<<run Enunciate($activeSlave)>>
+
+<<if $pedo_mode == 1 && $seeDicks < 100>>
+	You make a habit of dropping in on your mercenaries whenever you get the chance. You have regular meetings with their grizzled captain, of course, but turning up unannounced to get to know them is simply a matter of self-preservation. The better they like you, the more likely they are to think of more than their pay when deciding how to hazard themselves on your behalf.
+
+	When you enter the lounge of their <<if $barracks>>barracks<<else>>main living area<</if>>, you see $activeSlave.slaveName kneeling next to a mercenary with most of his armor stripped off. $He's the <<print aNational($activeSlave.nationality)>> nurse they captured and enslaved, and $he seems to be doing pretty well in $his new life. $He seems to be checking the sutures on a minor wound to the man's flank.
+
+	"Don't <<s>>quirm!" $he says with an annoyed tone. "I'll get you off when I've checked thi<<s>>." He chuckles and holds still; $he redresses the wound, stands up, and strips off $his tank top, allowing $his huge tits to swing free. $He's quite young, but $his $activeSlave.skin body is appealingly curvy. As $he swings one leg across the seated mercenary, $he continues, "Plea<<s>>e <<s>>it <<s>>till and let me do the work. You need to take it ea<<s>>y for a day or two or you'll pop tho<<s>>e <<s>>uture<<s>>." Using $his hands, $he gently caresses his stiff prick with $his pillowy breasts, eliciting a grunt. $He's a strong $girl, and pleasures him without letting any of $his weight rest on his body at all. When he climaxes, $he leans in to clean him with $his mouth and then heads off to wash out $his cleavage.
+<<else>>
+	You make a habit of dropping in on your mercenaries whenever you get the chance. You have regular meetings with their grizzled captain, of course, but turning up unannounced to get to know them is simply a matter of self-preservation. The better they like you, the more likely they are to think of more than their pay when deciding how to hazard themselves on your behalf.
+
+	When you enter the lounge of their <<if $barracks>>barracks<<else>>main living area<</if>>, you see $activeSlave.slaveName bending over a mercenary with most of his armor stripped off. $He's the <<print aNational($activeSlave.nationality)>> nurse they captured and enslaved, and $he seems to be doing pretty well in $his new life. $He seems to be checking the sutures on a minor wound to the man's flank.
+
+	"Don't <<s>>quirm," $he says quietly. "I'll get you off when I've checked thi<<s>>." He chuckles and holds still; $he redresses the wound, stands up, and strips off $his fatigue pants.
+	<<if $pedo_mode == 1>>
+		$He's quite youthful, nimble and knows just how to manage $his impressive asset without it touching $his charge.
+	<<else>>
+		$He's no longer young, but $his $activeSlave.skin legs are pretty enough.
+	<</if>>
+	As $he swings one leg across the seated mercenary, $he continues, "Please <<s>>it <<s>>till and let me do the work. You need to take it ea<<s>>y for a day or two or you'll pop tho<<s>>e <<s>>uture<<s>>." Using a hand, $he guides $himself down onto his stiff prick, eliciting a grunt. $He's a strong $girl, and rides him without letting any of $his weight rest on his hips at all. When he climaxes, $he kneels to clean him with $his mouth and then heads off to wash.
+<</if>>
+
+<span id="result">
+<br><br><<link "Offer <<print cashFormat(10000)>> for $him">>
+	<<replace "#result">>
+		The mercenary laughs at your offered price. "No offense, <<= properTitle()>>, but no. Even if I wanted to sell $him on everyone's behalf for that price, my buddies would kill me for that. $He's popular, that $activeSlave.slaveName."
+	<</replace>>
+<</link>>
+<br><<link "Offer a very generous <<print cashFormat(25000)>> for $him">>
+	<<replace "#result">>
+	<<run cashX(-25000, "slaveTransfer", $activeSlave)>>
+		"Huh," says the mercenary. "$He's popular, but for that we could probably buy two of $him. Might be fun to train a couple of new nurses. Let me ask the boys and girls." He speaks into his helmet for a few minutes, and then turns back to you. "Sold. Enjoy, $he's a good fuck."
+		<<include "New Slave Intro">>
+	<</replace>>
+<</link>>
+</span>

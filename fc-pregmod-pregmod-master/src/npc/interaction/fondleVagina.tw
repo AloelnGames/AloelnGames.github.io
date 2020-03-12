@@ -1,0 +1,347 @@
+:: FondleVagina [nobr]
+
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+
+You call $him over so you can fondle $his
+<<if (getSlave($AS).vagina > 3)>>
+	gaping vagina.
+<<elseif (getSlave($AS).vagina == 3)>>
+	loose vagina.
+<<elseif (getSlave($AS).vagina == 2)>>
+	well-used pussy.
+<<elseif (getSlave($AS).vagina == 1)>>
+	tight pussy.
+<<elseif (getSlave($AS).vagina == 0)>>
+	virgin pussy.
+<<elseif (getSlave($AS).vagina == -1)>>
+	dick.
+<</if>>
+
+<<if (getSlave($AS).vaginaTat == "tribal patterns")>>
+	The tattoos on $his abdomen certainly draw attention there.
+<</if>>
+
+<<if (getSlave($AS).vagina != -1)>>
+	<<if getSlave($AS).devotion <= 20>>
+		<<if getSlave($AS).clit == 1>>
+			$His big clit peeks out from under its hood
+		<<elseif getSlave($AS).clit == 2>>
+			$His huge clit is impossible to miss
+		<<elseif getSlave($AS).clit > 1>>
+			$His pseudophallus-sized clit is soft
+		<<else>>
+			$His pretty little clit is barely visible
+		<</if>>
+		and
+		<<if getSlave($AS).labia == 1>>
+			$his lovely petals are quite inviting.
+		<<elseif getSlave($AS).labia == 2>>
+			$his prominent petals are inviting.
+		<<elseif getSlave($AS).labia > 1>>
+			$his labia are so large they present a slight obstacle to entry.
+		<<else>>
+			$his cute labia are barely noticeable.
+		<</if>>
+	<<else>>
+		<<if getSlave($AS).clit == 1>>
+			$His big clit peeks out from under its hood.
+		<<elseif getSlave($AS).clit == 2>>
+			$His huge clit is impossible to miss.
+		<<elseif getSlave($AS).clit > 1>>
+			$His pseudophallus-sized clit is soft.
+		<<else>>
+			$His pretty little clit is ready for you,
+		<</if>>
+		and
+		<<if getSlave($AS).labia == 1>>
+			$his lovely petals are moist with arousal.
+		<<elseif getSlave($AS).labia == 2>>
+			$his prominent petals bear a sheen of arousal.
+		<<elseif getSlave($AS).labia > 1>>
+			$his huge labia are almost dripping with arousal.
+		<<else>>
+			$he's becoming moist.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if (getSlave($AS).vaginaPiercing > 1) && (getSlave($AS).vagina != -1)>>
+	$His pierced lips and clit have $his nice and wet.
+<<elseif (getSlave($AS).vaginaPiercing == 1) && (getSlave($AS).vagina != -1)>>
+	$His pierced clit has $his nice and moist.
+<</if>>
+
+<<if (getSlave($AS).vagina == 0)>>
+	<<if (getSlave($AS).fetish == "mindbroken")>>
+		$He accepts your orders dumbly and presents $his virgin pussy to you, <<if canSee(getSlave($AS))>>watching your hands move towards $him<<else>>waiting<</if>> without any real interest. You gently trace along $his
+		<<if getSlave($AS).labia == 1>>
+			lovely petals
+		<<elseif getSlave($AS).labia == 2>>
+			prominent petals
+		<<elseif getSlave($AS).labia > 1>>
+			huge labia
+		<</if>>
+		with your outstretched fingers, strumming up and down the edges of $his pussylips, then softly rub your fingers along the inner walls with a tender touch, starting slow but gradually increasing the speed of your movements. You occasionally flick $his
+		<<if getSlave($AS).clit == 1>>
+			erect clit
+		<<elseif getSlave($AS).clit == 2>>
+			large clit
+		<<elseif getSlave($AS).clit > 1>>
+			massive clit
+		<<else>>
+			pretty little clit
+		<</if>>
+		and rub it with your fingertips as your hand nears it but except for the pussy juices trickling down $his leg, $he does not respond. Since $he is mindbroken, $his responses to you are purely physiological and your actions have no affect on $him mentally.
+	<<elseif (getSlave($AS).devotion > 50)>>
+		$He accepts your orders happily and presents $his virgin pussy to you, watching your hands with eagerness. $He gasps and quivers with pleasure as you gently trace along $his
+		<<if getSlave($AS).labia == 1>>
+			lovely petals
+		<<elseif getSlave($AS).labia == 2>>
+			prominent petals
+		<<elseif getSlave($AS).labia > 1>>
+			huge labia
+		<<else>>
+			cute labia
+		<</if>>
+		with your outstretched fingers, strumming up and down the edges of $his pussylips, then softly rub your fingers along the inner walls with a tender touch, starting slow but gradually increasing the speed of your movements. <<if (getSlave($AS).fetish == "boobs")>> $He fondles $his breasts and plays with $his nipples at the same time.<</if>> You occasionally flick $his
+		<<if getSlave($AS).clit == 1>>
+			large clit
+		<<elseif getSlave($AS).clit == 2>>
+			huge clit
+		<<elseif getSlave($AS).clit > 1>>
+			massive clit
+		<<else>>
+			pretty little clit
+		<</if>>
+		and rub it with your fingertips as your hand nears it. As $he becomes more aroused, $he grabs hold of your wrist lightly, moving $his hands along with the motion of your own. $His pussy juices run down $his leg as $he begins to moan audibly<<if (hasAnyLegs(getSlave($AS)))>>, gently clamping your hand between $his thighs<</if>> as you continue to move your hand along $his pussy. $He moans loudly as $he shudders in orgasmic joy.
+		<<if ((!hasAnyArms(getSlave($AS))) && !canTalk(getSlave($AS)))>>
+			$He does $his best to communicate love with $his <<= App.Desc.eyesColor(getSlave($AS))>>.
+		<<elseif !canTalk(getSlave($AS))>>
+			$He signs that $he loves you.
+		<<elseif SlaveStatsChecker.checkForLisp(getSlave($AS))>> "I love you,
+			<<Master>>," $he lisps rapturously.
+		<<else>> "I love you,
+			<<Master>>," $he says rapturously.
+		<</if>>
+	<<elseif (getSlave($AS).devotion > 20)>>
+		$He accepts your orders without comment and presents $his virgin pussy to you, watching your hands with some slight trepidation. $He gasps as you gently trace along $his
+		<<if getSlave($AS).labia == 1>>
+			lovely petals
+		<<elseif getSlave($AS).labia == 2>>
+			prominent petals
+		<<elseif getSlave($AS).labia > 1>>
+			huge labia
+		<</if>>
+		with your outstretched fingers, strumming up and down the edges of $his pussylips, then softly rub your fingers along the inner walls with a tender touch, starting slow but gradually increasing the speed of your movements. You occasionally flick $his
+		<<if getSlave($AS).clit == 1>>
+			large clit
+		<<elseif getSlave($AS).clit == 2>>
+			huge clit
+		<<elseif getSlave($AS).clit > 1>>
+			massive clit
+		<<else>>
+			pretty little clit
+		<</if>>
+		and rub it with your fingertips as your hand nears it. $His pussy juices run down $his leg as $he begins to moan audibly<<if (hasAnyArms(getSlave($AS)))>>, grasping your wrist with $his hand<<if (hasBothArms(getSlave($AS)))>>s<</if>> tightly<</if>> and clamping $his thighs together as you continue to move your hand along $his pussy. $He moans as $he shudders in an orgasm, almost embarrassed. $He looks into your eyes expectantly.
+	<<elseif (getSlave($AS).devotion >= -20)>>
+		$He clearly dislikes the thought of getting fondled by you. $His lower lip quivers with trepidation as $he watches your hands move towards $him. $He has no choice but to obey if $he wants to avoid punishment. $He gasps and shakes as you gently trace along $his
+		<<if getSlave($AS).labia == 1>>
+			lovely petals
+		<<elseif getSlave($AS).labia == 2>>
+			prominent petals
+		<<elseif getSlave($AS).labia > 1>>
+			huge labia
+		<<else>>
+			cute labia
+		<</if>>
+		with your outstretched fingers, strumming up and down the edges of $his pussylips, then softly rub your fingers along the inner walls with a tender touch, starting slow but gradually increasing the speed of your movements. You occasionally flick $his
+		<<if getSlave($AS).clit == 1>>
+			erect clit
+		<<elseif getSlave($AS).clit == 2>>
+			huge clit
+		<<elseif getSlave($AS).clit > 1>>
+			massive clit
+		<<else>>
+			pretty little clit
+		<</if>>
+		and rub it with your fingertips as your hand nears it. $His pussy juices run down $his leg as $he begins to moan audibly<<if (hasAnyArms(getSlave($AS)))>>, grasping your wrist with $his hand<<if (hasBothArms(getSlave($AS)))>>s<</if>> tightly<</if>> and clamping $his thighs together as you continue to move your hand along $his pussy. $He moans as $he shudders in an orgasm, clearly embarrassed to end up in this position as $he loses control.
+	<<else>>
+		As you anticipated, $he refuses to let $himself be groped by you. $He is unable to resist you, also as you expected, when you mention some of the alternatives. $He gasps and shakes as you gently trace along $his
+		<<if getSlave($AS).labia == 1>>
+			lovely petals
+		<<elseif getSlave($AS).labia == 2>>
+			prominent petals
+		<<elseif getSlave($AS).labia > 1>>
+			huge labia
+		<<else>>
+			cute labia
+		<</if>>
+		with your outstretched fingers, strumming up and down the edges of $his pussylips, then softly rub your fingers along the inner walls with a tender touch, starting slow but gradually increasing the speed of your movements.<<if (hasAnyArms(getSlave($AS)))>> $He grabs your wrist with $his hand<<if (hasBothArms(getSlave($AS)))>>s<</if>> in an effort to stop you but $he is unable to stop your hand from moving for long.<</if>> You occasionally flick $his
+		<<if getSlave($AS).clit == 1>>
+			erect clit
+		<<elseif getSlave($AS).clit == 2>>
+			huge clit
+		<<elseif getSlave($AS).clit > 1>>
+			massive clit
+		<<else>>
+			pretty little clit
+		<</if>>
+		and rub it with your fingertips as your hand nears it. $He <<if (hasAnyArms(getSlave($AS)))>>tightly grasps your wrist and<</if>>clamps $his thighs together as you continue to move your hand along $his pussy. $He moans as $he shudders in an orgasm, gripping tighter and shamefully looking at you as you stop moving your hand.
+	<</if>>
+<<elseif (getSlave($AS).fetish == "mindbroken")>>
+	Like a doll, $he dumbly remains still, watching your hands move towards $him without any real interest.
+	<<if (getSlave($AS).vagina != -1)>>
+		You gently trace along $his
+		<<if getSlave($AS).labia == 1>>
+			lovely petals
+		<<elseif getSlave($AS).labia == 2>>
+			prominent petals
+		<<elseif getSlave($AS).labia > 1>>
+			huge labia
+		<<else>>
+			cute labia
+		<</if>>
+		with your outstretched fingers, strumming up and down the edges of $his pussylips, then softly rub your fingers along the inner walls with a tender touch, starting slow but gradually increasing the speed of your movements. You occasionally flick $his
+		<<if getSlave($AS).clit == 1>>
+			erect clit
+		<<elseif getSlave($AS).clit == 2>>
+			huge clit
+		<<elseif getSlave($AS).clit > 1>>
+			massive clit
+		<<else>>
+			pretty little clit
+		<</if>>
+		and rub it with your fingertips as your hand nears it. Except for the pussy juices trickling down $his leg, $he does not respond.
+	<</if>>
+	Since $he is mindbroken, $his responses to you are purely physiological and your actions have no affect on $him mentally. You leave your toy for one of your other slaves to clean and maintain.
+<<elseif isAmputee(getSlave($AS))>>
+	Since $he's a quadruple amputee, $he's yours to use as a human finger toy. While $he's lying there helpless, you move your hands towards $him.
+	<<if (getSlave($AS).vagina != -1)>>
+		You gently trace along $his
+		<<if getSlave($AS).labia == 1>>
+			lovely petals
+		<<elseif getSlave($AS).labia == 2>>
+			prominent petals
+		<<elseif getSlave($AS).labia > 1>>
+			huge labia
+		<<else>>
+			cute labia
+		<</if>>
+		with your outstretched fingers, strumming up and down the edges of $his pussylips, then softly rub your fingers along the inner walls with a tender touch, starting slow but gradually increasing the speed of your movements. You occasionally flick $his
+		<<if getSlave($AS).clit == 1>>
+			erect clit
+		<<elseif getSlave($AS).clit == 2>>
+			huge clit
+		<<elseif getSlave($AS).clit > 1>>
+			massive clit
+		<<else>>
+			pretty little clit
+		<</if>>
+		and rub it with your fingertips as your hand nears it.
+	<</if>>
+	Soon $he shudders in an orgasm, <<if canSee(getSlave($AS))>>looking at you<<else>>facing<</if>> as you stop moving your hand. You leave your toy for one of your other slaves to clean and maintain.
+<<elseif (getSlave($AS).fetish == "submissive") && (getSlave($AS).fetishStrength > 60) && (getSlave($AS).fetishKnown == 1)>>
+	$He comes submissively over, smiling a little submissive smile, and points $his pussy towards you.
+	<<if (getSlave($AS).vagina != -1)>>
+		You gently trace along $his
+		<<if getSlave($AS).labia == 1>>
+			lovely petals
+		<<elseif getSlave($AS).labia == 2>>
+			prominent petals
+		<<elseif getSlave($AS).labia > 1>>
+			huge labia
+		<<else>>
+			cute labia
+		<</if>>
+		with your outstretched fingers, strumming up and down the edges of $his pussylips, then softly rub your fingers along the inner walls with a tender touch, starting slow but gradually increasing the speed of your movements. You occasionally flick $his
+		<<if getSlave($AS).clit == 1>>
+			erect clit
+		<<elseif getSlave($AS).clit == 2>>
+			huge clit
+		<<elseif getSlave($AS).clit > 1>>
+			massive clit
+		<<else>>
+			pretty little clit
+		<</if>>
+		and rub it with your fingertips as your hand nears it. $He begs you not to stop as $he <<if canSee(getSlave($AS))>>looks into your eyes<<else>>faces<</if>> expectantly as $he shudders in an orgasm.
+	<</if>>
+<<elseif getSlave($AS).devotion < -20>>
+	$He tries to refuse, so you push the disobedient slave down over your desk as you move your hands towards $him.
+	<<if (getSlave($AS).vagina != -1)>>
+		You gently trace along $his
+		<<if getSlave($AS).labia == 1>>
+			lovely petals
+		<<elseif getSlave($AS).labia == 2>>
+			prominent petals
+		<<elseif getSlave($AS).labia > 1>>
+			huge labia
+		<<else>>
+			cute labia
+		<</if>>
+		with your outstretched fingers, strumming up and down the edges of $his pussylips, then softly rub your fingers along the inner walls with a tender touch, starting slow but gradually increasing the speed of your movements. $He <<if hasAnyArms(getSlave($AS))>>grabs your wrist<<else>>twists and turns<</if>> to try to stop you but $he is unable to. You occasionally flick $his
+		<<if getSlave($AS).clit == 1>>
+			large clit
+		<<elseif getSlave($AS).clit == 2>>
+			huge clit
+		<<elseif getSlave($AS).clit > 1>>
+			massive clit
+		<<else>>
+			pretty little clit
+		<</if>>
+		and rub it with your fingertips as your hand nears it, despite $his resistant pulling against you. $He bites $his lip but $he cannot help but moan and $he shudders in an orgasm.
+	<</if>>
+	$He <<if canSee(getSlave($AS))>>looks at you<<else>>faces<</if>> shamefully as you stop moving your hand.
+<<elseif getSlave($AS).devotion <= 20>>
+	$He obeys silently, standing in front of you as you move your hands towards $him.
+	<<if (getSlave($AS).vagina != -1)>>
+		You gently trace along $his
+		<<if getSlave($AS).labia == 1>>
+			lovely petals
+		<<elseif getSlave($AS).labia == 2>>
+			prominent petals
+		<<elseif getSlave($AS).labia > 1>>
+			huge labia
+		<<else>>
+			cute labia
+		<</if>>
+		with your outstretched fingers, strumming up and down the edges of $his pussylips, then softly rub your fingers along the inner walls with a tender touch, starting slow but gradually increasing the speed of your movements. You occasionally flick $his
+		<<if getSlave($AS).clit == 1>>
+			erect clit
+		<<elseif getSlave($AS).clit == 2>>
+			huge clit
+		<<elseif getSlave($AS).clit > 1>>
+			massive clit
+		<<else>>
+			pretty little clit
+		<</if>>
+		and rub it with your fingertips as your hand nears it. $He <<if canSee(getSlave($AS))>>looks into your eyes<<else>>faces you<</if>> furtively while<<if hasAnyArms(getSlave($AS))>> $he grabs your wrist with $his hand and<</if>> $he squeezes $his thighs together as $he moans and shudders in an orgasm.
+	<</if>>
+	$He dutifully <<if canSee(getSlave($AS))>>looks at you<<else>>faces<</if>> as you stop moving your hand.
+<<else>>
+	$He devotedly comes over and gives you an impassioned kiss. $He smiles and points $his pussy towards you.
+	<<if (getSlave($AS).vagina != -1)>>
+		You gently trace along $his
+		<<if getSlave($AS).labia == 1>>
+			lovely petals
+		<<elseif getSlave($AS).labia == 2>>
+			prominent petals
+		<<elseif getSlave($AS).labia > 1>>
+			huge labia
+		<<else>>
+			cute labia
+		<</if>>
+		with your outstretched fingers, strumming up and down the edges of $his pussylips, then softly rub your fingers along the inner walls with a tender touch, starting slow but gradually increasing the speed of your movements. You occasionally flick $his
+		<<if getSlave($AS).clit == 1>>
+			large clit
+		<<elseif getSlave($AS).clit == 2>>
+			huge clit
+		<<elseif getSlave($AS).clit > 1>>
+			massive clit
+		<<else>>
+			pretty little clit
+		<</if>>
+		and rub it with your fingertips as your hand nears it. $He squeezes $his thighs lightly against your hand as $he moans and shudders in orgasmic bliss.
+	<</if>>
+	$He <<if canSee(getSlave($AS))>>looks at you<<else>>faces<</if>> passionately as you stop moving your hand.
+<</if>>

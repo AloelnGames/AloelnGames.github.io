@@ -1,0 +1,881 @@
+:: SE wedding single [nobr]
+
+<<set _wedS = $slaveIndices[$marrying[0]]>>
+<<setLocalPronouns $slaves[_wedS]>>
+<<set _belly = bellyAdjective($slaves[_wedS])>>
+<<set _knees = "knees">>
+<<if !hasBothLegs($slaves[_wedS])>>
+	<<set _knees = "knee">>
+<</if>>
+
+<span id="artFrame">
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<<if $imageChoice == 1>>
+		<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($slaves[_wedS], 2, 0)>></div>
+	<<else>>
+		<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($slaves[_wedS], 2, 0)>></div>
+	<</if>>
+<</if>>
+/* 000-250-006 */
+</span>
+
+<<if $slaves[_wedS].relationship != 0>>
+	<<if $slaves[_wedS].relationship > 0>>
+		<<set _m = $slaveIndices[$slaves[_wedS].relationshipTarget]>>
+		<<set $slaves[_wedS].relationshipTarget = 0>>
+		<<set $slaves[_m].relationship = 0, $slaves[_m].relationshipTarget = 0>>
+		<<setLocalPronouns $slaves[_m] 2>>
+	<</if>>
+<</if>>
+In the days leading up to your wedding, $slaves[_wedS].slaveName spent $his time
+<<if $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+	<<if $slaves[_wedS].relationship != 0>>
+		<<if $slaves[_wedS].relationship == -1>>
+			vowing that $he'll be less of a slut.
+		<<elseif $slaves[_wedS].relationship == 4>>
+			breaking up with $his lover, $slaves[_m].slaveName, as painlessly as possible.
+		<<elseif $slaves[_wedS].relationship == 3>>
+			breaking up with $his FWB, $slaves[_m].slaveName, as painlessly as possible.
+		<<elseif $slaves[_wedS].relationship > 0>>
+			promising $slaves[_m].slaveName that they'll still be friends, even if they can't spend time together.
+		<<else>>
+			as close to you as $he could.
+		<</if>>
+	<</if>>
+<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+	<<if $slaves[_wedS].relationship == -1>>
+		sleeping with as many different people as $he could.
+		<<if !isSlaveAvailable($slaves[_wedS])>>
+			Or $he would have, if $he were able.
+		<<elseif canDoVaginal($slaves[_wedS]) && canDoAnal($slaves[_wedS])>>
+			<<set _randomVag = random(30,60)>>
+			<<set _randomAnal = random(30,60)>>
+			<<set _randomOral = random(30,60)>>
+			<<set $slaves[_wedS].counter.vaginal += _randomVag, $slaves[_wedS].counter.anal += _randomAnal, $slaves[_wedS].counter.oral += _randomOral, $vaginalTotal += _randomVag, $analTotal += _randomAnal, $oralTotal += _randomOral>>
+			By week's end, $he's managed to ruin $his body out of spite. $He can barely move, trapped on $his back as cum steadily drips from $his prolapsed, gaping, destroyed holes.
+			<<if $slaves[_wedS].vagina == 0 && $slaves[_wedS].anus == 0>>
+				$His actions robbed you of @@.lime;both $his virginities.@@
+			<</if>>
+			<<if $slaves[_wedS].vagina < 4>><<set $slaves[_wedS].vagina = 4>><</if>><<set $slaves[_wedS].anus = 4>>
+			<<if canGetPregnant($slaves[_wedS]) && (random(1,100) > 70) && $slaves[_wedS].eggType == "human">>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals the bitch managed to get knocked up. There is no time before the ceremony to deal with it.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<elseif canDoVaginal($slaves[_wedS])>>
+			<<set _randomVag = random(30,60)>>
+			<<set _randomOral = random(30,60)>>
+			<<set $slaves[_wedS].counter.vaginal += _randomVag, $slaves[_wedS].counter.oral += _randomOral, $vaginalTotal += _randomVag, $oralTotal += _randomOral>>
+			By week's end, $he's managed to ruin $his body out of spite. $He can barely move, trapped on $his back as cum steadily drips from $his prolapsed, gaping, destroyed cunt.
+			<<if $slaves[_wedS].vagina == 0>>
+				$His actions robbed you of @@.lime;$his virginity.@@
+			<</if>>
+			<<if $slaves[_wedS].vagina < 4>><<set $slaves[_wedS].vagina = 4>><</if>>
+			<<if canGetPregnant($slaves[_wedS]) && (random(1,100) > 70) && $slaves[_wedS].eggType == "human">>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals the bitch managed to get knocked up. There is no time before the ceremony to deal with it.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<elseif canDoAnal($slaves[_wedS])>>
+			<<set _randomAnal = random(30,60)>>
+			<<set _randomOral = random(30,60)>>
+			<<set $slaves[_wedS].counter.anal += _randomAnal, $slaves[_wedS].counter.oral += _randomOral, $analTotal += _randomAnal, $oralTotal += _randomOral>>
+			By week's end, $he's managed to ruin $his body out of spite. $He can barely move, trapped on $his back as cum steadily drips from $his prolapsed, gaping, destroyed anus.
+			<<if $slaves[_wedS].anus == 0>>
+				$His actions robbed you of @@.lime;$his anal virginity.@@
+			<</if>>
+			<<set $slaves[_wedS].anus = 4>>
+			<<if canGetPregnant($slaves[_wedS]) && (random(1,100) > 70) && $slaves[_wedS].eggType == "human">>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals the bitch managed to get knocked up. There is no time before the ceremony to deal with it.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<else>>
+			<<set _randomOral = random(60,100)>>
+			<<set $slaves[_wedS].counter.oral += _randomOral, $oralTotal += _randomOral>>
+			By week's end, $he's managed to make $himself sick from sucking down so much sexual fluid. Luckily inducing vomiting will save your wedding from making the tabloids.
+		<</if>>
+	<<elseif $slaves[_wedS].relationship == 4>>
+		fucking $his love, $slaves[_m].slaveName, as often as possible while ignoring you.
+		<<if !isSlaveAvailable($slaves[_wedS])>>
+			Or $he would have, if $he were able.
+		<<elseif !isSlaveAvailable($slaves[_m])>>
+			Or $he would have, if _he2 were around.
+		<<elseif canDoVaginal($slaves[_wedS]) && canDoAnal($slaves[_wedS])>>
+			<<set _randomVag = random(3,7)>>
+			<<set _randomAnal = random(1,4)>>
+			<<set _randomOral = random(5,10)>>
+			<<set $slaves[_wedS].counter.vaginal += _randomVag, $slaves[_wedS].counter.anal += _randomAnal, $slaves[_wedS].counter.oral += _randomOral, $vaginalTotal += _randomVag, $analTotal += _randomAnal, $oralTotal += _randomOral>>
+			<<if $slaves[_wedS].vagina == 0 && $slaves[_wedS].anus == 0>>
+				$His actions robbed you of @@.lime;both $his virginities.@@
+				<<set $slaves[_wedS].vagina = 1, $slaves[_wedS].anus = 1>>
+			<</if>>
+			<<if canImpreg($slaves[_wedS], $slaves[_m]) && (random(1,100) > 70)>>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals the bitch managed to get knocked up. There is no time before the ceremony to deal with it.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1, $slaves[_wedS].pregSource = $slaves[_m].ID, $slaves[_m].counter.penetrative += (_randomVag+_randomAnal), $penetrativeTotal += (_randomVag+_randomAnal)>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<elseif canDoVaginal($slaves[_wedS])>>
+			<<set _randomVag = random(3,7)>>
+			<<set _randomOral = random(5,10)>>
+			<<set $slaves[_wedS].counter.vaginal += _randomVag, $slaves[_wedS].counter.oral += _randomOral, $vaginalTotal += _randomVag, $oralTotal += _randomOral>>
+			<<if $slaves[_wedS].vagina == 0>>
+				$His actions robbed you of @@.lime;$his virginity.@@
+				<<set $slaves[_wedS].vagina = 1>>
+			<</if>>
+			<<if canImpreg($slaves[_wedS], $slaves[_m]) && (random(1,100) > 70)>>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals the bitch managed to get knocked up. There is no time before the ceremony to deal with it.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1, $slaves[_wedS].pregSource = $slaves[_m].ID, $slaves[_m].counter.penetrative += (_randomVag), $penetrativeTotal += (_randomVag)>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<elseif canDoAnal($slaves[_wedS])>>
+			<<set _randomAnal = random(1,4)>>
+			<<set _randomOral = random(5,10)>>
+			<<set $slaves[_wedS].counter.anal += _randomAnal, $slaves[_wedS].counter.oral += _randomOral, $analTotal += _randomAnal, $oralTotal += _randomOral>>
+			<<if $slaves[_wedS].anus == 0>>
+				$His actions robbed you of @@.lime;$his anal virginity.@@
+				<<set $slaves[_wedS].anus = 1>>
+			<</if>>
+			<<if canImpreg($slaves[_wedS], $slaves[_m]) && (random(1,100) > 70)>>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals the bitch managed to get knocked up. There is no time before the ceremony to deal with it.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1, $slaves[_wedS].pregSource = $slaves[_m].ID, $slaves[_m].counter.penetrative += (_randomAnal), $penetrativeTotal += (_randomAnal)>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<else>>
+			<<set _randomOral = random(15,20)>>
+			<<set $slaves[_wedS].counter.oral += _randomOral, $oralTotal += _randomOral>>
+			By week's end, $he's managed to make $himself sick from going down on $slaves[_m].slaveName so often. Luckily inducing vomiting will save your wedding from making the tabloids.
+		<</if>>
+	<<elseif $slaves[_wedS].relationship == 3>>
+		fucking $his lover, $slaves[_m].slaveName, as often as possible while ignoring you.
+		<<if !isSlaveAvailable($slaves[_wedS])>>
+			Or $he would have, if $he were able.
+		<<elseif !isSlaveAvailable($slaves[_m])>>
+			Or $he would have, if _he2 were around.
+		<<elseif canDoVaginal($slaves[_wedS]) && canDoAnal($slaves[_wedS])>>
+			<<set _randomVag = random(3,7)>>
+			<<set _randomAnal = random(1,4)>>
+			<<set _randomOral = random(5,10)>>
+			<<set $slaves[_wedS].counter.vaginal += _randomVag, $slaves[_wedS].counter.anal += _randomAnal, $slaves[_wedS].counter.oral += _randomOral, $vaginalTotal += _randomVag, $analTotal += _randomAnal, $oralTotal += _randomOral>>
+			<<if $slaves[_wedS].vagina == 0 && $slaves[_wedS].anus == 0>>
+				$His actions robbed you of @@.lime;both $his virginities.@@
+				<<set $slaves[_wedS].vagina = 1, $slaves[_wedS].anus = 1>>
+			<</if>>
+			<<if canImpreg($slaves[_wedS], $slaves[_m]) && (random(1,100) > 70)>>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals the bitch managed to get knocked up. There is no time before the ceremony to deal with it.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1, $slaves[_wedS].pregSource = $slaves[_m].ID, $slaves[_m].counter.penetrative += (_randomVag+_randomAnal), $penetrativeTotal += (_randomVag+_randomAnal)>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<elseif canDoVaginal($slaves[_wedS])>>
+			<<set _randomVag = random(3,7)>>
+			<<set _randomOral = random(5,10)>>
+			<<set $slaves[_wedS].counter.vaginal += _randomVag, $slaves[_wedS].counter.oral += _randomOral, $vaginalTotal += _randomVag, $oralTotal += _randomOral>>
+			<<if $slaves[_wedS].vagina == 0>>
+				$His actions robbed you of @@.lime;$his virginity.@@
+			<<set $slaves[_wedS].vagina = 1>>
+			<</if>>
+			<<if canImpreg($slaves[_wedS], $slaves[_m]) && (random(1,100) > 70)>>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals the bitch managed to get knocked up. There is no time before the ceremony to deal with it.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1, $slaves[_wedS].pregSource = $slaves[_m].ID, $slaves[_m].counter.penetrative += (_randomVag), $penetrativeTotal += (_randomVag)>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<elseif canDoAnal($slaves[_wedS])>>
+			<<set _randomAnal = random(1,4)>>
+			<<set _randomOral = random(5,10)>>
+			<<set $slaves[_wedS].counter.anal += _randomAnal, $slaves[_wedS].counter.oral += _randomOral, $analTotal += _randomAnal, $oralTotal += _randomOral>>
+			<<if $slaves[_wedS].anus == 0>>
+				$His actions robbed you of @@.lime;$his anal virginity.@@
+				<<set $slaves[_wedS].anus = 1>>
+			<</if>>
+			<<if canImpreg($slaves[_wedS], $slaves[_m]) && (random(1,100) > 70)>>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals the bitch managed to get knocked up. There is no time before the ceremony to deal with it.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1, $slaves[_wedS].pregSource = $slaves[_m].ID, $slaves[_m].counter.penetrative += (_randomAnal), $penetrativeTotal += (_randomAnal)>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<else>>
+			<<set _randomOral = random(15,20)>>
+			<<set $slaves[_wedS].counter.oral += _randomOral, $oralTotal += _randomOral>>
+			By week's end, $he's managed to make $himself sick from going down on $slaves[_m].slaveName so often. Luckily inducing vomiting will save your wedding from making the tabloids.
+		<</if>>
+	<<elseif $slaves[_wedS].relationship > 0>>
+		spending time away from you with $slaves[_m].slaveName.
+	<<else>>
+		inappropriately planning redecorations.
+	<</if>>
+<<elseif $slaves[_wedS].devotion < -20>>
+	<<if $slaves[_wedS].relationship == -1>>
+		desperately pleading with you to change your mind.
+	<<elseif $slaves[_wedS].relationship == 4>>
+		with $his love, $slaves[_m].slaveName, weeping.
+	<<elseif $slaves[_wedS].relationship == 3>>
+		with $his lover, $slaves[_m].slaveName, weeping.
+	<<elseif $slaves[_wedS].relationship > 0>>
+		with $his friend, $slaves[_m].slaveName, weeping.
+	<<else>>
+		desperately pleading with you to change your mind.
+	<</if>>
+<<else>>
+	<<if $slaves[_wedS].relationship == -1>>
+		trying $his hardest to not sleep with anyone else.
+	<<elseif $slaves[_wedS].relationship == 4>>
+		alongside $his love, $slaves[_m].slaveName.
+		<<if canDoVaginal($slaves[_wedS]) && $slaves[_wedS].vagina != 0>>
+			<<set $slaves[_wedS].counter.vaginal += 1, $vaginalTotal += 1>>
+			$He later lets you know $he let $slaves[_m].slaveName enjoy $his pussy one last time.
+			<<if canImpreg($slaves[_wedS], $slaves[_m]) && (random(1,100) > 90)>>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals $slaves[_wedS].slaveName managed to get knocked up. There is no time before the ceremony to deal with it and the distraught $girl is in a panic for making you go through this.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1, $slaves[_wedS].pregSource = $slaves[_m].ID, $slaves[_m].counter.penetrative++, $penetrativeTotal++>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<elseif canDoAnal($slaves[_wedS])>>
+			<<set $slaves[_wedS].counter.anal += 1, $analTotal += 1>>
+			$He later lets you know $he let $slaves[_m].slaveName enjoy $his butt one last time.
+			<<if canImpreg($slaves[_wedS], $slaves[_m]) && (random(1,100) > 90)>>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals $slaves[_wedS].slaveName managed to get knocked up. There is no time before the ceremony to deal with it and the distraught $girl is in a panic for making you go through this.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1, $slaves[_wedS].pregSource = $slaves[_m].ID, $slaves[_m].counter.penetrative++, $penetrativeTotal++>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<else>>
+			<<set $slaves[_wedS].counter.oral += 1, $oralTotal += 1>>
+			$He later tells you $he gave $slaves[_m].slaveName <<if $slaves[_m].dick > 0>>one last blow job<<elseif canDoVaginal($slaves[_m])>>cunnilingus one last time<<else>>oral one last time<</if>>.
+		<</if>>
+	<<elseif $slaves[_wedS].relationship == 3>>
+		alongside $his lover, $slaves[_m].slaveName.
+		<<if canDoVaginal($slaves[_wedS]) && $slaves[_wedS].vagina != 0>>
+			<<set $slaves[_wedS].counter.vaginal += 1, $vaginalTotal += 1>>
+			$He later lets you know $he let $slaves[_m].slaveName enjoy $his pussy one last time.
+			<<if canImpreg($slaves[_wedS], $slaves[_m]) && (random(1,100) > 90)>>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals $slaves[_wedS].slaveName managed to get knocked up. There is no time before the ceremony to deal with it and the distraught $girl is in a panic for making you go through this.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1, $slaves[_wedS].pregSource = $slaves[_m].ID, $slaves[_m].counter.penetrative++, $penetrativeTotal++>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<elseif canDoAnal($slaves[_wedS])>>
+			<<set $slaves[_wedS].counter.anal += 1, $analTotal += 1>>
+			$He later lets you know $he let $slaves[_m].slaveName enjoy $his butt one last time.
+			<<if canImpreg($slaves[_wedS], $slaves[_m]) && (random(1,100) > 90)>>
+				A pre-wedding checkup following an unusual bout of morning nausea reveals $slaves[_wedS].slaveName managed to get knocked up. There is no time before the ceremony to deal with it and the distraught $girl is in a panic for making you go through this.
+				<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1, $slaves[_wedS].pregSource = $slaves[_m].ID, $slaves[_m].counter.penetrative++, $penetrativeTotal++>>
+				<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+				<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, $slaves[_wedS].pregSource, $slaves[_wedS].preg)>>
+			<</if>>
+		<<else>>
+			<<set $slaves[_wedS].counter.oral += 1, $oralTotal += 1>>
+			$He later tells you $he gave $slaves[_m].slaveName <<if $slaves[_m].dick > 0>>one last blow job<<elseif canDoVaginal($slaves[_m])>>cunnilingus one last time<<else>>oral one last time<</if>>.
+		<</if>>
+	<<elseif $slaves[_wedS].relationship > 0>>
+		with $his friend, $slaves[_m].slaveName.
+	<<else>>
+		wearing a very conflicted expression.
+	<</if>>
+<</if>>
+
+<<if !isFertile($slaves[_wedS]) && $weddingPlanned == 3>>
+	$slaves[_wedS].slaveName can no longer be impregnated as planned for the ceremony, so it has been hurriedly recast as a normal slave wedding.
+	<<set $weddingPlanned = 1>>
+	<br><br>
+<</if>>
+
+<<if $weddingPlanned == 3>>
+
+	The ceremony to bind <<= SlaveFullName($slaves[_wedS])>> to you as your slave $wife, and $his womb to you as your private breeding ground, is a polite affair which you host in the lower floor of your penthouse. <<if $arcologies[0].FSRestart != "unset" && ($slaves[_wedS].breedingMark == 0 || $propOutcome == 0)>>Barely anyone is there, mostly lower-class citizens, several accompanied by their slaves. Many of your other slaves, that is your slaves who are not being married and fucked pregnant tonight, are present to serve your guests, but are dressed more conservatively than usual. There is a distinct air of unrest in the room, as if the absent Elites' distaste of your actions came in their place.<<else>>All the arcology's most prominent citizens are there, most with a favored slave or two and some even with their slave wives. Many of your other slaves, that is your slaves who are not being married and fucked pregnant tonight, are present to serve your guests, but are dressed more conservatively than usual. When assignations between citizen and slave develop, guests are politely encouraged to perform them in side rooms rather than out in view of the main gathering.<</if>>
+	<br><br>
+	$slaves[_wedS].slaveName appears after everyone has had a chance to socialize,
+	<<if !hasAnyLegs($slaves[_wedS])>>
+		carried by another slave since $he's a
+		<<if isAmputee($slaves[_wedS])>>
+			quadruple
+		<<elseif !hasBothArms($slaves[_wedS])>>
+			triple
+		<<else>>
+			double
+		<</if>>
+		amputee and $he cannot walk,
+	<</if>>
+	wearing beautiful bridal lingerie in
+	<<if ($slaves[_wedS].vagina == 0)>>
+		white, since $he's a virgin.
+	<<elseif ($slaves[_wedS].pregKnown == 1)>>
+		light pink, since $he's pregnant.
+	<<elseif ($slaves[_wedS].vagina < 0) && ($slaves[_wedS].anus == 0)>>
+		white, since $he's an anal virgin.
+	<<elseif ($slaves[_wedS].vagina < 0) && ($slaves[_wedS].boobs > 500)>>
+		electric blue, since $he's a shemale.
+	<<elseif ($slaves[_wedS].vagina < 0)>>
+		pale blue, since $he's a sissy slave.
+	<<elseif ($slaves[_wedS].dick > 0)>>
+		hot pink, since $he's a futa slave.
+	<<else>>
+		light pink, since $he's an experienced sex slave.
+	<</if>>
+	A filmy veil covers $his head and shoulders. $His lacy bridal bra
+	<<if ($slaves[_wedS].boobs > 4000)>>
+		is a marvel of engineering, discreetly reinforced to support $his gigantic udders.
+	<<elseif ($slaves[_wedS].boobs > 1200)>>
+		just barely restrains $his huge boobs, leaving the tops of $his areolae visible.
+	<<elseif ($slaves[_wedS].boobs > 400)>>
+		flatters $his pretty breasts.
+	<<else>>
+		flatters $his pretty chest.
+	<</if>>
+	<<if $slaves[_wedS].bellyPreg >= 600000>>
+		$His expansive, squirming pregnant belly makes $his bridal wear particularly obscene.
+	<<elseif ($slaves[_wedS].bellyPreg >= 1500)>>
+		$His _belly pregnant belly protrudes out the front of $his bridal wear.
+	<<elseif ($slaves[_wedS].bellyImplant >= 1500)>>
+		$His _belly <<print $slaves[_wedS].bellyImplant>>cc belly implant protrudes $his middle out the front of $his bridal wear.
+	<<elseif ($slaves[_wedS].bellyFluid >= 10000)>>
+		$His hugely bloated, <<print $slaves[_wedS].inflationType>>-filled belly protrudes out the front of $his bridal wear.
+	<<elseif ($slaves[_wedS].bellyFluid >= 5000)>>
+		$His bloated, <<print $slaves[_wedS].inflationType>>-stuffed belly protrudes out the front of $his bridal wear.
+	<<elseif ($slaves[_wedS].bellyFluid >= 1500)>>
+		$His distended, <<print $slaves[_wedS].inflationType>>-belly protrudes out the front of $his bridal wear.
+	<</if>>
+	<<if $slaves[_wedS].chastityPenis == 1>>
+		$His slave dick is hidden by its chastity cage.
+	<<elseif canAchieveErection($slaves[_wedS])>>
+		<<if ($slaves[_wedS].dick > 4) && ($slaves[_wedS].belly >= 5000)>>
+			$He's hugely erect, with $his lacy g-string only serving to hold $his dick agonizingly pressed against the bottom of $his _belly <<if $slaves[_wedS].bellyPreg >= 3000>>pregnant <</if>>belly.
+		<<elseif $slaves[_wedS].dick > 4>>
+			$He's hugely erect, with $his lacy g-string only serving to hold $his dick upright along $his belly.
+		<<else>>
+			$His erection tents the front of $his lacy g-string.
+		<</if>>
+	<<elseif ($slaves[_wedS].dick > 0)>>
+		<<if $slaves[_wedS].dick > 10>>
+			$His huge soft cock is allowed to dangle freely as no g-string could hope to contain it.
+		<<elseif $slaves[_wedS].dick > 4>>
+			$His big soft cock forms a lewd mass, stuffed into $his lacy g-string.
+		<<else>>
+			$His lacy g-string perfectly conceals $his soft dick.
+		<</if>>
+	<<else>>
+		<<if $slaves[_wedS].clit > 1>>
+			$His huge clit is quite hard, making $him shift uncomfortably as $his lacy g-string stimulates it.
+		<<else>>
+			$His lacy g-string covers $his womanhood demurely.
+		<</if>>
+	<</if>>
+	There is no aisle for $him to <<if !hasAnyLegs($slaves[_wedS])>>be carried<<else>>walk<</if>> down, just a small space at the head of the room where you're standing alone, and there's no one to <<if !hasAnyLegs($slaves[_wedS])>>walk alongside the slave carrying<<else>>walk<</if>> $him there; this symbolizes $his submission to you
+	<<if $slaves[_wedS].fetish == "mindbroken">>
+		despite the fact that $he had to be pushed into walking towards you.
+	<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+		of $his own choice, and $he does so with a smile.
+	<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+		of $his own choice, and $he does so with hesitation.
+	<<elseif $slaves[_wedS].devotion < -20>>
+		of $his own (forced) choice, and $he does so with wavering steps.
+	<<else>>
+		of $his own choice, and $he does so willingly.
+	<</if>>
+	<br><br>
+	When $he's in front of you,
+	<<if !hasAnyLegs($slaves[_wedS])>>
+		the slave carrying $his <<if isAmputee($slaves[_wedS])>>limbless<<else>>legless<</if>> torso sets $him down on the floor in front of you and props $him up so $his head is level with your crotch.
+	<<else>>
+		<<if $slaves[_wedS].fetish == "mindbroken">>
+			you push $him onto $his _knees so $his head
+		<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+			$he happily gets down on $his _knees so $his head
+		<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+			$he slowly lowers $himself onto $his _knees so $his head
+		<<elseif $slaves[_wedS].devotion < -20>>
+			$he quickly lowers $himself onto $his _knees so $his tear-streaked face
+		<<else>>
+			$he gets down on $his _knees so $his head
+		<</if>>
+	<</if>>
+	is level with your crotch.
+	<<= capFirstChar($assistant.name)>> reads the short recitation for $him, and you place a simple steel ring
+	<<if !hasAnyArms($slaves[_wedS])>>
+		on a cord around $his neck, since $he lacks fingers to wear it on.
+	<<else>>
+		on $his <<if $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust <= 20>>trembling <</if>>finger.
+	<</if>>
+	There is no ring for you, since this marriage does not bind you.
+	<br>
+	<<if $PC.slaveSurname && $slaves[_wedS].slaveSurname != $PC.slaveSurname>>
+		<br><br><span id="surnaming">
+		<<link "Give $him your surname too">>
+			<<replace "#surnaming">>
+				<<set $slaves[_wedS].slaveSurname = $PC.slaveSurname>>
+				You also proclaim your new slave $wife $slaves[_wedS].slaveName $slaves[_wedS].slaveSurname. The new Mrs. $slaves[_wedS].slaveSurname <<if canHear($slaves[_wedS])>>hears<<else>>understands<</if>> this, of course, and
+				<<if $slaves[_wedS].fetish == "mindbroken">>
+					shows no reaction. Like many things, names mean nothing to $him now. Your guests, on the other hand, appreciate the gift.
+				<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+					breaks down again. Not only is $he to be blessed with your child, but $he's to take your surname as well.
+				<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+					scoffs audibly. Just another burden for $him to carry; like the child soon to be growing in $his womb.
+				<<elseif $slaves[_wedS].devotion < -20>>
+					breaks down again. Not only are you binding $him to you with your child, but with your name as well.
+				<<else>>
+					nods acceptingly. Your will is $his will, after all.
+				<</if>>
+			<</replace>>
+		<</link>>
+		</span>
+	<</if>>
+	<br><br>
+	<<if $slaves[_wedS].fetish == "mindbroken">>
+		$slaves[_wedS].slaveName is mindbroken, so you gather $him up and hold $him in front of you, pulling $his panties off as you do. $He follows your motions like a ragdoll. You maneuver your dick inside $him while holding $him against your <<if $PC.boobs >= 300>>breasts<<elseif $PC.title == 0>>flat chest<<else>>strong chest<</if>>. Then you pull $his _knees up to give your guests a good view as you fuck $his fertile <<if $slaves[_wedS].mpreg == 1>>asshole<<else>>cunt<</if>>. $He is left to face them, staring off into space. Though $he faces the crowd, $his mind is empty; this might as well be any other fucking to $him. $He twitches ever so slightly when your seed flows into $him, orgasming robotically to @@.green;applause from your guests.@@ You'll fuck $him repeatedly over the next few days, ensuring impregnation.
+	<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+		Then, you <<if !hasAnyLegs($slaves[_wedS])>>gather $him up and hold $him in front of you, pulling $his panties off as you do. Showing considerable dexterity, you maneuver your dick inside $him while holding $him against your <<if $PC.boobs >= 300>>breasts<<elseif $PC.title == 0>>flat chest<<else>>strong chest<</if>><<else>>take $his hand and pull $him to $his feet while $he shimmies out of $his panties. $He cocks $his hips for you and you slide your cock inside $him before taking $his _knees and drawing <<if hasBothLegs($slaves[_wedS])>>them<<else>>it<</if>> up to hold $him in midair, impaled on you<</if>>. $He is left to face your guests, watching raptly as you fuck $his fertile <<if $slaves[_wedS].mpreg == 1>>asshole<<else>>cunt<</if>>. Though $his face is towards the crowd, $his mind is concentrated on your hard cock, pumping in and out of $him at an angle; to $him, it's @@.mediumaquamarine;concrete proof that $he's special to you.@@ $He gasps when your seed flows into $him, orgasming $himself to @@.green;applause from your guests.@@ You'll fuck $him repeatedly over the next few days, ensuring impregnation.
+	<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+		$slaves[_wedS].slaveName is unwilling, so you gather $him up and hold $him in front of you, pulling $his panties off as you do. $He was crying before, but this causes $him to tremble and tear up in anticipation of what's next. Ignoring this, you maneuver your dick inside $him while holding $him against your <<if $PC.boobs >= 300>>breasts<<elseif $PC.title == 0>>flat chest<<else>>strong chest<</if>>.<<if hasAnyLegs($slaves[_wedS])>> Then you pull $his _knees to give your guests a good view of the consummation.<</if>> $He is left to face them, watching sullenly as you fuck $his fertile <<if $slaves[_wedS].mpreg == 1>>asshole<<else>>cunt<</if>>. Though $his face is towards the crowd, $his mind is concentrated on your hard cock, pumping in and out of $him at an angle; to $him, this is torture. $He gasps when your seed flows into $him, faking an orgasm to @@.green;applause from your guests.@@ At this, $he shoots you a dirty look, blaming you for this indignity. You'll fuck $him repeatedly over the next few days, ensuring impregnation, despite $his efforts to defy you.
+	<<elseif $slaves[_wedS].devotion < -20>>
+		$slaves[_wedS].slaveName is unwilling, so you gather $him up and hold $him in front of you, pulling $his panties off as you do. $He was crying before, but this causes $him to tremble and sob loudly in anticipation of what's next. Ignoring this, you maneuver your dick inside $him while holding $him against your <<if $PC.boobs >= 300>>breasts<<elseif $PC.title == 0>>flat chest<<else>>strong chest<</if>>.<<if hasAnyLegs($slaves[_wedS])>> Then you pull $his _knees to give your guests a good view of the consummation.<</if>> $He is left to face them, watching sullenly as you fuck $his fertile <<if $slaves[_wedS].mpreg == 1>>asshole<<else>>cunt<</if>>. Though $his face is towards the crowd, $his mind is concentrated on your hard cock, pumping in and out of $him at an angle; to $him, this is torture. $He gasps when your seed flows into $him, orgasming unwillingly @@.green;applause from your guests.@@ At this, $he completely breaks down, blubbering like a child at the unwelcome warmth in $his lower belly. You'll fuck $him repeatedly over the next few days, ensuring impregnation, despite $his protesting.
+	<<else>>
+		$slaves[_wedS].slaveName isn't particularly excited about what's coming, but $he's fully prepared for it and accepted it as a fact of life. There are worse things one can be than the slave-<<= $wife>> of a wealthy arcology owner. You <<if !hasAnyLegs($slaves[_wedS])>>gather $him up and hold $him in front of you, pulling $his panties off as you do. Showing considerable dexterity, you maneuver your dick inside $him while holding $him against your <<if $PC.boobs > 300>>breasts<<elseif $PC.title == 0>>flat chest<<else>>strong chest<</if>><<else>>take $his hand and pull $him to $his feet while $he shimmies out of $his panties. $He cocks $his hips for you and you slide your cock inside $him before taking $his _knees and drawing <<if hasBothLegs($slaves[_wedS])>>them<<else>>it<</if>> up to hold $him in midair, impaled on you<</if>>. Though $his face is towards the crowd, $his mind is concentrated on your hard cock, pumping in and out of $him at an angle; to $him, it is what it is. $He gasps when your seed flows into $him, orgasming shortly after to @@.green;applause from your guests.@@ You'll fuck $him repeatedly over the next few days, ensuring impregnation.
+	<</if>>
+	<<set $slaves[_wedS].preg = 1, $slaves[_wedS].pregKnown = 1, $slaves[_wedS].pregWeek = 1>>
+	<<set $slaves[_wedS].pregType = setPregType($slaves[_wedS])>>
+	<<set WombImpregnate($slaves[_wedS], $slaves[_wedS].pregType, -1, $slaves[_wedS].preg)>>
+	<<set $slaves[_wedS].pregSource = -1>>
+	<<if ($slaves[_wedS].vagina == 0) || ($slaves[_wedS].mpreg == 1 && $slaves[_wedS].anus == 0)>>
+		Naturally, the ceremony @@.lime;took $his virginity;@@
+		<<if $slaves[_wedS].fetish == "mindbroken">>
+			$he didn't notice.
+		<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+			$he was so happy @@.hotpink;$his first time was with you and so special.@@
+			<<set $slaves[_wedS].devotion += 5>>
+		<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+			$he was @@.mediumorchid;saving that for someone special.@@
+			<<set $slaves[_wedS].devotion -= 5>>
+		<<elseif $slaves[_wedS].devotion < -20>>
+			$he wept at the <<if canSee($slaves[_wedS])>>sight<<else>>feeling<</if>> of cum pooling from $his @@.mediumorchid;defiled <<if $slaves[_wedS].mpreg == 1>>asshole<<else>>pussy<</if>>.@@
+			<<set $slaves[_wedS].devotion -= 10>>
+		<<else>>
+			you made it @@.hotpink;enjoyable@@ at least.
+			<<set $slaves[_wedS].devotion += 2>>
+		<</if>>
+		<<if $slaves[_wedS].mpreg == 1>><<set $slaves[_wedS].anus = 1>><<else>><<set $slaves[_wedS].vagina = 1>><</if>>
+	<</if>>
+	<<if ($slaves[_wedS].fetish == "pregnancy") && ($slaves[_wedS].fetishStrength > 60)>>
+		<<if $slaves[_wedS].fetish == "mindbroken">>
+		<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+			As a pregnancy fetishist, @@.hotpink;$he confidently believes this wedding will be the high point of $his life.@@
+			<<set $slaves[_wedS].devotion += 20>>
+		<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+			As a hateful pregnancy fetishist, @@.hotpink;getting pregnant was the best part of the ceremony.@@
+			<<set $slaves[_wedS].devotion += 1>>
+		<<elseif $slaves[_wedS].devotion < -20>>
+			As a pregnancy fetishist, getting raped pregnant by someone $he hates leaves $him with very mixed feelings.
+		<<else>>
+			As a pregnancy fetishist, @@.hotpink;$he thoroughly enjoyed getting knocked up in such an ostentatious fashion.@@
+			<<set $slaves[_wedS].devotion += 10>>
+		<</if>>
+	<</if>>
+	<<if $slaves[_wedS].relationship != 0>>
+		<<if $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+			<<if $slaves[_wedS].relationship > 0>>
+				$His <<if $slaves[_wedS].relationship > 2>>ex<<else>>friend<</if>> is @@.mediumorchid;disappointed@@ that their relationship had to end and @@.gold;worries@@ for _his2 <<if $slaves[_wedS].relationship > 2>>ex<<else>>companion<</if>>'s future.
+				<<if $slaves[_wedS].relationship == 4>>
+					<<set $slaves[_m].devotion -= 5, $slaves[_m].trust -= 5>>
+				<<elseif $slaves[_wedS].relationship == 3>>
+					<<set $slaves[_m].devotion -= 3, $slaves[_m].trust -= 3>>
+				<<else>>
+					<<set $slaves[_m].devotion -= 1, $slaves[_m].trust -= 1>>
+				<</if>>
+			<</if>>
+		<<elseif $slaves[_wedS].devotion < -20>>
+			<<if $slaves[_wedS].relationship == -1>>
+				$He @@.mediumorchid;hates@@ that $he has to be yours only and @@.gold;fears@@ what will happen if $he strays.
+				<<set $slaves[_wedS].devotion -= 40, $slaves[_wedS].trust -= 40>>
+			<<elseif $slaves[_wedS].relationship == 4>>
+				Both $him and $his ex @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future. $slaves[_m].slaveName is especially @@.mediumorchid;furious@@ to watch _his2 life's love get stolen away and fucked pregnant in such a manner.
+				<<set $slaves[_m].devotion -= 60, $slaves[_m].trust -= 40>>
+				<<set $slaves[_wedS].devotion -= 40, $slaves[_wedS].trust -= 40>>
+			<<elseif $slaves[_wedS].relationship == 3>>
+				Both $him and $his ex @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future. $slaves[_m].slaveName is especially @@.mediumorchid;hurt@@ after watching _his2 life's love get stolen away and fucked pregnant in such a manner.
+				<<set $slaves[_m].devotion -= 30, $slaves[_m].trust -= 30>>
+				<<set $slaves[_wedS].devotion -= 50, $slaves[_wedS].trust -= 30>>
+			<<elseif $slaves[_wedS].relationship > 0>>
+				Both $him and $his friend @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future.
+				<<set $slaves[_m].devotion -= 20, $slaves[_m].trust -= 20>>
+				<<set $slaves[_wedS].devotion -= 20, $slaves[_wedS].trust -= 20>>
+			<</if>>
+		<<else>>
+			<<if $slaves[_wedS].relationship == -1>>
+				$He @@.mediumorchid;dislikes@@ that $he has to be yours only and @@.gold;worries@@ what will happen if $he strays.
+				<<set $slaves[_wedS].devotion -= 10, $slaves[_wedS].trust -= 10>>
+			<<elseif $slaves[_wedS].relationship == 4>>
+				Both $him and $his ex @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;worry@@ for each other. $slaves[_m].slaveName is especially @@.mediumorchid;hurt@@ after watching _his2 life's love get stolen away and fucked pregnant in such a manner.
+				<<set $slaves[_m].devotion -= 20, $slaves[_m].trust -= 20>>
+				<<set $slaves[_wedS].devotion -= 30, $slaves[_wedS].trust -= 20>>
+			<<elseif $slaves[_wedS].relationship == 3>>
+				Both $him and $his ex are @@.mediumorchid;saddened@@ that their relationship had to end and @@.gold;worry@@ for each other. $slaves[_m].slaveName is a little @@.mediumorchid;jealous@@ of you for snagging such catch out from under _him2.
+				<<set $slaves[_m].devotion -= 10, $slaves[_m].trust -= 10>>
+				<<set $slaves[_wedS].devotion -= 15, $slaves[_wedS].trust -= 10>>
+			<<elseif $slaves[_wedS].relationship > 0>>
+				Both $him and $his friend are @@.mediumorchid;disappointed@@ that their relationship had to end and @@.gold;worry@@ for each other.
+				<<set $slaves[_m].devotion -= 5, $slaves[_m].trust -= 5>>
+				<<set $slaves[_wedS].devotion -= 5, $slaves[_wedS].trust -= 5>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<set $slaves[_wedS].relationship = -3>>
+	<<if $slaves[_wedS].mpreg == 1>><<set $slaves[_wedS].counter.anal += 1, $analTotal += 1>><<else>><<set $slaves[_wedS].counter.vaginal += 1, $vaginalTotal += 1>><</if>>
+	<<run repX(2000, "event", $slaves[_m])>>
+	<<run repX(2000, "event", $slaves[_wedS])>>
+	<<if $slaves[_wedS].fetish == "mindbroken">>
+		<<set $desc = "a framed shot of you impregnating the blank-faced " + $slaves[_wedS].slaveName + " at your wedding">>
+	<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+		<<set $desc = "a framed shot of you impregnating the joyous " + $slaves[_wedS].slaveName + " at your wedding">>
+	<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+		<<set $desc = "a framed shot of you forcefully impregnating the disinterested " + $slaves[_wedS].slaveName + " at your wedding">>
+	<<elseif $slaves[_wedS].devotion < -20>>
+		<<set $desc = "a framed shot of you forcefully impregnating the tear soaked " + $slaves[_wedS].slaveName + " at your wedding">>
+	<<else>>
+		<<set $desc = "a framed shot of you impregnating " + $slaves[_wedS].slaveName + " at your wedding">>
+	<</if>>
+	<<set $trinkets.push($desc)>>
+	<<if $arcologies[0].FSRestart != "unset" && ($slaves[_wedS].breedingMark == 0 || $propOutcome == 0) && $eugenicsFullControl != 1>>
+		You have @@.red;angered@@ the Societal Elite by this public showing of everything they stand against.
+		<<set $failedElite += 250>>
+	<</if>>
+
+<<elseif $weddingPlanned == 2>>
+
+	The ceremony to bind <<= SlaveFullName($slaves[_wedS])>> to you as your slave $wife is an all day affair.
+	<<if $slaves[_wedS].fetish == "mindbroken">>
+		$He spent the day before resting and preparing $himself, if you can call sitting around mindlessly preparing. $He spends most of the day-long party at the center of a nonstop gangbang, occasionally moaning as more of a physical reaction than anything. The theory is that $he'll be bound to you as your slave $wife from this day onward, so $he must get the promiscuity that is a sex slave's responsibility out of the way now. Whatever their opinions on the idea, your guests take part with enthusiasm, completely unhampered by your slave's utter emptiness. Many brought their own slaves to participate, too. $slaves[_wedS].slaveName spends hours with numerous cocks inside $him, with attending slaves using their mouths on any erogenous zones they can reach. When the moment of the ceremony nears, $he's extracted and taken off to be bathed.
+		<br><br>
+		$He returns shortly, looking exhausted but otherwise uncaring. $He's naked still, $his skin clean and $slaves[_wedS].skin, and is led to you for the ceremony by another slave. The only evident signs that $he's had sex with more than a hundred people today is $his ass, which looks rather well traveled, and $his tiredness. $He can't conceal $his tiredness, and leans against you subconsciously. <<= capFirstChar($assistant.name)>> reads the short recitation for $him, and you place a simple steel ring <<if !hasAnyArms($slaves[_wedS])>>on a cord around $his neck, since $he lacks fingers to wear it on<<else>>on $his finger<</if>>. There is no ring for you, since this marriage does not bind you.
+		<br><br>
+		Once the ceremony is complete, you scoop up your new slave $wife to carry $him back into the master bedroom. $He rests $his head against your <<if $PC.boobs >= 300>>breasts<<elseif $PC.title == 0>>flat chest<<else>>strong chest<</if>> as you cradle $him in your arms, and by the time $he's home, $he's fast asleep. You set $him gently down on the bed and curl up behind $him, feeling the animal warmth of $his body as the exhausted slave's chest rises and falls with $his breathing.
+	<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+		$He spent the day before resting and preparing $himself, and this was a necessary precaution. $He spends most of the day-long party at the center of a nonstop gangbang. The theory is that $he'll be bound to you as your slave $wife from this day onward, so $he must get the promiscuity that is a sex slave's responsibility out of the way now. Whatever their opinions on the idea, @@.green;your guests take part with enthusiasm,@@ many having brought their own slaves to participate, too. $slaves[_wedS].slaveName spends hours with numerous cocks inside $him, with attending slaves using their mouths on any erogenous zones they can reach. When the moment of the ceremony nears, $he's extracted and taken off to be bathed.
+		<br><br>
+		$He returns shortly, looking exhausted but rather proud of $himself for getting through all that. $He's naked still, $his skin clean and $slaves[_wedS].skin, and comes confidently to stand by you for the ceremony. The only evident signs that $he's had sex with more than a hundred people today is $his ass, which looks rather well-traveled, and $his tiredness. $He does $his best to conceal how ready to sleep $he is, but $he leans against you a little. <<= capFirstChar($assistant.name)>> reads the short recitation for $him, and you place a simple steel ring <<if !hasAnyArms($slaves[_wedS])>>on a cord around $his neck, since $he lacks fingers to wear it on<<else>>on $his finger<</if>>. There is no ring for you, since this marriage does not bind you.
+		<br><br>
+		Once the ceremony is complete, you scoop up your new slave $wife to carry $him back into the master bedroom. $He rests $his head against your <<if $PC.boobs >= 300>>breasts<<elseif $PC.title == 0>>flat chest<<else>>strong chest<</if>> as you cradle $him in your arms, and by the time $he's home, $he's fast asleep. You set $him gently down on the bed and curl up behind $him, feeling the animal warmth of $his body as the exhausted slave's chest rises and falls with $his breathing.
+	<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+		$He spent the day before resting and trying to ready $himself, and this was a necessary precaution. $He spends most of the day-long party at the center of a nonstop gangbang, screaming mixed cries of pleasure and horror. The theory is that $he'll be bound to you as your slave $wife from this day onward, so $he must get the promiscuity that is a sex slave's responsibility out of the way now. Whatever their opinions on the idea, your guests take part with enthusiasm, completely unhampered by your slave's utter unwillingness. Many brought their own slaves to participate, too. $slaves[_wedS].slaveName spends hours with numerous cocks inside $him, with attending slaves using their mouths on any erogenous zones they can reach. When the moment of the ceremony nears, $he's extracted and taken off to be bathed.
+		<br><br>
+		$He returns shortly, looking exhausted and annoyed. $He's naked still, $his skin clean and $slaves[_wedS].skin, and comes reluctantly to stand by you for the ceremony, glaring at you the whole time. The only evident signs that $he's had sex with more than a hundred people today is $his ass, which looks rather well traveled, and $his tiredness. $He does $his best to conceal $his tiredness and look stronger than $he is, choosing to struggle to stand instead of leaning against you. <<= capFirstChar($assistant.name)>> reads the short recitation for $him, and you place a simple steel ring <<if !hasAnyArms($slaves[_wedS])>>on a cord around $his neck, since $he lacks fingers to wear it on<<else>>on $his finger<</if>>. There is no ring for you, since this marriage does not bind you.
+		<br><br>
+		Once the ceremony is complete, you scoop up your new, protesting, slave $wife to carry $him back into the master bedroom. $He rests $his head against your <<if $PC.boobs >= 300>>breasts<<elseif $PC.title == 0>>flat chest<<else>>strong chest<</if>>, simply too tired to care anymore. By the time $he's home, $he's fast asleep. You set $him gently down on the bed and curl up behind $him, feeling the animal warmth of $his body as the exhausted slave's chest rises and falls with $his breathing. $He squirms slightly in $his sleep to the unwelcome feeling of your arm around $him.
+	<<elseif $slaves[_wedS].devotion < -20>>
+		$He spent the day before resting and crying to $himself, and this was a necessary precaution. $He spends most of the day-long party at the center of a nonstop gangbang, screaming mixed cries of pleasure and horror. The theory is that $he'll be bound to you as your slave $wife from this day onward, so $he must get the promiscuity that is a sex slave's responsibility out of the way now. Whatever their opinions on the idea, your guests take part with enthusiasm, completely unhampered by your slave's utter unwillingness. Many brought their own slaves to participate, too. $slaves[_wedS].slaveName spends hours with numerous cocks inside $him, with attending slaves using their mouths on any erogenous zones they can reach. When the moment of the ceremony nears, $he's extracted and taken off to be bathed.
+		<br><br>
+		$He returns shortly, looking exhausted and depressed. $He's naked still, $his skin clean and $slaves[_wedS].skin, and comes reluctantly to stand by you for the ceremony, just wanting it to be over. The only evident signs that $he's had sex with more than a hundred people today is $his ass, which looks rather well traveled, and $his tiredness. $He does $his best to conceal $his tiredness out of fear of punishment, and $he leans against you for support despite $his feelings on the wedding and you. <<= capFirstChar($assistant.name)>> reads the short recitation for $him, and you place a simple steel ring <<if !hasAnyArms($slaves[_wedS])>>on a cord around $his neck, since $he lacks fingers to wear it on<<else>>on $his finger<</if>>. There is no ring for you, since this marriage does not bind you.
+		<br><br>
+		Once the ceremony is complete, you scoop up your new slave $wife to carry $him back into the master bedroom. $He rests $his head against your <<if $PC.boobs >= 300>>breasts<<elseif $PC.title == 0>>flat chest<<else>>strong chest<</if>>, simply too tired to care anymore. By the time $he's home, $he's fast asleep. You set $him gently down on the bed and curl up behind $him, feeling the animal warmth of $his body as the exhausted slave's chest rises and falls with $his breathing.
+	<<else>>
+		$He spent the day before resting and reluctantly preparing $himself, and this was a necessary precaution. $He spends most of the day-long party at the center of a nonstop gangbang, moaning and wincing as $he takes cock after cock. The theory is that $he'll be bound to you as your slave $wife from this day onward, so $he must get the promiscuity that is a sex slave's responsibility out of the way now. Whatever their opinions on the idea, your guests take part with enthusiasm, completely unhampered by your slave's lack of passion. Many brought their own slaves to participate, too. $slaves[_wedS].slaveName spends hours with numerous cocks inside $him, with attending slaves using their mouths on any erogenous zones they can reach. When the moment of the ceremony nears, $he's extracted and taken off to be bathed.
+		<br><br>
+		$He returns shortly, looking exhausted. $He's naked still, $his skin clean and $slaves[_wedS].skin, and comes to stand by you for the ceremony. The only evident signs that $he's had sex with more than a hundred people today is $his ass, which looks rather well traveled, and $his tiredness. $He does $his best to conceal it, leaning against you despite the lack of love between you. <<= capFirstChar($assistant.name)>> reads the short recitation for $him, and you place a simple steel ring <<if !hasAnyArms($slaves[_wedS])>>on a cord around $his neck, since $he lacks fingers to wear it on<<else>>on $his finger<</if>>. There is no ring for you, since this marriage does not bind you.
+		<br><br>
+		Once the ceremony is complete, you scoop up your new slave $wife to carry $him back into the master bedroom. $He rests $his head against you, so tired that $he's grateful for the break from standing. By the time $he's home, $he's fast asleep. You set $him gently down on the bed and curl up behind $him, feeling the animal warmth of $his body as the exhausted slave's chest rises and falls with $his breathing.
+	<</if>>
+	<br>
+	<<if $PC.slaveSurname && $slaves[_wedS].slaveSurname != $PC.slaveSurname>>
+		<br><br><span id="surnaming">
+		<<link "Give $him your surname as well">>
+			<<replace "#surnaming">>
+				<<set $slaves[_wedS].slaveSurname = $PC.slaveSurname>>
+				You also proclaim your new slave $wife $slaves[_wedS].slaveName $slaves[_wedS].slaveSurname. The new Mrs. $slaves[_wedS].slaveSurname <<if canHear($slaves[_wedS])>>hears<<else>>understands<</if>> this, of course, and
+				<<if $slaves[_wedS].fetish == "mindbroken">>
+					shows no reaction. Like many things, names mean nothing to $him now.
+				<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+					breaks down again.
+				<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+					scoffs audibly.
+				<<elseif $slaves[_wedS].devotion < -20>>
+					breaks down again.
+				<<else>>
+					nods acceptingly.
+				<</if>>
+			<</replace>>
+		<</link>>
+		</span>
+	<</if>>
+
+	<<if $slaves[_wedS].vagina > 0>>
+		<<run seX($slaves[_wedS], "vaginal", "public", "penetrative", 50)>>
+	<</if>>
+	<<if $slaves[_wedS].anus < 3>>
+		<<set $slaves[_wedS].anus += 1>>
+		You can feel $his ass, still somewhat gaped from its ordeal. It's been @@.lime;loosened@@ by $his wedding party.
+	<</if>>
+	<<if $slaves[_wedS].relationship != 0>>
+		<<if $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+			<<if $slaves[_wedS].relationship > 0>>
+				$His <<if $slaves[_wedS].relationship > 2>>ex<<else>>friend<</if>> is @@.mediumorchid;disappointed@@ that their relationship had to end and @@.gold;worries@@ for _his2 <<if $slaves[_wedS].relationship > 2>>love<<else>>companion<</if>>'s future.
+				<<if $slaves[_wedS].relationship == 4>>
+					<<set $slaves[_m].devotion -= 5, $slaves[_m].trust -= 5>>
+				<<elseif $slaves[_wedS].relationship == 3>>
+					<<set $slaves[_m].devotion -= 3, $slaves[_m].trust -= 3>>
+				<<else>>
+					<<set $slaves[_m].devotion -= 1, $slaves[_m].trust -= 1>>
+				<</if>>
+			<<elseif $slaves[_wedS].relationship == -2>>
+				$He feels like $he betrayed you by getting fucked by so many others and struggles to convince $himself it was what you wanted.
+			<<elseif $slaves[_wedS].relationship == -1>>
+				Judging by the smile on $his sleeping face, today may have been the @@.hotpink;best day of $his life.@@
+				<<set $slaves[_wedS].devotion = 100, $slaves[_wedS].trust = 100>>
+			<</if>>
+		<<elseif $slaves[_wedS].devotion < -20>>
+			<<if $slaves[_wedS].relationship == -1>>
+				$He @@.mediumorchid;hates@@ that $he has to be yours only after such a thrilling orgy and @@.gold;fears@@ what will happen if $he strays.
+				<<set $slaves[_wedS].devotion -= 40, $slaves[_wedS].trust -= 40>>
+			<<elseif $slaves[_wedS].relationship == 4>>
+				Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future. $slaves[_m].slaveName is especially @@.mediumorchid;furious@@ to watch _his2 life's love get stolen away and fucked by so many others.
+				<<set $slaves[_m].devotion -= 60, $slaves[_m].trust -= 40>>
+				<<set $slaves[_wedS].devotion -= 40, $slaves[_wedS].trust -= 40>>
+			<<elseif $slaves[_wedS].relationship == 3>>
+				Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future. $slaves[_m].slaveName is especially @@.mediumorchid;hurt@@ after watching _his2 life's love get stolen away and fucked by so many others.
+				<<set $slaves[_m].devotion -= 30, $slaves[_m].trust -= 30>>
+				<<set $slaves[_wedS].devotion -= 50, $slaves[_wedS].trust -= 30>>
+			<<elseif $slaves[_wedS].relationship > 0>>
+				Both $him and $his friend are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future.
+				<<set $slaves[_m].devotion -= 20, $slaves[_m].trust -= 20>>
+				<<set $slaves[_wedS].devotion -= 20, $slaves[_wedS].trust -= 20>>
+			<</if>>
+		<<else>>
+			<<if $slaves[_wedS].relationship == -1>>
+				$He @@.mediumorchid;dislikes@@ that $he has to be yours only and @@.gold;worries@@ what will happen if $he strays, especially after such a lovely orgy.
+				<<set $slaves[_wedS].devotion -= 10, $slaves[_wedS].trust -= 10>>
+			<<elseif $slaves[_wedS].relationship == 4>>
+				Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;worry@@ for each other. $slaves[_m].slaveName is especially @@.mediumorchid;hurt@@ after watching _his2 life's love get stolen away and fucked by so many others.
+				<<set $slaves[_m].devotion -= 20, $slaves[_m].trust -= 20>>
+				<<set $slaves[_wedS].devotion -= 30, $slaves[_wedS].trust -= 20>>
+			<<elseif $slaves[_wedS].relationship == 3>>
+				Both $him and $his ex are @@.mediumorchid;are saddened@@ that their relationship had to end and @@.gold;worry@@ for each other. $slaves[_m].slaveName is a little @@.mediumorchid;resentful@@ that you'd treat such a catch that way.
+				<<set $slaves[_m].devotion -= 10, $slaves[_m].trust -= 10>>
+				<<set $slaves[_wedS].devotion -= 15, $slaves[_wedS].trust -= 10>>
+			<<elseif $slaves[_wedS].relationship > 0>>
+				Both $him and $his friend are @@.mediumorchid;are disappointed@@ that their relationship had to end and @@.gold;worry@@ for each other.
+				<<set $slaves[_m].devotion -= 5, $slaves[_m].trust -= 5>>
+				<<set $slaves[_wedS].devotion -= 5, $slaves[_wedS].trust -= 5>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<run seX($slaves[_wedS], "oral", "public", "penetrative", 50)>>
+	<<run seX($slaves[_wedS], "anal", "public", "penetrative", 50)>>
+	<<if canGetPregnant($slaves[_wedS]) && $slaves[_wedS].eggType == "human">>
+		<<= knockMeUp($slaves[_wedS], 20, 2, -2)>>
+	<</if>>
+	<<run repX(2500, "event", $slaves[_m])>>
+	<<run repX(2500, "event", $slaves[_wedS])>>
+	<<if $slaves[_wedS].fetish == "mindbroken">>
+		<<set $desc = "a framed shot of the broken " + $slaves[_wedS].slaveName + " getting gangbanged at your wedding">>
+	<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+		<<set $desc = "a framed shot of the tear and cum soaked " + $slaves[_wedS].slaveName + " getting gangbanged at your wedding">>
+	<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+		<<set $desc = "a framed shot of the glowering " + $slaves[_wedS].slaveName + " getting gangbanged at your wedding">>
+	<<elseif $slaves[_wedS].devotion < -20>>
+		<<set $desc = "a framed shot of " + $slaves[_wedS].slaveName + " getting gangbanged and weeping at your wedding">>
+	<<else>>
+		<<set $desc = "a framed shot of " + $slaves[_wedS].slaveName + " getting gangbanged at your wedding">>
+	<</if>>
+	<<set $trinkets.push($desc)>>
+
+<<else>>
+
+	The ceremony to bind <<= SlaveFullName($slaves[_wedS])>> to you as your slave $wife is a polite affair which you host in the lower floor of your penthouse. All the arcology's most prominent citizens are there, most with a favored slave or two and some even with their slave wives. Many of your other slaves, that is your slaves who are not being married tonight, are present to serve your guests, but are dressed more conservatively than usual. When assignations between citizen and slave develop, guests are politely encouraged to perform them in side rooms rather than out in view of the main gathering.
+	<br><br>
+	$slaves[_wedS].slaveName appears after everyone has had a chance to socialize,
+	<<if (!hasAnyLegs($slaves[_wedS]))>>
+		carried by another slave since $he's a
+		<<if (isAmputee($slaves[_wedS]))>>
+			quadruple
+		<<elseif !hasBothArms($slaves[_wedS])>>
+			triple
+		<<else>>
+			double
+		<</if>>
+		amputee and $he cannot walk,
+	<</if>>
+	wearing beautiful bridal lingerie in
+	<<if ($slaves[_wedS].vagina == 0)>>
+		white, since $he's a virgin.
+	<<elseif ($slaves[_wedS].pregKnown == 1)>>
+		light pink, since $he's pregnant.
+	<<elseif ($slaves[_wedS].vagina < 0) && ($slaves[_wedS].anus == 0)>>
+		white, since $he's an anal virgin.
+	<<elseif ($slaves[_wedS].vagina < 0) && ($slaves[_wedS].boobs > 500)>>
+		electric blue, since $he's a shemale.
+	<<elseif ($slaves[_wedS].vagina < 0)>>
+		pale blue, since $he's a sissy slave.
+	<<elseif ($slaves[_wedS].dick > 0)>>
+		hot pink, since $he's a futa slave.
+	<<else>>
+		light pink, since $he's an experienced sex slave.
+	<</if>>
+	A filmy veil covers $his head and shoulders. $His lacy bridal bra
+	<<if ($slaves[_wedS].boobs > 4000)>>
+		is a marvel of engineering, discreetly reinforced to support $his gigantic udders.
+	<<elseif ($slaves[_wedS].boobs > 1200)>>
+		just barely restrains $his huge boobs, leaving the tops of $his areolae visible.
+	<<elseif ($slaves[_wedS].boobs > 400)>>
+		flatters $his pretty breasts.
+	<<else>>
+		flatters $his pretty chest.
+	<</if>>
+	<<if $slaves[_wedS].bellyPreg >= 600000>>
+		$His expansive, squirming pregnant belly makes $his bridal wear particularly obscene.
+	<<elseif ($slaves[_wedS].bellyPreg >= 1500)>>
+		$His _belly pregnant belly protrudes out the front of $his bridal wear.
+	<<elseif ($slaves[_wedS].bellyImplant >= 1500)>>
+		$His _belly <<print $slaves[_wedS].bellyImplant>>cc belly implant protrudes $his middle out the front of $his bridal wear.
+	<<elseif ($slaves[_wedS].bellyFluid >= 10000)>>
+		$His hugely bloated, <<print $slaves[_wedS].inflationType>>-filled belly protrudes out the front of $his bridal wear.
+	<<elseif ($slaves[_wedS].bellyFluid >= 5000)>>
+		$His bloated, <<print $slaves[_wedS].inflationType>>-stuffed belly protrudes out the front of $his bridal wear.
+	<<elseif ($slaves[_wedS].bellyFluid >= 1500)>>
+		$His distended, <<print $slaves[_wedS].inflationType>>-belly protrudes out the front of $his bridal wear.
+	<</if>>
+	<<if $slaves[_wedS].chastityPenis == 1>>
+		$His slave dick is hidden by its chastity cage.
+	<<elseif canAchieveErection($slaves[_wedS])>>
+		<<if ($slaves[_wedS].dick > 4) && ($slaves[_wedS].belly >= 5000)>>
+			$He's hugely erect, with $his lacy g-string only serving to hold $his dick agonizingly pressed against the bottom of $his _belly <<if $slaves[_wedS].bellyPreg >= 3000>>pregnant <</if>>belly.
+		<<elseif $slaves[_wedS].dick > 4>>
+			$He's hugely erect, with $his lacy g-string only serving to hold $his dick upright along $his belly.
+		<<else>>
+			$His erection tents the front of $his lacy g-string.
+		<</if>>
+	<<elseif ($slaves[_wedS].dick > 0)>>
+		<<if $slaves[_wedS].dick > 10>>
+			$His huge soft cock is allowed to dangle freely as no g-string could hope to contain it.
+		<<elseif $slaves[_wedS].dick > 4>>
+			$His big soft cock forms a lewd mass, stuffed into $his lacy g-string.
+		<<else>>
+			$His lacy g-string perfectly conceals $his soft dick.
+		<</if>>
+	<<else>>
+		<<if $slaves[_wedS].clit > 1>>
+			$His huge clit is quite hard, making $him shift uncomfortably as $his lacy g-string stimulates it.
+		<<else>>
+			$His lacy g-string covers $his womanhood demurely.
+		<</if>>
+	<</if>>
+	There is no aisle for $him to <<if !hasAnyLegs($slaves[_wedS])>>be carried<<else>>walk<</if>> down, just a small space at the head of the room where you're standing alone, and there's no one to <<if !hasAnyLegs($slaves[_wedS])>>walk alongside the slave carrying<<else>>walk<</if>> $him there; this symbolizes $his submission to you
+	<<if $slaves[_wedS].fetish == "mindbroken">>
+		despite the fact that $he had to be pushed into walking towards you.
+	<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+		of $his own choice, and $he does so with a smile.
+	<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+		of $his own choice, and $he does so with hesitation.
+	<<elseif $slaves[_wedS].devotion < -20>>
+		of $his own (forced) choice, and $he does so with wavering steps.
+	<<else>>
+		of $his own choice, and $he does so willingly.
+	<</if>>
+	<br><br>
+	When $he's in front of you, <<if !hasAnyLegs($slaves[_wedS])>>the slave carrying $his <<if isAmputee($slaves[_wedS])>>limbless<<else>>legless<</if>> torso sets $him down on the floor in front of you and props $him up so $his head is level with your crotch<<else>>$he gets down on $his _knees so $his head is level with your crotch<</if>>. <<= capFirstChar($assistant.name)>> reads the short recitation for $him, and you place a simple steel ring <<if !hasAnyArms($slaves[_wedS])>>on a cord around $his neck, since $he lacks fingers to wear it on<<else>>on $his finger<</if>>. There is no ring for you, since this marriage does not bind you.
+	<br>
+	<<if $PC.slaveSurname && $slaves[_wedS].slaveSurname != $PC.slaveSurname>>
+		<br><br><span id="surnaming">
+		<<link "Give $him your surname">>
+			<<replace "#surnaming">>
+				<<set $slaves[_wedS].slaveSurname = $PC.slaveSurname>>
+				You also proclaim your new slave $wife $slaves[_wedS].slaveName $slaves[_wedS].slaveSurname. The new Mrs. $slaves[_wedS].slaveSurname <<if canHear($slaves[_wedS])>>hears<<else>>understands<</if>> this, of course, and
+				<<if $slaves[_wedS].fetish == "mindbroken">>
+					shows no reaction. Like many things, names mean nothing to $him now. Your guests, on the other hand, appreciate the gift.
+				<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+					breaks down again; it's like a dream come true.
+				<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+					scoffs audibly; just another burden for $him to carry.
+				<<elseif $slaves[_wedS].devotion < -20>>
+					breaks down again; this is nothing more than another unwanted link to you.
+				<<else>>
+					nods acceptingly. Your will is $his will, after all.
+				<</if>>
+			<</replace>>
+		<</link>>
+		</span>
+	<</if>>
+	<br><br>
+	Then, you flip $his veil over $his head so $he can <<if $PC.dick != 0>>suck your dick<<if $PC.vagina != -1>> and <</if>><</if>><<if $PC.vagina != -1>>eat you out<</if>> in front of your guests, as the ceremony requires. $He approaches $his task
+	<<if $slaves[_wedS].fetish == "mindbroken">>
+		with robotic obedience. You climax promptly, <<if $PC.dick != 0>>shooting your cum down $his throat<<else>>covering $his face in girlcum<</if>>. Your guests and their attendant slaves applaud at the consummation, or rather, the first stage of the consummation. The balance will take place privately, however, and you scoop up your new slave $wife to carry $him back into the master bedroom. $He absentmindedly rests $his head against your <<if $PC.boobs >= 300>>breasts<<elseif $PC.title == 0>>flat chest<<else>>strong chest<</if>> as you cradle $him in your arms, gazing up at you with empty eyes.
+	<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+		<<if ($slaves[_wedS].fetish == "cumslut")>>enthusiastically<<else>>with a will<</if>>, and you climax promptly, <<if $PC.dick != 0>>shooting your cum down $his throat<<else>>covering $his face in girlcum<</if>>. Your guests and their attendant slaves @@.green;applaud at the consummation,@@ or rather, at the first stage of the consummation. The balance will take place privately, however, and you scoop up your new slave $wife to carry $him back into the master bedroom. $He rests $his head against your <<if $PC.boobs >= 300>>breasts<<elseif $PC.title == 0>>flat chest<<else>>strong chest<</if>> as you cradle $him in your arms, staring up at you.
+	<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+		with apprehension, so much so that things are taking too long, so you grab $his head and facefuck $him instead. $He gags and sputters, tears running down $his cheeks, as you violate $his mouth publicly. You climax promptly, <<if $PC.dick != 0>>shooting your cum down $his throat<<else>>covering $his face in girlcum<</if>>. Your guests and their attendant slaves applaud at the consummation, or rather, the first stage of the consummation. The balance will take place privately, however, and you scoop up your new slave $wife to carry $him back into the master bedroom. $He looks up at you with fearful, hate-filled eyes, blaming you for everything that has happened so far.
+	<<elseif $slaves[_wedS].devotion < -20>>
+		with apprehension, so much so that things are taking too long, so you grab $his head and facefuck $him instead. $He gags and sputters, tears running down $his cheeks, as you violate $his mouth publicly. You climax promptly, <<if $PC.dick != 0>>shooting your cum down $his throat<<else>>covering $his face in girlcum<</if>>. Your guests and their attendant slaves applaud at the consummation, or rather, the first stage of the consummation. The balance will take place privately, however, and you scoop up your new slave $wife to carry $him back into the master bedroom. $He looks up at you with fearful, tear-filled eyes as if pleading for you not to do this.
+	<<else>>
+		with a will. $He approaches $his task <<if ($slaves[_wedS].fetish == "cumslut")>>enthusiastically<<else>>obediently<</if>>, and you climax promptly, <<if $PC.dick != 0>>shooting your cum down $his throat<<else>>covering $his face in girlcum<</if>>. Your guests and their attendant slaves applaud at the consummation, or rather, the first stage of the consummation. The balance will take place privately, however, and you scoop up your new slave $wife to carry $him back into the master bedroom. $He looks up at you, $his eyes unsure.
+	<</if>>
+	<<if $slaves[_wedS].relationship != 0>>
+		<<if $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+			<<if $slaves[_wedS].relationship > 0>>
+				$His <<if $slaves[_wedS].relationship > 2>>ex<<else>>friend<</if>> is @@.mediumorchid;disappointed@@ that their relationship had to end and @@.gold;worries@@ for _his2 <<if $slaves[_wedS].relationship > 2>>love<<else>>companion<</if>>'s future.
+				<<if $slaves[_wedS].relationship == 4>>
+					<<set $slaves[_m].devotion -= 5, $slaves[_m].trust -= 5>>
+				<<elseif $slaves[_wedS].relationship == 3>>
+					<<set $slaves[_m].devotion -= 3, $slaves[_m].trust -= 3>>
+				<<else>>
+					<<set $slaves[_m].devotion -= 1, $slaves[_m].trust -= 1>>
+				<</if>>
+			<</if>>
+		<<elseif $slaves[_wedS].devotion < -20>>
+			<<if $slaves[_wedS].relationship == -1>>
+				$He @@.mediumorchid;hates@@ that $he has to be yours only and @@.gold;fears@@ what will happen if $he strays.
+				<<set $slaves[_wedS].devotion -= 40, $slaves[_wedS].trust -= 40>>
+			<<elseif $slaves[_wedS].relationship == 4>>
+				Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future.
+				<<set $slaves[_m].devotion -= 40, $slaves[_m].trust -= 40>>
+				<<set $slaves[_wedS].devotion -= 40, $slaves[_wedS].trust -= 40>>
+			<<elseif $slaves[_wedS].relationship == 3>>
+				Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future.
+				<<set $slaves[_m].devotion -= 30, $slaves[_m].trust -= 30>>
+				<<set $slaves[_wedS].devotion -= 30, $slaves[_wedS].trust -= 30>>
+			<<elseif $slaves[_wedS].relationship > 0>>
+				Both $him and $his friend are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;fear@@ for each other's future.
+				<<set $slaves[_m].devotion -= 20, $slaves[_m].trust -= 20>>
+				<<set $slaves[_wedS].devotion -= 20, $slaves[_wedS].trust -= 20>>
+			<</if>>
+		<<else>>
+			<<if $slaves[_wedS].relationship == -1>>
+				$He @@.mediumorchid;dislikes@@ that $he has to be yours only and @@.gold;worries@@ what will happen if $he strays.
+				<<set $slaves[_wedS].devotion -= 10, $slaves[_wedS].trust -= 10>>
+			<<elseif $slaves[_wedS].relationship == 4>>
+				Both $him and $his ex are @@.mediumorchid;resent@@ that their relationship had to end and @@.gold;worry@@ for each other.
+				<<set $slaves[_m].devotion -= 20, $slaves[_m].trust -= 20>>
+				<<set $slaves[_wedS].devotion -= 20, $slaves[_wedS].trust -= 20>>
+			<<elseif $slaves[_wedS].relationship == 3>>
+				Both $him and $his ex are @@.mediumorchid;are saddened@@ that their relationship had to end and @@.gold;worry@@ for each other.
+				<<set $slaves[_m].devotion -= 10, $slaves[_m].trust -= 10>>
+				<<set $slaves[_wedS].devotion -= 10, $slaves[_wedS].trust -= 10>>
+			<<elseif $slaves[_wedS].relationship > 0>>
+				Both $him and $his friend are @@.mediumorchid;are disappointed@@ that their relationship had to end and @@.gold;worry@@ for each other.
+				<<set $slaves[_m].devotion -= 5, $slaves[_m].trust -= 5>>
+				<<set $slaves[_wedS].devotion -= 5, $slaves[_wedS].trust -= 5>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<set $slaves[_wedS].relationship = -3>>
+	<<set $slaves[_wedS].counter.oral += 1>>
+	<<set $oralTotal += 1>>
+	<<run repX(2000, "event", $slaves[_m])>>
+	<<run repX(2000, "event", $slaves[_wedS])>>
+	<<if $slaves[_wedS].fetish == "mindbroken">>
+		<<set $desc = "a framed shot of your uneventful wedding to the mindbroken " + $slaves[_wedS].slaveName>>
+	<<elseif $slaves[_wedS].devotion+$slaves[_wedS].trust >= 175>>
+		<<set $desc = "a framed shot of your romantic wedding to the joyous " + $slaves[_wedS].slaveName>>
+	<<elseif $slaves[_wedS].devotion < -20 && $slaves[_wedS].trust > 20>>
+		<<set $desc = "a framed shot of your forced wedding to the hateful " + $slaves[_wedS].slaveName>>
+	<<elseif $slaves[_wedS].devotion < -20>>
+		<<set $desc = "a framed shot of your forced wedding to the weeping " + $slaves[_wedS].slaveName>>
+	<<else>>
+		<<set $desc = "a framed shot of your wedding to " + $slaves[_wedS].slaveName>>
+	<</if>>
+	<<set $trinkets.push($desc)>>
+
+<</if>>

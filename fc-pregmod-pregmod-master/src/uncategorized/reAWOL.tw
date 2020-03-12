@@ -1,0 +1,270 @@
+:: RE AWOL [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "RIE Eligibility Check", $returnTo = "RIE Eligibility Check">>
+
+<<if $pedo_mode == 1>>
+	<<set $activeSlaveOneTimeMinAge = 21>>
+<<else>>
+	<<set $activeSlaveOneTimeMinAge = 38>>
+<</if>>
+<<set $activeSlaveOneTimeMaxAge = 43>>
+<<set $one_time_age_overrides_pedo_mode = 1>>
+<<set $oneTimeDisableDisability = 1>>
+<<if $arcologies[0].FSSupremacistLawME == 1>>
+	<<set $fixedRace = $arcologies[0].FSSupremacistRace>>
+<<elseif $arcologies[0].FSSubjugationistLawME == 1>>
+	<<set _races = setup.filterRacesLowercase.filter(race => race !== $arcologies[0].FSSubjugationistRace)>>
+	<<set $fixedRace = _races.random()>>
+<</if>>
+<<if $seeDicks != 100>>
+	<<set $activeSlave = GenerateNewSlave("XX")>>
+<<else>>
+	<<set $activeSlave = GenerateNewSlave("XY")>>
+<</if>>
+<<set $activeSlave.origin = "You sentenced $him to enslavement as a punishment for dereliction of $his duty to you as a mercenary and for theft.">>
+<<set $activeSlave.career = "a soldier">>
+<<set $activeSlave.devotion = random(-75,-60)>>
+<<set $activeSlave.trust = random(-15,0)>>
+<<run setHealth($activeSlave, jsRandom(60, 80))>>
+<<set $activeSlave.muscles = 50>>
+<<set $activeSlave.weight = random(-10,10)>>
+<<run eyeSurgery($activeSlave, "both", "normal")>>
+<<set $activeSlave.hears = 0>>
+<<set $activeSlave.anus = 0>>
+<<set $activeSlave.skill.anal = 0>>
+<<set $activeSlave.skill.whoring = 0>>
+<<set $activeSlave.skill.combat = 1>>
+<<set $activeSlave.behavioralFlaw = "arrogant">>
+<<set $activeSlave.sexualFlaw = "hates men">>
+<<set $activeSlave.hStyle = "shaved into a mohawk">>
+<<set $activeSlave.custom.tattoo = "$He has a number of tattoos from a variety of mercenary companies.">>
+<<set $activeSlave.clothes = "a military uniform">>
+
+<<setLocalPronouns $activeSlave>>
+<<setAssistantPronouns>>
+<span id="artFrame">
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<div class="imageColumn">
+			<<if $imageChoice == 1>>
+				<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+			<<else>>
+				<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+			<</if>>
+			<<= assistantArt(3)>>
+		</div>
+	<</if>>
+	/* 000-250-006 */
+</span>
+
+Human soldiers are superior to drones in a number of ways — they have the capability for suspicion, the ability to understand human interactions, and are impervious to the ever-present threat of cyber-warfare. That said, a crucial failing of any sentient warrior is their agency.
+
+<br><br>
+
+On this particular evening, you find your work interrupted by an urgent alert from $assistant.name<<if $seeImages == 1>>, accompanied by a recent picture<</if>>.
+<<if $assistant.personality > 0>>
+	"<<= properMaster()>>, one of the $mercenariesTitle has gone AWOL." _HeA pauses before continuing. "$He's taken a number of weapons with $him."
+<<else>>
+	_HeA informs you that one of the $mercenariesTitle has disappeared, seemingly taking with $him a small stash of weapons.
+<</if>>
+
+<br><br>
+
+Your window of opportunity to act is closing. If you have plans for punishing this dereliction from your authority, they must be set in motion now.
+
+<br><br>
+
+<span id="result">
+
+<<link "Let them go">>
+	<<replace "#result">>
+		You inform your personal assistant that you aren't planning to take any action. By the next morning, word has spread to the rest of your arcology that crossing you is apparently permissible and your @@.red;reputation has suffered@@ as a result.
+		<<run repX(-1000, "event", $activeSlave)>>
+	<</replace>>
+<</link>>
+
+<br>
+
+<<link "Let your mercenaries handle $him">>
+	<<replace "#artFrame">>
+		/* 000-250-006 */
+		<<if $seeImages == 1>>
+			<div class="imageColumn">
+				<<= assistantArt(3)>>
+			</div>
+		<</if>>
+		/* 000-250-006 */
+	<</replace>>
+	<<replace "#result">>
+		<<if random(1,100) > 50>>
+			Despite the trouble $he has caused you, the culmination of this mercenary's wanton flight from the rest of the $mercenariesTitle is decidedly an anti-climax. The last you hear of the matter is a chorus of grim grunts and nods as your mercenaries file back into the arcology. The matter is done.
+		<<else>>
+			Your mercenaries return to tell you that they could not find the mutineer. It could be that $he managed to escape beyond their reach or that one among your 'loyal' retainers allowed $him to flee your judgment, but alas there is little that can be done to remedy the issue now. Still, aside from a slight grumbling within the arcology, few fault you for allowing the $mercenariesTitle to recapture one of their own — even if they failed to do so.
+		<</if>>
+	<</replace>>
+<</link>>
+
+<br>
+
+<<if $SF.Toggle && $SF.Active >= 1>>
+	<<link "Let your $SF.Lower handle $him">>
+		<<replace "#result">>
+				You take a tablet and send <<print App.SF.SFC()>> a notice about the mutinous mercenary. When you have the majority of the pertinent details committed to text, all that remains is to decide the fate of your quarry.
+				<br><br>
+				<span id="SFresult">
+
+					<<link "You want $him dead">>
+						<<replace "#artFrame">>
+							/* 000-250-006 */
+							<<if $seeImages == 1>>
+								<<set $activeSlave.trust = 100>>
+								<<set $activeSlave.devotion = 100>>
+								<div class="imageColumn">
+									<<= assistantArt(3)>>
+								</div>
+							<</if>>
+							/* 000-250-006 */
+						<</replace>>
+						<<replace "#SFresult">>
+							Despite the trouble $he has caused you, the culmination of this mercenary's wanton flight from the rest of the $mercenariesTitle is decidedly anti-climatic. The last you hear of $him is in the footnote of one of your daily reports, with some minute yet suitably gory pictures as an accompaniment. When the stolen weapons are returned to their rightful place in your arcology, the unfortunate matter is concluded once and for all. @@.green;Your reputation and $arcologies[0].name's prosperity improves,@@ a result of the fear crossing you will bring, in addition to showing your citizens that you are willing and able to deal with such matters in-house.
+							<<set $arcologies[0].prosperity += 2>>
+							<<run repX(5000, "event", $activeSlave)>>
+							<<if $arcologies[0].prosperity > $AProsperityCap>>
+								<<set $arcologies[0].prosperity = $AProsperityCap>>
+							<</if>>
+						<</replace>>
+					<</link>>
+
+					<br>
+
+					<<link "You want $him alive">>
+						<<replace "#SFresult">>
+							<<replace "#artFrame">>
+								/* 000-250-006 */
+								<<if $seeImages == 1>>
+									<<set $activeSlave.clothes = "chains">>
+									<div class="imageColumn">
+										<<if $imageChoice == 1>>
+											<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+										<<else>>
+											<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+										<</if>>
+										<<= assistantArt(3)>>
+									</div>
+								<</if>>
+								/* 000-250-006 */
+							<</replace>>
+							It doesn't take long for a squad of $SF.Lower to track $him down. Soon you have the troublesome turncoat before you in chains.
+							<br><br>
+							<span id="aliveresult">
+
+								<<link "Enslave $him">>
+									<<replace "#aliveresult">>
+										Despite the trouble $he has caused you, you manage to complete the legalities and biometric scanning quickly and without incident. Of course, this is in large part due to the fact that the would-be mutineer is of course restrained. Based on the accounts of $his captors and the numerous injuries evident amongst them, $he is likely to be violent when $he is finally released.
+										<br>
+										<<include "New Slave Intro">>
+									<</replace>>
+								<</link>>
+
+								<br>
+
+								<<link "Flog $him in public then exile $him from the arcology">>
+									<<replace "#aliveresult">>
+										An example must be made. There is a binding contract between you and your $mercenariesTitle, and this $woman attempted to undermine it for $his own selfish profit. The protesting bitch is stripped and flogged on the promenade before being escorted bleeding from the arcology. The public @@.green;approves of this harshness.@@ In addition @@.green;Arcology prosperity improves,@@ a result of showing your citizens that you are willing and able to deal with such matters in-house.
+										<<set $arcologies[0].prosperity += 2>>
+										<<run repX(5000, "event", $activeSlave)>>
+										<<if $arcologies[0].prosperity > $AProsperityCap>>
+											<<set $arcologies[0].prosperity = $AProsperityCap>>
+										<</if>>
+									<</replace>>
+								<</link>>
+
+							</span> /* closes aliveresult */
+						<</replace>> /* SFresult */
+					<</link>> /* want $him alive */
+
+				</span> /* closes SFresult */
+		<</replace>> /* result */
+	<</link>>
+<</if>>
+<<if $cash < 5000>>
+	<br>
+	//You lack the necessary funds to put out a bounty.//
+<<else>> /* cash >= 5000 */
+	<br>
+
+	<<link "Put out a bounty on $his head">>
+		<<replace "#result">>
+			You take a tablet and draft a bounty notice for the mutinous mercenary. When you have the majority of the pertinent details committed to text, all that remains is to decide the fate of your quarry.
+			<br><br>
+			<span id="bountyresult">
+
+				<<link "You want $him dead">>
+					<<replace "#artFrame">>
+						/* 000-250-006 */
+						<<if $seeImages == 1>>
+							<div class="imageColumn">
+								<<= assistantArt(3)>>
+							</div>
+						<</if>>
+						/* 000-250-006 */
+					<</replace>>
+					<<replace "#bountyresult">>
+						Despite the trouble $he has caused you, the culmination of this mercenary's wanton flight from the rest of the $mercenariesTitle is decidedly an anti-climax. The last you hear of $him is in the footnote of one of your daily reports, with some minute yet suitably gory pictures as an accompaniment. When the stolen weapons are returned to their rightful place in your arcology, the unfortunate matter is concluded once and for all. @@.green;Your reputation improves,@@ a result of the fear of crossing you that your unpleasantness has inspired.
+						<<run repX(5000, "event", $activeSlave)>>
+						<<run cashX(-5000, "capEx")>>
+					<</replace>>
+				<</link>>
+
+				<br>
+
+				<<link "You want $him alive">>
+					<<replace "#artFrame">>
+						/* 000-250-006 */
+						<<if $seeImages == 1>>
+							<<set $activeSlave.clothes = "chains">>
+							<div class="imageColumn">
+								<<if $imageChoice == 1>>
+									<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+								<<else>>
+									<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+								<</if>>
+								<<= assistantArt(3)>>
+							</div>
+						<</if>>
+						/* 000-250-006 */
+					<</replace>>
+					<<replace "#bountyresult">>
+						It doesn't take long for some hired guns, motivated by the bounty, to track $him down. Soon you have the troublesome turncoat before you in chains.
+						<br><br>
+						<span id="aliveresult">
+
+							<<link "Enslave $him">>
+								<<replace "#aliveresult">>
+									Despite the trouble $he has caused you, you manage to complete the legalities and biometric scanning quickly and without incident. Of course, this is in large part due to the fact that the would-be mutineer is of course restrained. Based on the accounts of $his captors and the numerous injuries evident amongst them, $he is likely to be violent when $he is finally released.
+									<br>
+									<<include "New Slave Intro">>
+									<<run cashX(-5000, "event", $activeSlave)>>
+								<</replace>>
+							<</link>>
+
+							<br>
+
+							<<link "Flog $him in public then exile $him from the arcology">>
+								<<replace "#aliveresult">>
+									An example must be made. There is a binding contract between you and your $mercenariesTitle, and this $woman attempted to undermine it for $his own selfish profit. The protesting bitch is stripped and flogged on the promenade before being escorted bleeding from the arcology. The public @@.green;approves of this harshness.@@
+									<<run repX(5000, "event", $activeSlave)>>
+									<<run cashX(-5000, "event", $activeSlave)>>
+								<</replace>>
+							<</link>>
+
+						</span> /* closes aliveresult */
+					<</replace>> /* bountyresult */
+				<</link>> /* want $him alive */
+
+			</span> /* closes bountyresult */
+		<</replace>> /* result */
+	<</link>> // It will cost <<print cashFormat(5000)>> to put out a bounty on $him.//
+<</if>> /* cash >= 5000 */
+
+</span> /* closes result */

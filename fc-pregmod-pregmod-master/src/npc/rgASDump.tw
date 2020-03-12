@@ -1,0 +1,116 @@
+:: RG AS Dump [silently]
+
+<<set _SL = $slaves.length, _ID = $activeSlave.ID>>
+
+<<set $activeSlave.actualAge = Math.clamp($activeSlave.actualAge, $minimumSlaveAge, 120)>>
+<<set $activeSlave.physicalAge = $activeSlave.actualAge>>
+<<set $activeSlave.visualAge = $activeSlave.actualAge>>
+<<set $activeSlave.ovaryAge = $activeSlave.actualAge>>
+<<set $activeSlave.devotion = Number($activeSlave.devotion) || 0>>
+<<set $activeSlave.trust = Number($activeSlave.trust) || 0>>
+<<set $activeSlave.boobs = Number($activeSlave.boobs) || 200>>
+
+<<if $activeSlave.analArea < $activeSlave.anus>>
+	<<set $activeSlave.analArea = $activeSlave.anus>>
+<</if>>
+
+/* RECRUITERS */
+
+<<if $familyTesting == 1>>
+	<<if $activeSlave.canRecruit == 1>>
+		/*<<set $recruiters.push($activeSlave)>>*/
+	<</if>>
+<<else>>
+
+<<if ($activeSlave.relation == 0)>>
+	<<if random(1,100) <= 5>>
+		<<set $activeSlave.recruiter = "twin">>
+	<<elseif ($activeSlave.actualAge > 32) && (random(1,100) <= 41)>>
+		<<set $activeSlave.recruiter = "mother">>
+	<<elseif ($activeSlave.actualAge < 24) && (random(1,100) <= 40)>>
+		<<set $activeSlave.recruiter = "daughter">>
+	<<elseif ($activeSlave.actualAge < 43) && (random(1,100) <= 20)>>
+		<<set $activeSlave.recruiter = "older sister">>
+	<<elseif ($activeSlave.actualAge < 25) && ($activeSlave.actualAge > 18) && (random(1,100) <= 20)>>
+		<<set $activeSlave.recruiter = "young sister">>
+	<</if>>
+<</if>>
+
+<</if>>
+
+<<if $applyCareerBonus == 1>>
+	<<set _seed = 2>>
+	<<if $PC.career == "capitalist">>
+		<<if $activeSlave.skill.whoring < 60>><<set $activeSlave.skill.whoring += 20>><</if>>
+	<<elseif $PC.career == "mercenary">>
+		<<set $activeSlave.trust += 10>>
+	<<elseif $PC.career == "slaver">>
+		<<set $activeSlave.devotion += 10>>
+	<<elseif $PC.career == "medicine">>
+		<<set $activeSlave.boobs += 600, $activeSlave.boobsImplant += 600, $activeSlave.boobsImplantType = "normal", $activeSlave.butt += 2, $activeSlave.buttImplant += 2, $activeSlave.buttImplantType = "normal", $activeSlave.lips += 10, $activeSlave.lipsImplant += 10, $activeSlave.waist = -55>>
+	<<elseif $PC.career == "celebrity">>
+		<<if $activeSlave.skill.entertainment < 60>><<set $activeSlave.skill.entertainment += 20>><</if>>
+	<<elseif $PC.career == "servant">>
+		<<set $activeSlave.trust += 10>>
+		<<set $activeSlave.devotion += 10>>
+	<<elseif $PC.career == "gang">>
+		<<run increaseCondition($activeSlave, 5)>>
+		<<if $activeSlave.skill.combat < 1>>
+			<<set $activeSlave.skill.combat += 1>>
+		<</if>>
+	<<elseif $PC.career == "BlackHat">>
+		<<set $activeSlave.intelligence += 40>>
+		<<if $activeSlave.intelligence > 100>>
+			<<set $activeSlave.intelligence = 100>>
+		<</if>>
+	<<elseif $PC.career == "escort">>
+		<<if $activeSlave.skill.entertainment < 60>>
+			<<set $activeSlave.skill.entertainment += 20>>
+		<</if>>
+		<<if $activeSlave.skill.whoring < 60>>
+			<<set $activeSlave.skill.whoring += 20>>
+		<</if>>
+		<<if ($activeSlave.skill.oral < 60)>>
+			<<set $activeSlave.skill.oral += 20, _seed-->>
+		<</if>>
+		<<if ($activeSlave.skill.anal < 60) && (($activeSlave.anus > 0) || ($activeSlave.skill.anal <= 10))>>
+			<<set $activeSlave.skill.anal += 20, _seed-->>
+		<</if>>
+		<<if (_seed > 0) && ($activeSlave.skill.vaginal < 60) && ($activeSlave.vagina > -1) && (($activeSlave.vagina > 0) || ($activeSlave.skill.vaginal <= 10))>>
+			<<set $activeSlave.skill.vaginal += 20, _seed-->>
+		<</if>>
+	<<elseif $PC.career == "wealth">>
+		<<if ($activeSlave.skill.oral < 60)>>
+			<<set $activeSlave.skill.oral += 20, _seed-->>
+		<</if>>
+		<<if ($activeSlave.skill.anal < 60) && (($activeSlave.anus > 0) || ($activeSlave.skill.anal <= 10))>>
+			<<set $activeSlave.skill.anal += 20, _seed-->>
+		<</if>>
+		<<if (_seed > 0) && ($activeSlave.skill.vaginal < 60) && ($activeSlave.vagina > -1) && (($activeSlave.vagina > 0) || ($activeSlave.skill.vaginal <= 10))>>
+			<<set $activeSlave.skill.vaginal += 20>>
+		<</if>>
+	<<else>>
+		<<set $activeSlave.devotion += 10>>
+		<<if $activeSlave.skill.whoring < 60>><<set $activeSlave.skill.whoring += 20>><</if>>
+		<<if $activeSlave.skill.entertainment < 60>><<set $activeSlave.skill.entertainment += 20>><</if>>
+		<<if ($activeSlave.skill.oral < 60)>>
+			<<set $activeSlave.skill.oral += 20, _seed-->>
+		<</if>>
+		<<if ($activeSlave.skill.anal < 60) && (($activeSlave.anus > 0) || ($activeSlave.skill.anal <= 10))>>
+			<<set $activeSlave.skill.anal += 20, _seed-->>
+		<</if>>
+		<<if (_seed > 0) && ($activeSlave.skill.vaginal < 60) && ($activeSlave.vagina > -1) && (($activeSlave.vagina > 0) || ($activeSlave.skill.vaginal <= 10))>>
+			<<set $activeSlave.skill.vaginal += 20>>
+		<</if>>
+	<</if>>
+	<<set $careerBonusApplied = 1>>
+<</if>>
+
+<<set _i = $slaveIndices[_ID]>>
+<<if def _i>>
+	<<set $slaves[_i] = $activeSlave>>
+<<elseif def $activeSlave.slaveName>>
+	<<run newSlave($activeSlave)>>
+<</if>>
+
+<<goto $returnTo>>

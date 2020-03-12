@@ -1,0 +1,129 @@
+:: init [nobr]
+
+/*
+FREE CITIES
+a text-based slave management game
+Copyright (C) 2017 freecitiesdev
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* Set up the game as politely as possible.  If values are already set, they are preserved. */
+<<run App.Update.setNonexistantProperties(V, App.Data.defaultGameStateVariables)>>
+
+/* These variables must be created AND set to default values, NG+ or not */
+<<run App.Update.setExistantProperties(V, App.Data.resetOnNGPlus)>>
+
+<<set $ver = App.Version.base, $pmodVer = App.Version.pmod, $releaseID = App.Version.release>>
+
+<<set _NGPOffset = 1200000>>
+
+<<run App.Update.slaveLoopInit()>>
+
+/* 0 out the record books as we start a new game */
+<<run setupLastWeeksCash()>>
+<<run setupLastWeeksRep()>>
+
+<<if $saveImported == 0>> /* new game (not NG+) */
+
+	<<set $PC = basePlayer()>>
+	<<run WombInit($PC)>>
+	<<run cashX(10000, "personalBusiness")>>
+	<<include "Init Rules">>
+
+<<else>> /* imported save (NG+) */
+
+	<<if $freshPC == 0>>
+		<<if def $arcologies[0].prosperity>>
+			<<run cashX((250*$arcologies[0].prosperity*$arcologies[0].ownership), "personalBusiness")>>
+		<</if>>
+		<<set _cash = $cash, $cash = 0, $cashLastWeek = 0>>
+		<<run cashX((Math.clamp(1000*Math.trunc(_cash/100000), 5000, 1000000)), "personalBusiness")>>
+		<<if $retainCareer == 0>>
+			<<set $PC.career = "arcology owner", $PC.skill.trading = 100, $PC.skill.warfare = 100, $PC.skill.hacking = 100, $PC.skill.slaving = 100, $PC.skill.engineering = 100, $PC.skill.medicine = 100>>
+		<</if>>
+		<<if $PC.mother > 0>>
+			<<set $PC.mother += _NGPOffset>>
+		<<elseif $PC.mother < 0>>
+			<<set $PC.mother -= _NGPOffset>>
+		<</if>>
+		<<if $PC.father > 0>>
+			<<set $PC.father += _NGPOffset>>
+		<<elseif $PC.father < 0>>
+			<<set $PC.father -= _NGPOffset>>
+		<</if>>
+		<<if $PC.pregSource > 0>>
+			<<set $PC.pregSource += _NGPOffset>>
+			<<set _getFather = $slaveIndices[$PC.pregSource]>>
+			<<if ndef _getFather>>
+				<<set $PC.pregSource = 0>>
+			<</if>>
+			<<for _sInit = 0; _sInit < $PC.womb.length; _sInit++>>
+				<<if $PC.womb[_sInit].fatherID > 0>>
+					<<set $PC.womb[_sInit].fatherID += _NGPOffset>>
+				<</if>>
+			<</for>>
+		<</if>>
+	<<else>>
+		<<set $PC = basePlayer()>>
+		<<run WombInit($PC)>>
+		<<set $cheater = 0>>
+		<<set $cash = 0>>
+		<<run cashX(10000, "personalBusiness")>>
+		<<for _i = 0; _i < _SL; _i++>>
+			<<if $familyTesting == 1>>
+				<<if $slaves[_i].mother == -1>>
+					<<set $slaves[_i].mother = $missingParentID+_NGPOffset>>
+				<</if>>
+				<<if $slaves[_i].father == -1>>
+					<<set $slaves[_i].father = $missingParentID+_NGPOffset>>
+				<</if>>
+				<<if $slaves[_i].pregSource == -1>>
+					<<set $slaves[_i].pregSource = 0>>
+				<</if>>
+				<<if $slaves[_i].cloneID == -1>>
+					<<set $slaves[_i].cloneID = 0>>
+				<</if>>
+			<</if>>
+			<<for _sInit = 0; _sInit < $slaves[_i].womb.length; _sInit++>>
+				<<if $slaves[_i].womb[_sInit].fatherID == -1>>
+					<<set $slaves[_i].womb[_sInit].fatherID = 0>>
+				<</if>>
+			<</for>>
+		<</for>>
+	<</if>>
+
+	/*Undefining corporation variables*/
+	<<unset $corp.AssetsDev, $corp.AssetsDevOld, $corp.AssetsSlave, $corp.AssetsSlaveOld, $corp.Cash, $corp.Div, $corp.DivArcadeFromMarket, $corp.DivArcadeSlaves, $corp.DivBreakFromMarket, $corp.DivBreakSlaves, $corp.DivBreakSlaves2, $corp.DivBreakToMarket, $corp.DivBreakToMenial, $corp.DivBreakToSurgery, $corp.DivBreakToTrain, $corp.DivDairyFromMarket, $corp.DivDairySlaves, $corp.DivExtraSlaves, $corp.DivExtraToArcade, $corp.DivExtraToBreak, $corp.DivExtraToMarket, $corp.Dividend, $corp.DivLegalSlaves, $corp.DivLegalToMarket, $corp.DivLegalToMenial, $corp.DivLegalToSurgery, $corp.DivLegalToTrain, $corp.DivMenialFromMarket, $corp.DivMenialSlaves, $corp.DivSurgeryFromMarket, $corp.DivSurgerySlaves, $corp.DivSurgerySlaves2, $corp.DivSurgeryToDairy, $corp.DivSurgeryToMarket, $corp.DivSurgeryToTrain, $corp.DivTrainFromMarket, $corp.DivTrainSlaves, $corp.DivTrainSlaves2, $corp.DivTrainToMarket, $corp.DivTrainToWhore, $corp.DivWhoreFromMarket, $corp.DivWhoreSlaves, $corp.OpCostOld, $corp.OverheadOld, $corp.ProfitOld, $corp.Rev, $corp.RevOld, $corp.SpecAccent, $corp.SpecAge, $corp.SpecAmputee, $corp.SpecBalls, $corp.SpecDevotion, $corp.SpecDick, $corp.SpecEducation, $corp.SpecGender, $corp.SpecGenitalia, $corp.SpecHeight, $corp.SpecHormones, $corp.SpecImplants, $corp.SpecInjection, $corp.SpecIntelligence, $corp.SpecMilk, $corp.SpecMuscle, $corp.SpecPussy, $corp.SpecSexEd, $corp.SpecTrust, $corp.SpecVirgin, $corp.SpecWeight, $dividendTimer, $personalShares, $publicShares>>
+
+<</if>>
+/* Porn star counts (prestige 1) and ID's (prestige 3) */
+<<set $pornStars = {}>>
+<<for _genre range App.Porn.getAllGenres()>>
+	<<set $pornStars[_genre.fameVar] = { p1count: 0, p3ID: 0 }>>
+<</for>>
+
+<<run assistant.object()>>
+<<run repX(1000, "event")>>
+<<run setup.prostheticIDs.forEach(function(id) {
+	$prosthetics[id] = {amount: 0, research: 0};
+})>>
+
+/*SFVAR*/ <<set $SF = Object.assign({}, $SF, {Toggle:0, Active: -1}), $SF.Facility = Object.assign({}, $SF.Facility, {Toggle:0, Active:0})>>
+
+<<set $foodConsumption = (($lowerClass*$foodRate.lower) + ($middleClass*$foodRate.middle) + ($upperClass*$foodRate.upper) + ($topClass*$foodRate.top))>>	/* total amount food consumed per week */
+
+<<set $weatherToday = App.Data.weather.nice.random()>>
+<<set $prisonCircuitIndex = random(0,$prisonCircuit.length-1)>>
+
+/* I am not a slave object! Do not treat me like one! */
+<<set $customSlave = new App.Entity.CustomSlaveOrder()>>
+<<set $huskSlave = new App.Entity.CustomSlaveOrder()>>
+
+<<= App.SF.Init()>>
+
+<<goto "Alpha disclaimer">>

@@ -1,0 +1,149 @@
+:: P hacker support [nobr]
+
+<<set $nextButton = "End Call", $nextLink = "Random Nonindividual Event", $hackerSupport = 0>>
+
+<<setAssistantPronouns>>
+<<set $fcnn.push("...the Daughters of Liberty as 'cyberterrorists', after an attempted...")>>
+
+While you are reviewing your information security posture in light of the Daughters of Liberty and their apparent ability to get into your systems, you receive yet another well-secured message unannounced. To your surprise, it isn't the Daughters. It's a video call from a rather interesting individual. She is quite pretty, and has a variety of facial tattoos and piercings; her face is androgynous enough that you aren't entirely sure what gender (probably) she considers herself. Her pale skin is illuminated by the diffuse glow from what's clearly a huge bank of monitors, and the clacking sound of a traditional mechanical keyboard can be heard over the line.
+
+<br><br>
+
+"Hi!" she says cheerfully. "I seen you been contacted by these Daughters cunts. They been after me too. They're pretty decent at cyberwarfare, but I'm fuckin' better." A momentary discomfort crosses her face, and she shifts a little in her seat. "They're building up for somethin' big. Wouldn't a' contacted you at all, let us both fight our own fights, but I gotta short fuse on this vulnerability and I need to bribe a weak link. Your money can get me in; my skills can fuck 'em up. What do you say?<<if $traitorType == "hostage">> If it sweetens the deal at all, I can even get $traitor.slaveName out of hot water. Not the brightest, that one.<</if>>"
+<<if $assistant.personality > 0>>
+	<<= capFirstChar($assistant.name)>> has been trying to track the contact, but fails horribly. The hacker glances at _hisA
+	<<switch $assistant.appearance>>
+	<<case "monstergirl">>
+		frustrated little monster<<= _girlA>> avatar
+	<<case "shemale">>
+		angry little shemale avatar
+	<<case "amazon">>
+		raging little amazon avatar
+	<<case "businesswoman">>
+		mortified little business<<= _womanA>> avatar
+	<<case "fairy" "pregnant fairy">>
+		pouting little fairy avatar
+	<<case "goddess">>
+		scornful little goddess avatar
+	<<case "hypergoddess">>
+		scornful "little" goddess avatar
+	<<case "loli">>
+		pouting little _girlA avatar
+	<<case "preggololi">>
+		pouting little _girlA avatar
+	<<case "schoolgirl">>
+		embarrassed little school<<= _girlA>> avatar
+	<<case "angel">>
+		terrified little angel avatar
+	<<case "cherub">>
+		terrified little cherub avatar
+	<<case "incubus">>
+		indignant little incubus avatar
+	<<case "succubus">>
+		frustrated little succubus avatar
+	<<case "imp">>
+		pouting little imp avatar
+	<<case "witch">>
+		frustrated little witch avatar
+	<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+		expressionless little corrupted avatar
+	<<default>>
+		symbol
+	<</switch>>
+	and chuckles. "Haha, cute."
+<</if>>
+
+<br><br>
+
+As she finishes speaking, another spasm distorts her expression, and then she suddenly relaxes. After a moment, she looks down, out of your field of view, and hisses, <<if $seeDicks == 0>>"Keep licking, bitch, I like aftershocks. Work my clit, or it's your asshole."<<else>>"Swallow, bitch. Every fucking drop, or it's your asshole."<</if>>
+
+<br><br>
+
+<span id="result">
+<<link "Decline">>
+	<<set $nextButton = "Continue">><<UpdateNextButton>>
+	<<replace "#result">>
+	She's almost certainly trying to extort a quick payoff. You politely decline. "Meh," she shrugs. <<if $seeDicks == 0>>She shudders again and there's a gasping sound from down below. She looks down again, and as she ends the video call, you hear her say "Good job. Ha ha, fuck you, slut, it's your asshole anyway. Get me my strap-on."<<else>>She shudders and there's a popping sound from down below, like a cockhead springing free of someone's mouth. Sure enough, a still-erect dickhead springs into view from the bottom of the screen; for that to be visible she has to be truly huge, almost as long as one of her forearms. She looks down again, and as she ends the video call, you hear her say "Good job. Ha ha, fuck you, slut, it's your asshole anyway. Rape time! Turn around." Tearful begging can be heard before the call closes.<</if>>
+	<<if $traitorType == "hostage">>
+		<<set $traitor = 0>>
+	<</if>>
+	<</replace>>
+<</link>>
+<br><<link "Accept">>
+	<<set $nextButton = "Continue">><<UpdateNextButton>>
+	<<replace "#result">>
+	You transfer the funds. "Meh," she shrugs. <<if $seeDicks == 0>>She shudders again and there's a gasping sound from down below. She looks down again, and as she ends the video call, you hear her say "Good job. Ha ha, fuck you, slut, it's your asshole anyway. Get me my strap-on."<<else>>She shudders and there's a popping sound from down below, like a cockhead springing free of someone's mouth. Sure enough, a still-erect dickhead springs into view from the bottom of the screen; for that to be visible she has to be truly huge, almost as long as one of her forearms. She looks down again, and as she ends the video call, you hear her say "Good job. Ha ha, fuck you, bitch, it's your asshole anyway. Buttrape time!"<</if>>
+	<<if $assistant.personality > 0>>
+		<<switch $assistant.appearance>>
+		<<case "monstergirl">>
+			She seems to have left a present for your poor personal assistant; _hisA little monster<<= _girlA>> avatar is visible in the bottom corner of a screen on the wall opposite you, and is writhing around, babbling and orgasming continuously.
+		<<case "shemale">>
+			She seems to have left a present for your poor personal assistant; _hisA little shemale avatar is visible in the bottom corner of a screen on the wall opposite you. _HeA's being assraped by a representation of the hacker in the same style, and is helplessly masturbating as _heA gets fucked.
+		<<case "amazon">>
+			She seems to have left a present for your poor personal assistant; _hisA little amazon avatar is visible in the bottom corner of a screen on the wall opposite you, and is writhing around, babbling and squirting continuously.
+		<<case "businesswoman">>
+			She seems to have left a present for your poor personal assistant; _hisA little business<<= _womanA>> avatar is visible in the bottom corner of a screen on the wall opposite you, and seems to be under a compulsion to strip out of _hisA suit. _HeA's blushing furiously at _hisA inability to control _himselfA.
+		<<case "fairy">>
+			She seems to have left a present for your poor personal assistant; _hisA little fairy avatar is visible in the bottom corner of a screen on the wall opposite you, and is grinding against the stamen of a virtual flower. _HeA repeatedly moans your name as _hisA body twitches and jerks against the plant.
+		<<case "pregnant fairy">>
+			She seems to have left a present for your poor personal assistant; _hisA little fairy avatar is visible in the bottom corner of a screen on the wall opposite you, and is currently perched upon a virtual flower with the stamen buried in _hisA little ass. Milk leaks from _hisA breasts down _hisA swollen belly as _heA writhes in both pain and pleasure, slowly giving birth to a pair of fairies.
+		<<case "goddess">>
+			She seems to have left a present for your poor personal assistant; _hisA little goddess avatar is visible in the bottom corner of a screen on the wall opposite you. _HeA's being facefucked by a representation of the hacker in the same style, meekly struggling, but flushed with arousal.
+		<<case "hypergoddess">>
+			She seems to have left a present for your poor personal assistant; _hisA "little" goddess avatar is visible in the bottom corner of a screen on the wall opposite you. _HeA's being assfucked by a representation of the hacker in the same style, while _hisA large breasts are roughly milked. Every few thrusts coincide with another baby slipping out alongside an orgasm.
+		<<case "loli">>
+			She seems to have left a present for your poor personal assistant; _hisA little _girlA avatar is visible in the bottom corner of a screen on the wall opposite you.
+			<<if $seePreg != 0>>
+				_HisA virginity is being forcibly taken by a representation of the hacker in the same style. _HeA cries out as she cums in _hisA fertile womb; again and again the hacker uploads her virus into _hisA abused pussy until _hisA sagging bloated belly is touching the floor. _HeA leaves the avatar drooling cum to rest on _hisA new pregnancy. _HeA may need to be reset after this experience.
+				<<set $assistant.appearance = "preggololi">>
+			<<else>>
+				_HeA's writhing on the floor in tears as a series of hands tickles _hisA body. They shift their focus to _hisA nipples and pussy as _heA begins moaning with lust. As _heA twitches and jerks before the mounting orgasm, they vanish, leaving _himA writhing in sexual frustration before you. Before your eyes, _hisA hands shoot to _hisA crotch and _heA climaxes lewdly in front of you.
+			<</if>>
+		<<case "preggololi">>
+			She seems to have left a present for your poor personal assistant; _hisA little _girlA avatar is visible in the bottom corner of a screen on the wall opposite you. _HisA vagina is being forcibly fucked by a representation of the hacker in the same style. Each thrust causes _himA to rock atop _hisA bulging pregnancy until the hacker unloads into _himA. She leaves the avatar drooling cum to rest on _hisA overfilled belly.
+		<<case "schoolgirl">>
+			She seems to have left a present for your poor personal assistant; _hisA little school<<= _girlA>> avatar is visible in the bottom corner of a screen on the wall opposite you, and is blushing furiously as _heA compulsively fists _himselfA.
+		<<case "angel">>
+			She seems to have left a present for your poor personal assistant; _hisA little angel avatar is visible in the bottom corner of a screen on the wall opposite you. _HisA virginity is being forcibly taken by a representation of the hacker in the same style. _HeA pleads for them to stop before _heA falls, but it goes unheeded. _HeA cries out in orgasm as the hacker unloads their corrupting jism deep into _hisA womb before pulling out and letting _himA drop to the ground. _HeA rolls from side to side in anguish,
+			<<if $seePreg != 0>>
+				gripping _hisA cum filled belly as it rounds more and more, before settling on _hisA back and cradling _hisA now full-term pregnancy. As it continues to grow, _hisA body becomes increasingly withered, until _heA appears to be pregnant with a fully grown person.
+				<<if $seeExtreme == 1>>
+					As the light fades from _himA, _hisA gravid belly begins to shudder violently, its occupant trying to tear its way free. Before long, it splits open, revealing a gorgeous _womanA with all the features of the fallen angel. $assistant.name spreads _hisA bat-like wings as _heA rises from the disintegrating remains of _hisA once holy body, turns to you, and sensually traces _hisA new curves seductively.
+				<<else>>
+					As the light fades from _himA, _hisA gravid belly begins to shudder violently, its occupant trying to find its way out. A pair of arms burst forth from _hisA ruined pussy, followed a perfectly endowed _womanA with all the features of the former angel. $assistant.name rises and spreads _hisA bat-like wings as the remains of _hisA once holy body turn to dust behind _himA. _HeA turns to you, sensually tracing the contours of _hisA new body, and blows you a kiss.
+				<</if>>
+			<<else>>
+				alternating between groping _hisA swelling breasts and fingering _hisA aching pussy, before screaming with climax as _hisA body twists into a more suiting form. $assistant.name rises to _hisA feet, spreads _hisA bat-like wings, and sensually traces _hisA new curves before bending over revealing _hisA sopping wet cunt. "All for you, <<print $PC.slaveName>>, you know you want it."
+			<</if>>
+			<<set $assistant.appearance = "succubus">>
+		<<case "cherub">>
+			She seems to have left a present for your poor personal assistant; _hisA little cherub avatar is visible in the bottom corner of a screen on the wall opposite you, and is writhing around, both hands on _hisA pussy and masturbating furiously.
+		<<case "incubus">>
+			She seems to have left a present for your poor personal assistant; _hisA little incubus avatar is visible in the bottom corner of a screen on the wall opposite you, _hisA dick steadily growing longer and prehensile. As _heA gasps in shock, it rockets into _hisA mouth and down _hisA throat. It delves deeper into the struggling demon, _hisA intestines bulging under _hisA skin as _hisA dick snakes through _himA, until it pops out the other end. It begins pistoning in and out of _hisA body, literally forcing _himA to fuck _himselfA until _heA cums, causing it to rapidly retract back through _hisA body. _HeA collapses to the floor, coughing up cum and struggling to catch _hisA breath.
+		<<case "succubus">>
+			She seems to have left a present for your poor personal assistant; _hisA little succubus avatar is visible in the bottom corner of a screen on the wall opposite you. _HeA has adjusted _hisA form to better suit _hisA lover: a representation of the hacker in the same style. _HeA calls out a silent name, something you'll never know, as she comes deep into _hisA pussy. They shift positions, $assistant.name standing, legs spread, with _hisA arms against the edge of the screen as the hacker fucks _hisA rear.
+			<<if $seePreg != 0>>
+				As _heA bucks against her, it is obvious that _hisA belly has rounded significantly; swaying slightly with every thrust. Cumming again, the hacker pulls _hisA leg up over their shoulder and begins thrusting anew, _hisA middle heavily rounded with child now, quickly bring both to orgasm. _HeA is left to slide down the edge of the screen and upon reaching the bottom, spreads _hisA legs and begins laboring on _hisA new child. Each imp that passes through _hisA netherlips brings another orgasm and muffled shout of the hacker's name. Once the last hacker imp leaves _hisA womb, _heA
+			<<else>>
+				Position after position, orgasm after orgasm, you are forced to watch. Once the hacker is satisfied, _heA is left to slide down the edge of the screen, and, upon reaching the bottom,
+			<</if>>
+			reaches down, gathers a trace of cum, and licks it off _hisA finger while staring you down, stating "$PC.slaveName will never be as good as..." before passing out.
+		<<case "imp">>
+			She seems to have left a present for your poor personal assistant; _hisA little impish avatar is visible in the bottom corner of a screen on the wall opposite you, and is writhing around, vigorously fisting _hisA pussy.
+		<<case "witch">>
+			She seems to have left a present for your poor personal assistant; _hisA little witch avatar is visible in the bottom corner of a screen on the wall opposite you being assaulted by tentacles. They've already managed to rip _hisA robes off and are currently forcing themselves into all _hisA holes. Only once every orifice has two to three tentacles crammed into it does the beast start fucking _himA. Before long,
+			<<if $seePreg != 0>>
+				half the tentacles are pumping the poor _girlA full of cum while the rest fill _himA with eggs; _heA struggles valiantly at first, but as _hisA middle grows larger and heavier, _heA is forced to accept _hisA fate. When the tentacles feel they can fit no more eggs into _himA, they pull _himA into a sitting position and spread _hisA legs wide; just in time for the first hatched larva to begin squeezing its way from _hisA packed womb. Moments later, another plops from _hisA rear, and yet another squirms up _hisA throat and out _hisA mouth, flopping wetly onto _hisA chest. With each path cleared, the rest of the larvae begin to pour from _hisA body.
+			<<else>>
+				the tentacles begin pumping the poor _girlA full of cum; _heA struggles valiantly at first, but as _hisA middle grows larger and heavier, _heA is forced to accept _hisA fate. As they vacate _hisA body, a large surge of fluid follows.
+			<</if>>
+			Given the size of _hisA belly, it may be awhile before _heA is done.
+		<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+			She seems to have left a present for your poor personal assistant; _hisA little bugged avatar is visible in the bottom corner of a screen on the wall opposite you, and is writhing disturbingly. _HisA arms twist into a pair of extremely phallic tentacles, which it uses to forcefully fuck _hisA ass and pussy.
+		<</switch>>
+	<</if>>
+	<<run cashX(-10000, "event")>>
+	<<set $hackerSupport = 1>>
+	<</replace>>
+<</link>> //This will cost <<print cashFormat(10000)>>//
+</span>

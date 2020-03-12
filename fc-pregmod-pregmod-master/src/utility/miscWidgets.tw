@@ -1,0 +1,299 @@
+:: misc widgets [nobr widget]
+
+/* TODO: Modularize. */
+
+/%
+Call as <<UpdateNextButton>>
+Allows for dynamic updating of the next button in the storyCaption (left side-bar) for events that disable the button until user makes a selection
+%/
+<<widget "UpdateNextButton">>
+	<<replace "#nextButton">> <<userButton>> <</replace>>
+<</widget>>
+
+<<widget "Master">><<if def $args[0]>><<run Enunciate($args[0])>><<elseif ndef $titleEnunciate>><<run Enunciate($activeSlave)>><</if>>$titleEnunciate<</widget>>
+<<widget "say">><<if (def $args[0]) && $sayEnunciate != "lisp">>$args[0]<<else>>$sayEnunciate<</if>><</widget>>
+<<widget "s">>$sEnunciate<</widget>>
+<<widget "S">>$SEnunciate<</widget>>
+<<widget "ss">>$ssEnunciate<</widget>>
+<<widget "c">>$cEnunciate<</widget>>
+<<widget "C">>$CEnunciate<</widget>>
+<<widget "cc">>$ccEnunciate<</widget>>
+<<widget "z">>$zEnunciate<</widget>>
+<<widget "Z">>$ZEnunciate<</widget>>
+<<widget "zz">>$zzEnunciate<</widget>>
+<<widget "ch">>$chEnunciate<</widget>>
+<<widget "Ch">>$ChEnunciate<</widget>>
+<<widget "ps">>$psEnunciate<</widget>>
+<<widget "Ps">>$PsEnunciate<</widget>>
+<<widget "sh">>$shEnunciate<</widget>>
+<<widget "Sh">>$ShEnunciate<</widget>>
+<<widget "sc">>$scEnunciate<</widget>>
+<<widget "Sc">>$ScEnunciate<</widget>>
+<<widget "sch">>$schEnunciate<</widget>>
+<<widget "Sch">>$SchEnunciate<</widget>>
+<<widget "x">>$xEnunciate<</widget>>
+<<widget "X">>$XEnunciate<</widget>>
+
+/*
+	If $args[0] is defined, it is assumed the primary slave is speaking about secondary slave. Else, the secondary slave is speaking about primary slave.
+	This means that <<he>> will print _heLisp or $he, and <<he 2>> will print _he2Lisp or _he2.
+	Pronouns must be set for both slaves, and <<setSpokenLocalPronouns primarySlave secondarySlave>> must be previously called.
+*/
+<<widget "he">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_heLisp<<else>>$he<</if>><<else>><<if _primarySlaveLisp>>_he2Lisp<<else>>_he2<</if>><</if>><</widget>>
+<<widget "his">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_hisLisp<<else>>$his<</if>><<else>><<if _primarySlaveLisp>>_his2Lisp<<else>>_his2<</if>><</if>><</widget>>
+<<widget "hers">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_hersLisp<<else>>$hers<</if>><<else>><<if _primarySlaveLisp>>_hers2Lisp<<else>>_hers2<</if>><</if>><</widget>>
+<<widget "himself">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_himselfLisp<<else>>$himself<</if>><<else>><<if _primarySlaveLisp>>_himself2Lisp<<else>>_himself2<</if>><</if>><</widget>>
+<<widget "daughter">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_daughterLisp<<else>>$daughter<</if>><<else>><<if _primarySlaveLisp>>_daughter2Lisp<<else>>_daughter2<</if>><</if>><</widget>>
+<<widget "sister">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_sisterLisp<<else>>$sister<</if>><<else>><<if _primarySlaveLisp>>_sister2Lisp<<else>>_sister2<</if>><</if>><</widget>>
+<<widget "loli">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_loliLisp<<else>>$loli<</if>><<else>><<if _primarySlaveLisp>>_loli2Lisp<<else>>_loli2<</if>><</if>><</widget>>
+<<widget "wife">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_wifeLisp<<else>>$wife<</if>><<else>><<if _primarySlaveLisp>>_wife2Lisp<<else>>_wife2<</if>><</if>><</widget>>
+<<widget "wives">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_wivesLisp<<else>>$wives<</if>><<else>><<if _primarySlaveLisp>>_wives2Lisp<<else>>_wives2<</if>><</if>><</widget>>
+<<widget "He">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_HeLisp<<else>>$He<</if>><<else>><<if _primarySlaveLisp>>_He2Lisp<<else>>_He2<</if>><</if>><</widget>>
+<<widget "His">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_HisLisp<<else>>$His<</if>><<else>><<if _primarySlaveLisp>>_His2Lisp<<else>>_His2<</if>><</if>><</widget>>
+<<widget "Hers">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_HersLisp<<else>>$Hers<</if>><<else>><<if _primarySlaveLisp>>_Hers2Lisp<<else>>_Hers2<</if>><</if>><</widget>>
+<<widget "Himself">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_HimselfLisp<<else>>$Himself<</if>><<else>><<if _primarySlaveLisp>>_Himself2Lisp<<else>>_Himself2<</if>><</if>><</widget>>
+<<widget "Daughter">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_DaughterLisp<<else>>$Daughter<</if>><<else>><<if _primarySlaveLisp>>_Daughter2Lisp<<else>>_Daughter2<</if>><</if>><</widget>>
+<<widget "Sister">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_SisterLisp<<else>>$Sister<</if>><<else>><<if _primarySlaveLisp>>_Sister2Lisp<<else>>_Sister2<</if>><</if>><</widget>>
+<<widget "Loli">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_LoliLisp<<else>>$Loli<</if>><<else>><<if _primarySlaveLisp>>_Loli2Lisp<<else>>_Loli2<</if>><</if>><</widget>>
+<<widget "Wife">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_WifeLisp<<else>>$Wife<</if>><<else>><<if _primarySlaveLisp>>_Wife2Lisp<<else>>_Wife2<</if>><</if>><</widget>>
+<<widget "Wives">><<if ndef $args[0]>><<if _secondarySlaveLisp>>_WivesLisp<<else>>$Wives<</if>><<else>><<if _primarySlaveLisp>>_Wives2Lisp<<else>>_Wives2<</if>><</if>><</widget>>
+
+<<widget "heP">><<if _playerSlaveLisp>>_hePLisp<<else>>_heP<</if>><</widget>>
+<<widget "hisP">><<if _playerSlaveLisp>>_hisPLisp<<else>>_hisP<</if>><</widget>>
+<<widget "hersP">><<if _playerSlaveLisp>>_hersPLisp<<else>>_hersP<</if>><</widget>>
+<<widget "himselfP">><<if _playerSlaveLisp>>_himselfPLisp<<else>>_himselfP<</if>><</widget>>
+<<widget "daughterP">><<if _playerSlaveLisp>>_daughterPLisp<<else>>_daughterP<</if>><</widget>>
+<<widget "sisterP">><<if _playerSlaveLisp>>_sisterPLisp<<else>>_sisterP<</if>><</widget>>
+<<widget "loliP">><<if _playerSlaveLisp>>_loliPLisp<<else>>_loliP<</if>><</widget>>
+<<widget "wifeP">><<if _playerSlaveLisp>>_wifePLisp<<else>>_wifeP<</if>><</widget>>
+<<widget "wivesP">><<if _playerSlaveLisp>>_wivesPLisp<<else>>_wivesP<</if>><</widget>>
+<<widget "HeP">><<if _playerSlaveLisp>>_HePLisp<<else>>_HeP<</if>><</widget>>
+<<widget "HisP">><<if _playerSlaveLisp>>_HisPLisp<<else>>_HisP<</if>><</widget>>
+<<widget "HersP">><<if _playerSlaveLisp>>_HersPLisp<<else>>_HersP<</if>><</widget>>
+<<widget "HimselfP">><<if _playerSlaveLisp>>_HimselfPLisp<<else>>_HimselfP<</if>><</widget>>
+<<widget "DaughterP">><<if _playerSlaveLisp>>_DaughterPLisp<<else>>_DaughterP<</if>><</widget>>
+<<widget "SisterP">><<if _playerSlaveLisp>>_SisterPLisp<<else>>_SisterP<</if>><</widget>>
+<<widget "LoliP">><<if _playerSlaveLisp>>_LoliPLisp<<else>>_LoliP<</if>><</widget>>
+<<widget "WifeP">><<if _playerSlaveLisp>>_WifePLisp<<else>>_WifeP<</if>><</widget>>
+<<widget "WivesP">><<if _playerSlaveLisp>>_WivesPLisp<<else>>_WivesP<</if>><</widget>>
+
+<<widget "heA">><<if _assistantSlaveLisp>>_heALisp<<else>>_heA<</if>><</widget>>
+<<widget "hisA">><<if _assistantSlaveLisp>>_hisALisp<<else>>_hisA<</if>><</widget>>
+<<widget "hersA">><<if _assistantSlaveLisp>>_hersALisp<<else>>_hersA<</if>><</widget>>
+<<widget "himselfA">><<if _assistantSlaveLisp>>_himselfALisp<<else>>_himselfA<</if>><</widget>>
+<<widget "daughterA">><<if _assistantSlaveLisp>>_daughterALisp<<else>>_daughterA<</if>><</widget>>
+<<widget "sisterA">><<if _assistantSlaveLisp>>_sisterALisp<<else>>_sisterA<</if>><</widget>>
+<<widget "loliA">><<if _assistantSlaveLisp>>_loliALisp<<else>>_loliA<</if>><</widget>>
+<<widget "wifeA">><<if _assistantSlaveLisp>>_wifeALisp<<else>>_wifeA<</if>><</widget>>
+<<widget "wivesA">><<if _assistantSlaveLisp>>_wivesALisp<<else>>_wivesA<</if>><</widget>>
+<<widget "HeA">><<if _assistantSlaveLisp>>_HeALisp<<else>>_HeA<</if>><</widget>>
+<<widget "HisA">><<if _assistantSlaveLisp>>_HisALisp<<else>>_HisA<</if>><</widget>>
+<<widget "HersA">><<if _assistantSlaveLisp>>_HersALisp<<else>>_HersA<</if>><</widget>>
+<<widget "HimselfA">><<if _assistantSlaveLisp>>_HimselfALisp<<else>>_HimselfA<</if>><</widget>>
+<<widget "DaughterA">><<if _assistantSlaveLisp>>_DaughterALisp<<else>>_DaughterA<</if>><</widget>>
+<<widget "SisterA">><<if _assistantSlaveLisp>>_SisterALisp<<else>>_SisterA<</if>><</widget>>
+<<widget "LoliA">><<if _assistantSlaveLisp>>_LoliALisp<<else>>_LoliA<</if>><</widget>>
+<<widget "WifeA">><<if _assistantSlaveLisp>>_WifeALisp<<else>>_WifeA<</if>><</widget>>
+<<widget "WivesA">><<if _assistantSlaveLisp>>_WivesALisp<<else>>_WivesA<</if>><</widget>>
+
+/%
+Call as <<EventFetish>>
+$args[0]: Slave.
+$args[1]: Fetish.
+%/
+<<widget "EventFetish">>
+
+<<if $args[0].fetish == $args[1]>>
+	This experience
+	<<if $args[0].fetishKnown == 1>>
+		<<if $args[0].fetishStrength <= 95>>
+			@@.lightsalmon;<<switch $args[0].fetish>>
+			<<case "submissive">>deepens $his sexual need to submit.
+			<<case "cumslut">>increases $his appetite for oral sex.
+			<<case "humiliation">>makes $him even more eager to be humiliated.
+			<<case "buttslut">>encourages $him to focus on anal sex.
+			<<case "boobs">>focuses $his sexuality on $his breasts and nipples.
+			<<case "sadist">>titillates the sadistic part of $him.
+			<<case "masochist">>helps conflate pain and sexual pleasure for $him.
+			<<case "dom">>strengthens $his desire to top other slaves.
+			<<case "pregnancy">>further confuses lust and pregnancy in $his mind.
+			<<default>>ERROR: bad fetish
+			<</switch>>@@
+			<<set $args[0].fetishStrength += 10>>
+		<<else>>
+			is @@.hotpink;especially enjoyable for $him,@@ since
+			<<switch $args[0].fetish>>
+			<<case "submissive">>$he's an utterly submissive little slut.
+			<<case "cumslut">>$his <<if $args[0].vagina > -1>>clit<<else>>frenulum<</if>> might as well be located in $his throat.
+			<<case "humiliation">>$he has a hopeless need to be humiliated and degraded.
+			<<case "buttslut">>$he's completely in love with having $his ass fucked.
+			<<case "boobs">>$he loves breast play more than any other kind of sex.
+			<<case "sadist">>nothing is as titillating to $him as another slave's pain can be.
+			<<case "masochist">>$he loves pain more than $he likes pleasure.
+			<<case "dom">>$he lives for the times $he's allowed to fuck someone.
+			<<case "pregnancy">>all $his deepest sexual desires involve <<if $args[0].vagina > -1 || $args[0].mpreg == 1>>pregnancy<<else>>impregnation<</if>>.
+			<<default>>ERROR: bad fetish
+			<</switch>>
+			<<set $args[0].devotion += 3>>
+		<</if>>
+	<<else>>
+		was surprisingly appealing for $him, revealing that $he's a
+		@@.lightsalmon;<<switch $args[0].fetish>>
+		<<case "submissive">>sexual submissive!
+		<<case "humiliation">>humiliation slut!
+		<<case "boobs">>slut for breast play!
+		<<case "pregnancy">>pregslut!
+		<<default>>$args[0]!
+		<</switch>>@@
+		<<set $args[0].fetishKnown = 1>>
+	<</if>>
+<</if>>
+
+<</widget>>
+
+/%
+ Call as <<SlaveIDSort [slaveIDs]>>
+ $args[0]: array to sort
+%/
+<<widget "SlaveIDSort">>
+	<<run SlaveSort.IDs($args[0])>>
+<</widget>>
+
+/%
+ Call as <<SlaveIndexSort [slaveIndxs]>>
+ $args[0]: array to sort
+%/
+<<widget "SlaveIndexSort">>
+	<<run SlaveSort.indices($args[0])>>
+<</widget>>
+
+/* Called as <<FSChangeDecoration "FSName" "clothesBoughtFSClothes">>, will generate description of current decoration level and a link to increase it if applicable, quotes are needed to pass FSName as reference - DO NOT INCLUDE IT AS PROPERTY OF $arcologies[0]! */
+<<widget "FSChangeDecoration">>
+<<set _FS = $args[0]>>
+<<set _FSDecoration = _FS + "Decoration">>
+<<capture _FS, _FSDecoration>>
+<<switch $arcologies[0][_FSDecoration]>>
+<<case 20>>
+	$arcologies[0].name is not customized to support this goal.
+	<<if $arcologies[0][_FS] >= 10>>
+		[[Modify your arcology's internal media to support this goal|Future Society][$arcologies[0][_FSDecoration] = 40, cashX(-2500, "capEx")]] //Costs <<print cashFormat(2500)>>//
+	<<else>>
+		You must advance this goal before customization to support it becomes available.
+	<</if>>
+<<case 40>>
+	$arcologies[0].name's media is supporting this goal.
+	<<if $arcologies[0][_FS] >= 30>>
+		[[Redecorate your arcology's public spaces to support this goal|Future Society][$arcologies[0][_FSDecoration] = 60, cashX(-10000, "capEx")]] //Costs <<print cashFormat(10000)>>//
+	<<else>>
+		You must advance this goal before further customization to support it becomes available.
+	<</if>>
+<<case 60>>
+	$arcologies[0].name's media is supporting this goal, and $arcologies[0].name's public spaces are decorated to support it too.
+	<<if $arcologies[0][_FS] >= 50>>
+		[[Station slaves in your arcology's public spaces to promote this goal|Future Society][$arcologies[0][_FSDecoration] = 80, cashX(-10000, "capEx")]] //Costs <<print cashFormat(10000)>>//
+	<<else>>
+		You must advance this goal before further customization to support it becomes available.
+	<</if>>
+<<case 80>>
+	$arcologies[0].name's media is supporting this goal; $arcologies[0].name's public spaces are decorated to support it, and have slaves stationed in them to support it too.
+	<<if $arcologies[0][_FS] >= 70>>
+		<<if def $args[3]>> /* Only for FSRepopulation */
+			[[Customize the exterior of the arcology to support this goal|Future Society][$arcologies[0][_FSDecoration] = 100, State.variables[$args[1]] = 1, State.variables[$args[2]] = 1, State.variables[$args[3]] = 1, cashX(-20000, "capEx")]] //Costs <<print cashFormat(20000)>>//
+		<<elseif def $args[1]>>
+			[[Customize the exterior of the arcology to support this goal|Future Society][$arcologies[0][_FSDecoration] = 100, State.variables[$args[1]] = 1, cashX(-20000, "capEx")]] //Costs <<print cashFormat(20000)>>//
+		<<elseif $args[0] == "FSRestart">>
+			[[Customize the exterior of the arcology to support this goal and fully establish the Societal Elite|Future Society][$arcologies[0].FSRestartDecoration = 100, $upgradeMultiplierArcology = upgradeMultiplier('engineering'), $upgradeMultiplierMedicine = upgradeMultiplier('medicine'), cashX(-75000, "capEx")]] //Costs <<print cashFormat(75000)>> and may dilute your control over the arcology//
+		<<else>>
+			[[Customize the exterior of the arcology to support this goal|Future Society][$arcologies[0][_FSDecoration] = 100, cashX(-20000, "capEx")]] //Costs <<print cashFormat(20000)>>//
+		<</if>>
+	<<else>>
+		You must advance this goal before further customization to support it becomes available.
+	<</if>>
+<<case 100>>
+	$arcologies[0].name's media is supporting this goal; $arcologies[0].name's public spaces are decorated to support it, and have slaves stationed in them to support it. The exterior of the arcology has been remodeled to support it as well; the arcology is fully customized for this goal.
+<</switch>>
+<</capture>>
+<</widget>>
+
+/* Called as <<SetFacilityDecoration "facilityDecoration">>, will generate a clickable list of potential decorations, quotes are needed to pass facilityDecoration as reference - DO NOT INCLUDE $ PREFIX! */
+<<widget "SetFacilityDecoration">>
+<<if ($arcologies[0].FSSupremacist >= 20) && (State.variables[$args[0]] != "Supremacist")>>
+	<div class="indent">[[Supremacist redecoration|Future Society][State.variables[$args[0]] = "Supremacist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSSubjugationist >= 20) && (State.variables[$args[0]] != "Subjugationist")>>
+	<div class="indent">[[Subjugationist redecoration|Future Society][State.variables[$args[0]] = "Subjugationist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSRepopulationFocus >= 20) && (State.variables[$args[0]] != "Repopulation Focus")>>
+	<div class="indent">[[Repopulation Focus redecoration|Future Society][State.variables[$args[0]] = "Repopulation Focus", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSRestart >= 20) && (State.variables[$args[0]] != "Eugenics")>>
+	<div class="indent">[[Eugenics redecoration|Future Society][State.variables[$args[0]] = "Eugenics", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSGenderRadicalist >= 20) && (State.variables[$args[0]] != "Gender Radicalist")>>
+	<div class="indent">[[Gender Radicalist redecoration|Future Society][State.variables[$args[0]] = "Gender Radicalist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSGenderFundamentalist >= 20) && (State.variables[$args[0]] != "Gender Fundamentalist")>>
+	<div class="indent">[[Gender Fundamentalist redecoration|Future Society][State.variables[$args[0]] = "Gender Fundamentalist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSPaternalist >= 20) && (State.variables[$args[0]] != "Paternalist")>>
+	<div class="indent">[[Paternalist redecoration|Future Society][State.variables[$args[0]] = "Paternalist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSIntellectualDependency >= 20) && (State.variables[$args[0]] != "Intellectual Dependency")>>
+	<div class="indent">[[Intellectual Dependency redecoration|Future Society][State.variables[$args[0]] = "Intellectual Dependency", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSSlaveProfessionalism >= 20) && (State.variables[$args[0]] != "Slave Professionalism")>>
+	<div class="indent">[[Slave Professionalism redecoration|Future Society][State.variables[$args[0]] = "Slave Professionalism", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSBodyPurist >= 20) && (State.variables[$args[0]] != "Body Purist")>>
+	<div class="indent">[[Body Purist redecoration|Future Society][State.variables[$args[0]] = "Body Purist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSTransformationFetishist >= 20) && (State.variables[$args[0]] != "Transformation Fetishist")>>
+	<div class="indent">[[Transformation Fetishist redecoration|Future Society][State.variables[$args[0]] = "Transformation Fetishist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSYouthPreferentialist >= 20) && (State.variables[$args[0]] != "Youth Preferentialist")>>
+	<div class="indent">[[Youth Preferentialist redecoration|Future Society][State.variables[$args[0]] = "Youth Preferentialist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSMaturityPreferentialist >= 20) && (State.variables[$args[0]] != "Maturity Preferentialist")>>
+	<div class="indent">[[Maturity Preferentialist redecoration|Future Society][State.variables[$args[0]] = "Maturity Preferentialist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSPetiteAdmiration >= 20) && (State.variables[$args[0]] != "Petite Admiration")>>
+	<div class="indent">[[Petite Admiration redecoration|Future Society][State.variables[$args[0]] = "Petite Admiration", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSStatuesqueGlorification >= 20) && (State.variables[$args[0]] != "Statuesque Glorification")>>
+	<div class="indent">[[Statuesque Glorification redecoration|Future Society][State.variables[$args[0]] = "Statuesque Glorification", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSSlimnessEnthusiast >= 20) && (State.variables[$args[0]] != "Slimness Enthusiast")>>
+	<div class="indent">[[Slimness Enthusiast redecoration|Future Society][State.variables[$args[0]] = "Slimness Enthusiast", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSAssetExpansionist >= 20) && (State.variables[$args[0]] != "Asset Expansionist")>>
+	<div class="indent">[[Asset Expansionist redecoration|Future Society][State.variables[$args[0]] = "Asset Expansionist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSPastoralist >= 20) && (State.variables[$args[0]] != "Pastoralist")>>
+	<div class="indent">[[Pastoralist redecoration|Future Society][State.variables[$args[0]] = "Pastoralist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSPhysicalIdealist >= 20) && (State.variables[$args[0]] != "Physical Idealist")>>
+	<div class="indent">[[Physical Idealist redecoration|Future Society][State.variables[$args[0]] = "Physical Idealist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSHedonisticDecadence >= 20) && (State.variables[$args[0]] != "Hedonistic")>>
+	<div class="indent">[[Hedonistic redecoration|Future Society][State.variables[$args[0]] = "Hedonistic", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSChattelReligionist >= 20) && (State.variables[$args[0]] != "Chattel Religionist")>>
+	<div class="indent">[[Chattel Religionist redecoration|Future Society][State.variables[$args[0]] = "Chattel Religionist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSDegradationist >= 20) && (State.variables[$args[0]] != "Degradationist")>>
+	<div class="indent">[[Degradationist redecoration|Future Society][State.variables[$args[0]] = "Degradationist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<<if ($arcologies[0].FSRomanRevivalist >= 20) && (State.variables[$args[0]] != "Roman Revivalist")>>
+	<div class="indent">[[Roman Revivalist redecoration|Future Society][State.variables[$args[0]] = "Roman Revivalist", cashX(-5000, "capEx")]]</div>
+<<elseif ($arcologies[0].FSAztecRevivalist >= 20) && (State.variables[$args[0]] != "Aztec Revivalist")>>
+	<div class="indent">[[Aztec Revivalist redecoration|Future Society][State.variables[$args[0]] = "Aztec Revivalist", cashX(-5000, "capEx")]]</div>
+<<elseif ($arcologies[0].FSEgyptianRevivalist >= 20) && (State.variables[$args[0]] != "Egyptian Revivalist")>>
+	<div class="indent">[[Egyptian Revivalist redecoration|Future Society][State.variables[$args[0]] = "Egyptian Revivalist", cashX(-5000, "capEx")]]</div>
+<<elseif ($arcologies[0].FSEdoRevivalist >= 20) && (State.variables[$args[0]] != "Edo Revivalist")>>
+	<div class="indent">[[Edo Revivalist redecoration|Future Society][State.variables[$args[0]] = "Edo Revivalist", cashX(-5000, "capEx")]]</div>
+<<elseif ($arcologies[0].FSArabianRevivalist >= 20) && (State.variables[$args[0]] != "Arabian Revivalist")>>
+	<div class="indent">[[Arabian Revivalist redecoration|Future Society][State.variables[$args[0]] = "Arabian Revivalist", cashX(-5000, "capEx")]]</div>
+<<elseif ($arcologies[0].FSChineseRevivalist >= 20) && (State.variables[$args[0]] != "Chinese Revivalist")>>
+	<div class="indent">[[Chinese Revivalist redecoration|Future Society][State.variables[$args[0]] = "Chinese Revivalist", cashX(-5000, "capEx")]]</div>
+<</if>>
+<</widget>>

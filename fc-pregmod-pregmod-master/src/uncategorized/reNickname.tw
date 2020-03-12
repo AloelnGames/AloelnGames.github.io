@@ -1,0 +1,1285 @@
+:: RE nickname [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "AS Dump">>
+<<if $seed == 1>>
+	<<set $returnTo = "RIE Eligibility Check">>
+<<else>>
+	<<set $returnTo = "Next Week">>
+<</if>>
+
+<<set $activeSlave = $eventSlave>>
+<<setLocalPronouns $activeSlave>>
+
+/* NICKNAME QUALIFICATION CHECKS */
+
+<<set _qualifiedNicknames = []>>
+
+<<if ($activeSlave.nationality != 0)>>
+	<<set _qualifiedNicknames.push("nationality")>>
+<</if>>
+
+<<if ($seeRace == 1)>>
+	<<switch $activeSlave.race>>
+	<<case "amerindian">>
+		<<set _qualifiedNicknames.push("amerindian")>>
+	<<case "asian">>
+		<<set _qualifiedNicknames.push("asian")>>
+	<<case "black">>
+		<<set _qualifiedNicknames.push("black")>>
+	<<case "indo-aryan">>
+		<<set _qualifiedNicknames.push("indo-aryan")>>
+	<<case "latina">>
+		<<set _qualifiedNicknames.push("latina")>>
+	<<case "malay">>
+		<<set _qualifiedNicknames.push("malay")>>
+	<<case "middle eastern">>
+		<<set _qualifiedNicknames.push("middle eastern")>>
+	<<case "mixed race">>
+		<<set _qualifiedNicknames.push("mixed race")>>
+	<<case "pacific islander">>
+		<<set _qualifiedNicknames.push("pacific islander")>>
+	<<case "semitic">>
+		<<set _qualifiedNicknames.push("semitic")>>
+	<<case "southern european">>
+		<<set _qualifiedNicknames.push("southern european")>>
+	<<case "white">>
+		<<set _qualifiedNicknames.push("white")>>
+	<</switch>>
+<</if>>
+
+<<if ($activeSlave.boobs < 500) && ($activeSlave.butt < 3) && ($activeSlave.weight <= 10)>>
+	<<set _qualifiedNicknames.push("girlish")>>
+<</if>>
+<<if ($activeSlave.boobs <= 300)>>
+	<<set _qualifiedNicknames.push("flat")>>
+<</if>>
+<<if ($activeSlave.anus > 2) || ($activeSlave.vagina > 2)>>
+	<<set _qualifiedNicknames.push("loose")>>
+<</if>>
+<<if ($activeSlave.boobs < 500) && ($activeSlave.butt < 3) && ($activeSlave.dick > 0)>>
+	<<set _qualifiedNicknames.push("trap")>>
+<</if>>
+<<if ($activeSlave.boobs > 500) && ($activeSlave.butt > 3) && ($activeSlave.dick > 0)>>
+	<<set _qualifiedNicknames.push("trans")>>
+<</if>>
+<<if ($activeSlave.weight > 30)>>
+	<<set _qualifiedNicknames.push("chubby")>>
+<</if>>
+<<if ($activeSlave.weight > 100)>>
+	<<set _qualifiedNicknames.push("fat")>>
+<</if>>
+<<if ($activeSlave.muscles > 30)>>
+	<<set _qualifiedNicknames.push("muscles")>>
+<</if>>
+<<if ($activeSlave.energy > 95)>>
+	<<if $activeSlave.anus > 1>>
+		<<set _qualifiedNicknames.push("buttslut")>>
+	<</if>>
+	<<set _qualifiedNicknames.push("cumslut")>>
+	<<set _qualifiedNicknames.push("humiliation")>>
+	<<set _qualifiedNicknames.push("submissive")>>
+<</if>>
+<<if ($activeSlave.fetishKnown == 1) && ($activeSlave.fetishStrength > 60)>>
+	<<switch $activeSlave.fetish>>
+	<<case "buttslut">>
+		<<if $activeSlave.anus > 0>>
+			<<set _qualifiedNicknames.push("buttslut")>>
+		<<else>>
+			<<set _qualifiedNicknames.push("butt toy")>>
+		<</if>>
+	<<case "cumslut">>
+		<<set _qualifiedNicknames.push("cumslut")>>
+	<<case "humiliation">>
+		<<set _qualifiedNicknames.push("humiliation")>>
+	<<case "submissive">>
+		<<set _qualifiedNicknames.push("submissive")>>
+	<</switch>>
+<</if>>
+<<if ($activeSlave.counter.oral+$activeSlave.counter.vaginal+$activeSlave.counter.anal > 500)>>
+	<<set _qualifiedNicknames.push("veteran")>>
+<</if>>
+<<if (($activeSlave.boobs*$activeSlave.lactation) > 1000)>>
+	<<set _qualifiedNicknames.push("cow")>>
+<</if>>
+<<if ($activeSlave.skill.oral <= 30) && ($activeSlave.skill.anal <= 30)>>
+	<<set _qualifiedNicknames.push("novice")>>
+<</if>>
+<<if ($activeSlave.ID == $HeadGirl.ID)>>
+	<<set _qualifiedNicknames.push("Head Girl")>>
+<</if>>
+<<if ($activeSlave.ID == $Bodyguard.ID)>>
+	<<set _qualifiedNicknames.push("Bodyguard")>>
+<</if>>
+<<if ($activeSlave.ID == $Concubine.ID)>>
+	<<set _qualifiedNicknames.push("Concubine")>>
+<</if>>
+<<if ($activeSlave.ID == $Attendant.ID)>>
+	<<set _qualifiedNicknames.push("Attendant")>>
+<</if>>
+<<if ($activeSlave.ID == $Matron.ID)>>
+	<<set _qualifiedNicknames.push("Matron")>>
+<</if>>
+<<if ($activeSlave.ID == $Madam.ID)>>
+	<<set _qualifiedNicknames.push("Madam")>>
+<</if>>
+<<if ($activeSlave.ID == $DJ.ID)>>
+	<<set _qualifiedNicknames.push("DJ")>>
+<</if>>
+<<if ($activeSlave.ID == $Recruiter.ID)>>
+	<<set _qualifiedNicknames.push("Recruiter")>>
+<</if>>
+<<if ($activeSlave.ID == $Wardeness.ID)>>
+	<<set _qualifiedNicknames.push("Wardeness")>>
+<</if>>
+<<if ($activeSlave.ID == $Milkmaid.ID)>>
+	<<set _qualifiedNicknames.push("Milkmaid")>>
+<</if>>
+<<if ($activeSlave.ID == $Farmer.ID)>>
+	<<set _qualifiedNicknames.push("Farmer")>>
+<</if>>
+<<if ($activeSlave.ID == $Milkmaid.ID) && $activeSlave.dick > 5 && canPenetrate($activeSlave) && $cumSlaves > 3>>
+	<<set _qualifiedNicknames.push("Collectrix")>>
+<</if>>
+<<if ($activeSlave.ID == $Stewardess.ID)>>
+	<<set _qualifiedNicknames.push("Stewardess")>>
+<</if>>
+<<if ($activeSlave.ID == $Schoolteacher.ID)>>
+	<<set _qualifiedNicknames.push("Schoolteacher")>>
+<</if>>
+<<if ($activeSlave.ID == $Nurse.ID)>>
+	<<set _qualifiedNicknames.push("Nurse")>>
+<</if>>
+
+<<if ($activeSlave.ID == $Lurcher.ID)>>
+	<<set _qualifiedNicknames.push("Lurcher")>>
+<</if>>
+<<if ($activeSlave.assignment == "be a subordinate slave")>>
+	<<set _qualifiedNicknames.push("server")>>
+<</if>>
+<<if ($activeSlave.nipples == "huge") || ($activeSlave.nipples == "puffy")>>
+	<<set _qualifiedNicknames.push("nipples")>>
+<<elseif ($activeSlave.nipples == "fuckable")>>
+	<<set _qualifiedNicknames.push("nippleCunts")>>
+<</if>>
+<<if ($activeSlave.areolae > 2)>>
+	<<set _qualifiedNicknames.push("areolae")>>
+<</if>>
+<<if ($activeSlave.lips > 40)>>
+	<<set _qualifiedNicknames.push("lips")>>
+<</if>>
+<<if ($activeSlave.labia > 1) && ($activeSlave.vagina > -1)>>
+	<<set _qualifiedNicknames.push("labia")>>
+<</if>>
+<<if ($activeSlave.physicalAge < 18)>>
+	<<set _qualifiedNicknames.push("young")>>
+<</if>>
+<<if ($activeSlave.physicalAge > 35)>>
+	<<set _qualifiedNicknames.push("old")>>
+<</if>>
+<<if ($activeSlave.physicalAge > 59)>>
+	<<set _qualifiedNicknames.push("reallyold")>>
+<</if>>
+<<if (isAmputee($activeSlave))>>
+	<<set _qualifiedNicknames.push("amp")>>
+<</if>>
+<<if ($activeSlave.boobsImplant/$activeSlave.boobs) >= .60 || ($activeSlave.buttImplant/$activeSlave.butt) > .60>>
+	<<set _qualifiedNicknames.push("implants")>>
+<</if>>
+<<if ($activeSlave.boobsImplant >= 750) && ($activeSlave.boobsImplant/$activeSlave.boobs) >= .60 && ($activeSlave.buttImplant >= 2) && ($activeSlave.buttImplant/$activeSlave.butt) > .60 && ($activeSlave.lipsImplant >= 10) && ($activeSlave.lipsImplant/$activeSlave.lips) > .30 && ($activeSlave.intelligence+$activeSlave.intelligenceImplant < -15)>>
+	<<set _qualifiedNicknames.push("bimbo")>>
+<</if>>
+<<if ($activeSlave.intelligence+$activeSlave.intelligenceImplant < -50)>>
+	<<set _qualifiedNicknames.push("stupid")>>
+<</if>>
+<<if ($activeSlave.intelligence+$activeSlave.intelligenceImplant > 50)>>
+	<<set _qualifiedNicknames.push("smart")>>
+<</if>>
+<<if getBestVision($activeSlave) === 0>>
+	<<set _qualifiedNicknames.push("blind")>>
+<</if>>
+<<if ($activeSlave.hears <= -2)>>
+	<<set _qualifiedNicknames.push("deaf")>>
+<</if>>
+<<if ($activeSlave.voice == 0)>>
+	<<set _qualifiedNicknames.push("mute")>>
+<</if>>
+<<if $activeSlave.breedingMark == 1 && $propOutcome == 1 && $arcologies[0].FSRestart != "unset">>
+	<<set _qualifiedNicknames.push("mark")>>
+<</if>>
+<<if ($activeSlave.broodmother > 1) && ($activeSlave.preg >= 37)>>
+	<<set _qualifiedNicknames.push("hyperbroodmother")>>
+<</if>>
+<<if ($activeSlave.broodmother == 1) && ($activeSlave.preg >= 37)>>
+	<<set _qualifiedNicknames.push("broodmother")>>
+<</if>>
+<<if ($activeSlave.bellyPreg >= 300000)>>
+	<<set _qualifiedNicknames.push("hyperpreg")>>
+<</if>>
+<<if ($activeSlave.bellyPreg >= 30000) && ($activeSlave.boobs >= 5000) && ($activeSlave.butt > 5) && ($activeSlave.hips >= 2) && ($activeSlave.weight < 100)>>
+	<<set _qualifiedNicknames.push("fertilityGoddess")>>
+<</if>>
+<<if ($activeSlave.dick > 5) && ($activeSlave.balls > 5) && ($activeSlave.counter.slavesKnockedUp > 4)>>
+	<<set _qualifiedNicknames.push("babymaker")>>
+<</if>>
+<<if ($activeSlave.prostate > 2) && ($activeSlave.dick == 0) && ($activeSlave.vagina > -1)>>
+	<<set _qualifiedNicknames.push("superSquirter")>>
+<</if>>
+<<if ($activeSlave.bellyPreg >= 100) && ($activeSlave.pregKnown == 1)>>
+	<<set _qualifiedNicknames.push("preg")>>
+<</if>>
+<<if ($activeSlave.dick > 4)>>
+	<<set _qualifiedNicknames.push("hung")>>
+<</if>>
+<<if ($activeSlave.dick > 0) && ($activeSlave.balls == 0)>>
+	<<set _qualifiedNicknames.push("gelding")>>
+<</if>>
+<<if ($activeSlave.dick == 1)>>
+	<<set _qualifiedNicknames.push("micropenis")>>
+<</if>>
+<<if ($activeSlave.boobs >= 800)>>
+	<<set _qualifiedNicknames.push("boobs")>>
+<</if>>
+<<if ($activeSlave.butt > 5)>>
+	<<set _qualifiedNicknames.push("butt")>>
+<</if>>
+<<if ($activeSlave.vagina == 0)>>
+	<<set _qualifiedNicknames.push("virgin")>>
+<</if>>
+<<if ($activeSlave.height >= 185)>>
+	<<set _qualifiedNicknames.push("tall")>>
+<</if>>
+<<if ($activeSlave.height < 150)>>
+	<<set _qualifiedNicknames.push("short")>>
+<</if>>
+<<if ($activeSlave.vagina == 1) && ($activeSlave.skill.vaginal <= 10)>>
+	<<set _qualifiedNicknames.push("vaginalWhiner")>>
+<</if>>
+<<if ($activeSlave.anus == 1) && ($activeSlave.skill.anal <= 10)>>
+	<<set _qualifiedNicknames.push("analWhiner")>>
+<</if>>
+<<if ($activeSlave.vagina == -1) && ($activeSlave.dick == 0) && ($activeSlave.balls == 0)>>
+	<<set _qualifiedNicknames.push("null")>>
+<</if>>
+
+<<if (_qualifiedNicknames.length == 0)>>
+	<<goto "RIE Eligibility Check">>
+<<else>>
+
+<<set _nickname = _qualifiedNicknames.random()>>
+
+<<switch _nickname>>
+<<case "nationality">>
+	<<switch $activeSlave.nationality>>
+	<<case "Afghan">>
+		<<set _nickname = either("'Afghan'", "'Afghani'", "'Avagana'", "'Bactrian'", "'Bagram'", "'Chai Girl'", "'Herat'", "'Kabul'", "'Kandahar'", "'Pashtun'", "'Peshawar'", "'Poppy'", "'Rubab'", "'Taliban'")>>
+	<<case "Albanian">>
+		<<set _nickname = either("'Albani'", "'Albanian'", "'Albanoi'", "'Durrës'", "'Eagle Child'", "'Hoxha'", "'Mother Albania'", "'Qemali'", "'Sejdia'", "'Shiptar'", "'Skanderbeg'", "'Tirana'", "'Understanding'", "'White Hills'")>>
+	<<case "Algerian">>
+		<<set _nickname = either("'Algerian'", "'Algiers'", "'Casbah'", "'Corsair'", "'Daughter of Māzġānna'", "'Djamila'", "'Harki'", "'Hassiba'", "'Oran'", "'Pied-Noir'", "'Sanhaja'", "'Zhora'")>>
+	<<case "American">>
+		<<set _nickname = either("'American'", "'Amerifat'", "'Apple Pie'", "'Atlanta'", "'Bald Eagle'", "'Baseball'", "'Boston'", "'Burger'", "'California'", "'Chicago'", "'Colonist'", "'Columbia'", "'Cowgirl'", "'Dallas'", "'Detroit'", "'Great Satan'", "'Gun Nut'", "'Hollywood'", "'Houston'", "'Lady Liberty'", "'Las Vegas'", "'Lone Star'", "'Los Angeles'", "'Miami'", "'Murica'", "'New York'", "'Philadelphia'", "'Plymouth'", "'San Francisco'", "'Seattle'", "'Septic'", "'Stars & Stripes'", "'Trump'", "'U.S.A.'", "'Ugly'", "'Uncle Sam'", "'United Statesian'", "'US American'", "'Usonian'", "'Washington'", "'Yank'", "'Yankee'")>>
+	<<case "Andorran">>
+		<<set _nickname = either("'Andor'", "'Andorran'", "'Catalan'", "'Forester'", "'Hell Valley'", "'La Vella'", "'Les Escaldes'", "'Pyrenees'", "'Scrub'", "'Ski Trip'", "'Skossyreff'", "'Urgell'")>>
+	<<case "Angolan">>
+		<<set _nickname = either("'Angolan'", "'Baixa de Cassanje'", "'Cabinda'", "'Conqueror'", "'Huambo'", "'Luanda'", "'Matamba'", "'Ndongo'", "'Ngola'", "'Nzinga'")>>
+	<<case "Antiguan">>
+		<<set _nickname = either("'All Saints'", "'Ancient'", "'Antiguan'", "'Barbuda'", "'Barbudan'", "'Barbudian'", "'Bearded'", "'Fig Tree'", "'Leeward'", "'Redonda'", "'Seville'", "'St. John's'", "'Virgin of the Old Cathedral'", "'Whitewood'")>>
+	<<case "Argentinian">>
+		<<set _nickname = either("'Argentine'", "'Argentinean'", "'Argentinian'", "'Blanca'", "'Buenos Aires'", "'Córdoba'", "'Evita'", "'Gaucha'", "'Macri'", "'Malvinas'", "'Patagonia'", "'Perón'", "'Silver River'", "'Silvery'")>>
+	<<case "Armenian">>
+		<<set _nickname = either("'Apricot'", "'Aram'", "'Armenian'", "'Armo'", "'Assembler'", "'Duduk'", "'Gyumri'", "'Hachik'", "'Hayastan'", "'Khorovats'", "'Minni Mountain'", "'Mother Armenia'", "'Rabiz'", "'Urmani'", "'Yerevan'")>>
+	<<case "Aruban">>
+		<<set _nickname = either("'Aloe Vera'", "'Aruban'", "'Caquetio'", "'Croes'", "'Djucu'", "'Giant'", "'Golden'", "'Oranjestad'", "'Papiamento'", "'Shell'", "'Sint Nicolaas'", "'Well-Placed'")>>
+	<<case "Australian">>
+		<<set _nickname = either("'Abo'", "'Adelaide'", "'Aussie'", "'Australian'", "'Bogan'", "'Brisbane'", "'Bunyip'", "'Canberra'", "'Convict'", "'Crikey'", "'Didgeridoo'", "'Dingo'", "'Down Under'", "'Emu'", "'G'Day'", "'Gold Coast'", "'Incognita'", "'Kangaroo'", "'Mad'", "'Melbourne'", "'New Holland'", "'Oz'", "'Perth'", "'Sheila'", "'Skip'", "'Skippy'", "'Southern Land'", "'Sydney'")>>
+	<<case "Austrian">>
+		<<set _nickname = either("'Anschluss'", "'Austrian'", "'Bavarian'", "'Bundesadler'", "'Eastern Realm'", "'Fritzl'", "'Fut'", "'Graz'", "'Innsbruck'", "'Linz'", "'Maria'", "'Österreich'", "'Sharp Mountain'", "'Vienna'", "'Wiener'", "'Willendorf'")>>
+	<<case "Azerbaijani">>
+		<<set _nickname = either("'Arran'", "'Atropatene'", "'Azerbaijani'", "'Azerbaijanian'", "'Azeri'", "'Baku'", "'Balaban'", "'Black January'", "'Caucasian Albania'", "'Ganja'", "'Holy Fire'", "'Musavat'", "'Shirvan'", "'Transcaucasia'")>>
+	<<case "Bahamian">>
+		<<set _nickname = either("'Bahama Mama'", "'Bahamian'", "'Big Upper Middle'", "'Bimini'", "'Castaway'", "'Columbus'", "'Creole'", "'Freeport'", "'Low Tide'", "'Lucayan'", "'Nassau'", "'New Providence'", "'Shallow Seas'", "'Southern Cross'", "'Symonette'", "'Windsor'")>>
+	<<case "Bahraini">>
+		<<set _nickname = either("'Al-Hasa'", "'Arad'", "'Awal'", "'Bahraini'", "'Bahri'", "'Dilmun'", "'Manama'", "'Nestorian'", "'Pearl'", "'Qarmatian'", "'Riffa'", "'Two Seas'", "'Tylos'", "'Zubarah'")>>
+	<<case "Bangladeshi">>
+		<<set _nickname = either("'Bangamata'", "'Bangla'", "'Bangladeshi'", "'Bengal'", "'Bengalese'", "'Bengali'", "'Bengi'", "'Bengullie'", "'Bennie'", "'Bhang'", "'Bhibhi'", "'Bhola'", "'Chittagong'", "'Deshi'", "'Dhaka'", "'Dotara'", "'East Pakistan'", "'Jackfruit'", "'Joy Bangla'", "'Mujibnagar'", "'Sweatshop'", "'Tiger'", "'Vanga'")>>
+	<<case "Barbadian">>
+		<<set _nickname = either("'Bajan'", "'Barbadian'", "'Bim'", "'Bimshire'", "'Bridgetown'", "'Fig Tree'", "'Flying Fish'", "'Little England'", "'Speightstown'", "'Sugar Cane'", "'The Rock'")>>
+	<<case "Belarusian">>
+		<<set _nickname = either("'Belarusian'", "'Bulbash'", "'Draniki'", "'Homel'", "'Homyel'", "'Lukashenko'", "'Mahilyow'", "'Minsk'", "'Ruthenia'", "'Shlyukha'", "'Šliucha'", "'Stalker'", "'White Russian'")>>
+	<<case "Belgian">>
+		<<set _nickname = either("'Angry Bulge'", "'Antwerp'", "'Belgae'", "'Belgian'", "'Belgica'", "'Brussels'", "'Dazzling'", "'Liège'", "'Muette de Portici'", "'Sprout'", "'Straatmeid'", "'Truttemie'", "'Waffles'")>>
+	<<case "Belizean">>
+		<<set _nickname = either("'Beacon'", "'Belizean'", "'Belmopan'", "'British Honduras'", "'Great Blue Hole'", "'Muddy-Watered'", "'Punta'", "'San Ignacio'", "'Shady'", "'Wallace'")>>
+	<<case "Beninese">>
+		<<set _nickname = either("'Abomey-Calavi'", "'Abomey'", "'Ahosi'", "'Balleland'", "'Beninese'", "'Beninois'", "'Bight'", "'Borgu'", "'Cotonou'", "'Dahomey'", "'Mino'", "'Porto-Novo'", "'Tribal'", "'Ubinu'", "'Vexation'")>>
+	<<case "Bermudian">>
+		<<set _nickname = either("'Bermuda Triangle'", "'Bermudan'", "'Bermúdez'", "'Bermudian'", "'Devil'", "'Hamilton'", "'Onion'", "'Portuguese Rock'", "'Sea Venture'", "'St. George's'", "'Wild Hog'")>>
+	<<case "Bhutanese">>
+		<<set _nickname = either("'Bhutanese'", "'Boutan'", "'Butt'", "'Dragon Queen'", "'Druk'", "'End of Tibet'", "'Gangkhar Puensum'", "'Happiness Report'", "'Highlander'", "'Phuntsholing'", "'Punakha'", "'Takin'", "'Thimphu'", "'Thunder Dragon'")>>
+	<<case "Bissau-Guinean">>
+		<<set _nickname = either("'Bafatá'", "'Bissau-Guinean'", "'Bissau'", "'Bissorã'", "'Boe'", "'Bolama'", "'Cabral'", "'Cacheu'", "'Gabu'", "'Gabú'", "'Kaabu'", "'Kansala'", "'Kriol'", "'Portuguese Guinea'", "'Slave Coast'")>>
+	<<case "Bolivian">>
+		<<set _nickname = either("'Bolívar'", "'Bolivian'", "'Charango'", "'Charcas'", "'Chuquisaca'", "'El Alto'", "'La Paz'", "'Potosí'", "'Santa Cruz'", "'Sucre'", "'Titicaca'", "'Upper Peru'")>>
+	<<case "Bosnian">>
+		<<set _nickname = either("'Ban Kulin'", "'Banja Luka'", "'Bosniak'", "'Bosnian'", "'Boundary'", "'Brčko'", "'Duke's Land'", "'Herzegovina'", "'Herzegovinian'", "'Izetbegović'", "'Princip'", "'Running Water'", "'Sarajevo'", "'Srebrenica'", "'Stećak'", "'Tvrtko'")>>
+	<<case "Brazilian">>
+		<<set _nickname = either("'7-1'", "'Amazon'", "'Bauru'", "'Belo Horizonte'", "'Bracile'", "'Brasília'", "'Brazilian'", "'Brazilwood'", "'Bunda'", "'Carmen Miranda'", "'Carnival'", "'Dago'", "'Efígie da República'", "'Favelada'", "'Holy Cross'", "'Hue'", "'Ipanema'", "'Monkey'", "'Palm Tree'", "'Pindorama'", "'Ragamuffin'", "'Red-Wood'", "'Rio de Janeiro'", "'São Paulo'", "'True Cross'", "'Zika'")>>
+	<<case "British">>
+		<<set _nickname = either("'Albion'", "'Angle'", "'Big Ben'", "'Birmingham'", "'Brexit'", "'Brigid'", "'Bristol'", "'Brit'", "'Britannia'", "'Britbong'", "'British'", "'Briton'", "'Bulldog'", "'Chav'", "'English'", "'Fish'n'Chips'", "'Gov'nor'", "'Jane Bull'", "'Leeds'", "'Limey'", "'Liverpool'", "'London'", "'Manchester'", "'Northern Irish'", "'Old Fox'", "'Pikey'", "'Pommie'", "'Rosbif'", "'Round Table'", "'Scottish'", "'Scrubber'", "'Slag'", "'Slapper'", "'Welsh'", "'White Cliffs'")>>
+	<<case "Bruneian">>
+		<<set _nickname = either("'Abode of Peace'", "'Bandar Seri Begawan'", "'Barunah'", "'Bolkiah'", "'Brunei Beauty'", "'Bruneian'", "'Camphor'", "'Chinese Widow'", "'Cockfight'", "'Jerudong'", "'Kinabalu'", "'Kuala Belait'", "'Limbang'", "'Seafarer'", "'Sultan'", "'White Rajah'")>>
+	<<case "Bulgarian">>
+		<<set _nickname = either("'Bulgar'", "'Bulgarian'", "'Disordered'", "'Five Arrows'", "'Gaida'", "'Karanovo'", "'Kubrat'", "'Mother Bulgaria'", "'Nikopol'", "'Pliska'", "'Plovdiv'", "'Sofia'", "'Split Off'", "'Varna'", "'Zhivkov'")>>
+	<<case "Burkinabé">>
+		<<set _nickname = either("'Bobo-Dioulasso'", "'Burkina Fasan'", "'Burkinabé'", "'Compaoré'", "'Dyula'", "'Father's House'", "'Honest'", "'Lamizana'", "'Mossi'", "'Ouagadougou'", "'Sankara'", "'Upper Volta'", "'Upright'")>>
+	<<case "Burmese">>
+		<<set _nickname = either("'Bamar'", "'Brahma'", "'Burma Shave'", "'Burman'", "'Burmese Python'", "'Burmese'", "'Fast-Strong'", "'Golden Triangle'", "'Irrawaddy'", "'Mandalay'", "'Myanma'", "'Myanmar'", "'Myanmese'", "'Naypyidaw'", "'Pagan'", "'Rangoon'", "'Yangon'")>>
+	<<case "Burundian">>
+		<<set _nickname = either("'Bagaza'", "'Bujumbura'", "'Burundian'", "'Gitega'", "'Heha'", "'Impunity'", "'Martyazo'", "'Micombero'", "'Muyinga'", "'Ngozi'", "'Rundi'", "'Umurundi'", "'Urundi'")>>
+	<<case "Cambodian">>
+		<<set _nickname = either("'Angkor Wat'", "'Beauty Enjoyer'", "'Cambodian'", "'Chenla'", "'Holiday in Cambodia'", "'Indochina'", "'Kamboja'", "'Kampuchea'", "'Khmer Rouge'", "'Khmer'", "'Killing Field'", "'Kouprey'", "'Lovek'", "'Naga'", "'Phnom Penh'", "'Pol Pot'", "'Siem Reap'", "'Tuol Sleng'", "'Unshaken'", "'Yasodharapura'")>>
+	<<case "Cameroonian">>
+		<<set _nickname = either("'Africa in Miniature'", "'Bakassi'", "'Bamenda'", "'Biya'", "'Cameroonian'", "'Camfranglais'", "'Douala'", "'Fon'", "'Ghost Shrimp'", "'Kamerun'", "'Shrimp River'", "'Wouri'", "'Yaoundé'")>>
+	<<case "Canadian">>
+		<<set _nickname = either("'Aboot'", "'Acadia'", "'Beaver'", "'Calgary'", "'Canadian'", "'Canadienne'", "'Canuck'", "'Edmonton'", "'Eh'", "'Francisca'", "'Leaf'", "'Loonie'", "'Maple Syrup'", "'Maple'", "'Montreal'", "'Mountie'", "'No Gold'", "'Ottawa'", "'Poutine'", "'Quebec'", "'Toronto'", "'Vancouver'", "'Villager'", "'Winnipeg'", "'Yukon'")>>
+	<<case "Cape Verdean">>
+		<<set _nickname = either("'Cabo Verde'", "'Cabral'", "'Cap-Vert'", "'Cape Verdean'", "'Cidade Velha'", "'Green Cape'", "'Macronesia'", "'Mindelo'", "'Praia'", "'Ribeira Grande'")>>
+	<<case "Catalan">>
+		<<set _nickname = either("'Aloja'", "'Banyoles'", "'Barcelona'", "'Battle Chief'", "'Castell'", "'Catalan'", "'Catalonian'", "'Catalufo'", "'Goth'", "'Killer'", "'Lacetani'", "'Nova Planta'", "'Sardana'", "'Segadora'", "'Senyera'", "'Spanish'", "'Xuixo'")>>
+	<<case "Central African">>
+		<<set _nickname = either("'Abiras'", "'Banana'", "'Bangui'", "'Bimbo'", "'Bokassa'", "'Bouar'", "'C.A.R.'", "'Central African Empire'", "'Central African'", "'Chari'", "'Kolingba'", "'Sango'", "'Ubangi-Shari'", "'Ubangi'")>>
+	<<case "Chadian">>
+		<<set _nickname = either("'Borkou'", "'Chad'", "'Chadian'", "'Déby'", "'Habré'", "'Kanem-Bornu'", "'Lake'", "'Moundou'", "'N'Djamena'", "'Njimi'", "'Tchadienne'", "'Tibesti'", "'Tombalbaye'")>>
+	<<case "Chilean">>
+		<<set _nickname = either("'Araucaria'", "'Chela'", "'Chilean'", "'Chilli'", "'Chilote'", "'Deep Snow'", "'Doña Juanita'", "'Hausa'", "'Helicopter Ride'", "'Land's End'", "'Pinochet'", "'Poet'", "'Puente Alto'", "'Rapa Nui'", "'Rota'", "'Santiago'", "'Toya'", "'Valparaiso'", "'Valparaíso'", "'Yellow-Winged Blackbird'")>>
+	<<case "Chinese">>
+		<<set _nickname = either("'Beijing'", "'Boxer'", "'Cathay'", "'Changsha'", "'Chankoro'", "'Chengdu'", "'Chinese'", "'Ching Chong'", "'Chink'", "'Chongqing'", "'Cina'", "'Dalian'", "'Dim Sum'", "'Dongguan'", "'Dragon'", "'Empress'", "'Foshan'", "'Great Wall'", "'Guangzhou'", "'Hangzhou'", "'Harbin'", "'Hefei'", "'Hong Kong'", "'Kowloon'", "'Kung Fu'", "'Lead Toys'", "'Lotus'", "'Macau'", "'Made in China'", "'Manchu'", "'Nanchang'", "'Nanjing'", "'Nanking'", "'Ningbo'", "'Qingdao'", "'Red Dragon'", "'Renmenbi'", "'Shanghai'", "'Shantou'", "'Shenyang'", "'Shenzhen'", "'Silken'", "'Suzhou'", "'Tianjin'", "'Triad'", "'Wenzhou'", "'Wuhan'", "'Xi'an'", "'Xiamen'", "'Zhengzhou'", "'Zhongshan'")>>
+	<<case "Colombian">>
+		<<set _nickname = either("'Bogotá'", "'Bogotazo'", "'Cafetera'", "'Cali'", "'Coca'", "'Colombian'", "'Columbus'", "'Condor'", "'Crystal'", "'Cundinamarca'", "'El Dorado'", "'FARC'", "'Guatavita'", "'Medellín'", "'New Granada'", "'Pablita Escobar'", "'Violencia'")>>
+	<<case "Comorian">>
+		<<set _nickname = either("'Anjouan'", "'Comoran'", "'Comorian'", "'Great Islander'", "'Karthala'", "'Mayotte'", "'Mohéli'", "'Moon'", "'Moroni'", "'Mutsamudu'")>>
+	<<case "Congolese">>
+		<<set _nickname = either("'Brazza'", "'Brazzaville'", "'Congolese'", "'French Congo'", "'Kongo'", "'Middle Congo'", "'Mokele-Mbembe'", "'Ngouabi'", "'Nguesso'", "'Pointe-Noire'")>>
+	<<case "a Cook Islander">>
+		<<set _nickname = either("'Aitutaki'", "'Amuri'", "'Arutanga'", "'Avarua'", "'Cook Islander'", "'Cook'", "'Cumberland'", "'Endeavour'", "'Hermosa'", "'Hervey'", "'Māori'", "'Pukapuka'", "'Rarotonga'", "'San Bernardo'", "'Two Harbors'")>>
+	<<case "Costa Rican">>
+		<<set _nickname = either("'Alajuela'", "'Cartago'", "'Coffee Baron'", "'Costa Rican'", "'Diquís Sphere'", "'Ferrer'", "'Guanacaste'", "'Limón'", "'Mekatelyu'", "'Nicoya'", "'Oxcart'", "'Rich Coast'", "'San José'", "'Tica'")>>
+	<<case "Croatian">>
+		<<set _nickname = either("'Ban'", "'Baška'", "'Branimir'", "'Croat'", "'Croatian'", "'Horn Armor'", "'Hrvatska'", "'Mountaineer'", "'Pavelić'", "'Split'", "'Starčević'", "'Tito'", "'Tuđman'", "'Ustaše'", "'Zagreb'")>>
+	<<case "Cuban">>
+		<<set _nickname = either("'Batista'", "'Bay of Pigs'", "'Bayamo'", "'Blockade'", "'Camagüey'", "'Castro'", "'Cienfuegos'", "'Cigars'", "'Commie'", "'Cuban'", "'Gitmo'", "'Great Place'", "'Guantanamo'", "'Guevara'", "'Havana'", "'Martí'", "'Missile Crisis'", "'Santiago'", "'Scarface'", "'Trinidad'")>>
+	<<case "Curaçaoan">>
+		<<set _nickname = either("'Antillean'", "'Arawak'", "'Caquetio'", "'Curaçaoan'", "'Divi-Divi'", "'Djucu'", "'Happy Field'", "'Healer'", "'Heart'", "'Mirage'", "'Papiamento'", "'Sint Michiel'", "'Stew Cat'", "'Willemstad'")>>
+	<<case "Cypriot">>
+		<<set _nickname = either("'Atilla'", "'Ayia Napa'", "'Chalcopyrite'", "'Copper'", "'Cypress'", "'Cyprian'", "'Cypriot'", "'Dove'", "'Enosis'", "'Famagusta'", "'Greek'", "'Henna'", "'Larnaca'", "'Limassol'", "'Nicosia'", "'Olive Branch'", "'Taksim'", "'Turkish'")>>
+	<<case "Czech">>
+		<<set _nickname = either("'Bohemian'", "'Bohunk'", "'Brno'", "'Čechie'", "'Czech'", "'Czechia'", "'Czechnya'", "'Czechoslovakia'", "'Double-Tailed Lion'", "'Hussite'", "'Kunda'", "'Masaryk'", "'Moravian'", "'Ostrava'", "'Prague'", "'Silesian'", "'Václav'", "'Velvet'", "'Wenceslaus'")>>
+	<<case "Danish">>
+		<<set _nickname = either("'Aalborg'", "'Aarhus'", "'Border Forest'", "'Copenhagen'", "'Dane'", "'Danish'", "'Danske'", "'Jutland'", "'Ludertæve'", "'Odense'", "'Roskilde'", "'Schleswig'", "'Tøs'", "'Trelleborg'", "'Viking'")>>
+	<<case "Djiboutian">>
+		<<set _nickname = either("'Adal'", "'Afar'", "'Ali Sabieh'", "'Aptidon'", "'Booty'", "'Djiboutian'", "'French Somaliland'", "'Handoga'", "'Ifat'", "'Issa'", "'Loyada'", "'Obock'", "'Pearl of the Gulf'", "'Punt'", "'Qat'", "'Tadjoura'", "'Tehuti'")>>
+	<<case "Dominican">>
+		<<set _nickname = either("'Caribbean'", "'Cibao'", "'Domingo'", "'Dominican'", "'Hispaniola'", "'Merengue'", "'Ozama'", "'Palo'", "'Quisqueyana'", "'Samaná'", "'Santo Domingo'", "'Spanish Haiti'", "'Taíno'", "'Trinitaria'", "'Trujillo'", "'Yania Tierra'")>>
+	<<case "Dominiquais">>
+		<<set _nickname = either("'Boiling Lake'", "'Domingo'", "'Dominican'", "'Dominiquais'", "'Kalinago'", "'Leeward'", "'Natural'", "'Portsmouth'", "'Red Dog'", "'Roseau'", "'Sisserou'", "'Sunday'", "'Tall Body'")>>
+	<<case "Dutch">>
+		<<set _nickname = either("'Amsterdam'", "'Cheesehead'", "'Dutch Maiden'", "'Dutch'", "'Dutchie'", "'Fingered Dike'", "'Holland'", "'Klompendansen'", "'Netherlander'", "'Rotterdam'", "'Slaaf'", "'Slet'", "'The Hague'", "'Tulip'", "'Utrecht'", "'Windmill'")>>
+	<<case "East Timorese">>
+		<<set _nickname = either("'27th Province'", "'Dare'", "'Dili'", "'East Timorese'", "'Eastern East'", "'Lifau'", "'Maubere'", "'Portuguese Timor'", "'Timor Leste'", "'Timorese'")>>
+	<<case "Ecuadorian">>
+		<<set _nickname = either("'Cañari'", "'Cuenca'", "'Ecuadorian'", "'Equator'", "'Galápagos'", "'Glorious May'", "'Guayaquil'", "'Ingapirca'", "'Julian'", "'Latacunga'", "'Liberal'", "'Luz de América'", "'Machala'", "'Mama Negra'", "'New Granada'", "'Party Bus'", "'Portoviejo'", "'Quito'", "'Quitus'", "'Rondador'", "'Tomebamba'")>>
+	<<case "Egyptian">>
+		<<set _nickname = either("'Aegean'", "'Al-Askar'", "'Alexandria'", "'Cairo'", "'Cleopatra'", "'Egyptian'", "'Fustat'", "'Giza'", "'Gypsy'", "'Kemet'", "'Luxor'", "'Memphis'", "'Misirlou'", "'Nasser'", "'Pharaoh'", "'Ptah'", "'Pyramid'", "'Sadat'", "'Sinai'", "'Sphinx'", "'Suez'", "'Thebes'")>>
+	<<case "Emirati">>
+		<<set _nickname = either("'Abu Dhabi'", "'Ajman'", "'Bedouin'", "'Dubai'", "'Emir'", "'Emirati'", "'Emiri'", "'Emirian'", "'Fujairah'", "'Gulf Tiger'", "'Ras Al Khaimah'", "'Sharjah'", "'Trucial'", "'U.A.E.'", "'Umm Al Quwain'")>>
+	<<case "Equatoguinean">>
+		<<set _nickname = either("'Annobón'", "'Bata'", "'Bioko'", "'Corisco'", "'Equatoguinean'", "'Equator'", "'Equatorial Guinean'", "'Fa d'Ambu'", "'Formosa'", "'Malabo'", "'Nguema'", "'Obiang'", "'Oyala'", "'Río Muni'", "'Spanish Guinea'")>>
+	<<case "Eritrean">>
+		<<set _nickname = either("'Asmara'", "'Bahri Negash'", "'D'mt'", "'Dahlak'", "'Danakil'", "'Eritrean'", "'Ertra'", "'Hamasien'", "'Keren'", "'Massawa'", "'Medri Bahri'", "'Punt'", "'Quda'", "'Red Sea'", "'Tigrayan'")>>
+	<<case "Estonian">>
+		<<set _nickname = either("'Aesti'", "'Baltic Tiger'", "'Baltic'", "'East'", "'Eesti'", "'Esthonian'", "'Estonian'", "'Oeselian'", "'Pulli'", "'Tallinn'", "'Tartu'", "'Terra Mariana'", "'Vistula'", "'Yestonian'")>>
+	<<case "Ethiopian">>
+		<<set _nickname = either("'Abyssinian'", "'Addis Ababa'", "'Aksumite'", "'Axum'", "'Burnt Face'", "'Candace'", "'D'mot'", "'Dalllol'", "'Debre Berhan'", "'Derg'", "'Dire Dawa'", "'Ethiopian'", "'Gondar'", "'Ityopp'is'", "'Mengistu'", "'Oromo'", "'Rastafarian'", "'Selassie'")>>
+	<<case "Fijian">>
+		<<set _nickname = either("'Feejee'", "'Fijian'", "'Itaukei'", "'Lautoka'", "'Levuka'", "'Look-Out'", "'Lutunasobasoba'", "'Nadi'", "'Nasinu'", "'Suva'", "'Vanua Levu'", "'Viti Levu'")>>
+	<<case "Filipina">>
+		<<set _nickname = either("'Baguio'", "'Cebu'", "'Chavacano'", "'Dela Cruz'", "'Filipina'", "'Flip'", "'Manila'", "'Marcos'", "'Noble'", "'Nutshack'", "'Philip'", "'Philippine'", "'Pinay'", "'Pinoy'", "'Quezon'", "'River Dweller'", "'Rizal'", "'Ryan'", "'St. Lazarus'", "'Tagalog'", "'West Island'")>>
+	<<case "Finnish">>
+		<<set _nickname = either("'China Swede'", "'Chukhna'", "'Espoo'", "'Finn'", "'Finnic'", "'Finnish Maiden'", "'Finnish'", "'Finnjävel'", "'Helsinki'", "'Hunter'", "'Kantele'", "'Mämmi'", "'Perkele'", "'Saunagirl'", "'Suomi'", "'Tampere'", "'Turku'", "'Vaasa'", "'Winter War'")>>
+	<<case "French">>
+		<<set _nickname = either("'Baguette'", "'Belle'", "'Charlemagne'", "'Charlie Hebdo'", "'Clovis'", "'Crapaud'", "'De Gaulle'", "'Eiffel Tower'", "'Escargot'", "'Fille de Joie'", "'Français'", "'Frank'", "'French'", "'Frenchie'", "'Frog'", "'Gabacha'", "'Gaul'", "'Javelin'", "'L'Hexagone'", "'Lille'", "'Lyon'", "'Mademoiselle'", "'Marianne'", "'Marseille'", "'Napoleon'", "'Nice'", "'Paris'", "'Surrender Monkey'", "'Toulouse'", "'Vercingetorix'", "'Vichy'")>>
+	<<case "French Guianan">>
+		<<set _nickname = either("'Cayenne'", "'French Guianan'", "'French Guianese'", "'Guiana Shield'", "'Île du Diable'", "'Kourou'", "'Saint-Laurent-du-Maroni'", "'Véronique'")>>
+	<<case "French Polynesian">>
+		<<set _nickname = either("'Austral'", "'Faaa'", "'Fangataufa'", "'French Polynesian'", "'Gambier'", "'Mahina'", "'Marquesas'", "'Moruroa'", "'Papeete'", "'Polynesian'", "'Society'", "'Tahiti'", "'Tuamotu'")>>
+	<<case "Gabonese">>
+		<<set _nickname = either("'Bongo'", "'Cloak'", "'Franceville'", "'Gabonais'", "'Gabonese'", "'Komo'", "'Libreville'", "'Orungu'", "'Port-Gentil'")>>
+	<<case "Gambian">>
+		<<set _nickname = either("'Banjul'", "'Bathurst'", "'Brikama'", "'Fajara'", "'Gambian'", "'Gambo'", "'Jammeh'", "'Jawara'", "'Kaabu'", "'Senegambia'", "'Serekunda'", "'Trader'")>>
+	<<case "Georgian">>
+		<<set _nickname = either("'Agricultural'", "'Batumi'", "'Colchis'", "'Georgian'", "'Golden Fleece'", "'Iberian'", "'Kartlis Deda'", "'Kartvelian'", "'Knight in Panther's Skin'", "'Kutaisi'", "'Mepe'", "'Mtskheta'", "'Tamar'", "'Tbilisi'", "'Wolf'")>>
+	<<case "German">>
+		<<set _nickname = either("'Arminius'", "'Basic Law'", "'Battle Cry'", "'Bavarian'", "'Berlin'", "'Bonn'", "'Bratwurst'", "'Bremen'", "'Bundesadler'", "'Cabbage Eater'", "'Charlemagne'", "'Cologne'", "'Deutsche'", "'Dresden'", "'Düsseldorf'", "'Frankfurt'", "'Fraulein'", "'German'", "'Germania'", "'Hamburg'", "'Hannover'", "'Hanover'", "'Hitler'", "'Hun'", "'Jerry'", "'Kaiser'", "'Kraut'", "'Leipzig'", "'Mannheim'", "'Munich'", "'Nazi'", "'Nuremberg'", "'Oktoberfest'", "'Piefke'", "'Prussian'", "'Rhine-Ruhr'", "'Saupreiß'", "'Stuttgart'", "'Teuton'", "'Valkyrie'", "'Von Bismarck'")>>
+	<<case "Ghanan">>
+		<<set _nickname = either("'Accra'", "'Akan'", "'Ashanti'", "'British Togoland'", "'Cape Coast'", "'Cold Chop'", "'Ghanan'", "'Gold Coast'", "'Kumasi'", "'Nkrumah'", "'Shaman Queen'", "'Warrior Queen'")>>
+	<<case "Greek">>
+		<<set _nickname = either("'Athens'", "'Classical'", "'Debts'", "'Gift of Honor'", "'Greco'", "'Grecoman'", "'Greek'", "'Hellas'", "'Hellene'", "'Hellenic'", "'Ionian'", "'Kapodistrias'", "'Marble Column'", "'Mount Olympus'", "'Nafplio'", "'Old Woman'", "'Phoenix'", "'Sacrificer'", "'Spartan'", "'Thebes'", "'Thessaloniki'", "'Toga'", "'Venizelos'")>>
+	<<case "Greenlandic">>
+		<<set _nickname = either("'Danish'", "'Erik the Red'", "'Eskimo'", "'Godthåb'", "'Greenlander'", "'Greenlandic'", "'Iceberg'", "'Inuit'", "'Kalaallit'", "'Nuuk'", "'Sisimiut'")>>
+	<<case "Grenadian">>
+		<<set _nickname = either("'Carib'", "'Concepción'", "'Gouyave'", "'Grenada Dove'", "'Grenadian'", "'Mace'", "'Mayo'", "'Nutmeg'", "'Spices'", "'St. George's'", "'Urgent Fury'", "'Windward'", "'Woolie'")>>
+	<<case "Guamanian">>
+		<<set _nickname = either("'51st State'", "'Arc Light'", "'Chamorro'", "'Dededo'", "'Guamanian'", "'Hagåtña'", "'Mangilao'", "'Military Base'", "'Tamuning'")>>
+	<<case "Guatemalan">>
+		<<set _nickname = either("'Cabrera'", "'Carrera'", "'Chapín'", "'Forester'", "'Guatemalan'", "'Guatemalteca'", "'Many Trees'", "'Mayan'", "'Montt'", "'Quetzal'", "'Ubico'")>>
+	<<case "Guinean">>
+		<<set _nickname = either("'Bauxite'", "'Burnt One'", "'Conakry'", "'Djenné'", "'French Guinea'", "'Futa Jallon'", "'Green Sea'", "'Guinean'", "'Market Woman'", "'Nzérékoré'", "'Southern River'", "'Timbo'", "'Toure'")>>
+	<<case "Guyanese">>
+		<<set _nickname = either("'Berbice'", "'British Guiana'", "'Demerara'", "'Essequibo'", "'Flavor Aid'", "'Georgetown'", "'Guiana Shield'", "'Guyanese'", "'Hoatzin'", "'Jonestown'", "'Many Waters'", "'Soca'")>>
+	<<case "Haitian">>
+		<<set _nickname = either("'Ayisyen'", "'Duvalier'", "'Earthquake'", "'Ezilí Dantor'", "'Gonaïves'", "'Haiti Lady'", "'Haitian'", "'Hispaniola'", "'Kadans'", "'Maîtresse'", "'Mama Doc'", "'Maman'", "'Mountainous'", "'Port-au-Prince'", "'Tortuga'", "'Voodoo'")>>
+	<<case "Honduran">>
+		<<set _nickname = either("'Anchuria'", "'Catracha'", "'Comayagua'", "'Comayagüela'", "'Depths'", "'Higueras'", "'Honduran'", "'Punta'", "'San Pedro Sula'", "'Tegucigalpa'", "'Xatruch'")>>
+	<<case "Hungarian">>
+		<<set _nickname = either("'Árpád'", "'Bozgor'", "'Budapest'", "'Czardas'", "'Debrecen'", "'Hun'", "'Hungarian'", "'Kádár'", "'Kossuth'", "'Lady of Hungaria'", "'Magyar'", "'Ogur'", "'Szent Korona'", "'Szuka'", "'Ten Arrows'", "'Tower of Babel'", "'Turul'")>>
+	<<case "I-Kiribati">>
+		<<set _nickname = either("'Bairiki'", "'Betio'", "'Butaritari'", "'Gilbert'", "'I-Kiribati'", "'Kiribatian'", "'Tarawa'", "'Tungaru'")>>
+	<<case "Icelandic">>
+		<<set _nickname = either("'Bessastaðir'", "'Fire and Ice'", "'Fjallkona'", "'Gyrfalcon'", "'Icelander'", "'Icelandic'", "'Kópavogur'", "'Lady of the Mountain'", "'Lagarfljótsormur'", "'Penis Museum'", "'Reykjavík'", "'Sagas'", "'Viking'", "'Þingvellir'")>>
+	<<case "Indian">>
+		<<set _nickname = either("'Agra'", "'Ahmedabad'", "'Aligarh'", "'Allahabad'", "'Bangalore'", "'Bharat Mata'", "'Bharata'", "'Bhibhi'", "'Bhopal'", "'Bollywood'", "'Bombay'", "'Chennai'", "'Daulatabad'", "'Delhi'", "'Gandhi'", "'Hindi'", "'Hindu'", "'Howrah'", "'Hyderabad'", "'Indian'", "'Indus'", "'Jaipur'", "'Kanpur'", "'Kolkata'", "'Lucknow'", "'Mahatma'", "'Mumbai'", "'Nagpur'", "'Patna'", "'Pune'", "'Punjabi'", "'Raj'", "'Savita'", "'Sind'", "'Street Shitter'", "'Surat'", "'Taj Mahal'", "'Visakhapatnam'")>>
+	<<case "Indonesian">>
+		<<set _nickname = either("'Bandung'", "'Dutch East Indies'", "'Emerald of the Equator'", "'Garuda'", "'Hindia-Belanda'", "'Ibu Pertiwi'", "'Indian'", "'Indies'", "'Indognesial'", "'Indon'", "'Indonesian'", "'Jakarta'", "'Java'", "'Komodo Dragon'", "'Malay'", "'Medan'", "'New Order'", "'Suharto'", "'Sukarno'", "'Sunda'", "'Surabaya'", "'Teak'", "'Yogyakarta'")>>
+	<<case "Iranian">>
+		<<set _nickname = either("'Antioch'", "'Aryan'", "'Ayatollah'", "'Bukhara'", "'Ecbatana'", "'Farsi'", "'Free Noble'", "'Ghazni'", "'Iranian'", "'Iranic'", "'Isfahan'", "'Khamenei'", "'Majus'", "'Maragheh'", "'Mashhad'", "'Pasargadae'", "'Persepolis'", "'Persian'", "'Qazvin'", "'Sari'", "'Seleucia'", "'Shah'", "'Shiraz'", "'Susa'", "'Tabriz'", "'Tehran'", "'Zaranj'", "'Zirta'")>>
+	<<case "Iraqi">>
+		<<set _nickname = either("'Assur'", "'Assyrian'", "'Babylon'", "'Babylonian'", "'Baghdad'", "'Basra'", "'Calah'", "'Euphrates'", "'Fallujah'", "'Fertile Crescent'", "'Hussein'", "'Iraqi'", "'Lowlander'", "'Mesopotamian'", "'Nineveh'", "'Oilfields'", "'Sumerian'", "'Tigris'", "'Uruk'", "'Whore of Babylon'")>>
+	<<case "Irish">>
+		<<set _nickname = either("'Aisling'", "'British'", "'Carbomb'", "'Celtic Tiger'", "'Cork'", "'Culchie'", "'Dublin'", "'Eire'", "'Emerald'", "'Gaelic'", "'Hibernia'", "'I.R.A.'", "'Irish'", "'Irishwoman'", "'Jackeen'", "'Kilkenny'", "'Lassie'", "'Mick'", "'Paddy'", "'Potato Famine'", "'Riverdance'", "'Sinn Féin'", "'West'", "'Wintry'")>>
+	<<case "Israeli">>
+		<<set _nickname = either("'Acre'", "'Eretz Yisrael'", "'Gibeah'", "'God's Chosen'", "'Haifa'", "'Hebrew'", "'Holy Land'", "'Hoopoe'", "'Israeli'", "'Israelite'", "'Jacob'", "'Jaffa'", "'Jerusalem'", "'Jew'", "'Levantine'", "'Little Satan'", "'Merchant'", "'Oven Dodger'", "'Palestinian'", "'Sharmuta'", "'Shekels'", "'Shiksa'", "'Srulik'", "'Struggle with God'", "'Tel Aviv'", "'Zio'", "'Zionist'")>>
+	<<case "Italian">>
+		<<set _nickname = either("'Bologna'", "'Boot'", "'Eytie'", "'Florence'", "'Garibaldi'", "'Greaseball'", "'Italia Turrita'", "'Italian'", "'Latin'", "'Leaning Tower'", "'Mafia'", "'Milan'", "'Mussolini'", "'Naples'", "'Napoli'", "'Pasta'", "'Pizza'", "'Renaissance'", "'Roman'", "'Rome'", "'Salami'", "'Sicilian'", "'Spaghetti'", "'Terrone'", "'Turin'", "'Venice'", "'Wop'", "'Yearling'")>>
+	<<case "Ivorian">>
+		<<set _nickname = either("'Abidjan'", "'Baoulé'", "'Bingerville'", "'Bouaké'", "'Five and Six Stripes'", "'Grand-Bassam'", "'Houphouët-Boigny'", "'Ivorian'", "'Ivory'", "'Licorne'", "'Quaqua'", "'Teeth Coast'", "'Tusk'", "'Windward'", "'Yamoussoukro'")>>
+	<<case "Jamaican">>
+		<<set _nickname = either("'Ackee'", "'Arawak'", "'Cool Running'", "'Ganja'", "'Jamaican'", "'Jamdown'", "'Jamrock'", "'Kingston'", "'Kush'", "'Patois'", "'Port Royal'", "'Rasta'", "'Reggae'", "'Rock'", "'Spanish Town'", "'Springs'", "'West Indies'", "'Wood & Water'", "'Xaymaca'", "'Yardie'")>>
+	<<case "Japanese">>
+		<<set _nickname = either("'Amaterasu'", "'Anime'", "'Banzai'", "'Bishoujo'", "'Carp'", "'Fukushima'", "'Geisha Girl'", "'Hello Kitty'", "'Hirohito'", "'Hiroshima'", "'Hokkaido'", "'Ichiban'", "'Jap'", "'Japanese'", "'Kamikaze'", "'Karate'", "'Kawaii'", "'Kawasaki'", "'Kyoto'", "'Kyushu'", "'Manga'", "'Nagano'", "'Nagasaki'", "'Nagoya'", "'Nip'", "'Nipponese'", "'Osaka'", "'Otaku'", "'Persimmon'", "'Rising Sun'", "'Sapporo'", "'Sushi'", "'Tempura'", "'Tokyo'", "'Wasabi'", "'Xiao Riben'", "'Yakuza'", "'Yamaha'", "'Yamato Nadeshiko'", "'Yellow Cab'", "'Yokohama'")>>
+	<<case "Jordanian">>
+		<<set _nickname = either("'Ain Ghazal'", "'Al-Urdunn'", "'Amman'", "'Descent'", "'Edomite'", "'Hashemite'", "'Jordanian'", "'Mahanaim'", "'Mansaf'", "'Moab'", "'Oultrejordain'", "'Penuel'", "'Petra'", "'Transjordan'", "'Urdun'", "'Yarden'", "'Zarqa'")>>
+	<<case "Kazakh">>
+		<<set _nickname = either("'Alma-Ata'", "'Almaty'", "'Astana'", "'Blue Hat'", "'Borat'", "'Dombra'", "'Kazakh'", "'Kazakhstani'", "'Khan'", "'Nazarbayev'", "'Nomad'", "'Qyzylorda'", "'Semey'", "'Tulpar'")>>
+	<<case "Kenyan">>
+		<<set _nickname = either("'British East Africa'", "'Kenyan'", "'Kirinyaga'", "'Man-Eater'", "'Mau Mau'", "'Mombasa'", "'Nairobi'", "'Nyatiti'", "'Obama'", "'Ostrich'", "'Safari'", "'Swahili'", "'Tsavo'", "'Wanjiku'")>>
+	<<case "Kittitian">>
+		<<set _nickname = either("'Basseterre'", "'Charlestown'", "'Christopher'", "'Culturama'", "'Kittitian'", "'Kitty'", "'Lady of the Snows'", "'Leeward'", "'Liamuiga'", "'Nevis'", "'Nevisian'")>>
+	<<case "Korean">>
+		<<set _nickname = either("'Busan'", "'Chollima'", "'Daejeon'", "'Dokdo'", "'Gangnam'", "'Goyang'", "'Hamhung'", "'Hermit Queen'", "'Incheon'", "'Jeju'", "'K-Pop'", "'Kimchi'", "'Korean'", "'Lofty'", "'Morning Calm'", "'Nida'", "'Pyongyang'", "'Rocket Woman'", "'Samsung'", "'Seoul'")>>
+	<<case "Kosovan">>
+		<<set _nickname = either("'Blackbird'", "'Dardania'", "'Kosovan'", "'Kosovar'", "'Kosovo Maiden'", "'Metohija'", "'Pristina'", "'Prizren'", "'Serbian'", "'Thrush'", "'Ulpiana'")>>
+	<<case "Kurdish">>
+		<<set _nickname = either("'Ararat'", "'Hawler'", "'Iraqi'", "'Kurd'", "'Kurdish'", "'Kurdistani'", "'Mahabad'", "'Rojava'", "'Syrian'", "'Turkish'", "'Zaza'")>>
+	<<case "Kuwaiti">>
+		<<set _nickname = either("'Al Jahra'", "'Bani Utub'", "'Burgan'", "'Failaka'", "'Fortress'", "'Gulf War'", "'Hollywood of the Gulf'", "'Kadhima'", "'Kuwaiti'", "'Sabah'", "'Souk Al-Manakh'")>>
+	<<case "Kyrgyz">>
+		<<set _nickname = either("'Bishkek'", "'Forty'", "'Frunze'", "'Kirghizia'", "'Kyrgyz'", "'Kyrgyzstani'", "'Manas'", "'Osh'", "'Pishpek'", "'Tulip'", "'Urkun'")>>
+	<<case "Laotian">>
+		<<set _nickname = either("'Frangipani'", "'Indochina'", "'Lan Xang'", "'Lao'", "'Laotian'", "'Lava'", "'Luang Prabang'", "'Million Elephants'", "'Muang Khoun'", "'Muang Lao'", "'Pakxe'", "'Pathet Lao'", "'Vientiane'")>>
+	<<case "Latvian">>
+		<<set _nickname = either("'Baltic Tiger'", "'Blue Lake'", "'Daugavpils'", "'Jelgava'", "'Latgalian'", "'Latvian'", "'Lett'", "'Liepaja'", "'Livonia'", "'Riga'", "'Singing'", "'Ulmanis'")>>
+	<<case "Lebanese">>
+		<<set _nickname = either("'Abu Abed'", "'Beirut'", "'Byblos'", "'Canaanite'", "'Cedar'", "'Druze'", "'Hezbollah'", "'Lebanese'", "'Lebo'", "'Maronite'", "'Phoenician'", "'Snow-Capped'")>>
+	<<case "Liberian">>
+		<<set _nickname = either("'American Colonial'", "'Free'", "'Gbarnga'", "'Grain Coast'", "'Harper'", "'Kreyol'", "'Kru'", "'Liberian'", "'Liberty'", "'Maryland'", "'Mississippi-in-Africa'", "'Monrovia'", "'Pepper Coast'", "'Taylor'")>>
+	<<case "Libyan">>
+		<<set _nickname = either("'Awjila'", "'Benghazi'", "'Cyrene'", "'Gaddafi'", "'Jamahiriya'", "'Libu'", "'Libyan'", "'Mukhtar'", "'Silphium'", "'Sirte'", "'Tobruk'", "'Tripoli'", "'Zenga Zenga'")>>
+	<<case "a Liechtensteiner">>
+		<<set _nickname = either("'Alpine'", "'Austrian'", "'Gutenberg'", "'Liechtensteiner'", "'Light Stone'", "'Principal'", "'Rhine'", "'Schaan'", "'Schellenberg'", "'Vaduz'")>>
+	<<case "Lithuanian">>
+		<<set _nickname = either("'Amber'", "'Baltic Tiger'", "'Kaunas'", "'Kernavė'", "'Klaipėda'", "'Labas'", "'Leitis'", "'Lietuva'", "'Lithuanian'", "'Lugan'", "'Memel'", "'Mindaugas'", "'Pagan'", "'Rainy'", "'Unity'", "'Vilnus'", "'White Stork'")>>
+	<<case "Luxembourgian">>
+		<<set _nickname = either("'Ardennes'", "'Bureaucrat'", "'Esch-sur-Alzette'", "'Gëlle Fra'", "'Goldcrest'", "'Grand Duchess'", "'Little Castle'", "'Lucilinburhuc'", "'Luxembourger'", "'Luxembourgian'", "'Luxembourgish'", "'Passerelle'")>>
+	<<case "Macedonian">>
+		<<set _nickname = either("'Bitola'", "'Greek'", "'Highlander'", "'Macedon'", "'Macedonian'", "'Macedonist'", "'Ohrid'", "'Oro'", "'Paeonia'", "'Sarissa'", "'Serboman'", "'Skopianoi'", "'Skopje'", "'Stobi'", "'Tall One'", "'Yugoslav'")>>
+	<<case "Malagasy">>
+		<<set _nickname = either("'Antananarivo'", "'Baobab'", "'Fossa'", "'Great Red'", "'Hiragasy'", "'Imerina'", "'Lemur'", "'Madagascan'", "'Madagasikara'", "'Malagasy'", "'Mogadishu'", "'Ranavalona'", "'São Lourenço'", "'Toamasina'", "'Vazimba'", "'Zebu'")>>
+	<<case "Malawian">>
+		<<set _nickname = either("'Banda'", "'Blantyre'", "'Bororo'", "'Fire Water'", "'Flames'", "'Lilongwe'", "'Malawian'", "'Maravi'", "'Mzuzu'", "'Nyasaland'", "'Warm Heart of Africa'", "'Zomba'")>>
+	<<case "Malaysian">>
+		<<set _nickname = either("'Durian'", "'George Town'", "'Jakun'", "'Jementah'", "'Kuala Lumpur'", "'Malay Girl'", "'Malaya'", "'Malaysian'", "'Malingsia'", "'Malon'", "'Manglish'", "'Pirate'", "'Putrajaya'", "'Selangor'", "'Subang Jaya'", "'Zapin'")>>
+	<<case "Maldivian">>
+		<<set _nickname = either("'Addu'", "'Dhivehi'", "'Dhoni'", "'Dibajat'", "'Garland'", "'Gayoom'", "'Hithadhoo'", "'Mahiladiva'", "'Maldive'", "'Maldivian'", "'Malé'", "'Necklace'", "'Suvadive'")>>
+	<<case "Malian">>
+		<<set _nickname = either("'Azawad'", "'Bamako'", "'Djenné'", "'French Sudan'", "'Hippopotamus'", "'Malian'", "'Mandinka'", "'Mansa Musa'", "'Sahel'", "'Sikasso'", "'Timbuktu'", "'Trans-Sahara'", "'Tuareg'")>>
+	<<case "Maltese">>
+		<<set _nickname = either("'Birkirkara'", "'George Cross'", "'Għargħar'", "'Maltese Falcon'", "'Maltese'", "'Melita'", "'Mosta'", "'Pharaoh Hound'", "'Valletta'")>>
+	<<case "Marshallese">>
+		<<set _nickname = either("'Bikini Atoll'", "'Ebeye'", "'Enewetak'", "'Leroij'", "'Majuro'", "'Marshall'", "'Marshallese'", "'Rita'", "'Stick Chart'")>>
+	<<case "Mauritanian">>
+		<<set _nickname = either("'Akjoujt'", "'Arguin'", "'Coppolani'", "'Daddah'", "'Honorable Gift'", "'Imraguen'", "'Mauri'", "'Mauritanian'", "'Moor'", "'Nouadhibou'", "'Nouakchott'", "'Tamkartkart'")>>
+	<<case "Mauritian">>
+		<<set _nickname = either("'Chagos'", "'Cirne'", "'Dina Arobi'", "'Dodo'", "'Isle de France'", "'Mascarene'", "'Maurice'", "'Mauritian'", "'Moris'", "'Morisien'", "'Port Louis'", "'Star and Key'")>>
+	<<case "Mexican">>
+		<<set _nickname = either("'Acapulco'", "'Ahuehuete'", "'Alegoría de la Patria Mexicana'", "'Azteca'", "'Beaner'", "'Burrito'", "'Cartel'", "'China Poblana'", "'Chiquita'", "'Fence Hopper'", "'Guadalajara'", "'Hat Dance'", "'Headless'", "'Juarez'", "'Malinche'", "'Mamacita'", "'Mexica'", "'Mexican'", "'Monterrey'", "'Pelada'", "'Senorita'", "'Sinaloa'", "'Sunny'", "'Taco'", "'Tijuana'", "'Veracruz'", "'Wetback'")>>
+	<<case "Micronesian">>
+		<<set _nickname = either("'Caroline'", "'Chuuk'", "'F.S.M.'", "'Hailstone'", "'Kolonia'", "'Kosrae'", "'Micronesian'", "'Nan Madol'", "'Ngatikese'", "'Palikir'", "'Pohnpei'", "'Truk'", "'Weno'", "'Yap'")>>
+	<<case "Moldovan">>
+		<<set _nickname = either("'Aurochs'", "'Bălți'", "'Bessarabia'", "'Chișinău'", "'Dragoș'", "'Molda'", "'Moldavia'", "'Moldovan'", "'Tiraspol'", "'Voivode'", "'Wallachia'")>>
+	<<case "Monégasque">>
+		<<set _nickname = either("'Grace Kelly'", "'Grimaldi'", "'Hercules'", "'Liguria'", "'Monacan'", "'Monégasque'", "'Monte Carlo'", "'Single House'")>>
+	<<case "Mongolian">>
+		<<set _nickname = either("'Biyelgee'", "'Blue Sky'", "'Death Worm'", "'Genghis Khan'", "'Hun'", "'Mong'", "'Mongol'", "'Mongolian'", "'Mongoloid'", "'Tulpar'", "'Ulaanbaatar'", "'Yumjaagiin'")>>
+	<<case "Montenegrin">>
+		<<set _nickname = either("'Black Mountain'", "'Cetinje'", "'Crna Gora'", "'Fairy of Lovćen'", "'Montenegrin'", "'Mother Montenegro'", "'Nikšić'", "'Podgorica'")>>
+	<<case "Moroccan">>
+		<<set _nickname = either("'Agadir'", "'Barbary Lion'", "'Berber'", "'Casablanca'", "'Ceuta'", "'Fez'", "'Maghreb'", "'Marrakesh'", "'Meknes'", "'Melilla'", "'Moor'", "'Moroccan'", "'Oujda'", "'Rabat'", "'Tangier'", "'Walili'", "'Western Queen'")>>
+	<<case "Mosotho">>
+		<<set _nickname = either("'Basotho'", "'Basutoland'", "'Butha-Buthe'", "'Lesothan'", "'Lesotho Promise'", "'Maseru'", "'Moshoeshoe'", "'Mosotho'", "'Queen in the Sky'", "'San'", "'Sesotho'", "'Teyateyaneng'")>>
+	<<case "Motswana">>
+		<<set _nickname = either("'Bechuanaland'", "'Botswanan'", "'Equal'", "'Francistown'", "'Gaborone'", "'Jameson'", "'Kalahari'", "'Khama'", "'Mafeking'", "'Motswana'", "'Sedudu'", "'Tswana'")>>
+	<<case "Mozambican">>
+		<<set _nickname = either("'Beira'", "'Chibuene'", "'Gaza'", "'Lourenço Marques'", "'Machel'", "'Maputo'", "'Matola'", "'Mozambican'", "'Mussa Bin Bique'", "'Tufo'")>>
+	<<case "Namibian">>
+		<<set _nickname = either("'Brave'", "'Caprivi'", "'Herero'", "'Namaqua'", "'Namib'", "'Namibian'", "'Nothingness'", "'Otjimbingwe'", "'Rundu'", "'Shark Island'", "'Vastness'", "'Von Trotha'", "'Walvis Bay'", "'Windhoek'")>>
+	<<case "Nauruan">>
+		<<set _nickname = either("'Beachgoer'", "'Buada'", "'Denigomudu'", "'Meneng'", "'Nauruan'", "'Nawodo'", "'Onawero'", "'Phosphate'", "'Pleasant Island'", "'Yaren'")>>
+	<<case "Nepalese">>
+		<<set _nickname = either("'Cattle Herder'", "'Danphe'", "'Everest'", "'K2'", "'Kathmandu'", "'Kumari'", "'Nep'", "'Nepalese'", "'Nepali'", "'Newa'", "'Pashupati'", "'Pokhara'", "'Rhododendron'", "'Sagarmatha'", "'Sherpa'")>>
+	<<case "New Caledonian">>
+		<<set _nickname = either("'Belep'", "'Caillou'", "'Caldoche'", "'Chesterfield'", "'Cutter'", "'Grande Terre'", "'Granite'", "'Kanak'", "'Loyalty'", "'New Caledonian'", "'Nickel'", "'Nouméa'", "'Ouvéa'", "'Pine'", "'Sandalwood'", "'Tayo'")>>
+	<<case "a New Zealander">>
+		<<set _nickname = either("'All-Black'", "'Auckland'", "'Haka'", "'Hobbit'", "'Kiwi'", "'Kiwifruit'", "'Long White Cloud'", "'New Zealander'", "'Sheep Shagger'", "'Wellington'", "'Zealandia'")>>
+	<<case "Ni-Vanuatu">>
+		<<set _nickname = either("'Bislama'", "'Cargo Cult'", "'Espiritu Santo'", "'Great Cyclade'", "'Jane Frum'", "'Luganville'", "'Mobile Force'", "'New Hebride'", "'Ni-Vanuatu'", "'Port Vila'", "'Vanuatuan'")>>
+	<<case "Nicaraguan">>
+		<<set _nickname = either("'By the Water'", "'Contra'", "'Granada'", "'Guardabarranco'", "'Lakes and Volcanoes'", "'León'", "'Managua'", "'Mosquito'", "'Nica'", "'Nicaraguan'", "'Nicarao'", "'Nicotine Water'", "'Pinolera'", "'Sandinista'", "'Somoza'")>>
+	<<case "Nigerian">>
+		<<set _nickname = either("'Abuja'", "'Babangida'", "'Biafra'", "'Calabar'", "'Giant of Africa'", "'Igbo-Ukwu'", "'Kano'", "'Kukawa'", "'Kwara'", "'Lagos'", "'Naija'", "'Ngazargamu'", "'Niger Delta'", "'Nigerian'", "'Nok'", "'Obasanjo'", "'Ogoniland'", "'Onitsha'", "'Scammer'", "'Scrabble'")>>
+	<<case "Nigerien">>
+		<<set _nickname = either("'Agadez'", "'Flowing Water'", "'Kaocen'", "'Kountché'", "'Niamey'", "'Nigerien'", "'Nigérienne'", "'Sarraounia'", "'Songhai'", "'Tenere'", "'Zinder'")>>
+	<<case "Niuean">>
+		<<set _nickname = either("'Alofi'", "'Coconut'", "'Hakupu'", "'Niuean'", "'Patu-Iki'", "'Peniamina'", "'Rock of Polynesia'", "'Savage'", "'The Rock'")>>
+	<<case "Norwegian">>
+		<<set _nickname = either("'Bergen'", "'Black Metal'", "'Fjord'", "'Hallingdans'", "'Kuksuger'", "'Lillehammer'", "'Ludder'", "'Midnight Sun'", "'Norse'", "'Norsk'", "'Northern Way'", "'Northwoman'", "'Norwegian'", "'Oil Hog'", "'Ola'", "'Oslo'", "'Troll'", "'Trondheim'", "'Viking'")>>
+	<<case "Omani">>
+		<<set _nickname = either("'Al Ayn'", "'Al Batinah'", "'Al-Bar'ah'", "'Dhofar'", "'Empty Quarter'", "'Ibadi'", "'Ibadite'", "'Khanjar'", "'Muscat'", "'Omani'", "'Said'", "'Salalah'", "'Seeb'", "'Suhar'")>>
+	<<case "Pakistani">>
+		<<set _nickname = either("'Deodar'", "'Faisalabad'", "'Indus'", "'Islamabad'", "'Karachi'", "'Lahore'", "'Markhor'", "'Now or Never'", "'Pak'", "'Paki'", "'Pakistani'", "'PAKSTAN'", "'Pure'")>>
+	<<case "Palauan">>
+		<<set _nickname = either("'Airai'", "'Belau'", "'Enchanted'", "'Indirect Reply'", "'Koror'", "'Ngerulmud'", "'Palaos'", "'Palauan'", "'Peleliu'", "'Pelew'", "'Trinidad'", "'Ulong'")>>
+	<<case "Palestinian">>
+		<<set _nickname = either("'Dabke'", "'Gaza'", "'Hamas'", "'Hebron'", "'Intifada'", "'Israeli'", "'Jerusalem'", "'Palestinian'", "'Pallywood'", "'Philistine'", "'Ramallah'", "'River to Sea'", "'Samaria'", "'Shechem'", "'Tirzah'", "'West Bank'")>>
+	<<case "Panamanian">>
+		<<set _nickname = either("'Balboa'", "'Butterfly'", "'Caledonia'", "'Canalera'", "'Colón'", "'Harpy Eagle'", "'Istmeña'", "'Many Fish'", "'New Granada'", "'Noriega'", "'Pana'", "'Panama Canal'", "'Panamanian'", "'Tamborito'", "'Zonian'")>>
+	<<case "Papua New Guinean">>
+		<<set _nickname = either("'Black'", "'Bougainville'", "'Dugong'", "'Lae'", "'P.N.G.'", "'Papua New Guinean'", "'Papua'", "'Port Moresby'", "'Sing-Sing'", "'Sweet Potato'", "'Tok Pisin'", "'Unserdeutsch'")>>
+	<<case "Paraguayan">>
+		<<set _nickname = either("'Asunción'", "'Ciudad del Este'", "'Crown River'", "'Guaraní'", "'Heart of South America'", "'Lapacho'", "'Paraguayan'", "'River Water'", "'Stroessner'", "'Stronato'")>>
+	<<case "Peruvian">>
+		<<set _nickname = either("'Arequipa'", "'Beru'", "'Cain de Latinoamérica'", "'Cusco'", "'Incan'", "'Lima'", "'Lorcha'", "'Madre Patria'", "'Marinera'", "'Perucha'", "'Peruvian'", "'Trujillo'", "'Zampoña'")>>
+	<<case "Polish">>
+		<<set _nickname = either("'Hussar'", "'Katowice'", "'Kraków'", "'Kurwa'", "'Łódź'", "'Lublin'", "'Polack'", "'Polan'", "'Polandball'", "'Pole'", "'Polish'", "'Polonia'", "'Polski'", "'Pshek'", "'Virgin Soil'", "'Warsaw'")>>
+	<<case "Portuguese">>
+		<<set _nickname = either("'Braga'", "'Bunda'", "'Carnation'", "'Estado Novo'", "'Lisbon'", "'Lusitania'", "'Óbidos'", "'Patuleia'", "'Portagee'", "'Porto'", "'Portuguese'", "'Tuga'", "'Vira'")>>
+	<<case "Puerto Rican">>
+		<<set _nickname = either("'51st State'", "'Bayamón'", "'Boricua'", "'Borinquen'", "'Nuyorican'", "'P.R.'", "'Ponce'", "'Porto Rican'", "'Puerto Rican'", "'Puertorriqueña'", "'San Juan'", "'West Side Story'")>>
+	<<case "Qatari">>
+		<<set _nickname = either("'Al Da'asa'", "'Al Jazeera'", "'Al Khor'", "'Al Rayyan'", "'Al Wajbah'", "'Ardah'", "'Cadara'", "'Catara'", "'Catharrei'", "'Cutter'", "'Doha'", "'Qatari'", "'Thani'", "'Zubarah'")>>
+	<<case "Romanian">>
+		<<set _nickname = either("'Bucharest'", "'Ceaușescu'", "'Cluj-Napoca'", "'Constanța'", "'Dacian'", "'Dracula'", "'Gypsy'", "'Impaler'", "'Lynx'", "'Orphan'", "'Roma'", "'Roman'", "'România'", "'Romanian'", "'Transylvanian'", "'Vlad'", "'Wallachia'")>>
+	<<case "Russian">>
+		<<set _nickname = either("'Bolshevik'", "'Cabbage Eater'", "'Commie'", "'Double-Headed Eagle'", "'Kacap'", "'Katsap'", "'Mafiya'", "'Moscow'", "'Moskal'", "'Omsk'", "'Red Banner'", "'Rosuke'", "'Russian'", "'Russkie'", "'Saint Petersburg'", "'Shlyukha'", "'Siberian Kitten'", "'Sickle & Hammer'", "'Slav'", "'Soviet'", "'Stalin'", "'Suchka'", "'Suka'", "'Tovarish'", "'Tsar'", "'Tsaritsa'", "'Ulyanovsk'", "'Vodka'", "'Yekaterinburg'")>>
+	<<case "Rwandan">>
+		<<set _nickname = either("'Expanded'", "'Habyarimana'", "'Hotel Rwanda'", "'Hutu'", "'Kigali'", "'Leopard'", "'Muhanga'", "'Ruanda'", "'Rwandan'", "'Rwandese'", "'Thousand Hills'", "'Tutsi'")>>
+	<<case "Sahrawi">>
+		<<set _nickname = either("'Abdelaziz'", "'Berm'", "'Bir Lehlou'", "'Dakhla'", "'El-Aaiún'", "'Free Zone'", "'Laayoune'", "'Moroccan'", "'Polisario'", "'Sahraouian'", "'Sahrawi'", "'Sahrawian'", "'Spanish Sahara'", "'Tifariti'", "'Western Saharan'")>>
+	<<case "Saint Lucian">>
+		<<set _nickname = either("'Brigand'", "'Castries'", "'Gros Islet'", "'Helen of the West Indies'", "'Kwadril'", "'Lucia'", "'Lucy of Syracuse'", "'Saint Lucian'", "'Windward'")>>
+	<<case "Salvadoran">>
+		<<set _nickname = either("'Cuzcatlan'", "'Diamond'", "'Duarte'", "'Guanaca'", "'Indigo'", "'Izalco'", "'Maquilishuat'", "'Salvadoran'", "'Salvadoreña'", "'San Miguel'", "'San Salvador'", "'Savior'", "'Tomayate'", "'Xuc'")>>
+	<<case "Sammarinese">>
+		<<set _nickname = either("'Apennine'", "'Dogana'", "'Garage'", "'Monte Titano'", "'Most Serene'", "'Saint Marinus'", "'Sammarinese'", "'San Marinese'", "'Serravalle'", "'Three Towers'")>>
+	<<case "Samoan">>
+		<<set _nickname = either("'Apia'", "'Baumann'", "'Holy Center'", "'Mau'", "'Moa'", "'Nafanua'", "'Navigator'", "'Nu'uuli'", "'Pago Pago'", "'Samoan'", "'Savai'i'", "'Tafuna'", "'Taualuga'", "'Tupu'", "'Upolu'", "'Vaitele'", "'Wrestler'")>>
+	<<case "São Toméan">>
+		<<set _nickname = either("'Cocoa'", "'Elmina'", "'Forro'", "'Prince's Islander'", "'Príncipe'", "'Roças'", "'Saint Anthony'", "'Saint Thomas'", "'Santomean'", "'São Tomé'", "'São Toméan'")>>
+	<<case "Saudi">>
+		<<set _nickname = either("'Al Qaeda'", "'Burqa'", "'Constellation'", "'Diriyah'", "'Jeddah'", "'Mecca'", "'Medina'", "'Osama'", "'Riyadh'", "'Sandy'", "'Saud'", "'Saudi Arabian'", "'Saudi'", "'Zamzam'")>>
+	<<case "Scottish">>
+		<<set _nickname = either("'Aberdeen'", "'Bagpipes'", "'Braveheart'", "'British'", "'Edinburgh'", "'Gaelic'", "'Glasgow'", "'Hadrian'", "'Haggis'", "'Jock'", "'Lass'", "'Ned'", "'Nessie'", "'Pict'", "'Scot'", "'Scotswoman'", "'Scottish'", "'Teuchter'", "'Unicorn'")>>
+	<<case "Senegalese">>
+		<<set _nickname = either("'Balafon'", "'Baobab'", "'Casamance'", "'Dakar'", "'Gorée'", "'Kora'", "'Mbalax'", "'Our Boat'", "'Pirogue'", "'Roge Sene'", "'Senegalese'", "'Wolof'", "'Zenata'")>>
+	<<case "Serbian">>
+		<<set _nickname = either("'Belgrade'", "'Kolo'", "'Picka'", "'Plum'", "'Rascia'", "'Remove Kebab'", "'Serb'", "'Serbian'", "'Shkije'", "'Starčevo'", "'Triballi'", "'Vinča'", "'Vlach'", "'White Eagle'")>>
+	<<case "Seychellois">>
+		<<set _nickname = either("'Angela'", "'Blooming Flower'", "'Mahé'", "'René'", "'Seabird'", "'Séchelles'", "'Seselwa'", "'Seychellois'", "'Victoria'")>>
+	<<case "Sierra Leonean">>
+		<<set _nickname = either("'Blood Diamond'", "'Cuffee'", "'Freetown'", "'Friendly'", "'Hut Tax'", "'Krio'", "'Mountain Lioness'", "'Serra Lyoa'", "'Sierra Leonean'", "'Sierra'")>>
+	<<case "Singaporean">>
+		<<set _nickname = either("'Bedok'", "'City Lioness'", "'Durian'", "'Gardener'", "'Little Red Dot'", "'Merlion'", "'Pulau Ujong'", "'Raffles'", "'Sabana'", "'Singaporean'", "'Singlish'", "'Temasek'", "'Tumasik'")>>
+	<<case "Slovak">>
+		<<set _nickname = either("'Bratislava'", "'Bzdocha'", "'Czechoslovakia'", "'Shahrisabz'", "'Shlapka'", "'Slav'", "'Slovak'", "'Slovakian'", "'Slovensko'", "'Tatra Tiger'", "'Tiso'", "'Tuka'", "'Velvet'")>>
+	<<case "Slovene">>
+		<<set _nickname = either("'Carantanian'", "'Carinthian'", "'Hayrack'", "'Ljubljana'", "'Prince's Stone'", "'Slav'", "'Slovene'", "'Slovenian'", "'Stara Pravda'")>>
+	<<case "a Solomon Islander">>
+		<<set _nickname = either("'Guadalcanal'", "'Helpem Fren'", "'Honiara'", "'Lavinia'", "'Ophir'", "'Pijin'", "'Sandfly'", "'Solomon Islander'", "'Solomon'", "'Young Dick'")>>
+	<<case "Somali">>
+		<<set _nickname = either("'Barre'", "'Black Hawk Down'", "'Cattle Herder'", "'Dhaanto'", "'Laas Geel'", "'Mogadishu'", "'Pirate'", "'Samaale'", "'Skinnie'", "'Somali'", "'Somalian'", "'The Captain Now'", "'Zeila'")>>
+	<<case "South African">>
+		<<set _nickname = either("'Afrikaner'", "'Apartheid'", "'Azania'", "'Bloemfontein'", "'Boer'", "'Cape Town'", "'Durban'", "'Ekurhuleni'", "'Johannesburg'", "'Mandela'", "'Mzansi'", "'Port Elizabeth'", "'Pretoria'", "'Rainbow'", "'Rand'", "'Saffer'", "'Shaka'", "'Sharpeville'", "'South African'", "'Soweto'", "'Springbok'", "'Vuvuzela'")>>
+	<<case "South Sudanese">>
+		<<set _nickname = either("'Anyanya'", "'Fashoda'", "'Juba'", "'Mountain Sea'", "'Nilotic'", "'Nuba'", "'Referendum'", "'South Kordofan'", "'South Sudanese'", "'Sudd'", "'Yei'")>>
+	<<case "Spanish">>
+		<<set _nickname = either("'Barcelona'", "'Castellana'", "'Castilian'", "'Español'", "'Flamenco'", "'Franco'", "'Gallega'", "'Hyrax'", "'Iberian'", "'Jamon'", "'Madrid'", "'Monja'", "'Peninsular'", "'Senora'", "'Siesta'", "'Spaniard'", "'Spanish'", "'Toreadora'", "'Xarnega'")>>
+	<<case "Sri Lankan">>
+		<<set _nickname = either("'Anuradhapura'", "'Ceylon'", "'Colombo'", "'Golden'", "'Hela'", "'Holy'", "'Kandy'", "'Kotte'", "'Lanka'", "'Polonnaruwa'", "'Rawana'", "'Sri Lankan'", "'Tamil'")>>
+	<<case "Sudanese">>
+		<<set _nickname = either("'Black'", "'Darfur'", "'Gordon's Revenge'", "'Khartoum'", "'Kushite'", "'Mahdist'", "'North Sudanese'", "'Nubian'", "'Omdurman'", "'Sennar'", "'Sudanese'")>>
+	<<case "Surinamese">>
+		<<set _nickname = either("'Bouterse'", "'Dutch Guiana'", "'Guiana Shield'", "'Kaseko'", "'Lelydorp'", "'Mama Sranan'", "'Paramaribo'", "'Sranan Tongo'", "'Surinam'", "'Surinamer'", "'Surinamese'", "'Surinen'")>>
+	<<case "Swazi">>
+		<<set _nickname = either("'Eswatini'", "'Incwala'", "'Lobamba'", "'Manzini'", "'Mbabane'", "'Mswati'", "'Ngwane'", "'Swati'", "'Swazi'", "'Swazilander'", "'Umhlanga'")>>
+	<<case "Swedish">>
+		<<set _nickname = either("'Gothenburg'", "'Ikea'", "'Mother Svea'", "'Norse'", "'One's Own'", "'Stockholm'", "'Swede'", "'Sweden Yes'", "'Swedish'")>>
+	<<case "Swiss">>
+		<<set _nickname = either("'Alpine'", "'Banker'", "'Basel'", "'Bern'", "'Geneva'", "'Helvetia'", "'Lausanne'", "'Neutral'", "'Numbered Account'", "'Schlampe'", "'Sonderbund'", "'Swabian'", "'Swiss Miss'", "'Swiss'", "'Zürich'")>>
+	<<case "Syrian">>
+		<<set _nickname = either("'Aleppo'", "'Assad'", "'Dabke'", "'Damascus'", "'Eblan'", "'Hermon'", "'Homs'", "'Rojava'", "'Syriac'", "'Syrian'", "'Tahrir al-Sham'", "'Umayyad'")>>
+	<<case "Taiwanese">>
+		<<set _nickname = either("'Chiang'", "'Chinese'", "'Formosa'", "'Kaohsiung'", "'Kuomintang'", "'Liuqiu'", "'Middag'", "'Penghu'", "'Taichung'", "'Tainan'", "'Taipei'", "'Taiwanese'", "'Terraced'", "'Zeelandia'")>>
+	<<case "Tajik">>
+		<<set _nickname = either("'Aluminum'", "'Dehgān'", "'Dushanbe'", "'Fārsīwān'", "'Khujand'", "'Persian Tiger'", "'Rahmon'", "'Remittances'", "'Sarazm'", "'Sogdiana'", "'Tajik'", "'Tajikistani'")>>
+	<<case "Tanzanian">>
+		<<set _nickname = either("'Black Coast'", "'Dar es Salaam'", "'Dodoma'", "'Flat Island'", "'Joined Waters'", "'Maji Maji'", "'Tanganyika'", "'Tanzanian'", "'Tanzanite'", "'Tippu Tip'", "'Wilderness'", "'Zanzibar'")>>
+	<<case "Thai">>
+		<<set _nickname = either("'Ayutthaya'", "'Bangcock'", "'Bangkok'", "'Freedom'", "'Ladyboy'", "'Pattaya'", "'Phaya Naga'", "'Phra Siam Devadhiraj'", "'Rachapruek'", "'Royal Domain'", "'Siamese'", "'Smiley'", "'T-Girl'", "'Thai'")>>
+	<<case "Tibetan">>
+		<<set _nickname = either("'Buddhist'", "'Chamdo'", "'Chinese'", "'Chomolungma'", "'Dalai Lama'", "'Everest'", "'Himalayan'", "'Lhasa'", "'Monk'", "'Nagqu'", "'Nyingchi'", "'Shannan'", "'Shigatse'", "'Tibetan'", "'Tibetian'", "'Xizang'", "'Yarlung'")>>
+	<<case "Togolese">>
+		<<set _nickname = either("'Aného'", "'Behind the Sea'", "'By the Water'", "'Eyadéma'", "'Gnassingbé'", "'Lagoon'", "'Lomé'", "'Sokodé'", "'Togo Stick'", "'Togoland'", "'Togolese'", "'Togoville'")>>
+	<<case "Tongan">>
+		<<set _nickname = either("'Eendracht'", "'Friendly'", "'Lakalaka'", "'Neiafu'", "'Nuku'alofa'", "'Nukuleka'", "'Southern'", "'Tongan'", "'Tongatapu'", "'Tu'i Tonga'")>>
+	<<case "Trinidadian">>
+		<<set _nickname = either("'Chaguanas'", "'Flying Fish'", "'Holy Trinity'", "'Hummingbird'", "'Iere'", "'Limbo'", "'Port of Spain'", "'San Fernando'", "'Tobacco'", "'Tobago'", "'Tobagonian'", "'Trinbagonian'", "'Trini'", "'Trinidad'", "'Trinidadian'")>>
+	<<case "Tunisian">>
+		<<set _nickname = either("'Arab Spring'", "'Barbary'", "'Bourguiba'", "'Capsa'", "'Carthaginian'", "'Ifriqiya'", "'Punic'", "'Resting'", "'Sfax'", "'Tanith'", "'Tunis'", "'Tunisian'")>>
+	<<case "Turkish">>
+		<<set _nickname = either("'Ankara'", "'Bursa'", "'Constantinople'", "'Created'", "'Erdoğan'", "'Harem'", "'Harran'", "'Istanbul'", "'Izmir'", "'Kanake'", "'Kebab'", "'Ottoman'", "'Turk'", "'Turkette'", "'Turkish'", "'Turksmell'", "'Young Turk'")>>
+	<<case "Turkmen">>
+		<<set _nickname = either("'Almost Turk'", "'Ashgabat'", "'Iman'", "'Karakum'", "'Kyushtdepdi'", "'Merv'", "'Niyazov'", "'Pure Turk'", "'Turkmen'", "'Türkmenabat'", "'Turkmenistani'")>>
+	<<case "Tuvaluan">>
+		<<set _nickname = either("'Asau'", "'Curacoa'", "'Eight'", "'Ellice'", "'Funafuti'", "'Gran Cocal'", "'Mendaña'", "'Nui'", "'Tuvaluan'")>>
+	<<case "Ugandan">>
+		<<set _nickname = either("'Amin'", "'Buganda'", "'Bundle'", "'Bushbaby'", "'Cannibal'", "'Gulu'", "'Kampala'", "'Kony'", "'Museveni'", "'Omukama'", "'Uganda Martyr'", "'Ugandan'")>>
+	<<case "Ukrainian">>
+		<<set _nickname = either("'Bandera'", "'Borderland'", "'Chernobyl'", "'Chiki Briki'", "'Cossack'", "'Crimea'", "'Donbass'", "'Donetsk'", "'Euromaidan'", "'Hohlina'", "'Hohlushka'", "'Hopak'", "'Kharkiv'", "'Khokhol'", "'Kiev'", "'Kyiv'", "'Mamay'", "'Radioactive'", "'Salo'", "'Shlyukha'", "'Stalker'", "'Suchka'", "'Suka'", "'Svoboda'", "'Uke'", "'Ukrainian'", "'Ukrop'", "'Viburnum'")>>
+	<<case "Uruguayan">>
+		<<set _nickname = either("'Bird-River'", "'Blanca'", "'Bordaberry'", "'Charrúa'", "'Ciudad de la Costa'", "'Colorada'", "'Garra Charrúa'", "'Maldonado'", "'Montevideo'", "'Oriental'", "'Shellfish'", "'Terra'", "'Tupamaro'", "'Uruguayan'")>>
+	<<case "Uzbek">>
+		<<set _nickname = either("'Bukhara'", "'Free'", "'Namangan'", "'Samarkand'", "'Shahrisabz'", "'Silk Road'", "'Steppe Princess'", "'Steppe Queen'", "'Tashkent'", "'Timur'", "'Ubeki-beki'", "'Uzbek'", "'Uzbekistani'")>>
+	<<case "Vatican">>
+		<<set _nickname = either("'Altar Girl'", "'Catholic'", "'Crusader'", "'Deus Vult'", "'Holy See'", "'Italian'", "'Lateran'", "'Nun'", "'Papal'", "'Pontifical'", "'Pope Joan'", "'Prophet'", "'Roman'", "'Sistine'", "'Swiss Guard'", "'Vatican'")>>
+	<<case "Venezuelan">>
+		<<set _nickname = either("'Araguaney'", "'Bolívar'", "'Caracas'", "'Chavista'", "'Chola'", "'Grace'", "'Joropo'", "'Little Venice'", "'Maracaibo'", "'New Granada'", "'Revolutionary'", "'Socialist'", "'Valencia'", "'Venezuelan'", "'Vuvuzela'")>>
+	<<case "Vietnamese">>
+		<<set _nickname = either("'Charlie'", "'Da Nang'", "'Hanoi'", "'Ho Chi'", "'Indochina'", "'Me Love You Long Time'", "'Me So Horny'", "'Mỹ Lai'", "'Saigon'", "'V.C.'", "'Victor Charlie'", "'Viet Cong'", "'Viet'", "'Vietnamese'", "'Yuon'")>>
+	<<case "Vincentian">>
+		<<set _nickname = either("'Barrouallie'", "'Carib War'", "'Grenadine'", "'Hairouna'", "'Kingstown'", "'Soufrière'", "'Vincent'", "'Vincentian'", "'Vincy'", "'Windward'", "'Youloumain'")>>
+	<<case "Yemeni">>
+		<<set _nickname = either("'Aden'", "'Al-Bar'ah'", "'Arabia Felix'", "'Felicity'", "'Himyarite'", "'Houthi'", "'Khat'", "'Minaean'", "'Queen of the Desert'", "'Red Sea Pirate'", "'Sana'a'", "'Sheba'", "'Yemeni'", "'Yemenite'")>>
+	<<case "Zairian">>
+		<<set _nickname = either("'Authenticité'", "'Belgian Congo'", "'Boma'", "'Bongo'", "'Congolese'", "'Diamond'", "'Ebola'", "'Katanga'", "'Kinshasa'", "'Leopold'", "'Léopoldville'", "'Lubumbashi'", "'Okapi'", "'Rubber Farm'", "'South Kasai'", "'Zairean'", "'Zairian'")>>
+	<<case "Zambian">>
+		<<set _nickname = either("'Broken Hill'", "'Copperbelt'", "'Grand River'", "'Kabwe'", "'Kafue'", "'Kalambo'", "'Kaunda'", "'Kitwe'", "'Livingstone'", "'Lusaka'", "'Northern Rhodesia'", "'Victoria Falls'", "'Zambezi'", "'Zambian'")>>
+	<<case "Zimbabwean">>
+		<<if $activeSlave.race == "white">>
+			<<set _nickname = either("'Altena'", "'Bush War'", "'Colonizer'", "'Mabuno'", "'Minority Rule'", "'Rhodesian'", "'Rhodie'", "'Salisbury'", "'Southern Rhodesia'", "'Zimbabwean'")>>
+		<<else>>
+			<<set _nickname = either("'Bobojan'", "'Bulawayo'", "'Chimurenga'", "'Grimmy'", "'Harare'", "'Kaffir'", "'Mugabe'", "'Mujiba'", "'Nyombie'", "'Stone House'", "'Zimbabwean'", "'Zimbo'")>>
+		<</if>>
+	<<default>>
+		<<set _nickname = either("'Alien'", "'Hobo'", "'Homeless'", "'Immigrant'", "'International'", "'Nomad'", "'Refugee'", "'Stateless'", "'Wanderer'")>>
+	<</switch>>
+	<<set _situationDesc = "is $activeSlave.nationality. The slave trade is truly international, and no nation is unrepresented among the masses of sex slaves passed from hand to hand like the chattel they are. Most of the old nations are struggling, and even those still in great shape often find their citizens emigrating to the Free Cities. Some of these émigrés do well, and others become human livestock.">>
+	<<set _applyDesc = "is a little proud of $his national nickname, as a reminder of who $he was and a mark that $he still has an identity.">>
+	<<set _notApplyDesc = "realizes that $his new identity is truly stateless. In the Free Cities, it does not matter where a slave is from, so long as that slave has value. All slaves belong to the singular nation of the owned, the subordinated, the fucked.">>
+
+<<case "amerindian">>
+	<<set _nickname = either("'Aborigine'", "'Amerindian'", "'Casino'", "'Chug'", "'Deerskin'", "'Dreamcatcher'", "'Eskimo Sister'", "'Eskimo'", "'Firewater'", "'First Nations'", "'Indian Giver'", "'Indian'", "'Indigenous'", "'Indio'", "'Injun'", "'Ke-mo Sah-bee'", "'Malinche'", "'Métis Mother'", "'Moccasins'", "'Native'", "'Nitchie'", "'Peace Pipe'", "'Pocahontas'", "'Pole Smoker'", "'Powwow'", "'Prairie Nigger'", "'Red'", "'Redskin'", "'Reservation'", "'Savage'", "'Scalper'", "'Smoke Signal'", "'Spirit Animal'", "'Squaw'", "'Tiger Lily'", "'Timber Nigger'", "'Tipi Warmer'", "'Tonto'", "'Totem Pole'", "'Tribal'", "'Warpath'", "'Wigwam'")>>
+	<<set _situationDesc = "is amerindian, which is not uncommon given the poverty that still plagues those long-suffering peoples. Slaves casually reference race as much or more than free citizens. They absorb the racial peccadilloes of their owners, and many of them bring prejudices from the old world into their slave lives.">>
+	<<set _applyDesc = "now has a constant reminder that as a sex slave $he is judged on $his appearance first.">>
+	<<set _notApplyDesc = "may feel some gratitude due to your preference that $he not be defined by $his ethnicity, but this is counterbalanced by the increased independence your kindness inspires.">>
+
+<<case "asian">>
+	<<set _nickname = either("'3DPD'", "'Almond'", "'Asian'", "'Bamboo'", "'Charlie'", "'Chinese'", "'Ching Chong'", "'Chink'", "'Chopsticks'", "'Coolie'", "'Dink'", "'Dragon Lady'", "'E-Sports'", "'Fortune Cookie'", "'Fu Manchu'", "'Gook'", "'Heathen Chinee'", "'Jade Empress'", "'Manila'", "'Me Love You Long Time'", "'Me So Horny'", "'Oriental'", "'Pancake Face'", "'Pinoy'", "'Sideways'", "'Slant'", "'Slanteye'", "'Slope'", "'Squint'", "'Thaigirl'", "'Ting Tong'", "'Tokyo'", "'Waifu'", "'Yellow Fever'", "'Yellow Peril'", "'Yellow'", "'Zip'")>>
+	<<set _situationDesc = "is asian, which is not uncommon given the huge population of Asia and the poverty of many countries there. Slaves casually reference race as much or more than free citizens. They absorb the racial peccadilloes of their owners, and many of them bring prejudices from the old world into their slave lives.">>
+	<<set _applyDesc = "now has a constant reminder that as a sex slave $he is judged on $his appearance first.">>
+	<<set _notApplyDesc = "may feel some gratitude due to your preference that $he not be defined by $his ethnicity, but this is counterbalanced by the increased independence your kindness inspires.">>
+
+<<case "black">>
+	<<set _nickname = either("'African'", "'Afro'", "'Aunt Jemima'", "'B-Girl'", "'Basketball'", "'Black'", "'Blackass'", "'Blacked'", "'Blackie'", "'Bottom Bitch'", "'Burrhead'", "'Cocoa'", "'Coon'", "'Cotton'", "'Dark'", "'Darky'", "'Ebony'", "'Gangsta'", "'Ghetto'", "'His Girl Friday'", "'House Slave'", "'Jungle Bunny'", "'Jungle Fever'", "'Mammy'", "'Miss'", "'Missie'", "'Mulatto'", "'Mulignan'", "'N-Word'", "'Negro'", "'Negroid'", "'Never Go Back'", "'Nigga'", "'Nigger'", "'Porch Monkey'", "'Projects'", "'Quadroon'", "'Queen'", "'Rapper'", "'Sambo'", "'Sheboon'", "'Spade'", "'Spear Chucker'", "'Spook'", "'Uncle Tom'", "'Welfare Queen'")>>
+	<<set _situationDesc = "is black, which is not uncommon given the urban collapse afflicting the first world and the wars raging in Africa. Slaves casually reference race as much or more than free citizens. They absorb the racial peccadilloes of their owners, and many of them bring prejudices from the old world into their slave lives.">>
+	<<set _applyDesc = "now has a constant reminder that as a sex slave $he is judged on $his appearance first.">>
+	<<set _notApplyDesc = "may feel some gratitude due to your preference that $he not be defined by $his ethnicity, but this is counterbalanced by the increased independence your kindness inspires.">>
+
+<<case "indo-aryan">>
+	<<set _nickname = either("'Apu'", "'Aryan'", "'Babu'", "'Bhabhi'", "'Bindi'", "'Bollywood'", "'Brown'", "'Chakra'", "'Chandala'", "'Curry Muncher'", "'Desi'", "'Dot'", "'Dothead'", "'Durga'", "'Gyp'", "'Gypsy'", "'Hajji'", "'Hare Krishna'", "'Hindu'", "'Indian'", "'Indo-Aryan'", "'Indo'", "'Kali Maa'", "'Kama Sutra'", "'Kaur'", "'Mughal'", "'Offshore'", "'Paki'", "'Rajah'", "'Sati'", "'Sepoy'", "'Shanti'", "'Shopkeep'", "'Sikh'", "'Sim Sim Salabim'", "'Snake Charmer'", "'Subcontinental'", "'Swami'", "'Tigress'", "'Untouchable'", "'Yoga'", "'Zoroastrian'", "'Zott'")>>
+	<<set _situationDesc = "is indo-aryan, which is not uncommon given the poverty in many majority indo-aryan countries, and the near-submersion of some others due to rising sea levels. Slaves casually reference race as much or more than free citizens. They absorb the racial peccadilloes of their owners, and many of them bring prejudices from the old world into their slave lives.">>
+	<<set _applyDesc = "now has a constant reminder that as a sex slave $he is judged on $his appearance first.">>
+	<<set _notApplyDesc = "may feel some gratitude due to your preference that $he not be defined by $his ethnicity, but this is counterbalanced by the increased independence your kindness inspires.">>
+
+<<case "latina">>
+	<<set _nickname = either("'Adorada'", "'Arriba'", "'Banana Republic'", "'Bandita'", "'Barrio'", "'Beaner'", "'Brown'", "'Brownie'", "'Café'", "'Cartel'", "'Chica'", "'Chiquita'", "'Chola'", "'Coca'", "'Cuzinho'", "'Facil'", "'Fiery'", "'Fiesta'", "'Greaseball'", "'Greaser'", "'Hat Dance'", "'Hispanic'", "'Latin'", "'Latina'", "'Malinche'", "'Mamacita'", "'Mestiza'", "'Mexicali'", "'One Peso'", "'Piñata'", "'Rio Grande'", "'Salsa'", "'Señora'", "'Señorita'", "'Shakira'", "'Siesta'", "'South of the Border'", "'Spanish'", "'Spic'", "'Spicy'", "'Tacohead'", "'Tequila'", "'Wetback'", "'Yeyo'")>>
+	<<set _situationDesc = "is latina, which is not uncommon given the poor state of many Central and South American countries and the long diaspora of poor natives of those areas. Slaves casually reference race as much or more than free citizens. They absorb the racial peccadilloes of their owners, and many of them bring prejudices from the old world into their slave lives.">>
+	<<set _applyDesc = "now has a constant reminder that as a sex slave $he is judged on $his appearance first.">>
+	<<set _notApplyDesc = "may feel some gratitude due to your preference that $he not be defined by $his ethnicity, but this is counterbalanced by the increased independence your kindness inspires.">>
+
+<<case "malay">>
+	<<set _nickname = either("'Asian Nigger'", "'Austronesian'", "'Bumi'", "'Bumiputera'", "'Cinnamon'", "'Durian'", "'East Indies'", "'Flip-Flop'", "'Flying Fish'", "'Huan-a'", "'Indon'", "'Island Hopper'", "'Islander'", "'Jakun'", "'Keling'", "'Krakatoa'", "'Kunlun'", "'Lazy Day'", "'Madrasa'", "'Malay'", "'Malaysian'", "'Malingsia'", "'Malon'", "'Melayu'", "'Mesoindian'", "'My Lay'", "'Nāga'", "'Nutmeg'", "'Orang'", "'Pinoy'", "'Pribumi'", "'Rani'", "'Samudra Kidul'", "'Sandalwood'", "'Sarong Party'", "'Spice Girl'", "'Spice Islands'", "'Spice Trade'", "'Spice'", "'Trade Winds'", "'Treehouse'")>>
+	<<set _situationDesc = "is malay, which is not uncommon given the ongoing poverty in many majority malay countries, and the serious weather patterns savaging that part of the world. Slaves casually reference race as much or more than free citizens. They absorb the racial peccadilloes of their owners, and many of them bring prejudices from the old world into their slave lives.">>
+	<<set _applyDesc = "now has a constant reminder that as a sex slave $he is judged on $his appearance first.">>
+	<<set _notApplyDesc = "may feel some gratitude due to your preference that $he not be defined by $his ethnicity, but this is counterbalanced by the increased independence your kindness inspires.">>
+
+<<case "middle eastern">>
+	<<set _nickname = either("'Akbar'", "'Arab'", "'Arabian Nights'", "'Arabian'", "'Arabush'", "'Belly Dancer'", "'Bibi'", "'Bougnoule'", "'Brownie'", "'Caliph'", "'Camel Jockey'", "'Chai Girl'", "'Desert Sun'", "'Dune Coon'", "'Dune'", "'Durka Durka'", "'Emir'", "'Flying Carpet'", "'Genie'", "'Halal'", "'Harem Girl'", "'Hijabi'", "'Hookah Bar'", "'Imam'", "'Jasmine'", "'Jihadi'", "'Kebab'", "'Middle Eastern'", "'Mideastern'", "'Moromierda'", "'Oil Well'", "'Raghead'", "'Sand Nigger'", "'Sand'", "'Sandy'", "'Scheherazade'", "'Sheikh'", "'Soosmar-Khor'", "'Third Wife'", "'Towelhead'")>>
+	<<set _situationDesc = "is middle eastern, which is not uncommon given the interminable wars and disruptions in that part of the world. Slaves casually reference race as much or more than free citizens. They absorb the racial peccadilloes of their owners, and many of them bring prejudices from the old world into their slave lives.">>
+	<<set _applyDesc = "now has a constant reminder that as a sex slave $he is judged on $his appearance first.">>
+	<<set _notApplyDesc = "may feel some gratitude due to your preference that $he not be defined by $his ethnicity, but this is counterbalanced by the increased independence your kindness inspires.">>
+
+<<case "mixed race">>
+	<<set _nickname = either("'Bastard'", "'Chola'", "'Colonial'", "'Colored'", "'Creole'", "'Criss-Cross'", "'Crisscross'", "'Crossbreed'", "'Cur'", "'Diverse'", "'Diversity'", "'Hāfu'", "'Half and Half'", "'Half-breed'", "'Half-caste'", "'Hybrid'", "'Hyphenated'", "'Illegitimate'", "'Impure'", "'Integration'", "'Interracial'", "'Love Child'", "'Melting Pot'", "'Melungeon'", "'Mestiza'", "'Métis'", "'Miscegenation'", "'Mix'", "'Mixed Race'", "'Mixed Up'", "'Mixed'", "'Mongrel'", "'Mulatto'", "'Mule'", "'Multiracial'", "'Mutt'", "'Octaroon'", "'Pardo'", "'Quadroon'", "'Remix'", "'Swirl'", "'Zambo'")>>
+	<<set _situationDesc = "is mixed race, an ethnic makeup that has always been a target for abuse. Slaves of all races can find something about $him to dislike. They absorb the racial peccadilloes of their owners, and many of them bring prejudices from the old world into their slave lives.">>
+	<<set _applyDesc = "now has a constant reminder that as a sex slave $he is judged on $his appearance first.">>
+	<<set _notApplyDesc = "may feel some gratitude due to your preference that $he not be defined by $his ethnicity, but this is counterbalanced by the increased independence your kindness inspires.">>
+
+<<case "pacific islander">>
+	<<set _nickname = either("'Aloha'", "'Antipodean'", "'Atoll'", "'Austronesian'", "'Boong'", "'Boonga'", "'Breadfruit'", "'Coconut'", "'Conch Blower'", "'Grass Skirt'", "'Hori'", "'Hula Girl'", "'Hula Hoop'", "'Island Girl'", "'Island Hopper'", "'Islander'", "'Kanaka'", "'Lei'", "'Longpig'", "'Melanesian'", "'Micronesian'", "'Oceanian'", "'Oceanic'", "'Outrigger'", "'Pacific Islander'", "'Pacific'", "'Paradise'", "'Pasifika'", "'Pineapple'", "'Polynesian'", "'Sea'", "'Seashell'", "'South Pacific'", "'Tiki Torch'", "'Tourist Trap'", "'Ukulele'")>>
+	<<set _situationDesc = "is a pacific islander, which is not uncommon given wholesale destruction of many countries in that area by the worsening climate. Slaves casually reference race as much or more than free citizens. They absorb the racial peccadilloes of their owners, and many of them bring prejudices from the old world into their slave lives.">>
+	<<set _applyDesc = "now has a constant reminder that as a sex slave $he is judged on $his appearance first.">>
+	<<set _notApplyDesc = "may feel some gratitude due to your preference that $he not be defined by $his ethnicity, but this is counterbalanced by the increased independence your kindness inspires.">>
+
+<<case "semitic">>
+	<<set _nickname = either("'Abie'", "'Abrahamic'", "'Baal Worshipper'", "'Biblical'", "'Canaanite'", "'Dead Sea'", "'Golden Calf'", "'Good Samaritan'", "'Goy Toy'", "'Hebrew'", "'Heeb'", "'Holy land'", "'Hymie'", "'Inanna'", "'Ishtar'", "'Jew'", "'Kike'", "'Kosher'", "'Levantine'", "'Lilith'", "'Lost Ark'", "'Mocky'", "'Ms. Jew Booty'", "'Nephilim'", "'Oven Dodger'", "'Oy Vey'", "'Philistine'", "'Qedesha'", "'Rabbi'", "'Red Sea'", "'Salome'", "'Semite'", "'Semitic'", "'Sheeny'", "'Shylock'", "'Sodom and Gomorrah'", "'Triple Parentheses'", "'Whore of Babylon'", "'Yid'")>>
+	<<set _situationDesc = "is semitic, which is not uncommon given the many conflicts in countries with semitic minorities. Slaves casually reference race as much or more than free citizens. They absorb the racial peccadilloes of their owners, and many of them bring prejudices from the old world into their slave lives.">>
+	<<set _applyDesc = "now has a constant reminder that as a sex slave $he is judged on $his appearance first.">>
+	<<set _notApplyDesc = "may feel some gratitude due to your preference that $he not be defined by $his ethnicity, but this is counterbalanced by the increased independence your kindness inspires.">>
+
+<<case "southern european">>
+	<<set _nickname = either("'Aphrodite'", "'Aquiline'", "'Bella'", "'Classical'", "'Dago'", "'Doña'", "'Fine Wine'", "'Fuhgeddaboudit'", "'Garlic Breath'", "'Garlic Goon'", "'Ginzo'", "'Goomah'", "'Goombah'", "'Greaseball'", "'Greaser'", "'Grecian'", "'Guidette'", "'Guido'", "'Guinea'", "'Hand Talker'", "'Imperial'", "'Infamis'", "'Latin'", "'Lupa'", "'Mafioso'", "'Marble Column'", "'Mediterranean'", "'Mediterranid'", "'Meretrix'", "'Odalisque'", "'Olive Oil'", "'Olive'", "'Pizzahead'", "'Pope'", "'Riviera'", "'Roman Nose'", "'Roman'", "'Southern European'", "'Southie'", "'Toga Party'", "'Venus'", "'Wog'", "'Wop'")>>
+	<<set _situationDesc = "is southern european, which is not uncommon given the endemic corruption and political collapse in that part of the world. Slaves casually reference race as much or more than free citizens. They absorb the racial peccadilloes of their owners, and many of them bring prejudices from the old world into their slave lives.">>
+	<<set _applyDesc = "now has a constant reminder that as a sex slave $he is judged on $his appearance first.">>
+	<<set _notApplyDesc = "may feel some gratitude due to your preference that $he not be defined by $his ethnicity, but this is counterbalanced by the increased independence your kindness inspires.">>
+
+<<case "white">>
+	<<set _nickname = either("'Albino'", "'Ang Mo'", "'Bleached'", "'Casper'", "'Caucasian'", "'Caucasoid'", "'Cracker'", "'Cumskin'", "'Dixie'", "'Down Home'", "'Duchess'", "'Euro Trash'", "'Europa'", "'European'", "'Farang'", "'Ghost'", "'Grits'", "'Gweilo'", "'Hick'", "'Hillbilly'", "'Hollywood'", "'Honky'", "'Ice Monkey'", "'Ice Queen'", "'Klanswoman'", "'Mayo'", "'Memphis'", "'Pale'", "'Paleface'", "'Paleskin'", "'Pasty'", "'Peckerwood'", "'Princess'", "'Redleg'", "'Snowflake'", "'Sunburnt'", "'Top Dollar'", "'Valley Girl'", "'Vanilla'", "'Vegas'", "'White Bread'", "'White Devil'", "'White Trash'", "'White'", "'Whitey'", "'Wigger'", "'Wypipo'", "'Xanthochroic'", "'Yankee'")>>
+	<<set _situationDesc = "is white, which is not uncommon given the collapse of many erstwhile first world nations into depression and the proximity of many Free Cities to majority white areas. Slaves casually reference race as much or more than free citizens. They absorb the racial peccadilloes of their owners, and many of them bring prejudices from the old world into their slave lives.">>
+	<<set _applyDesc = "now has a constant reminder that as a sex slave $he is judged on $his appearance first.">>
+	<<set _notApplyDesc = "may feel some gratitude due to your preference that $he not be defined by $his ethnicity, but this is counterbalanced by the increased independence your kindness inspires.">>
+
+<<case "vaginalWhiner">>
+	<<set _nickname = either("'Crybaby'", "'Cunt Vise'", "'Pussy Bitch'", "'Pussy Pain'", "'Rape Bait'", "'Shallow'", "'Squealer'", "'Struggles'", "'Tight Cunt'", "'Vaginal Whiner'", "'Whiner'", "'Whiny'", "'Wuss'")>>
+	<<set _situationDesc = "has a tight pussy and not much skill using it. $He still gets fucked, which results in frequent painful situations for $him. $His moaning as $he takes a big dick earns $him the scorn of $his fellow slaves.">>
+	<<set _applyDesc = "is embarrassed by $his new nickname, and resolves to try harder to address $his lack of skill. $He hopes $he'll get better at sex soon, for $his own sake.">>
+	<<set _notApplyDesc = "is a little grateful you've decided to protect $him from the other slaves' mockery of $his sore little pussy. $He still wants to get better at sex, for $his own sake.">>
+
+<<case "analWhiner">>
+	<<set _nickname = either("'Anal Bitch'", "'Anal Whiner'", "'Ass Pain'", "'Ass Vise'", "'Butt Rape'", "'Crybaby'", "'Painal'", "'Squealer'", "'Struggles'", "'Tight Ass'", "'Whiner'", "'Whiny'", "'Wuss'")>>
+	<<set _situationDesc = "has a tight asshole and not much skill taking an anal fuck. $He still gets buttraped, which causes $him a great deal of anal pain. $His sobbing as $he takes a big dick up $his tight little asspussy earns $him the scorn of $his fellow slaves.">>
+	<<set _applyDesc = "is embarrassed by $his new nickname, and resolves to try harder to address $his lack of skill. $He hopes $he'll get better at buttsex soon, for $his own sake.">>
+	<<set _notApplyDesc = "is a little grateful you've decided to protect $him from the other slaves' mockery of $his sore little asshole. $He still wants to get better at buttsex, for $his own sake.">>
+
+<<case "girlish">>
+	<<set _nickname = either("'Ano'", "'Fashionista'", "'Girlish'", "'Girly'", "'Missie'", "'Model'", "'Runway'", "'Slender'", "'Slim'", "'Slip'", "'Supermodel'", "'Teen Idol'", "'Thin'", "'Tomboy'", "'Toothpick'", "'Youthful'", "'Zero'")>>
+	<<set _situationDesc = "has a trim form: $his assets are quite modest. The slave society of the Free Cities tends to follow average male desires, which is to say that many slaves find themselves augmented to very large proportions. It's natural that slaves required to carry such burdens should resent $him.">>
+	<<set _applyDesc = "is prouder of $his lithe form that $he was before, and is a little relieved at the added evidence that you don't plan to give $him major implants any time soon.">>
+	<<set _notApplyDesc = "realizes that $his form isn't necessarily due to some master plan and that you may see fit to change it; $he begins to regard the remote surgery with apprehension.">>
+
+<<case "flat">>
+	<<set _nickname = either("'A-Cup'", "'DFC'", "'Flat'", "'Flats'", "'Flatty'", "'Ironing Board'", "'Itty Bitty'", "'Kansas'", "'Mastectomy'", "'Mosquito Bites'", "'Pettanko'", "'Plank'", "'Tank Top'", "'Undersized'")>>
+	<<set _situationDesc = "has barely any breasts to speak of, $he is completely flat. The slave society of the Free Cities tends to follow average male desires, which is to say that many slaves find themselves carrying comically oversized breasts. It's natural that slaves required to carry such burdens should resent $him.">>
+	<<set _applyDesc = "further believes that chests should be deliciously flat, and is a little relieved at the added evidence that you don't plan to give $his breasts the size of $his head any time soon.">>
+	<<set _notApplyDesc = "realizes that $his form isn't necessarily due to some master plan and that you may see fit to change it; $he begins to regard the remote surgery with apprehension.">>
+
+<<case "loose">>
+	<<set _nickname = either("'Accommodating'", "'Blown Out'", "'Gaping'", "'Hallway'", "'Loose'", "'Loosey Goosey'", "'Noisy'", "'Open'", "'Overused'", "'Promiscuous'", "'Relaxed'", "'Roomy'", "'Sinkhole'", "'Size Queen'", "'Slit'", "'Sloppy'", "'Spacious'", "'Used'", "'Welcoming'", "'Whorish'", "'Wide Receiver'", "'Wideopen'")>>
+	<<set _situationDesc = "has taken a lot of dick. Enough dick that $his overused holes really show the mileage. $He can take the largest cock without a sigh.">>
+	<<set _applyDesc = "is proud of $his mileage, now that you've countenanced adding it to your name. Every cock $he's taken, $he's taken at your command.">>
+	<<set _notApplyDesc = "realizes that $he isn't special just because $he's been fucked so much, and understands that $he'll have to do $his best to fuck like a fresh teenager no matter how loose $he gets.">>
+
+<<case "trap">>
+	<<set _nickname = either("'Androgyne'", "'Androgynous'", "'Chai'", "'Ganymede'", "'Girldick'", "'He-She'", "'Ladyboy'", "'Otokonoko'", "'Shemale'", "'Sissy'", "'Spurt'", "'Switch'", "'Thai'", "'Trap'", "'Trappy'", "'Trick'")>>
+	<<set _situationDesc = "is a Free Cities sex slave, which makes $him female. It makes $him female despite several obvious physical issues, such as the fact that $he's got an androgynous figure, or the fact that $he has a penis. Neither of these makes any real difference when a cock gets shoved down $his throat or stuffed up $his butt, but they're hard not to notice.">>
+	<<set _applyDesc = "accepts that $he's a little piece of shemale property.">>
+	<<set _notApplyDesc = "will do $his best to serve as a nice little sex slave without explicit reference to how $he's put together, or $he'll be punished.">>
+
+<<case "micropenis">>
+	<<set _nickname = either("'Baby Dick'", "'Bitchdick'", "'Boyclit'", "'Chode'", "'Compensating'", "'Dicklet'", "'Gherkin'", "'Inchworm'", "'Little Dick'", "'Micro'", "'Micropenis'", "'Overcircumcised'", "'Rantallion'", "'Shorty'", "'Shrunken Head'", "'Teenie Weenie'", "'Tiny'", "'Toothpick'")>>
+	<<set _situationDesc = "is a Free Cities sex slave, which makes $him female. It's not immediately obvious from many angles that $he wasn't born that way, since $his penis is almost comically small. For $him, penetrative sex would be very limited, even if $he weren't a Free Cities slave and therefore a perpetual receptacle for dick.">>
+	<<set _applyDesc = "accepts the implicit mockery.">>
+	<<set _notApplyDesc = "is a little relieved to be protected from the mockery, even though $his tiny endowment mocks $him as it flops around whenever $he's used.">>
+
+<<case "implants">>
+	<<set _nickname = either("'Balloons'", "'Blown Up'", "'Blowup Doll'", "'Bolted-On'", "'Enhanced'", "'Expanded'", "'Fake'", "'Implanted'", "'Implants'", "'Plastic'", "'Plastique'", "'Silicone'")>>
+	<<set _situationDesc = "is full of breast implants. They're so large it's quite obvious they're fake, and the implications are clear: $He's a plastic slut, and the other slaves never tire of letting $him know it.">>
+	<<set _applyDesc = "accepts the implicit mockery, knowing that $his bimbo-esque body is what appeals to $his <<= WrittenMaster($activeSlave)>>.">>
+	<<set _notApplyDesc = "is relieved to be protected from the other slaves' mockery over $his implants, though $he's also a little sad $he can't take them as a kind of trademark.">>
+
+<<case "bimbo">>
+	<<set _nickname = either("'Airhead'", "'Barbie'", "'Bimbette'", "'Bimbo'", "'Bimboesque'", "'Bimbofied'", "'Blown Up'", "'Blowup Doll'", "'Brain Dead'", "'Broad'", "'Doxy'", "'Fake'", "'Floozie'", "'Fuck Toy'", "'Fuckmeat'", "'Plastic'", "'Plastique'", "'Sex Doll'", "'Silicone'", "'Tootsie'")>>
+	<<set _situationDesc = "is full of implants, and stupid beyond stupid. It's obvious $he's fake, and $his idiocy only confirms it: $He's a bimbo slut, and the other slaves never tire of mocking $him for it, not caring that $he doesn't notice.">>
+	<<set _applyDesc = "doesn't notice the mockery, only that $he now has a cute little nickname.">>
+	<<set _notApplyDesc = "would be thankful for this protection from the other slaves' mockery if $he saw it as such, or was smart enough to notice it.">>
+
+<<case "stupid">>
+	<<set _nickname = either("'Brain Dead'", "'Cretin'", "'Dropout'", "'Dumb'", "'Dumbass'", "'Dummy'", "'Idiot'", "'Intellectually Challenged'", "'Nimrod'", "'Retard'", "'Retarded'", "'Short Bus'", "'Straight F Grades'", "'Stupid'")>>
+	<<set _situationDesc = "is, quite simply, an uneducated dullard. Numerous slaves are a bit dumb, which makes it easier to break them, but $he takes the cake and throws it in the trash. Some of the other, smarter slaves, see fit to tease $him for it.">>
+	<<set _applyDesc = "accepts this mockery happily, as if $he doesn't recognize it for what it is.">>
+	<<set _notApplyDesc = "would be thankful for this protection from the other slaves' mockery if $he saw it as such, or was smart enough to notice it.">>
+
+<<case "smart">>
+	<<set _nickname = either("'Brainiac'", "'Bright'", "'Clever'", "'Einstein'", "'Geek'", "'Genius'", "'Graduate'", "'Honor Roll'", "'Nerd'", "'Poindexter'", "'Prodigy'", "'Professor'", "'Smart'", "'Smartass'", "'Smarty'", "'Straight A Grades'", "'Whiz'")>>
+	<<set _situationDesc = "is particularly brainy. A significant number of quality slaves are smart, but $he is especially so, and it shows. $He learns skills quicker, performs $his duties better, and can carry intellectual conversation if allowed. Other slaves deem this enough to mock $him.">>
+	<<set _applyDesc = "is proud of $his intellect, and pleased that you have made it a part of $his identity.">>
+	<<set _notApplyDesc = "accepts that $his intellect is merely of slight interest.">>
+
+<<case "chubby">>
+	<<set _nickname = either("'Ample'", "'BBW'", "'Bloated'", "'Chubby'", "'Chubster'", "'Chunky'", "'Curvy'", "'Double Wide'", "'Fat'", "'Feedee'", "'Hambeast'", "'Jabba'", "'Jiggles'", "'Jiggly'", "'Jumbo'", "'Landwhale'", "'Love Handles'", "'Plump'", "'Plush'", "'Rotund'", "'Rubenesque'", "'Thicc'", "'Thick'", "'Tubby'", "'Whale'")>>
+	<<set _situationDesc = "is carrying a little extra weight. The cruelty of life as a slave increases your property's willingness to do cruelty where they can get away with it — what is passed to them, they pass to others — so $he finds $himself mocked for $his size.">>
+	<<set _applyDesc = "knows that being fat makes $him less valuable on the market, but $he begins to accept that $he's going to have to put up with being chubby for now.">>
+	<<set _notApplyDesc = "believes that this means $he's going to have to lose weight soon, causing $him some trepidation.">>
+
+<<case "fat">>
+	<<set _nickname = either("'Bed Breaker'", "'Beluga'", "'Blimp'", "'Bloated'", "'Buffet Closer'", "'Chunky'", "'Cow'", "'Double Wide'", "'Extra Thicc'", "'Fat'", "'Fatass'", "'Fatso'", "'Fatty'", "'Feedee'", "'Hambeast'", "'Hippo'", "'Jabba'", "'Jiggles'", "'Jiggly'", "'Jumbo'", "'Lap Crusher'", "'Lardy'", "'Piggy'", "'Roller'", "'Scale Breaker'", "'Smothers'", "'SSBBW'", "'Thud'", "'Tubby'", "'Whale'")>>
+	<<set _situationDesc = "is carrying a lot of extra weight. The cruelty of life as a slave increases your property's willingness to do cruelty where they can get away with it — what is passed to them, they pass to others — so $he finds $himself mocked for $his size.">>
+	<<set _applyDesc = "knows that being obese makes $him less valuable on the market, but $he begins to accept that $he's going to have to put up with being fat for now.">>
+	<<set _notApplyDesc = "believes that this means $he's going to have to lose a lot of weight soon, causing $him some trepidation, though deep down $he hopes you'll just have it sucked out instead of making $him run.">>
+
+<<case "muscles">>
+	<<set _nickname = either("'Amazon'", "'Bodybuilder'", "'Buff'", "'Gargantua'", "'Giant'", "'Gunshow'", "'Gymrat'", "'Huge'", "'Muscle Barbie'", "'Muscles'", "'Muscular'", "'Prepare Yourself'", "'Protein Shake'", "'Red Sonja'", "'Ripped'", "'She-Hulk'", "'Snu-Snu'", "'Strong'", "'Tank'", "'Toned'", "'Warrior Queen'", "'Weightlifter'", "'Wonder Woman'")>>
+	<<set _situationDesc = "is a big $girl. $His huge muscles aren't to everyone's taste, but they're quite eye-catching, and give $him some interesting sexual possibilities that wouldn't work with, for example, a sex slave not capable of supporting $his own body weight on one hand for long periods. $He has become the object of mixed admiration and envy from your other stock.">>
+	<<set _applyDesc = "is happy with $his nickname; any embarrassment $he may have felt about looking like statuary becomes a jet of pride. $He's confident that this is the way you want $him.">>
+	<<set _notApplyDesc = "is a sex slave first, last, and always, no matter what $his one-rep max is.">>
+
+<<case "buttslut">>
+	<<set _nickname = either("'Anal Addict'", "'Anal'", "'Ass Pussy'", "'Assgasm'", "'Back Door'", "'Balloon Knot'", "'Bum-Love'", "'Butthole'", "'Buttslut'", "'Cornhole'", "'Greek'", "'Rear Entrance'", "'Rosebud'", "'Rump Pump'", "'Second Pussy'", "'Sodomite'", "'Sodomy'", "'Sphincter'", "'Swedish'")>>
+	<<set _situationDesc = "loves it up the butt, and $his tastes in sex are hard to miss. $He's a sex slave and takes it however it's given, but honest enjoyment is hard to fake and it's pretty obvious how much fun $he has when $he's bent over and buttfucked. $His typical come-on is to bend over, reach around to spread $his buttocks, and wink $his anus by alternately clenching and relaxing $his sphincter.">>
+	<<set _applyDesc = "knows that whatever the rest of $his slave life holds, it will involve $his slave rectum holding a lot of dick.">>
+	<<set _notApplyDesc = "understands that $he'll have to take what buttsex $he can get.">>
+
+<<case "butt toy">>
+	<<set _nickname = either("'Assplay'", "'Back Door'", "'Backside'", "'Behind'", "'Beso Negro'", "'Booty'", "'Butt Toy'", "'Buttcrack'", "'Butthole'", "'Buttjob'", "'Cheeky'", "'Hotdog'", "'Reach Around'", "'Rear End'", "'Rim Job'", "'Rump Roast'", "'Spanky'", "'Sphincter'", "'Stinky Pinky'", "'Tossed Salad'")>>
+	<<set _situationDesc = "loves it when attention is lavished on $his butt, even though $he has never done anal. $He's a sex slave and takes it however it's given, but honest enjoyment is hard to fake and it's pretty obvious how much fun $he has when a client is roughly groping $his rear. $His typical come-on is to 'accidentally' find $his client's dick hotdogged betwixt $his cheeks.">>
+	<<set _applyDesc = "knows that whatever the rest of $his slave life holds, it will involve an ever growing amount of attention to $his rear.">>
+	<<set _notApplyDesc = "understands that $he'll have to take what butt play $he can get.">>
+
+<<case "cumslut">>
+	<<set _nickname = either("'Bukkake'", "'Cocksucker'", "'Cum Dumpster'", "'Cum'", "'Cumfiend'", "'Cumslut'", "'Deep Throat'", "'Dicksuck'", "'Facepussy'", "'Fellatio'", "'Gobbler'", "'Gokkun'", "'Guzzler'", "'Hoover'", "'Lip Service'", "'Meat Smoker'", "'No Gag Reflex'", "'Pearl Necklace'", "'Pole Smoker'", "'Receptacle'", "'Semen Demon'", "'Succubus'", "'Sucker'", "'Swallows'", "'Third Pussy'", "'Throat Meat'", "'Throatclit'", "'Vacuum'", "'Vampire'")>>
+	<<set _situationDesc = "loves $him some cum. Most slaves have to put effort into showing enthusiasm when on their knees and presented with the second or third cock in a row. $He, on the other hand, maintains such a fetish for the stuff that $he'll often suck it out of other slaves' holes, if allowed.">>
+	<<set _applyDesc = "knows that as long as $he's your slave, $he'll get what $he needs.">>
+	<<set _notApplyDesc = "understands that cum is a luxury and $he'll have to savor what comes $his way naturally.">>
+
+<<case "submissive">>
+	<<set _nickname = either("'Acquiescent'", "'Bootlicker'", "'Bottom'", "'Clinger'", "'Doormat'", "'Face Down'", "'Follower'", "'Fuckee'", "'Gimp'", "'Humble'", "'Low Rung'", "'Meek'", "'Rapebait'", "'Secondary'", "'Servant'", "'Spineless'", "'Sub'", "'Submissive'")>>
+	<<set _situationDesc = "loves sexual submission. Whatever $he's doing, $he likes to be on the bottom. $He'd rather be facefucked than suck, and would rather take a dick than ride one. Some slaves look down on $his willingness to put $himself even farther below others, while some envy $his ability to enjoy things that they have to work to tolerate.">>
+	<<set _applyDesc = "pretends to accept $his new nickname obediently, but is secretly pleased by recognition of $his submissive nature.">>
+	<<set _notApplyDesc = "understands that being a submissive sex slave doesn't make $him special. All sex slaves must submit.">>
+
+<<case "humiliation">>
+	<<set _nickname = either("'Attention Whore'", "'Display Model'", "'Exhibitionist'", "'Flasher'", "'Flaunter'", "'Humiliated'", "'Humiliation'", "'Nudist'", "'Pornstar'", "'Public Display'", "'Rape'", "'Rapebait'", "'Shameless'", "'Showboat'", "'Showgirl'", "'Showoff'")>>
+	<<set _situationDesc = "loves to show off. Where other slaves would blush, get embarrassed, and wish they could cover themselves, $he blushes, gets aroused, and enjoys the stares. Most other slaves are jealous of $his predilections. Not many slaves naturally enjoy being fucked in public, and $he can get off on it.">>
+	<<set _applyDesc = "accepts $his new nickname without even pretending not to enjoy it. $He's proud to fuck in plain view, and $he wants everyone to know it. And fuck $him in plain view.">>
+	<<set _notApplyDesc = "understands that $he's a sex slave first, and must fuck in private like $he were fucking in public.">>
+
+<<case "veteran">>
+	<<set _nickname = either("'Cum Dumpster'", "'Cumdump'", "'Dirty'", "'Easy'", "'Experienced'", "'High Mileage'", "'Libertine'", "'Loose'", "'Overused'", "'Public Favorite'", "'Skank'", "'Slut'", "'Tired-Out'", "'Used'", "'Vet'", "'Veteran'", "'Village Bicycle'", "'Whore Queen'", "'Whore'", "'Worn'")>>
+	<<set _situationDesc = "has been with you for a while, and $he's gotten fucked a lot. Hundreds and hundreds of times over many weeks. Though $he does $his best, at times it can be obvious that there's very little that surprises $him any more. $He's forgotten more sexual experience than many of your other slaves remember.">>
+	<<set _applyDesc = "knows that you've noticed all $his hard work. Getting fucked day in and day out is harder than digging ditches, and $he's a veteran ditchdigger.">>
+	<<set _notApplyDesc = "understands that even though $he's been fucked so much, $he's still just meat; $he isn't special.">>
+
+<<case "cow">>
+	<<set _nickname = either("'Beefcake'", "'Bessie'", "'Bovine'", "'Cheesehead'", "'Cow'", "'Cowbell'", "'Creamy'", "'Dairy Queen'", "'Heifer'", "'Holstein'", "'Mega Milk'", "'Milk Cans'", "'Milk Factory'", "'Milk Fountain'", "'Milkmaid'", "'Milky Udders'", "'Milky'", "'Moo'", "'Udders'")>>
+	<<set _situationDesc = "is a good stock animal. $His body efficiently turns the cheap slave nutrition produced by your arcology into a never-ending river of rich milk.">>
+	<<set _applyDesc = "knows that $his future involves many hours having $his nipples gently tugged by a milking machine.">>
+	<<set _notApplyDesc = "understands that $he must continue to be a good milking slave, but that such duties do not necessarily define $him.">>
+
+<<case "novice">>
+	<<set _nickname = either("'Beginner'", "'Calamity'", "'Clumsy'", "'First Day'", "'Fresh Meat'", "'Fresh'", "'Freshman'", "'Fumbles'", "'Guppy'", "'Inexperienced'", "'Innocent'", "'New Kid'", "'Newbie'", "'Novice'", "'Rookie'", "'Slippery'", "'Sorry'", "'Tyro'")>>
+	<<set _situationDesc = "does $his best; $he really tries. But $he simply hasn't mastered the skills that more experienced sex slaves take for granted. Though this can be annoying and at times even painful, it is a source of occasional slapstick comedy.">>
+	<<set _applyDesc = "has a constant reminder that no matter how skilled a courtesan $he becomes, some of $his greatest hits will be told as amusing anecdotes for the rest of $his service.">>
+	<<set _notApplyDesc = "understands that what matters is not what $he did yesterday, or how much they liked it, but what $he does today, and how much they like it.">>
+
+<<case "Head Girl">>
+	<<set _nickname = either("'Boss'", "'Bossy'", "'Bottom Bitch'", "'Captain'", "'Chief'", "'Commander'", "'Deputy'", "'Favorite'", "'Head Girl'", "'Head Honcho'", "'Head'", "'House Slave'", "'Lieutenant'", "'Major'", "'Mistress'", "'Mrs.'", "'Number Two'", "'On Your Knees'", "'Overseer'", "'Prefect'", "'Second in Command'", "'Sergeant'", "'Top'", "'Understudy'", "'Vice'")>>
+	<<set _situationDesc = "occupies a place in the hierarchy of your penthouse that is certainly one which encourages nicknaming. Your other slaves view $him with mixed envy, adoration, emulation, and apprehension. $He is someone to curry favor with, to offer sexual favors, and at times someone to avoid. To the devoted slave $his closeness to you is enviable; to the rebellious slave $his alliance with you is traitorous.">>
+	<<set _applyDesc = "was already proud of and happy with $his exalted position, but now $he is all the more so. $He had always nursed the secret fear that this was temporary, but $his place at your right hand is now part of $his name.">>
+	<<set _notApplyDesc = "begins to fear a little that $he may one day be supplanted, since you did not think it right to make $his place a part of $his name.">>
+
+<<case "Concubine">>
+	<<set _nickname = either("'Beauty'", "'Bed Wench'", "'Bed'", "'Cicisbeo'", "'Co-Wife'", "'Cohabitant'", "'Common-Law'", "'Concubine'", "'Contessa'", "'Empress'", "'Fuck Buddy'", "'Girlfriend'", "'Goomah'", "'Grass Widow'", "'Harem Queen'", "'Kept'", "'Lover'", "'Master'", "'Missus'", "'Mistress'", "'Mrs.'", "'Paramour'", "'Partner'", "'Pilegesh'", "'Polygamized'", "'Princess'", "'Queen'", "'Side Piece'", "'Sidechick'", "'Spouse'", "'Strumpet'", "'Wife'", "'Wifelet'", "'Wifey'")>>
+	<<set _situationDesc = "occupies a place in the hierarchy of your penthouse that is certainly one which encourages nicknaming. Your other slaves view $him with mixed envy and admiration. $He has much of the luxury of the Head Girl and none of the responsibility, and all $he has to do for this exalted place is keep your sexual satisfaction as $his prime goal.">>
+	<<set _applyDesc = "was already proud of and happy with $his exalted position, but now $he is all the more so. $He had always nursed the secret fear that this was temporary, but $his place in your bed is now part of $his name.">>
+	<<set _notApplyDesc = "begins to fear a little that $he may one day be supplanted, since you did not think it right to make $his place a part of $his name.">>
+
+<<case "Attendant">>
+	<<set _nickname = either("'Attendant'", "'Bath Girl'", "'Bath'", "'Bathing Beauty'", "'Body Wrapper'", "'Healer'", "'Healing Hand'", "'Helping Hand'", "'Hot Springs'", "'Hot Tub'", "'Masseuse'", "'Mist Queen'", "'Misty'", "'Saunagirl'", "'Spa Day'", "'Spa Mother'", "'Spa'", "'Steam Queen'", "'Sweat Lodge'", "'Warm Water'")>>
+	<<set _situationDesc = "is loved by almost every slave in your penthouse. Getting a chance to go and spend some time in $his spa is a wonderful treat, for which slaves are willing to work very hard. $He's very willing to help them find sexual release, but mostly just provides minor care and an understanding ear for their troubles.">>
+	<<set _applyDesc = "enjoys helping your girls, and is happy to learn that the role is part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes helping your girls and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "Matron">>
+	<<set _nickname = either("'Amah'", "'Au Pair'", "'Ayah'", "'Baby Farmer'", "'Babysitter'", "'Caretaker'", "'Childminder'", "'Daycare'", "'Governess'", "'Houseparent'", "'Mama'", "'Matron'", "'Mommy'", "'Mother'", "'Nanny'", "'Nursemaid'", "'Nursery'", "'Orphanotrophos'", "'Pacifier'", "'Stork'", "'Supernanny'")>>
+	<<set _situationDesc = "has a very important role in ensuring the children in $arcologies[0].name grow up to be the perfect slaves for you.">>
+	<<set _applyDesc = "is excited and proud when $he learns that $his position in your arcology is a part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes taking care of the children and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "Madam">>
+	<<set _nickname = either("'Abbess'", "'Bawd'", "'Boss Bitch'", "'Brothel Queen'", "'Brothel-Keeper'", "'Fishmonger'", "'Flesh-Peddler'", "'Hustler'", "'Mack Mommy'", "'Madam'", "'Manager'", "'Middle Woman'", "'Miss Kitty'", "'Mother'", "'Nookie Bookie'", "'Operator'", "'Panderer'", "'Pimp Hand'", "'Pimp Queen'", "'Pimp'", "'Pimparella'", "'Procurer'", "'Procuress'", "'Queen Bitch'", "'Saleswoman'", "'Solicitor'", "'Third Party'", "'Trafficker'", "'Whore Queen'", "'Whorehousekeeper'", "'Whoremonger'")>>
+	<<set _situationDesc = "is in an unusually responsible and pragmatic position, for a slave. $He runs $his whores' lives with almost total control, overseeing the sale of their bodies day in, day out. Some resent $him, some love $him, but all depend on $him.">>
+	<<set _applyDesc = "enjoys running a whorehouse, and is happy to learn that the role is part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes running a whorehouse and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "DJ">>
+	<<set _nickname = either("'Arcology Idol'", "'Bass Drop'", "'Bass Slut'", "'Bass'", "'Bassgirl'", "'Beatmatcher'", "'Booth'", "'Celebutante'", "'Club Idol'", "'Club Princess'", "'Club Queen'", "'Deejay'", "'Disc Jockey'", "'Discaire'", "'DJ Whore'", "'DJ'", "'EP'", "'LP'", "'Mixer'", "'Music Master'", "'Radio'", "'Record Player'", "'Subwoofers'", "'SuperBass'", "'Turntables'")>>
+	<<set _situationDesc = "has a leadership role that requires decisiveness and discretion, but has to maintain a role of flirtatiousness and fun, at the same time. Other slaves marvel at how $he must give another slut orders one moment, and girlishly giggle at a prominent citizen the next.">>
+	<<set _applyDesc = "enjoys being one of the most idolized <<= $girl>>s in the arcology, and is happy to learn that the role is part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes being one of the most idolized <<= $girl>>s in the arcology and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "Recruiter">>
+	<<set _nickname = either("'Abductor'", "'Agent'", "'Cam Queen'", "'Cam'", "'Camgirl'", "'Collector'", "'Employer'", "'Fraudster'", "'Headhunter'", "'Honeypot'", "'Honeytrap'", "'Interviewer'", "'Job Fair'", "'Kidnapper'", "'Recruiter'", "'Recruitment Tool'", "'Scout'", "'Slavecatcher'", "'Slaver'", "'Snake'", "'Spider'", "'Trapper'", "'Trickster'")>>
+	<<set _situationDesc = "is fundamentally a liar, in $his role as recruiter. $He must constantly lie by omission if not by commission, telling everyone interested in slavery all about everything good about being your slave, while leaving out the fundamental reality of sexual servitude.">>
+	<<set _applyDesc = "enjoys seeing girls go from faces on a screen to fellow fuckslaves, and is happy to learn that the role is part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes making girls go from faces on a screen to fellow fuckslaves and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "Wardeness">>
+	<<set _nickname = either("'Boss'", "'Captor'", "'Chief'", "'Cop'", "'Copper'", "'Dogcatcher'", "'Governor'", "'Inquisitrix'", "'Interrogatrix'", "'Jail'", "'Jaileress'", "'Keeper'", "'Nightstick'", "'Officer'", "'Overseer'", "'Prison Queen'", "'Prison'", "'Rapist'", "'Screw'", "'Sheriff'", "'Snake'", "'Spider'", "'Stoolie'", "'Turnkey'", "'Warden'", "'Wardeness'")>>
+	<<set _situationDesc = "has perhaps the most hated role among your slaves. $His charges hate $him, of course. But almost every slave who was once one of $his charges hates $him too, for they have not forgotten how $his whim was once the law to them.">>
+	<<set _applyDesc = "enjoys having a row of cells full of slaves to abuse, and is happy to learn that the role is part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes having a row of cells full of slaves to abuse and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "Milkmaid">>
+	<<set _nickname = either("'Cattle Driver'", "'Cowgirl'", "'Cowhand'", "'Cowpoke'", "'Cream Queen'", "'Dairy Queen'", "'Dairy'", "'Farm'", "'Milker'", "'Milking Machine'", "'Milkmaid'", "'Milktugger'", "'Milkwoman'", "'Rancher'", "'Squeezer'", "'Strong Hands'", "'Teat Puller'", "'Udder Lover'")>>
+	<<set _situationDesc = "has a physically demanding and emotionally rewarding role. It's hard work, hauling milk and shifting cows all day, but $his stock love $him. It's hard not to love someone when you depend on them so totally.">>
+	<<set _applyDesc = "enjoys being a milkmaid, despite the tough work, and is happy to learn that the role is part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes being a milkmaid, despite the tough work, and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "Farmer">>
+	<<set _nickname = either("'Agriculturalist'", "'Country'", "'Cropper'", "'Farmer'", "'Feeder'", "'Fertilizer'", "'Gardener'", "'Green Thumb'", "'Harvest Moon'", "'Harvester'", "'Hay Bale'", "'Hick'", "'Laborer'", "'Old McDonald'", "'Peasant'", "'Pesticide'", "'Planter'", "'Rancher'", "'Reaper'", "'Redneck'", "'Rural'", "'Sharecropper'", "'Sower'", "'Tender'", "'Tiller'", "'Tractor Pull'")>>
+	<<set _situationDesc = "has a very physically demanding role. It's hard work, tending to crops and animals all day, but $he loves it.">>
+	<<set _applyDesc = "enjoys being a farmer, despite the constant manual labor, and is happy to learn that the role is part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes being a farmer, despite the constant manual labor, and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "Collectrix">>
+	<<set _nickname = either("'Anal Retentive'", "'Ass Fiend'", "'Booty Warrior'", "'Buggerer'", "'Buttfucker'", "'Collectrix'", "'Cum Queen'", "'Extractrix'", "'Fucker'", "'Fudge Packer'", "'Milker'", "'Orgasmotron'", "'Prostate Masseuse'", "'Prostate Poker'", "'Rear Poker'", "'Sod Off'", "'Sodomizer'")>>
+	<<set _situationDesc = "is required to fuck more exhaustingly than any other slave in the arcology. It's one thing to take dick all day; it's quite another to be expected to constantly massage prostates to orgasm. Naturally, the other slaves notice.">>
+	<<set _applyDesc = "really enjoys being expected to bone butts constantly, and is happy to learn that the role is part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes being expected to bone butts constantly and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "Schoolteacher">>
+	<<set _nickname = either("'Classroom'", "'Dean'", "'Educator'", "'Extra Credit'", "'Headmistress'", "'Pedagogue'", "'Principal'", "'Profesora'", "'Professor'", "'Ruler'", "'Schoolmarm'", "'Schoolmistress'", "'Schoolteacher'", "'Sensei'", "'Shiny Apple'", "'Teach'", "'Teacher'", "'Tutor'")>>
+	<<set _situationDesc = "might consider $his role boring, if $he weren't allowed to use sexual abuse as a correction for poor attentiveness. As it is, $his sexual aggressiveness draws much open comment and some private infatuation from the students.">>
+	<<set _applyDesc = "likes teaching, especially because $he's allowed to use the students, and is happy to learn that the role is part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes teaching, especially because $he's allowed to use the students, and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "Nurse">>
+	<<set _nickname = either("'Candy Striper'", "'Doc'", "'Doctor'", "'Dr.'", "'Healer'", "'Hospital Hottie'", "'Life Support'", "'M.D.'", "'Medic'", "'Medicine Woman'", "'Nurse'", "'Pill Peddler'", "'Pill Pusher'", "'Placebo'", "'Practitioner'", "'Quack'", "'Sawbones'", "'Snake Oil'", "'Surgeon'")>>
+	<<set _situationDesc = "might consider $his role boring, if $he weren't allowed to use sexual abuse as a correction for poor health. As it is, $his sexual aggressiveness draws much open comment and some private infatuation from the patients.">>
+	<<set _applyDesc = "likes being a nurse, especially because $he's allowed to use the patients, and is happy to learn that the role is part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes being a nurse, especially because $he's allowed to use the patients, and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "Lurcher">>
+	<<set _nickname = either("'Athlete'", "'Bloodhound'", "'Bloodsport'", "'Cardio'", "'Catcher'", "'Courser'", "'Fetch'", "'First Place'", "'Greyhound'", "'Hound'", "'Hunter'", "'Lurcher'", "'Poacher'", "'Race Queen'", "'Racehound'", "'Racer'", "'Runner'", "'Sighthound'", "'Speedy'", "'Sprinter'", "'Tackler'")>>
+	<<set _situationDesc = "is a lurcher in the regular coursing races held by the Coursing Association. The slaves fortunate enough to have never experienced these events learn of them through hearsay, so $his position comes with a great deal of both infamy and envy">>
+	<<set _applyDesc = "likes being a lurcher, especially because of what $he's allowed to do to captured hares, and is happy to learn that the role is part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes being a lurcher, especially because of what $he's allowed to do to captured hares, and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "Stewardess">>
+	<<set _nickname = either("'Chamberlain'", "'Clean Queen'", "'Concierge'", "'Head Maid'", "'Head Servant'", "'Housekeeper'", "'Housemistress'", "'Inspectrix'", "'Maid Boss'", "'Majordomo'", "'Martinet'", "'Perfectionist'", "'Sanitizer'", "'Scrubber'", "'Stewardess'", "'Top Mop'")>>
+	<<set _situationDesc = "might consider $his role boring, if $he weren't allowed to use sexual abuse as a correction for poor work. As it is, $his sexual aggressiveness draws much open comment and some private infatuation from the servants.">>
+	<<set _applyDesc = "likes being in charge of household tasks, especially because $he's allowed to use the servants, and is happy to learn that the role is part of $his name now.">>
+	<<set _notApplyDesc = "is a bit sad that $his role isn't part of $his name, since $he likes being in charge of household tasks, especially because $he's allowed to use the servants, and now wonders whether $he'll be allowed to keep doing so.">>
+
+<<case "Bodyguard">>
+	<<set _nickname = either("'Aegis'", "'Amazon'", "'Athena'", "'Battle'", "'Bloody'", "'Body Armor'", "'Bodyguard'", "'Diana'", "'Guard'", "'Gunsmoke'", "'Hired Gun'", "'Mercenary'", "'Officer'", "'Paladin'", "'Protection'", "'Secret Service'", "'Security'", "'Soldier'", "'Terminatrix'", "'Threat Neutralizer'", "'Warrior'", "'Widow'")>>
+	<<set _situationDesc = "divides your other slaves. $He is a physically intimidating sight, wearing normal slave attire and obviously sexually available, but also carrying a sword across $his back and an automatic weapon at $his hip. Some revere $his unique position of responsibility, while others mock how far $he steps outside the bounds of sexual slavery.">>
+	<<set _applyDesc = "knew a while ago that $he was likely to spend some time shadowing your every move. But now, $he understands that not only is your life in $his hand<<if hasBothArms($activeSlave)>>s<</if>>, it is going to remain so. $He is almost awed by the responsibility.">>
+	<<set _notApplyDesc = "realizes to $his apprehension that $he may someday be a simple sex slave again, respected for $his holes rather than for $his swords<<= $woman>>ship.">>
+
+<<case "server">>
+	<<set _nickname = either("'Bedwarmer'", "'Bottom Rung'", "'Bottom'", "'Doormat'", "'Girltoy'", "'Group Whore'", "'House Slave'", "'Kick Me'", "'Lovergirl'", "'Please No'", "'Rapebait'", "'Servant'", "'Server'", "'Servile'", "'Slave Slut'", "'Sub'", "'Submissive'")>>
+	<<set _situationDesc = "holds a place in the hierarchy of your penthouse that almost demands a nickname. $He is the lowest of the low, below even your other slaves. $He is a pitiable creature, living with a large number of sexually charged people, slave and free, all of whom have the right to demand any sexual service they wish of $him.">>
+	<<set _applyDesc = "has become almost proud of $his strange, exhausting situation. $Hers is not the struggle of slaves to know their place, for $he knows $hers. It is on the bottom.">>
+	<<set _notApplyDesc = "begins to hope a little that maybe $he can rise beyond $his current station.">>
+
+<<case "nipples">>
+	<<set _nickname = either("'Bullets'", "'Buttons'", "'Cold Weather'", "'Dicknipples'", "'Erect'", "'Eye Hazard'", "'Milk Taps'", "'Nipples'", "'Nippy'", "'Nips'", "'Pointers'", "'Pointy'", "'Pokers'", "'Puffy'", "'Spikes'", "'Teats'", "'THO'", "'Tips'", "'Titclits'")>>
+	<<set _situationDesc = "has a pair of nipples that are hard to ignore. Whenever $he's sexually aroused, they jut proudly from $his chest. As a result, it's totally impossible for $him to conceal arousal. When $he's ready for it, $his big nipples let the whole world know $he's easy.">>
+	<<set _applyDesc = "is proud of the nickname, almost amusingly so. $He flaunts $his nipples in a way $he didn't before.">>
+	<<set _notApplyDesc = "accepts that $his nipples are just another part of $him, and that if $he pokes those who fuck $him in the missionary position a little, that's all right.">>
+
+<<case "nippleCunts">>
+	<<set _nickname = either("'Areola Hole'", "'Bonus Holes'", "'Cuntnipples'", "'Fuck Ducts'", "'Fuckable Nipples'", "'Milk Ducts'", "'Nip Holes'", "'Nip Slipped'", "'Nipple Cunts'", "'Nipple Fucked'", "'Nipplejob'", "'Nippussy'", "'Titjob'")>>
+	<<set _situationDesc = "has a pair of unassuming nipples that hide an unusual secret: They can take a dick as well as any other hole can. This previously impossible talent is a source of both envy and disgust, and as such, $he often finds $himself in the center of any breast based discussion.">>
+	<<set _applyDesc = "is proud of the nickname, almost amusingly so. $He flaunts $his fuckable nipples in a way $he didn't before.">>
+	<<set _notApplyDesc = "accepts that $his nipples are just another pair of fuckable holes in $his body, nothing more.">>
+
+<<case "areolae">>
+	<<set _nickname = either("'Areolae'", "'Areolar'", "'Areolas'", "'Broad Based'", "'Cans'", "'Dark Circles'", "'Dinner Plates'", "'Flapjacks'", "'Fried Eggs'", "'Headlamps'", "'Headlights'", "'Highbeams'", "'Pancakes'", "'Pepperoni'", "'Rounders'")>>
+	<<set _situationDesc = "has areolae broader than many slaves' entire breasts. Some slaves find them unattractive, making them an easy target for mockery; others like them, and playfully torment $him by giving $him a nickname based on them.">>
+	<<set _applyDesc = "is proud of the nickname, almost amusingly so. $He flaunts $his lovely broad areolae happily, the nipples in their centers hard.">>
+	<<set _notApplyDesc = "accepts that $his broad areolae are just another part of $him, just like $his big tits.">>
+
+<<case "lips">>
+	<<set _nickname = either("'Beestung'", "'Cakehole'", "'Chops'", "'DSLs'", "'Ducklips'", "'Facepussy'", "'Fat Lips'", "'Kisser'", "'Kissing Booth'", "'Kissy'", "'Lip Gloss'", "'Lippy'", "'Lips'", "'Lipstick'", "'Mwah'", "'Pillows'", "'Rims'", "'Smackers'", "'Smooches'", "'Soup Coolers'", "'Sucker'", "'Suckles'", "'Sucky-Sucky'")>>
+	<<set _situationDesc = "has lovely lips. They're so big $he can hardly talk straight, and they even hinder $his ability to communicate any facial expression other than a desire to be facefucked. This is appropriate, as $he spends a lot of time getting facefucked.">>
+	<<set _applyDesc = "accepts that $his big lips define $him. Even more than before, $he presents $his mouth for oral sex whenever $he flirts, and $he views $his throat as $his primary sexual organ.">>
+	<<set _notApplyDesc = "accepts that $his mouth is only one of $his holes, and that as a sex slave $he'll be taking cock in all of them, even if $his lips are huge.">>
+
+<<case "mark">>
+	<<set _nickname = either("'Ass Kisser'", "'Breeder'", "'Chosen'", "'Conceited'", "'Connections'", "'Elite Breeder'", "'Elite'", "'Elitist'", "'Eugenicist'", "'Favors'", "'High and Mighty'", "'Lucky'", "'Mark'", "'Marked'", "'Nepotist'", "'Pedigree'", "'Privileged'", "'Special'")>>
+	<<set _situationDesc = "is an Elite Breeder. $He has permanently been marked as the mother of society's children. If $he isn't currently swelling with life, $he will be soon. However, $he is also granted special benefits befitting the mother of future generations of gifted children.">>
+	<<set _applyDesc = "takes pride in $his new nickname and the bond it displays between $him and $his sire. $He has to make sure that it doesn't go to $his head, though.">>
+	<<set _notApplyDesc = "understands that $he is expected to obey and fuck just like any of your other slaves, regardless of $his status as a breeder.">>
+
+<<case "broodmother">>
+	<<set _nickname = either("'Baby Factory'", "'Bakery'", "'Bloated'", "'Breeder'", "'Broodmother'", "'Factory'", "'Mother'", "'Naedoko'", "'Nursery'", "'Seeded'", "'Stuffed'")>>
+	<<set _situationDesc = "is a Broodmother. $His belly is enormous, unavoidable evidence that $his life has been dedicated to carrying children. $His taut belly is stuffed with $his brood and barely gets smaller with every child born from $him.">>
+	<<set _applyDesc = "takes a bit of solace from $his new hope in $his nickname that $he will be kept in good shape and not have to worry about $his pregnancy draining $him, but also a bit of fear from $his suspicion that $he'll remain this way until $he's out of eggs.">>
+	<<set _notApplyDesc = "understands that $he is expected to obey, work, and fuck just like any of your other slaves, regardless of how big $his pregnancy is.">>
+
+<<case "hyperbroodmother">>
+	<<set _nickname = either("'Baby Factory'", "'Bakery'", "'Bloated'", "'Breeder'", "'Broodmother'", "'Bursting'", "'Factory'", "'Hyperbroodmother'", "'Mother'", "'Naedoko'", "'Nursery'", "'Seedbed'", "'Seeded'", "'Stuffed'", "'Tentacle Raped'")>>
+	<<set _situationDesc = "is a Broodmother. $His belly is enormous, unavoidable evidence that $his life has been dedicated to carrying children. $His taut belly constantly bulges and squirms from $his brood writhing within $him and it is a very real possibility that $he may pop.">>
+	<<set _applyDesc = "takes a bit of solace from $his new hope in $his nickname that $he will be kept in good shape and not have to worry about $his pregnancy draining $him, but also a bit of fear from $his suspicion that $he'll remain this way until $he dies or $his body is used up.">>
+	<<set _notApplyDesc = "understands that $he is expected to obey, work, and fuck just like any of your other slaves, regardless of how big $his pregnancy is.">>
+
+<<case "hyperpreg">>
+	<<set _nickname = either("'Balloon'", "'Breeder'", "'Breeding Bitch'", "'Breeding Cow'", "'Breeding Mare'", "'Breeding Sow'", "'Breeding Stock'", "'Broodmother'", "'Bulgey'", "'Bulging'", "'Bursting'", "'Clown Car'", "'Expecting'", "'Fertile'", "'Hyperbreeder'", "'Hyperfertile'", "'Hyperpreg'", "'Impregnated'", "'Knocked Up'", "'Mare'", "'Megapreg'", "'Mommy'", "'Mother'", "'Ninpuchan'", "'Preg'", "'Preggers'", "'Squirming'", "'Squirmy'", "'Stuffed'", "'Waterslide'")>>
+	<<set _situationDesc = "is a breeding slave. $His belly is huge, unavoidable evidence that $he's very pregnant. $His taut belly constantly bulges and squirms from $his brood writhing within $him and it is a very real possibility that $he may pop.">>
+	<<set _applyDesc = "takes a bit of solace from $his new hope at $his nickname that $he will be kept in good shape and not have to worry about the size of $his pregnancy, and a bit of fear from $his suspicion that producing babies is $his whole future.">>
+	<<set _notApplyDesc = "understands that $he is expected to obey, work, and fuck just like any of your other slaves, regardless of how big $his pregnancy is.">>
+
+<<case "babymaker">>
+	<<set _nickname = either("'Baby Daddy'", "'Baby Maker'", "'Babymaker'", "'Baker'", "'Belly Popper'", "'Breeder'", "'Breeding Boar'", "'Breeding Bull'", "'Breeding Stallion'", "'Breeding Stud'", "'Cannon'", "'Cocksmith'", "'Cum Cannon'", "'Daddy'", "'Father'", "'Fire Hose'", "'Impregnator'", "'Inflator'", "'Motherfucker'", "'Popper'", "'Potent'", "'Sirer'", "'Sperm Donor'", "'Virile'", "'Womb Filler'")>>
+	<<set _situationDesc = "is a terror to any fertile girl $he fucks. Horrifically potent, $he leaves a trail of pregnancies in $his wake. A great deal of the babies in your slaves might just be $hers.">>
+	<<set _applyDesc = "takes a bit of pride from $his new nickname and hopes you'll keep letting $him knock bitches up.">>
+	<<set _notApplyDesc = "understands that $he is a slave and it is not $his place to decide who gets pregnant and who doesn't.">>
+
+<<case "fertilityGoddess">>
+	<<switch $activeSlave.nationality>>
+	<<case "Ancient Chinese Revivalist" "Chinese">>
+		<<set _nickname = either("'Jiutian Xuannü'")>>
+	<<case "Ancient Egyptian Revivalist" "Egyptian">>
+		<<set _nickname = either("'Bastet'", "'Hathor'", "'Heqet'", "'Isis'", "'Meskhenet'", "'Min'", "'Qetesh'", "'Taweret'", "'Tefnut'")>>
+	<<case "Arabian Revivalist">>
+		<<set _nickname = either("'Al-Lat'", "'Al-Uzza'")>>
+	<<case "Armenian">>
+		<<set _nickname = either("'Anahit'")>>
+	<<case "Aztec Revivalist">>
+		<<set _nickname = either("'Xochiquetzal'")>>
+	<<case "Cambodian" "Laotian" "Vietnamese">>
+		<<set _nickname = either("'Sowathara'")>>
+	<<case "Edo Revivalist" "Japanese">>
+		<<set _nickname = either("'Inari Ōkami'", "'Kisshōten'")>>
+	<<case "Estonian" "Finnish">>
+		<<set _nickname = either("'Rauni'")>>
+	<<case "Ghanan">>
+		<<set _nickname = either("'Asase Ya'")>>
+	<<case "Indian">>
+		<<set _nickname = either("'Aditi'", "'Bhūmi'", "'Manasa'", "'Parvati'", "'Sinivali'")>>
+	<<case "Indonesian">>
+		<<set _nickname = either("'Dewi Sri'")>>
+	<<case "Irish">>
+		<<set _nickname = either("'Brigid'")>>
+	<<case "Latvian" "Lithuanian">>
+		<<set _nickname = either("'Laima'", "'Saulė'")>>
+	<<case "Nigerian">>
+		<<set _nickname = either("'Ala'")>>
+	<<case "Roman Revivalist">>
+		<<set _nickname = either("'Epona'", "'Fecunditas'", "'Terra'", "'Venus'")>>
+	<<default>>
+		<<if $activeSlave.race == "white">>
+			<<set _nickname = either("'Aphrodite'", "'Ceres'", "'Demeter'", "'Freyja'", "'Gaia'", "'Venus'")>>
+		<<elseif $activeSlave.race == "pacific islander">>
+			<<set _nickname = either("'Haumea'", "'Nuakea'")>>
+		<<elseif $activeSlave.race == "amerindian">>
+			<<set _nickname = either("'Atahensic'", "'Hanhepi Wi'")>>
+		<<elseif $activeSlave.race == "black">>
+			<<set _nickname = either("'Ala'", "'Asase Ya'")>>
+		<<else>>
+			<<set _nickname = either("'Gaia'", "'Venus'")>>
+		<</if>>
+	<</switch>>
+	<<set _situationDesc = "is the spitting image of a fertility idol. With $his wide hips, heavy bosom and fecund belly, $he lives up to the title.">>
+	<<set _applyDesc = "takes pride in $his radiant form and hopes that $he'll be treated as a goddess for possessing it.">>
+	<<set _notApplyDesc = "accepts that $his motherly curves are just the mark of a sex slave and not a goddess.">>
+
+<<case "superSquirter">>
+	<<set _nickname = either("'Baby'", "'Bedwetter'", "'Deluge'", "'Flood Warning'", "'Fountain'", "'Geyser'", "'Girlcum'", "'Gusher'", "'Needs Diapers'", "'Panty Wetter'", "'Squirter'", "'Super Soaker'", "'Super Squirter'", "'Swim-Ready'", "'Water Park'", "'Wet'")>>
+	<<set _situationDesc = "completely soaks $himself and $his partners whenever $he cums. Every orgasm from $him unleashes a waterfall of girlcum from $his pussy.">>
+	<<set _applyDesc = "takes pride in the amount of girlcum $he makes, even though it looks like $he peed $himself when $he cums with $his clothes on.">>
+	<<set _notApplyDesc = "understands that $he must learn to control $himself and stop soaking $his partners, clothes and bed.">>
+
+<<case "labia">>
+	<<set _nickname = either("'Beefy'", "'Blooming'", "'Curtains'", "'Fanny Flaps'", "'Flaps'", "'Flower'", "'Folds'", "'Labes'", "'Labia'", "'Lips'", "'Lower Lips'", "'Meatflaps'", "'Petals'", "'Pussylips'", "'Roast Beef'", "'Roastie'", "'Vulva'", "'Wizard Sleeve'")>>
+	<<set _situationDesc = "has pretty pussylips, larger than most girls'. When $he's aroused they announce $his state to the whole world, becoming engorged with lust. Other slaves can't help but notice, and mock $his uniqueness down there.">>
+	<<set _applyDesc = "really starts to see the appearance of $his pussy as a trademark. $He's prouder of it than $he was before, and $he enjoys sex a bit more too, really appreciating it when $he gets to feel another slave gently nibble $his lovely folds.">>
+	<<set _notApplyDesc = "accepts that the most important part of $his vagina is the warm, wet interior, not the generously endowed exterior.">>
+
+<<case "old">>
+	<<set _nickname = either("'Aged'", "'Auntie'", "'Big Sis'", "'Cougar'", "'Cradle Robber'", "'Jukusei'", "'Mama'", "'Mature'", "'MILF'", "'Mom'", "'Momma'", "'Mommy'", "'Mother'", "'Oba-san'", "'Okā-san'", "'Old'", "'Onē-san'", "'Seasoned'")>>
+	<<set _situationDesc = "is older than the average Free Cities slave. It has its downsides; $he's worth less at sale and $his earning potential as a whore is lower. But, on the other hand, good experience is irreplaceable, and in your experience all slaves feel remarkably similar inside, regardless of age. Nevertheless, some younger slaves resent $him.">>
+	<<set _applyDesc = "understands that far from being a mockery, your sanction has turned an intended insult into a reference to the advantages of $his years.">>
+	<<set _notApplyDesc = "understands that $he must do $his best to fuck like the teenager $he isn't.">>
+
+<<case "reallyold">>
+	<<set _nickname = either("'Aged'", "'Ancient'", "'Elder'", "'Elderly'", "'Generation X'", "'Geriatric'", "'GILF'", "'GMILF'", "'Grandma'", "'Grandmother'", "'Granny'", "'Nanna'", "'Obā-chan'", "'Old'", "'Oldie'", "'Really Old'", "'Senior Citizen'", "'Senior'")>>
+	<<set _situationDesc = "is old. Really old. Old enough to be a grandmother. This, naturally, makes $him one of the most experienced sluts in the arcology, a desirable quality in and of itself. Many of the younger slaves mock $him relentlessly for $his age.">>
+	<<set _applyDesc = "accepts $his new nickname with pride. This acknowledgment of $his age has $him ready to show these young sluts a thing or two.">>
+	<<set _notApplyDesc = "understands that $he must do $his best to fuck like the teenager $he once was.">>
+
+<<case "young">>
+	<<set _nickname = either("'Baby'", "'Babycakes'", "'Candy Van'", "'Candydoll'", "'Imouto'", "'Jailbait'", "'Juliet'", "'Kiddie'", "'Kiddo'", "'Loli'", "'Lolita'", "'Nymphet'", "'Party Van'", "'Pedobait'", "'Pocket Pussy'", "'POMF'", "'Precocious'", "'PTHC'", "'Underage'", "'Young'", "'Youngling'")>>
+	<<if random(1, 1500) <= 100>>
+		<<if ($activeSlave.physicalAge < 13)>>
+			<<set _nickname = either("'Preteen'")>>
+		<<elseif ($activeSlave.physicalAge >= 16) && ($activeSlave.physicalAge < 17)>>
+			<<set _nickname = either("'Sweet Sixteen'")>>
+		<<elseif ($activeSlave.physicalAge >= 18) && ($activeSlave.physicalAge < 19)>>
+			/% Not currently possible but we might change later. %/
+			<<set _nickname = either("'Barely Legal'")>>
+		<</if>>
+	<</if>>
+	<<set _situationDesc = "is yet underage by old world standards, and some older slaves do not let $him forget that.">>
+	<<set _applyDesc = "understands that far from being a mockery, your sanction has turned an intended insult into a reference to the appeal of $his years.">>
+	<<set _notApplyDesc = "understands that despite $his young age $he must do $his best to fuck like the most veteran of whores.">>
+
+<<case "trans">>
+	<<set _nickname = either("'Crying Game'", "'Deception'", "'Drag'", "'Gender Bender'", "'Girly'", "'Kathoey'", "'Ladyboy'", "'Legs Crossed'", "'Missie'", "'Queen'", "'Shemale'", "'Surprise'", "'T-Girl'", "'Tranny'", "'Trans'", "'Transgender'", "'Trap'", "'Trick'")>>
+	<<set _situationDesc = "might have looked like a sissy or a trap at some point, but $he no longer does. $He has the curves and the face to be mistaken for a natural woman if $he wears clothes that conceal $his cock, which is an ability with all sorts of interesting uses. Mockery always fixes on what's unusual, of course, and some of your other slaves even envy $his equipment.">>
+	<<set _applyDesc = "believes that you approve of $him as $he is now, and that $he can treat $his dick as an asset.">>
+	<<set _notApplyDesc = "understands that $he must do $his best to fuck like the natural girl $he isn't.">>
+
+<<case "amp">>
+	<<set _nickname = either("'Amp'", "'Amputee'", "'Cocksock'", "'Cripple'", "'Dickholster'", "'Fifi'", "'Fleshlight'", "'Fucknugget'", "'Fucktoy'", "'Limbless'", "'Nubs'", "'Onahole'", "'Pillow Pet'", "'Pocket Pussy'", "'Quadruple'", "'Sex Toy'", "'Stubs'", "'Stumps'", "'Stumpy'", "'Torso'")>>
+	<<set _situationDesc = "is a fun little fucktoy, a limbless torso with nice wet holes than can be used regardless of $his feelings. Giving a poor quadruple amputee a nickname might seem like stooping to wanton cruelty, but other slaves are willing to call $him anything to take their minds off their own status.">>
+	<<set _applyDesc = "takes a tiny bit of solace from $his nickname, hoping that by accepting it, you were expressing an enjoyment of $his attenuated body.">>
+	<<set _notApplyDesc = "understands that $he would be a sex toy even if $he still had arms and legs.">>
+
+<<case "blind">>
+	<<set _nickname = either("'Amaurotic'", "'Batty'", "'Blind'", "'Blindfold'", "'Braille'", "'Cataracts'", "'Crash'", "'Darkness'", "'Deadeye'", "'Eyeless'", "'Groping'", "'Masturbator'", "'No-Sight'", "'Oracle'", "'Sightless'", "'Stares'", "'Sunglasses'", "'Visionless'", "'White Cane'")>>
+	<<set _situationDesc = "is blind. $His dull eyes reveal $his condition. $He has to feel $his way between jobs, and is at the mercy of everyone.">>
+	<<set _applyDesc = "accepts that $his disability defines $him. $He keeps $his eyes wide open, no longer fearing what others say about them.">>
+	<<set _notApplyDesc = "understands that $he is expected to obey, work, and fuck just like any of your other slaves, regardless of $his eyesight.">>
+
+<<case "deaf">>
+	<<set _nickname = either("'Adder'", "'Cochlear'", "'Deaf Ears'", "'Deaf'", "'Deafened'", "'Decibel'", "'Ear Plugs'", "'Earless'", "'Earmuffs'", "'Hearing Aid'", "'Hearing Impaired'", "'Lip Reader'", "'Post'", "'Sign Language'", "'Stone Deaf'", "'Tinnitus'", "'Unhearing'")>>
+	<<set _situationDesc = "is deaf. $He is on constant alert for the commands and orders $he cannot hear, and is at the mercy of everyone.">>
+	<<set _applyDesc = "accepts that $his disability defines $him. $He takes pride in knowing that $he's being insulted on the fact that $he can't hear any insults.">>
+	<<set _notApplyDesc = "understands that $he is expected to obey, work, and fuck just like any of your other slaves, regardless of $his hearing.">>
+
+<<case "mute">>
+	<<set _nickname = either("'Aphasic'", "'Aphonic'", "'Dumb'", "'Gagged'", "'Muffled'", "'Mum'", "'Mute'", "'Mutie'", "'Quiet'", "'Sign Language'", "'Silenced'", "'Silent'", "'Soundless'", "'Speechless'", "'Tight-Lipped'", "'Tongue-Tied'", "'Tongueless'", "'Voiceless'", "'Wordless'", "'Zipped Lips'")>>
+	<<set _situationDesc = "is mute. $He poorly attempts to communicate with often panicky gesturing, and is at the mercy of everyone.">>
+	<<set _applyDesc = "accepts that $his disability defines $him. $He gestures with much less panic, now that $his communication problems are common knowledge.">>
+	<<set _notApplyDesc = "understands that $he is expected to obey, work, and fuck just like any of your other slaves, regardless of $his voice.">>
+
+<<case "preg">>
+	<<set _nickname = either("'Breeder'", "'Breeding Bitch'", "'Breeding Cow'", "'Breeding Mare'", "'Breeding Sow'", "'Breeding Stock'", "'Broodmother'", "'Expecting'", "'Fertile'", "'Impregnated'", "'Knocked Up'", "'Mare'", "'Mommy'", "'Mother'", "'Ninpuchan'", "'Preg'", "'Preggers'")>>
+	<<set _situationDesc = "is a breeding slave. $His belly seems to grow daily, unavoidable evidence that $he's pregnant. Most men prefer slaves without pregnant stomachs, but those that enjoy them adore $him. $He occupies a strange place in slave culture, desired and abhorred, hopeful and fearful.">>
+	<<set _applyDesc = "takes a bit of solace from $his new hope at $his nickname that $he will be allowed to complete $his pregnancy, and a bit of fear from $his suspicion that producing babies is $his whole future.">>
+	<<set _notApplyDesc = "understands that $he is expected to obey, work, and fuck just like any of your other slaves, regardless of $his pregnancy.">>
+
+<<case "hung">>
+	<<set _nickname = either("'Anaconda'", "'Biggus Dickus'", "'Bitchbreaker'", "'Dangle'", "'Dolichophallic'", "'Horse'", "'Hung'", "'Long Dick Johnson'", "'Long Dong'", "'Long'", "'Macropenis'", "'Magnum Dong'", "'Maypole'", "'Python'", "'Shaft'", "'Superpenis'", "'Swingin' Dick'", "'Tentpole'", "'Third Arm'", "'Third Leg'", "'Tripod'", "'Truncheon'", "'Trunk'")>>
+	<<set _situationDesc = "is a Free Cities sex slave, which makes $him a girl. The pretension is hard to maintain at times, however, as $his massive member swings around, gets in the way, sticks out of clothing, and blows huge loads. Half the fun of using $his butt is making $his absurd dick slap around. It's an obvious target for a nickname, especially since more than one slave has personal experience with how $he feels inside them.">>
+	<<set _applyDesc = "enjoys being nicknamed for $his dick. $He's special, $his dick is special, and now that $he's been nicknamed for it, $he's confident $he and $his dick will be allowed to go on being special.">>
+	<<set _notApplyDesc = "realizes that $he's just a slave girl behind, no matter what's dangling in front, and does $his best to take it like one.">>
+
+<<case "gelding">>
+	<<set _nickname = either("'Altered'", "'Ball-Less'", "'Castrated'", "'Clipped'", "'Cut'", "'Desexed'", "'Emasculate'", "'Empty'", "'Eunuch'", "'Fixed'", "'Gelded'", "'Gelding'", "'Limp'", "'Neutered'", "'Nipped'", "'Nutless'", "'Sackless'", "'Soft'", "'Spayed'", "'Sterile'", "'Sterilized'", "'Unman'")>>
+	<<set _situationDesc = "is a Free Cities sex slave, which makes $him a girl. This is an easier thing for $him to accept since $his testicles were removed. The lack of testosterone makes $him docile and more accepting of $his proper role as a receptacle for hard dick. Naturally, other slaves have taken notice.">>
+	<<set _applyDesc = "naturally viewed $his own castration as a subject of revulsion and horror. Now, though, $he begins to see $himself as filling a right and proper role as a gelded slave.">>
+	<<set _notApplyDesc = "realizes that the process of turning $him from what $he was into what $he is did not make $him special.">>
+
+<<case "short">>
+	<<set _nickname = either("'Cock Sock'", "'Compact'", "'Dwarf'", "'Fun Size'", "'Funsize'", "'Itsy Bitsy'", "'Micro'", "'Midget'", "'Mini'", "'Miniature'", "'Napoleon'", "'Petite'", "'Pint-Sized'", "'Pipsqueak'", "'Pocket Pussy'", "'Pocket-Sized'", "'Short'", "'Shortstack'", "'Shortstuff'", "'Shorty'", "'Shrimp'", "'Shrunk'", "'Small Fry'", "'Stumpy'", "'Stunted'", "'Tiny'", "'Undersized'", "'Waif'", "'Wee'")>>
+	<<set _situationDesc = "is fairly low to the ground. This makes $him a bit different, sexually; $he's better for several oral sex positions, but most standing positions turn into a game of how long $his partner can hold $him at the appropriate height.">>
+	<<set _applyDesc = "is a little proud that $his diminutive stature, once nothing but a source of embarrassment, is apparently significant to you.">>
+	<<set _notApplyDesc = "realizes that $he'll just have to reach higher to make up for $his height, since you don't consider it special.">>
+
+<<case "tall">>
+	<<set _nickname = either("'Alpine'", "'Amazon'", "'B-Baller'", "'Basketballer'", "'Beanpole'", "'Beanstalk'", "'Bigfoot'", "'Everest'", "'Giant'", "'Giantess'", "'Giraffe'", "'Jumbo'", "'Ladder'", "'Lofty'", "'Macro'", "'Mountain'", "'Redwood'", "'Skyscraper'", "'Slim'", "'Stilts'", "'Stretch'", "'Tall'", "'Top Shelf'", "'Top'", "'Tower'", "'Treetop'")>>
+	<<set _situationDesc = "is impressively tall for a $girl. This makes $him sexually convenient, since $his holes are at convenient cock height. $He spends many of $his sexual encounters bent slightly at the waist to allow $himself to be taken from behind.">>
+	<<set _applyDesc = "is quite proud of $his impressive height, even more so than before. $He resolves to tower over other slaves sexually as well as literally.">>
+	<<set _notApplyDesc = "realizes that being tall doesn't make $him special, and understands that it's $his holes that make $him, not how high they are.">>
+
+<<case "boobs">>
+	<<set _nickname = either("'Airbags'", "'Bazookas'", "'Boob'", "'Boobs'", "'Bosom'", "'Bouncing'", "'Bouncy'", "'Bristols'", "'Busty'", "'Buxom'", "'Charlies'", "'Chounyuu'", "'Funbags'", "'Hooters'", "'Jugs'", "'Knockers'", "'Macromastic'", "'Megaboobs'", "'Melons'", "'Norks'", "'Oppai'", "'Pillows'", "'Stacked'", "'Tatas'", "'Titties'", "'Titty'", "'Top Heavy'", "'Udders'")>>
+	<<set _situationDesc = "has large breasts. Pointing this out is about as observant as describing the sky as blue. When $he enters a room, they precede $him. When $he takes it doggy style, they prop $him up. Other slaves are envious of the attention $he gets, and happy they don't have to carry such burdens.">>
+	<<set _applyDesc = "was of course proud of $his huge breasts before this new nickname. Now, though, $he accepts them as a sort of trademark.">>
+	<<set _notApplyDesc = "accepts that having titanic tits does not make $him special, since what's important is $his holes, not $his boobs.">>
+
+<<case "butt">>
+	<<set _nickname = either("'Ass'", "'Backside'", "'Badonkadonk'", "'Big Ass'", "'Bootylicious'", "'Bottom'", "'Brazilian'", "'Bumtastic'", "'Bunda'", "'Buns'", "'Butt'", "'Buttocks'", "'Caboose'", "'Callipygian'", "'Derriere'", "'Glutes'", "'Heiny'", "'Jiggly'", "'Milkshake'", "'Moneymaker'", "'Rear End'", "'Rump'", "'Thunder Thighs'", "'Tuckus'", "'Tushy'", "'Wide Load'")>>
+	<<set _situationDesc = "has a large ass. Pointing this out is about as observant as describing the sky as blue. (Though impressive for other reasons, for $his sexual partners, since they sometimes have difficulty drawing breath for such remarks.) When $he enters a room, it follows $him. When $he takes it doggy style, it pads penetration to an almost inconvenient degree. Other slaves are envious of the attention $he gets, and happy they don't have to carry such burdens.">>
+	<<set _applyDesc = "was of course proud of $his huge ass before this new nickname. Now, though, $he accepts it as a sort of trademark.">>
+	<<set _notApplyDesc = "accepts that having a massive ass does not make $him special, since what's important is $his holes, not $his buttocks.">>
+
+<<case "virgin">>
+	<<set _nickname = either("'Abstinent'", "'Callow'", "'Celibate'", "'Chaste'", "'Chastity'", "'Cherry'", "'Clean'", "'Cloistered'", "'Doomed'", "'Flower'", "'Innocent'", "'Maiden'", "'Pristine'", "'Pucelle'", "'Pure'", "'Unbroken'", "'Unfucked'", "'Unicorn Bait'", "'Unspoilt'", "'Untouched'", "'Vestal'", "'Virgin'", "'Virginal'")>>
+	<<set _situationDesc = "has never had vanilla sex. This is not unusual in the Free Cities, since many slaveowners value and preserve virginity. Virgins form a separate class of sorts among slaves. Some of them even dislike their status, as having a virgin pussy can often result in a tired tongue or a sore butt.">>
+	<<set _applyDesc = "understands that it's $his fate to remain unspoiled a while longer, and redoubles $his efforts to do better with $his other parts.">>
+	<<set _notApplyDesc = "dreads and anticipates the day when $he'll lose $his pearl of great price and gain another way to please a man.">>
+
+<<case "null">>
+	<<set _nickname = either("'Agender'", "'Androgynous'", "'Angelic'", "'Asexual'", "'Barbie Doll'", "'Censored'", "'Cherub'", "'Devoid'", "'Featureless'", "'Genderless'", "'Groinless'", "'Hole-Less'", "'Mannequin'", "'Mutilated'", "'Netherless'", "'Nondescript'", "'Null'", "'Sewn'", "'Sexless'", "'Smooth'", "'Soft Groin'", "'Two-Hole'", "'Uniform'", "'Unproductive'")>>
+	<<set _situationDesc = "has neither a penis nor a vagina; $he is a null, with nothing but soft skin on $his groin. Since $he is a Free Cities sex slave, that makes $him female, despite the androgyny of $his genitals. This sometimes makes $his life more difficult, as it only draws more attention to the availability of $his mouth or ass.">>
+	<<set _applyDesc = "finds some perverse pride in $his genital makeup, which defies traditional notions of gender.">>
+	<<set _notApplyDesc = "will try $his best to keep up with what's demanded of a sex slave, despite the annoyance of lacking genitals.">>
+<</switch>>
+
+<span id="artFrame">
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<<if $imageChoice == 1>>
+		<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+	<<else>>
+		<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+	<</if>>
+<</if>>
+/* 000-250-006 */
+</span>
+
+<<= App.UI.slaveDescriptionDialog($activeSlave)>> _situationDesc You begin to overhear your other slaves refer to $him as @@.pink;_nickname $activeSlave.slaveName.@@
+
+<br><br>
+
+<span id="result">
+<<if ($activeSlave.slaveName.indexOf("'") == -1)>>
+<<link "Encourage use of the nickname">>
+	<<replace "#result">>
+	Whatever $activeSlave.slaveName's feelings about being called _nickname were, $he knows they're moot <<if !canHear($activeSlave)>>when $he learns that you also<<else>>the first time $he hears you<</if>> refer to $him that way. @@.hotpink;$He has become more submissive to you.@@ $activeSlave.slaveName _applyDesc
+	<<set $activeSlave.devotion += 4>>
+	<<set $activeSlave.slaveName = (_nickname + " " + $activeSlave.slaveName)>>
+	<</replace>>
+<</link>>
+<br>
+<</if>>
+<<link "Disapprove, but encourage the other slaves to come up with a better nickname">>
+	<<goto "RE nickname">>
+<</link>>
+<br><<link "Put a stop to it">>
+	<<replace "#result">>
+	As soon as you make your will on the matter known, $activeSlave.slaveName is referred to as $activeSlave.slaveName again. $activeSlave.slaveName _notApplyDesc
+	<</replace>>
+<</link>>
+<br><<link "No nicknames, now or ever">>
+	<<replace "#result">>
+	You make it known that the power to name slaves is yours and yours alone.
+	<<set $nicknamesAllowed = 0>>
+	<</replace>>
+<</link>>
+</span>
+
+<</if>> /* closes _qualifiedNicknames.length > 0 */

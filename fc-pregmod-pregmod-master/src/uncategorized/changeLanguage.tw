@@ -1,0 +1,188 @@
+:: Change Language [nobr]
+
+<<set $nextButton = "Confirm changes">>
+<<if $sideBarOptions.compact > 0>>
+	<<set $nextLink = "Manage Arcology">>
+<<else>>
+	<<set $nextLink = "Main">>
+<</if>>
+
+<<set $revivalistLanguage = 0>>
+<<if $arcologies[0].FSRomanRevivalist != "unset">>
+	<<if $language != "Latin">>
+		<<set $revivalistLanguage = "Latin">>
+	<</if>>
+<<elseif $arcologies[0].FSAztecRevivalist != "unset">>
+	<<if $language != "Nahuatl">>
+		<<set $revivalistLanguage = "Nahuatl">>
+	<</if>>
+<<elseif $arcologies[0].FSEgyptianRevivalist != "unset">>
+	<<if $language != "Ancient Egyptian">>
+		<<set $revivalistLanguage = "Ancient Egyptian">>
+	<</if>>
+<<elseif $arcologies[0].FSEdoRevivalist != "unset">>
+	<<if $language != "Japanese">>
+		<<set $revivalistLanguage = "Japanese">>
+	<</if>>
+<<elseif $arcologies[0].FSArabianRevivalist != "unset">>
+	<<if $language != "Arabic">>
+		<<set $revivalistLanguage = "Arabic">>
+	<</if>>
+<<elseif $arcologies[0].FSChineseRevivalist != "unset">>
+	<<if $language != "Chinese">>
+		<<set $revivalistLanguage = "Chinese">>
+	<</if>>
+<</if>>
+
+The lingua franca of the arcology is ''$language''.
+<br><br>
+//Changing the lingua franca of the arcology is a difficult process. Doing so will slightly reduce the arcology's prosperity due to the difficulty changing languages will impose on businesses. It will also cost <<print cashFormat(500)>> for each mentally competent slave you own, since it will be necessary to build time into their schedules for them to learn basic commands in the new language. Slaves' starting fluency in the new language will depend on their intelligence, nationality, education, and in some cases, ethnicity. Previous linguistic experience will not be saved, meaning that repeated language changes will wipe out slaves' previous language skills.//
+<br><br>
+Select a custom language to be applied: <<textbox "$seed" $seed "Change Language">> //A single capitalized word is recommended.//
+
+<br><br>
+
+<span id="result">
+
+<<if $language != "English">>
+	<br><<link "English">>
+	<<replace "#result">>
+	<<set $language = "English">>
+	<<set $arcologies[0].prosperity = Math.trunc(0.9*$arcologies[0].prosperity)>>
+	<<for _cl = 0; _cl < $slaves.length; _cl++>>
+		<<if $slaves[_cl].fetish != "mindbroken">>
+			<<run nationalityToAccent($slaves[_cl])>>
+			<<if ($slaves[_cl].accent >= 3)>>
+				<<if ($slaves[_cl].intelligence+$slaves[_cl].intelligenceImplant+100) > random(0,100)>>
+					<<set $slaves[_cl].accent -= 1>>
+				<</if>>
+			<</if>>
+			<<run cashX(-500, "capEx")>>
+		<</if>>
+	<</for>>
+	<br><br>//Language changed.//
+	<</replace>>
+	<</link>>
+<</if>>
+<<if $language != "Spanish">>
+	<br><<link "Spanish">>
+	<<replace "#result">>
+	<<set $language = "Spanish">>
+	<<set $arcologies[0].prosperity = Math.trunc(0.9*$arcologies[0].prosperity)>>
+	<<for _cl = 0; _cl < $slaves.length; _cl++>>
+		<<if $slaves[_cl].fetish != "mindbroken">>
+			<<run nationalityToAccent($slaves[_cl])>>
+			<<if ($slaves[_cl].accent >= 3)>>
+				<<if ($slaves[_cl].intelligence+$slaves[_cl].intelligenceImplant+100) > random(0,100)>>
+					<<set $slaves[_cl].accent -= 1>>
+				<</if>>
+			<</if>>
+			<<run cashX(-500, "capEx")>>
+		<</if>>
+	<</for>>
+	<br><br>//Language changed.//
+	<</replace>>
+	<</link>>
+<</if>>
+<<if $language != "Portuguese">>
+	<br><<link "Portuguese">>
+	<<replace "#result">>
+	<<set $language = "Portuguese">>
+	<<set $arcologies[0].prosperity = Math.trunc(0.9*$arcologies[0].prosperity)>>
+	<<for _cl = 0; _cl < $slaves.length; _cl++>>
+		<<if $slaves[_cl].fetish != "mindbroken">>
+			<<run nationalityToAccent($slaves[_cl])>>
+			<<if ($slaves[_cl].accent >= 3)>>
+				<<if ($slaves[_cl].intelligence+$slaves[_cl].intelligenceImplant+100) > random(0,100)>>
+					<<set $slaves[_cl].accent -= 1>>
+				<</if>>
+			<</if>>
+			<<run cashX(-500, "capEx")>>
+		<</if>>
+	<</for>>
+	<br><br>//Language changed.//
+	<</replace>>
+	<</link>>
+<</if>>
+<<if $language != "Arabic">>
+	<br><<link "Arabic">>
+	<<replace "#result">>
+	<<set $language = "Arabic">>
+	<<set $arcologies[0].prosperity = Math.trunc(0.9*$arcologies[0].prosperity)>>
+	<<for _cl = 0; _cl < $slaves.length; _cl++>>
+		<<if $slaves[_cl].fetish != "mindbroken">>
+			<<run nationalityToAccent($slaves[_cl])>>
+			<<if ($slaves[_cl].accent >= 3)>>
+				<<if ($slaves[_cl].intelligence+$slaves[_cl].intelligenceImplant+100) > random(0,100)>>
+					<<set $slaves[_cl].accent -= 1>>
+				<</if>>
+			<</if>>
+			<<run cashX(-500, "capEx")>>
+		<</if>>
+	<</for>>
+	<br><br>//Language changed.//
+	<</replace>>
+	<</link>>
+<</if>>
+<<if $language != "Chinese">>
+	<br><<link "Chinese">>
+	<<replace "#result">>
+	<<set $language = "Chinese">>
+	<<set $arcologies[0].prosperity = Math.trunc(0.9*$arcologies[0].prosperity)>>
+	<<for _cl = 0; _cl < $slaves.length; _cl++>>
+		<<if $slaves[_cl].fetish != "mindbroken">>
+			<<run nationalityToAccent($slaves[_cl])>>
+			<<if ($slaves[_cl].accent >= 3)>>
+				<<if ($slaves[_cl].intelligence+$slaves[_cl].intelligenceImplant+100) > random(0,100)>>
+					<<set $slaves[_cl].accent -= 1>>
+				<</if>>
+			<</if>>
+			<<run cashX(-500, "capEx")>>
+		<</if>>
+	<</for>>
+	<br><br>//Language changed.//
+	<</replace>>
+	<</link>>
+<</if>>
+<<if $language != $seed>>
+	<br><<link "Apply custom language">>
+	<<replace "#result">>
+	<<set $language = $seed>>
+	<<set $arcologies[0].prosperity = Math.trunc(0.9*$arcologies[0].prosperity)>>
+	<<for _cl = 0; _cl < $slaves.length; _cl++>>
+		<<if $slaves[_cl].fetish != "mindbroken">>
+			<<run nationalityToAccent($slaves[_cl])>>
+			<<if ($slaves[_cl].accent >= 3)>>
+				<<if ($slaves[_cl].intelligence+$slaves[_cl].intelligenceImplant+100) > random(0,100)>>
+					<<set $slaves[_cl].accent -= 1>>
+				<</if>>
+			<</if>>
+			<<run cashX(-500, "capEx")>>
+		<</if>>
+	<</for>>
+	<br><br>//Language changed.//
+	<</replace>>
+	<</link>>
+<</if>>
+<<if $revivalistLanguage != 0>>
+	<br><<link "Match language to Revivalist future society">>
+	<<replace "#result">>
+	<<set $language = $revivalistLanguage>>
+	<<set $arcologies[0].prosperity = Math.trunc(0.9*$arcologies[0].prosperity)>>
+	<<for _cl = 0; _cl < $slaves.length; _cl++>>
+		<<if $slaves[_cl].fetish != "mindbroken">>
+			<<run nationalityToAccent($slaves[_cl])>>
+			<<if ($slaves[_cl].accent >= 3)>>
+				<<if ($slaves[_cl].intelligence+$slaves[_cl].intelligenceImplant+100) > random(0,100)>>
+					<<set $slaves[_cl].accent -= 1>>
+				<</if>>
+			<</if>>
+			<<run cashX(-500, "capEx")>>
+		<</if>>
+	<</for>>
+	<br><br>//Language changed.//
+	<</replace>>
+	<</link>> //Failing to take this step will retard adoption of Revivalism//
+<</if>>
+
+</span>

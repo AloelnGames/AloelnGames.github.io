@@ -1,0 +1,29 @@
+:: Ova Transplant Workaround [nobr]
+
+<<set $nextButton = "Cancel", $receptrix = 0, _eligibility = 0>>
+
+//You've decided which fertilized ovum is to be transplanted; now you must select whose womb will be its new home.//
+
+<br><br>
+
+__Select a slave to serve as the host__
+
+<br>
+
+<<for _otw = 0; _otw < $slaves.length; _otw++>>
+	<<capture _otw>>
+		<<if ($donatrix.ID != $slaves[_otw].ID && $slaves[_otw].ovaries > 0 || $slaves[_otw].mpreg > 0) && isSlaveAvailable($slaves[_otw]) && $slaves[_otw].preg >= 0 && $slaves[_otw].preg < $slaves[_otw].pregData.normalBirth/10 && $slaves[_otw].pregWeek >= 0 && $slaves[_otw].pubertyXX == 1 && $slaves[_otw].pregType < 12 && $slaves[_otw].bellyImplant == -1 && $slaves[_otw].broodmother == 0 && $slaves[_otw].inflation <= 2 && $slaves[_otw].physicalAge < 70>>
+			<<set _name = SlaveFullName($slaves[_otw])>>
+			<br>[[_name|Surrogacy][$receptrix = $slaves[_otw], cashX(forceNeg($surgeryCost*2), "slaveSurgery"), $surgeryType = "transplant"]] <<if $slaves[_otw].pregType >= 4>>//Using a slave carrying multiples is inadvisable//<</if>>
+			<<set _eligibility = 1>>
+		<</if>>
+	<</capture>>
+<</for>>
+<<if (_eligibility == 0)>>
+	<br>//You have no slaves capable of acting as a surrogate.//
+<</if>>
+
+<<if $PC.vagina != -1 && $donatrix.ID != -1 && $PC.preg >= 0 && $PC.preg < 4 && $PC.pregType < 8 && $PC.physicalAge < 70>>
+	<br>
+	[[Use your own womb|Surrogacy][$receptrix = $PC, cashX(forceNeg($surgeryCost*2), "slaveSurgery"), $surgeryType = "transplant"]]
+<</if>>

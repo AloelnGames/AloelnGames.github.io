@@ -1,0 +1,145 @@
+:: Economics [nobr]
+
+<h1> <<print $arcologies[0].name + " Weekly Financial Report — Week " + $week>></h1>
+
+<<set $nextButton = "Continue", $nextLink = "Scheduled Event">>
+
+<<if $cash > -10000>>
+	<<set $debtWarned = 0>>
+<</if>>
+
+<<= SectorCounts()>>
+<<run App.Arcology.updateOwnership()>>
+
+<<include "Markets Report">>
+
+<br><br>
+
+<<if $useTabs == 0>>
+<<include "Neighbors Development">>
+
+<br><br>
+
+<<include "Arcology Management">>
+
+<<if $FSAnnounced > 0>>
+	<br><br>
+	<<include "FS Developments">>
+<</if>>
+
+<<if $corp.Incorporated == 1>>
+	<br><br>
+	<<include "Corporation Developments">>
+<</if>>
+
+<<if $secExpEnabled == 1>>
+	<br><br>
+	<<include "authorityReport">>
+	<br><br>
+	<<include "securityReport">>
+<</if>>
+
+<br><br>
+
+<<include "Reputation">>
+
+<br><br>
+
+<<include "Personal Business">>
+
+<<if $PC.boobs >= 1000 || $PC.pregKnown == 1 || $playerAging != 0>>
+	<br><br>
+	<<include "Personal Notes">>
+<</if>>
+
+<<else>>
+<body>
+
+<div class="tabbar">
+	<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Arcologies')" id="defaultOpen">Arcologies</button>
+	<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Management')">Arcology Management</button>
+	<<if $FSAnnounced > 0>>
+		<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Societies')">Society Development</button>
+	<</if>>
+	<<if $corp.Incorporated == 1>>
+		<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Corporation')">Corporation Developments</button>
+	<</if>>
+	<<if $secExpEnabled == 1>>
+		<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Authority')">Authority</button>
+		<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'securityReport')">Security</button>
+	<</if>>
+	<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Reputation')">Reputation</button>
+	<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Business')">Personal Business</button>
+	<<if $PC.boobs >= 1000 || $PC.pregKnown == 1 || $playerAging != 0>>
+		<button class="tablinks" onclick="App.UI.tabbar.openTab(event, 'Personal')">Personal Notes</button>
+	<</if>>
+</div>
+
+<div id="Arcologies" class="tabcontent">
+	<div class="content">
+		<<include "Neighbors Development">>
+	</div>
+</div>
+
+<div id="Management" class="tabcontent">
+	<div class="content">
+		<<include "Arcology Management">>
+	</div>
+</div>
+
+<<if $FSAnnounced > 0>>
+	<div id="Societies" class="tabcontent">
+		<div class="content">
+			<<include "FS Developments">>
+		</div>
+	</div>
+<</if>>
+
+<<if $corp.Incorporated == 1>>
+	<div id="Corporation" class="tabcontent">
+		<div class="content">
+			<<include "Corporation Developments">>
+		</div>
+	</div>
+<</if>>
+
+<<if $secExpEnabled > 0>>
+	<div id="Authority" class="tabcontent">
+		<div class="content">
+			<<include "authorityReport">>
+		</div>
+	</div>
+
+	<div id="securityReport" class="tabcontent">
+		<div class="content">
+			<<include "securityReport">>
+		</div>
+	</div>
+<</if>>
+
+<div id="Reputation" class="tabcontent">
+	<div class="content">
+		<<include "Reputation">>
+	</div>
+</div>
+
+<div id="Business" class="tabcontent">
+	<div class="content">
+		<<include "Personal Business">>
+	</div>
+</div>
+
+<<if $PC.boobs >= 1000 || $PC.pregKnown == 1 || $playerAging != 0>>
+	<div id="Personal" class="tabcontent">
+		<div class="content">
+			<<include "Personal Notes">>
+		</div>
+	</div>
+<</if>>
+
+<script>
+	document.getElementById("defaultOpen").click();
+</script>
+
+</body>
+<</if>>

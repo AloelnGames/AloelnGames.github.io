@@ -1,0 +1,2504 @@
+:: Long Slave Description [nobr]
+
+<<run SlaveStatClamp($activeSlave)>>
+<<setLocalPronouns $activeSlave>>
+
+<span id="artFrame">
+	<<if $seeImages == 1 && $eventDescription != 1 && passage() != "Slave Interact">>
+		<<if $imageChoice == 1>>
+			<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 3, 0)>></div>
+		<<else>>
+			<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 3, 0)>></div>
+		<</if>>
+	<</if>>
+</span>
+
+<span style="font-weight:bold"><span class="pink"><<= SlaveFullName($activeSlave)>></span></span>
+
+<<if $activeSlave.custom.label>> (<span class="yellow"><span style="font-weight:bold"><<print $activeSlave.custom.label>></span></span>)<</if>>
+
+<<if $ui == "start">>
+<<elseif $saleDescription == 1>>
+	<<if $applyLaw == 1>>
+		has passed inspection to be sold in your arcology.
+		<<include "Law Compliance">> /* includes CheckForGingering */
+	<<else>>
+		is for sale and is available to inspect.
+		<<if $prisonCrime>> /* reports a slave's crime in the criminal market */
+			$He $prisonCrime
+			<<set $prisonCrime = 0>>
+		<</if>>
+	<</if>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight:bold">$activeSlave.slaveName</span>
+<</if>>
+
+is
+
+<<if $activeSlave.devotion < -95>>a <span class="darkviolet">hate-filled,</span>
+<<elseif $activeSlave.devotion < -50>>a <span class="darkviolet">hateful,</span>
+<<elseif $activeSlave.devotion < -20>>a <span class="mediumorchid">reluctant,</span>
+<<elseif $activeSlave.devotion <= 20>>a <span class="yellow">hesitant,</span>
+<<elseif $activeSlave.devotion <= 50>>an <span class="hotpink">accepting,</span>
+<<elseif $activeSlave.devotion <= 95>>a <span class="deeppink">devoted,</span>
+<<else>>a <span class="magenta">worshipful,</span>
+<</if>>
+<<if $activeSlave.trust < -95>><span class="goldenrod">abjectly terrified</span>
+<<elseif $activeSlave.trust < -50>><span class="goldenrod">terrified</span>
+<<elseif $activeSlave.trust < -20>><span class="gold">frightened</span>
+<<elseif $activeSlave.trust < 20>><span class="yellow">fearful</span>
+<<elseif $activeSlave.trust <= 50>>
+	<<if $activeSlave.devotion < -20>>
+		<span class="orange">careful</span>
+	<<else>>
+		<span class="mediumaquamarine">careful</span>
+	<</if>>
+<<elseif $activeSlave.trust < 95>>
+	<<if $activeSlave.devotion < -20>>
+		<span class="orangered">bold</span>
+	<<else>>
+		<span class="mediumseagreen">trusting</span>
+	<</if>>
+<<else>>
+	<<if $activeSlave.devotion < -20>>
+		<span class="darkred">defiant</span>
+	<<else>>
+		<span class="seagreen">profoundly trusting</span>
+	<</if>>
+<</if>>
+
+<<set $desc = SlaveTitle($activeSlave)>>
+<span style="font-weight:bold"><span class="coral">$desc.</span></span>
+
+<<if $activeSlave.indenture > -1>>
+	$His <<if $activeSlave.indentureRestrictions > 1>>restrictive<<elseif $activeSlave.indentureRestrictions > 0>>protective<<else>>unrestricted<</if>> indenture
+	<<if $activeSlave.indenture > 0>>
+		<<if $activeSlave.indenture > 1>>
+			has $activeSlave.indenture weeks left to run.
+		<<else>>
+			expires next week.
+		<</if>>
+	<<else>>
+		expires this week.
+	<</if>>
+<</if>>
+
+<<if $ui == "start">>
+<<elseif $saleDescription == 1>>
+<<elseif $eventDescription == 1>>
+	$He is currently involved in an event, but is assigned to $activeSlave.assignment.
+	<<if $activeSlave.assignment == "be a subordinate slave">>
+		<<set _lsd = $slaveIndices[$activeSlave.subTarget]>>
+		<<if def _lsd>>
+			$He has been ordered to serve <span style="font-weight:bold"><span class="pink"><<= SlaveFullName($slaves[_lsd])>></span></span> specifically.
+		<</if>>
+	<</if>>
+<<else>>
+
+	<<if $activeSlave.fuckdoll > 0>>
+		You order another slave to bring $him before your desk so you can inspect $him.
+	<<elseif ($activeSlave.assignment == "work in the dairy") && ($dairyRestraintsSetting > 1)>>
+		You go down to $dairyName to inspect $his heaving body.
+	<<else>>
+		$He comes to you for an inspection
+		<<switch $activeSlave.assignment>>
+		<<case "whore">>
+			between customers.
+		<<case "serve the public">>
+			from where $he was offering $himself publicly.
+		<<case "work a glory hole">>
+			straight from confinement in a glory hole.
+		<<case "get milked">>
+			between milkings.
+		<<case "work as a farmhand">>
+			from where $he was taking care of crops and animals.
+		<<case "rest">>
+			from where $he was resting.
+		<<case "work as a nanny">>
+			from where $he was <<if $nurseryBabies > 0>>taking care of children<<else>>keeping $nurseryName clean<</if>>.
+		<<case "please you">>
+			from where $he was offering $himself to you.
+		<<case "be a subordinate slave">>
+			straight from orally servicing another slave.
+		<<case "be a servant">>
+			straight from bathing another slave.
+		<<case "train slaves">>
+			between slave training contracts.
+		<<case "stay confined">>
+			straight from $his confinement.
+		<<case "guard you">>
+			armed and alert.
+		<<case "recruit girls">>
+			<<if $recruiterTarget != "other arcologies">>
+				after $he finishes cybering with a prospective recruit.
+			<<else>>
+				<<if $arcologies[0].influenceTarget == -1>>
+					right away, since you haven't decided on an arcology to target for cultural influence, leaving $him with nothing to do.
+				<<else>>
+					from where $he was resting after $his latest sexually exhausting visit to <<for $i = 0; $i < $arcologies.length; $i++>><<if $arcologies[$i].direction == $arcologies[0].influenceTarget>>$arcologies[$i].name<<break>><</if>><</for>>.
+				<</if>>
+			<</if>>
+		<<case "be your Head Girl">>
+			with updates on your other slaves ready for your review.
+		<<default>>
+			as quickly as $he can.
+		<</switch>>
+	<</if>>
+
+	<<if $activeSlave.sentence > 0>>
+		<<if $activeSlave.assignment == "work a glory hole">>
+			$His sentence lasts another <<if $activeSlave.sentence > 1>>$activeSlave.sentence weeks<<else>>week<</if>>.
+		<<else>>
+			$His work assignment lasts another <<if $activeSlave.sentence > 1>>$activeSlave.sentence weeks<<else>>week<</if>>.
+		<</if>>
+	<</if>>
+
+	<<if $activeSlave.fuckdoll == 0>>
+		<<if $activeSlave.voice != 0>>
+			<<if $activeSlave.rules.speech == "restrictive">>
+				$He is not allowed to speak unless spoken to, but when allowed, $he speaks in a
+			<<else>>
+				$He is allowed to ask questions, and when $he speaks, $he does so in a
+			<</if>>
+			<<if $activeSlave.voice == 1>>
+				<<if $activeSlave.voiceImplant < 0>>
+					ridiculously deep, gravelly voice.
+				<<else>>
+					deep, unfeminine voice.
+				<</if>>
+			<<elseif $activeSlave.voice == 2>>
+				<<if $activeSlave.voiceImplant != 0>>
+					slightly artificial feminine voice.
+				<<else>>
+					pretty, feminine voice.
+				<</if>>
+			<<elseif $activeSlave.voice == 3>>
+				<<if $activeSlave.voiceImplant > 0>>
+					ridiculously high, bubblegum voice.
+				<<else>>
+					high, girly voice.
+				<</if>>
+			<</if>>
+
+			<<if canTalk($activeSlave, false)>>
+				<<accentDescription>>
+			<</if>>
+
+		<</if>>
+	<</if>>
+
+	<<if $activeSlave.relationship == -3>>
+		<<if $activeSlave.fetish == "mindbroken">>
+			$He is <span class="lightgreen">married to you,</span> not that it matters to $his broken mind; to $him, $he is a slave, nothing more.
+		<<elseif $activeSlave.devotion+$activeSlave.trust >= 175>>
+			$He is <span class="lightgreen">happily married to you,</span> though of course $he is still your slave; albeit a loving, devoted one.
+		<<elseif $activeSlave.devotion < -20 && $activeSlave.trust > 20>>
+			$He is <span class="lightgreen">reluctantly married to you,</span> though of course $he is still your slave.
+		<<elseif $activeSlave.devotion < -20>>
+			$He is <span class="lightgreen">forcibly married to you,</span> though of course $he is still your slave.
+		<<else>>
+			$He is <span class="lightgreen">married to you,</span> though of course $he is still your slave.
+		<</if>>
+	<<elseif $activeSlave.relationship == -1>>
+		$He is an <span class="lightgreen">emotional slut,</span> happy to remain officially single and free to treat everyone equally.
+	<<elseif $activeSlave.relationship == -2>>
+		$He is <span class="lightgreen">emotionally bound to you;</span> $his feelings for you are comparable to those in a healthy, loving relationship.
+	<<elseif $activeSlave.relationship != 0>>
+		<<set _lsd = $slaveIndices[$activeSlave.relationshipTarget]>>
+		<<if def _lsd>>
+			$He is
+			/* TODO: update this with the new relationship rules */
+			<<if $activeSlave.relationship <= 1>>
+				<span style="font-weight:bold" class="lightgreen">friends with <<= SlaveFullName($slaves[_lsd])>>;</span> the rules <<if $activeSlave.rules.relationship != "restrictive">>encourage<<else>> discourage<</if>> their relationship.
+			<<elseif $activeSlave.relationship <= 2>>
+				<span style="font-weight:bold" class="lightgreen">best friends with <<= SlaveFullName($slaves[_lsd])>>;</span> the rules <<if $activeSlave.rules.relationship != "restrictive">>encourage<<else>> discourage<</if>> their close relationship.
+			<<elseif $activeSlave.relationship <= 3>>
+				<span style="font-weight:bold" class="lightgreen"><<= SlaveFullName($slaves[_lsd])>>'s friend with benefits;</span> the rules <<if $activeSlave.rules.relationship == "permissive">>encourage<<else>> discourage<</if>> their sexual relationship.
+			<<elseif $activeSlave.relationship <= 4>>
+				<span style="font-weight:bold" class="lightgreen"><<= SlaveFullName($slaves[_lsd])>>'s lover;</span> the rules <<if $activeSlave.rules.relationship == "permissive">>encourage<<else>> discourage<</if>> their passionate relationship.
+			<<elseif $slaves[_lsd].relationship > 4>>
+				<span style="font-weight:bold" class="lightgreen"><<= SlaveFullName($slaves[_lsd])>>'s slave $wife;</span> the rules <<if $activeSlave.rules.relationship == "permissive">>encourage<<else>> discourage<</if>> marital bliss.
+			<</if>>
+		<</if>>
+	<<elseif $activeSlave.fuckdoll == 0>>
+		<<if $activeSlave.rules.relationship == "restrictive">>
+			The rules forbid $him from associating freely with other slaves.
+		<<elseif $activeSlave.career == "a Futanari Sister">>
+			The rules encourage $him to form friendships with other slaves, but $he seems disinclined to do so. $He's both friendly with them and eagerly sexual with them when allowed, but $he seems to be waiting for someone, deep down.
+		<<elseif $activeSlave.rules.relationship == "just friends">>
+			The rules encourage $him to form friendships with other slaves.
+		<<else>>
+			The rules encourage $him to form relationships with other slaves.
+		<</if>>
+	<</if>>
+
+	<<if $activeSlave.fuckdoll == 0>>
+		<<set _lover = getSlave($activeSlave.relationshipTarget)>>
+		<<if def _lover>>
+			<<setLocalPronouns _lover 2>>
+		<</if>>
+		<<if ($activeSlave.ID == $HeadGirl.ID) && ($HGSuite == 1)>>
+			$He lives in $his own suite within your penthouse,
+		<<elseif ($activeSlave.ID == $Bodyguard.ID) && ($dojo > 1)>>
+			$He lives in $his own room within the armory,
+		<<elseif ($activeSlave.assignment == "work in the dairy") && ($dairyRestraintsSetting > 1)>>
+			$He sleeps attached to a milking machine,
+		<<elseif $activeSlave.rules.living == "spare">>
+			$He sleeps on a bedroll,
+		<<elseif $activeSlave.rules.living == "normal">>
+			$He sleeps on a cot,
+		<<elseif $activeSlave.relationship >= 4>>
+			$He has $his own room, which $he shares with $his <<if $activeSlave.relationship == 5>>_wife2<<else>><<= _girl2>>friend<</if>> whenever they can manage it,
+		<<else>>
+			$He sleeps in $his own little room,
+		<</if>>
+		<<= App.Desc.releaseDesc($activeSlave)>>
+	<</if>>
+
+<</if>> /* CLOSES SALE AND EVENT RULES NONDISPLAY */
+
+<<if $activeSlave.slaveName != $activeSlave.birthName || $activeSlave.slaveSurname != $activeSlave.birthSurname>>
+	<<set _nameloss = 0>>
+	<<if $activeSlave.fuckdoll == 0>>
+		<<if $activeSlave.slaveName != $activeSlave.birthName && $activeSlave.slaveSurname != $activeSlave.birthSurname>>
+			<<= SlaveFullName($activeSlave)>> is not $his original full name;
+			<<if $activeSlave.birthName === "" || $activeSlave.birthSurname === "">>
+				whatever it was, however, has been lost forever.
+				<<set _nameloss = 1>>
+			<</if>>
+		<<elseif $activeSlave.slaveName != $activeSlave.birthName>>
+			$activeSlave.slaveName is not $his original given name;
+			<<if $activeSlave.birthName === "">>
+				whatever it was, however, has been lost forever.
+				<<set _nameloss = 1>>
+			<</if>>
+		<<elseif $activeSlave.slaveSurname != $activeSlave.birthSurname>>
+			<<if $activeSlave.slaveSurname === 0 && $activeSlave.birthSurname === "">>
+				$He once had a surname; whatever it was, however, has been lost forever.
+				<<set _nameloss = 1>>
+			<<elseif $activeSlave.slaveSurname !== 0>>
+				$activeSlave.slaveSurname is not $his original surname;
+				<<if $activeSlave.birthSurname === "">>
+					whatever it was, however, has been lost forever.
+					<<set _nameloss = 1>>
+				<</if>>
+			<<else>>
+				<<set _nameloss = 1>>
+			<</if>>
+		<</if>>
+		<<if $activeSlave.birthName !== "" || $activeSlave.birthSurname !== "">>
+			<<if _nameloss == 1>>
+				$He
+			<<else>>
+				$he
+			<</if>>
+			<<if $activeSlave.devotion > 95>>
+				adores $his slave name and affects to have forgotten that $he was ever called
+			<<elseif $activeSlave.devotion > 50>>
+				uses $his slave name automatically and gives no sign that $he was ever called
+			<<elseif $activeSlave.devotion > 20>>
+				uses $his slave name despite once being known as
+			<<elseif $activeSlave.devotion >= -20>>
+				uses $his slave name hesitantly since $he was once called
+			<<elseif $activeSlave.devotion >= -50>>
+				uses $his slave name with resentment since $he prefers $his original name,
+			<<else>>
+				uses $his slave name only when constantly punished, since $he feels $his real name is
+			<</if>>
+			<<if $activeSlave.slaveName !== $activeSlave.birthName && $activeSlave.slaveSurname !== $activeSlave.birthSurname>>
+				<<= SlaveFullBirthName($activeSlave)>>.
+			<<elseif $activeSlave.slaveName !== $activeSlave.birthName>>
+				<<if $activeSlave.slaveName.endsWith($activeSlave.birthName)>>
+					just plain
+				<</if>>
+				$activeSlave.birthName.
+			<<elseif $activeSlave.slaveSurname !== $activeSlave.birthSurname>>
+				$activeSlave.birthSurname.
+			<</if>>
+		<</if>>
+		<<if $activeSlave.slaveSurname == 0>>
+			$He has no surname as a slave, which $he
+			<<if $activeSlave.devotion > 95>>loves.
+			<<elseif $activeSlave.devotion > 50>>likes.
+			<<elseif $activeSlave.devotion > 20>>accepts.
+			<<elseif $activeSlave.devotion >= -20>>tolerates.
+			<<elseif $activeSlave.devotion >= -50>>resents.
+			<<else>>hates.
+			<</if>>
+		<</if>>
+	<<else>>
+		<<= SlaveFullName($activeSlave)>> is not $his original name: $he was once called <<= SlaveFullBirthName($activeSlave)>>.
+	<</if>>
+<</if>>
+
+<<= App.Desc.ageAndHealth($activeSlave)>>
+
+<<if $saleDescription != 1>>
+	<<if $clinic != 0 && $clinicUpgradeScanner == 1>>
+		<<if $activeSlave.chem > 15>>
+			$clinicNameCaps's scanners score long term carcinogenic buildup in $his body at <span class="cyan"><<print Math.ceil($activeSlave.chem/10)>>.</span>
+		<<else>>
+			$clinicNameCaps's scanners confirm that $he has good prospects for long term health.
+		<</if>>
+	<</if>>
+
+	<<geneticQuirkAssessment>>
+
+	<<if $showSexualHistory == 1 && $ui != "start">>
+		<<= App.Desc.sexualHistory($activeSlave)>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.fuckdoll == 0>> /* NORMAL NON-FUCKDOLL MENTAL REPORT */
+	<<= App.Desc.eyes($activeSlave)>>
+
+	<<if $activeSlave.fetish == "mindbroken">>
+		However, <span class="coral">$his mind is fundamentally broken;</span> everything $he experiences will quickly be forgotten.
+	<</if>>
+
+	<<if ($activeSlave.behavioralFlaw == "arrogant")>>
+		<<if ($activeSlave.devotion < -20) && ($activeSlave.trust >= -20)>>
+			$He is <span class="red">arrogant</span> and clings to $his dignity.
+		<<elseif ($activeSlave.devotion < -20)>>
+			$He is still <span class="red">arrogant</span> at heart, but does $his best to hide it out of fear.
+		<<elseif ($activeSlave.devotion <= 20)>>
+			$He is <span class="red">arrogant</span> and seems to think slavery beneath $him.
+		<<else>>
+			Despite being well broken, $he seems to retain hints of <span class="red">arrogance.</span>
+		<</if>>
+	<<elseif ($activeSlave.behavioralFlaw == "bitchy")>>
+		<<if ($activeSlave.devotion < -20) && ($activeSlave.trust >= -20)>>
+			$He is <span class="red">bitchy</span> and insults you every chance $he gets.
+		<<elseif ($activeSlave.devotion < -20)>>
+			$He is still <span class="red">bitchy</span> at times, but does $his best to keep quiet out of fear.
+		<<elseif ($activeSlave.devotion <= 20)>>
+			$He is <span class="red">bitchy</span> and constantly tries to get a word in edgewise.
+		<<else>>
+			Since $he is well broken, $he tries to confine $his <span class="red">bitchy</span> remarks to your other slaves.
+		<</if>>
+	<<elseif ($activeSlave.behavioralFlaw == "liberated")>>
+		<<if ($activeSlave.devotion < -20) && ($activeSlave.trust >= -20)>>
+			$He strongly believes that <span class="red">slavery is wrong,</span> and resists it as best $he can.
+		<<elseif ($activeSlave.devotion < -20)>>
+			$He strongly believes that <span class="red">slavery is wrong,</span> but usually keeps quiet out of fear.
+		<<elseif ($activeSlave.devotion <= 20)>>
+			$He strongly believes that <span class="red">slavery is wrong,</span> and rarely misses a chance to complain about it.
+		<<else>>
+			$He strongly believes that <span class="red">slavery is wrong,</span> but has learned to keep it to $himself.
+		<</if>>
+	<<elseif ($activeSlave.behavioralFlaw == "devout")>>
+		$He is <span class="red">devoutly religious,</span>
+		<<if ($activeSlave.devotion < -20) && ($activeSlave.trust >= -20)>>
+			and uses $his faith as a wellspring of resistance.
+		<<elseif ($activeSlave.devotion < -20)>>
+			and uses $his faith as a place of refuge.
+		<<elseif ($activeSlave.devotion <= 20)>>
+			and uses $his faith as a private place within $himself.
+		<<else>>
+			but has learned to keep $his faith private.
+		<</if>>
+	<<elseif ($activeSlave.behavioralFlaw == "odd")>>
+		$He behaves <span class="red">oddly,</span> saying and doing random things.
+	<<elseif ($activeSlave.behavioralFlaw == "hates men")>>
+		$He <span class="red">strongly dislikes</span> being around
+		<<if ($activeSlave.attrXY >= 85) && ($activeSlave.energy >= 40)>>
+			men; since $he loves the dick, $he's forced to put up with them.
+		<<elseif ($activeSlave.attrXY >= 65) && ($activeSlave.energy >= 40)>>
+			men; since $he likes the dick, $he reluctantly puts up with them.
+		<<else>>
+			men.
+		<</if>>
+	<<elseif ($activeSlave.behavioralFlaw == "hates women")>>
+		$He <span class="red">strongly dislikes</span> being around
+		<<if ($activeSlave.attrXX >= 85) && ($activeSlave.energy >= 40)>>
+			women; since $he loves pussy, $he's forced to put up with them.
+		<<elseif ($activeSlave.attrXX >= 65) && ($activeSlave.energy >= 40)>>
+			women; since $he likes pussy, $he reluctantly puts up with them.
+		<<else>>
+			women.
+		<</if>>
+	<<elseif ($activeSlave.behavioralFlaw == "anorexic")>>
+		$He suffers from <span class="red">anorexia.</span>
+	<<elseif ($activeSlave.behavioralFlaw == "gluttonous")>>
+		$He <span class="red">tends to overeat</span> whenever $he can, reacting to the rigors of sexual slavery with overeating.
+	<</if>>
+
+	<<switch $activeSlave.behavioralQuirk>>
+	<<case "confident">>
+		$He's <span class="green">confident,</span> and believes that $he has something of value to offer, even as a slave.
+	<<case "cutting">>
+		$He often has a witty or <span class="green">cutting</span> remark ready, but knows when to keep them to $himself.
+	<<case "funny">>
+		$He's <span class="green">funny,</span> often providing a little comic relief.
+	<<case "adores women">>
+		$He <span class="green">adores women,</span> and loves spending time with them.
+	<<case "adores men">>
+		$He <span class="green">adores men,</span> and loves spending time with them.
+	<<case "fitness">>
+		$He's a <span class="green">fitness fanatic,</span> and almost gets off to a hard workout.
+	<<case "insecure">>
+		$He's <span class="green">insecure,</span> defining $his self worth by how much others want to fuck $him.
+	<<case "sinful">>
+		<<if $arcologies[0].FSChattelReligionist == "unset">>
+			$He's delightfully <span class="green">sinful,</span> taking real pleasure in breaking cultural mores.
+		<<else>>
+			$He's a devout Chattel Religionist, and is aggressively <span class="green">sinful</span> against old world faiths. $He is enthusiastic about slutty religious clothing, and excited by intentional sacrilege like openly using old world religious icons as sex toys or having orgies on altars.
+		<</if>>
+	<<case "advocate">>
+		$He's an <span class="green">advocate</span> for slavery, and can articulate what it's done for $him.
+	<</switch>>
+
+	<<switch $activeSlave.sexualFlaw>>
+	<<case "hates oral">>
+		$He <span class="red">hates</span> oral sex and tries to avoid it.
+	<<case "hates anal">>
+		$He <span class="red">hates</span> anal sex and tries to avoid it.
+	<<case "hates penetration">>
+		$He <span class="red">hates</span> penetration and tries to avoid it.
+	<<case "repressed">>
+		$He is <span class="red">sexually repressed,</span> retaining a fundamental distaste for sex from $his upbringing.
+	<<case "idealistic">>
+		$He is <span class="red">sexually idealistic,</span> retaining a belief that sex should be based on love and consent.
+	<<case "shamefast">>
+		$He is <span class="red">shamefast,</span> suffering crippling anxiety when naked.
+	<<case "apathetic">>
+		$He is <span class="red">sexually apathetic,</span> often slipping into inertness during sex.
+	<<case "crude">>
+		$He is <span class="red">sexually crude,</span> and has little sense of what partners find disgusting during sex.
+	<<case "judgemental">>
+		$He is <span class="red">sexually judgemental,</span> and often denigrates $his sexual partners' performance.
+	<<case "cum addict">>
+		$He's a <span class="yellow">cum addict:</span> $he has a deep psychological addiction to <<if $PC.balls > 0>>semen<<if $PC.vagina != -1>> and <</if>><</if>><<if $PC.vagina != -1>>pussyjuice<</if>> and becomes anxious if $he goes for a few hours without drinking any.
+	<<case "anal addict">>
+		$He's an <span class="yellow">anal addict:</span> $he has a deep psychological need to be fucked in the ass and becomes anxious if $he goes for a few hours without anal.
+	<<case "attention whore">>
+		$He's an <span class="yellow">attention whore:</span> shocking and titillating spectators is more important to $him than the actual pleasure of sex.
+	<<case "breast growth">>
+		$He has a <span class="yellow">breast growth obsession:</span> $he's nearly incapable of believing that $his breasts are big enough.
+	<<case "abusive">>
+		$He's sexually <span class="yellow">abusive:</span> $he prefers taking sexual pleasure by force to having it offered to $him.
+	<<case "malicious">>
+		$He's sexually <span class="yellow">malicious:</span> $he gets off on others' anguish.
+	<<case "self hating">>
+		$He's filled with <span class="yellow">self hatred,</span> and is disturbingly willing to comply with things that might hurt $him.
+	<<case "neglectful">>
+		$He's sexually <span class="yellow">self neglectful,</span> and often shows no interest in getting off $himself.
+	<<case "breeder">>
+		$He's <span class="yellow">obsessed with being bred</span> to the point of fetishizing pregnancy itself as much as any act that leads to it.
+	<</switch>>
+
+	<<switch $activeSlave.sexualQuirk>>
+	<<case "gagfuck queen">>
+		$He's a <span class="green">gagfuck queen:</span> $he's able to safely take a rough facefuck.
+	<<case "painal queen">>
+		$He's a <span class="green">painal queen:</span> $he knows exactly how much $he can take without getting hurt.
+	<<case "strugglefuck queen">>
+		$He's a <span class="green">strugglefuck queen:</span> $he can gauge exactly how much resistance $his partners want.
+	<<case "tease">>
+		$He's a <span class="green">tease,</span> and often displays a little flash of $himself followed by a blush.
+	<<case "romantic">>
+		$He's a <span class="green">romantic,</span> and persists in innocent pleasure in the closeness of sex.
+	<<case "perverted">>
+		$He's <span class="green">perverted,</span> and enjoys breaking sexual boundaries.
+	<<case "caring">>
+		$He's <span class="green">caring,</span> and enjoys bringing partners pleasure more than getting off $himself.
+	<<case "unflinching">>
+		$He's <span class="green">unflinching,</span> willing to do anything, even by the standards of sex slaves.
+	<<case "size queen">>
+		$He's <span class="green">a size queen;</span> preferring big cock is almost $his trademark.
+	<</switch>>
+
+	<<if ($activeSlave.fetishKnown == 1)>>
+		<<switch $activeSlave.fetish>>
+		<<case "submissive">>
+			<<if ($activeSlave.sexualFlaw == "apathetic")>>
+				This sexual apathy plays into $his preference for <span class="lightcoral">submission.</span>
+			<<elseif ($activeSlave.behavioralFlaw == "arrogant")>>
+				$His arrogance is really just a thin shell to protect $his true need to <span class="lightcoral">submit.</span>
+			<<elseif ($activeSlave.fetishStrength > 95)>>
+				$He's an extreme <span class="lightcoral">submissive,</span> and relishes the strictures of slavery.
+			<<elseif ($activeSlave.fetishStrength > 60)>>
+				$He's a confirmed <span class="lightcoral">submissive,</span> and enjoys the strictures of slavery.
+			<<else>>
+				$He has <span class="lightcoral">submissive</span> tendencies, and likes the strictures of slavery.
+			<</if>>
+		<<case "cumslut">>
+			<<if ($activeSlave.sexualFlaw == "hates oral")>>
+				$He's torn between $his <span class="lightcoral">love of semen</span> and $his dislike of having cocks in $his mouth.
+			<<elseif ($activeSlave.fetishStrength > 95)>>
+				$He's a <span class="lightcoral">cumslut,</span> and loves giving blowjobs and receiving facials.
+			<<elseif ($activeSlave.fetishStrength > 60)>>
+				$He <span class="lightcoral">prefers giving oral,</span> and enjoys sucking dick and receiving facials.
+			<<else>>
+				$He has an <span class="lightcoral">oral fixation,</span> and likes giving blowjobs and receiving facials.
+			<</if>>
+		<<case "humiliation">>
+			<<if ($activeSlave.behavioralFlaw == "bitchy")>>
+				$His bitchiness is really just an expression of $his deep need to be <span class="lightcoral">humiliated</span> $himself.
+			<<elseif ($activeSlave.sexualFlaw == "shamefast")>>
+				$His shame is genuine, and it is with real self-loathing that $he <span class="lightcoral">gets off on humiliation.</span>
+			<<elseif ($activeSlave.fetishStrength > 95)>>
+				$He's a slut for <span class="lightcoral">humiliation,</span> and gets off on having others see $his enslavement.
+			<<elseif ($activeSlave.fetishStrength > 60)>>
+				$He enjoys <span class="lightcoral">humiliating</span> sex.
+			<<else>>
+				$He likes <span class="lightcoral">embarrassing</span> sex.
+			<</if>>
+		<<case "buttslut">>
+			<<if ($activeSlave.sexualFlaw == "hates anal")>>
+				$His hatred is just pretense to cover $his shame about how much $he really loves getting <span class="lightcoral">fucked in the butt.</span>
+			<<elseif ($activeSlave.fetishStrength > 95)>>
+				$He's a <span class="lightcoral">buttslut,</span> happy to have anyone put anything up $his ass.
+			<<elseif ($activeSlave.fetishStrength > 60)>>
+				$He <span class="lightcoral">prefers anal.</span>
+			<<else>>
+				$He has an <span class="lightcoral">anal fixation.</span>
+			<</if>>
+		<<case "boobs">>
+			<<if ($activeSlave.fetishStrength > 95)>>
+				$He <span class="lightcoral">prefers mammary intercourse</span> to any other kind of sex, and readily climaxes to nipple stimulation.
+			<<elseif ($activeSlave.fetishStrength > 60)>>
+				$He enjoys <span class="lightcoral">breast play,</span> and is rapidly aroused by nipple stimulation.
+			<<else>>
+				$He <span class="lightcoral">really likes boobs,</span> $hers and others.
+			<</if>>
+		<<case "pregnancy">>
+			<<if ($activeSlave.fetishStrength > 95)>>
+				$He has a <span class="lightcoral">pregnancy fetish,</span> and finds anything related to reproduction sexy.
+			<<elseif ($activeSlave.fetishStrength > 60)>>
+				$He has an <span class="lightcoral">impregnation fantasy,</span> and enjoys bareback sex.
+			<<else>>
+				$He has a recurring <span class="lightcoral">impregnation fantasy.</span>
+			<</if>>
+		<<case "dom">>
+			<<if ($activeSlave.sexualFlaw == "apathetic")>>
+				$He is at war with $himself, since $his habitual apathy during sex barely masks a desire to <span class="lightcoral">dominate.</span>
+			<<elseif ($activeSlave.fetishStrength > 95)>>
+				$He is a <span class="lightcoral">complete dom;</span> with other slaves this is expressed as a strong preference to top, and with $his betters $he's an almost competitive lover.
+			<<elseif ($activeSlave.fetishStrength > 60)>>
+				$He likes to take an active, powerful role in sex; with other slaves this is expressed as <span class="lightcoral">dominance,</span> and with $his betters $he's a very energetic lover.
+			<<else>>
+				$He prefers to take a <span class="lightcoral">dominant</span> sexual role.
+			<</if>>
+		<<case "sadist">>
+			<<if ($activeSlave.fetishStrength > 95)>>
+				$He is an <span class="lightcoral">aggressive sadist;</span> $he's constantly plotting to control, abuse, and hurt other slaves.
+			<<elseif ($activeSlave.fetishStrength > 60)>>
+				$He has <span class="lightcoral">sadistic tendencies;</span> $he enjoys watching other slaves in pain, but truly loves causing pain $himself.
+			<<else>>
+				$He gets off on <span class="lightcoral">the suffering of others;</span> $he enjoys watching other slaves in pain.
+			<</if>>
+		<<case "masochist">>
+			<<if ($activeSlave.fetishStrength > 95)>>
+				$He is a <span class="lightcoral">pain slut.</span>
+			<<elseif ($activeSlave.fetishStrength > 60)>>
+				$He <span class="lightcoral">gets off on pain,</span> showing strong masochistic tendencies.
+			<<else>>
+				$He <span class="lightcoral">doesn't mind pain,</span> and shows some masochistic tendencies.
+			<</if>>
+		<<default>>
+			$His sexual tastes are <span class="pink">quite normal.</span>
+		<</switch>>
+	<<else>>
+		$His fetishes, if any, are not known to you.
+	<</if>>
+
+	<<if ($activeSlave.attrKnown == 1)>>
+		<<if ($activeSlave.energy > 95)>>
+			$He's a <span class="green">nymphomaniac.</span>
+		<<elseif ($activeSlave.energy > 80)>>
+			$He's a <span class="green">sex addict.</span>
+		<<elseif ($activeSlave.energy > 60)>>
+			$He has a <span class="green">powerful appetite for sex.</span>
+		<<elseif ($activeSlave.energy > 40)>>
+			$He has a <span class="yellow">healthy sex drive.</span>
+		<<elseif ($activeSlave.energy > 20)>>
+			$He has a <span class="red">weak sex drive.</span>
+		<<else>>
+			$He's <span class="red">frigid,</span> with little interest in sex.
+		<</if>>
+		<<if ($activeSlave.attrXY <= 5)>>
+			<<if ($activeSlave.attrXX <= 5)>>
+				$He <span class="red">finds both men's and women's intimate areas quite repulsive,</span> an unfortunate state of affairs!
+			<<else>>
+				$He <span class="red">finds men sexually disgusting,</span>
+				<<if ($activeSlave.attrXX <= 15)>>
+					and <span class="red">has almost as much trouble with women.</span>
+				<<elseif ($activeSlave.attrXX <= 35)>>
+					and is <span class="red">unenthusiastic about women.</span>
+				<<elseif ($activeSlave.attrXX <= 65)>>
+					and $he is indifferent to women.
+				<<elseif ($activeSlave.attrXX <= 85)>>
+					but <span class="green">is attracted to women.</span>
+				<<elseif ($activeSlave.attrXX <= 95)>>
+					<span class="green">strongly preferring women.</span>
+				<<else>>
+					but is <span class="green">passionate about women.</span>
+				<</if>>
+			<</if>>
+		<<elseif ($activeSlave.attrXY <= 15)>>
+			$He <span class="red">considers men's bodies a turnoff,</span>
+			<<if ($activeSlave.attrXX <= 5)>>
+				and is <span class="red">actually disgusted by women's.</span>
+			<<elseif ($activeSlave.attrXX <= 15)>>
+				and <span class="red">feels the same about women's.</span>
+			<<elseif ($activeSlave.attrXX <= 35)>>
+				and is <span class="red">unenthusiastic about women.</span>
+			<<elseif ($activeSlave.attrXX <= 65)>>
+				and $he is indifferent to women.
+			<<elseif ($activeSlave.attrXX <= 85)>>
+				but <span class="green">is attracted to women.</span>
+			<<elseif ($activeSlave.attrXX <= 95)>>
+				<span class="green">strongly preferring women.</span>
+			<<else>>
+				but is <span class="green">passionate about women.</span>
+			<</if>>
+		<<elseif ($activeSlave.attrXY <= 35)>>
+			$He <span class="red">finds most men unattractive,</span>
+			<<if ($activeSlave.attrXX <= 5)>>
+				and is <span class="red">disgusted by the idea of intimacy with a woman.</span>
+			<<elseif ($activeSlave.attrXX <= 15)>>
+				and is <span class="red">turned off by women.</span>
+			<<elseif ($activeSlave.attrXX <= 35)>>
+				and is <span class="red">unenthusiastic about women.</span>
+			<<elseif ($activeSlave.attrXX <= 65)>>
+				and $he is indifferent to women.
+			<<elseif ($activeSlave.attrXX <= 85)>>
+				but <span class="green">is attracted to women.</span>
+			<<elseif ($activeSlave.attrXX <= 95)>>
+				<span class="green">strongly preferring women.</span>
+			<<else>>
+				but is <span class="green">passionate about women.</span>
+			<</if>>
+		<<elseif ($activeSlave.attrXY <= 65)>>
+			$He's indifferent to sex with men,
+			<<if ($activeSlave.attrXX <= 5)>>
+				but is <span class="red">disgusted by the idea of intimacy with a woman.</span>
+			<<elseif ($activeSlave.attrXX <= 15)>>
+				but is <span class="red">turned off by women.</span>
+			<<elseif ($activeSlave.attrXX <= 35)>>
+				but is <span class="red">actually unenthusiastic about women.</span>
+			<<elseif ($activeSlave.attrXX <= 65)>>
+				and feels the same about women, too.
+			<<elseif ($activeSlave.attrXX <= 85)>>
+				but <span class="green">is attracted to women.</span>
+			<<elseif ($activeSlave.attrXX <= 95)>>
+				<span class="green">strongly preferring women.</span>
+			<<else>>
+				but is <span class="green">passionate about women.</span>
+			<</if>>
+		<<elseif ($activeSlave.attrXY <= 85)>>
+			$He <span class="green">finds men attractive,</span>
+			<<if ($activeSlave.attrXX <= 5)>>
+				but is <span class="red">disgusted by the idea of intimacy with a woman.</span>
+			<<elseif ($activeSlave.attrXX <= 15)>>
+				but is <span class="red">turned off by women.</span>
+			<<elseif ($activeSlave.attrXX <= 35)>>
+				but is <span class="red">unenthusiastic about women.</span>
+			<<elseif ($activeSlave.attrXX <= 65)>>
+				but is indifferent to women.
+			<<elseif ($activeSlave.attrXX <= 85)>>
+				and <span class="green">likes women too.</span>
+			<<elseif ($activeSlave.attrXX <= 95)>>
+				but <span class="green">likes women even more.</span>
+			<<else>>
+				but is really <span class="green">passionate about women.</span>
+			<</if>>
+		<<elseif ($activeSlave.attrXY <= 95)>>
+			$He <span class="green">is aroused by most men,</span>
+			<<if ($activeSlave.attrXX <= 5)>>
+				but is <span class="red">disgusted by the idea of intimacy with a woman.</span>
+			<<elseif ($activeSlave.attrXX <= 15)>>
+				but is <span class="red">turned off by women.</span>
+			<<elseif ($activeSlave.attrXX <= 35)>>
+				but is <span class="red">unenthusiastic about women.</span>
+			<<elseif ($activeSlave.attrXX <= 65)>>
+				but is indifferent to women.
+			<<elseif ($activeSlave.attrXX <= 85)>>
+				and <span class="green">likes women too.</span>
+			<<elseif ($activeSlave.attrXX <= 95)>>
+				and <span class="green">thinks most women are hot,</span> too.
+			<<else>>
+				but is most <span class="green">passionate about women.</span>
+			<</if>>
+		<<else>>
+			<<if ($activeSlave.attrXX > 95)>>
+				$He's <span class="green">omnisexual,</span> and is passionately attracted to nearly everyone.
+			<<else>>
+				$He's <span class="green">passionate about men,</span>
+				<<if ($activeSlave.attrXX <= 5)>>
+					but is <span class="red">disgusted by the idea of intimacy with a woman.</span>
+				<<elseif ($activeSlave.attrXX <= 15)>>
+					but is <span class="red">turned off by women.</span>
+				<<elseif ($activeSlave.attrXX <= 35)>>
+					but is <span class="red">unenthusiastic about women.</span>
+				<<elseif ($activeSlave.attrXX <= 65)>>
+					but is indifferent to women.
+				<<elseif ($activeSlave.attrXX <= 85)>>
+					but also <span class="green">likes women,</span> too.
+				<<else>>
+					but also <span class="green">thinks most women are hot,</span> too.
+				<</if>>
+			<</if>>
+		<</if>>
+	<<else>>
+		You do not understand $his sexuality very well.
+	<</if>>
+
+<<else>> /* FUCKDOLL MENTAL REPORT */
+
+	It's impossible to tell what intelligence or inclinations a Fuckdoll might have by looking at it, but the most recent records indicate that this one is
+	<<if ($activeSlave.intelligence+$activeSlave.intelligenceImplant > 95)>>
+		<span class="deepskyblue">brilliant</span>
+	<<elseif ($activeSlave.intelligence+$activeSlave.intelligenceImplant > 50)>>
+		<span class="deepskyblue">highly intelligent</span>
+	<<elseif ($activeSlave.intelligence+$activeSlave.intelligenceImplant > 15)>>
+		of <span class="deepskyblue">above average intelligence</span>
+	<<elseif ($activeSlave.intelligence+$activeSlave.intelligenceImplant >= -15)>>
+		of average intelligence
+	<<elseif ($activeSlave.intelligence+$activeSlave.intelligenceImplant >= -50)>>
+		of <span class="orangered">below average intelligence</span>
+	<<elseif ($activeSlave.intelligence+$activeSlave.intelligenceImplant >= -95)>>
+		<span class="orangered">very stupid</span>
+	<<elseif ($activeSlave.intelligence+$activeSlave.intelligenceImplant >= -100)>>
+		<span class="orangered">a moron</span>
+	<</if>>
+	<<if ($activeSlave.intelligence >= -15)>>
+		<<if ($activeSlave.intelligenceImplant < 15)>>
+			but is uneducated.
+		<<elseif $activeSlave.intelligenceImplant >= 30>>
+			and is well educated.
+		<<else>>
+			and is educated.
+		<</if>>
+	<<else>>
+		<<if ($activeSlave.intelligenceImplant < 15)>>
+			and is uneducated.
+		<<elseif $activeSlave.intelligenceImplant >= 30>>
+			but is well educated.
+		<<else>>
+			but is educated.
+		<</if>>
+	<</if>>
+
+	<<if ($activeSlave.behavioralFlaw != "none") ||($activeSlave.sexualFlaw != "none") ||($activeSlave.behavioralQuirk != "none") ||($activeSlave.sexualQuirk != "none")>>
+		<<if ($activeSlave.behavioralFlaw != "none") ||($activeSlave.sexualFlaw != "none")>>
+			$His remaining mental flaws are likewise impossible to discern, but if $he was allowed out of $his suit, this Fuckdoll would probably still
+			<<if $activeSlave.behavioralFlaw != "none">>
+				<<switch $activeSlave.behavioralFlaw>>
+				<<case "hates men">>
+					<span class="red">hate men</span>
+				<<case "hates women">>
+					<span class="red">hate women</span>
+				<<case "gluttonous">>
+					be a <span class="red">stress eater</span>
+				<<default>>
+					be <span class="red">$activeSlave.behavioralFlaw</span>
+				<</switch>>
+			<</if>>
+			<<if $activeSlave.sexualFlaw != "none">>
+				<<if $activeSlave.behavioralFlaw != "none">>and would still<</if>>
+				<<switch $activeSlave.sexualFlaw>>
+				<<case "hates oral">>
+					<span class="red">hate oral.</span>
+				<<case "hates anal">>
+					<span class="red">hate anal.</span>
+				<<case "hates penetration">>
+					<span class="red">hate penetration.</span>
+				<<case "cum addict">>
+					a <span class="yellow">cum addict.</span>
+				<<case "anal addict">>
+					an <span class="yellow">anal addict.</span>
+				<<case "attention whore">>
+					an <span class="yellow">attention whore.</span>
+				<<case "breast growth">>
+					have a <span class="yellow">breast obsession.</span>
+				<<case "breeder">>
+					have a <span class="yellow">breeding obsession.</span>
+				<<default>>
+					be <span class="red">$activeSlave.sexualFlaw.</span>
+				<</switch>>
+			<<else>>
+				to an unacceptable degree.
+			<</if>>
+		<</if>>
+		<<if ($activeSlave.behavioralQuirk != "none") ||($activeSlave.sexualQuirk != "none")>>
+			$His character seems to retain some distinctiveness; $he may still
+			<<if $activeSlave.behavioralQuirk != "none">>
+				be
+				<<switch $activeSlave.behavioralQuirk>>
+				<<case "fitness">>
+					<span class="green">a fitness fanatic</span>
+				<<case "adores women">>
+					<span class="green">adore women</span>
+				<<case "adores men">>
+					<span class="green">adore men</span>
+				<<case "advocate">>
+					<span class="green">an advocate</span>
+				<<default>>
+					<span class="green">$activeSlave.behavioralQuirk</span>
+				<</switch>>
+			<</if>>
+			<<if $activeSlave.sexualQuirk != "none">>
+				<<if $activeSlave.behavioralQuirk != "none">>and still<</if>> be
+				<<switch $activeSlave.sexualQuirk>>
+				<<case "romantic" "perverted" "caring" "unflinching">>
+					<span class="green">$activeSlave.sexualQuirk.</span>
+				<<default>>
+					a <span class="green">$activeSlave.sexualQuirk.</span>
+				<</switch>>
+			<<else>>
+				in there.
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<if ($activeSlave.fetishKnown == 1)>>
+		$His recent biomedical readings indicate that $he still prefers
+		<<switch $activeSlave.fetish>>
+		<<case "submissive">>
+			<span class="lightcoral">being forced to submit</span>
+		<<case "cumslut">>
+			<span class="lightcoral">being facefucked</span>
+		<<case "humiliation">>
+			<span class="lightcoral">being fucked in public</span>
+		<<case "buttslut">>
+			<span class="lightcoral">being sodomized</span>
+		<<case "boobs">>
+			<span class="lightcoral">having $his breasts handled</span>
+		<<case "pregnancy">>
+			<span class="lightcoral">being inseminated</span>
+		<<case "dom" "sadist">>
+			<span class="lightcoral">being on top</span>
+		<<case "masochist">>
+			<span class="lightcoral">being hurt</span>
+		<<default>>
+			<span class="lightcoral">having vanilla sex</span>
+		<</switch>>
+		to any other kind of use.
+	<</if>>
+
+	<<if ($activeSlave.attrKnown == 1)>>
+		$His suit usually forces $him to become aroused for use, but when $he's allowed to react naturally, $he has
+		<<if ($activeSlave.energy > 95)>>
+			a <span class="green">nymphomaniac</span> need
+		<<elseif ($activeSlave.energy > 80)>>
+			a <span class="green">pathological need</span>
+		<<elseif ($activeSlave.energy > 60)>>
+			a <span class="green">powerful need</span>
+		<<elseif ($activeSlave.energy > 40)>>
+			a <span class="yellow">healthy need</span>
+		<<elseif ($activeSlave.energy > 20)>>
+			a <span class="red">weak need</span>
+		<<else>>
+			<span class="red">no need</span>
+		<</if>>
+		for external sexual stimulation, acts
+		<<if ($activeSlave.attrXX <= 15)>>
+			<span class="red">revolted</span>
+		<<elseif ($activeSlave.attrXX <= 35)>>
+			<span class="red">unhappy</span>
+		<<elseif ($activeSlave.attrXX <= 65)>>
+			indifferent
+		<<elseif ($activeSlave.attrXX <= 85)>>
+			<span class="green">eager</span>
+		<<else>>
+			<span class="green">very enthusiastic</span>
+		<</if>>
+		when a pussy is pressed against $his face hole, and
+		<<if ($activeSlave.attrXY <= 15)>>
+			<span class="red">struggles</span>
+		<<elseif ($activeSlave.attrXY <= 35)>>
+			<span class="red">does not react positively</span>
+		<<elseif ($activeSlave.attrXY <= 65)>>
+			does not react significantly
+		<<elseif ($activeSlave.attrXY <= 85)>>
+			<span class="green">seems pleased</span>
+		<<else>>
+			is <span class="green">very happy</span>
+		<</if>>
+		when a dick is pushed inside
+		<<if canDoVaginal($activeSlave) && $activeSlave.vagina > 0 && canDoAnal($activeSlave) && $activeSlave.anus > 0>>
+			either of $his lower holes.
+		<<elseif canDoVaginal($activeSlave) && $activeSlave.vagina > 0>>
+			$his front hole.
+		<<elseif canDoAnal($activeSlave) && $activeSlave.anus > 0>>
+			$his rear hole.
+		<<else>>
+			it.
+		<</if>>
+	<</if>>
+
+<</if>> /* END MENTAL REPORT */
+
+<<if $saleDescription == 0>>
+	<<if $eventDescription == 0>>
+		<<if canSee($activeSlave)>>
+			<<if ($activeSlave.attrKnown == 1)>>
+				<<if ($activeSlave.assignment != "work in the dairy") || ($dairyRestraintsSetting > 1)>>
+					<<if ($activeSlave.attrXX > 85) && ($PC.boobs >= 400)>>
+						$His attraction to women is obvious: $he can't seem to stop staring at your breasts.
+					<<elseif ($activeSlave.attrXY > 85) && ($PC.dick != 0)>>
+						$His attraction to men is obvious: $he can't seem to stop glancing down at your package.
+					<<elseif ($activeSlave.attrXY > 85) && $PC.title == 1 && ($PC.boobs < 300)>>
+						$His attraction to men is obvious: $he can't seem to stop checking out your broad chest.
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $familyTesting == 1>>
+
+	<<Family>>
+
+	<<if $activeSlave.relationship >= 3 && totalRelatives($activeSlave) > 0>>
+		<<set _lover = getSlave($activeSlave.relationshipTarget)>>
+		<<if def _lover>>
+			<<set _relTerm = relativeTerm($activeSlave, _lover)>>
+			<<if _relTerm !== null>>
+				$He is in an <span class="lightgreen">incestuous relationship with $his _relTerm, <<= SlaveFullName(_lover)>>.</span>
+			<</if>>
+		<</if>>
+	<<elseif $activeSlave.relationship <= -2>>
+		<<set _relTerm = relativeTerm($activeSlave, $PC)>>
+		<<if _relTerm !== null>>
+			$He is in an <span class="lightgreen">incestuous relationship with $his _relTerm, you.</span>
+		<</if>>
+	<</if>>
+
+<<else>>
+
+	<<if $activeSlave.relation != 0>>
+		<<set _lsd = $slaveIndices[$activeSlave.relationTarget]>>
+		<<if def _lsd>>
+			<<if ($slaves[_lsd].ID == $activeSlave.relationshipTarget) && ($activeSlave.relationship >= 3)>>
+				$He is <span class="lightgreen"><<= SlaveFullName($slaves[_lsd])>>'s $activeSlave.relation, making their relationship incestuous.</span>
+			<<else>>
+				$He is <span class="lightgreen"><<= SlaveFullName($slaves[_lsd])>>'s $activeSlave.relation.</span>
+			<</if>>
+		<</if>>
+	<</if>>
+
+<</if>> /* closes extended family mode */
+
+<<if $activeSlave.rivalry != 0>>
+	<<set _lsd = $slaveIndices[$activeSlave.rivalryTarget]>>
+	<<if def _lsd>>
+		$He
+		<<if $activeSlave.rivalry <= 1>>
+			<span class="lightsalmon">dislikes</span> <<= SlaveFullName($slaves[_lsd])>>.
+		<<elseif $activeSlave.rivalry <= 2>>
+			is <<= SlaveFullName($slaves[_lsd])>>'s <span class="lightsalmon">rival.</span>
+		<<else>>
+			<span class="lightsalmon">bitterly hates</span> <<= SlaveFullName($slaves[_lsd])>>.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.bodySwap > 0>>
+	<<if $activeSlave.origBodyOwner !== "">>
+		$He currently possesses <<print $activeSlave.origBodyOwner>>'s body.
+	<</if>>
+	<<if $activeSlave.fetish != "mindbroken" && $activeSlave.fuckdoll == 0 && $activeSlave.origBodyOwnerID > 0>>
+		<<set _lsd = $slaveIndices[$activeSlave.origBodyOwnerID]>>
+		<<if def _lsd>>
+			$He is fully aware that <<= SlaveFullName($slaves[_lsd])>> is in $his old body.
+		<</if>>
+	<</if>>
+<</if>>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+
+<<if $saleDescription == 0>>
+	<<if $activeSlave.origin != 0>>
+		$activeSlave.origin
+	<</if>>
+<</if>>
+
+<<if $activeSlave.fuckdoll == 0>>
+	<<if $activeSlave.career != 0>>
+		<<if $activeSlave.career == "a slave">>
+			$He was a slave long before you obtained $him.
+		<<elseif $activeSlave.career == "a slave since birth">>
+			$He's been your slave $his entire life.
+		<<elseif $activeSlave.career == "a meat toilet" || $activeSlave.career == "a cum dump">>
+			$He sees $himself as a cum receptacle.
+		<<elseif $activeSlave.career == "a dairy cow">>
+			$He's been broken into the belief that $he is nothing more than a cow to be milked and bred.
+		<<elseif $activeSlave.career == "a breeding bull">>
+			$He's been broken into the belief that $he is nothing more than a bull destined to fill fertile wombs with calves.
+		<<elseif $activeSlave.career == "a breeder">>
+			Before you obtained $him, $he was a breeding slave.
+		<<elseif $activeSlave.career == "a bioreactor">>
+			$He has spent time as a cow in an industrial dairy, an experience that marked $him deeply.
+		<<else>>
+			Before $he was a slave, $he was
+			<<if setup.bodyguardCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as a Bodyguard.
+			<<elseif setup.wardenessCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as a Wardeness for <<if $cellblock == 0>>a Cellblock<<else>>$cellblockName<</if>>.
+			<<elseif setup.attendantCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as an Attendant for <<if $spa == 0>>a Spa<<else>>$spaName<</if>>.
+			<<elseif setup.matronCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as a Matron for <<if $nursery == 0 && $nurseryNannies == 0>>a Nursery<<else>>$nurseryName<</if>>.
+			<<elseif setup.nurseCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as a Nurse for <<if $clinic == 0>>a Clinic<<else>>$clinicName<</if>>.
+			<<elseif setup.schoolteacherCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as a Schoolteacher for <<if $schoolroom == 0>>a Schoolroom<<else>>$schoolroomName<</if>>.
+			<<elseif setup.stewardessCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as a Stewardess for <<if $servantsQuarters == 0>>a Servant's Quarters<<else>>$servantsQuartersName<</if>>.
+			<<elseif setup.milkmaidCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as a Milkmaid for <<if $dairy == 0>>a Dairy<<else>>$dairyName<</if>>.
+			<<elseif setup.farmerCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as a Farmer for <<if $farmyard == 0>>a Farmyard<<else>>$farmyardName<</if>>.
+			<<elseif setup.madamCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as a Madam for <<if $brothel == 0>>a Brothel<<else>>$brothelName<</if>>.
+			<<elseif setup.DJCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as a DJ for <<if $club == 0>>a Club<<else>>$clubName<</if>>.
+			<<elseif setup.HGCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as a Head Girl.
+			<<elseif setup.recruiterCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him potential as a recruiter.
+			<<elseif setup.entertainmentCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him a slight edge at entertainment.
+			<<elseif setup.whoreCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him a slight edge at sexual commerce.
+			<<elseif setup.gratefulCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, so $he can remember what it's like <<if $activeSlave.career == "prisoner">>no one looking out for you<<else>>to have the freedom to starve<</if>>.
+			<<elseif setup.menialCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him experience following orders.
+			<<elseif setup.servantCareers.includes($activeSlave.career)>>
+				<<= convertCareer($activeSlave)>>, giving $him a slight edge in housekeeping.
+			<<else>>
+				<<= convertCareer($activeSlave)>>.
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if ($week-$activeSlave.weekAcquired >= 20) && ($activeSlave.skill.entertainment >= 100)>>
+		<<if setup.entertainmentCareers.includes($activeSlave.career)>><<else>>
+			$He has gotten enough experience to be as charismatic as any professional entertainer<<if ($activeSlave.counter.oral + $activeSlave.counter.anal + $activeSlave.counter.vaginal + $activeSlave.counter.mammary + $activeSlave.counter.penetrative > 1000)>>, and has been fucked so many times that a free sex worker could teach $him nothing<</if>>.
+		<</if>>
+	<<elseif ($activeSlave.counter.oral + $activeSlave.counter.anal + $activeSlave.counter.vaginal + $activeSlave.counter.mammary + $activeSlave.counter.penetrative > 1000)>>
+		<<if setup.whoreCareers.includes($activeSlave.career)>><<else>>
+			$He has been fucked so many times that a free sex worker could teach $him nothing.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<set _careers = []>>
+<<if ($activeSlave.skill.headGirl >= $masteredXP)>>
+	<<set _careers.push("Head Girl")>>
+<</if>>
+<<if ($activeSlave.skill.recruiter >= $masteredXP)>>
+	<<set _careers.push("Recruiter")>>
+<</if>>
+<<if ($activeSlave.skill.bodyguard >= $masteredXP)>>
+	<<set _careers.push("Bodyguard")>>
+<</if>>
+<<if ($activeSlave.skill.madam >= $masteredXP)>>
+	<<set _careers.push("Madam")>>
+<</if>>
+<<if ($activeSlave.skill.DJ >= $masteredXP)>>
+	<<set _careers.push("DJ")>>
+<</if>>
+<<if ($activeSlave.skill.nurse >= $masteredXP)>>
+	<<set _careers.push("Nurse")>>
+<</if>>
+<<if ($activeSlave.skill.teacher >= $masteredXP)>>
+	<<set _careers.push("Schoolteacher")>>
+<</if>>
+<<if ($activeSlave.skill.attendant >= $masteredXP)>>
+	<<set _careers.push("Attendant")>>
+<</if>>
+<<if ($activeSlave.skill.matron >= $masteredXP)>>
+	<<set _careers.push("Matron")>>
+<</if>>
+<<if ($activeSlave.skill.stewardess >= $masteredXP)>>
+	<<set _careers.push("Stewardess")>>
+<</if>>
+<<if ($activeSlave.skill.milkmaid >= $masteredXP)>>
+	<<set _careers.push("Milkmaid")>>
+<</if>>
+<<if ($activeSlave.skill.farmer >= $masteredXP)>>
+	<<set _careers.push("Farmer")>>
+<</if>>
+<<if ($activeSlave.skill.wardeness >= $masteredXP)>>
+	<<set _careers.push("Wardeness")>>
+<</if>>
+<<if ($activeSlave.skill.servant >= $masteredXP)>>
+	<<set _careers.push("Servant")>>
+<</if>>
+<<if ($activeSlave.skill.entertainer >= $masteredXP)>>
+	<<set _careers.push("Entertainer")>>
+<</if>>
+<<if ($activeSlave.skill.whore >= $masteredXP)>>
+	<<set _careers.push("Whore")>>
+<</if>>
+<<if _careers.length > 0>>
+	$He has working experience as a
+	<<if _careers.length > 2>>
+		<<for _j = 0; _j < _careers.length; _j++>>
+			<<if _j < _careers.length-1>>
+				<<print _careers[_j]>>,
+			<<else>>
+				and <<print _careers[_j]>>.
+			<</if>>
+		<</for>>
+	<<elseif _careers.length > 1>>
+		_careers[1] and <<print _careers[0]>>.
+	<<else>>
+		<<print _careers[0]>>.
+	<</if>>
+<</if>>
+/* old
+<<set _numCareers = 0>>
+<<if ($activeSlave.skill.headGirl >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if ($activeSlave.skill.recruiter >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if ($activeSlave.skill.bodyguard >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if ($activeSlave.skill.madam >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if ($activeSlave.skill.DJ >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if ($activeSlave.skill.nurse >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if ($activeSlave.skill.teacher >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if ($activeSlave.skill.attendant >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if ($activeSlave.skill.matron >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if ($activeSlave.skill.stewardess >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if ($activeSlave.skill.milkmaid >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if ($activeSlave.skill.farmer >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if ($activeSlave.skill.wardeness >= $masteredXP)>>
+	<<set _numCareers += 1>>
+<</if>>
+<<if _numCareers > 0>>
+	$He has working experience as a
+	<<if $activeSlave.skill.headGirl >= $masteredXP>>
+		<<if _numCareers == 1>>
+			Head Girl.
+		<<elseif _numCareers == 2>>
+			Head Girl and
+		<<else>>
+			Head Girl,
+		<</if>>
+		<<set _numCareers -= 1>>
+	<</if>>
+	<<if $activeSlave.skill.recruiter >= $masteredXP>>
+		<<if _numCareers == 1>>
+			Recruiter.
+		<<elseif _numCareers == 2>>
+			Recruiter and
+		<<else>>
+			Recruiter,
+		<</if>>
+		<<set _numCareers -= 1>>
+	<</if>>
+	<<if $activeSlave.skill.bodyguard >= $masteredXP>>
+		<<if _numCareers == 1>>
+			Bodyguard.
+		<<elseif _numCareers == 2>>
+			Bodyguard and
+		<<else>>
+			Bodyguard,
+		<</if>>
+		<<set _numCareers -= 1>>
+	<</if>>
+	<<if $activeSlave.skill.madam >= $masteredXP>>
+		<<if _numCareers == 1>>
+			Madam.
+		<<elseif _numCareers == 2>>
+			Madam and
+		<<else>>
+			Madam,
+		<</if>>
+		<<set _numCareers -= 1>>
+	<</if>>
+	<<if $activeSlave.skill.DJ >= $masteredXP>>
+		<<if _numCareers == 1>>
+			DJ.
+		<<elseif _numCareers == 2>>
+			DJ and
+		<<else>>
+			DJ,
+		<</if>>
+		<<set _numCareers -= 1>>
+	<</if>>
+	<<if $activeSlave.skill.nurse >= $masteredXP>>
+		<<if _numCareers == 1>>
+			Nurse.
+		<<elseif _numCareers == 2>>
+			Nurse and
+		<<else>>
+			Nurse,
+		<</if>>
+		<<set _numCareers -= 1>>
+	<</if>>
+	<<if $activeSlave.skill.teacher >= $masteredXP>>
+		<<if _numCareers == 1>>
+			Schoolteacher.
+		<<elseif _numCareers == 2>>
+			Schoolteacher and
+		<<else>>
+			Schoolteacher,
+		<</if>>
+		<<set _numCareers -= 1>>
+	<</if>>
+	<<if $activeSlave.skill.attendant >= $masteredXP>>
+		<<if _numCareers == 1>>
+			Attendant.
+		<<elseif _numCareers == 2>>
+			Attendant and
+		<<else>>
+			Attendant,
+		<</if>>
+		<<set _numCareers -= 1>>
+	<</if>>
+	<<if $activeSlave.skill.matron >= $masteredXP>>
+		<<if _numCareers == 1>>
+			Matron.
+		<<elseif _numCareers == 2>>
+			Matron and
+		<<else>>
+			Matron,
+		<</if>>
+		<<set _numCareers -= 1>>
+	<</if>>
+	<<if $activeSlave.skill.stewardess >= $masteredXP>>
+		<<if _numCareers == 1>>
+			Stewardess.
+		<<elseif _numCareers == 2>>
+			Stewardess and
+		<<else>>
+			Stewardess,
+		<</if>>
+		<<set _numCareers -= 1>>
+	<</if>>
+	<<if $activeSlave.skill.milkmaid >= $masteredXP>>
+		<<if _numCareers == 1>>
+			Milkmaid.
+		<<else>>
+			Milkmaid and
+		<</if>>
+		<<set _numCareers -= 1>>
+	<</if>>
+	<<if $activeSlave.skill.farmer >= $masteredXP>>
+		<<if _numCareers == 1>>
+			Farmer.
+		<<else>>
+			Farmer and
+		<</if>>
+		<<set _numCareers -= 1>>
+	<</if>>
+	<<if $activeSlave.skill.wardeness >= $masteredXP>>
+		Wardeness.
+	<</if>>
+<</if>>
+*/
+
+<<if $activeSlave.prestige > 0>>
+	<<if $activeSlave.prestigeDesc>>$activeSlave.prestigeDesc<</if>>
+	<<if $activeSlave.prestige > 2>>
+		<span class="green">It is extremely prestigious to own $him.</span>
+	<<elseif $activeSlave.prestige > 1>>
+		<span class="green">It is quite prestigious to own $him.</span>
+	<<else>>
+		<span class="green">It is fairly prestigious to own $him.</span>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.porn.prestige > 0>>
+	<<if $activeSlave.porn.prestigeDesc>>$activeSlave.porn.prestigeDesc<</if>>
+	<<if $activeSlave.porn.prestige > 2>>
+		As such, $he tends to gain a following wherever $he goes.
+	<<elseif $activeSlave.porn.prestige > 1>>
+		As such, $he is recognized often.
+	<<else>>
+		As such, $he is recognized occasionally.
+	<</if>>
+<</if>>
+
+<<if $activeSlave.prestige > 0 || $activeSlave.porn.prestige > 1>>
+	<<if $activeSlave.fuckdoll == 0 && $activeSlave.markings == "birthmark">>
+		$He has a large, liver-colored birthmark, but since $he's well known, this uniqueness adds to $his beauty rather than detracting from it.
+	<</if>>
+<</if>>
+
+<<if $activeSlave.fuckdoll > 0>>
+	$He is
+	<<if $activeSlave.fuckdoll <= 10>>
+		poorly adapted to life as a living sex toy.
+	<<elseif $activeSlave.fuckdoll <= 30>>
+		<span class="aquamarine">moderately adapted to life as a living sex toy.</span>
+	<<elseif $activeSlave.fuckdoll <= 60>>
+		<span class="aquamarine">well adapted to life as a living sex toy.</span>
+	<<elseif $activeSlave.fuckdoll < 100>>
+		<span class="aquamarine">almost perfectly adapted to life as a living sex toy.</span>
+	<<else>>
+		<span class="aquamarine">perfectly adapted to life as a living sex toy.</span>
+	<</if>>
+	Entertainment and prostitution skills are irrelevant for a Fuckdoll.
+<<else>>
+	<<if $activeSlave.skill.whoring <= 10>>
+		<<if $activeSlave.skill.entertainment <= 10>>
+		<<elseif $activeSlave.skill.entertainment <= 30>>
+			$He is <span class="aquamarine">reasonably entertaining.</span>
+		<<elseif $activeSlave.skill.entertainment <= 60>>
+			$He is a <span class="aquamarine">skilled entertainer.</span>
+		<<elseif $activeSlave.skill.entertainment < 100>>
+			$He is an <span class="aquamarine">expert entertainer.</span>
+		<<else>>
+			$He is a <span class="aquamarine">master of entertainment.</span>
+		<</if>>
+	<<else>>
+		<<if $activeSlave.skill.entertainment <= 10>>
+		<<elseif $activeSlave.skill.entertainment <= 30>>
+			$He is <span class="aquamarine">reasonably entertaining</span> and
+		<<elseif $activeSlave.skill.entertainment <= 60>>
+			$He is a <span class="aquamarine">skilled entertainer</span> and
+		<<elseif $activeSlave.skill.entertainment < 100>>
+			$He is an <span class="aquamarine">expert entertainer</span> and
+		<<else>>
+			$He is a <span class="aquamarine">master of entertainment</span> and
+		<</if>>
+	<</if>>
+	<<if $activeSlave.skill.whoring <= 10>>
+	<<elseif $activeSlave.skill.whoring <= 30>>
+		<<if $activeSlave.skill.entertainment <= 10>>$He <</if>>has <span class="aquamarine">basic experience as a prostitute.</span>
+	<<elseif $activeSlave.skill.whoring <= 60>>
+		<<if $activeSlave.skill.entertainment <= 10>>$He is <</if>>a <span class="aquamarine">skilled streetwalker.</span>
+	<<elseif $activeSlave.skill.whoring < 100>>
+		<<if $activeSlave.skill.entertainment <= 10>>$He is <</if>>an <span class="aquamarine">expert working $girl.</span>
+	<<else>>
+		<<if $activeSlave.skill.entertainment <= 10>>$He is <</if>>a <span class="aquamarine">masterful whore.</span>
+	<</if>>
+<</if>>
+
+<<if ($activeSlave.custom.desc != "") && (def $activeSlave.custom.desc)>>
+	<<print $activeSlave.custom.desc>>
+<</if>>
+
+<<if $arcologies[0].FSGenderFundamentalistLawBeauty + $arcologies[0].FSGenderRadicalistLawBeauty > 0>>
+	<<if genderLawPass($activeSlave) == 1>>
+		$His body is a perfect example of the fashionable feminine ideal.
+	<</if>>
+<<elseif $arcologies[0].FSSlimnessEnthusiastLaw == 1>>
+	<<if slimLawPass($activeSlave) == 1>>
+		$His body is a perfect example of the fashionable ideal flat body.
+	<</if>>
+<<elseif $arcologies[0].FSHedonisticDecadenceLaw2 == 1>>
+	<<if ($activeSlave.boobs >= 2000) && ($activeSlave.butt >= 5) && ($activeSlave.weight > 95)>>
+		$His body is a perfect example of the fashionable plump body.
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSRestartSMR > 0 && $arcologies[0].FSRestart > 80 && ($activeSlave.dick == 0) && ($activeSlave.balls == 0) && ($activeSlave.ovaries == 0) && ($activeSlave.mpreg == 0) && ($activeSlave.vagina < 0)>>
+	$His body is a perfect example of a subhuman who has accepted their place in society.
+<</if>>
+
+<<if $arcologies[0].FSIntellectualDependencyLawBeauty == 1>>
+	$He currently is graded
+	<<switch bimboScore($activeSlave)>>
+	<<case 6>>
+		an S-class
+	<<case 5>>
+		an A-class
+	<<case 4>>
+		a B-class
+	<<case 3>>
+		a C-class
+	<<case 2>>
+		a D-class
+	<<case 1>>
+		an E-class
+	<<default>>
+		an F-class
+	<</switch>>
+	bimbo by societal trends.
+<</if>>
+
+<<if ($showScores != 0)>>
+	Currently, $he has an
+	<span class="pink">
+		<span style="font-weight:bold">
+			attractiveness score
+		</span>
+		of
+		<span class="text-decoration-line: underline">
+			<span id="BeautyTooltip" style="font-weight:bold">
+				<<if $cheatMode || $debugMode>>
+					<<link "<<= Beauty($activeSlave)>>">>
+						<<run BeautyTooltip($activeSlave)>>
+					<</link>>
+				<<else>>
+					<<= Beauty($activeSlave)>>
+				<</if>>
+			</span>
+		</span>
+	</span>
+	and a
+	<span class="lightcoral">
+		<span style="font-weight:bold">
+			sexual score
+		</span>
+		of
+		<span class="text-decoration-line: underline">
+			<span id="FResultTooltip" style="font-weight:bold">
+				<<if $cheatMode || $debugMode>>
+					<<link "<<= FResult($activeSlave)>>.">>
+						<<run FResultTooltip($activeSlave)>>
+					<</link>>
+				<<else>>
+					<<= FResult($activeSlave)>>.
+				<</if>>
+			</span>
+		</span>
+	</span>
+<</if>>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+
+<<= App.Desc.limbs($activeSlave)>>
+
+<<ClothingDescription>>
+<<if $showBodyMods == 1>>
+	<<clothingCorsetDescription>>
+<</if>>
+
+<<if ($showClothing == 1) && ($saleDescription == 0)>>
+	$He
+<<else>>
+	$activeSlave.slaveName
+<</if>>
+<<set _averageHeight = Height.mean($activeSlave)>>
+is
+<<if $activeSlave.height <= (_averageHeight+5) && $activeSlave.height >= (_averageHeight-5)>>
+	an average height<<if $activeSlave.physicalAge < 16>> for $his age<</if>>
+<<elseif $activeSlave.height < (_averageHeight-15)>>
+	petite<<if $activeSlave.physicalAge < 16>> for $his age<</if>>
+<<elseif $activeSlave.height < (_averageHeight-5)>>
+	short<<if $activeSlave.physicalAge < 16>> for $his age<</if>>
+<<elseif $activeSlave.height > (_averageHeight+15)>>
+	very tall<<if $activeSlave.physicalAge < 16>> for $his age<</if>>
+<<elseif $activeSlave.height > (_averageHeight+5)>>
+	tall<<if $activeSlave.physicalAge < 16>> for $his age<</if>>
+<</if>>
+<<if $showHeightCMs == 1>> at <<= heightToEitherUnit($activeSlave.height)>>,<</if>>
+
+and
+
+<<if $activeSlave.weight > 190 >>
+	<<if $arcologies[0].FSHedonisticDecadence != "unset">>
+		<<print either("perfectly curvy", "perfectly plush")>>.
+	<<else>>
+		<span class="red"><<print either("dangerously fat", "dangerously overweight", "extremely obese")>>.</span>
+	<</if>>
+<<elseif $activeSlave.weight > 160 >>
+	<<if $arcologies[0].FSHedonisticDecadence != "unset">>
+		<<print either("spectacularly curvy", "spectacularly plush")>>.
+	<<else>>
+		<span class="red"><<print either("extremely fat", "extremely overweight", "very obese")>>.</span>
+	<</if>>
+<<elseif $activeSlave.weight > 130 >>
+	<<if $arcologies[0].FSHedonisticDecadence != "unset">>
+		<<print either("amazingly curvy", "amazingly plush")>>.
+	<<else>>
+		<span class="red"><<print either("obese", "very fat", "very overweight")>>.</span>
+	<</if>>
+<<elseif $activeSlave.weight > 95>>
+	<<if $activeSlave.hips > 1>>
+		<<print either("extremely curvy", "extremely plush")>>, but $his huge hips make the extra weight attractive on $him.
+	<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+		<<print either("extremely curvy", "extremely plush")>>.
+	<<else>>
+		<span class="red"><<print either("carrying a lot of extra weight", "fat", "overweight")>>.</span>
+	<</if>>
+<<elseif $activeSlave.weight > 30>>
+	<<if $activeSlave.hips > 1>>
+		<<print either("quite curvy", "very plush")>>, but $his motherly hips make the extra weight attractive on $him.
+	<<elseif $arcologies[0].FSHedonisticDecadence != "unset">>
+		<<print either("quite curvy", "very plush")>>.
+	<<else>>
+		<span class="red"><<print either("carrying extra weight", "chubby")>>.</span>
+	<</if>>
+<<elseif $activeSlave.weight > 10 >><<print either("nicely plush", "pleasingly curvy")>>.
+<<elseif $activeSlave.weight >= -10>><<print either("a healthy weight", "an attractive weight for $his frame", "neither too fat nor too skinny")>>.
+<<elseif $activeSlave.weight >= -30>><<print either("appealingly skinny", "pleasingly thin")>>.
+<<elseif $activeSlave.weight >= -95>>
+	<<if $activeSlave.hips > 1>>
+		<<print either("quite skinny", "very thin")>>, but $his wide hips make the gap between $his thighs very noticeable.
+	<<elseif $activeSlave.hips < -1>>
+		<<print either("quite skinny", "very thin")>>, but $his trim hips make $him look like a model.
+	<<else>>
+		<span class="red"><<print either("rail thin", "too skinny", "underweight")>>.</span>
+	<</if>>
+<<else>><span class="red"><<print either("dangerously skinny", "emaciated")>>.</span>
+<</if>>
+
+<<if $activeSlave.hips > 2>>
+	$His hips are unrealistically wide, it is obvious they have been artificially widened.
+<</if>>
+
+<<waistDescription>>
+
+<<if $arcologies[0].FSStatuesqueGlorification != "unset">>
+	<<if heightPass($activeSlave)>>
+		$He is tall enough <<if setup.heightBoostingShoes.includes($activeSlave.shoes)>>in $his <<= heightToEitherUnit(heelLength($activeSlave))>> $activeSlave.shoes <</if>>to measure up to society's strict tastes.
+	<<else>>
+		$He fails to measure up to society's strict tastes<<if setup.heightBoostingShoes.includes($activeSlave.shoes)>> even with $his <<= heightToEitherUnit(heelLength($activeSlave))>> $activeSlave.shoes<</if>>.
+	<</if>>
+<<elseif $arcologies[0].FSPetiteAdmiration != "unset">>
+	<<if heightPass($activeSlave)>>
+		Society finds $him adorably short.
+	<<elseif $activeSlave.height >= 170>>
+		Society finds $him distastefully tall.
+	<</if>>
+<</if>>
+
+<<if $arcologies[0].FSGenderFundamentalistLawBeauty + $arcologies[0].FSGenderRadicalistLawBeauty > 0>>
+	<<if $arcologies[0].FSHedonisticDecadence == "unset" && $arcologies[0].FSPhysicalIdealistStrongFat == 0>>
+		<<if $activeSlave.weight > 130>>
+			$He is much too fat for the fashionable feminine ideal.
+		<<elseif $activeSlave.weight > 30>>
+			$He is too fat for the fashionable feminine ideal.
+		<<elseif $activeSlave.weight < -30>>
+			$He is too skinny for the fashionable feminine ideal.
+		<</if>>
+	<<else>>
+		<<if $activeSlave.weight > 130>>
+			$He is much too fat for the fashionable feminine ideal.
+		<<elseif $activeSlave.weight < -30>>
+			$He is too skinny for the fashionable feminine ideal.
+		<</if>>
+	<</if>>
+<<elseif $arcologies[0].FSSlimnessEnthusiastLaw == 1>>
+	<<if $arcologies[0].FSHedonisticDecadence == "unset" && $arcologies[0].FSPhysicalIdealistStrongFat == 0>>
+		<<if $activeSlave.weight > 30>>
+			$He is much too fat for the fashionable feminine ideal.
+		<<elseif $activeSlave.weight > 10>>
+			$He is too fat for the fashionable feminine ideal.
+		<</if>>
+	<<else>>
+		<<if $activeSlave.weight > 60>>
+			$He is much too fat for the fashionable feminine ideal.
+		<<elseif $activeSlave.weight > 30>>
+			$He is too fat for the fashionable feminine ideal.
+		<</if>>
+	<</if>>
+<<elseif $arcologies[0].FSHedonisticDecadenceLaw2 == 1>>
+	<<if $activeSlave.weight <= 95>>
+		$He is too thin for the fashionable feminine ideal.
+	<<elseif $activeSlave.weight <= 10>>
+		$He is much too thin for the fashionable feminine ideal.
+	<</if>>
+<</if>>
+
+<<if canWalk($activeSlave)>>
+	<<if $activeSlave.weight > (170+($activeSlave.muscles/5)) && $activeSlave.physicalAge >= 18>>
+		$He is so fat that it is difficult for $him to move.
+		<<if $activeSlave.muscles > 95>>
+			However, $he is so powerfully built that $he can manage it with effort, though $he often has to stop for breaks.
+		<<elseif $activeSlave.muscles > 30>>
+			$He can barely manage to get to $his feet unaided, and usually walks alongside objects to help relieve the weight.
+		<<elseif $activeSlave.muscles > 5>>
+			$He requires assistance to get to $his feet, and tends to lean on things to help relieve the weight. Much furniture has met an early demise thanks to this habit.
+		<<else>>
+			$He cannot get to $his feet unaided, and tries to stay seated as much as $he can.
+		<</if>>
+	<<elseif $activeSlave.weight > (110+($activeSlave.muscles/20)) && $activeSlave.physicalAge <= 3>>
+		$He is so fat that it is difficult for $him to move.
+		<<if $activeSlave.muscles > 95>>
+			However, $he is so powerfully built that $he can manage it with effort, though $he often has to stop for breaks.
+		<<elseif $activeSlave.muscles > 30>>
+			$He can barely manage to get to $his feet unaided, and usually walks alongside objects to help relieve the weight.
+		<<elseif $activeSlave.muscles > 5>>
+			$He requires assistance to get to $his feet, and tends to lean on things to help relieve the weight. Much furniture has met an early demise thanks to this habit.
+		<<else>>
+			$He cannot get to $his feet unaided, and tries to stay seated as much as $he can.
+		<</if>>
+	<<elseif $activeSlave.weight > (140+($activeSlave.muscles/15)) && $activeSlave.physicalAge <= 12>>
+		$He is so fat that it is difficult for $him to move.
+		<<if $activeSlave.muscles > 95>>
+			However, $he is so powerfully built that $he can manage it with effort, though $he often has to stop for breaks.
+		<<elseif $activeSlave.muscles > 30>>
+			$He can barely manage to get to $his feet unaided, and usually walks alongside objects to help relieve the weight.
+		<<elseif $activeSlave.muscles > 5>>
+			$He requires assistance to get to $his feet, and tends to lean on things to help relieve the weight. Much furniture has met an early demise thanks to this habit.
+		<<else>>
+			$He cannot get to $his feet unaided, and tries to stay seated as much as $he can.
+		<</if>>
+	<<elseif $activeSlave.weight > (165+($activeSlave.muscles/10)) && $activeSlave.physicalAge < 18>>
+		$He is so fat that it is difficult for $him to move.
+		<<if $activeSlave.muscles > 95>>
+			However, $he is so powerfully built that $he can manage it with effort, though $he often has to stop for breaks.
+		<<elseif $activeSlave.muscles > 30>>
+			$He can barely manage to get to $his feet unaided, and usually walks alongside objects to help relieve the weight.
+		<<elseif $activeSlave.muscles > 5>>
+			$He requires assistance to get to $his feet, and tends to lean on things to help relieve the weight. Much furniture has met an early demise thanks to this habit.
+		<<else>>
+			$He cannot get to $his feet unaided, and tries to stay seated as much as $he can.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<heightImplantDescription>>
+
+$He is
+<<if $activeSlave.muscles > 95>>
+	<span class="pink">extremely muscular,</span> with defined pecs, powerful glutes, and massive traps<<if $activeSlave.weight > 95>> hidden beneath a layer of fat<</if>>.
+<<elseif $activeSlave.muscles > 50>>
+	<span class="pink">quite muscular,</span> with ripped abs, strong shoulders, and defined lats<<if $activeSlave.weight > 95>> hidden beneath a layer of fat<</if>>.
+<<elseif $activeSlave.muscles > 30>>
+	<span class="pink">well built,</span> yet feminine with defined abs and strong shapely muscles<<if $activeSlave.weight > 95>> hidden beneath a layer of fat<</if>>.
+<<elseif $activeSlave.muscles > 5>>
+	<span class="pink">well built,</span> yet feminine, with just-visible muscles<<if $activeSlave.weight > 30>> hidden beneath a layer of fat<</if>>.
+<<elseif $activeSlave.muscles > -6>>
+	<span class="pink">soft and feminine,</span> with no visible muscles.
+<<elseif $activeSlave.muscles > -31>>
+	<span class="pink">rather weak,</span> with barely any muscles.
+<<elseif $activeSlave.muscles > -96>>
+	<span class="pink">very weak;</span> $he struggles with day-to-day tasks.
+<<else>>
+	<span class="red">frail;</span> $he can barely hold $himself up.
+<</if>>
+
+<<if $arcologies[0].FSGenderFundamentalistLawBeauty + $arcologies[0].FSGenderRadicalistLawBeauty + $arcologies[0].FSSlimnessEnthusiastLaw > 0 && $arcologies[0].FSPhysicalIdealist == "unset" && $arcologies[0].FSHedonisticDecadenceStrongFat == 0>>
+	<<if $arcologies[0].FSPhysicalIdealistLaw > 0 && $activeSlave.muscles > 50>>
+		$He is entirely too muscular for the fashionable feminine ideal.
+	<<elseif $activeSlave.muscles > 30>>
+		$He is entirely too muscular for the fashionable feminine ideal.
+	<</if>>
+<</if>>
+
+<<if hasAnyNaturalArms($activeSlave)>>
+	<<if $activeSlave.weight > 190>>
+		$He has <<if hasBothNaturalArms($activeSlave)>>hugely thick arms<<else>>a hugely thick arm<</if>> with sagging fat rolls<<if $activeSlave.muscles > 5>> and<<else>>.<</if>>
+	<<elseif $activeSlave.weight > 160>>
+		$He has <<if hasBothNaturalArms($activeSlave)>>thick arms<<else>>a thick arm<</if>> with drooping fat folds<<if $activeSlave.muscles > 5>> and<<else>>.<</if>>
+	<<elseif $activeSlave.weight > 130>>
+		$He has <<if hasBothNaturalArms($activeSlave)>>plump arms<<else>>a plump arm<</if>><<if $activeSlave.muscles > 5>> with<<else>>.<</if>>
+	<<elseif $activeSlave.weight > 97>>
+		$He has <<if hasBothNaturalArms($activeSlave)>>chubby arms<<else>>a chubby arm<</if>><<if $activeSlave.muscles > 5>> with<<else>>.<</if>>
+	<<elseif $activeSlave.muscles > 5>>
+		$He has <<if hasBothNaturalArms($activeSlave)>>normal arms<<else>>a normal arm<</if>> with
+	<</if>>
+	<<if $activeSlave.muscles > 95>>
+		huge muscles<<if $activeSlave.weight > 95>> hidden beneath $his soft flesh<</if>>.
+	<<elseif $activeSlave.muscles > 30>>
+		obvious muscles<<if $activeSlave.weight > 95>> hidden beneath $his soft flesh<</if>>.
+	<<elseif $activeSlave.muscles > 5>>
+		toned muscles<<if $activeSlave.weight > 30>> hidden beneath $his soft flesh<</if>>.
+	<<else>>
+		/*little muscle to them.*/
+	<</if>>
+<</if>>
+
+<<if $activeSlave.fuckdoll == 0>>
+	<<if $activeSlave.ID == $Bodyguard.ID>>
+		$He is your bodyguard.
+		<<BodyguardWeapon>>
+	<</if>>
+
+	<<if $activeSlave.skill.combat > 0>>
+		$He is <span class="aquamarine">skilled at combat:</span> $he is comfortable with the use of modern firearms and edged weapons, and $his hands
+		<<if !hasBothArms($activeSlave)>>
+			would be deadly weapons if $he had
+			<<if !hasAnyArms($activeSlave)>>
+				any.
+			<<else>>
+				more than one.
+			<</if>>
+		<<else>>
+			<<if getArmCount($activeSlave, 5) + getArmCount($activeSlave, 6) > 1>>
+				would be deadly weapons even if they weren't full of deadly weapons already.
+			<<else>>
+				are deadly weapons.
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.counter.pitKills > 0>>
+	$activeSlave.counter.pitKills slaves have died by $his hand in pit fights.
+<</if>>
+
+<<= App.Desc.piercing($activeSlave, "corset")>>
+
+<<pregnancyDescription>>
+
+<<if hasAnyNaturalLegs($activeSlave)>>
+	<<if $activeSlave.weight > 190>>
+		$He has <<if hasBothNaturalLegs($activeSlave)>>extremely fat legs with immense soft, rather uneven thighs<<else>>an extremely fat leg with an immense soft, rather uneven thigh<</if>><<if $activeSlave.muscles > 5>> and<<else>>.<</if>>
+	<<elseif $activeSlave.weight > 160>>
+		$He has <<if hasBothNaturalLegs($activeSlave)>>very fat legs with massively thick, soft, somewhat uneven thighs<<else>>a very fat leg with a massively thick, soft, somewhat uneven thigh<</if>><<if $activeSlave.muscles > 5>> and<<else>>.<</if>>
+	<<elseif $activeSlave.weight > 130>>
+		$He has <<if hasBothNaturalLegs($activeSlave)>>fat legs with hugely thick, soft thighs<<else>>a fat leg with a hugely thick, soft thigh<</if>><<if $activeSlave.muscles > 5>> and<<else>>.<</if>>
+	<<elseif $activeSlave.weight > 97>>
+		$He has <<if hasBothNaturalLegs($activeSlave)>>fat legs with thick, soft thighs<<else>>a fat leg with a thick, soft thigh<</if>><<if $activeSlave.muscles > 5>> and<<else>>.<</if>>
+	<<elseif $activeSlave.weight > 95>>
+		$He has <<if hasBothNaturalLegs($activeSlave)>>normal legs with thick, soft thighs<<else>> a normal leg with a thick, soft thigh<</if>><<if $activeSlave.muscles > 5>> and<<else>>.<</if>>
+	<<elseif $activeSlave.muscles > 5>>
+		$He has <<if hasBothNaturalLegs($activeSlave)>>relatively normal legs and thighs<<else>>a relatively normal leg and thigh<</if>> with
+	<</if>>
+	<<if $activeSlave.muscles > 95>>
+		huge muscles<<if $activeSlave.weight > 95>> hidden beneath $his soft flab<</if>>.
+	<<elseif $activeSlave.muscles > 30>>
+		obvious muscles<<if $activeSlave.weight > 95>> hidden beneath $his soft flab<</if>>.
+	<<elseif $activeSlave.muscles > 5>>
+		toned muscles<<if $activeSlave.weight > 30>> hidden beneath $his soft flab<</if>>.
+	<<else>>
+		/*barely any muscle in them.*/
+	<</if>>
+<</if>>
+
+<<= App.Desc.mods($activeSlave, "thigh")>>
+<<= App.Desc.mods($activeSlave, "calf")>>
+<<= App.Desc.mods($activeSlave, "ankle")>>
+<<= App.Desc.mods($activeSlave, "foot")>>
+<<heelDescription>>
+<<skinDescription>>
+
+<<if $saleDescription == 1>>
+
+	<<accentDescription>>
+
+<</if>>
+
+<<set _scarCounter = 0>>
+<<for _scarName, _scar range $activeSlave.scar>>
+	<<if ($activeSlave.ID == $Bodyguard.ID) && _scarCounter > 1>>
+		$His scars make $him look even more menacing than $he actually is.
+		<<break>>
+	<<elseif ($activeSlave.ID == $Bodyguard.ID) && $activeSlave.scar[_scarName].menacing > 0>>
+		$His menacing scar makes $him look terrifying.
+		<<break>>
+	<<elseif ($activeSlave.ID == $Wardeness.ID) && _scarCounter > 1>>
+		$His scars make $him look like $he's in the right place.
+	<</if>>
+	<<set _scarCounter++>>
+<</for>>
+
+<<if $activeSlave.fuckdoll == 0>>
+	<<if $activeSlave.markings == "birthmark" && $activeSlave.prestige == 0 && $activeSlave.porn.prestige < 2>>
+		$He has a large, liver-colored birthmark, detracting from $his beauty.
+	<</if>>
+	<<if ($activeSlave.skin == "sun tanned")>>
+		<<if (($activeSlave.rules.release.slaves === 1) || App.Utils.hasFamilySex($activeSlave))>>
+			<<if ($activeSlave.fetishStrength > 60) && ($activeSlave.fetishKnown == 1)>>
+				$His tan is slightly uneven, since $he enjoys
+				<<if ($activeSlave.fetish == "buttslut")>>
+					letting other tanned slaves share a tanning bed with $him so they can sodomize $him while $he tans.
+				<<elseif ($activeSlave.fetish == "cumslut")>>
+					letting other tanned slaves share a tanning bed with $him so they get oral from $him while $he tans.
+				<<elseif ($activeSlave.fetish == "sadist")>>
+					forcing inferior slaves into the tanning beds with $him so $he can sodomize them while $he tans.
+				<<elseif ($activeSlave.fetish == "dom")>>
+					bringing other slaves into the tanning beds with $him so $he can fuck them while $he tans.
+				<<elseif ($activeSlave.fetish == "masochist") || ($activeSlave.fetish == "submissive")>>
+					letting other slaves into the tanning beds with $him so they can fuck $him while $he tans.
+				<<elseif ($activeSlave.fetish == "boobs")>>
+					bringing other slaves into the tanning beds with $him so $he can tittyfuck them while $he tans.
+				<<elseif ($activeSlave.fetish == "pregnancy") && (random(0,99) < $seeDicks)>>
+					letting slaves with dicks into the tanning beds with $him so they can cum inside $him while $he tans.
+				<<else>>
+					bringing other slaves into the tanning beds with $him to have sex while $he tans.
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.fuckdoll == 0>>
+	/* Describe any brands that are not directly addressed elsewhere in longSlave */
+	<<= App.Desc.mods($activeSlave, "extra")>>
+<</if>>
+
+<<if ($showClothing == 1) && ($saleDescription == 0)>>
+
+	<<earDescription>>
+
+	<<upperFaceDescription>>
+
+	<<HairDescription>>
+
+<<else>>
+	$His hair is $activeSlave.hColor<<if $activeSlave.hColor != $activeSlave.eyebrowHColor>>, with $activeSlave.eyebrowHColor eyebrows<</if>>.
+<</if>>
+
+<<if $activeSlave.fuckdoll == 0>>
+	<<if ($activeSlave.hColor == "red")>>
+		<<if ($activeSlave.hLength >= 10)>>
+			<<if ($activeSlave.markings == "freckles") || ($activeSlave.markings == "heavily freckled")>>
+				<<if (skinToneLevel($activeSlave.skin) > 5) && (skinToneLevel($activeSlave.skin) < 10)>>
+					It goes perfectly with $his $activeSlave.skin skin and freckles.
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<set _pubertyAge = Math.min($activeSlave.pubertyAgeXX, $activeSlave.pubertyAgeXY)>>
+	<<if ($activeSlave.physicalAge < _pubertyAge-2)>>
+		$He is too sexually immature to have armpit hair.
+	<<elseif $activeSlave.underArmHStyle == "hairless">>
+		$His armpits are perfectly smooth and naturally hairless.
+	<<elseif $activeSlave.underArmHStyle == "bald">>
+		$His armpits no longer grow hair, leaving them smooth and hairless.
+	<<elseif ($activeSlave.underArmHStyle == "waxed")>>
+		<<if ($activeSlave.assignment == "work in the dairy") && ($dairyRestraintsSetting > 1)>>
+			$His armpit hair has been removed to prevent chafing.
+		<<else>>
+			$His armpits are waxed and smooth.
+		<</if>>
+	<<elseif ($activeSlave.physicalAge < _pubertyAge-1)>>
+		$He has a few $activeSlave.underArmHColor wisps of armpit hair.
+	<<elseif ($activeSlave.physicalAge < _pubertyAge)>>
+		$He is on the verge of puberty and has a small patch of $activeSlave.underArmHColor armpit hair.
+	<<elseif $activeSlave.underArmHStyle == "shaved">>
+		$His armpits appear hairless, but closer inspection reveals light, $activeSlave.underArmHColor stubble.
+	<<elseif $activeSlave.underArmHStyle == "neat">>
+		$His armpit hair is neatly trimmed <<if !hasBothArms($activeSlave)>>since <<if hasAnyArms($activeSlave)>>at least half<<else>>it<</if>> is always in full view<<else>>to not be visible unless $he lifts $his arms<</if>>.
+	<<elseif $activeSlave.underArmHStyle == "bushy">>
+		$His $activeSlave.underArmHColor armpit hair has been allowed to grow freely, <<if !hasAnyArms($activeSlave)>>creating two bushy patches under where $his arms used to be<<else>>so it can be seen poking out from under $his arm<<if hasBothArms($activeSlave)>>s<</if>> at all times<</if>>.
+	<</if>>
+<</if>>
+
+<<if $activeSlave.voice == 0>>
+	$He is <span class="pink">completely silent,</span> which is understandable, since $he's mute.
+<<else>>
+	<<if $activeSlave.lips > 95>>
+		$He is <span class="pink">effectively mute,</span> since $his lips are so large that $he can no longer speak intelligibly. $He can still <<if $activeSlave.devotion > 50>>moan<<elseif $activeSlave.devotion > 20>>whimper<<else>>scream<</if>> through them, though.
+	<</if>>
+<</if>>
+
+<<if $showBodyMods == 1>>
+	<<if $activeSlave.fuckdoll > 0>>
+		<<if $activeSlave.earPiercing+$activeSlave.eyebrowPiercing+$activeSlave.nosePiercing > 0>>
+			The piercings on $his head run through $his suit, helping secure the material to $his head.
+		<</if>>
+	<<else>>
+		<<= App.Desc.mods($activeSlave, "ear")>>
+		<<= App.Desc.mods($activeSlave, "nose")>>
+		<<= App.Desc.mods($activeSlave, "eyebrow")>>
+		<<= App.Desc.mods($activeSlave, "cheek")>>
+		<<= App.Desc.mods($activeSlave, "neck")>>
+		<<if ($activeSlave.custom.tattoo != "") && (def $activeSlave.custom.tattoo)>>
+			<<print $activeSlave.custom.tattoo>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<hornDescription>>
+<<faceDescription>>
+<<mouthDescription>>
+
+<<if ($showClothing == 1) && ($saleDescription == 0)>>
+
+	<<if $activeSlave.fuckdoll == 0>>
+		<<collarDescription>>
+		<<if ($activeSlave.relationship > 4)>>
+			<<if hasAnyArms($activeSlave)>>
+				$He has a simple gold band on the little finger of $his <<if !hasLeftArm($activeSlave)>>right<<else>>left<</if>> hand.
+			<<else>>
+				$He has a simple gold band on a length of chain around $his neck.
+			<</if>>
+		<<elseif ($activeSlave.relationship == -3)>>
+			<<if hasAnyArms($activeSlave)>>
+				$He has a simple steel band on the little finger of $his <<if !hasLeftArm($activeSlave)>>right<<else>>left<</if>> hand.
+			<<else>>
+				$He has a simple steel band on a length of cord around $his neck.
+			<</if>>
+		<</if>>
+	<</if>>
+
+<</if>>
+
+<<if $activeSlave.fuckdoll == 0>>
+	<<nailsDescription>>
+<</if>>
+<<= App.Desc.mods($activeSlave, "back")>>
+<<= App.Desc.mods($activeSlave, "shoulder")>>
+<<= App.Desc.mods($activeSlave, "upper arm")>>
+<<= App.Desc.mods($activeSlave, "lower arm")>>
+<<= App.Desc.mods($activeSlave, "hand")>>
+<<= App.Desc.mods($activeSlave, "wrist")>>
+
+<<if $activeSlave.fuckdoll == 0>>
+	<<if $activeSlave.minorInjury != 0>>
+		<<if $activeSlave.minorInjury != "sore ass">>
+			$He is sporting a <span class="red">$activeSlave.minorInjury,</span> covered by makeup.
+		<</if>>
+	<</if>>
+<</if>>
+<<if $activeSlave.health.illness > 0>>
+	<<if $activeSlave.fuckdoll == 0>>
+		$He
+	<<else>>
+		$His suit reports that $he
+	<</if>>
+	<<if ($activeSlave.health.illness === 1)>>
+		<<if $activeSlave.fuckdoll == 0>>
+			is <span class="red">feeling under the weather.</span>
+		<<else>>
+			has <span class="red">fallen ill.</span>
+		<</if>>
+	<<elseif ($activeSlave.health.illness === 2)>>
+		is <span class="red">somewhat ill.</span>
+	<<elseif ($activeSlave.health.illness === 3)>>
+		is <span class="red">sick.</span>
+	<<elseif ($activeSlave.health.illness === 4)>>
+		is <span class="red">very sick.</span>
+	<<elseif ($activeSlave.health.illness === 5)>>
+		is <span class="red">terribly ill.</span>
+	<</if>>
+<</if>>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+
+/* Calling all boob widgets */
+<<print App.Desc.boobs($activeSlave)>>
+<<boobsShapeDescription>>
+<<print App.Desc.boobsExtra($activeSlave)>>
+<<= App.Desc.mods($activeSlave, "chest")>>
+<<= App.Desc.mods($activeSlave, "breast")>>
+<<shouldersDescription>>
+<<print App.Desc.nipples($activeSlave)>>
+<<= App.Desc.mods($activeSlave, "nipple")>>
+<<print App.Desc.areola($activeSlave)>>
+<<= App.Desc.mods($activeSlave, "areolae")>>
+
+<<if $activeSlave.inflation > 0>> /* to be obsoleted with phase 4 */
+	<<BellyInflationDescription>>
+<<elseif $activeSlave.bellyImplant >= 2000>>
+	<<BellyImplantDescription>>
+<<else>>
+	<<BellyDescription>>
+<</if>>
+<<= App.Desc.mods($activeSlave, "belly")>>
+/*<<= App.Desc.mods($activeSlave, "navel")>> Currently contained in <<bellyDescription>>*/
+<<ButtDescription>>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+
+<<crotchDescription>>
+<<dickDescription>>
+<<vaginaDescription>>
+
+<<AnusDescription>>
+
+<<if $activeSlave.fuckdoll == 0>>
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;
+	<<switch $activeSlave.drugs>>
+	<<case "priapism agents">>
+		<<if $activeSlave.dick > 0 && $activeSlave.dick <= 10>>
+			<<if $activeSlave.chastityPenis == 1>>
+				$He can do nothing but writhe in agony at the pain of $his priapismic erection trapped in $his chastity cage.
+			<<else>>
+				<<if ($activeSlave.dick > 8)>>
+					$His oversized dick is painfully engorged to a state of semi-hardness due to the priapism agents.
+				<<elseif ($activeSlave.dick > 6)>>
+					$He sports a painful, oversized erection due to the priapism agents.
+				<<else>>
+					$He sports a throbbing, painful erection due to the priapism agents.
+				<</if>>
+			<</if>>
+		<</if>>
+	<<case "super fertility drugs">>
+		<<if isFertile($activeSlave) && $activeSlave.preg == 0>>
+			$He is constantly dripping sexual fluids and $his breasts and belly are slightly swollen. The super fertility drugs have $him ready to be impregnated.
+		<</if>>
+	<<case "fertility drugs">>
+		<<if isFertile($activeSlave) && $activeSlave.preg == 0>>
+			$He smells of sexual fluids and $his breasts are slightly swollen. The fertility drugs have $him ready to be impregnated.
+		<</if>>
+	<<case "intensive breast injections">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his tits uncomfortably<<else>>$He squirms under the unfamiliar weight on $his chest<</if>>. The A-HGH must be having an effect, painfully stretching $his breasts as the mammary and adipose tissue underneath grows explosively.
+	<<case "hyper breast injections">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his tits uncomfortably<<else>>$He squirms under the unfamiliar weight on $his chest<</if>>. The HA-HGH must be having an effect, painfully stretching $his breasts as the mammary and adipose tissue underneath grows explosively.
+	<<case "intensive butt injections">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his butt uncomfortably<<else>>$He squirms against the unfamiliar weight on $his backside<</if>>. The A-HGH must be having an effect, painfully stretching $his buttocks as the muscular and adipose tissue underneath grows explosively.
+	<<case "hyper butt injections">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his butt uncomfortably<<else>>$He squirms against the unfamiliar weight on $his backside<</if>>. The HA-HGH must be having an effect, painfully stretching $his buttocks as the muscular and adipose tissue underneath grows explosively.
+	<<case "intensive penis enhancement">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his <<if ($activeSlave.dick > 0)>>dick<<else>>clit<</if>> uncomfortably<<else>>$He squirms against the unfamiliar weight in $his <<if ($activeSlave.dick > 0)>>dick<<else>>clit<</if>><</if>>. The A-HGH must be having an effect, painfully lengthening and thickening $his <<if ($activeSlave.dick > 0)>>dick<<else>>clit<</if>>.
+	<<case "intensive testicle enhancement">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his balls uncomfortably<<else>>$He squirms in response to the pressure in $his balls<</if>> as a bead of cum forms on tip of $his dick. The A-HGH must be having an effect, painfully expanding $his testicles.
+	<<case "hyper penis enhancement">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his <<if ($activeSlave.dick > 0)>>dick<<else>>clit<</if>> uncomfortably<<else>>$He squirms against the unfamiliar weight in $his <<if ($activeSlave.dick > 0)>>dick<<else>>clit<</if>><</if>>. The HA-HGH must be having an effect, painfully lengthening and thickening $his <<if ($activeSlave.dick > 0)>>dick<<else>>clit<</if>>.
+	<<case "hyper testicle enhancement">>
+		<<if $activeSlave.balls < 20>>
+			<<if hasAnyArms($activeSlave)>>$He massages $his balls uncomfortably<<else>>$He squirms in response to the pressure in $his balls<</if>> as cum drools from the tip of $his dick. The HA-HGH must be having an effect, painfully expanding $his testicles.
+		<<elseif $activeSlave.balls >= 50>>
+			<<if hasAnyArms($activeSlave)>>$He massages $his balls uncomfortably<<else>>$He squirms in response to the pressure in $his balls<</if>> as a thick cascade of cum pours from the tip of $his cock. The HA-HGH must be having an effect, painfully expanding $his testicles.
+		<<elseif $activeSlave.balls >= 37>>
+			<<if hasAnyArms($activeSlave)>>$He massages $his balls uncomfortably<<else>>$He squirms in response to the pressure in $his balls<</if>> as cum freely flows from the tip of $his cock, pooling under $him. The HA-HGH must be having an effect, painfully expanding $his testicles.
+		<<elseif $activeSlave.balls >= 20>>
+			<<if hasAnyArms($activeSlave)>>$He massages $his balls uncomfortably<<else>>$He squirms in response to the pressure in $his balls<</if>> as precum pools under $him. The HA-HGH must be having an effect, painfully expanding $his testicles.
+		<</if>>
+	<<case "female hormone injections" "male hormone injections">>
+		$He looks very ill, likely a side effect of the extreme hormone injections.
+	<<case "appetite suppressors">>
+		Despite how little $he has been eating lately, $his stomach barely growls at all.
+	<<case "penis atrophiers">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his dick uncomfortably<<else>>$He squirms in response to the discomfort in $his dick<</if>>. The A-TRPH must be having an effect, painfully causing $his body to atrophy $his dick.
+	<<case "testicle atrophiers">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his balls uncomfortably<<else>>$He squirms in response to the discomfort in $his balls<</if>>. The A-TRPH must be having an effect, painfully causing $his body to atrophy $his testicles.
+	<<case "clitoris atrophiers">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his clit uncomfortably<<else>>$He squirms in response to the discomfort in $his clit<</if>>. The A-TRPH must be having an effect, painfully causing $his body to atrophy $his clitoris.
+	<<case "labia atrophiers">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his pussy uncomfortably<<else>>$He squirms in response to the discomfort in $his cunt<</if>>. The A-TRPH must be having an effect, painfully causing $his body to atrophy $his labia.
+	<<case "nipple atrophiers">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his nipples uncomfortably<<else>>$He squirms in response to the discomfort in $his breasts<</if>>. The A-TRPH must be having an effect, painfully causing $his body to atrophy $his nipples.
+	<<case "lip atrophiers">>
+		<<if hasAnyArms($activeSlave)>>$He massages $his lips uncomfortably<<else>>$He licks $his lips uncomfortably<</if>>. The A-TRPH must be having an effect, painfully causing $his body to atrophy $his lips.
+	<<case "breast redistributors">>
+		<<if hasAnyArms($activeSlave)>>$He pinches at the fat building on $his belly and lets off a sigh<<else>>$He squirms under the added weight building on $his belly<</if>>. The RDST-D must be having an effect, encouraging $his body to redistribute $his breasts' adipose tissue to $his middle.
+	<<case "butt redistributors">>
+		<<if hasAnyArms($activeSlave)>>$He pinches at the fat building on $his belly and lets off a sigh<<else>>$He squirms under the added weight building on $his belly<</if>>. The RDST-D must be having an effect, encouraging $his body to redistribute $his buttock's adipose tissue to $his middle.
+	<<case "sag-B-gone">>
+		$His breasts are shiny from the layer of anti-sag cream rubbed onto them. They might be a little perkier, or not.
+	<<default>>
+	<</switch>>
+	<<if $activeSlave.aphrodisiacs > 0 || $activeSlave.inflationType == "aphrodisiacs">>
+		<<if $activeSlave.fetish == "mindbroken">>
+			<<set _ignoredRule = 1>>
+		<<elseif disobedience($activeSlave) != 0>>
+			<<set _ignoredRule = (disobedience($activeSlave) >= random(1,100)) ? 1 : 0>>
+		<<else>>
+			<<set _ignoredRule = 0>>
+		<</if>>
+		<<if $activeSlave.inflationType == "aphrodisiacs" || $activeSlave.aphrodisiacs > 1>>
+			<<if $activeSlave.inflationType == "aphrodisiacs">>
+				$He's literally full of
+			<<else>>
+				$He's swimming in
+			<</if>>
+			<<if !hasAnyArms($activeSlave)>>
+				aphrodisiacs, but is an amputee, so $he cannot touch $himself. $He writhes with extreme sexual frustration, desperately trying to relieve $himself<<if $activeSlave.inflationType == "aphrodisiacs">>, but only managing to stir up the aphrodisiacs contained in $his gut, strengthening their effects even more<</if>>.
+			<<elseif $activeSlave.rules.release.masturbation == 0 && $activeSlave.rules.release.master == 0 && _ignoredRule == 0>>
+				aphrodisiacs, but is not permitted to touch $himself nor beg you for release. $He writhes with extreme sexual frustration, desperate to not break the rules in front of you<<if $activeSlave.inflationType == "aphrodisiacs">>, but only manages to stir up the aphrodisiacs contained in $his gut, further strengthening their effects on $him<</if>>.
+				<<if canAchieveErection($activeSlave)>>
+					<<if $activeSlave.chastityPenis>>
+						$His cock agonizingly fills $his chastity cage, only adding to $his misery.
+					<<else>>
+						$His cock stands painfully erect, threatening to blow with the slightest contact.
+					<</if>>
+				<</if>>
+			<<elseif $activeSlave.vagina >= 0 && $activeSlave.dick > 0>>
+				<<if $activeSlave.rules.release.masturbation == 1 || _ignoredRule == 1>>
+					<<if !canDoVaginal($activeSlave) && $activeSlave.chastityPenis>>
+						<<if canDoAnal($activeSlave)>>
+							aphrodisiacs and
+							<<if _ignoredRule == 1>>
+								has disregarded $his masturbation restriction,
+							<<else>>
+								is allowed to masturbate,
+							<</if>>
+							so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he
+							<<if $activeSlave.anus == 0>>
+								<<if hasBothArms($activeSlave)>>
+									plays with a nipple with one hand while furiously rubbing $his virgin anus and the sensitive perineum beneath it with the other,
+								<<else>>
+									furiously rubs $his virgin anus and the sensitive perineum beneath it,
+								<</if>>
+								desperately trying to get $himself off.
+							<<else>>
+								uses <<if $activeSlave.anus > 2>>$his entire hand, formed into a beak shape,<<elseif $activeSlave.anus > 1>>two fingers<<else>>a finger<</if>> to fuck $his own ass.
+							<</if>>
+							<<if $activeSlave.inflationType == "aphrodisiacs">>
+								$His frantic attempts force $his distended middle to jiggle obscenely, stirring up the aphrodisiacs contained in $his gut and strengthening their effects even more.
+							<</if>>
+						<<else>>
+							aphrodisiacs, but is wearing full chastity and cannot touch $himself. $He writhes with extreme sexual frustration, desperately trying to relieve $himself<<if $activeSlave.inflationType == "aphrodisiacs">>, but only managing to stir up the aphrodisiacs contained in $his gut, strengthening their effects even more<</if>>.
+						<</if>>
+					<<elseif canDoVaginal($activeSlave)>>
+						aphrodisiacs and
+						<<if _ignoredRule == 1>>
+							has disregarded $his masturbation restriction,
+						<<else>>
+							is allowed to masturbate,
+						<</if>>
+						so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he fingers $his vagina with
+						<<if hasBothArms($activeSlave)>>
+							<<if canDoAnal($activeSlave) && $activeSlave.anus > 0>>
+								one hand while $he fingers $his anus with the other.
+							<<else>>
+								one hand while $he plays with a nipple with the other.
+							<</if>>
+						<<else>>
+							$his hand.
+						<</if>>
+					<<elseif !$activeSlave.chastityPenis>>
+						aphrodisiacs and
+						<<if _ignoredRule == 1>>
+							has disregarded $his masturbation restriction,
+						<<else>>
+							is allowed to masturbate,
+						<</if>>
+						so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he rubs $his shaft with
+						<<if hasBothArms($activeSlave)>>
+							<<if canDoAnal($activeSlave) && $activeSlave.anus > 0>>
+								one hand while $he fingers $his anus with the other.
+							<<else>>
+								both hands.
+							<</if>>
+						<<else>>
+							$his hand.
+						<</if>>
+						<<if canPenetrate($activeSlave)>>
+							$His cock is painfully erect.
+						<</if>>
+					<<else>>
+						aphrodisiacs and
+						<<if _ignoredRule == 1>>
+							has disregarded $his masturbation restriction,
+						<<else>>
+							is allowed to masturbate,
+						<</if>>
+						so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he rubs $his shaft
+						<<if hasBothArms($activeSlave)>>
+							<<if canDoAnal($activeSlave) && $activeSlave.anus > 0>>
+								 and pussy with one hand while $he fingers $his anus with the other.
+							<<else>>
+								one hand while $he fingers $his pussy with the other.
+							<</if>>
+						<<else>>
+							and pussy with $his hand.
+						<</if>>
+						<<if canAchieveErection($activeSlave)>>
+							$His cock is painfully erect.
+						<<else>>
+							$His cock is painfully engorged.
+						<</if>>
+						<<if $activeSlave.inflationType == "aphrodisiacs">>
+							$His frantic masturbation forces $his distended middle to jiggle obscenely, stirring up the aphrodisiacs contained in $his gut and strengthening their effects even more.
+						<</if>>
+					<</if>>
+				<<else>>
+					aphrodisiacs and is not allowed to masturbate so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he desperately presents $his open mouth, $his
+					<<if $activeSlave.boobs >= 300>>
+						breasts,
+					<<else>>
+						chest,
+					<</if>>
+					<<if canDoVaginal($activeSlave) || !$activeSlave.chastityPenis>>
+						<<if !canDoAnal($activeSlave)>>
+							and
+						<</if>>
+						$his crotch,
+					<</if>>
+					<<if canDoAnal($activeSlave)>>
+						<<if canDoVaginal($activeSlave) || !$activeSlave.chastityPenis>>
+							and
+						<</if>>
+						$his anus
+					<</if>>
+					<<if !canDoVaginal($activeSlave) && !$activeSlave.chastityPenis && !canDoAnal($activeSlave)>>
+						and $his chastity
+					<</if>>
+					in turn, hoping that something will entice you to give $him relief.
+					<<if $activeSlave.chastityPenis>>
+						$His cock agonizingly fills $his chastity cage, only adding to $his misery.
+					<<elseif canAchieveErection($activeSlave)>>
+						$His cock stands painfully erect, threatening to blow with the slightest contact.
+					<<else>>
+						$His cock is painfully engorged and ready to burst at the slightest touch.
+					<</if>>
+				<</if>>
+			<<elseif $activeSlave.vagina >= 0>>
+				<<if $activeSlave.rules.release.masturbation == 1 || _ignoredRule == 1>>
+					<<if !canDoVaginal($activeSlave)>>
+						<<if canDoAnal($activeSlave)>>
+							aphrodisiacs and
+							<<if _ignoredRule == 1>>
+								has disregarded $his masturbation restriction,
+							<<else>>
+								is allowed to masturbate,
+							<</if>>
+							so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he
+							<<if $activeSlave.anus == 0>>
+								<<if hasBothArms($activeSlave)>>
+									plays with a nipple with one hand while furiously rubbing $his virgin anus and the sensitive perineum beneath it with the other,
+								<<else>>
+									furiously rubs $his virgin anus and the sensitive perineum beneath it,
+								<</if>>
+								desperately trying to get $himself off.
+							<<else>>
+								uses <<if $activeSlave.anus > 2>>$his entire hand, formed into a beak shape,<<elseif $activeSlave.anus > 1>>two fingers<<else>>a finger<</if>> to fuck $his own ass.
+							<</if>>
+							<<if $activeSlave.inflationType == "aphrodisiacs">>
+								$His frantic attempts force $his distended middle to jiggle obscenely, stirring up the aphrodisiacs contained in $his gut and strengthening their effects even more.
+							<</if>>
+						<<else>>
+							aphrodisiacs, but is wearing a chastity belt and cannot touch $himself. $He writhes with extreme sexual frustration, desperately trying to relieve $himself<<if $activeSlave.inflationType == "aphrodisiacs">>, but only managing to stir up the aphrodisiacs contained in $his gut, strengthening their effects even more<</if>>.
+						<</if>>
+					<<else>>
+						aphrodisiacs and
+						<<if _ignoredRule == 1>>
+							has disregarded $his masturbation restriction,
+						<<else>>
+							is allowed to masturbate,
+						<</if>>
+						so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he rubs $his clit with
+						<<if hasBothArms($activeSlave)>>
+							<<if canDoAnal($activeSlave) && $activeSlave.anus > 0>>
+								one hand while $he fingers $his anus with the other.
+							<<else>>
+								one hand while $he plays with a nipple with the other.
+							<</if>>
+						<<else>>
+							$his hand.
+						<</if>>
+					<</if>>
+				<<else>>
+					aphrodisiacs and is not allowed to masturbate so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he desperately presents $his open mouth, $his
+					<<if $activeSlave.boobs >= 300>>
+						breasts,
+					<<else>>
+						chest,
+					<</if>>
+					<<if canDoVaginal($activeSlave)>>
+						<<if !canDoAnal($activeSlave)>>
+							and
+						<</if>>
+						$his crotch,
+					<</if>>
+					<<if canDoAnal($activeSlave)>>
+						<<if canDoVaginal($activeSlave)>>
+							and
+						<</if>>
+						$his anus
+					<</if>>
+					<<if !canDoVaginal($activeSlave) && !$activeSlave.chastityAnus>>
+						and $his chastity belts
+					<</if>>
+					in turn, hoping that something will entice you to give $him relief.
+				<</if>>
+			<<elseif $activeSlave.dick > 0>>
+				<<if $activeSlave.rules.release.masturbation == 1 || _ignoredRule == 1>>
+					<<if $activeSlave.chastityPenis>>
+						<<if canDoAnal($activeSlave)>>
+							aphrodisiacs and
+							<<if _ignoredRule == 1>>
+								has disregarded $his masturbation restriction,
+							<<else>>
+								is allowed to masturbate,
+							<</if>>
+							so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he
+							<<if $activeSlave.anus == 0>>
+								<<if hasBothArms($activeSlave)>>
+									plays with a nipple with one hand while furiously rubbing $his virgin anus and the sensitive perineum beneath it with the other,
+								<<else>>
+									furiously rubs $his virgin anus and the sensitive perineum beneath it,
+								<</if>>
+								desperately trying to get $himself off.
+							<<else>>
+								uses <<if $activeSlave.anus > 2>>$his entire hand, formed into a beak shape,<<elseif $activeSlave.anus > 1>>two fingers<<else>>a finger<</if>> to fuck $his own ass.
+							<</if>>
+							<<if $activeSlave.inflationType == "aphrodisiacs">>
+								$His frantic attempts force $his distended middle to jiggle obscenely, stirring up the aphrodisiacs contained in $his gut and strengthening their effects even more.
+							<</if>>
+						<<else>>
+							aphrodisiacs, but is wearing a chastity cage and cannot touch $himself. $He writhes with extreme sexual frustration, desperately trying to relieve $himself<<if $activeSlave.inflationType == "aphrodisiacs">>, but only managing to stir up the aphrodisiacs contained in $his gut, strengthening their effects even more<</if>>.
+						<</if>>
+					<<else>>
+						aphrodisiacs and
+						<<if _ignoredRule == 1>>
+							has disregarded $his masturbation restriction,
+						<<else>>
+							is allowed to masturbate,
+						<</if>>
+						so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he rubs $his shaft with
+						<<if hasBothArms($activeSlave)>>
+							<<if canDoAnal($activeSlave) && $activeSlave.anus > 0>>
+								one hand while $he fingers $his anus with the other.
+							<<else>>
+								both hands.
+							<</if>>
+						<<else>>
+							$his hand.
+						<</if>>
+						<<if canAchieveErection($activeSlave)>>
+							$His cock is painfully erect.
+						<<else>>
+							$His cock is painfully engorged.
+						<</if>>
+					<</if>>
+				<<else>>
+					aphrodisiacs and is not allowed to masturbate so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he desperately presents $his open mouth, $his
+					<<if $activeSlave.boobs >= 300>>
+						breasts,
+					<<else>>
+						chest,
+					<</if>>
+					<<if !canDoAnal($activeSlave)>>
+						and
+					<</if>>
+					$his crotch,
+					<<if canDoAnal($activeSlave)>>
+						and $his anus
+					<</if>>
+					in turn, hoping that something will entice you to give $him relief.
+					<<if $activeSlave.chastityPenis>>
+						$His chastity cage painfully squeezes $his cock.
+					<<elseif canAchieveErection($activeSlave)>>
+						$His cock is painfully erect.
+					<<else>>
+						$His cock is painfully engorged.
+					<</if>>
+				<</if>>
+			<<else>> /* no tools */
+				aphrodisiacs, has<<if $seeDicks > 0>> no penis and<</if>> no vagina, and
+				<<if $activeSlave.rules.release.masturbation == 1 || _ignoredRule == 1>>
+					<<if _ignoredRule == 1>>
+						has disregarded $his masturbation restriction,
+					<<else>>
+						is allowed to masturbate,
+					<</if>>
+					so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he
+					<<if canDoAnal($activeSlave)>>
+						<<if $activeSlave.anus == 0>>
+							plays with a nipple with one hand while furiously rubbing $his virgin anus and the sensitive perineum beneath it with the other, desperately trying to get $himself off.
+							<<if $activeSlave.inflationType == "aphrodisiacs">>
+								$His frantic attempts force $his distended middle to jiggle obscenely, stirring up the aphrodisiacs contained in $his gut and strengthening their effects even more.
+							<</if>>
+						<<else>>
+							uses <<if $activeSlave.anus > 2>>$his entire hand, formed into a beak shape,<<elseif $activeSlave.anus > 1>>two fingers<<else>>a finger<</if>> to fuck $his own ass.
+							<<if $activeSlave.inflationType == "aphrodisiacs">>
+								$His frantic attempts force $his distended middle to jiggle obscenely, stirring up the aphrodisiacs contained in $his gut and strengthening their effects even more.
+							<</if>>
+						<</if>>
+					<<elseif $activeSlave.fetish == "boobs">>
+						furiously works $his rock-hard nipples.
+					<<else>>
+						writhes with extreme sexual frustration, desperately trying to relieve $himself despite $his anal chastity.
+					<</if>>
+					<<if $activeSlave.inflationType == "aphrodisiacs">>
+						$His frantic attempts force $his distended middle to jiggle obscenely, stirring up the aphrodisiacs contained in $his gut and strengthening their effects even more.
+					<</if>>
+				<<else>>
+					<<if canDoAnal($activeSlave)>>
+						and is not allowed to masturbate, so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he desperately presents $his asshole, hoping you'll fuck $his only real source of relief.
+					<<else>>
+						and is locked in anal chastity, so as $he <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you $he desperately presents $his rear, hoping to entice you into removing $his belt and taking $him right there.
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			$He's on
+			<<if !hasAnyArms($activeSlave)>>
+				aphrodisiacs, but is an amputee, so $he cannot touch $himself. $He writhes with sexual frustration.
+			<<elseif $activeSlave.rules.release.masturbation == 0 && $activeSlave.rules.release.master == 0 && _ignoredRule == 0>>
+				aphrodisiacs, but is not permitted to touch $himself nor beg you for release, so as $he obeys your commands $he shifts $his weight uncomfortably.
+				<<if canAchieveErection($activeSlave) && !$activeSlave.chastityPenis>>
+					$His erect dick sways as $he does.
+				<</if>>
+			<<elseif $activeSlave.vagina >= 0 && $activeSlave.dick > 0>>
+				<<if $activeSlave.rules.release.masturbation == 1 || _ignoredRule == 1>>
+					<<if !canDoVaginal($activeSlave) && $activeSlave.chastityPenis>>
+						aphrodisiacs, but is wearing chastity and cannot touch $himself. $He writhes with sexual frustration as $he runs $his <<if hasBothArms($activeSlave)>>hands<<else>>hand<</if>> across $his body.
+					<<elseif canDoVaginal($activeSlave)>>
+						aphrodisiacs and
+						<<if _ignoredRule == 1>>
+							has disregarded $his masturbation restriction,
+						<<else>>
+							is allowed to masturbate,
+						<</if>>
+						so as $he obeys your commands $he idly rubs $his pussy with <<if hasBothArms($activeSlave)>>one hand while the other pinches a nipple<<else>>$his hand<</if>>.
+					<<elseif !$activeSlave.chastityPenis>>
+						aphrodisiacs and
+						<<if _ignoredRule == 1>>
+							has disregarded $his masturbation restriction,
+						<<else>>
+							is allowed to masturbate,
+						<</if>>
+						so as $he obeys your commands $he idly rubs $his shaft with <<if hasBothArms($activeSlave)>>one hand while the other pinches a nipple<<else>>$his hand<</if>>.
+					<<else>>
+						aphrodisiacs and
+						<<if _ignoredRule == 1>>
+							has disregarded $his masturbation restriction,
+						<<else>>
+							is allowed to masturbate,
+						<</if>>
+						so as $he obeys your commands $he idly rubs $his shaft
+						<<if hasBothArms($activeSlave)>>
+							with one hand while $he fingers $his pussy with the other.
+						<<else>>
+							and pussy with $his hand.
+						<</if>>
+					<</if>>
+				<<else>>
+					aphrodisiacs, but is not permitted to touch $himself, so as $he obeys your commands $he shifts $his weight uncomfortably.
+					<<if canAchieveErection($activeSlave) && !$activeSlave.chastityPenis>>
+						$His erect dick sways as $he does.
+					<</if>>
+				<</if>>
+			<<elseif $activeSlave.vagina >= 0>>
+				<<if $activeSlave.rules.release.masturbation == 1 || _ignoredRule == 1>>
+					<<if !canDoVaginal($activeSlave)>>
+						aphrodisiacs, but is wearing a chastity belt and cannot touch $himself. $He writhes with sexual frustration.
+					<<else>>
+						aphrodisiacs and
+						<<if _ignoredRule == 1>>
+							has disregarded $his masturbation restriction,
+						<<else>>
+							is allowed to masturbate,
+						<</if>>
+						so as $he obeys your commands $he idly rubs $his pussy with <<if hasBothArms($activeSlave)>>one hand while the other pinches a nipple<<else>>$his hand<</if>>.
+					<</if>>
+				<<else>>
+					aphrodisiacs, but is not permitted to touch $himself, so as $he obeys your commands $he shifts $his weight uncomfortably.
+				<</if>>
+			<<elseif $activeSlave.dick > 0>>
+				<<if $activeSlave.rules.release.masturbation == 1 || _ignoredRule == 1>>
+					<<if $activeSlave.chastityPenis>>
+						aphrodisiacs, but is wearing a chastity cage and cannot touch $himself. $He writhes with sexual frustration.
+					<<else>>
+						aphrodisiacs and
+						<<if _ignoredRule == 1>>
+							has disregarded $his masturbation restriction,
+						<<else>>
+							is allowed to masturbate,
+						<</if>>
+						so as $he obeys your commands $he idly rubs $his shaft with <<if hasBothArms($activeSlave)>>one hand while the other pinches a nipple<<else>>$his hand<</if>>.
+					<</if>>
+				<<else>>
+					aphrodisiacs, but is not permitted to touch $himself, so as $he obeys your commands $he shifts $his weight uncomfortably.
+					<<if canAchieveErection($activeSlave) && !$activeSlave.chastityPenis>>
+						$His erect dick sways as $he does.
+					<</if>>
+				<</if>>
+			<<else>>
+				aphrodisiacs, but has<<if $seeDicks > 0>> no penis and<</if>> no vagina no touch, so as $he obeys your commands $he shifts $his weight uncomfortably.
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if ($activeSlave.addict > 0) && ($activeSlave.addict <= 2)>>
+		$He is a new <span class="cyan">aphrodisiac addict.</span>
+	<<elseif ($activeSlave.addict > 0) && ($activeSlave.addict < 10)>>
+		$He is a confirmed <span class="cyan">aphrodisiac addict.</span>
+	<<elseif ($activeSlave.addict > 0)>>
+		$He is completely <span class="cyan">dependent on aphrodisiacs,</span> and it is unlikely you will ever be able to wean $him off them.
+	<</if>>
+<</if>>
+
+<<set $saleDescription = 0, $applyLaw = 0>> /* clear sale and law flags, if set */

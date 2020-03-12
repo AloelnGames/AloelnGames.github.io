@@ -1,0 +1,151 @@
+:: death widgets [widget nobr]
+
+<<widget "pop">>
+	<br>
+	/* 000-250-006 */
+	<<if $seeImages && $seeReportImages>>
+		<div class="imageRef tinyImg">
+			<<= SlaveArt($args[0], 0, 0)>>
+		</div>
+	<</if>>
+	/* 000-250-006 */
+	As $args[0].slaveName is going about $his business with $his overfilled $args[0].inflationType belly, $he can't help but feel exhausted. $His health has been poor lately and the pressure in $his organs is not helping things. $He immediately knows something is wrong when an intense pain runs through $his middle and $his load shifts threateningly. Blood and $args[0].inflationType leak from $his rear as $his body cavity fills with the contents of $his digestive tract. The skin of $his taut belly reddens as the pressure against it builds. As $he takes $his last breath, $he falls forward, $his weight landing upon $his straining stomach. With a gush, $he ruptures, flooding the area around $him with blood, guts and $args[0].inflationType. Word of the late slave and $his gruesome fate spread fast, @@.gold;terrifying@@ your untrusting slaves.
+	<<for _dw = 0; _dw < $slaves.length; _dw++>>
+		<<if ($slaves[_dw].trust <= 50)>>
+			<<if ($slaves[_dw].inflation >= 0)>>
+				<<set $slaves[_dw].trust -= (Math.pow($slaves[_dw].inflation,3)*5)>>
+			<<else>>
+				<<set $slaves[_dw].trust -= 10>>
+			<</if>>
+		<</if>>
+	<</for>>
+<</widget>>
+
+<<widget "DeathOldAge">>
+	/* 000-250-006 */
+	<<if $seeImages && $seeReportImages>>
+		<div class="imageRef tinyImg">
+			<<= SlaveArt($args[0], 0, 0)>>
+		</div>
+	<</if>>
+	/* 000-250-006 */
+	<<setLocalPronouns $args[0]>>
+	<<if $args[0].assignment == "be confined in the arcade">>
+		You are notified by $arcadeName staff that one of the cabinets has broken down and will need to be replaced. It would seem ''@@.pink;$args[0].slaveName@@'', the fucktoy encased in it, died <<if $args[0].physicalAge >= 70>>naturally of old age despite<<else>>suddenly, unrelated to<</if>> $his living conditions. $He was a good unit; logs show $he was taking dick up until the very end.
+	<<elseif $args[0].assignment == "work in the dairy" && $dairyRestraintsSetting > 1>>
+		You are notified by $dairyName staff that one of the occupied milkers has ceased producing. Upon inspection, it would seem ''@@.pink;$args[0].slaveName@@'', the cow restrained in it, died <<if $args[0].physicalAge >= 70>>naturally of old age despite<<else>>suddenly, unrelated to<</if>> $his living conditions. $He was a good cow; $he gave milk up until $his death.
+	<<elseif $args[0].fuckdoll > 0>>
+		One of your Fuckdolls' monitoring systems alerts you that the slave contained within has died. It would seem ''@@.pink;$args[0].slaveName@@'' has died <<if $args[0].physicalAge >= 70>>naturally of old age despite<<else>>suddenly, unrelated to<</if>> $his living conditions. Thankfully the suit notifies its owner of such things; especially with the rumors of earlier models and necrophilia you hear occasionally.
+	<<else>>
+		''@@.pink;$args[0].slaveName@@'' failed to report in for a routine inspection, something that rarely occurs under your watch. It doesn't take long to track down the wayward slave.
+		<<set _deathSeed = random(1,100)>>
+		<<if _deathSeed > 75>>
+			$He is found dead in $his bed, having died sometime during the previous night.
+		<<elseif _deathSeed > 50>>
+			$He is found dead in a stairwell, having had a heart attack while trying to climb it.
+		<<elseif _deathSeed > 25>>
+			$He is found dead in the showers, having slipped sometime earlier.
+		<<else>>
+			<<if App.Utils.hasNonassignmentSex($args[0])>>
+				$He is found dead in the bed of another slave, having died during intercourse. $His lover is not taking it well.
+			<<else>>
+				$He is found dead in the cafeteria, having died during breakfast; $he ruined the day for a number of your slaves.
+			<</if>>
+		<</if>>
+		$args[0].slaveName died at the age of $args[0].actualAge;
+		<<if $args[0].actualAge < 10>>
+			$he lived a tragically short life.
+		<<elseif $args[0].actualAge < 20>>
+			$he died far too young.
+		<<elseif $args[0].actualAge < 30>>
+			$he died in what would be a sex slave's prime.
+		<<elseif $args[0].actualAge < 50>>
+			$he died in $his prime.
+		<<elseif $args[0].actualAge < 65>>
+			$he lived a fair life, good or bad.
+		<<elseif $args[0].actualAge < 90>>
+			$he lived a long life and experienced much during it.
+		<<else>>
+			$he lived a very long life that few get to see.
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "DeathOverdose">>
+	<<setLocalPronouns $args[0]>>
+	/* 000-250-006 */
+	<<if $seeImages && $seeReportImages>>
+		<div class="imageRef tinyImg">
+			<<= SlaveArt($args[0], 0, 0)>>
+		</div>
+	<</if>>
+	/* 000-250-006 */
+	<<if $args[0].assignment == "be confined in the arcade">>
+		You are notified by $arcadeName staff that one of the cabinets has broken down and will need to be replaced. It would seem ''@@.pink;$args[0].slaveName@@'', the fucktoy encased in it, died of an aphrodisiac overdose from the constant aphrodisiac injections. $He was a good unit; logs show $he was taking dick up until the very end.
+	<<elseif $args[0].assignment == "work in the dairy" && $dairyRestraintsSetting > 1>>
+		You are notified by $dairyName staff that one of the occupied milkers has ceased producing. Upon inspection, it would seem ''@@.pink;$args[0].slaveName@@'', the cow restrained in it, died of an aphrodisiac overdose. How $he managed to get them is unknown, but $he was a good cow; $he gave milk up until $his death.
+	<<elseif $args[0].fuckdoll > 0>>
+		One of your Fuckdolls' monitoring systems alerts you that the slave contained within has died. It would seem ''@@.pink;$args[0].slaveName@@'' has died of an aphrodisiac overdose. Thankfully the suit notifies its owner of such things; especially with the rumors of earlier models and necrophilia you hear occasionally. It does little to deal with the resulting mess of the orgasm $he died during, however.
+	<<else>>
+		''@@.pink;$args[0].slaveName@@'' failed to report in for a routine inspection, something that rarely occurs under your watch. It doesn't take long to track down the wayward slave.
+		$He is found dead in $his bed, having died sometime earlier. Judging by the mess and the expression on $his face, $he died of a heart attack during a particularly intense orgasm bought about by the massive amount of aphrodisiacs in $his system. $args[0].slaveName died at the age of $args[0].actualAge;
+		<<if $args[0].actualAge < 10>>
+			$he lived a tragically short life.
+		<<elseif $args[0].actualAge < 20>>
+			$he died far too young.
+		<<elseif $args[0].actualAge < 30>>
+			$he died in what would be a sex slave's prime.
+		<<elseif $args[0].actualAge < 50>>
+			$he died in $his prime.
+		<<elseif $args[0].actualAge < 65>>
+			$he lived a fair life, good or bad.
+		<<elseif $args[0].actualAge < 90>>
+			$he lived a long life and experienced much during it.
+		<<else>>
+			$he lived a very long life that few get to see.
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "DeathUnhealthy">>
+	/* 000-250-006 */
+	<<if $seeImages && $seeReportImages>>
+		<div class="imageRef tinyImg">
+			<<= SlaveArt($args[0], 0, 0)>>
+		</div>
+	<</if>>
+	/* 000-250-006 */
+	<<setLocalPronouns $args[0]>>
+	<<if $args[0].assignment == "be confined in the arcade">>
+		You are notified by $arcadeName staff that one of the cabinets has broken down and will need to be replaced. It would seem ''@@.pink;$args[0].slaveName@@'', the fucktoy encased in it, died to poor health caused by $his living conditions. $He was a good unit; logs show $he was taking dick up until the very end.
+	<<elseif $args[0].assignment == "work in the dairy" && $dairyRestraintsSetting > 1>>
+		You are notified by $dairyName staff that one of the occupied milkers has ceased producing. Upon inspection, it would seem ''@@.pink;$args[0].slaveName@@'', the cow restrained in it, died to poor health caused by $his living conditions. $He was a good cow; $he gave milk up until $his death.
+	<<elseif $args[0].fuckdoll > 0>>
+		One of your Fuckdolls' monitoring systems alerts you that the slave contained within has died. It would seem ''@@.pink;$args[0].slaveName@@'' has died of general poor health. Thankfully the suit notifies its owner of such things; especially with the rumors of earlier models and necrophilia you hear occasionally. Clean up is easy enough, however.
+	<<else>>
+		''@@.pink;$args[0].slaveName@@'' failed to report in for a routine inspection, something that rarely occurs under your watch. It doesn't take long to track down the wayward slave.
+		$He is found dead in $his bed, having died sometime during the night. $He has been in very poor health lately, so you knew this was a possibility. $args[0].slaveName died at the age of $args[0].actualAge;
+		<<if $args[0].actualAge < 10>>
+			$he lived a tragically short life.
+		<<elseif $args[0].actualAge < 20>>
+			$he died far too young.
+		<<elseif $args[0].actualAge < 30>>
+			$he died in what would be a sex slave's prime.
+		<<elseif $args[0].actualAge < 50>>
+			$he died in $his prime.
+		<<elseif $args[0].actualAge < 65>>
+			$he lived a fair life, good or bad.
+		<<elseif $args[0].actualAge < 90>>
+			$he lived a long life and experienced much during it.
+		<<else>>
+			$he lived a very long life that few get to see.
+		<</if>>
+		<<if ($arcologies[0].FSPaternalist != "unset") && ($args[0].actualAge < 75)>>
+			Allowing a slave to die under your care @@.red;severely damages@@ your image as a caring slaveowner and @@.red;calls into question@@ your paternalistic resolve.
+			<<= FutureSocieties.Change("Paternalist", -10)>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "DeathPregnancyBurst">>
+<</widget>>

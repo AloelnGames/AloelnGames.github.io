@@ -1,0 +1,88 @@
+:: P collaboration choice [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event">>
+
+<<setLocalPronouns $traitor>>
+<<run Enunciate($traitor)>>
+
+Your next communication from the Daughters of Liberty is a request for a live video call. You accept and are surprised to be confronted by $traitor.slaveName's <<if $traitorType == "horror">>terrified <</if>>face. $He looks very different, without visible modifications of any kind and dressed in utilitarian clothes, but it's $him.
+
+<br><br>
+
+<<if $traitorType == "agent">>
+	<<if $traitor.intelligence+$traitor.intelligenceImplant >= 100>>
+		<<if canTalk($traitor)>>
+			"Hello, <<Master>>," $he <<say>>s simply. "It'<<s>> happening soon. The Daughter<<s>> have a<<s>>ked me to call you to a<<s>>k you for your cooperation. All they want are the a<<cc>>e<<ss>> code<<s>> to your <<s>>ecurity <<s>>y<<s>>tem<<s>> and they tru<<s>>t me to get them. You <<s>>till tru<<s>>t me, right? I promi<<s>>e giving me code<<s>> to give them i<<s>> the right choi<<c>>e." $He stares at the camera, trying $his best to convey the deeper meaning to $his request. "It may be rough, but I promi<<s>>e we'll make it through it."
+		<<else>>
+			$He gestures that the Daughters are coming and that $he was entrusted with earning your cooperation. $He explains that they want $him to get your security codes for them, and fully expect that $he'll succeed. $He vows that you won't be making a mistake by giving $him codes and that you'll be reunited when it is all over.
+		<</if>>
+		<<set $traitorType = "trapper">>
+	<<elseif $traitor.intelligence+$traitor.intelligenceImplant < 0>>
+		<<if canTalk($traitor)>>
+			"<<Master>>," $he <<say>>s with panic in $his voice, "They are coming for you. They want your a<<cc>>e<<ss>> code<<s>> <<s>>o they can get to you ea<<s>>ier, but now you know not to tru<<s>>t them!" $He manages to shout as $he is dragged offscreen, "Don't let them get you <<Master>>! <<Sh>>ow them who'<<s>> bo<<ss>>!"
+		<<else>>
+			$He hastily gestures that they are coming for you and that nothing you can do will deter them. $He barely signs off a plea for you to prepare your defenses.
+		<</if>>
+		<<set $traitorType = "hostage">>
+	<<elseif $traitor.intelligence+$traitor.intelligenceImplant < -50>>
+		<<if canTalk($traitor)>>
+			"Hello, <<Master>>," $he <<say>>s simply. "It'<<s>> happening soon. The Daughter<<s>> have a<<s>>ked me to call you to a<<s>>k you for your help. All they need i<<s>> the a<<cc>>e<<ss>> code<<s>> to your <<s>>ecurity <<s>>y<<s>>tem<<s>>. They'll let you live, <<Master>>, they'll even let you take your money. But the arcology and the <<s>>lave<<s>>, tho<<s>>e will have to go free." $He hesitates a little. "<<Master>>, I like being free. But I don't want to <<s>>ee you killed. Plea<<s>>e, plea<<s>>e agree."
+		<<else>>
+			$He gestures that the Daughters are coming and that $he was asked if you would lend your assistance. $He explains, that in return for the security codes, you'll be allowed to live and escape with your wealth, but at the loss of your slaves and arcology. $He hesitates a little, before imploring you to save yourself.
+		<</if>>
+		<<set $traitorType = "standard">>
+	<<else>>
+		<<if canTalk($traitor)>>
+			"Hello, <<Master>>," $he <<say>>s simply. "It'<<s>> happening soon. The Daughter<<s>> have a<<s>>ked me to call you to a<<s>>k you for your help. All they need i<<s>> the a<<cc>>e<<ss>> code<<s>> to your <<s>>ecurity <<s>>y<<s>>tem<<s>>. They'll let you live, <<Master>>, they'll even let you take your money. But the arcology and the <<s>>lave<<s>>, tho<<s>>e will have to go free. You do not want to be around when they clean up the <<s>>lave owner<<s>>." $He hesitates a little, unsure of who may be listening. "<<Master>>, I don't want to <<s>>ee you killed. Plea<<s>>e, plea<<s>>e think about who you are dealing with." $He stares into the camera, imploring you to make the right choice.
+		<<else>>
+			$He gestures that the Daughters are coming and that $he was asked if you would lend your assistance. $He explains, that in return for the security codes, you'll be allowed to live and escape with your wealth, but at the loss of your slaves and arcology. $He stares into the camera, imploring you not to trust $his words.
+		<</if>>
+	<</if>>
+<<elseif $traitorType == "horror">>
+	<<if canTalk($traitor)>>
+		"<<Master>>," $he struggles to <<say>>, "The Daughter<<s>> have a<<s>>ked me to call you to a<<s>>k you for your help." $He takes a deep breath and composes $himself. "They need the a<<cc>>e<<ss>> code<<s>> to your <<s>>ecurity <<s>>y<<s>>tem<<s>>." $He flinches upon making such a request. "They'll let you live, <<Master>>, they'll even let you take your money. But the arcology and the <<s>>lave<<s>>, tho<<s>>e will have to go free." $He hesitates a little. "<<Master>>, I like being free. But I don't want anything more to do with you. Plea<<s>>e, plea<<s>>e agree."
+	<<else>>
+		$He shakily gestures that the Daughters are coming and that $he was asked if you would lend your assistance. $He explains, that in return for the security codes, you'll be allowed to live and escape with your wealth, but at the loss of your slaves and arcology. $He hesitates a little, before asking you to take the deal so you never have to see each other again.
+	<</if>>
+<<elseif $traitorType == "defiant">>
+	<<if canTalk($traitor)>>
+		"Hello, <<Master>>," $he <<say>>s simply. "It'<<s>> happening soon. The Daughter<<s>> have a<<s>>ked me to call you to a<<s>>k you for your help. All they need i<<s>> the a<<cc>>e<<ss>> code<<s>> to your <<s>>ecurity <<s>>y<<s>>tem<<s>>. You'll get to live, <<Master>>, and you'll even get to keep your money. But the arcology and the <<s>>lave<<s>> will be handed over." $He hesitates a little. "<<Master>>, I like being free. But I don't want to <<s>>ee you killed by them. Plea<<s>>e, plea<<s>>e agree."
+	<<else>>
+		$He gestures that the Daughters will be coming soon and that $he was asked if you would comply with their demands. $He explains, that in return for the security codes, you'll be allowed to live and escape with your wealth. $He emphasizes that they will kill you otherwise.
+	<</if>>
+<<else>>
+	<<if canTalk($traitor)>>
+		"Hello, <<Master>>," $he <<say>>s simply. "It'<<s>> happening soon. The Daughter<<s>> have a<<s>>ked me to call you to a<<s>>k you for your help. All they need i<<s>> the a<<cc>>e<<ss>> code<<s>> to your <<s>>ecurity <<s>>y<<s>>tem<<s>>. They'll let you live, <<Master>>, they'll even let you take your money. But the arcology and the <<s>>lave<<s>>, tho<<s>>e will have to go free." $He hesitates a little. "<<Master>>, I like being free. But I don't want to <<s>>ee you killed. Plea<<s>>e, plea<<s>>e agree."
+	<<else>>
+		$He gestures that the Daughters are coming and that $he was asked if you would lend your assistance. $He explains, that in return for the security codes, you'll be allowed to live and escape with your wealth, but at the loss of your slaves and arcology. $He hesitates a little, before imploring you to save yourself.
+	<</if>>
+<</if>>
+
+<br><br>
+
+<span id="result">
+<<link "Transmit the codes">>
+	<<replace "#result">>
+		You transmit the access codes to your security systems.
+		<<if $traitorType == "agent">>
+			$traitor.slaveName silently frowns as tears start to well in $his eyes.
+		<<elseif $traitorType == "trapper">>
+			$traitor.slaveName smiles and thanks you. "I won't di<<s>>appoint you."
+		<<elseif $traitorType == "hostage">>
+			If this will lessen what will happen to $traitor.slaveName, you don't know.
+		<<elseif $traitorType == "horror">>
+			$traitor.slaveName meekly thanks you and hurries offscreen.
+		<<elseif $traitorType == "defiant">>
+			$traitor.slaveName smiles and thanks you. "I hope you <<s>>urvive the attack, <<= PoliteRudeTitle($traitor)>>."
+		<<else>>
+			$traitor.slaveName smiles and thanks you. "You made the right de<<c>>i<<s>>ion, <<Master>>. I love you."
+		<</if>>
+		<<set $collaboration = 1>>
+	<</replace>>
+<</link>>
+<br><<link "Refuse">>
+	<<replace "#result">>
+		You close the video call without a word. From your desk, you have access to thousands of video feeds from all across the arcology; they show men and women working, sleeping, eating, chatting, fucking. You wonder how many of them have plans, and what those plans are.
+	<</replace>>
+<</link>>
+</span>

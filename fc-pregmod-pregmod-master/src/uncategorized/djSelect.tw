@@ -1,0 +1,15 @@
+:: DJ Select [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Club", $showEncyclopedia = 1>><<set $encyclopedia = "DJ">>
+<<if ($DJ != 0)>>
+	<<set $DJ = getSlave($DJ.ID)>>
+	<<setLocalPronouns $DJ>>
+	<span class='slave-name'><<= SlaveFullName($DJ)>></span> is serving as your DJ.<br><br>$He will headline entertainment in $clubName.
+<<else>>
+	You have not selected a DJ.
+<</if>>
+
+<br><br>''Appoint a DJ from your devoted slaves:''
+<br><br>[[None|Club][removeJob($DJ, "be the DJ")]]
+<br><br>
+<<print App.UI.SlaveList.facilityManagerSelection(App.Entity.facilities.club, "Club")>>

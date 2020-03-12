@@ -1,0 +1,90 @@
+CSS classes to color code important parts of texts:
+class names that are not final are marked, this list is NOT exhaustive and subject to change.
+Note for mass replacing: The following cases have to be checked:
+	@@.trust.inc;
+	<span class="trust inc">
+	App.UI.DOM.makeElement('string', 'string', ['trust', 'inc']);
+
+CLASS         -   COLOR
+
+DEVOTION
+.devotion.inc - hotpink
+.devotion.dec - mediumorchid
+.devotion.hateful - darkviolet ( < -50) (there is also very hateful, but they are the same color, so same class for now)
+.devotion.resistant - mediumorchid ( < -20)
+.devotion.ambivalent - yellow ( <= 20)
+.devotion.accept - hotpink ( <= 50)
+.devotion.devoted - deeppink ( <= 95)
+.devotion.worship - magenta ( > 95)
+
+TRUST (defiant versions for devotion < -20)
+.trust.inc - mediumaquamarine
+.defiant.inc - orangered (trust > -20)
+.trust.dec - gold
+.trust.extremely-terrified - darkgoldenrod ( < - 95)
+.trust.terrified - goldenrod ( < -50)
+.trust.frightened - gold ( < -20)
+.trust.fearful - yellow ( <= 20)
+.trust.careful - mediumaquamarine ( <= 50)
+.defiant.careful - orange
+.trust.trusting - mediumseagreen ( <= 95)
+.defiant.bold - orangered
+.trust.prof-trusting - seagreen ( > 95)
+.defiant.full - darkred
+
+MINDBROKEN
+.mindbroken - red
+
+SKILL
+- Player
+skill.player - springgreen
+- Slave
+.skill - aquamarine
+.skill.inc - green
+
+FETISH
+.fetish.gain - lightcoral
+.fetish.loss - coral
+.fetish.inc - lightsalmon
+
+INTELLIGENCE (WIP)
+.intelligent - deepskyblue
+.stupid - orange
+.education.neg - orangered
+
+REPUTATION
+.reputation.inc - green
+.reputation.dec - red
+
+GENERAL CHANGES
+.improvement - green
+- body parts (usually)
+.change.positive - lime
+.change.negative - orange
+
+RELATIONSHIPS (both love and family)
+.relationship - lightgreen
+
+ORIFICES
+.virginity.loss - lime
+
+PREGNANCY
+.pregnant - lime
+
+HEALTH
+.health.dec - red
+
+MONEY
+.cash.dec - red
+.cash.inc - yellowgreen
+
+FLAWS
+.flaw.gain - red
+.flaw.break - green
+
+GENERAL
+.error - red
+.noteworthy - yellow
+
+FUTURE SOCIETIES
+.elites.loss - red (when incrementing $failedElite)

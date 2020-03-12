@@ -1,0 +1,483 @@
+:: Nursery [nobr]
+
+<<set $nextButton = "Back to Main", $nextLink = "Main", $returnTo = "Nursery", $showEncyclopedia = 1, $encyclopedia = "Nursery">>
+<<set $targetAgeNursery = Number($targetAgeNursery) || $minimumSlaveAge>>
+<<set $targetAgeNursery = Math.clamp($targetAgeNursery, $minimumSlaveAge, 42)>>
+
+<<if $nurseryName != "the Nursery">>
+	<<set $nurseryNameCaps = $nurseryName.replace("the ", "The ")>>
+<</if>>
+
+<<set $readyChildren = 0, $nurseryBabies = $cribs.length, $freeCribs = $nursery - $nurseryBabies, _NL = $NurseryiIDs.length, _SL = $slaves.length, _eligibility = 0, $reservedChildren = FetusGlobalReserveCount("incubator"), $reservedChildrenNursery = FetusGlobalReserveCount("nursery")>>
+<p class=scene-intro">
+	$nurseryNameCaps
+	<<switch $nurseryDecoration>>
+		<<case "Roman Revivalist">>
+			is run with the Roman dream in mind, with wide open windows exposing the babies to the elements. The sleek marble halls bring a sense of serenity and duty as wet nurses wander the halls.
+		<<case "Aztec Revivalist">>
+			is lined head to toe in illustrious Aztec gold. Tiny but notable subscripts lay in plaques to honor the mothers who died giving birth, the children of said mothers, alive or dead, are tirelessly watched over to tend to their every need.
+		<<case "Egyptian Revivalist">>
+			is decorated by sleek, sandstone tablets, golden statues, and even grander Egyptian wall sculptures, many of them depicting the conception, birth, and raising of a child. Each babe is reverently wrapped in linen covers as they drift to sleep to the stories of mighty pharaohs and prosperous palaces.
+		<<case "Edo Revivalist">>
+			is minimalistic in nature, but the errant paintings of cherry blossoms and vibrant Japanese maples give a certain peaceful air as the caretakers do their duties.
+		<<case "Arabian Revivalist">>
+			is decorated wall to wall with splendorous carvings and religious Hamsas meant to protect the fostering children.
+		<<case "Chinese Revivalist">>
+			is ripe with Chinese spirit. Depictions of colorful dragons and oriental designs grace the halls, rooms, and cribs of the babies who reside inside.
+		<<case "Chattel Religionist">>
+			is decorated with childish religious cartoons and artistic tapestries of slaves bowing in submission, their themes always subsiding varying degrees of sexual worship. The caretakers that wander the halls obediently wear their habits, and never waste a moment to tenderly lull the children to sleep with stories of their prophet.
+		<<case "Degradationist">>
+			is bare and sullen. The cries of the neglected children destined for slavery trying to find comfort in their burlap coverings echo the halls, while those that await freedom are raised among luxury and are taught to look down on their less fortunate peers.
+		<<case "Repopulation Focus">>
+			is designed to be very open and public; a showing testament to your arcology's repopulation efforts. For those old enough to support them, they are strapped with big, but body warming, empathy bellies as to remind them of their destiny.
+		<<case "Eugenics">>
+			is of utmost quality without a single pleasantry missing — if the parents are of the elite blood of course. While there are rare stragglers of unworthy genes, the child populace overall is pampered with warm rooms and plentiful small toys.
+		<<case "Asset Expansionist">>
+			is not so much decorated as it is intelligently staffed. Every passerby, slave or not, burns the image of their jiggling asses and huge, wobbling tits into the minds of the children.
+		<<case "Transformation Fetishist">>
+			is kept simple and clean. From their toys down to the nursemaids, the babies are exposed to the wonders of body transformation whenever possible.
+		<<case "Gender Radicalist">>
+			is decorated by cheery cartoon depictions of slaves of many shapes, sizes, and genitals, all of them undeniably feminine. The elated smiles and yips of the nurses getting reamed constantly instill the appreciation of nice, pliable buttholes.
+		<<case "Gender Fundamentalist">>
+			is simply designed and painted with soft feminine colors. The staff heavily encourage the children to play dress up and house, subtly sculpting their minds to proper gender norms and properly put them in line if they try to do otherwise.
+		<<case "Physical Idealist">>
+			is furnished with kiddy health books and posters; their caretakers making painstakingly sure that the importance is drilled into their heads at a young age. Their food is often littered with vitamins and supplements to keep the children growing strong.
+		<<case "Supremacist">>
+			is designed and structured to give those of $arcologies[0].FSSupremacistRace ethnicity the limelight of the nursery, while the others stay sectioned off and neglected to the world.
+		<<case "Subjugationist">>
+			is made to foster and raise the young children of $arcologies[0].FSSubjugationistRace ethnicity. They are reminded of their place with every failure and are encouraged to submissively follow their stereotypes at a ripe young age.
+		<<case "Paternalist">>
+			is well-stocked and by Paternalistic customs, constantly swaddle the children with love and attention. With the warm colors and sound of child laughter, to the untrained eye, the children actually seem free.
+		<<case "Pastoralist">>
+			is decorated to make the children grow up thinking that a life focused on breast milk, cum, and other human secretions are part of the norm. The milky tits swaying above their cow-patterned cribs certainly help with that.
+		<<case "Maturity Preferentialist">>
+			decorations remind the kids to respect those curvy and mature. The older nurserymaids are always flattered whenever the children try to act like adults and take care of the younger toddlers for them.
+		<<case "Youth Preferentialist">>
+			is making young children the center of attention, their rooms supplied with plenty of toys, blankets, and surrogate mothers at their beck and call.
+		<<case "Body Purist">>
+			is decorated to be very clean cut and sterilized with perfect corners and curves; symbolic of the human figure. Nurserymaids are encouraged to show off their natural assets to show the children what the appropriate body should be.
+		<<case "Slimness Enthusiast">>
+			constantly encourages the kids to try and keep their slim and cute physiques. They are given perfectly metered meals to make this possible.	/* TODO: tie this in to food system */
+		<<case "Hedonistic">>
+			would make any toddler drool in amazement. Meals and naps every other hour, cribs stalked with toys and blankets, and plush slaves carry them to and fro without preamble. A delicious layer of baby fat is the ideal figure of a baby, and they couldn't be happier.
+		<<case "Intellectual Dependency">>
+			/* TODO: */
+		<<case "Slave Professionalism">>
+			/* TODO: */
+		<<case "Petite Admiration">>
+			has large photos and paintings on the walls depicting small, petite children enjoying $nurseryName's amenities and having fun together.
+		<<case "Statuesque Glorification">>
+			has large photos and paintings on the walls depicting tall children enjoying $nurseryName's amenities and having fun together.	/* TODO: rewrite so it's not so similar? */
+		<<default>>
+			is as comfortable and child-friendly as it needs to be. They have everything they need to grow into a proper slave.
+	<</switch>>
+
+	<<if $Matron>>
+		<<setLocalPronouns $Matron>>
+	<</if>>
+
+	<<if _NL > 2>>
+		$nurseryNameCaps is bustling with activity. Nannies are busily moving about, feeding babies and changing diapers.
+	<<elseif _NL > 0>>
+		$nurseryNameCaps is working steadily. Nannies are moving about, cleaning up and feeding hungry children.
+		<<set $nannyInfluence = 1>>
+	<<elseif $Matron>>
+		$Matron.slaveName is alone in $nurseryName, and keeps the place clean and looks after the children $himself.
+		<<set $MatronInfluence = 1>>
+	<<elseif (_NL <= 0) && ($nurseryBabies <= 0)>>
+		$nurseryNameCaps is empty and quiet.
+		<div class="choices" style="font-style:normal">
+			<<link "Decommission the Nursery" "Main">>
+				<<set $nursery = 0, $nurseryNannies = 0, $nannyInfluence = 0, $nurseryDecoration = "standard", $cribs = [], $reservedChildrenNursery = 0>>
+				<<for _i = 0; _i < $slaves.length; _i++>>
+					<<run WombCleanGenericReserve($slaves[_i], "nursery", 9999)>>
+				<</for>>
+			<</link>>
+		</div>
+	<</if>>
+</p>
+
+
+<<set _Tmult0 = Math.trunc($nurseryNannies*1000*$upgradeMultiplierArcology)>>
+<br>It can support $nurseryNannies nann<<if $nurseryNannies != 1>>ies<<else>>y<</if>>.
+There <<if _NL == 1>>is<<else>>are<</if>> _NL nann<<if _NL != 1>>ies<<else>>y<</if>> in $nurseryName.
+<<if $nurseryBabies > 0 && _NL < 1 && (!$Matron)>>
+	<div class="note">
+		You must have a Matron or at least one nanny to be able to influence the children's upbringing
+	</div>
+<</if>>
+<<if $nurseryNannies < 5>>
+	<div class="choices">
+		[[Expand the nursery|Nursery][cashX(forceNeg(_Tmult0), "capEx"), $nurseryNannies += 1, $PC.skill.engineering += .1]] 
+		<span class="note">
+			Costs <<print cashFormat(_Tmult0)>> and will increase upkeep costs
+		</span>
+	</div>
+<<else>>
+	<span class="note">
+		$nurseryNameCaps can support a maximum of 5 slaves
+	</span>
+<</if>>
+
+<div class="choices">
+	<<if _NL > 0>>
+		<<removeFacilityWorkers "nursery" "rest" "rest">>
+	<</if>>
+</div>
+
+<div>
+	<<if $Matron>>
+		<<if $MatronIgnoresFlaws != 1>>
+			$Matron.slaveName will attempt to fix flaws in nannies serving under $him.
+			<div class="choices">
+				[[Ignore flaws|Nursery][$MatronIgnoresFlaws = 1]]
+			</div>
+		<<else>>
+			$Matron.slaveName has been instructed to ignore flaws in the nannies serving under $him.
+			<div class="choices">
+				[[Fix flaws|Nursery][$MatronIgnoresFlaws = 0]]
+			</div>
+		<</if>>
+	<</if>>
+</div>
+
+<p>
+	<<print App.UI.SlaveList.stdFacilityPage(App.Entity.facilities.nursery)>>
+</p>
+
+<br><br>It can support $nursery child<<if $nursery != 1>>ren<</if>>. There <<if $nurseryBabies == 1>>is<<else>>are<</if>> currently $nurseryBabies room<<if $nurseryBabies != 1>>s<</if>> in use in $nurseryName.
+<<if $nursery < 50>>
+	<div class="choices">
+		[[Add another room|Nursery][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "nursery"), $nursery += 5]] 
+		<span class="note">
+			Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>> and will increase upkeep costs
+		</span>
+		<<if $freeCribs == 0>>
+			All of the rooms are currently occupied by growing children.
+		<</if>>
+	</div>
+<<else>>
+	<span class="note">
+		$nurseryNameCaps can support a maximum of 50 children
+	</span>
+<</if>>
+
+<<if $nursery > 1 && $reservedChildrenNursery < $freeCribs>>
+	<div class="choices">
+		[[Remove a room|Nursery][cashX(forceNeg(Math.trunc(1000*$upgradeMultiplierArcology)), "nursery"), $nursery -= 5]] 
+		<span class="note">
+			Costs <<print cashFormat(Math.trunc(1000*$upgradeMultiplierArcology))>> and will reduce upkeep costs
+		</span>
+	</div>
+<</if>>
+
+<br><br>
+Reserve an eligible mother-to-be's child to be placed in a room upon birth. Of $nursery rooms, <<print $freeCribs>> <<if $freeCribs == 1>>is<<else>>are<</if>> unoccupied. Of those, $reservedChildrenNursery room<<if $reservedChildrenNursery == 1>> is<<else>>s are<</if>> reserved.
+
+<<if (0 < _SL)>>
+	<<set $sortNurseryList = $sortNurseryList || 'Unsorted'>>
+	<br>
+	<span class="note">
+		Sorting:
+	</span>
+	''<span id="qlNurserySort">$sortNurseryList</span>.''
+	<<link "Sort by Name">>
+		<<set $sortNurseryList = 'Name'>>
+		<<replace "#qlNurserySort">>$sortNurseryList<</replace>>
+		<<script>>
+			sortNurseryPossiblesByName();
+		<</script>>
+	<</link>> |
+	<<link "Sort by Reserved Nursery Spots">>
+		<<set $sortNurseryList = 'Reserved Nursery Spots'>>
+		<<replace "#qlNurserySort">>$sortNurseryList<</replace>>
+		<<script>>
+			sortNurseryPossiblesByReservedSpots();
+		<</script>>
+	<</link>> |
+	<<link "Sort by Pregnancy Week">>
+		<<set $sortNurseryList = 'Pregnancy Week'>>
+		<<replace "#qlNurserySort">>$sortNurseryList<</replace>>
+		<<script>>
+			sortNurseryPossiblesByPregnancyWeek();
+		<</script>>
+	<</link>> |
+	<<link "Sort by Number of Children">>
+		<<set $sortNurseryList = 'Number of Children'>>
+		<<replace "#qlNurserySort">>$sortNurseryList<</replace>>
+		<<script>>
+			sortNurseryPossiblesByPregnancyCount();
+		<</script>>
+	<</link>>
+	<br>
+<</if>>
+<div id="qlNursery">
+	<<for _u = 0; _u < _SL; _u++>>
+		<<setLocalPronouns $slaves[_u]>>
+		<<if $slaves[_u].preg > 0 && $slaves[_u].broodmother == 0 && $slaves[_u].pregKnown == 1 && $slaves[_u].eggType == "human">>
+			<<if $slaves[_u].assignment == "work in the dairy" && $dairyPregSetting > 0>>
+			<<else>>
+				<<set _slaveId = "slave-" + $slaves[_u].ID>>
+				<<set _WL = $slaves[_u].womb.length>>
+				<<set _reservedNursery = WombReserveCount($slaves[_u], "nursery")>>
+				<<set _reservedIncubator = WombReserveCount($slaves[_u], "incubator")>>
+				<<set _pregWeek = $slaves[_u].pregWeek>>
+				<<set _slaveName = SlaveFullName($slaves[_u])>>
+				<div class="possible" @id="_slaveId" @data-preg-count="_WL" @data-reserved-spots="_reservedNursery" @data-preg-week="_pregWeek" @data-name="_slaveName">
+				<<print "[[_slaveName|Long Slave Description][$activeSlave = $slaves[" + _u + "], $nextLink = passage()]]">> is <<= numberWithPluralOne($slaves[_u].pregWeek, "week")>> pregnant with
+				<<if $slaves[_u].pregSource == 0 || $slaves[_u].preg <= 5>>someone's<<if $slaves[_u].preg <= 5>>, though it is too early to tell whose,<</if>>
+				<<elseif $slaves[_u].pregSource == -1>>your
+				<<elseif $slaves[_u].pregSource == -2>>a citizen's
+				<<elseif $slaves[_u].pregSource == -3>>your Master's
+				<<elseif $slaves[_u].pregSource == -4>>another arcology owner's
+				<<elseif $slaves[_u].pregSource == -5>>your client's
+				<<elseif $slaves[_u].pregSource == -6>>the Societal Elite's
+				<<elseif $slaves[_u].pregSource == -7>>the lab's
+				<<elseif $slaves[_u].pregSource == -9>>the Futanari Sisters'
+				<<else>>
+					<<set _t = $slaveIndices[$slaves[_u].pregSource]>>
+					<<if def _t>>
+						<<print $slaves[_t].slaveName>>'s
+					<</if>>
+				<</if>>
+				<<if _WL > 1>>_WL babies<<else>>baby<</if>>.
+				<<if _reservedNursery > 0>>
+					<<set _childrenReservedNursery = 1>>
+					<<if _WL == 1>>
+						$His child will be placed in $nurseryName.
+					<<elseif _reservedNursery < _WL>>
+						_reservedNursery of $his children will be placed in $nurseryName.
+					<<elseif _WL == 2>>
+						Both of $his children will be placed in $nurseryName.
+					<<else>>
+						All _reservedNursery of $his children will be placed in $nurseryName.
+					<</if>>
+					<<if (_reservedIncubator + _reservedNursery < _WL) && ($reservedChildrenNursery < $freeCribs)>>
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;
+						<<print "[[Keep another child|Nursery][WombAddToGenericReserve($slaves[" + _u + "], 'nursery', 1)]]">>
+						<<if _reservedNursery > 0>>
+							| <<print "[[Keep one less child|Nursery][WombCleanGenericReserve($slaves[" + _u + "], 'nursery', 1)]]">>
+						<</if>>
+						<<if _reservedNursery > 1>>
+							| <<print "[[Keep none of " + $his + " children|Nursery][WombCleanGenericReserve($slaves[" + _u + "], 'nursery', 9999)]]">>
+						<</if>>
+						<<if ($reservedChildrenNursery + _WL - _reservedNursery) <= $freeCribs>>
+							| <<print "[[Keep the rest of " + $his + " children|Nursery][WombAddToGenericReserve($slaves[" + _u + "], 'nursery', 9999)]]">>
+						<</if>>
+					<<elseif (_reservedNursery == _WL) || ($reservedChildrenNursery == $freeCribs) || (_reservedIncubator + _reservedNursery == _WL)>>
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;
+						<<print "[[Keep one less child|Nursery][WombCleanGenericReserve($slaves[" + _u + "], 'nursery', 1)]]">>
+						<<if _reservedNursery > 1>>
+							| <<print "[[Keep none of " + $his + " children|Nursery][WombCleanGenericReserve($slaves[" + _u + "], 'nursery', 9999)]]">>
+						<</if>>
+					<</if>>
+				<<elseif ($reservedChildrenNursery < $freeCribs) && ($freeCribs > _WL)>>
+					<<if _WL - _reservedIncubator == 0>>	
+						<span class="note">
+							$His children are already reserved for $incubatorName
+						</span>
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;
+						<<print "[[Keep " + $his + " " + ((_WL > 1) ? "children" : "child") + " here instead|Nursery][WombChangeReserveType($slaves[" + _u + "], 'incubator', 'nursery')]]">>
+					<<else>>
+						You have <<if $freeCribs == 1>>an<</if>> @@.lime;available room<<if $freeCribs > 1>>s<</if>>.@@
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;
+						<<print "[[Keep "+ ((_WL > 1) ? "a" : "the") +" child|Nursery][WombAddToGenericReserve($slaves[" + _u + "], 'nursery', 1)]]">>
+						<<if (_WL > 1) && ($reservedChildrenNursery + _WL - _reservedNursery) <= $freeCribs>>
+							| <<print "[[Keep all of " + $his + " children|Nursery][WombAddToGenericReserve($slaves[" + _u + "], 'nursery', 9999)]]">>
+						<</if>>
+					<</if>>
+				<<elseif $reservedChildrenNursery == $freeCribs>>
+					<br>&nbsp;&nbsp;&nbsp;&nbsp;
+					You have @@.red;no room for $his offspring.@@
+				<</if>>
+				<<set _eligibility = 1>>
+				</div>
+			<</if>>
+		<</if>>
+	<</for>>
+</div>
+<<script>>
+	$('div#qlNursery').ready(sortNurseryPossiblesByPreviousSort);
+<</script>>
+<<if _eligibility == 0>>
+	<div class="note">
+		You have no pregnant slaves bearing eligible children.
+	</div>
+<</if>>
+<<if $PC.pregKnown == 1 && ($arcologies[0].FSRestart == "unset" || $eugenicsFullControl == 1 || ($PC.pregSource != -1 && $PC.pregSource != -6))>>
+	<<set _WL = $PC.womb.length>>
+	<<set _reservedIncubator = WombReserveCount($PC, "incubator")>>
+	<<set _reservedNursery = WombReserveCount($PC, "nursery")>>
+	<br>''@@.pink;You're pregnant@@'' and going to have
+		<<if _WL == 1>>
+			a baby.
+		<<else>>
+			<<print pregNumberName(_WL, 1)>>
+		<</if>>
+	<<if _reservedNursery > 0>>
+		<<set _childrenReservedNursery = 1>>
+		<<if _WL == 1>>
+			Your child will be placed in $nurseryName.
+		<<elseif _reservedNursery < _WL>>
+			_reservedNursery of your children will be placed in $nurseryName.
+		<<elseif _WL == 2>>
+			Both of your children will be placed in $nurseryName.
+		<<else>>
+			All _reservedNursery of your children will be placed in $nurseryName.
+		<</if>>
+		<<if (_reservedNursery < _WL) && ($reservedChildrenNursery < $freeCribs) && (_reservedNursery - _reservedIncubator > 0)>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<<print "[[Keep another child|Nursery][WombAddToGenericReserve($PC, 'nursery', 1)]]">>
+			<<if _reservedNursery > 0>>
+				| <<print "[[Keep one less child|Nursery][WombCleanGenericReserve($PC, 'nursery', 1)]]">>
+			<</if>>
+			<<if _reservedNursery > 1>>
+				| <<print "[[Keep none of your children|Nursery][WombCleanGenericReserve($PC, 'nursery', 9999)]]">>
+			<</if>>
+			<<if ($reservedChildrenNursery + _WL - _reservedNursery) <= $freeCribs>>
+				| <<print "[[Keep the rest of your children|Nursery][WombAddGenericReserve($PC, 'nursery', 9999)]]">>
+			<</if>>
+		<<elseif (_reservedNursery == _WL) || ($reservedChildrenNursery == $freeCribs) || (_reservedNursery - _reservedIncubator >= 0)>>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<<print "[[Keep one less child|Nursery][WombCleanGenericReserve($PC, 'nursery', 1)]]">>
+			<<if _reservedNursery > 1>>
+				| <<print "[[Keep none of your children|Nursery][WombCleanGenericReserve($PC, 'nursery', 9999)]]">>
+			<</if>>
+		<</if>>
+	<<elseif $reservedChildrenNursery < $freeCribs>>
+		<<if _WL - _reservedIncubator == 0>>	
+			<span class="note">
+				Your child<<if _WL > 0>>ren are<<else>>is<</if>> already reserved for $incubatorName
+			</span>
+			<<print "[[Keep your "+ ((_WL > 1) ? "children" : "child") +" here instead|Nursery][WombChangeReserveType($PC, 'incubator', 'nursery')]]">>
+		<<else>>
+			You have <<if $freeCribs == 1>>an<</if>> @@.lime;available room<<if $freeCribs > 1>>s<</if>>.@@
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;
+			<<print "[[Keep "+ ((_WL > 1) ? "a" : "your") +" child|Nursery][WombAddToGenericReserve($PC, 'nursery', 1)]]">>
+			<<if (_WL > 1) && ($reservedChildrenNursery + _WL - _reservedNursery) <= $freeCribs>>
+				| [[Keep all of your children|Nursery][WombAddToGenericReserve($PC, 'nursery', 9999)]]
+			<</if>>
+		<</if>>
+	<<elseif $reservedChildrenNursery == $freeCribs>>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;
+		You have @@.red;no room for your offspring.@@
+	<</if>>
+<</if>>
+<<if $reservedChildrenNursery || _childrenReservedNursery == 1>> /* the oops I made it go negative somehow button */
+	<br>
+	<<link "Clear all reserved children">>
+		<<for _u = 0; _u < _SL; _u++>>
+			<<run WombCleanGenericReserve($slaves[_u], "nursery", 9999)>>
+		<</for>>
+		<<run WombCleanGenericReserve($PC, "nursery", 9999)>>
+		<<goto "Nursery">>
+	<</link>>
+<</if>>
+
+<p>
+	Target age for release: <<textbox "$targetAgeNursery" $targetAgeNursery "Nursery">>
+	[[Minimum Legal Age|Nursery][$targetAgeNursery = $minimumSlaveAge]] |
+	[[Average Age of Fertility|Nursery][$targetAgeNursery = $fertilityAge]] |
+	[[Average Age of Potency|Nursery][$targetAgeNursery = $potencyAge]] |
+	[[Legal Adulthood|Nursery][$targetAgeNursery = 18]]
+	<span class="note">
+		Setting will not be applied to rooms in use.
+	</span>
+</p>
+
+<b>Rules</b>
+<hr style="margin:0">
+<<if $extremeUnderage>>
+	<<if $nurserySex>>
+		$nurseryNameCaps staff are ''allowed'' to molest the children. [[Forbid|Nursery][$nurserySex = 0]]
+	<<else>>
+		$nurseryNameCaps staff are ''not allowed'' to molest the children. [[Allow|Nursery][$nurserySex = 1]]
+	<</if>>
+<</if>>
+<br>
+
+<<if $nurseryWeight>>
+	<<if $nurseryWeightSetting>>
+		Food intake ''is'' being managed; children will be raised at a healthy weight.
+		[[End managing|Nursery][$nurseryWeightSetting = 0]]
+	<<else>>
+		Food intake ''is not'' being managed; children may end up malnourished.
+		[[Begin managing|Nursery][$nurseryWeightSetting = 1]]
+	<</if>>
+<<else>>
+	The amount of food the children eat ''is not'' being monitored, meaning they may end up becoming malnourished.
+	[[Monitor the amount of food the children eat|Nursery][cashX(forceNeg(Math.trunc(1000*$upgradeMultiplierArcology)), "nursery"), $nurseryWeight = 1]]
+	<span class="note">
+		Requires a Matron or at least one nanny and costs <<print cashFormat(Math.trunc(1000*$upgradeMultiplierArcology))>> and will increase upkeep costs
+	</span>
+<</if>>
+<br>
+
+<<if $nurseryMuscles>>
+	<<if $nurseryMusclesSetting>>
+		Exercise ''is'' being managed; children will be raised with average fitness.
+		[[End managing|Nursery][$nurseryMusclesSetting = 0]]
+	<<else>>
+		Children ''are not'' getting any exercise; they may end up quite weak and frail.
+		[[Begin managing|Nursery][$nurseryMusclesSetting = 1]]
+	<</if>>
+<<else>>
+	The children ''are not'' getting any exercise, meaning they will likely end up becoming fairly weak and frail.
+	[[Allow the children to remain active|Nursery][cashX(forceNeg(Math.trunc(1000*$upgradeMultiplierArcology)), "nursery"), $nurseryMuscles = 1]] 
+	<span class="note">
+		Requires a Matron or at least one nanny and costs <<print cashFormat(Math.trunc(1000*$upgradeMultiplierArcology))>> and will increase upkeep costs
+	</span>
+<</if>>
+<br>
+
+<<if $nurseryUpgradeHormones>>
+	<<if $nurseryHormonesSetting>>
+		Artificial hormone levels ''are'' being managed; children may experience precocious puberty.
+		[[Disable|Nursery][$nurseryHormonesSetting = 0]]
+	<<else>>
+		Artificial hormones ''are not'' being given; children will undergo normal puberty.
+		[[Activate|Nursery][$nurseryHormonesSetting = 1]]
+	<</if>>
+<<else>>
+	The children ''are not'' being given any artificial hormones.
+	[[Give the children growth hormones|Nursery][cashX(forceNeg(Math.trunc(1000*$upgradeMultiplierArcology)), "nursery"), $nurseryUpgradeHormones = 1, $nurseryHormonesSetting = 0]]
+	<span class="note">
+		Requires a Matron or at least one nanny and costs <<print cashFormat(Math.trunc(1000*$upgradeMultiplierArcology))>> and will increase upkeep costs
+	</span>
+<</if>>
+<br>
+
+<<if $nurseryBabies > 0>>
+	<div style="font-weight:bold">
+		Children in $nurseryName
+	</div>
+
+	<<= App.Facilities.Nursery.childList()>>
+<</if>>
+
+/*
+FIXME: not sure if this works
+<<set $newSlavePool = []>>
+<<for _nur = 0; _nur < $cribs.length; _nur++>>
+	<<if $cribs[_nur].growTime <= 0>>
+		<<set $nurseryOldID = $cribs[_nur].ID>> /* single slave case *//*
+		<<set _tempObject = {object: $cribs[_nur], ID: $cribs[_nur].ID}>>
+		<<set $newSlavePool.push(clone(_tempObject))>>
+		<<run $cribs.splice(_nur, 1)>>
+		<<set _nur-->>
+	<</if>>
+<</for>>
+<<if $newSlavePool.length == 1>>
+	<<set $readySlave = $newSlavePool[0].object>>
+	<<set $newSlavePool = 0>>
+<</if>>
+*/
+
+<p>
+	Rename $nurseryName: <<textbox "$nurseryName" $nurseryName "Nursery">> 
+	<span class="note">
+		Use a noun or similar short phrase
+	</span>
+</p>
+
+<<run App.UI.SlaveList.ScrollPosition.restore()>>

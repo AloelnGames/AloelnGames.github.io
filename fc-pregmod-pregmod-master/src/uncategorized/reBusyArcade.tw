@@ -1,0 +1,43 @@
+:: RE busy arcade [nobr]
+
+<<set _rebaIDs = []>>
+<<for _reba = 0; _reba < $ArcadeiIDs.length; _reba++>>
+	<<set _rebaIndex = $slaveIndices[$ArcadeiIDs[_reba]]>>
+	<<if hasAnyArms($slaves[_rebaIndex]) && $slaves[_rebaIndex].fetish != "mindbroken" && $slaves[_rebaIndex].devotion < 45>>
+		<<set _rebaIDs.push($slaves[_rebaIndex].ID)>>
+	<</if>>
+<</for>>
+<<set $activeSlave = getSlave(_rebaIDs.random())>>
+
+<<if (ndef $activeSlave)>>
+	<<goto "RIE Eligibility Check">>
+<<else>>
+
+<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "RIE Eligibility Check">>
+<<setLocalPronouns $activeSlave>>
+<<run Enunciate($activeSlave)>>
+
+Slaves in your arcade are not immured in the facility permanently, since holding them in one position at all times would negatively impact their health. They are released to exercise, eat, bathe, and sleep, but for nothing else. You occasionally inspect them when they do so, to see that their harsh lives are not inappropriately difficult for them. One day when you are doing so, <<= App.UI.slaveDescriptionDialog($activeSlave)>> flings $himself on the ground in front of you the instant $he sees you.
+
+<br><br>
+
+Facing the ground, <<if !canTalk($activeSlave)>>$he gestures with <<if hasBothArms($activeSlave)>>shaking hands<<else>>a shaking hand<</if>> that $he cannot take any more. $He begs you abjectly to let $him out of the arcade and promises to be a perfect sex slave if you do. <<elseif SlaveStatsChecker.checkForLisp($activeSlave)>>$he lisps through tears, <<else>>$he sobs, <</if>>"<<Master>>, plea<<s>>e. I can't take any more of thi<<s>>. Plea<<s>>e let me out. I'll do anything, <<Master>>. I'll love you forever, <<Master>> — ju<<s>>t don't make me go back in<<s>>ide that wall."
+
+<br><br>
+
+<span id="result">
+<<link "Accept $his pledge">>
+	<<replace "#result">>
+	When you accept, $activeSlave.slaveName looks up at you in incomprehension, expecting you to correct yourself or reveal that this is a cruel trick. When you do neither, $he scrabbles spastically to your feet, kisses them as $he cries, and then clings to your knees, sobbing. $He is so relieved by this reprieve that $he is now on the cusp of @@.hotpink;devotion to you,@@ and will obey out of near-paralytic fear of being sent back to the arcade.
+	<<set $activeSlave.devotion = 45>>
+	<<= removeJob($activeSlave, "be confined in the arcade")>>
+	<</replace>>
+<</link>>
+<br><<link "Refuse">>
+	<<replace "#result">>
+	$He did not really expect mercy, but $his sobs take on a distinctly dark tone of hopelessness at your refusal. As you personally immure $him in the arcade for another day of endless dick, you wonder whether $he'll damage $his throat with all the commotion $he's making. Several of the other arcade slaves glance dully over at the noise. Then, they look away.
+	<</replace>>
+<</link>>
+</span>
+
+<</if>>

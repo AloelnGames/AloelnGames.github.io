@@ -1,0 +1,206 @@
+:: SE expiration [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Scheduled Event">>
+
+<<set $expired = 1>>
+
+<<set $activeSlave = getSlave($expiree)>>
+
+<<run Enunciate($activeSlave)>>
+<<setLocalPronouns $activeSlave>>
+
+<span id="artFrame">
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<<if $imageChoice == 1>>
+		<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+	<<else>>
+		<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+	<</if>>
+<</if>>
+/* 000-250-006 */
+</span>
+
+$activeSlave.slaveName's indentured servitude is ending this week, meaning that your arcology is gaining a citizen.
+<<set $lowerClass += 1>>
+
+<<set _seed = 0>>
+<<for _seexp = 0; _seexp < $slaves.length; _seexp++>>
+	<<if $slaves[_seexp].devotion <= 20>>
+		<<set _seed = 1>>
+		<<set $slaves[_seexp].devotion -= 1>>
+	<</if>>
+<</for>>
+<<if _seed == 1>>
+	Those of your slaves who are unhappy with their lives under you are @@.mediumorchid;envious or angry@@ to see $him become free, according to their individual natures.
+<</if>>
+
+<<set $activeSlave.indenture = 52>>
+<<set _slaveCost = slaveCost($activeSlave)>>
+
+<<if $activeSlave.fetish == "mindbroken">>
+
+	Since $he is mindbroken, there is precisely no chance that $he will be able to look after $himself. $He <<if hasAnyLegs($activeSlave)>>stands<<else>>sits<</if>> before you dumbly, betraying no reaction to the prospect of becoming free from sexual slavery. In situations like this, it is perfectly acceptable to subject $him to another indenture for $his own good.
+	<br><br>
+
+	<span id="result">
+	<<if $cash > 1000>>
+		<<link "Plead necessity and reactivate $his indenture">>
+			<<replace "#result">>
+				You plead necessity and place $him under another indenture, paying the trivial fees left over once $he has been charged for $his own forecasted upkeep. Naturally, $he offers no response at all to any of this.
+				<<run cashX(-1000, "event", $activeSlave)>>
+				<<set $lowerClass -= 1>>
+				<<set $expired = 0, $expiree = 0>>
+				<<for $i = 0; $i < $slaves.length; $i++>>
+					<<if $slaves[$i].indenture == 0>>
+						<<set $expiree = $slaves[$i].ID>>
+						<<break>>
+					<</if>>
+				<</for>>
+			<</replace>>
+		<</link>> //This cost <<print cashFormat(1000)>>//
+	<<else>>
+		//You cannot afford to do this//
+	<</if>>
+	</span>
+
+<<elseif ($activeSlave.relationship < -1) && ($activeSlave.devotion > 95) && ($activeSlave.trust > 95)>>
+
+	$He has been trying desperately hard not to think about this trying situation, but when $he comes before you on the day of $his indenture's expiration, $he can ignore it no longer. $He
+	<<if !hasAnyArms($activeSlave)>>
+		wriggles disconsolately, probably wishing $he could throw $himself at your feet or cling to your knees.
+	<<else>>
+		throws $himself at your feet and clings to your knees, bursting into tears.
+	<</if>>
+	<<if !canTalk($activeSlave)>>
+		$He does $his best to communicate an earnest desire to stay, and repeats over and over that $he loves you. $He begins to indicate a willingness to accept true, unlimited slavery, if that's what it takes to stay.
+	<<else>>
+		"Plea<<s>>e <<Master>>, don't <<s>>end me away," $he sobs. "I love you! I'll d-do anything — I'll be your <<s>>lave! Plea<<s>>e, en<<s>>lave me. I l-love you..." $he moans, trailing off into convulsive blubbering.
+	<</if>>
+	<br><br>
+
+	<span id="result">
+	<<if $cash > 1000>>
+		<<link "Enslave $him">>
+			<<replace "#result">>
+				$He's beside $himself with joy when you accept $his plea and enslave $him. $He's given you the finest proof of loyalty a slave possibly can, having tasted a moment of freedom under the law, and thrown it away with utter contempt.
+				<<if hasAnyEyes($activeSlave)>>
+					$His <<= App.Desc.eyesColor($activeSlave)>>
+					<<if hasBothEyes($activeSlave)>>
+					<<if canSee($activeSlave)>>watch you<<else>>are wide<</if>>
+					<<else>>
+					<<if canSee($activeSlave)>>watches you<<else>>is wide<</if>>
+					<</if>>
+					with
+				<<else>>
+					$His face shows
+				<</if>>
+				eager anticipation, radiating gladness that the prospect of separation from you has gone.
+				<<set $activeSlave.indenture = -1, $activeSlave.indentureRestrictions = 0>>
+				<<run cashX(-1000, "event", $activeSlave)>>
+				<<set $lowerClass -= 1>>
+				<<set $expired = 0, $expiree = 0>>
+				<<for $i = 0; $i < $slaves.length; $i++>>
+					<<if $slaves[$i].indenture == 0>>
+						<<set $expiree = $slaves[$i].ID>>
+						<<break>>
+					<</if>>
+				<</for>>
+			<</replace>>
+		<</link>> //This will cost <<print cashFormat(1000)>>//
+	<<else>>
+		//You cannot afford to do this//
+	<</if>>
+	</span>
+
+<<elseif ($activeSlave.devotion > 50) && ($activeSlave.trust > 50)>>
+
+	<<set _slaveCost = Math.trunc((_slaveCost*0.5)/500)*500>>
+	<<set _slaveCost = Math.clamp(_slaveCost, $minimumSlaveCost, 100000)>>
+
+	$His feelings on this are quite mixed, since $he has come to feel that $he has a place under you.
+	<<if !hasAnyLegs($activeSlave)>>
+		Propped up
+	<<else>>
+		Standing before you
+	<</if>>
+	at the moment of $his scheduled emancipation, $he seems to be struggling to express $himself.
+	<<if !canTalk($activeSlave)>>
+		$He does $his best to communicate a willingness to remain your slave, indicating that $he wouldn't press too hard about the price if you offered $him another indenture.
+	<<else>>
+		"<<Master>>, um," $he <<say>>s hesitantly. "I don't mind being your <<s>>lave. Could I — would you plea<<s>>e give me another indenture? I'm, um, not too worried about the pri<<c>>e."
+	<</if>>
+	<br><br>
+
+	<span id="result">
+	<<if $cash > _slaveCost>>
+		<<link "Offer $him a one year supplementary indenture">>
+			<<replace "#result">>
+				$He smiles almost shyly when you offer $him a one year supplementary indenture. The price is reasonable, but definitely favorable to you. $He accepts it anyway, and you transfer the money into an escrow account to be held for $him until $his new indenture is done. Your sex slave once again, $he awaits your pleasure without a hint of fear.
+				<<run cashX(forceNeg(_slaveCost), "slaveTransfer", $activeSlave)>>
+				<<set $lowerClass -= 1>>
+				<<set $expired = 0>><<set $expiree = 0>>
+				<<for $i = 0; $i < $slaves.length; $i++>>
+					<<if $slaves[$i].indenture == 0>>
+						<<set $expiree = $slaves[$i].ID>>
+						<<break>>
+					<</if>>
+				<</for>>
+			<</replace>>
+		<</link>> //This will cost <<print cashFormat(_slaveCost)>>//
+	<<else>>
+		//You cannot afford to do this//
+	<</if>>
+	</span>
+
+<<elseif ($activeSlave.devotion >= -20) && ($activeSlave.trust > 20)>>
+
+$He approaches the moment with calculation, since $he has found more of a place in slavery than $he probably expected when $he became an indentured servant.
+<<if !hasAnyLegs($activeSlave)>>
+	Propped up
+<<else>>
+	Standing before you
+<</if>>
+at the moment of $his scheduled emancipation, $he seems willing to consider a short term continuation of service.
+<br><br>
+
+<span id="result">
+<<if $cash > _slaveCost>>
+	<<link "Offer $him a one year supplementary indenture">>
+		<<replace "#result">>
+			$He looks pensive when you offer $him a one year supplementary indenture. The price reflects the market, and is a reasonable compensation for a year of sexual slavery. $He accepts it after some consideration, and you transfer the money into an escrow account to be held for $him until $his new indenture is done. Your sex slave once again, $he awaits orders with complacency.
+			<<run cashX(forceNeg(_slaveCost), "slaveTransfer", $activeSlave)>>
+			<<set $lowerClass -= 1>>
+			<<set $expired = 0>><<set $expiree = 0>>
+			<<for $i = 0; $i < $slaves.length; $i++>>
+				<<if $slaves[$i].indenture == 0>>
+					<<set $expiree = $slaves[$i].ID>>
+					<<break>>
+				<</if>>
+			<</for>>
+		<</replace>>
+	<</link>> //This will cost <<print cashFormat(_slaveCost)>>//
+<<else>>
+	//You cannot afford to do this//
+<</if>>
+</span>
+
+<<else>>
+	$He makes no effort at all to conceal $his joy at being a free $woman again.
+	<<if $activeSlave.origin == "$He put $himself up as collateral at a poker game, and lost.">>
+		A bet is a bet, but that was a lonnng year.  There's still room for $him in your $mercenariesTitle, but many of them have come to see $him in a new, more... intimate way.  As a free $woman, $he'll have to decide if it's worth the risk and the sex to stay here and fight for you who $he loathes... or else take up arms elsewhere in an ever more uncertain world.
+		<<if $activeSlave.addict > 5>>
+			They'll need to make money fast as they remain addicted to your aphrodisiacs.
+		<</if>>
+	<<else>>
+		It seems very unlikely that $he'll stay in the arcology; $he'll probably take what remains of $his indenture payment, held in escrow for this day, and be off to wherever it is that $he came from in the first place.
+	<</if>>
+<</if>>
+
+<h3>Final notes?</h3>
+<div class="note">
+	<div class="indent">
+		$His most recent task was to <<print $activeSlave.assignment>><<if $assignmentRecords[$activeSlave.ID]>>, and before that to <<print $assignmentRecords[$activeSlave.ID]>><</if>>.
+	</div>
+	<<SlaveExpensesExtra $activeSlave>>
+</div>

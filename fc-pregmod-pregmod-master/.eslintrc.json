@@ -1,0 +1,112 @@
+{
+	"root": true,
+	"env": {
+		"browser": true,
+		"es6": true,
+		"jquery": true
+	},
+	"extends": "eslint:recommended",
+	"plugins": [
+		"jsdoc"
+	],
+	"globals": {
+		"SugarCube": false,
+		"Config": false,
+		"State": false,
+		"Story": false,
+		"settings": false,
+		"setup": false,
+		"App": false,
+		"prehistory": true,
+		"predisplay": true,
+		"prerender": true,
+		"postrender": true,
+		"postdisplay": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 2018,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"impliedStrict": true
+		}
+	},
+	"rules": {
+		"semi": ["warn", "always"],
+		"semi-spacing": "warn",
+		"semi-style": "warn",
+		"block-spacing": ["warn", "always"],
+		"curly": ["warn", "all"],
+		"eqeqeq": ["warn", "smart"],
+		"no-fallthrough": "error",
+		"space-before-function-paren": ["warn", {
+			"anonymous": "never",
+			"named": "never",
+			"asyncArrow": "always"
+		}],
+		"template-curly-spacing": ["warn", "never"],
+		"no-trailing-spaces": "warn",
+		"no-mixed-spaces-and-tabs": ["warn", "smart-tabs"],
+		"no-unneeded-ternary": "warn",
+		"camelcase": "warn",
+		"padded-blocks": ["warn", "never"],
+		"comma-spacing": "warn",
+		"comma-style": "warn",
+		"object-curly-newline": ["warn",
+			{
+				"ObjectExpression":{
+					"minProperties": 4,
+					"consistent": true
+				},
+				"ImportDeclaration": {
+					"minProperties": 4,
+					"consistent": true
+				},
+				"ExportDeclaration": {
+					"minProperties": 4,
+					"consistent": true
+				},
+				"ObjectPattern": {
+					"minProperties": 8,
+					"consistent": true
+				}
+			}
+		],
+		"object-curly-spacing": "warn",
+		"no-var": "warn",
+		"spaced-comment": "warn",
+		"no-undef": "off",
+		"no-unused-vars": ["error", {"args": "none"}],
+		"block-scoped-var": "error",
+		"dot-notation": "warn",
+		"eol-last": "warn",
+		"unicode-bom": ["error", "never"],
+		"brace-style": ["warn", "1tbs",
+			{
+				"allowSingleLine": true
+			}
+		],
+		"jsdoc/check-alignment": 1,
+		"jsdoc/check-examples": 0, // interferes with SugarCube examples
+		"jsdoc/check-indentation": 0,
+		"jsdoc/check-param-names": 1,
+		"jsdoc/check-property-names": 1,
+		"jsdoc/check-syntax": 1,
+		"jsdoc/check-tag-names": 1,
+		"jsdoc/check-types": 1,
+		"jsdoc/implements-on-classes": 1,
+		"jsdoc/match-description": 0, // rejects SugarCube syntax
+		"jsdoc/newline-after-description": 0,
+		"jsdoc/no-types": 0,
+		"jsdoc/no-undefined-types": 0,
+		"jsdoc/require-jsdoc": 0,
+		"jsdoc/require-param": 0,
+		"jsdoc/require-param-description": 0,
+		"jsdoc/require-param-name": 1,
+		"jsdoc/require-param-type": 1,
+		"jsdoc/require-returns": 0,
+		"jsdoc/require-returns-check": 1,
+		"jsdoc/require-returns-description": 0,
+		"jsdoc/require-returns-type": 1,
+		"jsdoc/valid-types": 1
+	}
+}

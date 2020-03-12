@@ -1,0 +1,283 @@
+:: Upgrades [nobr]
+
+<br><br>
+<<if $SF.Size !== _max>>
+	Total upgrade progress: <<print App.SF.progress($SF.Size,_max)>> $SF.Size/_max(<<print ($SF.Size/_max).toFixed(2)*100>>%) <<if $SF.Size < 30>> <br>//<<print (30-$SF.Size )>> more upgrades is needed until the next tier unlocks.// <</if>>
+<<else>>
+	There are no more upgrades available.
+<</if>>
+
+<<if $SF.Upgrade > 0 && ($SF.Size !== _max)>>
+	<<set _cost = Math.ceil(Math.abs($cash*.05*(1.25+($SF.Size/1000))))>>
+		<br>[[Re-unlock upgrading.|Firebase][$SF.Upgrade = 0,cashX(-(_cost), "specialForces")]] @@.red;<<print cashFormat(_cost)>>@@
+<</if>>
+
+<<if ($SF.Size < 30 || $SF.Size !== _max) && $SF.Upgrade < 1>>
+<br>Which facility or equipment do you wish to upgrade this week? <br>
+
+	<<if $SF.Squad.Firebase < 5||_T1 && $SF.Squad.Firebase < _FU>>
+		<<set _cF = App.SF.UpgradeCost(100000,$SF.Squad.Firebase)>>
+		<<if $cash >= _cF>> <br>
+			[[Upgrade Firebase|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.Firebase++, cashX(-(_cF), "specialForces")]]
+		<<else>>
+			//Cannot afford to upgrade the Firebase.//
+		<</if>>
+		//Costs @@.red;<<print cashFormat(_cF)>>@@// <span style="float:right;"> <<print App.SF.progress($SF.Squad.Firebase)>> </span> <br>
+	<<elseif $SF.Squad.Firebase === _FU>>
+		//The Firebase has been fully upgraded.// <br>
+	<</if>>
+
+	<<if $SF.Squad.Armoury < 5||_T1 && $SF.Squad.Armoury < _AU>>
+		<<set _cA = App.SF.UpgradeCost(40000,$SF.Squad.Armoury)>>
+		<<if $cash >= _cA>>
+			[[Upgrade Armory|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.Armoury++, cashX(-(_cA), "specialForces")]]
+		<<else>>
+			//Cannot afford to upgrade the Armory.//
+		<</if>>
+		//Costs @@.red;<<print cashFormat(_cA)>>@@// <span style="float:right;"> <<print App.SF.progress($SF.Squad.Armoury)>> </span> <br>
+	<<elseif $SF.Squad.Armoury === _AU>>
+		//The Armory has been fully upgraded.// <br>
+	<</if>>
+
+	<<if $SF.Squad.Drugs < 5||_T1 && $SF.Squad.Drugs < _DrugsU>>
+		<<set _cDrugs = App.SF.UpgradeCost(40000,$SF.Squad.Drugs)>>
+		<<if $cash >= _cDrugs>>
+			[[Upgrade Drug Lab|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.Drugs++, cashX(-(_cDrugs), "specialForces")]]
+		<<else>>
+				//Cannot afford to upgrade the Drug Lab.//
+		<</if>>
+		//Costs @@.red;<<print cashFormat(_cDrugs)>>@@// <span style="float:right;"> <<print App.SF.progress($SF.Squad.Drugs)>> </span> <br>
+	<<elseif $SF.Squad.Drugs === _DrugsU>>
+		//The Drug Lab has been fully upgraded.// <br>
+	<</if>>
+
+	<<if $SF.Squad.Firebase >= 2 && ($SF.Squad.Drones < 5 ||_T1 && $SF.Squad.Drones < _DU)>>
+		<<set _cDrones = App.SF.UpgradeCost(45000,$SF.Squad.Drones)>>
+		<<if $cash >= _cDrones>>
+			[[Upgrade Drone Bay|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.Drones++, cashX(-(_cDrones), "specialForces")]]
+		<<else>>
+			//Cannot afford to upgrade the Drone Bay.//
+		<</if>>
+		//Costs @@.red;<<print cashFormat(_cDrones)>>@@// <span style="float:right;"> <<print App.SF.progress($SF.Squad.Drones)>> </span> <br>
+	<<elseif $SF.Squad.Drones === _DU>>
+		//The Drone Bay has been fully upgraded.// <br>
+	<</if>>
+
+	<<if $SF.Squad.Firebase >= 1 && $terrain !== "oceanic">> <br>''Garage''<br>
+		<div style="margin-left:2em">
+		<<if ($SF.Squad.AV < 5||_T1 && $SF.Squad.AV < _AVU)>>
+			<<set _cAV = App.SF.UpgradeCost(60000,$SF.Squad.AV)>>
+			<<if $cash >= _cAV>>
+				[[Upgrade Attack Vehicle Fleet|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.AV++, cashX(-(_cAV), "specialForces")]]
+			<<else>>
+				//Cannot afford to upgrade the Attack Vehicle Fleet.//
+			<</if>>
+			//Costs @@.red;<<print cashFormat(_cAV)>>@@// <span style="float:right;"> <<print App.SF.progress($SF.Squad.AV)>> </span> <br>
+		<<elseif $SF.Squad.AV === _AVU>>
+			//The Attack Vehicle Fleet has been fully upgraded.// <br>
+		<</if>>
+		</div>
+
+		<div style="margin-left:2em">
+		<<if ($SF.Squad.TV < 5||_T1 && $SF.Squad.TV < _TVU)>>
+			<<set _cTV = App.SF.UpgradeCost(60000,$SF.Squad.TV)>>
+			<<if $cash >= _cTV>>
+				[[Upgrade Transport Vehicle Fleet|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.TV++, cashX(-(_cTV), "specialForces")]]
+			<<else>>
+				//Cannot afford to upgrade Transport Vehicle Fleet.//
+			<</if>>
+			//Costs @@.red;<<print cashFormat(_cTV)>>@@// <span style="float:right;"> <<print App.SF.progress($SF.Squad.TV)>> </span> <br>
+		<<elseif $SF.Squad.TV === _TVU>>
+			//The Transport Vehicle Fleet has been fully upgraded.// <br>
+		<</if>>
+		</div>
+
+		<div style="margin-left:2em">
+		<<if _T1 && $SF.Squad.PGT < _PGTU>>
+			<<set _cPGT = App.SF.UpgradeCost(735000,$SF.Squad.PGT)>>
+			<<if $cash >= _cPGT>>
+				[[Upgrade Prototype Goliath tank|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.PGT++, cashX(-(_cPGT), "specialForces")]]
+			<<else>>
+				//Cannot afford to upgrade Prototype Goliath Tank.//
+			<</if>>
+			//Costs @@.red;<<print cashFormat(_cPGT)>>@@// <span style="float:right;"> <<print App.SF.progress($SF.Squad.PGT)>> </span> <br>
+		<<elseif $SF.Squad.PGT === _PGTU && $PC.skill.warfare < 75>>
+			//Your warfare skill is not high enough unlock the next upgrade.//<span style="float:right;"> <<print App.SF.progress($SF.Squad.PGT)>> </span> <br>
+		<<elseif $SF.Squad.PGT === _PGTU>>
+			//The Prototype Goliath Tank has been fully upgraded.// <br>
+		<</if>>
+		</div>
+	<</if>> /*Closes garage.*/
+
+	<<if $SF.Squad.Firebase >= 4>>''Hangar''<br>
+		<div style="margin-left:2em">
+		<<if $SF.Squad.AA < 5||_T1 && $SF.Squad.AA < _AAU>>
+			<<set _cAA = App.SF.UpgradeCost(70000,$SF.Squad.AA)>>
+			<<if $cash >= _cAA>>
+				[[Upgrade Attack Aircraft Fleet|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.AA++, cashX(-(_cAA), "specialForces")]]
+			<<else>>
+				//Cannot afford to upgrade Attack Aircraft Fleet.//
+			<</if>>
+			//Costs @@.red;<<print cashFormat(_cAA)>>@@// <span style="float:right;"> <<print App.SF.progress($SF.Squad.AA)>> </span> <br>
+		<<elseif $SF.Squad.AA === _AAU>>
+			//The Attack Aircraft Fleet has been fully upgraded.// <br>
+		<</if>>
+		</div>
+
+		<div style="margin-left:2em">
+		<<if $SF.Squad.TA < 5||_T1 && $SF.Squad.TA < _TAU>>
+			<<set _cTA = App.SF.UpgradeCost(70000,$SF.Squad.TA)>>
+			<<if $cash >= _cTA>>
+				[[Upgrade Transport Aircraft Fleet|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.TA++, cashX(-(_cTA), "specialForces")]]
+			<<else>>
+				//Cannot afford to upgrade the Transport Aircraft Fleet.//
+			<</if>>
+			//Costs @@.red;<<print cashFormat(_cTA)>>@@// <span style="float:right;"> <<print App.SF.progress($SF.Squad.TA)>> </span> <br>
+		<<elseif $SF.Squad.TA === _TAU>>
+			//The Transport Aircraft Fleet has been fully upgraded.// <br>
+		<</if>>
+		</div>
+
+		<div style="margin-left:2em">
+		<<if _T1 && $SF.Squad.SpacePlane < _SPU>>
+			<<set _cSP = App.SF.UpgradeCost(250000,$SF.Squad.SpacePlane)>>
+			<<if $cash >= _cSP>>
+				[[Upgrade Spaceplane|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.SpacePlane++, cashX(-(_cSP), "specialForces")]]
+			<<else>>
+				//Cannot afford to upgrade the Spaceplane.//
+			<</if>>
+			//Costs @@.red;<<print cashFormat(_cSP)>>@@//<span style="float:right;"> <<print App.SF.progress($SF.Squad.SpacePlane)>> </span> <br>
+		<<elseif $SF.Squad.SpacePlane === _SPU && $PC.skill.warfare < 75>>
+			//Your warfare skill is not high enough unlock the next upgrade.//<span style="float:right;"> <<print App.SF.progress($SF.Squad.SpacePlane)>> </span> <br>
+		<<elseif $SF.Squad.SpacePlane === _SPU>>
+			//The Spaceplane has been fully upgraded.// <br>
+		<</if>>
+		</div>
+
+		<div style="margin-left:2em">
+		<<if _T1 && $SF.Squad.GunS < _GunSU>>
+			<<set _cGunS = App.SF.UpgradeCost(350000,$SF.Squad.GunS)>>
+			<<if $cash >= _cGunS>>
+				[[Upgrade Gunship|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.GunS++, cashX(-(_cGunS), "specialForces")]]
+			<<else>>
+				//Cannot afford to upgrade Gunship.//
+			<</if>>
+			//Costs @@.red;<<print cashFormat(_cGunS)>>@@//<span style="float:right;"> <<print App.SF.progress($SF.Squad.GunS)>> </span> <br>
+		<<elseif $SF.Squad.GunS === _GunSU && $PC.skill.warfare < 75>>
+			//Your warfare skill is not high enough unlock the next upgrade.//<span style="float:right;"> <<print App.SF.progress($SF.Squad.GunS)>> </span> <br>
+		<<elseif $SF.Squad.GunS === _GunSU>>
+			//The Gunship has been fully upgraded.// <br>
+		<</if>>
+		</div>
+	<</if>> /*Closes hangar.*/
+
+	<<if _T1>>''Launch Bay''
+		<div style="margin-left:2em">
+		<<if $SF.Squad.Satellite.lv < _SatU && $SF.Squad.Satellite.InOrbit < 1>>
+			<<set _cSat = App.SF.UpgradeCost(525000,$SF.Squad.Satellite.lv)>>
+			<<if $cash >= _cSat>>
+				[[Upgrade Satellite|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.Satellite.lv++, cashX(-(_cSat), "specialForces")]]
+			<<else>>
+				//Cannot afford to upgrade Satellite.//
+			<</if>>
+			//Costs @@.red;<<print cashFormat(_cSat)>>@@//<span style="float:right;"> <<print App.SF.progress($SF.Squad.Satellite.lv)>> </span> <br>
+		<<elseif $SF.Squad.Satellite.lv === _SatU && $PC.skill.warfare < 75>>
+			//Your warfare skill is not high enough unlock the next upgrade.//<span style="float:right;"> <<print App.SF.progress($SF.Squad.Satellite.lv)>> </span> <br>
+		<<else>>
+			//The Satellite has been fully upgraded.// <br>
+		<</if>>
+		</div>
+
+		<<if $terrain !== "oceanic">>
+			<div style="margin-left:2em">
+			<<if $SF.Squad.GiantRobot < _GRU>>
+				<<set _cGR = App.SF.UpgradeCost(550000,$SF.Squad.GiantRobot)>>
+				<<if $cash >= _cGR>>
+					[[Upgrade Giant Robot|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.GiantRobot++, cashX(-(_cGR), "specialForces")]]
+				<<else>>
+					//Cannot afford to upgrade the Giant Robot.//
+				<</if>>
+				//Costs @@.red;<<print cashFormat(_cGR)>>@@//<span style="float:right;"> <<print App.SF.progress($SF.Squad.GiantRobot)>> </span> <br>
+			<<elseif $SF.Squad.GiantRobot === _GRU && $PC.skill.warfare < 75>>
+				//Your warfare skill is not high enough unlock the next upgrade.//<span style="float:right;"> <<print App.SF.progress($SF.Squad.GiantRobot)>> </span> <br>
+			<<else>>
+				//The Giant Robot has been fully upgraded.// <br>
+			<</if>>
+			</div>
+
+			<div style="margin-left:2em">
+			<<if $SF.Squad.MissileSilo < _MSU>>
+				<<set _cMS = App.SF.UpgradeCost(565000,$SF.Squad.MissileSilo)>>
+				<<if $cash >= _cMS>>
+					[[Upgrade Cruise Missile|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.MissileSilo++, cashX(-(_cMS), "specialForces")]]
+				<<else>>
+					//Cannot afford to upgrade Cruise Missile.//
+				<</if>>
+				//Costs @@.red;<<print cashFormat(_cMS)>>@@//<span style="float:right;"> <<print App.SF.progress($SF.Squad.MissileSilo)>> </span> <br>
+			<<elseif $SF.Squad.MissileSilo === _MSU && $PC.skill.warfare < 75>>
+				//Your warfare skill is not high enough unlock the next upgrade.//<span style="float:right;"> <<print App.SF.progress($SF.Squad.MissileSilo)>> </span> <br>
+			<<else>>
+				//The Cruise Missile has been fully upgraded.// <br>
+			<</if>>
+			</div>
+	<</if>> /*Closes Launch Bay.*/
+
+	<<if _T1 && ($terrain == "oceanic" || $terrain == "marine")>>''Naval Yard''<br>
+		<div style="margin-left:2em">
+		<<if $SF.Squad.AircraftCarrier < _ACU>>
+			<<set _cAC = App.SF.UpgradeCost(650000,$SF.Squad.AircraftCarrier)>>
+			<<if $cash >= _cAC>>
+				[[Upgrade Aircraft Carrier|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.AircraftCarrier++, cashX(-(_cAC), "specialForces")]]
+			<<else>>
+				//Cannot afford to upgrade Aircraft Carrier.//
+			<</if>>
+			//Costs @@.red;<<print cashFormat(_cAC)>>@@//<span style="float:right;"> <<print App.SF.progress($SF.Squad.AircraftCarrier)>> </span> <br>
+		<<elseif $SF.Squad.AircraftCarrier === _ACU && $PC.skill.warfare < 75>>
+			//Your warfare skill is not high enough unlock the next upgrade.//<span style="float:right;"> <<print App.SF.progress($SF.Squad.AircraftCarrier)>> </span> <br>
+		<<else>>
+			//The Aircraft Carrier has been fully upgraded.// <br>
+		<</if>>
+		</div>
+
+		<div style="margin-left:2em">
+		<<if $SF.Squad.Sub < _SubU>>
+			<<set _cSub = App.SF.UpgradeCost(700000,$SF.Squad.Sub)>>
+			<<if $cash >= _cSub>>
+				[[Upgrade Submarine|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.Sub++, cashX(-(_cSub), "specialForces")]]
+			<<else>>
+				//Cannot afford to upgrade Submarine//
+			<</if>>
+			//Costs @@.red;<<print cashFormat(_cSub)>>@@//<span style="float:right;"> <<print App.SF.progress($SF.Squad.Sub)>> </span>
+		<<elseif $SF.Squad.Sub === _SubU && $PC.skill.warfare < 75>>
+			//Your warfare skill is not high enough unlock the next upgrade.//<span style="float:right;"> <<print App.SF.progress($SF.Squad.Sub)>> </span>
+		<<else>>
+			//The Submarine has been fully upgraded.// <br>
+		<</if>>
+		</div>
+
+		<div style="margin-left:2em">
+		<<if $SF.Squad.HAT < _HATU>>
+			<<set _cHAT = App.SF.UpgradeCost(665000,$SF.Squad.HAT)>>
+			<<if $cash >= _cHAT>>
+				[[Upgrade Amphibious Transport|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Squad.HAT++, cashX(-(_cHAT), "specialForces")]]
+			<<else>>
+				//Cannot afford to upgrade Amphibious Transport.//
+			<</if>>
+			//Costs @@.red;<<print cashFormat(_cHAT)>>@@//<span style="float:right;"> <<print App.SF.progress($SF.Squad.HAT)>> </span>
+		<<elseif $SF.Squad.HAT === _HATU && $PC.skill.warfare < 75>>
+			//Your warfare skill is not high enough unlock the next upgrade.//<span style="float:right;"> <<print App.SF.progress($SF.Squad.HAT)>> </span> <br>
+		<<else>>
+			//The Amphibious Transport has been fully upgraded.// <br>
+		<</if>>
+		</div>
+	<</if>> /*Closes Naval Yard.*/
+
+<</if>>
+<</if>>
+/* <div style="margin-left:2em"><<if _T1 && $SF.Facility.Toggle > 0 && $SF.Facility.Active < 1>>
+<<set _cSFF = App.SF.UpgradeCost(735000,$SF.Facility.Active)>>
+	<<if $cash >= _cSFF>>
+		[[Build $SF.Lower's support facility|Firebase][$SF.Upgrade = 1, $SF.Colonel.Talk += 1, $SF.Facility.Active++, cashX(-(_cSFF), "specialForces")]]
+	<<else>> //Cannot afford to build $SF.Lower's support facility.// <</if>>
+//Costs @@.red;<<print cashFormat(_cSFF)>>@@//
+<</if>>*/

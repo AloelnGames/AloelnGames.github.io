@@ -1,0 +1,61 @@
+:: FMaternitySwing [nobr]
+
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+
+You call $him over and hook $him into the reinforced silk maternity swing built into your office, then lift $him into the air so that you can toy with $his hyperfecund body. Once you have $him properly situated with $his
+<<if getSlave($AS).boobs >= 20000>>
+	obscenely bloated boobs
+<<elseif Math.floor(getSlave($AS).boobsImplant/getSlave($AS).boobs) >= .60>>
+	augmented balloon boobies
+<<elseif getSlave($AS).boobs >= 3000>>
+	enormous breasts
+<<else>>
+	cute tits
+<</if>>
+and
+<<if getSlave($AS).bellyPreg >= 1000000>>
+	ridiculously enormous, baby packed belly
+<<elseif getSlave($AS).bellyPreg >= 750000>>
+	mountainous, baby-stuffed gut
+<<elseif getSlave($AS).bellyPreg >= 600000>>
+	titanic, baby swollen womb
+<<else>>
+	massive belly
+<</if>>
+hanging above the floor of your office, you turn your attention to molesting $his ripe protuberances. Running your tongue along the distended nub of $his belly button, you kiss your way up the fertile curve of $his belly, making your way to $his tits so that you can suck on $his getSlave($AS).nipples nipples. $He squirms in $his restraints and
+<<if getSlave($AS).devotion > 95>>
+	<<if !canTalk(getSlave($AS))>>
+		begs you to fuck $him already
+	<<else>>
+		groans inchoately, obviously desperate for you to fuck $him
+	<</if>>
+<<elseif (getSlave($AS).trust < -20) && (getSlave($AS).devotion > -10)>>
+	groans with barely restrained lust.
+<<else>>
+	groans in lust and terror.
+<</if>>
+You strap into your own customized version of the device, then elevate your body so that <<if $PC.dick != 0>>your dick<<else>>the device's built-in strap-on<</if>> is at the perfect angle to drive yourself and your
+<<if getSlave($AS).bellyPreg >= 600000>>
+	brood-slave
+<<else>>
+	glorified belly balloon
+<</if>>
+into a string of mutual orgasms with some truly astounding aerial sex.
+<<if canDoVaginal(getSlave($AS))>><<= VCheck.Vaginal()>><<else>><<= VCheck.Anal()>><</if>>
+The sight of $his swollen body wobbling in mid-air as you pound away at $him never gets old,
+<<if getSlave($AS).devotion > 95>>
+	and $he certainly seems to enjoy your ministrations, too.
+<<elseif (getSlave($AS).trust < -20) && (getSlave($AS).devotion > -10)>>
+	and, by the end of your session, $he seems to be enjoying $himself, too.
+<<else>>
+	and the sight of $his ugly tears rolling down $his face to hit the ground far below is one hell of a bonus.
+<</if>>
+Once finished, you release $him from $his restraints and have $him carried away to clean $himself up before returning to $his duties.
+
+<<if passage() != "Slave Interact">>
+	<<set _fv = $slaveIndices[getSlave($AS).ID]>>
+	<<if def _fv>>
+		<<set $slaves[_fv] = getSlave($AS)>>
+	<</if>>
+<</if>>

@@ -1,0 +1,153 @@
+:: Organ Farm [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Manage Penthouse", $showEncyclopedia = 1, $encyclopedia = "The Pharmaceutical Fab.", _PCSkillCheck = Math.min($upgradeMultiplierMedicine, $HackingSkillMultiplier)>>
+
+<h1>The Organ Farm</h1>
+
+<p>
+	<div class="scene-intro">
+		<<if $organFarmUpgrade > 2>>
+			The organ farm is running smoothly. It can rapidly grow tailored organs for implantation in slaves. It can easily produce altered variants should you obtain the data necessary to create them.
+		<<elseif $organFarmUpgrade > 1>>
+			The organ farm is running smoothly. It can quickly grow tailored organs for implantation in slaves, though there will be side-effects. It can easily produce altered variants should you obtain the data necessary to create them.
+		<<elseif ($organFarmUpgrade > 0)>>
+			The organ farm is running smoothly. It can grow tailored organs for implantation in slaves. It can easily produce altered variants should you obtain the data necessary to create them.
+		<</if>>
+	</div>
+
+	<<if ($organFarmUpgrade < 3) && ($rep <= 10000*_PCSkillCheck)>>
+		<div class="note">
+			You lack the reputation to access experimental organ farm parts.
+		</div>
+	<<elseif $dispensary == 0 && $organFarmUpgrade == 2>>
+		<div class="note">
+			An upgraded pharmaceutical fabricator is required by the perfected organ farm.
+		</div>
+	<<elseif $dispensary == 0 && $organFarmUpgrade == 1>>
+		<div class="note">
+			A pharmaceutical fabricator is required to produce the chemicals for the accelerated organ farm.
+		</div>
+	<<elseif $dispensaryUpgrade == 0 && $organFarmUpgrade == 2>>
+		<div class="note">
+			The pharmaceutical fabricator must be upgraded in order to produce the drugs required by the perfected organ farm.
+		</div>
+	<<elseif $organs.length > 0>>
+		<div class="note">
+			The organ farm cannot be upgraded while it is use.
+		</div>
+	<<elseif ($organFarmUpgrade == 2) && ($rep > 10000*_PCSkillCheck)>>
+		<div>
+			[[Upgrade the organ farm to the cutting edge model|Organ Farm][cashX(forceNeg(150000*_PCSkillCheck), "capEx"), $organFarmUpgrade = 3]]
+			<span class="detail">Costs <<print cashFormat(150000*_PCSkillCheck)>></span>
+		</div>
+		<div class="indent detail">
+			Will allow the organ farm to rapidly grow organs without risk to the implantee's health.
+		</div>
+	<<elseif ($organFarmUpgrade == 1) && ($rep > 10000*_PCSkillCheck)>>
+		<div>
+			[[Upgrade the organ farm with an experimental growth accelerator|Organ Farm][cashX(forceNeg(75000*_PCSkillCheck), "capEx"), $organFarmUpgrade = 2]]
+			<span class="detail">Costs <<print cashFormat(75000*_PCSkillCheck)>></span>
+		</div>
+		<div class="indent detail">
+			Will allow the organ farm to quickly grow organs. Implanted organs may cause health issues.
+		</div>
+	<</if>>
+
+	<<if ($youngerOvaries != 1) && ($rep <= 10000*_PCSkillCheck)>>
+		<div class="note">
+			You lack the reputation to access designs for cloning fertile ovaries for menopausal slaves.
+		</div>
+	<<elseif ($youngerOvaries != 1) && ($rep > 10000*_PCSkillCheck)>>
+		<div>
+			[[Purchase designs for cloning fertile ovaries for menopausal slaves|Organ Farm][cashX(forceNeg(30000*_PCSkillCheck), "capEx"), $youngerOvaries = 1]]
+			<span class="detail">Costs <<print cashFormat(30000*_PCSkillCheck)>></span>
+		</div>
+		<div class="indent detail">
+			Will allow the growth of younger, fertile ovaries for menopausal slaves. Restored fertility will only last for a couple years at most.
+		</div>
+	<<elseif ($youngerOvaries > 0)>>
+		<div>
+			The organ farm is capable of growing fertile ovaries for postmenopausal slaves.
+		</div>
+	<</if>>
+
+	<<if $asexualReproduction == 1>>
+		<div>
+			The organ farm is capable of growing modified ovary pairs capable of self-fertilization.
+		</div>
+	<</if>>
+
+	<<if $seePreg != 0 && $seeBestiality == 1 && $experimental.animalOvaries == 1>>
+		<<if $farmyardLabUpgrades.animalOvaries > 0>>
+			<<if $animalOvaries < 1>>
+				<div class="note">
+					You lack the required designs for cloning animal ovaries for slaves.
+				</div>
+			<<else>>
+				<div>
+					The organ farm is capable of growing animal ovaries for slaves.
+				</div>
+			<</if>>
+		<</if>>
+
+		<<if $farmyardLabUpgrades.animalTesticles > 0>>
+			<<if $animalTesticles < 1>>
+				<div class="note">
+					You lack the required designs for cloning animal testicles for slaves.
+				</div>
+			<<else>>
+				<div>
+					The organ farm is capable of growing animal testicles for slaves.
+				</div>
+			<</if>>
+		<</if>>
+
+		<<if $farmyardLabUpgrades.animalMpreg > 0 && $arcologies[0].FSGenderRadicalistResearch == 1>>
+			<<if $animalMpreg < 1>>
+				<div class="note">
+					You lack the required designs for cloning animal anal wombs and ovaries for slaves.
+				</div>
+			<<else>>
+				<div>
+					The organ farm is capable of growing animal anal wombs and ovaries for slaves.
+				</div>
+			<</if>>
+		<</if>>
+	<</if>>
+</p>
+
+<h2>Organ Production</h2>
+
+<p>
+	<<= App.Medicine.OrganFarm.currentlyGrowing()>>
+</p>
+
+<h2>Future Societies Research</h2>
+
+<p>
+	<<if $seePreg != 0>>
+		<div>
+		<<if $arcologies[0].FSGenderRadicalistDecoration == 100>>
+			<<if ($arcologies[0].FSGenderRadicalistResearch == 0)>>
+				<<if ($rep >= 10000*_PCSkillCheck)>>
+					[[Fund research into developing male pregnancy methods|Organ Farm][cashX(forceNeg(50000*_PCSkillCheck), "capEx"),$arcologies[0].FSGenderRadicalistResearch = 1]]
+					<span class="detail">
+						Costs <<print cashFormat(50000*_PCSkillCheck)>>.
+						<div class="indent">Will allow cloning and production of anal uteri and ovaries.</div>
+					</span>
+				<<else>>
+					<span class="note">You lack the reputation to access the research necessary to develop anal uteri and ovaries.</span>
+					<br>
+				<</if>>
+			<<else>>
+				The organ farm has been upgraded with schematics for modified uteri and ovaries.
+				<br>
+			<</if>>
+		<<elseif $arcologies[0].FSGenderRadicalistResearch == 1>>
+			<span class="note">The organ farm has been upgraded with schematics for modified uteri and ovaries.</span>
+		<<else>>
+			<span class="note">Gender Radicalist focused research unavailable.</span>
+		<</if>>
+		</div>
+	<</if>>
+</p>

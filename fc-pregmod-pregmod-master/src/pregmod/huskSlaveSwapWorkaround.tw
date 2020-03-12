@@ -1,0 +1,30 @@
+:: husk Slave Swap Workaround [nobr]
+
+<<set $nextButton = "Abort Operation", $nextLink = "Scheduled Event", $returnTo = "Scheduled Event">>
+
+"This operation is neither simple nor is it perfected. There are extreme health risks involved and no guarantee of success. Strap a slave into your remote surgery to consent to the operation. Indentured servants<<if ($incubator > 0) || ($nurseryBabies)>> and slaves with reserved children<</if>> are not eligible."
+<br>
+//Select the slave whose mind will be transferred into the waiting husk. Amputated slaves must not be wearing prosthetics. This operation will cost <<print cashFormat(10000)>>.//
+
+<br><br>
+__Select an eligible slave:__
+<<for _i = 0; _i < $slaves.length; _i++>>
+	<<capture _i>>
+		<<if isSlaveAvailable($slaves[_i])>>
+			<<if $slaves[_i].fuckdoll == 0>>
+				<<if !hasAnyProstheticLimbs($slaves[_i])>>
+					<<if $slaves[_i].indenture == -1>>
+						<<if $slaves[_i].breedingMark == 0 || $propOutcome == 0 || $eugenicsFullControl == 1 || $arcologies[0].FSRestart == "unset">>
+							<<if WombReserveCount($slaves[_i]) == 0>>
+								<<if $slaves[_i].ID != $activeSlave.ID>>
+									<<set _name = SlaveFullName($slaves[_i])>>
+									<br>[[_name|Husk Slave Swap][$swappingSlave = $slaves[_i], cashX(-10000, "slaveSurgery", $slaves[_i])]]
+								<</if>>
+							<</if>>
+						<</if>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</capture>>
+<</for>>

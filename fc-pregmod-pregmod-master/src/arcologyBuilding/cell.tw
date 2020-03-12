@@ -1,0 +1,5 @@
+:: Cell [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Main">>
+
+<<print App.UI.DOM.includeDOM(V.building.cellByPath(V.cellPath).cellPassage(V.building))>>

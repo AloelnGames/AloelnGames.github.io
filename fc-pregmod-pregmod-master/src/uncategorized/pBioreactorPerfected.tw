@@ -1,0 +1,243 @@
+:: P bioreactor perfected [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Random Nonindividual Event", $bioreactorsAnnounced = 1>>
+
+<<set $activeSlave = $slaves.find(function(s) { return s.assignment == "work in the dairy" && s.boobs > 48000 && (s.balls == 0 || s.balls >= 10) && s.fetish == "mindbroken"; })>>
+
+<<if (ndef $activeSlave)>>
+	<<goto "Random Nonindividual Event">>
+<<else>>
+
+<<set _bioreactorsXX = 0>>
+<<set _bioreactorsXY = 0>>
+<<set _bioreactorsHerm = 0>>
+<<set _bioreactorsBarren = 0>>
+<<if ($activeSlave.ovaries == 1)>>
+	<<if ($activeSlave.balls == 0)>>
+		<<set _bioreactorsXX = 1>>
+	<<else>>
+		<<set _bioreactorsHerm = 1>>
+	<</if>>
+<<else>>
+	<<if ($activeSlave.balls == 0)>>
+		<<set _bioreactorsBarren = 1>>
+	<<else>>
+		<<set _bioreactorsXY = 1>>
+	<</if>>
+<</if>>
+
+<<setLocalPronouns $activeSlave>>
+<<setAssistantPronouns>>
+
+When you need peace and quiet to work through a difficult problem, you sometimes take a few minutes to pace through $dairyName. The massive, gently swaying breasts are always an encouraging sight, and the faint, rhythmic sounds of machine milking, machine feeding, and machine sodomy have a stimulating effect on one's thought processes. When you reach the end of the row of machines for the first time today, you turn to walk back again, and then notice that $assistant.name's
+<<if $assistant.personality == 0>>
+	symbol is visible on a screen across the last cow in the row from you, glowing gently to get your attention.
+<<else>>
+	<<switch $assistant.appearance>>
+	<<case "monstergirl">>
+		monster<<= _girlA>> avatar is visible on a screen across the last cow in the row from you, waving cheerfully for your attention with one of _hisA hands and a couple of _hisA hair-tentacles.
+	<<case "shemale">>
+		shemale avatar is visible on a screen across the last cow in the row from you, waving for your attention. (_HisA bouncy waving makes _hisA ever-erect cock wave too.)
+	<<case "amazon">>
+		amazon avatar is visible on a screen across the last cow in the row from you, jumping up and down for your attention.
+	<<case "businesswoman">>
+		business<<= _womanA>> avatar is visible on a screen across the last cow in the row from you, waving politely for your attention and pointing to a tablet in _hisA hand.
+	<<case "fairy">>
+		fairy avatar is visible on a screen across the last cow in the row from you, waving energetically and pointing to a tablet that _heA's sitting on.
+	<<case "pregnant fairy">>
+		pregnant fairy avatar is visible on a screen across the last cow in the row from you, waving energetically and pointing to a tablet that _heA's sitting on.
+	<<case "goddess">>
+		goddess avatar is visible on a screen across the last cow in the row from you, waving demurely for your attention and holding up one of _hisA dribbling breasts.
+	<<case "hypergoddess">>
+		goddess avatar is visible on a screen across the last cow in the row from you; _heA is aggressively milking _himselfA trying to get your attention.
+	<<case "loli">>
+		child avatar is visible on a screen across the last cow in the row from you, jumping up and down for your attention.
+	<<case "preggololi">>
+		child avatar is visible on a screen across the last cow in the row from you, waving _hisA arms over _hisA head.
+	<<case "angel">>
+		angel avatar is visible on a screen across the last cow in the row from you, waving _hisA arms and flapping _hisA wings.
+	<<case "cherub">>
+		cherub avatar is visible on a screen across the last cow in the row from you, fluttering back and forth while waving _hisA hands.
+	<<case "incubus">>
+		incubus avatar is visible on a screen across the last cow in the row from you, idly rubbing _hisA dick with one hand and beckoning you with the other.
+	<<case "succubus">>
+		succubus avatar is visible on a screen across the last cow in the row from you; _heA is happily mooning you.
+	<<case "imp">>
+		impish avatar is visible on a screen across the last cow in the row from you, flying back and forth while waving _hisA hands.
+	<<case "witch">>
+		witch avatar is visible on a screen across the last cow in the row from you, hopping up and down while waving _hisA arms over _hisA head.
+	<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+		avatar is visible on a screen across the last cow in the row from you; _heA has produced countless flashing tubercles across _hisA body.
+	<<case "schoolgirl">>
+		school<<= _girlA>> avatar is visible on a screen across the last cow in the row from you, waving cutely for your attention and pointing to a tablet in _hisA hand.
+	<<default>>
+		symbol is visible on a screen across the last cow in the row from you, spinning and glowing gently to get your attention.
+	<</switch>>
+<</if>>
+<br><br>
+<<if $assistant.personality == 0>>
+	<<if $PC.title == 1>>"Sir,"<<else>>"Madam,"<</if>> _heA says, "I have a matter for your attention, concerning this slave."
+<<else>>
+	<<if $PC.title == 1>>"Sir,"<<else>>"Ma'am,"<</if>> _heA says, "I'd like to ask you something about this slave."
+<</if>>
+You stop and consider the cow, from $his titanic breasts to $his <<if ($activeSlave.balls >= 10) && ($activeSlave.scrotum > 0)>>swollen balls<<elseif $activeSlave.vagina > -1>>slavering cunt<<else>>distended stomach<</if>> to $his dildo-filled anus.
+<<if $assistant.personality == 0>>
+	"This slave is permanently dependent on $his milking machine," it continues. "$He cannot be removed without uneconomical expenditures, and is unlikely to be useful elsewhere.
+	Additionally, there is nothing more that can be done to make $his breasts any bigger<<if $activeSlave.balls >= 10>> or $his testicles any more productive<<elseif $activeSlave.ovaries == 1>> or $his womb any more productive<</if>>. $His development is essentially final, and that status can be made official. $He could be redesignated as equipment. Other than $his designation, this would make little difference: the machine would be slightly less cautious with $his drugs, future intubations, and such. $He would be removed from the slave lists."
+<<else>>
+	"$He's never leaving here, not without surgery. And even then, $he's forgotten almost everything, and $he won't be getting it back."
+	<<switch $assistant.appearance>>
+	<<case "monstergirl">>
+		The monster<<= _girlA>> positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently petting the slave's shoulders. _HeA looks meditative.
+	<<case "shemale">>
+		The shemale positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently petting the slave's shoulders. _HeA looks uncharacteristically meditative.
+	<<case "amazon">>
+		The amazon positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently petting the slave's shoulders. _HeA looks meditative.
+	<<case "businesswoman">>
+		The business<<= _womanA>> positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently petting the slave's shoulders. _HeA looks meditative.
+	<<case "fairy">>
+		The fairy positions _himselfA on the screen to create an optical illusion that makes it look like _heA's standing on $his shoulder and hugging $his cheek.
+	<<case "pregnant fairy">>
+		The pregnant fairy positions _himselfA on the screen to create an optical illusion that makes it look like _heA's standing on $his shoulder and hugging $his cheek.
+	<<case "goddess">>
+		The goddess positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently caressing the slave's shoulders. _HeA looks meditative.
+	<<case "hypergoddess">>
+		The goddess positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently caressing the slave's shoulders. _HeA looks meditative.
+	<<case "loli">>
+		The little _girlA positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently petting the slave's shoulders. _HeA looks meditative.
+	<<case "preggololi">>
+		The little _girlA positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently petting the slave's shoulders. _HeA looks meditative.
+	<<case "angel">>
+		The angel positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently caressing the slave. _HeA looks meditative.
+	<<case "cherub">>
+		The cherub positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently petting the slave's shoulders while hovering over them. _HeA looks meditative.
+	<<case "incubus">>
+		The incubus positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently groping the slave's rear. _HeA looks uncharacteristically meditative.
+	<<case "succubus">>
+		The succubus positions _himselfA on the screen to create an optical illusion that makes it look like _heA's resting _hisA breasts on the slave's head. _HeA looks uncharacteristically meditative.
+	<<case "imp">>
+		The imp positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently rubbing the slave's shoulders while hovering over them. _HeA looks uncharacteristically meditative.
+	<<case "witch">>
+		The witch positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently caressing the slave's shoulders. _HeA looks meditative.
+	<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+		It positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently caressing the slave's breasts and groin with fleshy tentacles. _HeA looks uncharacteristically meditative.
+	<<case "schoolgirl">>
+		The school<<= _girlA>> positions _himselfA on the screen to create an optical illusion that makes it look like _heA's gently petting the slave's shoulders. _HeA looks uncharacteristically meditative.
+	<<default>>
+		The symbol on the screen dissolves down to create a gentle backlight behind the slave.
+	<</switch>>
+	"$He's beautiful, isn't $he? Perfect. There's nothing more that can be done, to make $his udders any bigger<<if $activeSlave.balls >= 10>> or $his balls any more productive<<elseif $activeSlave.ovaries == 1>> or $his womb any more productive<</if>>. $He's complete, and $he's part of this machine now, and that's all $he'll ever be. I can make that status official, <<if $PC.title == 1>>Sir<<else>>Ma'am<</if>>. I'd redesignate $him as equipment. It wouldn't change much, other than a designation. I'd just be a little less cautious with $his drugs, future intubations, things like that. But for slave purposes, $he'd be gone. Just a part of $dairyName, forever. Or, until $he wears out in <<if $retirementAge-$activeSlave.physicalAge <= 3>>a few years<<elseif $retirementAge-$activeSlave.physicalAge <= 10>>a decade or so<<elseif $retirementAge-$activeSlave.physicalAge >= 20>>a couple of decades<</if>>."
+<</if>>
+
+<br><br>
+
+<span id="result">
+<<link "Do it, and do it to all maximized dairy slaves">>
+	<<replace "#result">>
+		Your assistant pauses, and then says, "Redesignation complete, <<= properTitle()>>. This milking machine has been equipped with biological components. This combination is projected to produce approximately <<if $activeSlave.balls > 0>><<print 1000*Math.trunc((3*52*($retirementAge-$activeSlave.physicalAge))/1000)>> liters of cum,<</if>>
+		<<if $activeSlave.ovaries == 1>><<print 100*Math.trunc((52*($retirementAge-$activeSlave.physicalAge))/100)>> liters of vaginal secretions, <<print 5*($retirementAge-$activeSlave.physicalAge)>> slaves,<</if>>
+		and <<print 1000*Math.trunc((300*52*($retirementAge-$activeSlave.physicalAge))/1000)>> liters of milk over a <<print $retirementAge-$activeSlave.physicalAge>> year period before its biological components must be replaced."
+		<<if $assistant.personality > 0>>
+			<<switch $assistant.appearance>>
+			<<case "monstergirl">>
+				_HisA avatar watches the new equipment with almost motherly affection, _hisA tentacle hair writhing obscurely.
+			<<case "shemale">>
+				_HisA avatar sits down and produces a glass of milk. _HeA drains it in one long chug, and then begins to jerk off.
+			<<case "amazon">>
+				_HisA avatar sits down with a clatter of bone ornaments, produces a skin of milk, and takes a long pull.
+			<<case "businesswoman">>
+				_HisA avatar stands on the screen, watching the new equipment with an air of satisfaction.
+			<<case "fairy">>
+				_HisA avatar hovers around, humming a tune while checking the new equipment.
+			<<case "pregnant fairy">>
+				_HisA avatar hovers around, humming a soft tune while checking the new equipment.
+			<<case "goddess">>
+				_HisA avatar sits down, kneading _hisA milky tits in empathy, a hint of simulated jealousy in the way _heA watches the new equipment.
+			<<case "hypergoddess">>
+				_HisA avatar sits down, kneading _hisA milky tits in empathy, a hint of simulated jealousy in the way _heA watches the new equipment.
+			<<case "loli">>
+				_HisA avatar sits down, rubbing _hisA flat chest sadly as _heA watches the new equipment.
+			<<case "preggololi">>
+				_HisA avatar sits down, pinching _hisA milky nipples in empathy, a hint of simulated jealousy in the way _heA watches the new equipment.
+			<<case "angel">>
+				_HisA avatar blushes as _heA watches the new equipment. "$He'll feed so many hungry mouths..."
+			<<case "cherub">>
+				_HisA avatar blushes at the sight of the new equipment. _HeA quickly buries _hisA face in _hisA palms at the perversion.
+			<<case "incubus">>
+				_HisA avatar starts jerking off to the sight of the new bioreactor. _HeA throws you a smirk, "But you like MY milk best, don't you?"
+			<<case "succubus">>
+				_HisA avatar rubs _hisA breasts, steadily swelling them until a gush of milk escapes _hisA nipples. "Mine will always be your favorite."
+			<<case "imp">>
+				_HisA avatar licks _hisA lips at the new equipment, longing to taste it.
+			<<case "witch">>
+				_HisA avatar sits down and brings _hisA hands to _hisA breasts wondering if _heA could make them big and milky for you too.
+			<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+				_HisA avatar's breasts steadily begin swelling, _hisA belly following not long after. Once it is similar in size to the new equipment, a pair of tentacles extend from _hisA back and clamp onto _hisA nipples, eagerly suckling milk from _hisA unnatural udders.
+			<<case "schoolgirl">>
+				_HisA avatar sits down, watching the new equipment with an air of embarrassment. The school<<= _girlA>> blushes, and begins to masturbate.
+			<<default>>
+				_HisA avatar symbol returns to gentle spinning, doing so in synchrony with the undulations of the new equipment's breasts.
+			<</switch>>
+		<</if>>
+		"Future redesignations can always be disabled from $dairyName interface."
+		<<set $bioreactorsXX += _bioreactorsXX>>
+		<<set $bioreactorsXY += _bioreactorsXY>>
+		<<set $bioreactorsHerm += _bioreactorsHerm>>
+		<<set $bioreactorsBarren += _bioreactorsBarren>>
+		<<= removeActiveSlave() >>
+		<<set $createBioreactors = 1>>
+	<</replace>>
+<</link>>
+<br><<link "No, leave $him as $he is">>
+	<<replace "#result">>
+		"Yes, <<if $PC.title == 1>>sir<<else>>ma'am<</if>>," your assistant confirms. "This option will remain accessible from $dairyName's control interface, if you reconsider."
+	<</replace>>
+<</link>>
+</span>
+
+<h3>$His records...</h3>
+<div class="note">
+	<p class="indent">
+		/* Copied and modified from dairyReport, should be kept in sync manually to be*/
+
+		/*Income section */
+		<<set _cashX = 0>>
+
+		/* Cum */
+		<<set _seed = (100*_bioreactorsXY) + (100*_bioreactorsHerm)>>
+		<<if ($arcologies[0].FSPastoralistLaw == 1)>>
+			<<set _cashX += _seed*random(40,50)>>
+		<<elseif ($arcologies[0].FSPastoralist != "unset")>>
+			<<set _cashX += _seed*(random(25,35)+Math.trunc($arcologies[0].FSPastoralist/10))>>
+		<<else>>
+			<<set _cashX += _seed*random(25,35)>>
+		<</if>>
+
+		/* FemCum */
+		<<set _seed = (2*_bioreactorsXX) + (2*_bioreactorsHerm)>>
+		<<if ($arcologies[0].FSPastoralistLaw == 1)>>
+			<<set _cashX += _seed*random(40,50)>>
+		<<elseif ($arcologies[0].FSPastoralist != "unset")>>
+			<<set _cashX += _seed*(random(25,35)+Math.trunc($arcologies[0].FSPastoralist/10))>>
+		<<else>>
+			<<set _cashX += _seed*random(25,35)>>
+		<</if>>
+
+		/* Milk */
+		<<set _seed = (800*_bioreactorsXX) + (700*_bioreactorsBarren) + (600*_bioreactorsXY) + (600*_bioreactorsHerm)>>
+		<<if ($arcologies[0].FSPastoralistLaw == 1)>>
+			<<set _cashX += _seed*(13+Math.trunc($arcologies[0].FSPastoralist/30))>>
+		<<elseif ($arcologies[0].FSPastoralist != "unset")>>
+			<<set _cashX += _seed*(8+Math.trunc($arcologies[0].FSPastoralist/30))>>
+		<<else>>
+			<<set _cashX += _seed*9>>
+		<</if>>
+
+		As a bioreactor, she might gross <<print cashFormatColor(_cashX)>> and cost just <<print cashFormatColor(-100)>>, bringing in <<print cashFormatColor(_cashX - 100)>>
+	</p>
+	<div class="indent">
+		$His current task is to <<print $activeSlave.assignment>><<if $assignmentRecords[$slaves[$i].ID]>>, and before that to <<print $assignmentRecords[$slaves[$i].ID]>><</if>>.
+	</div>
+	<<SlaveExpenses $activeSlave>>
+</div>
+<</if>> /* closes validity check */

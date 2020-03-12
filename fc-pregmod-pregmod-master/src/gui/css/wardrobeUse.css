@@ -1,0 +1,24 @@
+/* Stylesheet for WardrobeUse.tw */
+
+#passage-wardrobe-use .optionMacro {
+	display: inline;
+}
+
+#passage-wardrobe-use .optionDescription {
+	width: unset;
+	text-align: left;
+}
+
+#passage-wardrobe-use .optionValue {
+	display: flex;
+}
+
+#passage-wardrobe-use .optionMacroOption {
+	flex-grow: 1;
+}
+
+/* Last line shouldn't grow */
+#passage-wardrobe-use .optionValue::after {
+	flex-grow: 1000000000;
+	content: '';
+}

@@ -1,0 +1,1144 @@
+:: Manage Corporation [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Main", $showEncyclopedia = 1, $encyclopedia = "The Corporation">>
+
+<<set _sepObj = { 'need': false, text: '|' }>>
+
+<<if !App.Corporate.founded >>
+<h1>Incorporation</h1>
+<br>//Please consider that the market price of slaves has quite the impact on the profitability of your corporation.//
+<br>//Focus on acquisition when prices are high, exploitation if prices are low. Slave improvement is a safe choice either way.//
+<br>//Also note the option for a 8 - 7 share split instead of the vanilla 2 - 1, this makes the initial investment cheaper but leaves you with relatively less shares.//
+<br><br>
+
+<<set _divisionsByFoundingCost = App.Corporate.divisionList.concat().sort( function(a,b) { return a.founding.startingPrice - b.founding.startingPrice; })>>
+<<set _optionsText = ["to found a slave corporation", "for most options", "for many options", "for some options", "for the final option"]>>
+
+ /*Picking a starting division*/
+<<if $vanillaShareSplit == 1>>
+	<<set _corpPerShares = 2000>>
+	<<set _corpPubShares = 1000>>
+<<else>>
+	<<set _corpPerShares = 8000>>
+	<<set _corpPubShares = 7000>>
+<</if>>
+
+<<for _index, _div range _divisionsByFoundingCost>>
+	<<set _divCost = App.Corporate.foundingCostToPlayer(_div, _corpPerShares, _corpPubShares)>>
+	<<if $cash >= _divCost>>
+		<<if _index == 0>>
+			You can lay the groundwork for a slave corporation and choose to start out with:
+		<</if>>
+		<div>
+		<<= "[[" + _div.name + "|Manage Corporation]"
+		 +  "[App.Corporate.create( '"+ _div.id + "'"
+								+", " + _corpPerShares
+								+", " + _corpPubShares
+								+")]]">> (<<=cashFormat(_divCost)>>): Focuses on <<= _div.focusDescription >>.
+		</div>
+	<<else>>
+		<br>You lack the funds <<= _optionsText[App.Utils.mapIndexBetweenLists(_index, _divisionsByFoundingCost, _optionsText)] >>. You need at least @@.yellowgreen;<<print cashFormat(_divCost)>>@@
+		<<if _index != 0>>
+			<<if _index < _divisionsByFoundingCost.length - 1>>
+				for the next option and at most @@.yellowgreen;<<print cashFormat(App.Corporate.foundingCostToPlayer(_divisionsByFoundingCost[_divisionsByFoundingCost.length - 1], _corpPerShares, _corpPubShares))>>@@.
+			<<else>>
+				for it.
+			<</if>>
+		<</if>>
+		<<break>>
+	<</if>>
+<</for>>
+
+<<if $vanillaShareSplit == 1>>
+	<br>[[8-7 Share Split|Manage Corporation][$vanillaShareSplit = 0]]
+<<else>>
+	<br>[[2-1 Share Split|Manage Corporation][$vanillaShareSplit = 1]]
+<</if>>
+
+<<else>> /*When the corporation exists*/
+
+<h1>Corporation Overview</h1>
+<<if App.Corporate.foundedDate>>
+<div class="founding">Founded on <<= asDateString(App.Corporate.foundedDate)>></div>
+<</if>>
+<<set _ledger = App.Corporate.ledger.old>>/*You can't pass the object directly into the widget. */
+<<set _lastWeek = $week - 1>>
+<<CorporateLedger _ledger _lastWeek>>
+
+<h1>Division Management</h1>
+<<for _div range App.Corporate.divisionList.filter(x => x.founded)>>
+	<h2><<= _div.name>> Division</h2>
+	<<if _div.foundedDate != 0>>
+	<div class="founding">Founded on <<= asDateString(_div.foundedDate)>></div>
+	<</if>>
+	This division focuses on <<= _div.focusDescription >>.
+	<br><<= _div.messageSlaveCount() >>
+
+	<<set _divMaint = _div.getDisplayMaintenanceCost()>>
+	<br>It costs @@.red;<<= cashFormat(Math.trunc(_divMaint.cost))>>@@ to run. On average that is @@.red;<<= cashFormat(Math.trunc(_divMaint.perUnit)) >>@@ per slave.
+	<br><<= _div.messageSlaveOutput() >>
+	<<set _divSentanceStart = ["Currently the division", "It also"]>>
+	<h3>Direct Control</h3>
+	<<if _div.fromMarket>>
+		<div>
+		<<= _divSentanceStart.shift() >> is <<= _div.slaveAction.present >> @@.green;<<= numberWithPlural(_div.activeSlaves, "slave") >>@@.
+		<<if _div.activeSlaves < _div.developmentCount>>
+			<<set _fillSlaveCount  = _div.availableRoom>>
+			<br>There is room to <<= _div.slaveAction.future >> <<= numberWithPluralOne(_fillSlaveCount, "more slave")>>.
+			<<set _buySlaveArray = [
+				{ 'name': 'Buy Slave', 'count':1 },
+				{ 'name': 'Buy x10'  , 'count':10}
+			]>>
+			<<if !_buySlaveArray.some(function(x) { return x.count == _fillSlaveCount })>>
+				<<run _buySlaveArray.push({ 'name': 'Fill'  , 'count':_fillSlaveCount})>>
+			<</if>>
+			<<set _singleSlaveCost = App.Corporate.slaveMarketPurchaseValue(_div, 1)>>
+			<<if $corp.Cash > _singleSlaveCost>>
+				<div>
+				The corporation can purchase slaves directly from the market for about <<=cashFormatColor(_singleSlaveCost)>>
+				</div>
+				<div>
+				<<set _sepObj.need = false>>
+				<<for  _slaveNum range _buySlaveArray.filter(num => _div.availableRoom > num.count)>>
+					<<set _slaveSetCost = App.Corporate.slaveMarketPurchaseValue(_div, _slaveNum.count)>>
+					<<if $corp.Cash < _slaveSetCost>>
+						<<continue>>
+					<</if>>
+					<<= Seperator(_sepObj) >>
+					<<= "[[" + _slaveNum.name + "|Manage Corporation]"
+					  + "[App.Corporate.buySlaves('"+_div.id+"', "+_slaveNum.count+")]"
+					  + "]">>
+				<</for>>
+				</div>
+			<<else>>
+				<div>//The corporation cannot afford to purchase any slaves from the market.// It requires about @@.yellowgreen;<<= cashFormat(_singleSlaveCost)>>@@ to buy a <<= asSingular(_div.slaveAction.market)>>.</div>
+			<</if>>
+		<<else>>
+		<br>There is //no room// to <<= _div.slaveAction.future>> more slaves.
+		<</if>>
+		</div>
+	<</if>>
+	<<if _div.toMarket>>
+		<<set _finishedSlaveNoun = _div.nounFinishedSlave>>
+		<<if _div.heldSlaves > 0>>
+			<div>
+			<<= _divSentanceStart.shift() >> holds @@.green;<<= numberWithPlural(_div.heldSlaves, _finishedSlaveNoun) >>@@.
+			<<for _nextDiv range _div.relatedDivisions
+									 .to
+									 .filter(div => div.availableRoom > 0
+												 && !App.Corporate.ownsIntermediaryDivision(_div, div))>>
+				<div>
+				The <<= _nextDiv.name >> Division can accept up to @@.green;<<= numberWithPlural(_nextDiv.availableRoom, "slave") >>@@.
+
+				<<set _sendSlaveArray = [
+					{'name': 'Send Slave', 'count':1  },
+					{'name': 'Send x10'   , 'count':10 }
+				]>>
+				<<if _div.heldSlaves >= _nextDiv.availableRoom>>
+					<<run _sendSlaveArray.push({'name':`Fill  ${_nextDiv.name} Division`, 'count':_nextDiv.availableRoom})>>
+				<<else>>
+					<<run _sendSlaveArray.push({'name':'Send All', 'count':_div.heldSlaves})>>
+				<</if>>
+				<<set _sepObj.need = false>>
+				<<for _index, _slaveNum range _sendSlaveArray.filter(slaveNum => slaveNum.count <= _nextDiv.availableRoom && slaveNum.count <= _div.heldSlaves)>>
+					<<= Seperator(_sepObj)>>
+					<<= "[[" + _slaveNum.name + "|Manage Corporation]"
+					  + "[App.Corporate.transferSlaves('"+_div.id+"', '"+_nextDiv.id+"', "+_slaveNum.count+")"
+					  + "]]">>
+				<</for>>
+				</div>
+			<</for>>
+			</div>
+
+			<div>The corporation can sell these slaves to the market.
+
+			<<set _sellSlaveArray = [
+				{'name':'Sell Slave', 'count':1   },
+				{'name':'Sell x10'  , 'count':10  },
+				{'name':'Sell x100' , 'count':100 },
+				{'name':'Sell All'  , 'count':_div.heldSlaves }
+			]>>
+
+			<<set _sepObj.need = false>>
+			<<for _index, _slaveNum range _sellSlaveArray.filter(slaveNum => _div.heldSlaves >= slaveNum.count)>>
+				<<= Seperator(_sepObj)>>
+				<<= "[[" + _slaveNum.name + "|Manage Corporation]"
+				  + "[App.Corporate.sellSlaves('"+_div.id+"',"+_slaveNum.count+")]"
+				  + "]">>
+			<</for>>
+			</div>
+		<<else>>
+			<div>The division is not holding any <<= asPlural(_finishedSlaveNoun)>>.</div>
+		<</if>>
+	<</if>>
+
+	/* Expanding the division*/
+	<<set _depExpandCost = _div.sizeCost * 1000>>
+	<div>Expanding the division costs <span class="red"><<print cashFormat(_depExpandCost)>>.</span> Downsizing recoups 80% of the investment; slaves will be sold at the going rate.</div>
+	<div>
+	<<set _buyDevArray = [
+				{ 'name': 'Expand Division' , 'count':1},
+				{ 'name': 'Expand x10', 'count':10}
+			]>>
+	<<set _sepObj.need = false>>
+	<<for _buySet range _buyDevArray.filter(buySet => App.Corporate.cash >= buySet.count * _depExpandCost)>>
+		<<= Seperator(_sepObj) >>
+		<<= "[["+_buySet.name+"|Manage Corporation]"
+		  + "[App.Corporate.buyDevelopment('" + _div.id + "', " + _buySet.count + ")]"
+		  + "]">>
+	<</for>>
+
+	/* Downsize the division*/
+	<<set _depDownsizeCost = _depExpandCost * 0.8>>
+	<<set _sellDevArray = [
+				{ 'name': 'Downsize Division', 'count':1 },
+				{ 'name': 'Downsize x10'	 , 'count':10}
+			]>>
+	<<for _sellSet range _sellDevArray.filter(divNum => _div.developmentCount > divNum.count)>>
+		<<= Seperator(_sepObj) >>
+		<<= "[["+_sellSet.name+"|Manage Corporation]"
+		  + "[App.Corporate.sellDevelopment('"+_div.id+"', "+_sellSet.count+")]"
+		  + "]">>
+	<</for>>
+	</div>
+	<h3>Rules</h3>
+	<<for _nextDiv range _div.relatedDivisions.to.filter(nextDiv => nextDiv.founded && !App.Corporate.ownsIntermediaryDivision(_div, nextDiv))>>
+		/* TODO: Originally this had a bit of flavor per nextDep. ie, Surgery said "to undergo surgery"*/
+		<div>
+		<<if _div.getAutoSendToDivision(_nextDiv)>>
+			Auto send slaves to <<= _nextDiv.name >> Division <<= "[[Stop Auto Send|Manage Corporation][App.Corporate.setAutoSendToDivision('"+_div.id+"', '"+_nextDiv.id+"', false)]]">>
+		<<else>>
+			Do not send slaves to <<= _nextDiv.name >> Division <<= "[[Auto Send|Manage Corporation][App.Corporate.setAutoSendToDivision('"+_div.id+"', '"+_nextDiv.id+"', true)]]">>
+		<</if>>
+		</div>
+	<</for>>
+	<<if _div.toMarket>>
+		<div>
+		<<if _div.getAutoSendToMarket()>>
+			Auto sell slaves to the market <<= "[[Stop Auto Sell|Manage Corporation][App.Corporate.setAutoSendToMarket('"+_div.id+"', false)]]" >>
+		<<else>>
+			Do not sell slaves to the market <<= "[[Auto Sell|Manage Corporation][App.Corporate.setAutoSendToMarket('"+_div.id+"', true)]]" >>
+		<</if>>
+		</div>
+	<</if>>
+	<<if _div.fromMarket>>
+		<div>
+		<<if _div.getAutoBuyFromMarket()>>
+			Auto buy slaves from the market <<= "[[Stop Auto Buy|Manage Corporation][App.Corporate.setAutoBuyFromMarket('"+ _div.id +"', false)]]" >>
+		<<else>>
+			Do not buy slaves from the market <<= "[[Auto Buy|Manage Corporation][App.Corporate.setAutoBuyFromMarket('"+ _div.id +"', true)]]" >>
+		<</if>>
+		</div>
+	<</if>>
+	<<if App.Corporate.numDivisions > 1>> /* Cannot dissolve the last division */
+		<div>Dissolve the division @@.orange;//Think before you click//@@ /* TODO: Add a confirmation button. Probably use replace?*/
+		<<= "[[Dissolve|Manage Corporation]"
+		  + "[App.Corporate.divisions['" + _div.id + "'].dissolve()]"
+		  + "]">>
+		</div>
+	<</if>>
+<</for>>
+
+
+<<if App.Corporate.canExpand>> /*is the corporation large enough to expand into another division?*/
+<h1>Found New Division</h1>
+<div>The corporation can expand by founding a new division related to its current <<= onlyPlural(App.Corporate.divisionList.filter(div => div.founded).length, "division") >>.</div>
+	<<for _div range App.Corporate.divisionList.filter(x => !x.founded && x.relatedDivisions.anyFounded)>>
+		<<set _depCost = _div.foundingCost * 1000>>
+		<div>
+		<<if App.Corporate.cash >= _depCost>>
+			<<= "[[Add " + _div.name + " Division|Manage Corporation]"
+			  + "[App.Corporate.divisions['"+_div.id+"'].create(App.Corporate)]]">>
+			(@@.yellowgreen;<<print cashFormat(_depCost)>>@@): A division focusing on <<= _div.focusDescription >>.
+		<<else>>
+			<<=  _div.name >>
+			(@@.red;<<print cashFormat(_depCost)>>@@):
+			The corporation cannot afford to start a division focusing on <<= _div.focusDescription >>.
+		<</if>>
+		</div>
+	<</for>>
+<</if>>
+<h1>Financials</h1>
+<h2>Dividend</h2>
+<div>
+
+<<set _dividends = App.Corporate.dividendOptions>>
+<<set _index = _dividends.findIndex(element => App.Corporate.dividendRatio >= element ) >>
+<<set _dividend = _dividends[_index] >>
+<<if _index >= 0>>
+	<<set _nextIndex = _index + 1>>
+	<<set App.Corporate.dividendRatio = _dividend>>/* Normalize */
+	The corporation is currently reserving <<= Math.trunc(_dividend * 100)>>% of its profit to be paid out as dividends.
+	<<set _sepObj.need = false>>
+	<<if _index > 0>>
+		<<= Seperator(_sepObj)>>
+		<<= "[[Increase Ratio|Manage Corporation][App.Corporate.dividendRatio = " + _dividends[_index - 1] + "]]">>
+	<</if>>
+	<<if _nextIndex != _dividends.length>>
+		<<= Seperator(_sepObj)>>
+		<<= "[[Reduce Ratio|Manage Corporation][App.Corporate.dividendRatio = " + _dividends[_nextIndex] + "]]">>
+	<<else>>
+		<<= Seperator(_sepObj)>>
+		<<= "[[None|Manage Corporation][App.Corporate.dividendRatio = 0]]">>
+	<</if>>
+<<else>>
+	The corporation is currently not reserving a portion of its profit to be paid out as dividends.
+	<<= "[[Increase Ratio|Manage Corporation][App.Corporate.dividendRatio = "+_dividends[_dividends.length - 1]+"]]" >>
+<</if>>
+</div>
+
+<div>
+<<if App.Corporate.payoutCash>>
+	The corporation will payout unused cash reserves over @@.yellowgreen;<<print cashFormat(App.Corporate.payoutAfterCash)>>@@ as dividends [[Stop|Manage Corporation][App.Corporate.payoutCash = false]]
+<<else>>
+	You can direct the corporation to reserve cash over @@.yellowgreen;<<print cashFormat(App.Corporate.payoutAfterCash)>>@@ to be paid out as dividends as well. [[Payout Cash Reserves|Manage Corporation][App.Corporate.payoutCash = true]]
+<</if>>
+</div>
+
+
+<h2>Shares</h2>
+You own <<print num($personalShares)>> shares while another <<print num($publicShares)>> shares are traded publicly. The going rate on the market for 1000 shares is currently @@.yellowgreen;<<print cashFormat(corpSharePrice())>>.@@
+<br>The corporation can buyback 1000 shares for @@.red;<<print cashFormat(corpSharePrice(-1000))>>@@ or issue 1000 shares and net @@.yellowgreen;<<print cashFormat(corpSharePrice(1000))>>.@@ The corporation will prefer to round shares to the nearest 1000 and will issue or buy shares toward that goal first.
+<<if $corp.Cash > corpSharePrice(-1000)>>
+	<<if $publicShares <= $personalShares - 2000 && $publicShares > 0>> /*It won't buy back player shares if the corporation is entirely owned by the player*/
+		<<set _persExtraShares = $personalShares % 1000 || 1000>>
+		<br>The corporation can buyback some of your shares.
+		<<= "[[Buyback "+ _persExtraShares + "|Manage Corporation][cashX(corpSharePrice(-"+_persExtraShares+"), 'stocksTraded'), $corp.Cash -= corpSharePrice(-"+_persExtraShares+"), $personalShares -= "+_persExtraShares+"]]">>
+	<</if>>
+	<<if $publicShares >= 1000>>
+		<<set _pubExtraShares = $publicShares % 1000 || 1000>>
+		<br>The corporation can buyback some of the public shares.
+		<<= "[[Buyback "+ _pubExtraShares + "|Manage Corporation][$corp.Cash -= corpSharePrice(-"+_pubExtraShares+"), $publicShares -= "+_pubExtraShares+"]]">>
+	<</if>>
+<</if>>
+
+<<set _persLeftoverShares = 1000 - ($personalShares % 1000)>>
+<<if $cash > corpSharePrice(_persLeftoverShares)>>
+	<br>The corporation can issue <<=_persLeftoverShares>> shares to you.
+	<<= "[[Issue " + _persLeftoverShares + "|Manage Corporation][cashX(forceNeg(corpSharePrice("+_persLeftoverShares+")), 'stocksTraded'), $corp.Cash += corpSharePrice("+_persLeftoverShares+"), $personalShares += "+_persLeftoverShares+"]]">>
+<</if>>
+<<set _pubLeftoverShares = 1000 - ($publicShares % 1000)>>
+<<if $publicShares <= $personalShares - 2000>>
+	<br>The corporation can issue <<=_pubLeftoverShares>> shares onto the stock market.
+	<<= "[[Issue " + _pubLeftoverShares + "|Manage Corporation][$corp.Cash += corpSharePrice("+_pubLeftoverShares+"), $publicShares += "+_pubLeftoverShares+"]]">>
+<</if>>
+<<if $publicShares <= $personalShares - 3000>>
+	<br>You can sell some of your shares on the stock market. [[Sell 1000|Manage Corporation][cashX(corpSharePrice(), "stocksTraded"), $personalShares -= 1000, $publicShares += 1000]]
+<</if>>
+<<if $cash > corpSharePrice() && $publicShares >= 1000>>
+	<br>You can buy some shares from the stock market [[Buy 1000|Manage Corporation][cashX(forceNeg(corpSharePrice()), "stocksTraded"), $personalShares += 1000, $publicShares -= 1000]]
+<</if>>
+<h3>Stock Split</h3>
+
+/* Splitting shares when they're unwieldy */
+<<set _splitFeeInitial = 10000>>
+<<set _splitFeeValue = _splitFeeInitial - Math.floor((_splitFeeInitial * ($PC.skill.trading / 100.0) / 2.0) / 1000) * 1000>>
+<<set _splitStockConstants = App.Corporate.stockSplits >>
+
+	The corporation can perform a stock split to increase the number of stocks while maintaining the same owned value. This requires paying a market fee of @@.red;<<= cashFormat(_splitFeeValue)>>@@ plus a per-share fee depending on the type of split being done.
+	<<if _splitFeeValue < _splitFeeInitial>>
+		//You negotiated lower fees due to your @@.springgreen;business acumen@@.//
+	<</if>>
+<<if $corp.SpecTimer > 0>>
+	<br>//The corporation has restructured too recently.//
+<</if>>
+<ul>
+<<for _stockType range _splitStockConstants>>
+	<<set _splitInitial	= _stockType['cost']>>
+	<<set _splitValue	  = _splitInitial>>
+	<<set _splitDenom	  = _stockType['oldStocks'] || 1>>
+	<<set _splitNumerator  = _stockType['newStocks'] || 1>>
+	<<set _splitMultiplier = _splitNumerator / _splitDenom>>
+	<<set _splitTotal	  = _splitValue * ($publicShares + $personalShares) + _splitFeeValue>>
+	<<set _splitWeek	   = _stockType['weeks']>>
+	<li><<= _splitNumerator >>-for-<<= _splitDenom>> <<if _splitDenom > _splitNumerator>>inverse<</if>> stock split at @@.red;<<= cashFormat(_splitValue) >>@@ per share.
+		Including market fees, this will cost the corporation a total of @@.red;<<= cashFormat(_splitTotal)>>@@,
+		leaving the going rate for stock at @@.yellowgreen;<<= cashFormat(Math.floor(corpSharePrice(0, $personalShares * _splitMultiplier, $publicShares * _splitMultiplier))) >>@@ per 1000 shares.
+	<<if $corp.SpecTimer == 0>>
+		<<if $publicShares % _splitDenom != 0 || $personalShares % _splitDenom != 0>>
+		//The number of shares cannot be evenly split//
+		<<elseif $corp.Cash > _splitTotal>>
+		<<= "[[Split Shares|Manage Corporation][$corp.Cash -= " + _splitTotal + ", $publicShares *= " + _splitMultiplier + ", $personalShares *= " + _splitMultiplier + ", $corp.SpecTimer="+_splitWeek+"]]" >>
+		<<else>>
+		//The corporation cannot afford the fees.//
+		<</if>>
+	<</if>>
+	</li>
+<</for>>
+</ul>
+
+<h2>Slave specialization</h2>
+<<if $corp.SpecToken > 0>> /*Spending tokens on new specializations*/
+	<<if $corp.SpecToken > 1>>
+		Your corporation has $corp.SpecToken specializations left.
+	<<else>>
+		Your corporation has one specialization left.
+	<</if>>
+	<<if $corp.SpecTimer > 0>>
+		You have recently changed specializations and the corporation needs <<if $corp.SpecTimer > 1>>$corp.SpecTimer more weeks<<else>>another week<</if>> before it can comply with another directive.
+	<<else>>
+		<br>Choosing to specialize your corporation uses a specialization. The corporation can be directed to focus on the following:
+		<<if $corp.SpecRaces.length == 0 && ($corp.DivExtra > 0 || $corp.DivLegal > 0)>> /*This used to be $captureUpgradeRace, it is a general acquisition specialization*/
+			<br>Slaves who are not
+			<<if $arcologies[0].FSSubjugationistRace != "amerindian" || $arcologies[0].FSSubjugationist == "unset">>[[Amerindian|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("amerindian", 1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]] | <</if>>
+			<<if $arcologies[0].FSSubjugationistRace != "asian" || $arcologies[0].FSSubjugationist == "unset">>[[Asian|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("asian", 1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]] | <</if>>
+			<<if $arcologies[0].FSSubjugationistRace != "black" || $arcologies[0].FSSubjugationist == "unset">>[[Black|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("black", 1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]] | <</if>>
+			<<if $arcologies[0].FSSubjugationistRace != "indo-aryan" || $arcologies[0].FSSubjugationist == "unset">>[[Indo-aryan|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("indo-aryan", 1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]] | <</if>>
+			<<if $arcologies[0].FSSubjugationistRace != "latina" || $arcologies[0].FSSubjugationist == "unset">>[[Latina|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("latina", 1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]] | <</if>>
+			<<if $arcologies[0].FSSubjugationistRace != "malay" || $arcologies[0].FSSubjugationist == "unset">>[[Malay|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("malay", 1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]] | <</if>>
+			<<if $arcologies[0].FSSubjugationistRace != "middle eastern" || $arcologies[0].FSSubjugationist == "unset">>[[Middle Eastern|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("middle eastern", 1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]] | <</if>>
+			<<if $arcologies[0].FSSubjugationistRace != "mixed race" || $arcologies[0].FSSubjugationist == "unset">>[[Mixed Race|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("mixed race", 1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]] | <</if>>
+			<<if $arcologies[0].FSSubjugationistRace != "pacific islander" || $arcologies[0].FSSubjugationist == "unset">>[[Pacific Islander|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("pacific islander", 1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]] | <</if>>
+			<<if $arcologies[0].FSSubjugationistRace != "semitic" || $arcologies[0].FSSubjugationist == "unset">>[[Semitic|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("semitic", 1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]] | <</if>>
+			<<if $arcologies[0].FSSubjugationistRace != "southern european" || $arcologies[0].FSSubjugationist == "unset">>[[Southern European|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("southern european", 1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]] | <</if>>
+			<<if $arcologies[0].FSSubjugationistRace != "white" || $arcologies[0].FSSubjugationist == "unset">>[[White|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("white", 1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]<</if>>
+			— //additional races can be excluded. 4 races per token.//
+			<<if $corp.SpecToken >= 3>>
+				<br>Only slaves who are
+				<<if $arcologies[0].FSSupremacistRace != "amerindian" || $arcologies[0].FSSubjugationist == "unset">>[[Amerindian|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("amerindian", 0), $corp.SpecToken -= 3, $corp.SpecTimer = 2]] | <</if>>
+				<<if $arcologies[0].FSSupremacistRace != "asian" || $arcologies[0].FSSubjugationist == "unset">>[[Asian|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("asian", 0), $corp.SpecToken -= 3, $corp.SpecTimer = 2]] | <</if>>
+				<<if $arcologies[0].FSSupremacistRace != "black" || $arcologies[0].FSSubjugationist == "unset">>[[Black|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("black", 0), $corp.SpecToken -= 3, $corp.SpecTimer = 2]] | <</if>>
+				<<if $arcologies[0].FSSupremacistRace != "indo-aryan" || $arcologies[0].FSSubjugationist == "unset">>[[Indo-aryan|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("indo-aryan", 0), $corp.SpecToken -= 3, $corp.SpecTimer = 2]] | <</if>>
+				<<if $arcologies[0].FSSupremacistRace != "latina" || $arcologies[0].FSSubjugationist == "unset">>[[Latina|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("latina", 0), $corp.SpecToken -= 3, $corp.SpecTimer = 2]] | <</if>>
+				<<if $arcologies[0].FSSupremacistRace != "malay" || $arcologies[0].FSSubjugationist == "unset">>[[Malay|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("malay", 0), $corp.SpecToken -= 3, $corp.SpecTimer = 2]] | <</if>>
+				<<if $arcologies[0].FSSupremacistRace != "middle eastern" || $arcologies[0].FSSubjugationist == "unset">>[[Middle Eastern|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("middle eastern", 0), $corp.SpecToken -= 3, $corp.SpecTimer = 2]] | <</if>>
+				<<if $arcologies[0].FSSupremacistRace != "mixed race" || $arcologies[0].FSSubjugationist == "unset">>[[Mixed Race|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("mixed race", 0), $corp.SpecToken -= 3, $corp.SpecTimer = 2]] | <</if>>
+				<<if $arcologies[0].FSSupremacistRace != "pacific islander" || $arcologies[0].FSSubjugationist == "unset">>[[Pacific Islander|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("pacific islander", 0), $corp.SpecToken -= 3, $corp.SpecTimer = 2]] | <</if>>
+				<<if $arcologies[0].FSSupremacistRace != "semitic" || $arcologies[0].FSSubjugationist == "unset">>[[Semitic|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("semitic", 0), $corp.SpecToken -= 3, $corp.SpecTimer = 2]] | <</if>>
+				<<if $arcologies[0].FSSupremacistRace != "southern european" || $arcologies[0].FSSubjugationist == "unset">>[[Southern European|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("southern european", 0), $corp.SpecToken -= 3, $corp.SpecTimer = 2]] | <</if>>
+				<<if $arcologies[0].FSSupremacistRace != "white" || $arcologies[0].FSSubjugationist == "unset">>[[White|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("white", 0), $corp.SpecToken -= 3, $corp.SpecTimer = 2]]<</if>>
+			<<else>>
+				<br>Only slaves of a particular race requires 3 tokens.
+			<</if>>
+		<</if>>
+		<<if $seeDicks != 0 && ndef $corp.SpecGender && ($corp.DivExtra > 0 || $corp.DivLegal > 0)>> /*This used to be $captureUpgradeGender, it is a general acquisition specialization*/
+			<br>Train only slaves with [[Pussies|Manage Corporation][$corp.SpecGender = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Dicks|Manage Corporation][$corp.SpecGender = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]]
+		<</if>>
+		<<if ndef $corp.SpecHeight && ($corp.DivExtra > 0 || $corp.DivLegal > 0)>> /*This is a general acquisition specialization*/
+			<br>Slaves that are [[Short|Manage Corporation][$corp.SpecHeight = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Tall|Manage Corporation][$corp.SpecHeight = 4, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] -- //Further specializations possible//
+		<</if>>
+		<<if ndef $corp.SpecVirgin && ($corp.DivExtra > 0 || $corp.DivLegal > 0)>> /*This is a general acquisition specialization*/
+			<br>Slaves that are [[Virgins|Manage Corporation][$corp.SpecVirgin = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]]
+		<</if>>
+		<<if ndef $corp.SpecIntelligence && $corp.DivLegal > 0 >> /*This used to be $entrapmentUpgradeIntelligence, it is a legal enslavement specialization*/
+			<br>Slaves who are [[Stupid|Manage Corporation][$corp.SpecIntelligence = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Intelligent|Manage Corporation][$corp.SpecIntelligence = 3, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] --//Further specializations possible//
+		<</if>>
+		<<if ndef $corp.SpecAge && $corp.DivExtra > 0>> /*This used to be $captureUpgradeAge, it is the extralegal enslavement specialization*/
+			<br>Slaves who are [[Younger|Manage Corporation][$corp.SpecAge = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Older|Manage Corporation][$corp.SpecAge = 3, $corp.SpecToken -= 1, $corp.SpecTimer = 2]]
+		<</if>>
+		<<if ndef $corp.SpecWeight && ($corp.DivBreak > 0 || $corp.DivSurgery > 0 || $corp.DivTrain > 0)>> /*This used to be $generalUpgradeWeight, it is a general improvement specialization*/
+			<br>Managing slaves' diets to achieve [[Thin Slaves|Manage Corporation][$corp.SpecWeight = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Fat nor Thin Slaves|Manage Corporation][$corp.SpecWeight = 3, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Fat Slaves|Manage Corporation][$corp.SpecWeight = 5, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] -- //Further specializations possible//
+		<</if>>
+		<<if ndef $corp.SpecDevotion && ($corp.DivBreak > 0 || $corp.DivSurgery > 0 || $corp.DivTrain > 0)>> /*This used to be $entrapmentUpgradeDevotionOne/Two, it is a general improvement specialization*/
+			<br>Slaves who are [[Reluctant|Manage Corporation][$corp.SpecDevotion = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Obedient|Manage Corporation][$corp.SpecDevotion = 4, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] -- //Further specializations possible//
+		<</if>>
+		<<if ndef $corp.SpecAccent && ($corp.DivBreak > 0 || $corp.DivSurgery > 0 || $corp.DivTrain > 0)>> /*This used to be $trainingUpgradeAccent, it is a general improvement specialization*/
+			<br>Slaves are taught to [[Speak the Language|Manage Corporation][$corp.SpecAccent = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Speak without Accent|Manage Corporation][$corp.SpecAccent = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]]
+		<</if>>
+		<<if ndef $corp.SpecHormones && ($corp.DivBreak > 0 || $corp.DivSurgery > 0 || $corp.DivTrain > 0)>> /*This used to be $drugUpgradeHormones, it is a general improvement specialization*/
+			<br>Slaves are given hormones to [[Feminize|Manage Corporation][$corp.SpecHormones = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Masculinize|Manage Corporation][$corp.SpecHormones = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]]
+		<</if>>
+		<<if ndef $corp.SpecInjection && ($corp.DivBreak > 0 || $corp.DivSurgery > 0 || $corp.DivTrain > 0)>> /*This used to be $drugUpgradeInjectionOne, it is a general improvement specialization*/
+			<br>Slave assets are made to be [[Petite|Manage Corporation][$corp.SpecInjection = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Tasteful|Manage Corporation][$corp.SpecInjection = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Huge|Manage Corporation][$corp.SpecInjection = 3, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] -- //Further specializations possible//
+		<</if>>
+		<<if ndef $corp.SpecCosmetics && ($corp.DivBreak > 0 || $corp.DivSurgery > 0 || $corp.DivTrain > 0)>> /*This used to be $surgicalUpgradeCosmetics, it is a general improvement specialization*/
+			<br>Straightforward cosmetic procedures are [[Applied|Manage Corporation][$corp.SpecCosmetics = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Not Applied|Manage Corporation][$corp.SpecCosmetics = 0, $corp.SpecTimer = 2]]
+		<</if>>
+		<<if ndef $corp.SpecEducation && $corp.DivTrain > 0>> /*This used to be $trainingUpgradeEducation, it is the training specialization*/
+			<br>Slaves are given [[No Education|Manage Corporation][$corp.SpecEducation == 0, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Basic Education|Manage Corporation][$corp.SpecEducation = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] -- //Further specializations possible//
+		<</if>>
+		<<if ndef $corp.SpecImplants && $corp.DivSurgery > 0>> /*This used to be $surgicalUpgradeImplants, it is the surgery specialization*/
+			<br>Slave implants are [[Applied|Manage Corporation][$corp.SpecImplants = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Not Applied|Manage Corporation][$corp.SpecImplants = 0, $corp.SpecTimer = 2]] -- //Further specializations possible//
+		<</if>>
+		<<if ndef $corp.SpecGenitalia && $corp.DivSurgeryDev > 100>> /*This used to be $surgicalUpgradeGenitalia, it is the surgery specialization*/
+			<br>Slaves get their genitalia reconfigured [[Add Pussy|Manage Corporation][$corp.SpecPussy = 1, $corp.SpecGenitalia = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Remove Pussy|Manage Corporation][$corp.SpecPussy = -1, $corp.SpecGenitalia = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Add Dick|Manage Corporation][$corp.SpecDick = 1, $corp.SpecGenitalia = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Remove Dick|Manage Corporation][$corp.SpecDick = -1, $corp.SpecGenitalia = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Add Balls|Manage Corporation][$corp.SpecBalls = 1, $corp.SpecGenitalia = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Remove Balls|Manage Corporation][$corp.SpecBalls = -1, $corp.SpecGenitalia = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] -- //Further specializations possible//
+		<</if>>
+		<<if ndef $corp.SpecTrust && $corp.DivBreak > 0>> /*This used to be $generalUpgradeBreaking, it is the slave breaking specific specialization*/
+			<br>Breaking slaves with [[Brutality|Manage Corporation][$corp.SpecTrust = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Care|Manage Corporation][$corp.SpecTrust = 4, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] -- //Further specializations possible//
+		<</if>>
+		<<if ndef $corp.SpecAmputee && $corp.DivArcade > 0 && $corp.DivSurgeryDev > 100>> /*This is the arcade specialization*/
+			<br>Slave limbs are categorically [[Removed|Manage Corporation][$corp.SpecAmputee = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]]
+		<</if>>
+		<<if ndef $corp.SpecMuscle && $corp.DivMenial > 0>> /*This used to be $generalUpgradeMuscle, it is the Menial division's specialization*/
+			<br>Slaves with muscles that are <<if $arcologies[0].FSPhysicalIdealist == "unset">> [[Weak|Manage Corporation][$corp.SpecMuscle = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | <</if>>[[Soft|Manage Corporation][$corp.SpecMuscle = 3, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Toned|Manage Corporation][$corp.SpecMuscle = 4, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] -- //Further specializations possible//
+		<</if>>
+		<<if ndef $corp.SpecMilk && $corp.DivDairy > 0>> /*This is the dairy specialization*/
+			<br>Slaves are made to be lactating [[Naturally|Manage Corporation][$corp.SpecMilk = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] | [[Through Implant|Manage Corporation][$corp.SpecMilk = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]]
+		<</if>>
+		<<if ndef $corp.SpecSexEd && $corp.DivWhore > 0>> /*This used to be $trainingUpgradeSexEd, it is the escort division specialization*/
+			<br>Slaves are sexually [[Clueless|Manage Corporation][$corp.SpecSexEd = 0, $corp.SpecToken -= 0, $corp.SpecTimer = 2]] | [[Competent|Manage Corporation][$corp.SpecSexEd = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] -- //Further specializations possible//
+		<</if>>
+	<</if>>
+<<else>>
+	<br>Your corporation cannot pick a new specialization at this time.
+<</if>>
+
+<<if $corp.Spec > $corp.SpecToken>> /*Modifying specializations*/
+	<br><br>You have chosen the following specializations;
+	<br>//You can choose to specialize further with additional tokens, specialize less, end the specialization or sometimes tweak them for free.//
+	<<if $corp.SpecRaces.length == 12>>
+		<<set $corp.SpecRaces = []>>
+	<</if>>
+	<<if $corp.SpecRaces.length > 0>>
+		<br>The corporation enslaves people of the following race(s);
+		<<if $corp.SpecRaces.includes("amerindian")>>
+			<br>Amerindian
+			<<if !($arcologies[0].FSSubjugationist != "unset" && $arcologies[0].FSSubjugationistRace != "amerindian")>>
+				<<if $corp.SpecRaces.length > 1 && $corp.SpecTimer == 0>>
+					<<if ($corp.SpecRaces.length == 4 || $corp.SpecRaces.length == 8) && $corp.SpecToken > 0>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("amerindian",1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]
+					<<elseif ($corp.SpecRaces.length != 4 || $corp.SpecRaces.length != 8)>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("amerindian",1)]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<br>==Amerindian==
+			<<if $corp.SpecTimer == 0>>
+				<<if $corp.SpecRaces.length == 3 || $corp.SpecRaces.length == 7 || $corp.SpecRaces.length == 11>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("amerindian",0), $corp.SpecToken += 1, $corp.SpecTimer = 1]]
+				<<else>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("amerindian",0)]]
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $corp.SpecRaces.includes("asian")>>
+			<br>Asian
+			<<if !($arcologies[0].FSSubjugationist != "unset" && $arcologies[0].FSSubjugationistRace != "asian")>>
+				<<if $corp.SpecRaces.length > 1 && $corp.SpecTimer == 0>>
+					<<if ($corp.SpecRaces.length == 4 || $corp.SpecRaces.length == 8) && $corp.SpecToken > 0>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("asian",1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]
+					<<elseif ($corp.SpecRaces.length != 4 || $corp.SpecRaces.length != 8)>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("asian",1)]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<br>==Asian==
+			<<if $corp.SpecTimer == 0>>
+				<<if $corp.SpecRaces.length == 3 || $corp.SpecRaces.length == 7 || $corp.SpecRaces.length == 11>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("asian",0), $corp.SpecToken += 1, $corp.SpecTimer = 1]]
+				<<else>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("asian",0)]]
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $corp.SpecRaces.includes("black")>>
+			<br>Black
+			<<if !($arcologies[0].FSSubjugationist != "unset" && $arcologies[0].FSSubjugationistRace != "black")>>
+				<<if $corp.SpecRaces.length > 1 && $corp.SpecTimer == 0>>
+					<<if ($corp.SpecRaces.length == 4 || $corp.SpecRaces.length == 8) && $corp.SpecToken > 0>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("black",1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]
+					<<elseif ($corp.SpecRaces.length != 4 || $corp.SpecRaces.length != 8)>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("black",1)]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<br>==Black==
+			<<if $corp.SpecTimer == 0>>
+				<<if $corp.SpecRaces.length == 3 || $corp.SpecRaces.length == 7 || $corp.SpecRaces.length == 11>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("black",0), $corp.SpecToken += 1, $corp.SpecTimer = 1]]
+				<<else>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("black",0)]]
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $corp.SpecRaces.includes("indo-aryan")>>
+			<br>Indo-Aryan
+			<<if !($arcologies[0].FSSubjugationist != "unset" && $arcologies[0].FSSubjugationistRace != "indo-aryan")>>
+				<<if $corp.SpecRaces.length > 1 && $corp.SpecTimer == 0>>
+					<<if ($corp.SpecRaces.length == 4 || $corp.SpecRaces.length == 8) && $corp.SpecToken > 0>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("indo-aryan",1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]
+					<<elseif ($corp.SpecRaces.length != 4 || $corp.SpecRaces.length != 8)>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("indo-aryan",1)]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<br>==Indo-Aryan==
+			<<if $corp.SpecTimer == 0>>
+				<<if $corp.SpecRaces.length == 3 || $corp.SpecRaces.length == 7 || $corp.SpecRaces.length == 11>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("indo-aryan",0), $corp.SpecToken += 1, $corp.SpecTimer = 1]]
+				<<else>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("indo-aryan",0)]]
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $corp.SpecRaces.includes("latina")>>
+			<br>Latina
+			<<if !($arcologies[0].FSSubjugationist != "unset" && $arcologies[0].FSSubjugationistRace != "latina")>>
+				<<if $corp.SpecRaces.length > 1 && $corp.SpecTimer == 0>>
+					<<if ($corp.SpecRaces.length == 4 || $corp.SpecRaces.length == 8) && $corp.SpecToken > 0>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("latina",1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]
+					<<elseif ($corp.SpecRaces.length != 4 || $corp.SpecRaces.length != 8)>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("latina",1)]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<br>==Latina==
+			<<if $corp.SpecTimer == 0>>
+				<<if $corp.SpecRaces.length == 3 || $corp.SpecRaces.length == 7 || $corp.SpecRaces.length == 11>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("latina",0), $corp.SpecToken += 1, $corp.SpecTimer = 1]]
+				<<else>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("latina",0)]]
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $corp.SpecRaces.includes("malay")>>
+			<br>Malay
+			<<if !($arcologies[0].FSSubjugationist != "unset" && $arcologies[0].FSSubjugationistRace != "malay")>>
+				<<if $corp.SpecRaces.length > 1 && $corp.SpecTimer == 0>>
+					<<if ($corp.SpecRaces.length == 4 || $corp.SpecRaces.length == 8) && $corp.SpecToken > 0>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("malay",1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]
+					<<elseif ($corp.SpecRaces.length != 4 || $corp.SpecRaces.length != 8)>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("malay",1)]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<br>==Malay==
+			<<if $corp.SpecTimer == 0>>
+				<<if $corp.SpecRaces.length == 3 || $corp.SpecRaces.length == 7 || $corp.SpecRaces.length == 11>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("malay",0), $corp.SpecToken += 1, $corp.SpecTimer = 1]]
+				<<else>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("malay",0)]]
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $corp.SpecRaces.includes("middle eastern")>>
+			<br>Middle Eastern
+			<<if !($arcologies[0].FSSubjugationist != "unset" && $arcologies[0].FSSubjugationistRace != "middle eastern")>>
+				<<if $corp.SpecRaces.length > 1 && $corp.SpecTimer == 0>>
+					<<if ($corp.SpecRaces.length == 4 || $corp.SpecRaces.length == 8) && $corp.SpecToken > 0>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("middle eastern",1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]
+					<<elseif ($corp.SpecRaces.length != 4 || $corp.SpecRaces.length != 8)>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("middle eastern",1)]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<br>==Middle Eastern==
+			<<if $corp.SpecTimer == 0>>
+				<<if $corp.SpecRaces.length == 3 || $corp.SpecRaces.length == 7 || $corp.SpecRaces.length == 11>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("middle eastern",0), $corp.SpecToken += 1, $corp.SpecTimer = 1]]
+				<<else>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("middle eastern",0)]]
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $corp.SpecRaces.includes("mixed race")>>
+			<br>Mixed Race
+			<<if !($arcologies[0].FSSubjugationist != "unset" && $arcologies[0].FSSubjugationistRace != "mixed race")>>
+				<<if $corp.SpecRaces.length > 1 && $corp.SpecTimer == 0>>
+					<<if ($corp.SpecRaces.length == 4 || $corp.SpecRaces.length == 8) && $corp.SpecToken > 0>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("mixed race",1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]
+					<<elseif ($corp.SpecRaces.length != 4 || $corp.SpecRaces.length != 8)>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("mixed race",1)]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<br>==Mixed Race==
+			<<if $corp.SpecTimer == 0>>
+				<<if $corp.SpecRaces.length == 3 || $corp.SpecRaces.length == 7 || $corp.SpecRaces.length == 11>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("mixed race",0), $corp.SpecToken += 1, $corp.SpecTimer = 1]]
+				<<else>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("mixed race",0)]]
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $corp.SpecRaces.includes("pacific islander")>>
+			<br>Pacific Islander
+			<<if !($arcologies[0].FSSubjugationist != "unset" && $arcologies[0].FSSubjugationistRace != "pacific islander")>>
+				<<if $corp.SpecRaces.length > 1 && $corp.SpecTimer == 0>>
+					<<if ($corp.SpecRaces.length == 4 || $corp.SpecRaces.length == 8) && $corp.SpecToken > 0>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("pacific islander",1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]
+					<<elseif ($corp.SpecRaces.length != 4 || $corp.SpecRaces.length != 8)>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("pacific islander",1)]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<br>==Pacific Islander==
+			<<if $corp.SpecTimer == 0>>
+				<<if $corp.SpecRaces.length == 3 || $corp.SpecRaces.length == 7 || $corp.SpecRaces.length == 11>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("pacific islander",0), $corp.SpecToken += 1, $corp.SpecTimer = 1]]
+				<<else>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("pacific islander",0)]]
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $corp.SpecRaces.includes("semitic")>>
+			<br>Semitic
+			<<if !($arcologies[0].FSSubjugationist != "unset" && $arcologies[0].FSSubjugationistRace != "semitic")>>
+				<<if $corp.SpecRaces.length > 1 && $corp.SpecTimer == 0>>
+					<<if ($corp.SpecRaces.length == 4 || $corp.SpecRaces.length == 8) && $corp.SpecToken > 0>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("semitic",1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]
+					<<elseif ($corp.SpecRaces.length != 4 || $corp.SpecRaces.length != 8)>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("semitic",1)]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<br>==Semitic==
+			<<if $corp.SpecTimer == 0>>
+				<<if $corp.SpecRaces.length == 3 || $corp.SpecRaces.length == 7 || $corp.SpecRaces.length == 11>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("semitic",0), $corp.SpecToken += 1, $corp.SpecTimer = 1]]
+				<<else>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("semitic",0)]]
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $corp.SpecRaces.includes("southern european")>>
+			<br>Southern European
+			<<if !($arcologies[0].FSSubjugationist != "unset" && $arcologies[0].FSSubjugationistRace != "southern european")>>
+				<<if $corp.SpecRaces.length > 1 && $corp.SpecTimer == 0>>
+					<<if ($corp.SpecRaces.length == 4 || $corp.SpecRaces.length == 8) && $corp.SpecToken > 0>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("southern european",1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]
+					<<elseif ($corp.SpecRaces.length != 4 || $corp.SpecRaces.length != 8)>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("southern european",1)]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<br>==Southern European==
+			<<if $corp.SpecTimer == 0>>
+				<<if $corp.SpecRaces.length == 3 || $corp.SpecRaces.length == 7 || $corp.SpecRaces.length == 11>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("southern european",0), $corp.SpecToken += 1, $corp.SpecTimer = 1]]
+				<<else>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("southern european",0)]]
+				<</if>>
+			<</if>>
+		<</if>>
+		<<if $corp.SpecRaces.includes("white")>>
+			<br>White
+			<<if !($arcologies[0].FSSubjugationist != "unset" && $arcologies[0].FSSubjugationistRace == "white")>>
+				<<if $corp.SpecRaces.length > 1 && $corp.SpecTimer == 0>>
+					<<if ($corp.SpecRaces.length == 4 || $corp.SpecRaces.length == 8) && $corp.SpecToken > 0>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("white",1), $corp.SpecToken -= 1, $corp.SpecTimer = 1]]
+					<<elseif ($corp.SpecRaces.length != 4 || $corp.SpecRaces.length != 8)>>
+						[[Blacklist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("white",1)]]
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<br>==White==
+			<<if $corp.SpecTimer == 0>>
+				<<if $corp.SpecRaces.length == 3 || $corp.SpecRaces.length == 7 || $corp.SpecRaces.length == 11>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("white",0), $corp.SpecToken += 1, $corp.SpecTimer = 1]]
+				<<else>>
+					[[Whitelist|Manage Corporation][$corp.SpecRaces = corpBlacklistRace("white",0)]]
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecGender == 1>>
+		<br>The corporation trains slaves with pussies.
+		<<if $corp.SpecTimer == 0>>
+			<<link "No Focus">><<unset $corp.SpecGender>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecGender == 2>>
+		<br>The corporation trains slaves with dicks.
+		<<if $corp.SpecTimer == 0>>
+			<<link "No Focus">><<unset $corp.SpecGender>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecHeight == 1>>
+		<br>The corporation is targeting tiny slaves.
+		<<if $corp.SpecTimer == 0>>
+			[[Short Slaves|Manage Corporation][$corp.SpecHeight = 2, $corp.SpecToken += 1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecHeight>><<set $corp.SpecToken += 2, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecHeight == 2>>
+		<br>The corporation is targeting short slaves.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.SpecToken > 0 && ($corp.DivExtraDev + $corp.DivLegalDev) > 50>>
+				[[Tiny Slaves|Manage Corporation][$corp.SpecHeight = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] |
+			<</if>>
+			<<link "No Focus">><<unset $corp.SpecHeight>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecHeight == 4>>
+		<br>The corporation is targeting tall slaves.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.SpecToken > 0 && ($corp.DivExtraDev + $corp.DivLegalDev) > 50>>
+				[[Giant Slaves|Manage Corporation][$corp.SpecHeight = 5, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] |
+			<</if>>
+			<<link "No Focus">><<unset $corp.SpecHeight>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecHeight == 5>>
+		<br>The corporation is targeting giant slaves.
+		<<if $corp.SpecTimer == 0>>
+			[[Tall Slaves|Manage Corporation][$corp.SpecHeight = 4, $corp.SpecToken += 1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecHeight>><<set $corp.SpecToken += 2, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecVirgin == 1>>
+		<br>The corporation is ensuring slaves remain virgins.
+		<<if $corp.SpecTimer == 0>>
+			<<link "No Focus">><<unset $corp.SpecVirgin>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecTrust == 1>>
+		<br>The corporation is breaking slaves with extreme brutality.
+		<<if $corp.SpecTimer == 0>>
+			[[Apply Less Brutality|Manage Corporation][$corp.SpecTrust = 2, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecTrust>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>> /*Don't think this deserves the added cost of a token, unlike the 'utmost care' one*/
+	<<elseif $corp.SpecTrust == 2>>
+		<br>The corporation is breaking slaves with brutality.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.SpecToken > 0 && $arcologies[0].FSDegradationist > 20 && $corp.DivBreakDev > 50>>
+				[[Apply Extreme Brutality|Manage Corporation][$corp.SpecTrust = 1, $corp.SpecTimer = 2]] |
+			<</if>>
+			<<link "No Focus">><<unset $corp.SpecTrust>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecTrust == 4>>
+		<br>The corporation is breaking slaves with care.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.SpecToken > 0 && $arcologies[0].FSPaternalist > 20 && $corp.DivBreakDev > 50>>
+				[[Use the Utmost Care|Manage Corporation][$corp.SpecTrust = 5, $corp.SpecToken += 1, $corp.SpecTimer == 2]] |
+			<</if>>
+			<<link "No Focus">><<unset $corp.SpecTrust>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecTrust == 5>>
+		<br>The corporation is breaking slaves with the utmost care.
+		<<if $corp.SpecTimer == 0>>
+			[[Use Less Care|Manage Corporation][$corp.SpecTrust = 4, $corp.SpecToken += 1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecTrust>><<set $corp.SpecToken += 2, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecWeight == 1>>
+		<br>The corporation makes slaves follow incredibly strict diets.
+		<<if $corp.SpecTimer == 0>>
+			[[Apply Looser Diet|Manage Corporation][$corp.SpecWeight = 2, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecWeight>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecWeight == 2>>
+		<br>The corporation makes slaves diet.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.SpecToken > 0 && $arcologies[0].FSHedonisticDecadence == "unset">>
+				[[Apply Strict Diet|Manage Corporation][$corp.SpecWeight = 1, $corp.SpecTimer = 2]] |
+			<</if>>
+			[[Aim for Healthy Weight|Manage Corporation][$corp.SpecWeight = 3, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecWeight>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecWeight == 3>>
+		<br>The corporation is aiming for slaves with a healthy weight.
+		<<if $corp.SpecTimer == 0>>
+			[[Apply Diet|Manage Corporation][$corp.SpecWeight = 2, $corp.SpecTimer = 2]] | [[Plump up Slaves|Manage Corporation][$corp.SpecWeight = 5, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecWeight>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>> /*Perhaps 'plump up' is not the right phrase*/
+	<<elseif $corp.SpecWeight == 5>>
+		<br>The corporation aims for plump slaves.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.SpecToken > 0 && $arcologies[0].FSPhysicalIdealist == "unset">>
+				[[Fatten Slaves|Manage Corporation][$corp.SpecWeight = 6, $corp.SpecTimer = 2]] |
+			<</if>>
+			[[Aim for Healthy Weight|Manage Corporation][$corp.SpecWeight = 3, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecWeight>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecWeight == 6>>
+		<br>The corporation aims for fat slaves.
+		<<if $corp.SpecTimer == 0>>
+			[[Settle for Plump|Manage Corporation][$corp.SpecWeight = 5, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecWeight>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecMuscle == 1>>
+		<br>The corporation aims to have frail slaves.
+		<<if $corp.SpecTimer == 0>>
+			[[Aim for Weak|Manage Corporation][$corp.SpecMuscle = 2, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecMuscle>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecMuscle == 2>> /*Don't think this deserves the added cost of a token, unlike slaves getting ripped*/
+		<br>The corporation aims to have weak slaves.
+		<<if $corp.SpecTimer == 0>>
+			<<if $arcologies[0].FSPhysicalIdealist == "unset">>
+				[[Aim for Frail|Manage Corporation][$corp.SpecMuscle = 1, $corp.SpecTimer = 2]] |
+			<</if>>
+			[[Aim for Soft|Manage Corporation][$corp.SpecMuscle = 3, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecWeight>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecMuscle == 3>>
+		<br>The corporation is aiming for slaves with soft muscles.
+		<<if $corp.SpecTimer == 0>>
+			<<if $arcologies[0].FSPhysicalIdealist == "unset">>
+				[[Aim for Weak|Manage Corporation][$corp.SpecMuscle = 2, $corp.SpecTimer = 2]] |
+			<</if>>
+			[[Aim for Toned|Manage Corporation][$corp.SpecMuscle = 4, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecWeight>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecMuscle == 4>>
+		<br>The corporation aims for toned muscles.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.SpecToken > 0 && ($corp.DivBreakDev + $corp.DivSurgeryDev + $corp.DivTrainDev > 100)>>
+				[[Aim for Ripped|Manage Corporation][$corp.SpecMuscle = 5, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] |
+			<</if>>
+			[[Aim for Soft|Manage Corporation][$corp.SpecMuscle = 3, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecWeight>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecMuscle == 5>>
+		<br>The corporation aims for ripped slaves.
+		<<if $corp.SpecTimer == 0>>
+			[[Aim for Toned|Manage Corporation][$corp.SpecMuscle = 4, $corp.SpecToken += 1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecWeight>><<set $corp.SpecToken += 2, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+		<<if $corp.SpecDevotion == 1>>
+		<br>The corporation keeps slaves extremely defiant.
+		<<if $corp.SpecTimer == 0>>
+			[[Less Defiant|Manage Corporation][$corp.SpecDevotion = 2, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecDevotion>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>> /*Don't think this deserves the added cost of a token, unlike the 'devoted' one*/
+	<<elseif $corp.SpecDevotion == 2>>
+		<br>The corporation keeps slaves reluctant.
+		<<if $corp.SpecTimer == 0>>
+			[[Make them Defiant|Manage Corporation][$corp.SpecDevotion = 1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecDevotion>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecDevotion == 4>>
+		<br>The corporation is fostering obedience.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.SpecToken > 0 && $corp.DivTrainDev > 100>>
+				[[Foster Devotion|Manage Corporation][$corp.SpecDevotion = 5, $corp.SpecToken += 1, $corp.SpecTimer = 2]] |
+			<</if>>
+		<<link "No Focus">><<unset $corp.SpecDevotion>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecDevotion == 5>>
+		<br>The corporation is fostering devotion.
+		<<if $corp.SpecTimer == 0>>
+			[[Settle for Obedience|Manage Corporation][$corp.SpecDevotion = 4, $corp.SpecToken += 1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecDevotion>><<set $corp.SpecToken += 2, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecIntelligence == 1>>
+		<br>The corporation keeps stupid slaves.
+		<<if $corp.SpecTimer == 0>>
+			<<link "No Focus">><<unset $corp.SpecIntelligence>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecIntelligence == 3>>
+		<br>The corporation keeps intelligent slaves.
+		<<if $corp.SpecTimer == 0>>
+			<<link "No Focus">><<unset $corp.SpecIntelligence>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecAge == 1>>
+		<br>The corporation focuses on young slaves.
+		<<if $corp.SpecTimer == 0>>
+			<<link "No Focus">><<unset $corp.SpecAge>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecAge == 3>>
+		<br>The corporation focuses on older slaves.
+		<<if $corp.SpecTimer == 0>>
+			<<link "No Focus">><<unset $corp.SpecAge>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecAccent == 1>>
+		<br>The corporation teaches slaves to speak the lingua franca.
+		<<if $corp.SpecTimer == 0>>
+			[[Eliminate Accents|Manage Corporation][$corp.SpecAccent = 2, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecAccent>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecAccent == 2>>
+		<br>The corporation teaches slaves to speak the lingua franca without an accent.
+		<<if $corp.SpecTimer == 0>>
+			[[Just Teach Language|Manage Corporation][$corp.SpecAccent = 1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecAccent>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecEducation == 0>>
+		<br>The corporation focuses on uneducated slaves.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.SpecToken > 0>>
+				[[Basic Education|Manage Corporation][$corp.SpecEducation = 1, $corp.SpecTimer = 2]] |
+			<</if>>
+		<<link "No Focus">><<unset $corp.SpecEducation>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecEducation == 1>>
+		<br>The corporation makes sure all slaves have a basic education.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.DivTrainDev > 200 && $corp.SpecToken > 0>>
+				[[Advanced Education|Manage Corporation][$corp.SpecEducation = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] |
+			<</if>>
+			[[No Education|Manage Corporation][$corp.SpecEducation = 1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecEducation>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecEducation == 2>>
+		<br>The corporation makes sure all slaves have an advanced education.
+		<<if $corp.SpecTimer == 0>>
+			[[Basic Education|Manage Corporation][$corp.SpecEducation = 1, $corp.SpecToken += 1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecEducation>><<set $corp.SpecToken += 2, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecCosmetics == 1>>
+		<br>The corporation applies straightforward cosmetic procedures.
+		<<if $corp.SpecTimer == 0>>
+			<<link "No Focus">><<unset $corp.SpecCosmetics>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecCosmetics == 0>>
+		<br>The corporation doesn't apply cosmetic procedures.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.SpecToken > 0>>
+				[[Applied|Manage Corporation][$corp.SpecCosmetics = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] |
+			<</if>>
+			<<link "No Focus">><<unset $corp.SpecCosmetics>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecImplants == 1>>
+		<br>The corporation applies tasteful implants to all slaves.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.DivSurgeryDev > 100 && $corp.SpecToken > 0>>
+				[[Absurd Implants|Manage Corporation][$corp.SpecImplants = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] |
+			<</if>>
+			<<link "No Focus">><<unset $corp.SpecImplants>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecImplants == 2>>
+		<br>The corporation applies absurd implants to all slaves.
+		<<if $corp.SpecTimer == 0>>
+			[[Tasteful Implants|Manage Corporation][$corp.SpecImplants = 1, $corp.SpecToken += 1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecImplants>><<set $corp.SpecToken += 2, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecImplants == 0>>
+		<br>The corporation keeps their slaves entirely implant free.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.SpecToken > 0>>
+				[[Tasteful Implants|Manage Corporation][$corp.SpecImplants = 1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] |
+			<</if>>
+			<<link "No Focus">><<unset $corp.SpecImplants>><<set $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if ndef $corp.SpecPussy && ndef $corp.SpecDick && ndef $corp.SpecBalls && $corp.SpecGenitalia == 1>>
+		<<set ndef $corp.SpecGenitalia,
+		$corp.SpecToken += 1>>
+	<</if>>
+	<<if $corp.SpecGenitalia == 1>>
+		<<if $corp.SpecPussy == 1>>
+			<br>The corporation adds a pussy to all slaves.
+			<<if $corp.SpecTimer == 0>>
+				<<link "Stop">><<unset $corp.SpecPussy>><<set $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+			<</if>>
+		<<elseif $corp.SpecPussy == -1>>
+			<br>The corporation removes pussies from all slaves.
+			<<if $corp.SpecTimer == 0>>
+				<<link "Stop">><<unset $corp.SpecPussy>><<set $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+			<</if>>
+		<<else>>
+			<br>The corporation has no plans for pussies.
+			<<if $corp.SpecTimer == 0>>
+				[[Add Pussy|Manage Corporation][$corp.SpecPussy = 1, $corp.SpecTimer = 2]] | [[Remove Pussy|Manage Corporation][$corp.SpecPussy = -1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]]
+			<</if>>
+		<</if>>
+		<<if $corp.SpecDick == 1>>
+			<br>The corporation adds a dick to all slaves.
+			<<if $corp.SpecTimer == 0>>
+				<<link "Stop">><<unset $corp.SpecDick>><<set $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+			<</if>>
+		<<elseif $corp.SpecDick == -1>>
+			<br>The corporation removes dicks from all slaves.
+			<<if $corp.SpecTimer == 0>>
+				<<link "Stop">><<unset $corp.SpecDick>><<set $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+			<</if>>
+		<<else>>
+			<br>The corporation has no plans for dicks.
+			<<if $corp.SpecTimer == 0>>
+				[[Add Dick|Manage Corporation][$corp.SpecDick = 1, $corp.SpecTimer = 2]] | [[Remove Dick|Manage Corporation][$corp.SpecDick = -1, $corp.SpecToken -= 1, $corp.SpecTimer = 2]]
+			<</if>>
+		<</if>>
+		<<if $corp.SpecBalls == 1>>
+			<br>The corporation adds balls to all slaves (penis required).
+			<<if $corp.SpecTimer == 0>>
+				<<link "Stop">><<unset $corp.SpecBalls>><<set $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+			<</if>>
+		<<elseif $corp.SpecBalls == -1>>
+			<br>The corporation removes balls from all slaves.
+			<<if $corp.SpecTimer == 0>>
+				<<link "Stop">><<unset $corp.SpecBalls>><<set $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+			<</if>>
+		<<else>>
+			<br>The corporation has no plans for balls.
+			<<if $corp.SpecTimer == 0>>
+				[[Add Balls|Manage Corporation][$corp.SpecBalls = 1, $corp.SpecTimer = 2]] | [[Remove Balls|Manage Corporation][$corp.SpecBalls = -1, $corp.SpecTimer = 2]]
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecInjection == 1>>
+		<br>The corporation aims for petite assets.
+		<<if $corp.SpecTimer == 0>>
+			[[Tasteful Size|Manage Corporation][$corp.SpecInjection = 2, $corp.SpecTimer = 2]] | [[Huge Size|Manage Corporation][$corp.SpecInjection = 3, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecInjection>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecInjection == 2>>
+		<br>The corporation aims for tasteful assets.
+		<<if $corp.SpecTimer == 0>>
+			[[Small Size|Manage Corporation][$corp.SpecInjection = 1, $corp.SpecTimer = 2]] | [[Huge Size|Manage Corporation][$corp.SpecInjection = 3, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecInjection>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecInjection == 3>>
+		<br>The corporation aims for huge assets.
+		<<if $corp.SpecTimer == 0>>
+			[[Small Size|Manage Corporation][$corp.SpecInjection = 1, $corp.SpecTimer = 2]] | [[Tasteful Size|Manage Corporation][$corp.SpecInjection = 2, $corp.SpecTimer = 2]] |
+			<<if $corp.DivSurgeryDev > 100 && $corp.SpecToken > 0>>
+				[[Supermassive Size|Manage Corporation][$corp.SpecInjection = 4, $corp.SpecToken -= 1, $corp.SpecTimer = 2]]
+			<</if>>
+			<<if $corp.DivDairyDev > 200 && $corp.SpecToken > 0>> |
+				[[Pastoral Size|Manage Corporation][$corp.SpecInjection = 5, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] |
+			<</if>>
+			<<link "No Focus">><<unset $corp.SpecInjection>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecInjection == 4>>
+		<br>The corporation aims for supermassive assets.
+		<<if $corp.SpecTimer == 0>>
+			[[Huge Size|Manage Corporation][$corp.SpecInjection = 3, $corp.SpecToken += 1, $corp.SpecTimer = 2]] |
+			<<if $corp.DivDairyDev > 200>>
+				[[Pastoral Size|Manage Corporation][$corp.SpecInjection = 5, $corp.SpecTimer = 2]] |
+			<</if>>
+		<<link "No Focus">><<unset $corp.SpecInjection>><<set $corp.SpecToken += 2, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecInjection == 5>>
+		<br>The corporation aims for pastoral assets.
+		<<if $corp.SpecTimer == 0>>
+			[[Huge Size|Manage Corporation][$corp.SpecInjection = 3, $corp.SpecToken += 1, $corp.SpecTimer = 2]] |
+			<<if $corp.DivSurgeryDev > 50>>
+				[[Supermassive Size|Manage Corporation][$corp.SpecInjection = 4, $corp.SpecTimer = 2]] |
+			<</if>>
+			<<link "No Focus">><<unset $corp.SpecInjection>><<set $corp.SpecToken += 2, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecHormones == 1>>
+		<br>The corporation feminizes slaves with hormones.
+		<<if $corp.SpecTimer == 0>>
+			[[Masculinize|Manage Corporation][$corp.SpecHormones = 2, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecHormones>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecHormones == 2>>
+		<br>The corporation masculinize slaves with hormones.
+		<<if $corp.SpecTimer == 0>>
+			[[Feminize|Manage Corporation][$corp.SpecHormones = 1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecHormones>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecAmputee == 1>>
+		<br>The corporation removes all limbs from its slaves.
+		<<if $corp.SpecTimer == 0>>
+			<<link "Stop">><<unset $corp.SpecAmputee>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecMilk == 1>>
+		<br>The corporation makes sure all slaves are naturally lactating.
+		<<if $corp.SpecTimer == 0>>
+			[[Lactation Implant|Manage Corporation][$corp.SpecMilk = 2, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecMilk>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecMilk == 2>>
+		<br>The corporation equips all slaves with lactation implants.
+		<<if $corp.SpecTimer == 0>>
+			[[Natural Lactation|Manage Corporation][$corp.SpecMilk = 1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecMilk>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+	<<if $corp.SpecSexEd == 1>>
+		<br>The corporation familiarizes slaves with sexual service.
+		<<if $corp.SpecTimer == 0>>
+			<<if $corp.SpecToken > 0 && $corp.DivWhoreDev > 200>>
+				[[Advanced Training|Manage Corporation][$corp.SpecSexEd = 2, $corp.SpecToken -= 1, $corp.SpecTimer = 2]] |
+			<</if>>
+			<<link "No Focus">><<unset $corp.SpecSexEd>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecSexEd == 2>>
+		<br>The corporation teaches advanced sexual techniques to its slaves.
+		<<if $corp.SpecTimer == 0>>
+			[[Basic Training|Manage Corporation][$corp.SpecSexEd = 1, $corp.SpecToken +=1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecSexEd>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<<elseif $corp.SpecSexEd == 0>>
+		<br>The corporation teaches no sexual techniques to its slaves.
+		<<if $corp.SpecTimer == 0>>
+			[[Basic Training|Manage Corporation][$corp.SpecSexEd = 1, $corp.SpecToken -=1, $corp.SpecTimer = 2]] | <<link "No Focus">><<unset $corp.SpecSexEd>><<set $corp.SpecToken += 1, $corp.SpecTimer = 2>><<goto "Manage Corporation">><</link>>
+		<</if>>
+	<</if>>
+<</if>> /*End of activated specializations*/
+
+<br><br>
+
+@@.orange;//Warning: Think TWICE before you click this!//@@
+<<link "Dissolve the corporation">>
+	<<set cashX(Math.min(corpSharePrice() * $personalShares / 1000, 1000000), "stocksTraded")>>
+	<<run App.Corporate.dissolve()>>
+	<<goto "Manage Corporation">>
+<</link>>
+@@.orange;//Warning!//@@
+
+<</if>> /*end of incorporated or not check*/

@@ -1,0 +1,342 @@
+:: PCCheatMenu [nobr]
+
+<<set $showEncyclopedia = 0, $nextButton = "Apply", $nextLink = "PCCheatMenuCheatDatatypeCleanup">>
+<<set $tempSlave = clone($PC)>>
+
+''Cheat Editing Player Character'' <<link "[Cancel]" "Manage Personal Affairs">><<unset $tempSlave, $customEvalCode>><</link>>
+
+<br><br>
+
+Title: ''<<if $tempSlave.title == 1>>Master<<else>>Mistress<</if>>''
+<br><<radiobutton "$tempSlave.title" 1>> Master
+	<<radiobutton "$tempSlave.title" 0>> Mistress
+<br>
+Sex: ''$tempSlave.genes''
+<br><<radiobutton "$tempSlave.genes" "XY">> XY
+	<<radiobutton "$tempSlave.genes" "XX">> XX
+<br>''Name'': <<textbox "$tempSlave.slaveName" $tempSlave.slaveName>>
+<br>''Birth Name'': <<textbox "$tempSlave.birthName" $tempSlave.birthName>>
+<br>''Surname'': <<textbox "$tempSlave.slaveSurname" $tempSlave.slaveSurname>>
+<br>''Birth Surname'': <<textbox "$tempSlave.birthSurname" $tempSlave.birthSurname>>
+<br>''Custom Title'': <<textbox "$tempSlave.custom.title" $tempSlave.custom.title>>
+
+<br>Nationality: ''$tempSlave.nationality''.
+<<textbox "$tempSlave.nationality" $tempSlave.nationality>>
+
+<br>Career: ''$tempSlave.career''.
+<br><<radiobutton "$tempSlave.career" "wealth">> Wealth
+	<<radiobutton "$tempSlave.career" "capitalist">> Capitalist
+	<<radiobutton "$tempSlave.career" "mercenary">> Mercenary
+	<<radiobutton "$tempSlave.career" "slaver">> Slaver
+	<<radiobutton "$tempSlave.career" "engineer">> Engineer
+	<<radiobutton "$tempSlave.career" "medicine">> Medicine
+	<<radiobutton "$tempSlave.career" "celebrity">> Celebrity
+	<<radiobutton "$tempSlave.career" "escort">> Escort
+	<<radiobutton "$tempSlave.career" "servant">> Servant
+	<<radiobutton "$tempSlave.career" "gang">> Gang
+	<<radiobutton "$tempSlave.career" "BlackHat">> BlackHat
+
+<br>Method of acquiring the arcology: ''$tempSlave.rumor''.
+<br><<radiobutton "$tempSlave.rumor" "wealth">> Wealth
+	<<radiobutton "$tempSlave.rumor" "diligence">> Diligence
+	<<radiobutton "$tempSlave.rumor" "force">> Force
+	<<radiobutton "$tempSlave.rumor" "social engineering">> Social Engineering
+	<<radiobutton "$tempSlave.rumor" "luck">> Luck
+
+<br>Preferred refreshment: <<textbox "$tempSlave.refreshment" $tempSlave.refreshment>>
+<br><<radiobutton "$tempSlave.refreshment" "cigar">> Cigar
+	<<radiobutton "$tempSlave.refreshment" "whiskey">> Whiskey
+
+<br>Preferred method of consumption: <<if $tempSlave.refreshmentType == 0>>Smoked<<elseif $tempSlave.refreshmentType == 1>>Drank<<elseif $tempSlave.refreshmentType == 2>>Eaten<<elseif $tempSlave.refreshmentType == 3>>Snorted<<elseif $tempSlave.refreshmentType == 4>>Injected<<elseif $tempSlave.refreshmentType == 5>>Popped<<else>>Orally Dissolved<</if>>
+<br><<radiobutton "$tempSlave.refreshmentType" 0>> Smoked
+	<<radiobutton "$tempSlave.refreshmentType" 1>> Drank
+	<<radiobutton "$tempSlave.refreshmentType" 2>> Eaten
+	<<radiobutton "$tempSlave.refreshmentType" 3>> Snorted
+	<<radiobutton "$tempSlave.refreshmentType" 4>> Injected
+	<<radiobutton "$tempSlave.refreshmentType" 5>> Popped
+	<<radiobutton "$tempSlave.refreshmentType" 6>> Orally Dissolved
+<br>
+
+<br>''Skin'': <<textbox "$tempSlave.skin" $tempSlave.skin>>
+<br>''Genetic Skin'': <<textbox "$tempSlave.origSkin" $tempSlave.origSkin>>
+<br>''Race'': <<textbox "$tempSlave.race" $tempSlave.race>>
+<br>''Genetic Race'': <<textbox "$tempSlave.origRace" $tempSlave.origRace>>
+<br>''Eye Color'': <<textbox "$tempSlave.eye.right.iris" $tempSlave.eye.right.iris>>
+<br>''Genetic Eye Color'': <<textbox "$tempSlave.eye.origColor" $tempSlave.eye.origColor>>
+<br>''Pupil Shape'': <<textbox "$tempSlave.eye.right.pupil" $tempSlave.eye.right.pupil>>
+<br>''Sclera Color'': <<textbox "$tempSlave.eye.right.sclera" $tempSlave.eye.right.sclera>>
+<br>''Hair Color'': <<textbox "$tempSlave.hColor" $tempSlave.hColor>>
+<br>''Genetic Hair Color'': <<textbox "$tempSlave.origHColor" $tempSlave.origHColor>>
+<br>
+<br>''Boobs'': <<textbox "$tempSlave.boobs" $tempSlave.boobs>> //100: masculine chest (if title = 1) or flat chested (if title = 0)(WIP), 300+: A cup, 400+: B cup, 500+: C cup, 650+: D cup, 800+: DD cup, 1000+: F cup, 1200+: G cup, 1400+: H cup//
+<br>''Boobs Implant'': <<textbox "$tempSlave.boobsImplant" $tempSlave.boobsImplant>> //do you have breast implants - size in CCs//
+<br>''Lactation'': <<textbox "$tempSlave.lactation" $tempSlave.lactation>> //are you lactating - 0: no, 1: yes//
+<br>
+<br>''Butt Size'': <<textbox "$tempSlave.butt" $tempSlave.butt>> //2: normal, 3: big, 4: huge, 5: enormous//
+<br>''Butt Implant'': <<textbox "$tempSlave.buttImplant" $tempSlave.buttImplant>> //do you have butt implants - 0: no, 1+: yes//
+<br>
+<br>''Vagina'': <<textbox "$tempSlave.vagina" $tempSlave.vagina>>
+<br>''New Vagina'': <<textbox "$tempSlave.newVag" $tempSlave.newVag>> //0: no, 1: yes//
+<br>
+<br>''Dick'': <<textbox "$tempSlave.dick" $tempSlave.dick>>
+<br>''Balls Size'': <<textbox "$tempSlave.balls" $tempSlave.balls>> //3: normal, 5: big, 9: huge, 14: enormous, 30: monstrous//
+<br>''Balls Implant'': <<textbox "$tempSlave.ballsImplant" $tempSlave.ballsImplant>> //0: none, 1+ yes//
+
+<br><br>
+__Age__
+<br>''Actual Age'': <<textbox "$tempSlave.actualAge" $tempSlave.actualAge>>
+<br>''Physical Age'': <<textbox "$tempSlave.physicalAge" $tempSlave.physicalAge>>
+<br>''Visual Age'': <<textbox "$tempSlave.visualAge" $tempSlave.visualAge>>
+<br>''Ovary Age'': <<textbox "$tempSlave.ovaryAge" $tempSlave.ovaryAge>>
+<br>''Age Implant'': <<textbox "$tempSlave.ageImplant" $tempSlave.ageImplant>> //0: no surgery, 1: age altering surgery//
+<br>''Player Aging'': <<textbox "$playerAging" $playerAging>> //0: no aging, 1: no aging, but birthdays, 2: aging//
+
+<br><br>
+__Pregnancy__
+<br>''Pregnancy Length'': <<textbox "$tempSlave.preg" $tempSlave.preg>> //how far along your pregnancy is (pregMood kicks in at 24+ weeks) - -2: infertile, -1: contraceptives, 0: not pregnant, 1 - 42: pregnant, 43+: giving birth//
+<br>''Fetus Count'': <<textbox "$tempSlave.pregType" $tempSlave.pregType>> //how many you're having (1-8)//
+<br>''PregSource'': <<textbox "$tempSlave.pregSource" $tempSlave.pregSource>> //who knocked you up - 0: unknown, -1: self-impreg, -2: citizen, -3: former Master, -4: male arc owner, -5: client, -6: Societal Elite, -7: designer baby, -9: Futanari Sister//
+<br>''PregMood'': <<textbox "$tempSlave.pregMood" $tempSlave.pregMood>> //how you act when heavily pregnant - 0: no change, 1: submissive and motherly, 2: aggressive and dominant//
+
+<br><br>
+''Skills:''
+<br>
+<br>Trading:
+''<<if $tempSlave.skill.trading >= 100>>
+	You are a master at economics and trading.
+<<elseif $tempSlave.skill.trading >= 80>>
+	You are an expert at economics and trading.
+<<elseif $tempSlave.skill.trading >= 60>>
+	You are skilled in economics and trading.
+<<elseif $tempSlave.skill.trading >= 40>>
+	You know some things about economics and trading.
+<<elseif $tempSlave.skill.trading >= 20>>
+	You are a beginner in economics.
+<<elseif $tempSlave.skill.trading >= 0>>
+	You know only the basics of trading.
+<<elseif $tempSlave.skill.trading >= -20>>
+	You know how to haggle a little.
+<<elseif $tempSlave.skill.trading >= -40>>
+	You know how to shop around.
+<<elseif $tempSlave.skill.trading >= -60>>
+	You know not to pay sticker price.
+<<elseif $tempSlave.skill.trading >= -80>>
+	People always give you discounts, but you never save any money.
+<<else>>
+	They said it was a bear market, so where are the bears?
+<</if>>''
+<br>
+<<radiobutton "$tempSlave.skill.trading" 100>> Economics master
+<<radiobutton "$tempSlave.skill.trading" 90>> Economics expert
+<<radiobutton "$tempSlave.skill.trading" 70>> Skilled in economics
+<<radiobutton "$tempSlave.skill.trading" 50>> Amateur economist
+<<radiobutton "$tempSlave.skill.trading" 30>> Economics beginner
+<<radiobutton "$tempSlave.skill.trading" 0>> Basic trader
+<<radiobutton "$tempSlave.skill.trading" -10>> Haggler
+<<radiobutton "$tempSlave.skill.trading" -30>> Shopper
+<<radiobutton "$tempSlave.skill.trading" -50>> Weak saver
+<<radiobutton "$tempSlave.skill.trading" -70>> Money sieve
+<<radiobutton "$tempSlave.skill.trading" -90>> What's a trading?
+<br>
+<br>Warfare:
+''<<if $tempSlave.skill.warfare >= 100>>
+	You are a master of warfare.
+<<elseif $tempSlave.skill.warfare >= 80>>
+	You are an expert at tactics and strategy.
+<<elseif $tempSlave.skill.warfare >= 60>>
+	You are skilled in combat.
+<<elseif $tempSlave.skill.warfare >= 40>>
+	You know some things about combat.
+<<elseif $tempSlave.skill.warfare >= 20>>
+	You are a beginner in tactics and strategy.
+<<elseif $tempSlave.skill.warfare >= 0>>
+	You know only the basics of fighting.
+<<elseif $tempSlave.skill.warfare >= -20>>
+	You know how to hold a gun.
+<<elseif $tempSlave.skill.warfare >= -40>>
+	You know how to stab with a knife.
+<<elseif $tempSlave.skill.warfare >= -60>>
+	Go for the throat?
+<<elseif $tempSlave.skill.warfare >= -80>>
+	Just kick them in the balls, right?
+<<else>>
+	People like you are usually the first raped in a war.
+<</if>>''
+<br>
+<<radiobutton "$tempSlave.skill.warfare" 100>> Warfare master
+<<radiobutton "$tempSlave.skill.warfare" 90>> Warfare expert
+<<radiobutton "$tempSlave.skill.warfare" 70>> Skilled in warfare
+<<radiobutton "$tempSlave.skill.warfare" 50>> Amateur combatant
+<<radiobutton "$tempSlave.skill.warfare" 30>> Combat beginner
+<<radiobutton "$tempSlave.skill.warfare" 0>> Basic fighter
+<<radiobutton "$tempSlave.skill.warfare" -10>> Gun haver
+<<radiobutton "$tempSlave.skill.warfare" -30>> Knife holder
+<<radiobutton "$tempSlave.skill.warfare" -50>> Throat puncher
+<<radiobutton "$tempSlave.skill.warfare" -70>> Groin kicker?
+<<radiobutton "$tempSlave.skill.warfare" -90>> Most likely to be raped
+<br>
+<br>Slaving:
+''<<if $tempSlave.skill.slaving >= 100>>
+	You are a master slaver.
+<<elseif $tempSlave.skill.slaving >= 80>>
+	You are an expert at enslaving.
+<<elseif $tempSlave.skill.slaving >= 60>>
+	You are skilled in slaving.
+<<elseif $tempSlave.skill.slaving >= 40>>
+	You know some things about getting slaves.
+<<elseif $tempSlave.skill.slaving >= 20>>
+	You are a beginner in slaving.
+<<elseif $tempSlave.skill.slaving >= 0>>
+	You know only the basics of slaving.
+<<elseif $tempSlave.skill.slaving >= -20>>
+	You know how to avoid becoming a slave.
+<<elseif $tempSlave.skill.slaving >= -40>>
+	You know to read contracts before you sign them.
+<<elseif $tempSlave.skill.slaving >= -60>>
+	You know to be careful.
+<<elseif $tempSlave.skill.slaving >= -80>>
+	You know better than to trust anyone.
+<<else>>
+	It would be easy to enslave you.
+<</if>>''
+<br>
+<<radiobutton "$tempSlave.skill.slaving" 100>> Master slaver
+<<radiobutton "$tempSlave.skill.slaving" 90>> Expert slaver
+<<radiobutton "$tempSlave.skill.slaving" 70>> Skilled in slaving
+<<radiobutton "$tempSlave.skill.slaving" 50>> Amateur slaver
+<<radiobutton "$tempSlave.skill.slaving" 30>> Slaving beginner
+<<radiobutton "$tempSlave.skill.slaving" 0>> Basic slaver
+<<radiobutton "$tempSlave.skill.slaving" -10>> Can't make me a slave
+<<radiobutton "$tempSlave.skill.slaving" -30>> Can read contracts
+<<radiobutton "$tempSlave.skill.slaving" -50>> Careful now
+<<radiobutton "$tempSlave.skill.slaving" -70>> Don't trust that guy
+<<radiobutton "$tempSlave.skill.slaving" -90>> Potential slave
+<br>
+<br>Engineering:
+''<<if $tempSlave.skill.engineering >= 100>>
+	You are a master engineer.
+<<elseif $tempSlave.skill.engineering >= 80>>
+	You are an expert at engineering.
+<<elseif $tempSlave.skill.engineering >= 60>>
+	You are skilled in engineering.
+<<elseif $tempSlave.skill.engineering >= 40>>
+	You know some things about engineering.
+<<elseif $tempSlave.skill.engineering >= 20>>
+	You are a beginner in engineering.
+<<elseif $tempSlave.skill.engineering >= 0>>
+	You know only the basics of engineering.
+<<elseif $tempSlave.skill.engineering >= -20>>
+	You can build a gingerbread house that doesn't collapse.
+<<elseif $tempSlave.skill.engineering >= -40>>
+	You can tie a tight knot, does that count?
+<<elseif $tempSlave.skill.engineering >= -60>>
+	Glue is your friend; lots of it.
+<<elseif $tempSlave.skill.engineering >= -80>>
+	You know better than to even try to build something.
+<<else>>
+	You can cook; that's sort of like building something, right?
+<</if>>''
+<br>
+<<radiobutton "$tempSlave.skill.engineering" 100>> Master engineer
+<<radiobutton "$tempSlave.skill.engineering" 90>> Expert engineer
+<<radiobutton "$tempSlave.skill.engineering" 70>> Skilled in engineering
+<<radiobutton "$tempSlave.skill.engineering" 50>> Amateur engineer
+<<radiobutton "$tempSlave.skill.engineering" 30>> Engineering beginner
+<<radiobutton "$tempSlave.skill.engineering" 0>> Basic engineer
+<<radiobutton "$tempSlave.skill.engineering" -10>> Gingerbread house
+<<radiobutton "$tempSlave.skill.engineering" -30>> Knot tyer
+<<radiobutton "$tempSlave.skill.engineering" -50>> You can use glue
+<<radiobutton "$tempSlave.skill.engineering" -70>> You aren't handy
+<<radiobutton "$tempSlave.skill.engineering" -90>> My hovercraft is full of eels
+<br>
+<br>Medicine:
+''<<if $tempSlave.skill.medicine >= 100>>
+	You are a master surgeon.
+<<elseif $tempSlave.skill.medicine >= 80>>
+	You are an expert at medicine and surgery.
+<<elseif $tempSlave.skill.medicine >= 60>>
+	You are skilled in surgery.
+<<elseif $tempSlave.skill.medicine >= 40>>
+	You know some things about medicine.
+<<elseif $tempSlave.skill.medicine >= 20>>
+	You are a beginner in medicine.
+<<elseif $tempSlave.skill.medicine >= 0>>
+	You know the basics of treating injuries.
+<<elseif $tempSlave.skill.medicine >= -20>>
+	You can stop a wound from getting infected.
+<<elseif $tempSlave.skill.medicine >= -40>>
+	Gauze is your friend. Just keep wrapping.
+<<elseif $tempSlave.skill.medicine >= -60>>
+	You know how to apply a band-aid.
+<<elseif $tempSlave.skill.medicine >= -80>>
+	Cure-alls are wonderful. Why aren't they sold in stores, though?
+<<else>>
+	Alcohol makes pain go away, right?
+<</if>>''
+<br>
+<<radiobutton "$tempSlave.skill.medicine" 100>> Master surgeon
+<<radiobutton "$tempSlave.skill.medicine" 90>> Expert surgeon
+<<radiobutton "$tempSlave.skill.medicine" 70>> Skilled in medicine
+<<radiobutton "$tempSlave.skill.medicine" 50>> Amateur surgeon
+<<radiobutton "$tempSlave.skill.medicine" 30>> Medical beginner
+<<radiobutton "$tempSlave.skill.medicine" 0>> Basic medic
+<<radiobutton "$tempSlave.skill.medicine" -10>> Can treat wounds
+<<radiobutton "$tempSlave.skill.medicine" -30>> First-aid kit user
+<<radiobutton "$tempSlave.skill.medicine" -50>> Band-aid applier
+<<radiobutton "$tempSlave.skill.medicine" -70>> MEDIC!
+<<radiobutton "$tempSlave.skill.medicine" -90>> Give me another beer
+<br>
+<br>Hacking:
+''<<if $tempSlave.skill.hacking >= 100>>
+	You are a master of hacking.
+<<elseif $tempSlave.skill.hacking >= 80>>
+	You are an expert at hacking.
+<<elseif $tempSlave.skill.hacking >= 60>>
+	You are skilled in hacking.
+<<elseif $tempSlave.skill.hacking >= 40>>
+	You know some things about hacking.
+<<elseif $tempSlave.skill.hacking >= 20>>
+	You are a beginner in hacking.
+<<elseif $tempSlave.skill.hacking >= 0>>
+	You know only the basics of hacking.
+<<elseif $tempSlave.skill.hacking >= -20>>
+	You know how to click a mouse.
+<<elseif $tempSlave.skill.hacking >= -40>>
+	Enter does something?
+<<elseif $tempSlave.skill.hacking >= -60>>
+	Where is the "any" key?
+<<elseif $tempSlave.skill.hacking >= -80>>
+	You can push the power button, good job.
+<<else>>
+	This black box thingy is magical.
+<</if>>''
+<br>
+<<radiobutton "$tempSlave.skill.hacking" 100>> Master hacker
+<<radiobutton "$tempSlave.skill.hacking" 90>> Expert hacker
+<<radiobutton "$tempSlave.skill.hacking" 70>> Skilled hacker
+<<radiobutton "$tempSlave.skill.hacking" 50>> Amateur hacker
+<<radiobutton "$tempSlave.skill.hacking" 30>> Hacking beginner
+<<radiobutton "$tempSlave.skill.hacking" 0>> Basic hacker
+<<radiobutton "$tempSlave.skill.hacking" -10>> Mouse clicker
+<<radiobutton "$tempSlave.skill.hacking" -30>> You can press Enter
+<<radiobutton "$tempSlave.skill.hacking" -50>> Where's the "any" key?
+<<radiobutton "$tempSlave.skill.hacking" -70>> Main screen turn on?
+<<radiobutton "$tempSlave.skill.hacking" -90>> Ooh, cool glowy thingy!
+
+<br>
+<br>Your mother ID:
+<<textbox "$tempSlave.mother" $tempSlave.mother>>
+<br>Your father ID:
+<<textbox "$tempSlave.father" $tempSlave.father>>
+
+<br>
+<br>''Sexual Energy'': <<textbox "$tempSlave.sexualEnergy" $tempSlave.sexualEnergy>>
+<br>''Cum Tap'': <<textbox "$tempSlave.skill.cumTap" $tempSlave.skill.cumTap>>
+<br>''Stored Cum'': <<textbox "$tempSlave.counter.storedCum" $tempSlave.counter.storedCum>>
+<br>''Fertility Drugs'': <<textbox "$tempSlave.fertDrugs" $tempSlave.fertDrugs>> //0: no, 1: yes//
+<br>''Forced Fertility Drugs'': <<textbox "$tempSlave.forcedFertDrugs" $tempSlave.forcedFertDrugs>> //time left in body system//
+<br>''Stamina Pills'': <<textbox "$tempSlave.staminaPills" $tempSlave.staminaPills>> //0: no, 1: yes//
+
+<br><br>Custom Cheat:
+<br><<textarea "$customEvalCode" "">>
+<br>//Any JavaScript function will be automatically run using the PC as an argument when "Apply" is clicked. For example, entering "(PC) => PC.name = 'Fancy Name' " will change your name to "Fancy Name".//

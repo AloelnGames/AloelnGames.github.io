@@ -1,0 +1,28 @@
+:: Subordinate Targeting [nobr]
+
+<<set $nextButton = "Back", $nextLink = "AS Dump">>
+
+<<setLocalPronouns $activeSlave>>
+
+<<if $activeSlave.subTarget == $activeSlave.ID>>
+	<<set $activeSlave.subTarget = 0>>
+<</if>>
+<<if $activeSlave.assignment !== "be a subordinate slave">>
+	<<= assignJob($activeSlave, "be a subordinate slave")>>
+<</if>>
+<<set _st = $slaveIndices[$activeSlave.subTarget]>>
+<<if def _st>>
+	$activeSlave.slaveName will submit to <span class='slave-name'>$slaves[_st].slaveName</span> this week.
+<<else>>
+	$activeSlave.slaveName has not been given to any particular slave, so $he will have to offer $himself to everyone this week.
+	<<set $activeSlave.subTarget = 0>>
+<</if>>
+
+<br><br>__Select a slave for $him to submit to, sexually:__
+<<= App.UI.SlaveList.slaveSelectionList(
+		s => s.devotion >= -20 && s.fuckdoll === 0 && State.variables.activeSlave.ID !== s.ID &&
+			(!isAmputee(State.variables.activeSlave) || !isAmputee(s)),
+		(s, i) => App.UI.DOM.passageLink(SlaveFullName(s), 'Subordinate Targeting', () => { V.activeSlave.subTarget = s.ID; }),
+	)>>
+
+<br><br>[[None|Subordinate Targeting][$activeSlave.subTarget = 0]]

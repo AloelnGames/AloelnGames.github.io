@@ -1,0 +1,232 @@
+:: Prosthetic Lab [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Manage Penthouse">>
+
+<<set $researchLab.speed = (($researchLab.hired * 3) + $researchLab.menials) * $researchLab.aiModule>>
+
+<h1>Prosthetic Lab</h1>
+
+
+<<if $adjustProsthetics.length > $adjustProstheticsCompleted>>
+	<h2>External contract workers</h2>
+	Currently adjusting these prosthetics:
+	<<for _p range $adjustProsthetics>>
+		<<if _p.workLeft > 0>>
+			<div class="indent">
+				<<= capFirstChar(setup.prosthetics[_p.id].name)>> for <<= SlaveFullName($slaves[$slaveIndices[_p.slaveID]])>>
+			</div>
+		<</if>>
+	<</for>>
+<</if>>
+
+<<if $researchLab.level > 0>>
+	<h2>Research Department</h2>
+	//You switch one of the screens in your office to the feed from your research facility.//
+
+	<h3>Personnel</h3>
+
+	<<if $researchLab.aiModule == 1>>
+		<div>
+			[[Buy and install research module|Prosthetic Lab][cashX(forceNeg(35000*$upgradeMultiplierArcology), "capEx"), $researchLab.aiModule = 2]] //This module enables your personal assistant to assist staff and direct menials assigned to your research facility, increasing efficiency. It costs <<= cashFormat(35000*$upgradeMultiplierArcology)>>//
+		</div>
+	<</if>>
+	<<if ($researchLab.hired + $researchLab.menials) == 0>>
+		//Facility is currently unstaffed.//
+	<<else>>
+		//You have
+		<<if $researchLab.hired == 1>>
+			one scientist
+		<<elseif $researchLab.hired > 1>>
+			$researchLab.hired scientists
+		<</if>>
+		<<if $researchLab.hired > 0 && $researchLab.menials > 0 >> and<</if>>
+		<<if $researchLab.menials == 1>>
+			one menial slave
+		<<elseif $researchLab.menials > 1>>
+			$researchLab.menials menials
+		<</if>>
+		working in your lab.
+			<<setAssistantPronouns>>
+			<<if $researchLab.aiModule > 1>>Occasionally you hear the voice of your assistant as _heA helps direct and organize work.<</if>>//
+	<</if>>
+
+	<div class="indent">
+	Currently, this facility can employ $researchLab.maxSpace people.
+	<<if $researchLab.maxSpace == 5>>
+		[[Expand facility|Prosthetic Lab][cashX(forceNeg(Math.trunc(5000*$upgradeMultiplierArcology)), "capEx"), $researchLab.maxSpace = 10]]
+		//Costs <<= cashFormat(Math.trunc(5000*$upgradeMultiplierArcology))>>//
+	<<elseif $researchLab.maxSpace == 10>>
+		[[Expand facility|Prosthetic Lab][cashX(forceNeg(Math.trunc(10000*$upgradeMultiplierArcology)), "capEx"), $researchLab.maxSpace = 20]]
+		//Costs <<= cashFormat(Math.trunc(10000*$upgradeMultiplierArcology))>>//
+	<<elseif $researchLab.maxSpace == 20>>
+		[[Expand facility|Prosthetic Lab][cashX(forceNeg(Math.trunc(15000*$upgradeMultiplierArcology)), "capEx"), $researchLab.maxSpace = 30]]
+		//Costs <<= cashFormat(Math.trunc(15000*$upgradeMultiplierArcology))>>//
+	<<elseif $researchLab.maxSpace == 30>>
+		[[Expand facility|Prosthetic Lab][cashX(forceNeg(Math.trunc(20000*$upgradeMultiplierArcology)), "capEx"), $researchLab.maxSpace = 40]]
+		//Costs <<= cashFormat(Math.trunc(20000*$upgradeMultiplierArcology))>>//
+	<<elseif $researchLab.maxSpace == 40>>
+		[[Expand facility|Prosthetic Lab][cashX(forceNeg(Math.trunc(25000*$upgradeMultiplierArcology)), "capEx"), $researchLab.maxSpace = 50]]
+		//Costs <<= cashFormat(Math.trunc(25000*$upgradeMultiplierArcology))>>//
+	<<elseif $researchLab.maxSpace == 50>>
+		//Facility is fully expanded.//
+	<</if>>
+	</div>
+
+	<div style="padding-top:1em">
+	<<if ($researchLab.hired + $researchLab.menials) < $researchLab.maxSpace>>
+		<div>
+		Hire [[x1|Prosthetic Lab][$researchLab.hired += 1,cashX(-2000, "lab")]]
+		<<if ($researchLab.maxSpace - ($researchLab.hired + $researchLab.menials)) >= 5>>
+			| [[x5|Prosthetic Lab][$researchLab.hired += 5,cashX(-10000, "lab")]]
+		<</if>>
+		<<if ($researchLab.maxSpace - ($researchLab.hired + $researchLab.menials)) >= 10>>
+			| [[x10|Prosthetic Lab][$researchLab.hired += 10,cashX(-10000, "lab")]]
+		<</if>>
+		scientists.
+		</div>
+		<div class="indent">
+		//Each scientist will require an initial fee of <<= cashFormat(2000)>> and incur <<= cashFormat(300)>> weekly.//
+		</div>
+		<div>
+		<<if $menials > 0>>
+			Assign [[x1|Prosthetic Lab][$researchLab.menials += 1,$menials -= 1]]
+			<<if ($researchLab.maxSpace - ($researchLab.hired + $researchLab.menials)) >= 5 && $menials >= 5>>
+				| [[x5|Prosthetic Lab][$researchLab.menials += 5,$menials -= 5]]
+			<</if>>
+			<<if ($researchLab.maxSpace - ($researchLab.hired + $researchLab.menials)) >= 10 && $menials >= 10>>
+				| [[x10|Prosthetic Lab][$researchLab.menials += 10,$menials -= 10]]
+			<</if>>
+			menial slaves to lab.
+		<<else>>
+			You do not own any <<if $researchLab.menials != 0>>unassigned <</if>>menial slaves.
+		<</if>>
+		</div>
+		<div class="indent">
+		//Using menial slaves is much cheaper than hiring scientists, but they are less effective. <<= cashFormat(100)>> per slave each week.//
+		</div>
+	<<else>>
+		<div class="indent">//Facility is fully staffed.//</div>
+	<</if>>
+	</div>
+
+	<div style="padding-top:1em">
+	<<if $researchLab.hired > 0>>
+		<div>
+		Fire [[x1|Prosthetic Lab][$researchLab.hired -= 1]]
+		<<if $researchLab.hired >= 5>>
+			| [[x5|Prosthetic Lab][$researchLab.hired -= 5]]
+		<</if>>
+		<<if $researchLab.hired >= 10>>
+			| [[x10|Prosthetic Lab][$researchLab.hired -= 10]]
+		<</if>>
+		| [[All|Prosthetic Lab][$researchLab.hired = 0]]
+		scientists.
+		</div>
+	<</if>>
+	<<if $researchLab.menials > 0>>
+		<div>
+		Dismiss [[x1|Prosthetic Lab][$researchLab.menials -= 1,$menials += 1]]
+		<<if $researchLab.menials >= 5>>
+			| [[x5|Prosthetic Lab][$researchLab.menials -= 5,$menials += 5]]
+		<</if>>
+		<<if $researchLab.menials >= 10>>
+			| [[x10|Prosthetic Lab][$researchLab.menials -= 10,$menials += 10]]
+		<</if>>
+		| [[All|Prosthetic Lab][$menials += $researchLab.menials, $researchLab.menials = 0]]
+		menial slaves.
+		</div>
+	<</if>>
+	</div>
+
+	<h3>Tasks</h3>
+
+	<<if $researchLab.tasks.length > 0>>
+		<<set _j = 0>>
+		<<if $researchLab.speed > 0>>
+			The following tasks are queued:
+		<<else>>
+			You have projects planned but without researchers you won't be able to work on them:
+		<</if>>
+		<br>
+		<<for _i = 0; _i < $researchLab.tasks.length; _i++>>
+			<div class="indent">
+			<<switch $researchLab.tasks[_i].type>>
+			<<case "research">>
+				You <<if _i == 0>>are researching<<else>> plan to research<</if>>
+			<<case "craft">>
+				You <<if _i == 0>>are constructing<<else>> plan to construct<</if>>
+			<<case "craftFit">>
+				For @@.noteworthy;<<= SlaveFullName($slaves[$slaveIndices[$researchLab.tasks[_i].slaveID]])>>@@ you <<if _i == 0>>are constructing<<else>> plan to construct<</if>>
+			<<default>>
+				@@.error;Error: Unknown $researchLab.tasks[].type: $researchLab.tasks[_i].type@@
+			<</switch>>
+			<<set _j += $researchLab.tasks[_i].workLeft>>
+			@@.noteworthy;<<= capFirstChar(setup.prosthetics[$researchLab.tasks[_i].id].name)>>@@.
+			<<if $researchLab.speed > 0>>
+				Finished in approximately <<= (Math.floor(_j / $researchLab.speed) + 1)>> week(s).
+			<</if>>
+
+			<<if $researchLab.tasks[_i].type == "research">>
+				<<set _link = "Cancel: Will not return investments.">>
+			<<else>>
+				<<set _link = "Cancel">>
+			<</if>>
+			<<capture _i>>
+				<<link _link "Prosthetic Lab">>
+					<<if $researchLab.tasks[_i].type == "research">>
+						<<set $prosthetics[$researchLab.tasks[_i].id].research = 0>>
+					<</if>>
+					<<set $researchLab.tasks.deleteAt(_i)>>
+				<</link>>
+			<</capture>>
+			</div>
+		<</for>>
+	<<else>>
+		//Currently the research lab has no tasks planned.//
+	<</if>>
+
+	<h3>Research</h3>
+
+	Available research projects:
+	<<for _p range setup.prostheticIDs>>
+		<<if $prosthetics[_p].research == 0>>
+			<<if _p != "erectile">> /*excludes erectile*/
+			<div class="indent">
+			<<if setup.prosthetics[_p].level <= $prostheticsUpgrade>>
+				<<capture _p>>
+				<<link "Reverse engineer <<= addA(setup.prosthetics[_p].name)>>" "Prosthetic Lab">>
+					<<set cashX(forceNeg(setup.prosthetics[_p].costs), "lab"), $prosthetics[_p].research = -1, $researchLab.tasks.push({type: "research", id: _p, workLeft: setup.prosthetics[_p].research})>>
+				<</link>>
+				<</capture>>
+					//Costs <<= cashFormat(setup.prosthetics[_p].costs)>> of initial investment.//
+			<<else>>
+				//You need better contracts to get the required research material for reverse engineering <<= addA(setup.prosthetics[_p].name)>>.//
+			<</if>>
+			</div>
+			<</if>>
+		<</if>>
+	<</for>>
+
+	<h3>Manufacture</h3>
+
+	Available building projects:
+	<<for _p range setup.prostheticIDs>>
+		<<if $prosthetics[_p].research == 1>>
+			<<if _p != "erectile">> /*excludes erectile*/
+			<div class="indent">
+			<<capture _p>>
+			<<link "Build <<= addA(setup.prosthetics[_p].name)>>" "Prosthetic Lab">>
+				<<set $researchLab.tasks.push({type: "craft", id: _p, workLeft: setup.prosthetics[_p].craft})>>
+			<</link>>
+			<</capture>>
+			</div>
+			<</if>>
+		<</if>>
+	<</for>>
+
+	<h3>Prepared prosthetics</h3>
+
+	<p>
+		<<= getProstheticsStockpile()>>
+	</p>
+<</if>>

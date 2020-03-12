@@ -1,0 +1,34 @@
+:: FarmyardLab [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Farmyard", $returnTo = "FarmyardLab", $showEncyclopedia = 1, $encyclopedia = "Farmyard">>
+
+/* TODO: add plant types and research for them */
+
+<br>
+$farmyardNameCaps Research Lab
+<hr>
+
+<<if $farmyardLabUpgrades.animalOvaries == 0>>
+	[[Retrofit the pharmaceutical fabricator to work with animal ovaries|FarmyardLab][cashX(forceNeg(25000), "capEx"), $farmyardLabUpgrades.animalOvaries = 1]]
+	<br>//Costs <<print cashFormat(25000)>> and allows you to implant animal ovaries into slaves.//
+	<br>
+<<elseif $farmyardLabUpgrades.animalOvaries == 1>>
+	The pharmaceutical fabricator has been retrofitted to work with animal ovaries, allowing you to implant them into slaves.
+	<br>
+<</if>>
+<<if $farmyardLabUpgrades.animalTesticles == 0>>
+	[[Retrofit the pharmaceutical fabricator to work with animal testicles|FarmyardLab][cashX(forceNeg(25000), "capEx"), $farmyardLabUpgrades.animalTesticles = 1]]
+	<br>//Costs <<print cashFormat(25000)>> and allows you to implant animal testicles into slaves.//
+	<br>
+<<elseif $farmyardLabUpgrades.animalTesticles == 1>>
+	The pharmaceutical fabricator has been retrofitted to work with animal testicles, allowing you to implant them into slaves.
+	<br>
+<</if>>
+<<if $farmyardLabUpgrades.animalMpreg == 0>>
+	[[Retrofit the pharmaceutical fabricator to work with animal anal wombs and ovaries|FarmyardLab][cashX(forceNeg(25000), "capEx"), $farmyardLabUpgrades.animalMpreg = 1]]
+	<br>//Costs <<print cashFormat(25000)>> and allows you to implant animal anal wombs and ovaries into slaves.//
+	<br>
+<<elseif $farmyardLabUpgrades.animalMpreg == 1>>
+	The pharmaceutical fabricator has been retrofitted to work with animal anal wombs and ovaries, allowing you to implant them into slaves.
+	<br>
+<</if>>

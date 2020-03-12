@@ -1,0 +1,1090 @@
+:: Salon [nobr]
+
+<<set $nextButton = "Confirm changes", $nextLink = "AS Dump", $returnTo = "Slave Interact">>
+
+<<set $showEncyclopedia = 1>><<set $encyclopedia = "The Auto Salon">>
+<<if $showInches == 2>>
+	<<set _oldHLength = Math.round($activeSlave.hLength/2.54), _newHLength = 0>>
+<<else>>
+	<<set _oldHLength = $activeSlave.hLength, _newHLength = 0>>
+<</if>>
+
+<h1>The Auto Salon</h1>
+
+<span class="note">$activeSlave.slaveName is seated in the auto salon. $He is awaiting your artistic pleasure.</span>
+
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<<if $imageChoice == 1>>
+		<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 3, 0)>></div>
+	<<else>>
+		<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 3, 0)>></div>
+	<</if>>
+<</if>>
+/* 000-250-006 */
+
+/* EYES */
+
+<h3>Eyewear</h3>
+<<if getBestVision($activeSlave) === 0>>
+	$He is blind, and
+	<<if $activeSlave.eyewear == "none">>
+		has no eyewear.
+	<<else>>
+		is wearing $activeSlave.eyewear. [[Remove|Salon][$activeSlave.eyewear = "none"]]
+	<</if>>
+	<div class="choices">
+		Give $him: [[Cosmetic glasses|Salon][$activeSlave.eyewear = "glasses",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	</div>
+<<elseif anyVisionEquals($activeSlave, 1)>>
+	$He is nearsighted, and $he
+	<<if $activeSlave.eyewear == "none">>
+		has no eyewear.
+	<<else>>
+		is wearing $activeSlave.eyewear. [[Remove|Salon][$activeSlave.eyewear = "none"]]
+	<</if>>
+	<div class="choices">
+		Give $him: [[Cosmetic glasses|Salon][$activeSlave.eyewear = "glasses",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		| [[Corrective glasses|Salon][$activeSlave.eyewear = "corrective glasses",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		| [[Corrective contacts|Salon][$activeSlave.eyewear = "corrective contacts",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		<span class="note">Nearsightedness will impede performance on some assignments.</span>
+	</div>
+<<else>>
+	$His vision is normal, and $he
+	<<if $activeSlave.eyewear == "none">>
+		has no eyewear.
+	<<else>>
+		is wearing $activeSlave.eyewear. [[Remove|Salon][$activeSlave.eyewear = "none"]]
+	<</if>>
+	<div class="choices">
+		Give $him: [[Cosmetic glasses|Salon][$activeSlave.eyewear = "glasses",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		| [[Blurring glasses|Salon][$activeSlave.eyewear = "blurring glasses",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		| [[Blurring contacts|Salon][$activeSlave.eyewear = "blurring contacts",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		<span class="note">Blurring options are annoying and impede performance on some assignments.</span>
+	</div>
+<</if>>
+
+<div>
+	Custom glass eyes and cosmetic lenses:
+	$He has <<print App.Desc.eyesType($activeSlave)>><<if hasAnyEyes($activeSlave)>>, they are <<print App.Desc.eyeColor($activeSlave)>><</if>>.
+	
+	<div class="choices">
+		/* remove lenses */
+		<<set _n = 0>>
+		<<if hasLeftEye($activeSlave) && getLeftEyeColor($activeSlave) !== getGeneticEyeColor($activeSlave, "left")>>
+			<<set _n++>>
+			[[Remove left lens|Salon][resetEyeColor($activeSlave, "left")]]
+		<</if>>
+		<<if hasRightEye($activeSlave) && getRightEyeColor($activeSlave) !== getGeneticEyeColor($activeSlave, "right")>>
+			<<set _n++>>
+			<<if _n > 0>>|<</if>>
+			[[Remove right lens|Salon][resetEyeColor($activeSlave, "right")]]
+		<</if>>
+		<<if _n === 2>>
+			| [[Remove both lenses|Salon][resetEyeColor($activeSlave, "both")]]
+		<</if>>
+		/* remove glass eyes */
+		<<set _n = 0>>
+		<<if getLeftEyeType($activeSlave) === 2>>
+			<<set _n++>>
+			[[Remove left glass eye|Salon][eyeSurgery($activeSlave, "left", "remove")]]
+		<</if>>
+		<<if getRightEyeType($activeSlave) === 2>>
+			<<set _n++>>
+			<<if _n > 0>>|<</if>>
+			[[Remove right glass eye|Salon][eyeSurgery($activeSlave, "right", "remove")]]
+		<</if>>
+		<<if _n === 2>>
+			| [[Remove both glass eyes|Salon][eyeSurgery($activeSlave, "both", "remove")]]
+		<</if>>
+	</div>
+</div>
+
+<div>
+	<<if hasBothEyes($activeSlave)>>
+		Change what $his eyes look like:
+	<<elseif hasAnyEyes($activeSlave)>>
+		Change what $his eye looks like or give $him a new glass eye:
+	<<else>>
+		Choose what kind of glass eyes you want $him to have:
+	<</if>>
+</div>
+
+<div class="choices">
+	Side:
+	[[Left|Salon][$artificialEyeSide = "left"]]
+	| [[Right|Salon][$artificialEyeSide = "right"]]
+	| [[Both|Salon][$artificialEyeSide = "both"]]
+</div>
+
+<div class="choices">
+	Iris:
+	[[Amber|Salon][$artificialEyeColor = "amber"]]
+	| [[Black|Salon][$artificialEyeColor = "black"]]
+	| [[Blue|Salon][$artificialEyeColor = "blue"]]
+	| [[Brown|Salon][$artificialEyeColor = "brown"]]
+	| [[Green|Salon][$artificialEyeColor = "green"]]
+	| [[Hazel|Salon][$artificialEyeColor = "hazel"]]
+	| [[Orange|Salon][$artificialEyeColor = "orange"]]
+	| [[Pale-Grey|Salon][$artificialEyeColor = "pale-grey"]]
+	| [[Pink|Salon][$artificialEyeColor = "pink"]]
+	| [[Red|Salon][$artificialEyeColor = "red"]]
+	| [[Sky-Blue|Salon][$artificialEyeColor = "sky-blue"]]
+	| [[Turquoise|Salon][$artificialEyeColor = "turquoise"]]
+	| [[White|Salon][$artificialEyeColor = "white"]]
+	| [[Yellow|Salon][$artificialEyeColor = "yellow"]]
+</div>
+
+<div class="choices">
+	Pupil:
+	[[Circular|Salon][$artificialEyeShape = "circular"]]
+	| [[Almond-Shaped|Salon][$artificialEyeShape = "almond-shaped"]]
+	| [[Bright|Salon][$artificialEyeShape = "bright"]]
+	| [[Catlike|Salon][$artificialEyeShape = "catlike"]]
+	| [[Demonic|Salon][$artificialEyeShape = "demonic"]]
+	| [[Devilish|Salon][$artificialEyeShape = "devilish"]]
+	| [[Goat-Like|Salon][$artificialEyeShape = "goat-like"]]
+	| [[Heart-Shaped|Salon][$artificialEyeShape = "heart-shaped"]]
+	| [[Hypnotic|Salon][$artificialEyeShape = "hypnotic"]]
+	| [[Serpent-Like|Salon][$artificialEyeShape = "serpent-like"]]
+	| [[Star-Shaped|Salon][$artificialEyeShape = "star-shaped"]]
+	| [[Teary|Salon][$artificialEyeShape = "teary"]]
+	| [[Vacant|Salon][$artificialEyeShape = "vacant"]]
+	| [[Wide-Eyed|Salon][$artificialEyeShape = "wide-eyed"]]
+</div>
+
+<div class="choices">
+	Sclera:
+	[[White|Salon][$artificialEyeFill = "white"]]
+	| [[Amber|Salon][$artificialEyeFill = "amber"]]
+	| [[Black|Salon][$artificialEyeFill = "black"]]
+	| [[Blue|Salon][$artificialEyeFill = "blue"]]
+	| [[Brown|Salon][$artificialEyeFill = "brown"]]
+	| [[Green|Salon][$artificialEyeFill = "green"]]
+	| [[Hazel|Salon][$artificialEyeFill = "hazel"]]
+	| [[Orange|Salon][$artificialEyeFill = "orange"]]
+	| [[Pale-Grey|Salon][$artificialEyeFill = "pale-grey"]]
+	| [[Pink|Salon][$artificialEyeFill = "pink"]]
+	| [[Red|Salon][$artificialEyeFill = "red"]]
+	| [[Sky-Blue|Salon][$artificialEyeFill = "sky-blue"]]
+	| [[Turquoise|Salon][$artificialEyeFill = "turquoise"]]
+	| [[Yellow|Salon][$artificialEyeFill = "yellow"]]
+</div>
+
+<div class="choices">
+	<<if $artificialEyeSide != "" && $artificialEyeColor != "">>
+		<<link "Give" "Salon">>
+			/* make sure the eye(s) exists: give glass eye if there is none */
+			<<if ($artificialEyeSide === "left" || $artificialEyeSide === "both") && getLeftEyeType($activeSlave) === 0>>
+				<<run eyeSurgery($activeSlave, "left", "glass")>>
+			<</if>>
+			<<if ($artificialEyeSide === "right" || $artificialEyeSide === "both") && getRightEyeType($activeSlave) === 0>>
+				<<run eyeSurgery($activeSlave, "right", "glass")>>
+			<</if>>
+
+			/* apply modifications */
+			<<run setEyeColorFull($activeSlave, $artificialEyeColor, $artificialEyeShape, $artificialEyeFill, $artificialEyeSide)>>
+			<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+
+			/* reset variables */
+			<<set $artificialEyeSide = "", $artificialEyeColor = "", $artificialEyeShape = "", $artificialEyeFill = "">>
+		<</link>>
+
+		/* make the following easier to read */
+		<<set _both = $artificialEyeSide === "both",
+		_leftGlass = !hasLeftEye($activeSlave) || getLeftEyeType($activeSlave) === 2,
+		_rightGlass = !hasRightEye($activeSlave) || getRightEyeType($activeSlave) === 2>>
+
+		$him $artificialEyeColor
+		<<if _both>>
+			<<if _leftGlass && _rightGlass>>
+				glass eyes
+			<<elseif _leftGlass || _rightGlass>>
+				a glass eye and a $artificialEyeColor lens
+			<<else>>
+				lenses
+			<</if>>
+		<<else>>
+			a
+			<<if ($artificialEyeSide === "left" && _leftGlass) || ($artificialEyeSide === "right" && _rightGlass)>>
+				glass eye
+			<<else>>
+				lens
+			<</if>>
+		<</if>>
+		<<if $artificialEyeShape != "" || $artificialEyeFill != "">>
+			with
+			<<if $artificialEyeShape != "" >>
+				$artificialEyeShape <<if _both>> pupils <<else>> pupil <</if>>
+			<</if>>
+			<<if $artificialEyeShape != "" && $artificialEyeFill != "">>
+				and
+			<</if>>
+			<<if $artificialEyeFill != "" >>
+				$artificialEyeFill <<if _both>> sclerae <<else>> sclera <</if>>
+			<</if>>
+		<</if>>? <span class="note">This is independent from eyewear choices.</span>
+	<</if>>
+</div>
+
+/* EARS */
+<h3>Ears</h3>
+<div>
+	<<if $activeSlave.earT != "none" && $activeSlave.earTColor != "hairless">>
+		$His fluffy ears are $activeSlave.earTColor.
+		<div class="choices">
+			<<if $activeSlave.earTColor != $activeSlave.hColor>>
+				[[Match current hair|Salon][$activeSlave.earTColor = $activeSlave.hColor]] or <span class="note">choose a new one:</span>
+			<<else>>
+				<span class="note">Choose a dye color before dyeing $his ears:</span>
+			<</if>>
+		</div>
+		<div class="choices">
+			Colors:
+				[[Auburn|Salon][$primaryEarColor = "auburn"]]
+				| [[Black|Salon][$primaryEarColor = "black"]]
+				| [[Blazing Red|Salon][$primaryEarColor = "blazing red"]]
+				| [[Blonde|Salon][$primaryEarColor = "blonde"]]
+				| [[Blue-Violet|Salon][$primaryEarColor = "blue-violet"]]
+				| [[Blue|Salon][$primaryEarColor = "blue"]]
+				| [[Brown|Salon][$primaryEarColor = "brown"]]
+				| [[Burgundy|Salon][$primaryEarColor = "burgundy"]]
+				| [[Chestnut|Salon][$primaryEarColor = "chestnut"]]
+				| [[Chocolate|Salon][$primaryEarColor = "chocolate brown"]]
+				| [[Copper|Salon][$primaryEarColor = "copper"]]
+				| [[Dark Blue|Salon][$primaryEarColor = "dark blue"]]
+				| [[Dark Brown|Salon][$primaryEarColor = "dark brown"]]
+				| [[Dark Orchid|Salon][$primaryEarColor = "dark orchid"]]
+				| [[Deep Red|Salon][$primaryEarColor = "deep red"]]
+				| [[Ginger|Salon][$primaryEarColor = "ginger"]]
+				| [[Golden|Salon][$primaryEarColor = "golden"]]
+				| [[Green-yellow|Salon][$primaryEarColor = "green-yellow"]]
+				| [[Green|Salon][$primaryEarColor = "green"]]
+				| [[Grey|Salon][$primaryEarColor = "grey"]]
+				| [[Hazel|Salon][$primaryEarColor = "hazel"]]
+				| [[Jet Black|Salon][$primaryEarColor = "jet black"]]
+				| [[Neon Blue|Salon][$primaryEarColor = "neon blue"]]
+				| [[Neon Green|Salon][$primaryEarColor = "neon green"]]
+				| [[Neon Pink|Salon][$primaryEarColor = "neon pink"]]
+				| [[Pink|Salon][$primaryEarColor = "pink"]]
+				| [[Platinum Blonde|Salon][$primaryEarColor = "platinum blonde"]]
+				| [[Purple|Salon][$primaryEarColor = "purple"]]
+				| [[Red|Salon][$primaryEarColor = "red"]]
+				| [[Sea Green|Salon][$primaryEarColor = "sea green"]]
+				| [[Silver|Salon][$primaryEarColor = "silver"]]
+				| [[Strawberry-Blonde|Salon][$primaryEarColor = "strawberry-blonde"]]
+				| [[White|Salon][$primaryEarColor = "white"]]
+		</div>
+
+		<div class="choices">
+			Highlights:
+				[[None|Salon][$secondaryEarColor = ""]]
+				| [[Black|Salon][$secondaryEarColor = " with black highlights"]]
+				| [[Blazing Red|Salon][$secondaryEarColor = " with blazing red highlights"]]
+				| [[Blonde|Salon][$secondaryEarColor = " with blonde highlights"]]
+				| [[Grey|Salon][$secondaryEarColor = " with grey highlights"]]
+				| [[Neon Blue|Salon][$secondaryEarColor = " with neon blue highlights"]]
+				| [[Neon Green|Salon][$secondaryEarColor = " with neon green highlights"]]
+				| [[Neon Pink|Salon][$secondaryEarColor = " with neon pink highlights"]]
+				| [[Rainbow|Salon][$secondaryEarColor = " with rainbow highlights"]]
+				| [[Silver|Salon][$secondaryEarColor = " with silver highlights"]]
+				| [[White|Salon][$secondaryEarColor = " with white highlights"]]
+			</div>
+
+		<<if $primaryEarColor != 0>>
+			<div class="choices">
+				[["Dye " + $his + " ears"|Salon][$activeSlave.earTColor = ($primaryEarColor + $secondaryEarColor),cashX(forceNeg($modCost), "slaveMod", $activeSlave), $primaryEarColor = 0, $secondaryEarColor = ""]] $primaryEarColor $secondaryEarColor now?
+			</div>
+		<</if>>
+	<</if>>
+</div>
+
+<div>
+	<<if $activeSlave.earImplant == 1>>
+		$He has artificial inner ear implants,
+		<<if $activeSlave.earwear == "none">>
+			which are unobstructed.
+		<<else>>
+			and is wearing $activeSlave.earwear. [[Remove|Salon][$activeSlave.earwear = "none"]]
+		<</if>>
+	<<elseif $activeSlave.hears < -1>>
+		$He is deaf, and
+		<<if $activeSlave.earwear == "none">>
+			is wearing nothing on $his ears.
+		<<else>>
+			is wearing $activeSlave.earwear. [[Remove|Salon][$activeSlave.earwear = "none"]]
+		<</if>>
+	<<elseif $activeSlave.hears > -1>>
+		$His hearing is normal, and $he
+		<<if $activeSlave.earwear == "none">>
+			has nothing in $his ears.
+		<<else>>
+			is wearing $activeSlave.earwear. [[Remove|Salon][$activeSlave.earwear = "none"]]
+		<</if>>
+	<<else>>
+		$He is hearing impaired, and
+		<<if $activeSlave.earwear == "none">>
+			wears nothing to correct or worsen this.
+		<<else>>
+			is wearing $activeSlave.earwear. [[Remove|Salon][$activeSlave.earwear = "none"]]
+		<</if>>
+	<</if>>
+	<div class="choices">
+		Give $him:
+		[[Hearing aids|Salon][$activeSlave.earwear = "hearing aids",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		| [[Muffling ear plugs|Salon][$activeSlave.earwear = "muffling ear plugs",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		| [[Deafening ear plugs|Salon][$activeSlave.earwear = "deafening ear plugs",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		<span class="note">Muffling options are annoying and impede performance on some assignments.</span>
+	</div>
+</div>
+
+/*End ear check */
+<div>
+	<<if $activeSlave.horn != "none">>
+		$His $activeSlave.horn are $activeSlave.hornColor
+		<div class="choices">
+			Set horn color:
+				[[Black|Salon][$activeSlave.hornColor = "black",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Blazing Red|Salon][$activeSlave.hornColor = "blazing red",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Blue-Violet|Salon][$activeSlave.hornColor = "blue-violet",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Blue|Salon][$activeSlave.hornColor = "blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Brown|Salon][$activeSlave.hornColor = "brown",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Burgundy|Salon][$activeSlave.hornColor = "burgundy",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Copper|Salon][$activeSlave.hornColor = "copper",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Dark Blue|Salon][$activeSlave.hornColor = "dark blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Dark Brown|Salon][$activeSlave.hornColor = "dark brown",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Dark Orchid|Salon][$activeSlave.hornColor = "dark orchid",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Deep Red|Salon][$activeSlave.hornColor = "deep red",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Golden|Salon][$activeSlave.hornColor = "golden",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Green-yellow|Salon][$activeSlave.hornColor = "green-yellow",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Green|Salon][$activeSlave.hornColor = "green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Grey|Salon][$activeSlave.hornColor = "grey",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Jet Black|Salon][$activeSlave.hornColor = "jet black",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Neon Blue|Salon][$activeSlave.hornColor = "neon blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Neon Green|Salon][$activeSlave.hornColor = "neon green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Neon Pink|Salon][$activeSlave.hornColor = "neon pink",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Pink|Salon][$activeSlave.hornColor = "pink",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Ivory|Salon][$activeSlave.hornColor = "ivory",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Purple|Salon][$activeSlave.hornColor = "purple",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Red|Salon][$activeSlave.hornColor = "red",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Sea Green|Salon][$activeSlave.hornColor = "sea green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Silver|Salon][$activeSlave.hornColor = "silver",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[White|Salon][$activeSlave.hornColor = "white",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		</div>
+	<</if>>
+</div>
+
+/* HAIR */
+
+<h3>Hair</h3>
+<div>
+	<<if $activeSlave.bald != 1>>
+		$His hair is $activeSlave.hColor.
+		<<if $activeSlave.origHColor != $activeSlave.hColor>>
+			[[Restore natural color|Salon][$activeSlave.hColor = $activeSlave.origHColor]] or <span class="note">choose a new one:</span>
+		<<else>>
+			<span class="note">Choose a dye color before dyeing $his hair:</span>
+		<</if>>
+		<div class="choices">
+			Colors:
+				[[Auburn|Salon][$primaryHairColor = "auburn"]]
+				| [[Black|Salon][$primaryHairColor = "black"]]
+				| [[Blazing Red|Salon][$primaryHairColor = "blazing red"]]
+				| [[Blonde|Salon][$primaryHairColor = "blonde"]]
+				| [[Blue-Violet|Salon][$primaryHairColor = "blue-violet"]]
+				| [[Blue|Salon][$primaryHairColor = "blue"]]
+				| [[Brown|Salon][$primaryHairColor = "brown"]]
+				| [[Burgundy|Salon][$primaryHairColor = "burgundy"]]
+				| [[Chestnut|Salon][$primaryHairColor = "chestnut"]]
+				| [[Chocolate|Salon][$primaryHairColor = "chocolate brown"]]
+				| [[Copper|Salon][$primaryHairColor = "copper"]]
+				| [[Dark Blue|Salon][$primaryHairColor = "dark blue"]]
+				| [[Dark Brown|Salon][$primaryHairColor = "dark brown"]]
+				| [[Dark Orchid|Salon][$primaryHairColor = "dark orchid"]]
+				| [[Deep Red|Salon][$primaryHairColor = "deep red"]]
+				| [[Ginger|Salon][$primaryHairColor = "ginger"]]
+				| [[Golden|Salon][$primaryHairColor = "golden"]]
+				| [[Green-yellow|Salon][$primaryHairColor = "green-yellow"]]
+				| [[Green|Salon][$primaryHairColor = "green"]]
+				| [[Grey|Salon][$primaryHairColor = "grey"]]
+				| [[Hazel|Salon][$primaryHairColor = "hazel"]]
+				| [[Jet Black|Salon][$primaryHairColor = "jet black"]]
+				| [[Neon Blue|Salon][$primaryHairColor = "neon blue"]]
+				| [[Neon Green|Salon][$primaryHairColor = "neon green"]]
+				| [[Neon Pink|Salon][$primaryHairColor = "neon pink"]]
+				| [[Pink|Salon][$primaryHairColor = "pink"]]
+				| [[Platinum Blonde|Salon][$primaryHairColor = "platinum blonde"]]
+				| [[Purple|Salon][$primaryHairColor = "purple"]]
+				| [[Red|Salon][$primaryHairColor = "red"]]
+				| [[Sea Green|Salon][$primaryHairColor = "sea green"]]
+				| [[Silver|Salon][$primaryHairColor = "silver"]]
+				| [[Strawberry-Blonde|Salon][$primaryHairColor = "strawberry-blonde"]]
+				| [[White|Salon][$primaryHairColor = "white"]]
+		</div>
+
+		<div class="choices">
+			Highlights:
+				[[None|Salon][$secondaryHairColor = ""]]
+				| [[Black|Salon][$secondaryHairColor = " with black highlights"]]
+				| [[Blazing Red|Salon][$secondaryHairColor = " with blazing red highlights"]]
+				| [[Blonde|Salon][$secondaryHairColor = " with blonde highlights"]]
+				| [[Grey|Salon][$secondaryHairColor = " with grey highlights"]]
+				| [[Neon Blue|Salon][$secondaryHairColor = " with neon blue highlights"]]
+				| [[Neon Green|Salon][$secondaryHairColor = " with neon green highlights"]]
+				| [[Neon Pink|Salon][$secondaryHairColor = " with neon pink highlights"]]
+				| [[Rainbow|Salon][$secondaryHairColor = " with rainbow highlights"]]
+				| [[Silver|Salon][$secondaryHairColor = " with silver highlights"]]
+				| [[White|Salon][$secondaryHairColor = " with white highlights"]]
+		</div>
+
+		<<if $primaryHairColor != 0>>
+			<div class="choices">
+				[["Dye " + $his + " hair"|Salon][$activeSlave.hColor = ($primaryHairColor + $secondaryHairColor),cashX(forceNeg($modCost), "slaveMod", $activeSlave), $primaryHairColor = 0, $secondaryHairColor = ""]] $primaryHairColor $secondaryHairColor now?
+			</div>
+		<</if>>
+
+		<div>
+			<<if $activeSlave.hStyle !== "shaved">>
+				$His $activeSlave.hStyle hair is <<= lengthToEitherUnit($activeSlave.hLength)>> long.
+			<<else>>
+				$His hair is shaved smooth.
+			<</if>>
+			<span class="note">General hairstyles will conform to hair length and clothing choices.</span>
+		</div>
+		<div class="choices">
+			<<if $activeSlave.hLength > 1>>
+				Style $his hair:
+				[[Afro|Salon][$activeSlave.hStyle = "afro",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Braided|Salon][$activeSlave.hStyle = "braided",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Cornrows|Salon][$activeSlave.hStyle = "cornrows",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Curled|Salon][$activeSlave.hStyle = "curled",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Dreadlocks|Salon][$activeSlave.hStyle = "dreadlocks",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Eary|Salon][$activeSlave.hStyle = "eary",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[In a bun|Salon][$activeSlave.hStyle = "bun",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[In a messy bun|Salon][$activeSlave.hStyle = "messy bun",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[In a ponytail|Salon][$activeSlave.hStyle = "ponytail",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[In tails|Salon][$activeSlave.hStyle = "tails",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Luxurious|Salon][$activeSlave.hStyle = "luxurious",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Messy|Salon][$activeSlave.hStyle = "messy",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Neat|Salon][$activeSlave.hStyle = "neat",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Permed|Salon][$activeSlave.hStyle = "permed",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Shaved sides|Salon][$activeSlave.hStyle = "strip",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Up|Salon][$activeSlave.hStyle = "up",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			<<else>>
+				<span class="note">$His hair is too short to style meaningfully</span>
+			<</if>>
+		</div>
+
+		<div class="choices">
+			<<if $activeSlave.hLength > 1>>
+				Cut and style $his hair:
+				[[Shaved|Salon][$activeSlave.hStyle = "shaved",$activeSlave.hLength = 0,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Trimmed short|Salon][$activeSlave.hStyle = "trimmed",$activeSlave.hLength = 10,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Buzzcut|Salon][$activeSlave.hStyle = "buzzcut",$activeSlave.hLength = 1,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			<</if>>
+		</div>
+
+		<div class="choices">
+			Cut or lengthen $his hair:
+			<<if $activeSlave.hLength > 5>>
+				[[Very short|Salon][$activeSlave.hLength = 5,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			<</if>>
+			<<if $activeSlave.hLength > 10>>
+				| [[Short|Salon][$activeSlave.hLength = 10,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			<</if>>
+			<<if $activeSlave.hLength > 30>>
+				| [[Shoulder length|Salon][$activeSlave.hLength = 30,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			<</if>>
+			<<if $activeSlave.hLength > 60>>
+				| [[Long|Salon][$activeSlave.hLength = 60,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			<</if>>
+			<<if $activeSlave.hLength > 100>>
+				| [[Very long|Salon][$activeSlave.hLength = 100,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			<</if>>
+			<<if $activeSlave.hLength == 1>>
+				| [[Apply hair growth stimulating treatment|Salon][$activeSlave.hLength = 1,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			<<elseif $activeSlave.hLength < 150>>
+				| [[Apply extensions|Salon][$activeSlave.hLength += 10,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			<</if>>
+				| Custom length: <<textbox "_newHLength" _oldHLength "Salon">>
+			<<if $showInches == 1>>
+				cm (<<= cmToInchString($activeSlave.hLength)>>)
+			<<elseif $showInches == 2>>
+				inches
+			<</if>>
+			[[Apply|Salon][cashX(forceNeg($modCost), "slaveMod", $activeSlave), $activeSlave.hLength = (Number(_newHLength) || $activeSlave.hLength)]]
+		</div>
+
+		<div class="choices">
+			Have $his hair carefully maintained at its current length:
+			<<if $activeSlave.haircuts == 1>>
+				[[Cease maintenance|Salon][$activeSlave.haircuts = 0]]
+			<<else>>
+				[[Begin maintenance|Salon][$activeSlave.haircuts = 1]]
+			<</if>>
+		</div>
+	<<else>>
+		<<if $activeSlave.hStyle == "bald">>
+			$He is completely bald.
+		<<else>>
+			$His current wig is $activeSlave.hColor.
+			<<if $activeSlave.hStyle != "bald">>
+				[[Remove wig|Salon][$activeSlave.hStyle = "bald",$activeSlave.hLength = 0,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]] or <span class="note">choose a new one:</span>
+			<<else>>
+				<span class="note">Choose a wig color:</span>
+			<</if>>
+
+			<div class="choices">
+				Colors:
+					[[Auburn|Salon][$primaryHairColor = "auburn"]]
+					| [[Black|Salon][$primaryHairColor = "black"]]
+					| [[Blazing Red|Salon][$primaryHairColor = "blazing red"]]
+					| [[Blonde|Salon][$primaryHairColor = "blonde"]]
+					| [[Blue-Violet|Salon][$primaryHairColor = "blue-violet"]]
+					| [[Blue|Salon][$primaryHairColor = "blue"]]
+					| [[Brown|Salon][$primaryHairColor = "brown"]]
+					| [[Burgundy|Salon][$primaryHairColor = "burgundy"]]
+					| [[Chestnut|Salon][$primaryHairColor = "chestnut"]]
+					| [[Chocolate|Salon][$primaryHairColor = "chocolate brown"]]
+					| [[Copper|Salon][$primaryHairColor = "copper"]]
+					| [[Dark Blue|Salon][$primaryHairColor = "dark blue"]]
+					| [[Dark Brown|Salon][$primaryHairColor = "dark brown"]]
+					| [[Dark Orchid|Salon][$primaryHairColor = "dark orchid"]]
+					| [[Deep Red|Salon][$primaryHairColor = "deep red"]]
+					| [[Ginger|Salon][$primaryHairColor = "ginger"]]
+					| [[Golden|Salon][$primaryHairColor = "golden"]]
+					| [[Green-yellow|Salon][$primaryHairColor = "green-yellow"]]
+					| [[Green|Salon][$primaryHairColor = "green"]]
+					| [[Grey|Salon][$primaryHairColor = "grey"]]
+					| [[Hazel|Salon][$primaryHairColor = "hazel"]]
+					| [[Jet Black|Salon][$primaryHairColor = "jet black"]]
+					| [[Neon Blue|Salon][$primaryHairColor = "neon blue"]]
+					| [[Neon Green|Salon][$primaryHairColor = "neon green"]]
+					| [[Neon Pink|Salon][$primaryHairColor = "neon pink"]]
+					| [[Pink|Salon][$primaryHairColor = "pink"]]
+					| [[Platinum Blonde|Salon][$primaryHairColor = "platinum blonde"]]
+					| [[Purple|Salon][$primaryHairColor = "purple"]]
+					| [[Red|Salon][$primaryHairColor = "red"]]
+					| [[Sea Green|Salon][$primaryHairColor = "sea green"]]
+					| [[Silver|Salon][$primaryHairColor = "silver"]]
+					| [[Strawberry-Blonde|Salon][$primaryHairColor = "strawberry-blonde"]]
+					| [[White|Salon][$primaryHairColor = "white"]]
+			</div>
+
+			<div class="choices">
+				Highlights:
+					[[None|Salon][$secondaryHairColor = ""]]
+					| [[Black|Salon][$secondaryHairColor = " with black highlights"]]
+					| [[Blazing Red|Salon][$secondaryHairColor = " with blazing red highlights"]]
+					| [[Blonde|Salon][$secondaryHairColor = " with blonde highlights"]]
+					| [[Grey|Salon][$secondaryHairColor = " with grey highlights"]]
+					| [[Neon Blue|Salon][$secondaryHairColor = " with neon blue highlights"]]
+					| [[Neon Green|Salon][$secondaryHairColor = " with neon green highlights"]]
+					| [[Neon Pink|Salon][$secondaryHairColor = " with neon pink highlights"]]
+					| [[Rainbow|Salon][$secondaryHairColor = " with rainbow highlights"]]
+					| [[Silver|Salon][$secondaryHairColor = " with silver highlights"]]
+					| [[White|Salon][$secondaryHairColor = " with white highlights"]]
+			</div>
+
+			<<if $primaryHairColor != 0>>
+				<div class="choices">
+					[[Change|Salon][$activeSlave.hColor = ($primaryHairColor + $secondaryHairColor),cashX(forceNeg($modCost), "slaveMod", $activeSlave), $primaryHairColor = 0, $secondaryHairColor = ""]] $his wig color to $primaryHairColor $secondaryHairColor
+				</div>
+			<</if>>
+		<</if>>
+
+		<div>
+			<<if $activeSlave.hStyle != "bald">>
+				$His $activeSlave.hStyle wig is <<= lengthToEitherUnit($activeSlave.hLength)>> long.
+				<span class="note">General hairstyles will conform to hair length and clothing choices.</span>
+
+				<<if $activeSlave.hLength == 0>><<set $activeSlave.hLength = 10>><</if>>
+
+				<div class="choices">
+					Set wig length to:
+					<<if $activeSlave.hLength != 10>>[[lengthToEitherUnit(10)|Salon][$activeSlave.hLength = 10,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]<</if>>
+					<<if $activeSlave.hLength != 30>>[[lengthToEitherUnit(30)|Salon][$activeSlave.hLength = 30,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]<</if>>
+					<<if $activeSlave.hLength != 60>>[[lengthToEitherUnit(60)|Salon][$activeSlave.hLength = 60,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]<</if>>
+					<<if $activeSlave.hLength != 90>>[[lengthToEitherUnit(90)|Salon][$activeSlave.hLength = 90,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]<</if>>
+					<<if $activeSlave.hLength != 120>>[[lengthToEitherUnit(120)|Salon][$activeSlave.hLength = 120,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]<</if>>
+					<<if $activeSlave.hLength != 150>>[[lengthToEitherUnit(150)|Salon][$activeSlave.hLength = 150,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]<</if>>
+				</div>
+			<<else>>
+				$He is not wearing a wig.
+			<</if>>
+			<div class="choices">
+				<<if $activeSlave.hStyle != "bald">>
+					Set wig style:
+				<<else>>
+					Give $him a wig:
+				<</if>>
+				[[Afro|Salon][$activeSlave.hStyle = "afro",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Braided|Salon][$activeSlave.hStyle = "braided",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Cornrows|Salon][$activeSlave.hStyle = "cornrows",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Curled|Salon][$activeSlave.hStyle = "curled",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Dreadlocks|Salon][$activeSlave.hStyle = "dreadlocks",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Eary|Salon][$activeSlave.hStyle = "eary",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[In a bun|Salon][$activeSlave.hStyle = "bun",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[In a messy bun|Salon][$activeSlave.hStyle = "messy bun",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[In a ponytail|Salon][$activeSlave.hStyle = "ponytail",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[In tails|Salon][$activeSlave.hStyle = "tails",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Luxurious|Salon][$activeSlave.hStyle = "luxurious",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Messy|Salon][$activeSlave.hStyle = "messy",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Neat|Salon][$activeSlave.hStyle = "neat",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Permed|Salon][$activeSlave.hStyle = "permed",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Shaved sides|Salon][$activeSlave.hStyle = "strip",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				| [[Up|Salon][$activeSlave.hStyle = "up",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			</div>
+		</div>
+	<</if>>
+</div>
+/* MAKEUP */
+<h3>Makeup</h3>
+
+<div>
+	<<makeupDescription>>
+	<<if $activeSlave.makeup > 0>>
+		[[Remove|Salon][$activeSlave.makeup = 0,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	<</if>>
+	<div class="choices">
+	Apply makeup:
+		[[Nice|Salon][$activeSlave.makeup = 1,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		| [[Gorgeous|Salon][$activeSlave.makeup = 2,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		| [[Slutty|Salon][$activeSlave.makeup = 4,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		| [[Color-coordinate with hair|Salon][$activeSlave.makeup = 3,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	</div>
+	<div class="choices">
+		&nbsp;&nbsp;
+		[[Neon|Salon][$activeSlave.makeup = 5,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		| [[Neon, color-coordinate with hair|Salon][$activeSlave.makeup = 6,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	</div>
+	<div class="choices">
+		&nbsp;&nbsp;
+		[[Metallic|Salon][$activeSlave.makeup = 7,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		| [[Metallic, color-coordinate with hair|Salon][$activeSlave.makeup = 8,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	</div>
+</div>
+
+/* NAILS */
+<div>
+	<<nailsDescription>>
+
+	<<if hasAnyArms($activeSlave)>>
+		<div class="choices">
+			Treat nails:
+			[[Clip|Salon][$activeSlave.nails = 0,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Extend|Salon][$activeSlave.nails = 1,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Sharp, claw-like|Salon][$activeSlave.nails = 3,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Bright, glittery|Salon][$activeSlave.nails = 4,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Streetwalker-style|Salon][$activeSlave.nails = 5,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Color-coordinate with hair|Salon][$activeSlave.nails = 2,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		</div>
+		<div class="choices">
+			&nbsp;&nbsp;
+			[[Neon|Salon][$activeSlave.nails = 6,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Neon, color-coordinate with hair|Salon][$activeSlave.nails = 7,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		</div>
+		<div class="choices">
+			&nbsp;&nbsp;
+			[[Metallic|Salon][$activeSlave.nails = 8,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Metallic, color-coordinate with hair|Salon][$activeSlave.nails = 9,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		</div>
+	<</if>>
+</div>
+
+/* SKIN */
+<h3>Skin</h3>
+<div>
+	$His skin is $activeSlave.skin.
+
+	<<if (setup.dyedSkins.includes($activeSlave.skin))>>
+		[[Remove coloring|Salon][$activeSlave.skin = $activeSlave.origSkin,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	<<elseif (($activeSlave.skin == "sun tanned") || ($activeSlave.skin == "spray tanned"))>>
+		[[Remove tanning|Salon][$activeSlave.skin = $activeSlave.origSkin,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	<</if>>
+</div>
+
+<<if (!setup.dyedSkins.includes($activeSlave.skin))>>
+	<div class="choices">
+		<<if ($activeSlave.skin == "sun tanned" || $activeSlave.skin == "spray tanned")>>
+			$His skin tanning must be removed before any advanced procedure to change $his skin color.
+		<<else>>
+			Change skin tone:
+			<<set _needsSpacers = 0>>
+			<<if (skinToneLevel($activeSlave.skin) > 1)>>
+				<<if _needsSpacers == 1>> | <</if>>
+				[[Bleach|Salon][$activeSlave.skin = changeSkinTone($activeSlave.skin, -2), cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				<<set _needsSpacers = 1>>
+			<</if>>
+			<<if (skinToneLevel($activeSlave.skin) > 8)>>
+				<<if _needsSpacers == 1>> | <</if>>
+				[[Lighten|Salon][$activeSlave.skin = changeSkinTone($activeSlave.skin, -1), cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				<<set _needsSpacers = 1>>
+			<</if>>
+			<<if (skinToneLevel($activeSlave.skin) < 18)>>
+				<<if _needsSpacers == 1>> | <</if>>
+				[[Darken|Salon][$activeSlave.skin = changeSkinTone($activeSlave.skin, 1), cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				<<set _needsSpacers = 1>>
+			<</if>>
+			<<if (skinToneLevel($activeSlave.skin) < 25)>>
+				<<if _needsSpacers == 1>> | <</if>>
+				[[Blacken|Salon][$activeSlave.skin = changeSkinTone($activeSlave.skin, 2), cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				<<set _needsSpacers = 1>>
+			<</if>>
+		<</if>>
+	</div>
+	<div class="choices">
+		<<set _needsSpacers = 0>>
+		<<if ($activeSlave.skin != "sun tanned")>>
+			<<if (skinToneLevel($activeSlave.skin) < 6)>>
+				$His skin is so light in color that any attempt at natural tanning is more likely to damage $his skin.
+			<<elseif (skinToneLevel($activeSlave.skin) > 20)>>
+				$His skin is so dark in color that any attempt at natural tanning is not likely to appear on $his skin.
+			<<else>>
+				[["Sun tan " + $his + " skin"|Salon][$activeSlave.skin = "sun tanned", cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+				<<set _needsSpacers = 1>>
+			<</if>>
+		<</if>>
+		<<if ($activeSlave.skin != "spray tanned")>>
+			<<if _needsSpacers == 1>> | <</if>>
+			[["Spray tan " + $his + " skin"|Salon][$activeSlave.skin = "spray tanned", cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		<</if>>
+	</div>
+<</if>>
+
+<div class="choices">
+	Dye or paint:
+	[[Blue|Salon][$activeSlave.skin = "dyed blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	| [[Camouflage|Salon][$activeSlave.skin = "camouflage patterned",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	| [[Gray|Salon][$activeSlave.skin = "dyed gray",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	| [[Green|Salon][$activeSlave.skin = "dyed green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	| [[Pink|Salon][$activeSlave.skin = "dyed pink",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	| [[Red|Salon][$activeSlave.skin = "dyed red",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	| [[Tiger Stripes|Salon][$activeSlave.skin = "tiger striped",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+</div>
+
+<<if $activeSlave.tail != "none">>
+	$His tail is $activeSlave.tailColor.
+	<<if $activeSlave.tailColor != $activeSlave.hColor>>
+		[[Match current hair|Salon][$activeSlave.tailColor = $activeSlave.hColor]] or <span class="note">choose a new one:</span>
+	<<else>>
+		<span class="note">Choose a dye color before dyeing $his tail:</span>
+	<</if>>
+	<div class="choices">
+		Colors:
+			[[Auburn|Salon][$primaryTailColor = "auburn"]]
+			| [[Black|Salon][$primaryTailColor = "black"]]
+			| [[Blazing Red|Salon][$primaryTailColor = "blazing red"]]
+			| [[Blonde|Salon][$primaryTailColor = "blonde"]]
+			| [[Blue-Violet|Salon][$primaryTailColor = "blue-violet"]]
+			| [[Blue|Salon][$primaryTailColor = "blue"]]
+			| [[Brown|Salon][$primaryTailColor = "brown"]]
+			| [[Burgundy|Salon][$primaryTailColor = "burgundy"]]
+			| [[Chestnut|Salon][$primaryTailColor = "chestnut"]]
+			| [[Chocolate|Salon][$primaryTailColor = "chocolate brown"]]
+			| [[Copper|Salon][$primaryTailColor = "copper"]]
+			| [[Dark Blue|Salon][$primaryTailColor = "dark blue"]]
+			| [[Dark Brown|Salon][$primaryTailColor = "dark brown"]]
+			| [[Dark Orchid|Salon][$primaryTailColor = "dark orchid"]]
+			| [[Deep Red|Salon][$primaryTailColor = "deep red"]]
+			| [[Ginger|Salon][$primaryTailColor = "ginger"]]
+			| [[Golden|Salon][$primaryTailColor = "golden"]]
+			| [[Green-yellow|Salon][$primaryTailColor = "green-yellow"]]
+			| [[Green|Salon][$primaryTailColor = "green"]]
+			| [[Grey|Salon][$primaryTailColor = "grey"]]
+			| [[Hazel|Salon][$primaryTailColor = "hazel"]]
+			| [[Jet Black|Salon][$primaryTailColor = "jet black"]]
+			| [[Neon Blue|Salon][$primaryTailColor = "neon blue"]]
+			| [[Neon Green|Salon][$primaryTailColor = "neon green"]]
+			| [[Neon Pink|Salon][$primaryTailColor = "neon pink"]]
+			| [[Pink|Salon][$primaryTailColor = "pink"]]
+			| [[Platinum Blonde|Salon][$primaryTailColor = "platinum blonde"]]
+			| [[Purple|Salon][$primaryTailColor = "purple"]]
+			| [[Red|Salon][$primaryTailColor = "red"]]
+			| [[Sea Green|Salon][$primaryTailColor = "sea green"]]
+			| [[Silver|Salon][$primaryTailColor = "silver"]]
+			| [[Strawberry-Blonde|Salon][$primaryTailColor = "strawberry-blonde"]]
+			| [[White|Salon][$primaryTailColor = "white"]]
+	</div>
+
+	<div class="choices">
+		Highlights:
+			[[None|Salon][$secondaryTailColor = ""]]
+			| [[Black|Salon][$secondaryTailColor = " with black highlights"]]
+			| [[Blazing Red|Salon][$secondaryTailColor = " with blazing red highlights"]]
+			| [[Blonde|Salon][$secondaryTailColor = " with blonde highlights"]]
+			| [[Grey|Salon][$secondaryTailColor = " with grey highlights"]]
+			| [[Neon Blue|Salon][$secondaryTailColor = " with neon blue highlights"]]
+			| [[Neon Green|Salon][$secondaryTailColor = " with neon green highlights"]]
+			| [[Neon Pink|Salon][$secondaryTailColor = " with neon pink highlights"]]
+			| [[Rainbow|Salon][$secondaryTailColor = " with rainbow highlights"]]
+			| [[Silver|Salon][$secondaryTailColor = " with silver highlights"]]
+			| [[White|Salon][$secondaryTailColor = " with white highlights"]]
+	</div>
+
+	<<if $primaryTailColor != 0>>
+		<div class="choices">
+			[["Dye " + $his + " tail"|Salon][$activeSlave.tailColor = ($primaryTailColor + $secondaryTailColor),cashX(forceNeg($modCost), "slaveMod", $activeSlave), $primaryTailColor = 0, $secondaryTailColor = ""]] $primaryTailColor $secondaryTailColor now?
+		</div>
+	<</if>>
+<</if>>
+
+/* MARKS */
+<div>
+	<<if ($activeSlave.markings == "beauty mark")>>
+		$He has a prominent mole on $his face, which
+		<<if $activeSlave.face > 40>>
+			qualifies as a beauty mark and enhances $his attractiveness due to $his facial beauty.
+		<<elseif $activeSlave.face < -10>>
+			makes $him even less attractive.
+		<<else>>
+			qualifies as a beauty mark since $he's pretty, having no significant impact on $his beauty.
+		<</if>>
+		[[Remove it|Salon][$activeSlave.markings = "none",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	<</if>>
+</div>
+
+<div>
+	<<if ($activeSlave.markings == "birthmark")>>
+		$He has a large birthmark, which
+		<<if $activeSlave.prestige > 0 || $activeSlave.porn.prestige > 1>>
+			enhances $his attractiveness due to $his prestige.
+		<<else>>
+			detracts from $his attractiveness.
+		<</if>>
+		[[Bleach it|Salon][$activeSlave.markings = "none",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	<</if>>
+</div>
+
+
+<h3>Body hair</h3>
+/* EYEBROW HAIR */
+
+<<if $activeSlave.eyebrowHStyle != "bald">>
+	<div>
+		$His <<if $activeSlave.eyebrowFullness != "natural">>$activeSlave.eyebrowFullness<<if $activeSlave.eyebrowHStyle != "natural">>,<</if>> <</if>><<if $activeSlave.eyebrowHStyle != "natural">>$activeSlave.eyebrowHStyle <</if>> eyebrows
+		<<if $activeSlave.eyebrowHStyle == "shaved">>
+			would be $activeSlave.eyebrowHColor if present.
+		<<else>>
+			are $activeSlave.eyebrowHColor.
+		<</if>>
+		<<if $activeSlave.eyebrowHColor != $activeSlave.hColor>>
+			[[Match the hair?|Salon][$activeSlave.eyebrowHColor = $activeSlave.hColor,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		<</if>>
+	</div>
+
+	<div class="choices">
+		Dye $his eyebrow hair:
+			[[Auburn|Salon][$activeSlave.eyebrowHColor = "auburn",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Black|Salon][$activeSlave.eyebrowHColor = "black",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Blazing Red|Salon][$activeSlave.eyebrowHColor = "blazing red",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Blonde|Salon][$activeSlave.eyebrowHColor = "blonde",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Blue-Violet|Salon][$activeSlave.eyebrowHColor = "blue-violet",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Blue|Salon][$activeSlave.eyebrowHColor = "blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Brown|Salon][$activeSlave.eyebrowHColor = "brown",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Burgundy|Salon][$activeSlave.eyebrowHColor = "burgundy",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Chestnut|Salon][$activeSlave.eyebrowHColor = "chestnut",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Chocolate|Salon][$activeSlave.eyebrowHColor = "chocolate brown",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Copper|Salon][$activeSlave.eyebrowHColor = "copper",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Dark Blue|Salon][$activeSlave.eyebrowHColor = "dark blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Dark Brown|Salon][$activeSlave.eyebrowHColor = "dark brown",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Dark Orchid|Salon][$activeSlave.eyebrowHColor = "dark orchid",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Deep Red|Salon][$primaryHairColor = "deep red"]]
+			| [[Ginger|Salon][$activeSlave.eyebrowHColor = "ginger",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Golden|Salon][$activeSlave.eyebrowHColor = "golden",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Green-yellow|Salon][$activeSlave.eyebrowHColor = "green-yellow",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Green|Salon][$activeSlave.eyebrowHColor = "green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Grey|Salon][$activeSlave.eyebrowHColor = "grey",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Hazel|Salon][$activeSlave.eyebrowHColor = "hazel",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Jet Black|Salon][$activeSlave.eyebrowHColor = "jet black",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Neon Blue|Salon][$activeSlave.eyebrowHColor = "neon blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Neon Green|Salon][$activeSlave.eyebrowHColor = "neon green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Neon Pink|Salon][$activeSlave.eyebrowHColor = "neon pink",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Pink|Salon][$activeSlave.eyebrowHColor = "pink",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Platinum Blonde|Salon][$activeSlave.eyebrowHColor = "platinum blonde",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Purple|Salon][$activeSlave.eyebrowHColor = "purple",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Red|Salon][$activeSlave.eyebrowHColor = "red",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Sea Green|Salon][$activeSlave.eyebrowHColor = "sea green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Silver|Salon][$activeSlave.eyebrowHColor = "silver",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Strawberry-Blonde|Salon][$activeSlave.eyebrowHColor = "strawberry-blonde",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[White|Salon][$activeSlave.eyebrowHColor = "white",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	</div>
+
+	<div class="choices">
+		Style $his eyebrow hair:
+			[[Natural|Salon][$activeSlave.eyebrowHStyle = "natural",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Curved|Salon][$activeSlave.eyebrowHStyle = "curved",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Elongated|Salon][$activeSlave.eyebrowHStyle = "elongated",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[High-Arched|Salon][$activeSlave.eyebrowHStyle = "high-arched",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Rounded|Salon][$activeSlave.eyebrowHStyle = "rounded",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Shaved|Salon][$activeSlave.eyebrowHStyle = "shaved",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Shortened|Salon][$activeSlave.eyebrowHStyle = "shortened",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Slanted Inwards|Salon][$activeSlave.eyebrowHStyle = "slanted inwards",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Slanted Outwards|Salon][$activeSlave.eyebrowHStyle = "slanted outwards",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Straight|Salon][$activeSlave.eyebrowHStyle = "straight",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	</div>
+
+	<div class="choices">
+		Shape $his eyebrow hair:
+			[[Natural|Salon][$activeSlave.eyebrowFullness = "natural",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Bushy|Salon][$activeSlave.eyebrowFullness = "bushy",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Thick|Salon][$activeSlave.eyebrowFullness = "thick",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Tapered|Salon][$activeSlave.eyebrowFullness = "tapered",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Threaded|Salon][$activeSlave.eyebrowFullness = "threaded",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Thin|Salon][$activeSlave.eyebrowFullness = "thin",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Pencil-Thin|Salon][$activeSlave.eyebrowFullness = "pencil-thin",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	</div>
+<<else>>
+	<div>
+		$His eyebrows are completely hairless.
+	</div>
+<</if>>
+
+/* PUBIC HAIR */
+
+<<set _pubertyAge = Math.min($activeSlave.pubertyAgeXX, $activeSlave.pubertyAgeXY)>>
+<<if $activeSlave.pubicHStyle != "bald" && $activeSlave.pubicHStyle != "hairless" && $activeSlave.physicalAge >= _pubertyAge-1>>
+
+	<div>
+		$His
+		<<if $activeSlave.physicalAge < _pubertyAge>>
+			wispy pubic hair, which is just starting to grow in,
+		<<elseif $activeSlave.pubicHStyle == "in a strip">>
+			pubic hair, which is shaved into a strip,
+		<<else>>
+			$activeSlave.pubicHStyle pubic hair
+		<</if>>
+		<<if $activeSlave.pubicHStyle == "waxed">>
+			would be $activeSlave.pubicHColor if present.
+		<<else>>
+			is $activeSlave.pubicHColor.
+		<</if>>
+		<<if $activeSlave.pubicHColor != $activeSlave.hColor>>
+			[[Match the curtains?|Salon][$activeSlave.pubicHColor = $activeSlave.hColor,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		<</if>>
+	</div>
+
+	<div class="choices">
+		Dye $his pubic hair:
+			[[Auburn|Salon][$activeSlave.pubicHColor = "auburn",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Black|Salon][$activeSlave.pubicHColor = "black",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Blazing Red|Salon][$activeSlave.pubicHColor = "blazing red",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Blonde|Salon][$activeSlave.pubicHColor = "blonde",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Blue-Violet|Salon][$activeSlave.pubicHColor = "blue-violet",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Blue|Salon][$activeSlave.pubicHColor = "blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Brown|Salon][$activeSlave.pubicHColor = "brown",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Burgundy|Salon][$activeSlave.pubicHColor = "burgundy",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Chestnut|Salon][$activeSlave.pubicHColor = "chestnut",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Chocolate|Salon][$activeSlave.pubicHColor = "chocolate brown",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Copper|Salon][$activeSlave.pubicHColor = "copper",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Dark Blue|Salon][$activeSlave.pubicHColor = "dark blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Dark Brown|Salon][$activeSlave.pubicHColor = "dark brown",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Dark Orchid|Salon][$activeSlave.pubicHColor = "dark orchid",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Deep Red|Salon][$primaryHairColor = "deep red"]]
+			| [[Ginger|Salon][$activeSlave.pubicHColor = "ginger",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Golden|Salon][$activeSlave.pubicHColor = "golden",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Green-yellow|Salon][$activeSlave.pubicHColor = "green-yellow",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Green|Salon][$activeSlave.pubicHColor = "green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Grey|Salon][$activeSlave.pubicHColor = "grey",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Hazel|Salon][$activeSlave.pubicHColor = "hazel",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Jet Black|Salon][$activeSlave.pubicHColor = "jet black",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Neon Blue|Salon][$activeSlave.pubicHColor = "neon blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Neon Green|Salon][$activeSlave.pubicHColor = "neon green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Neon Pink|Salon][$activeSlave.pubicHColor = "neon pink",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Pink|Salon][$activeSlave.pubicHColor = "pink",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Platinum Blonde|Salon][$activeSlave.pubicHColor = "platinum blonde",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Purple|Salon][$activeSlave.pubicHColor = "purple",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Red|Salon][$activeSlave.pubicHColor = "red",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Sea Green|Salon][$activeSlave.pubicHColor = "sea green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Silver|Salon][$activeSlave.pubicHColor = "silver",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Strawberry-Blonde|Salon][$activeSlave.pubicHColor = "strawberry-blonde",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[White|Salon][$activeSlave.pubicHColor = "white",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	</div>
+
+	<div class="choices">
+		Style $his pubic hair:
+			[[Waxed|Salon][$activeSlave.pubicHStyle = "waxed",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Landing strip|Salon][$activeSlave.pubicHStyle = "in a strip",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Neat|Salon][$activeSlave.pubicHStyle = "neat",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Bushy in the front|Salon][$activeSlave.pubicHStyle = "bushy in the front and neat in the rear",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Bushy|Salon][$activeSlave.pubicHStyle = "bushy",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Very Bushy|Salon][$activeSlave.pubicHStyle = "very bushy",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	</div>
+
+<<else>>
+	<div>
+		$His groin is completely hairless.
+	</div>
+<</if>>
+
+/* UNDERARM HAIR */
+
+<<if $activeSlave.underArmHStyle != "bald" && $activeSlave.underArmHStyle != "hairless" && $activeSlave.physicalAge >= _pubertyAge-1>>
+
+	<div>
+		$His
+		<<if $activeSlave.physicalAge < _pubertyAge>>
+			wispy underarm hair
+		<<else>>
+			$activeSlave.underArmHStyle underarm hair
+		<</if>>
+		<<if $activeSlave.underArmHStyle == "waxed">>
+			would be $activeSlave.underArmHColor if present.
+		<<else>>
+			is $activeSlave.underArmHColor.
+		<</if>>
+		<<if $activeSlave.underArmHColor != $activeSlave.hColor>>
+			[[Match the hair?|Salon][$activeSlave.underArmHColor = $activeSlave.hColor,cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+		<</if>>
+	</div>
+
+	<div class="choices">
+		Dye $his armpit hair:
+			[[Auburn|Salon][$activeSlave.underArmHColor = "auburn",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Black|Salon][$activeSlave.underArmHColor = "black",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Blazing Red|Salon][$activeSlave.underArmHColor = "blazing red",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Blonde|Salon][$activeSlave.underArmHColor = "blonde",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Blue-Violet|Salon][$activeSlave.underArmHColor = "blue-violet",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Blue|Salon][$activeSlave.underArmHColor = "blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Brown|Salon][$activeSlave.underArmHColor = "brown",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Burgundy|Salon][$activeSlave.underArmHColor = "burgundy",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Chestnut|Salon][$activeSlave.underArmHColor = "chestnut",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Chocolate|Salon][$activeSlave.underArmHColor = "chocolate brown",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Copper|Salon][$activeSlave.underArmHColor = "copper",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Dark Blue|Salon][$activeSlave.underArmHColor = "dark blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Dark Brown|Salon][$activeSlave.underArmHColor = "dark brown",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Dark Orchid|Salon][$activeSlave.underArmHColor = "dark orchid",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Deep Red|Salon][$primaryHairColor = "deep red"]]
+			| [[Ginger|Salon][$activeSlave.underArmHColor = "ginger",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Golden|Salon][$activeSlave.underArmHColor = "golden",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Green-yellow|Salon][$activeSlave.underArmHColor = "green-yellow",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Green|Salon][$activeSlave.underArmHColor = "green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Grey|Salon][$activeSlave.underArmHColor = "grey",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Hazel|Salon][$activeSlave.underArmHColor = "hazel",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Jet Black|Salon][$activeSlave.underArmHColor = "jet black",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Neon Blue|Salon][$activeSlave.underArmHColor = "neon blue",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Neon Green|Salon][$activeSlave.underArmHColor = "neon green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Neon Pink|Salon][$activeSlave.underArmHColor = "neon pink",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Pink|Salon][$activeSlave.underArmHColor = "pink",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Platinum Blonde|Salon][$activeSlave.underArmHColor = "platinum blonde",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Purple|Salon][$activeSlave.underArmHColor = "purple",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Red|Salon][$activeSlave.underArmHColor = "red",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Sea Green|Salon][$activeSlave.underArmHColor = "sea green",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Silver|Salon][$activeSlave.underArmHColor = "silver",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Strawberry-Blonde|Salon][$activeSlave.underArmHColor = "strawberry-blonde",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[White|Salon][$activeSlave.underArmHColor = "white",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	</div>
+
+	<div class="choices">
+		Style $his armpit hair:
+			[[Waxed|Salon][$activeSlave.underArmHStyle = "waxed",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Shaved|Salon][$activeSlave.underArmHStyle = "shaved",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Neat|Salon][$activeSlave.underArmHStyle = "neat",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+			| [[Bushy|Salon][$activeSlave.underArmHStyle = "bushy",cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	</div>
+
+<<else>>
+	<div>
+		$His underarms are completely hairless.
+	</div>
+<</if>>

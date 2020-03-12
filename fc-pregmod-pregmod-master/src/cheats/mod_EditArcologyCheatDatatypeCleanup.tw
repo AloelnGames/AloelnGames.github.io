@@ -1,0 +1,26 @@
+:: MOD_Edit Arcology Cheat Datatype Cleanup [nobr]
+
+<<set $nextButton = "Continue">>
+<<if $sideBarOptions.compact > 0>>
+	<<set $nextLink = "Manage Arcology">>
+<<else>>
+	<<set $nextLink = "Main">>
+<</if>>
+
+<<if $customEvalCode>>
+	<<if $customEvalCode.charAt(0) != "(" || $nextLink == ")">> /* second condition is only there for sanityCheck */
+		<<set $customEvalCode = "(" + $customEvalCode + ")">>
+	<</if>>
+	<<if typeof eval($customEvalCode) === "function">>
+		<<run (eval($customEvalCode))($arcologies[0])>>
+	<</if>>
+<</if>>
+<<unset $customEvalCode>>
+
+<<run ArcologyDatatypeCleanup()>>
+
+The chanting grows louder and louder, CHEAT! CHEAT! CHEAT!
+
+<br><br>The Arcology morphs and changes shape, CHEAT! CHEAT! CHEAT!
+
+<br><br>The Arcology has been changed forever and you forfeit your CHEATING CHEATY SOUL!

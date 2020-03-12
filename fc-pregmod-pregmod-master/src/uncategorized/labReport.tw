@@ -1,0 +1,42 @@
+:: Lab Report [nobr]
+
+''Lab Report''<hr style="margin:0">
+<br>
+<<if ($researchLab.hired + $researchLab.menials) > 0>>
+	<<if $researchLab.tasks.length == 0>>
+		<<set _cash = ($researchLab.speed * 90)>>
+		Since the lab is currently not working on any projects it takes contract work and earns you @@.yellowgreen;<<= cashFormat(_cash)>>.@@
+		<<run cashX(_cash, "lab")>>
+	<<else>>
+		<<set _work = $researchLab.speed, _task = $researchLab.tasks[0]>>
+		<<for _work > 0>>
+			<<if _work < _task.workLeft>>
+				<<set _task.workLeft -= _work, _work = 0>>
+				The lab continues <<if _task.type == "research">>research<<else>>work<</if>> on @@.yellow;<<= addA(setup.prosthetics[_task.id].name)>>.@@ It will take approximately <<= (Math.floor(_task.workLeft / $researchLab.speed) + 1)>> week(s) to complete.
+			<<else>>
+				<<set _work -= _task.workLeft>>
+				Your lab staff have @@.green;completed@@ their
+				<<switch _task.type>>
+				<<case "research">>
+					<<= setup.prosthetics[_task.id].name>> research project.
+					<<set $prosthetics[_task.id].research = 1>>
+				<<case "craft">>
+					<<= setup.prosthetics[_task.id].name>> construction project.
+					<<set $prosthetics[_task.id].amount += 1>>
+				<<case "craftFit">>
+					<<set _i = $slaveIndices[_task.slaveID], addProsthetic($slaves[_i], _task.id)>>
+					project to construct <<= addA(setup.prosthetics[_task.id].name)>> for <<= SlaveFullName($slaves[_i])>>.
+				<</switch>>
+				<<set $researchLab.tasks.shift(), _task = $researchLab.tasks[0]>>
+				<<if ndef _task>>
+					<<set _cashX = Math.round(_work * 90), _work = 0>>
+					<br>Your lab has @@.green;finished all projects.@@ The remaining time is used for contract work earning you @@.yellowgreen;<<= cashFormat(_cashX)>>.@@
+					<<run cashX(_cashX, "lab")>>
+				<</if>>
+			<</if>>
+			<br>
+		<</for>>
+	<</if>>
+<<elseif $researchLab.tasks.length > 0>>
+	//Without researchers your tasks will never be finished.//
+<</if>>

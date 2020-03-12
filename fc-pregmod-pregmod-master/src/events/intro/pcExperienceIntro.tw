@@ -1,0 +1,133 @@
+:: PC Experience Intro [nobr]
+
+<<if $PC.career == "arcology owner">>
+	<<goto "PC Rumor Intro">>
+<<else>>
+	<p>
+		You're a relative unknown in the Free Cities, but it's clear you're already accomplished. The meek and average cannot aspire to acquire arcologies. You've got all the necessary skills to take over an arcology and succeed as its owner, but you should be able to leverage the skills and experience you retain from your past, too.
+		<span class="intro question">
+			What career brought you to the Free Cities?
+		</span>
+	</p>
+
+	<div>
+		[[Idle wealth|PC Rumor Intro][$PC.career = "wealth"]]
+	</div>
+	<div class="indent note">
+		Start with <span class="cash inc">extra money.</span>
+		<<if $showSecExp == 1>>
+			However, you will find it @@.red;harder to maintain authority,@@ but <span class="cash inc">propaganda hub upgrades will be cheaper.</span>
+		<</if>>
+		Your starting slaves will have two free levels of @@.cyan;sex skills@@ available.
+	</div>
+
+	<div>
+		[[Venture capitalism|PC Rumor Intro][$PC.career = "capitalist"]]
+	</div>
+	<div class="indent note">
+		You will be more @@.green;effective at business pursuits.@@
+		<<if $showSecExp == 1>>
+			In addition, <span class="cash inc">propaganda hub upgrades will be cheaper.</span>
+		<</if>>
+		Your starting slaves will have a free level of @@.cyan;prostitution skill@@ available.
+	</div>
+
+	<div>
+		[[Private military work|PC Rumor Intro][$PC.career = "mercenary"]]
+	</div>
+	<div class="indent note">
+		You retain mercenary contacts
+		<<if $showSecExp == 1>>
+			and your security skills will make it @@.green;easier to keep the arcology safe.@@ Also, <span class="cash inc">security HQ upgrades will be cheaper.</span>
+		<<else>>
+			and security skills.
+		<</if>>
+		Your starting slaves will have @@.green;free trust available.@@
+	</div>
+
+	<div>
+		[[Slaving|PC Rumor Intro][$PC.career = "slaver"]]
+	</div>
+	<div class="indent note">
+		Your slave breaking experience will be useful.
+		<<if $showSecExp == 1>>
+			You will find that authority will be @@.green;easier to maintain@@ and <span class="cash inc">security HQ upgrades will be cheaper.</span>
+		<</if>>
+		Your starting slaves will have free @@.hotpink;devotion@@ available.
+	</div>
+
+	<div>
+		[[Arcology engineering|PC Rumor Intro][$PC.career = "engineer"]]
+	</div>
+	<div class="indent note">
+		<span class="cash inc">Upgrading the arcology will be cheaper.</span> Also, the arcology will start with <span class="cash inc">basic economic upgrades</span> already installed.
+	</div>
+
+	<div>
+		[[Slave surgery|PC Rumor Intro][$PC.career = "medicine"]]
+	</div>
+	<div class="indent note">
+		Surgery will be <span class="cash inc">cheaper</span> and @@.green;healthier@@ and <span class="cash inc">drug upgrades will be cheaper.</span> Your starting slaves will have free implants available.
+	</div>
+
+	<div>
+		[[Minor celebrity|PC Rumor Intro][$PC.career = "celebrity"]]
+	</div>
+	<div class="indent note">
+		Start with @@.green;extra reputation.@@
+		<<if $showSecExp == 1>>
+			In addition, <span class="cash inc">propaganda hub upgrades will be cheaper.</span>
+		<</if>>
+		Your starting slaves will have a free level of @@.cyan;entertainment skill@@ available.
+	</div>
+
+	<div>
+		[[High class escort|PC Rumor Intro][$PC.career = "escort"]]
+	</div>
+	<div class="indent note">
+		As an ex-whore, you will find it @@.red;hard to maintain reputation@@<<if $showSecExp == 1>>, @@.red;in addition to authority@@<</if>>.
+		Your starting slaves will have a free level of @@.cyan;sex skills@@ available, along with a free level of @@.cyan;entertainment and prostitution.@@
+	</div>
+
+	<div>
+		[[Servant|PC Rumor Intro][$PC.career = "servant"]]
+	</div>
+	<div class="indent note">
+		As an ex-servant, you will find it @@.red;hard to maintain reputation@@<<if $showSecExp == 1>>, @@.red;in addition to authority@@<</if>>.
+		You know how to <span class="cash inc">lower your upkeep,</span> but @@.red;not much else.@@ Your starting slaves will have free @@.mediumaquamarine;trust@@ and @@.hotpink;devotion.@@
+	</div>
+
+	<div>
+		[[Gang Leader|PC Rumor Intro][$PC.career = "gang"]]
+	</div>
+	<div class="indent note">
+		As an ex-gang leader, you know how to haggle slaves.
+		<<if $showSecExp == 1>>
+			In addition, asserting your authority @@.green;will be easier@@ and <span class="cash inc">security HQ upgrades will be cheaper.</span>
+		<</if>>
+		However, you will @@.red;find reputation quite hard@@ to maintain. Your starting slaves will be @@.green;fitter@@ and possess a free level of @@.cyan;combat skill.@@
+	</div>
+
+	<div>
+		[[Incursion Specialist|PC Rumor Intro][$PC.career = "BlackHat"]]
+	</div>
+	<div class="indent note">
+		As an ex-hacker for hire, you know how to gain access computer systems and other devices. @@.green;Certain upgrades will be cheaper@@ and you may find alternative approaches to problems.
+		<<if $showSecExp == 1>>
+			However, you will @@.red;find authority quite hard@@ to maintain.
+		<</if>>
+		Your starting slaves will have a free level of @@.cyan;intelligence@@.
+	</div>
+<</if>>
+
+<p>
+	<<if $showSecExp == 1>>
+		<<link "Hide Security Expansion Mod effects" "PC Experience Intro">>
+			<<set $showSecExp = 0>>
+		<</link>>
+	<<else>>
+		<<link "Show Security Expansion Mod effects" "PC Experience Intro">>
+			<<set $showSecExp = 1>>
+		<</link>>
+	<</if>>
+</p>

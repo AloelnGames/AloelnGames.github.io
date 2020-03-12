@@ -1,0 +1,441 @@
+:: HG Application [nobr]
+
+<<setLocalPronouns $HeadGirl>>
+<<setLocalPronouns $activeSlave 2>>
+
+<<if ndef $HGSeverity>>
+	<<set $HGSeverity = 0>>
+<</if>>
+
+<<set $activeSlave.training = Math.clamp($activeSlave.training, 0, 150)>>
+<<set _effectiveness = $HeadGirl.actualAge+(($HeadGirl.intelligence+$HeadGirl.intelligenceImplant)/3)-($HeadGirl.accent*5)+($HGSeverity*10)+(($activeSlave.intelligence+$activeSlave.intelligenceImplant)/4)-($activeSlave.accent*5)>>
+<<if $AgePenalty == 0>>
+	<<set _effectiveness += Math.max(0,(30-$HeadGirl.actualAge))>>
+<</if>>
+<<if $HeadGirl.sexualFlaw == "abusive" && $HGSeverity >= 0>>
+	<<set _effectiveness += 10>>
+<</if>>
+<<if $HGtraining != "health">>
+	<<set $activeSlave.health.tired += 25>>
+<</if>>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight: bold">Your Head Girl</span> <span class='slave-name'>$HeadGirl.slaveName</span> notices that <span class='slave-name'>$activeSlave.slaveName</span>
+<<switch $HGtraining>>
+<<case "health">>
+	is unwell.
+<<case "obedience">>
+	is disobedient.
+<<case "paraphilia">>
+	has a paraphilia.
+<<case "flaw">>
+	has an unpleasant flaw worth fixing.
+<<case "soften">>
+	has an unpleasant flaw that $he can try to soften into a unique quirk.
+<<case "oral skill">>
+	isn't as orally skilled as $he is.
+<<case "anal skill">>
+	isn't as skilled at taking anal as $he is.
+<<case "fuck skill">>
+	isn't as skilled at vaginal intercourse as $he is.
+<<case "whore skill">>
+	isn't as skilled at the fine art of sex for money as $he is.
+<<case "entertain skill">>
+	isn't as skilled at entertainment as $he is.
+<</switch>>
+
+<<if $HGtraining == "health">>
+
+$He helps $activeSlave.slaveName however $he can. The tender care has @@.green;improved $activeSlave.slaveName's health.@@
+<<run improveCondition($activeSlave, 10)>>
+<<set $activeSlave.health.tired = Math.clamp($activeSlave.health.tired-10, 0, 1000)>>
+<<set $activeSlave.training = 0>>
+
+<<else>>
+
+<<if $HeadGirl.career == "an arcology owner">>
+	$He was once an arcology owner $himself, making $him truly peerless as a Head Girl.
+	<<set _effectiveness += 50>>
+<<elseif setup.HGCareers.includes($HeadGirl.career)>>
+	$He was used to giving commands and being obeyed in $his life before $he was a slave, experience $he can call on now.
+	<<set _effectiveness += 5>>
+<<elseif $HeadGirl.skill.headGirl >= $masteredXP>>
+	$He is used to giving commands and being obeyed through experience, rendering $him more effective.
+	<<set _effectiveness += 5>>
+<</if>>
+
+<<if $HeadGirl.actualAge > 30>>
+	$His age and experience help $him as $he works with $activeSlave.slaveName.
+<<elseif $HeadGirl.actualAge < 25 && $AgePenalty > 0>>
+	$His youth and inexperience impede $him as $he works with $activeSlave.slaveName.
+<</if>>
+
+<<if $HeadGirl.accent >= 3>>
+	$He does $his best to give orders in $language, but has to resort to a lot of unseemly gesticulation and shouting, making $him much less effective.
+<<elseif $HeadGirl.accent == 2>>
+	$His heavy <<print aNational($HeadGirl.nationality)>> accent impedes $his clarity in $language, making $him somewhat less effective.
+<</if>>
+
+<<if ($HGtraining == "obedience") || ($HGtraining == "flaw") || ($HGtraining == "soften")>>
+	<<if $HeadGirl.intelligence+$HeadGirl.intelligenceImplant > 50>>
+		<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant > 50>>
+			$He needs $his wits about $him to mold $activeSlave.slaveName, who's quite intelligent _himself2.
+		<<elseif $activeSlave.intelligence+$activeSlave.intelligenceImplant >= -50>>
+			$His intelligence helps $him mold $activeSlave.slaveName.
+		<<else>>
+			Molding $activeSlave.slaveName is very easy, especially for a smart Head Girl like $him.
+		<</if>>
+	<</if>>
+<<else>>
+	<<if $HeadGirl.intelligence+$HeadGirl.intelligenceImplant > 50>>
+		<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant > 50>>
+			Both slaves are quite intelligent, making $his job much easier.
+		<<elseif $activeSlave.intelligence+$activeSlave.intelligenceImplant >= -50>>
+			$He's quite intelligent and can teach $activeSlave.slaveName well.
+		<<else>>
+			$He needs all $his considerable intelligence to get through to the idiot $he has to teach.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if $HGSeverity > 0>>
+	Your directives encourage $him to rape any slave that fails in the slightest way, a task $he approaches
+	<<if $HeadGirl.sexualFlaw == "abusive">>
+		eagerly, since $he prefers to take $his pleasure without consent.
+	<<elseif $HeadGirl.fetish == "sadist">>
+		with sadistic enthusiasm.
+	<<elseif $HeadGirl.fetish == "dom">>
+		with confidence.
+	<<elseif $HeadGirl.energy > 95>>
+		as a convenient way to
+		<<if ($HeadGirl.balls > 0)>>
+			drain $his perpetually overfilled balls into a series of spasming holes.
+		<<else>>
+			sate $his excess sexual appetite.
+		<</if>>
+	<<else>>
+		dutifully.
+	<</if>>
+	<<if $activeSlave.vagina == 0>>
+		In $activeSlave.slaveName's case, $he's careful to limit _his2 sexual abuse to things that won't take the _girl2's virginity. The slave
+	<<elseif $activeSlave.anus == 0>>
+		$He's careful to molest $activeSlave.slaveName in ways that don't involve penetrating _his2 virgin ass. The slave
+	<<else>>
+		$activeSlave.slaveName
+	<</if>>
+	<<if $activeSlave.devotion > 50>>
+		accepts the abuse, believing _he2 deserves to be raped.
+	<<elseif $activeSlave.devotion >= -20>>
+		is @@.gold;frightened@@ by the unceasing abuse.
+		<<set $activeSlave.trust -= 1>>
+	<<else>>
+		@@.mediumorchid;hates@@ and @@.gold;fears@@ the constant abuse.
+		<<set $activeSlave.trust -= 1>>
+		<<set $activeSlave.devotion -= 1>>
+	<</if>>
+	$HeadGirl.slaveName makes sure $his victim hates it, every time, and $activeSlave.slaveName can't help but do _his2 very best to avoid this treatment.
+<<elseif $HGSeverity == 0>>
+	You allow $him to use $his own judgment when punishing failures,
+	<<if $HeadGirl.sexualFlaw == "abusive">>
+		and $he usually decides in favor of forcing misbehaving slaves to get $him off.
+	<<elseif $HeadGirl.fetish == "sadist">>
+		permission the sadist uses for $his own gratification.
+	<<elseif $HeadGirl.fetish == "dom">>
+		which the dominant $girl uses confidently.
+	<<elseif $HeadGirl.energy > 95>>
+		which $he uses to
+		<<if ($HeadGirl.balls > 0)>>
+			force $his subordinates to keep $his balls drained.
+		<<else>>
+			extract the constant sexual favors $his libido demands.
+		<</if>>
+	<<else>>
+		and $he does $his best to be fair.
+	<</if>>
+	$activeSlave.slaveName
+	<<if $activeSlave.devotion > 50>>
+		is @@.mediumaquamarine;grateful@@ that _he2 is punished justly when _he2 makes mistakes.
+		<<set $activeSlave.trust += 1>>
+	<<elseif $activeSlave.devotion >= -20>>
+		does _his2 best to learn quickly and avoid punishment.
+	<<else>>
+		is @@.gold;scared@@ by _his2 inability to get away with the smallest disobedience.
+		<<set $activeSlave.trust -= 1>>
+	<</if>>
+<<else>>
+	You require $him to use respect when punishing; $he does $his best to motivate, but is unable to use real fear as a tool. $activeSlave.slaveName understands this, and @@.mediumaquamarine;trusts@@ that if _he2 fails, the consequences won't be too awful.
+	<<set $activeSlave.trust += 1>>
+<</if>>
+
+<<if $HGtraining == "obedience">>
+
+<<set $activeSlave.training = 0>>
+<<set _effectiveness -= ($activeSlave.intelligence+$activeSlave.intelligenceImplant)/3>>
+<<if _effectiveness <= 0>>
+	$activeSlave.slaveName is smart enough to complicate things; _he2 manages to outwit $him this week and makes no progress.
+<<else>>
+	<<set $activeSlave.devotion += Math.ceil(_effectiveness/4)>>
+	<<if $activeSlave.devotion < -50>>
+		$He helps watch and restrain the rebellious $activeSlave.slaveName, helping wear _him2 down, @@.gold;breaking $activeSlave.slaveName's rebelliousness.@@
+	<<elseif $activeSlave.devotion < -20>>
+		$He keeps $activeSlave.slaveName constantly aware of _his2 slavery, @@.gold;breaking $activeSlave.slaveName's resistance.@@
+	<<else>>
+		$He acts as another pair of eyes watching $activeSlave.slaveName and metes out punishments, @@.gold;improving $activeSlave.slaveName's servitude.@@
+	<</if>>
+<</if>>
+
+<<elseif $HGtraining == "paraphilia">>
+
+<<set _effectiveness -= ($activeSlave.intelligence+$activeSlave.intelligenceImplant)/3>>
+<<set $activeSlave.training += _effectiveness>>
+$HeadGirl.slaveName does $his best to get $activeSlave.slaveName past it with punishments and rewards,
+<<if $activeSlave.training > 100>>
+	and @@.green;resolves $activeSlave.slaveName's paraphilia.@@
+	<<set $activeSlave.training = 0>>
+	<<set $activeSlave.sexualFlaw = "none">>
+<<else>>
+	and makes partial progress.
+<</if>>
+
+<<elseif $HGtraining == "flaw">>
+
+<<set _effectiveness -= ($activeSlave.intelligence+$activeSlave.intelligenceImplant)/3>>
+<<set $activeSlave.training += _effectiveness>>
+$HeadGirl.slaveName punishes $activeSlave.slaveName whenever $he catches _him2 indulging in _his2 bad habits,
+<<if $activeSlave.training > 100>>
+	and @@.green;fixes $activeSlave.slaveName's flaw.@@
+	<<set $activeSlave.training = 0>>
+	<<if $activeSlave.behavioralFlaw != "none">>
+		<<set $activeSlave.behavioralFlaw = "none">>
+	<<elseif $activeSlave.sexualFlaw != "none">>
+		<<set $activeSlave.sexualFlaw = "none">>
+	<</if>>
+<<else>>
+	and makes partial progress.
+<</if>>
+
+<<elseif $HGtraining == "soften">>
+
+<<set _effectiveness -= ($activeSlave.intelligence+$activeSlave.intelligenceImplant)/3>>
+<<set $activeSlave.training += _effectiveness>>
+$He punishes $activeSlave.slaveName whenever $he sees _him2 breaking the rules yet does $his best to retain what makes the slave special,
+<<if $activeSlave.training > 150>>
+	<<set $activeSlave.training = 0>>
+	and successfully @@.green;softens $activeSlave.slaveName's flaw.@@
+	<<if $activeSlave.behavioralFlaw != "none">>
+		<<run SoftenBehavioralFlaw($activeSlave)>>
+	<<elseif $activeSlave.sexualFlaw != "none">>
+		<<run SoftenSexualFlaw($activeSlave)>>
+	<</if>>
+<<else>>
+	and makes partial progress.
+<</if>>
+
+<<elseif $HGtraining == "oral skill">>
+
+<<set $activeSlave.training = 0>>
+<<if ($HeadGirl.fetish == "cumslut") && ($HeadGirl.fetishStrength > 60)>>
+	In spare moments $he teaches $activeSlave.slaveName how to suck cocks, cunts, and assholes. $His enthusiasm for oral sex is infectious. $activeSlave.slaveName's @@.green;oral skills have improved.@@
+	<<= SkillIncrease.Oral($activeSlave, random(5,10))>>
+<<elseif ($HeadGirl.dick > 0) && canPenetrate($HeadGirl)>>
+	In spare moments $he teaches $activeSlave.slaveName how to suck cocks, cunts, and assholes. Your Head Girl uses $his penis as an effective teaching tool. $activeSlave.slaveName's @@.green;oral skills have improved.@@
+	<<= SkillIncrease.Oral($activeSlave, random(5,10))>>
+<<elseif ($HeadGirl.clit > 2)>>
+	In spare moments $he teaches $activeSlave.slaveName how to suck cocks, cunts, and assholes. Your Head Girl uses $his pseudophallus-sized clit as an effective teaching tool. $activeSlave.slaveName's @@.green;oral skills have improved.@@
+	<<= SkillIncrease.Oral($activeSlave, random(5,10))>>
+<<else>>
+	In spare moments $he teaches $activeSlave.slaveName how to suck cocks, cunts, and assholes. $activeSlave.slaveName's @@.green;oral skills have improved.@@
+<</if>>
+<<= SkillIncrease.Oral($activeSlave, Math.ceil(_effectiveness/10))>>
+
+<<elseif $HGtraining == "anal skill">>
+
+<<set $activeSlave.training = 0>>
+<<if ($HeadGirl.fetish == "buttslut") && ($HeadGirl.fetishStrength > 60)>>
+	In spare moments $he teaches $activeSlave.slaveName how to take it up the ass. Your Head Girl's enthusiasm for backdoor loving is infectious. $activeSlave.slaveName's @@.green;anal skills have improved.@@
+	<<= SkillIncrease.Anal($activeSlave, random(5,10))>>
+<<elseif ($HeadGirl.dick > 0) && canPenetrate($HeadGirl)>>
+	In spare moments $he teaches $activeSlave.slaveName how to take a dick up the butt. Your Head Girl uses $his penis as an effective teaching tool. $activeSlave.slaveName's @@.green;anal skills have improved.@@
+	<<= SkillIncrease.Anal($activeSlave, random(5,10))>>
+<<elseif ($HeadGirl.clit > 2)>>
+	In spare moments $he teaches $activeSlave.slaveName how to take a phallus up the butt. Your Head Girl uses $his pseudophallus-sized clit as an effective teaching tool. $activeSlave.slaveName's @@.green;anal skills have improved.@@
+	<<= SkillIncrease.Anal($activeSlave, random(5,10))>>
+<<else>>
+	In spare moments $he teaches $activeSlave.slaveName how to take a dick up the butt. $activeSlave.slaveName's @@.green;anal skills have improved.@@
+<</if>>
+<<= SkillIncrease.Anal($activeSlave, Math.ceil(_effectiveness/10))>>
+
+<<elseif $HGtraining == "fuck skill">>
+
+<<set $activeSlave.training = 0>>
+<<if ($HeadGirl.energy > 95)>>
+	In spare moments $he teaches $activeSlave.slaveName how to take a dick. Your Head Girl's enthusiasm for sex is infectious. $activeSlave.slaveName's @@.green;vanilla sex skills have improved.@@
+	<<= SkillIncrease.Vaginal($activeSlave, random(5,10))>>
+<<elseif ($HeadGirl.dick > 0) && canPenetrate($HeadGirl)>>
+	In spare moments $he teaches $activeSlave.slaveName how to take a dick. Your Head Girl uses $his penis as an effective teaching tool. $activeSlave.slaveName's @@.green;vanilla sex skills have improved.@@
+	<<= SkillIncrease.Vaginal($activeSlave, random(5,10))>>
+<<elseif ($HeadGirl.clit > 2)>>
+	In spare moments $he teaches $activeSlave.slaveName how to take a phallus. Your Head Girl uses $his pseudophallus-sized clit as an effective teaching tool. $activeSlave.slaveName's @@.green;vanilla sex skills have improved.@@
+	<<= SkillIncrease.Vaginal($activeSlave, random(5,10))>>
+<<else>>
+	In spare moments $he teaches $activeSlave.slaveName how to take a dick. $activeSlave.slaveName's @@.green;vanilla sex skills have improved.@@
+<</if>>
+<<= SkillIncrease.Vaginal($activeSlave, Math.ceil(_effectiveness/10))>>
+
+<<elseif $HGtraining == "whore skill">>
+
+<<set $activeSlave.training = 0>>
+In spare moments $he teaches $activeSlave.slaveName how to prostitute _himself2. $activeSlave.slaveName's @@.green;whoring skills have improved.@@
+<<= SkillIncrease.Whore($activeSlave, Math.ceil(_effectiveness/10))>>
+
+<<elseif $HGtraining == "entertain skill">>
+
+<<set $activeSlave.training = 0>>
+<<if ($HeadGirl.fetish == "humiliation") && ($HeadGirl.fetishStrength > 60)>>
+	In spare moments $he teaches $activeSlave.slaveName how to entertain. Your Head Girl's enthusiasm for public display is infectious. $activeSlave.slaveName's @@.green;entertainment skills have improved.@@
+	<<= SkillIncrease.Entertain($activeSlave, random(5,10))>>
+<<else>>
+	In spare moments $he teaches $activeSlave.slaveName how to entertain. $activeSlave.slaveName's @@.green;entertainment skills have improved.@@
+<</if>>
+<<= SkillIncrease.Entertain($activeSlave, Math.ceil(_effectiveness/10))>>
+
+<</if>>
+<</if>>
+
+<<if ($activeSlave.devotion >= -20)>>
+<<if ($activeSlave.attrKnown == 0)>>
+	<<set $activeSlave.attrKnown = 1>>
+	$HeadGirl.slaveName also investigates the slave's basic sexual orientation, finding that _he2 is
+	<<if ($activeSlave.attrXY <= 40)>>
+		@@.red;disgusted by men@@
+	<<elseif ($activeSlave.attrXY <= 60)>>
+		indifferent to men
+	<<elseif ($activeSlave.attrXY <= 80)>>
+		@@.green;attracted to men@@
+	<<else>>
+		@@.green;intensely attracted to men@@
+	<</if>>
+	and
+	<<if ($activeSlave.attrXX <= 40)>>
+		@@.red;disgusted by women.@@
+	<<elseif ($activeSlave.attrXX <= 60)>>
+		indifferent to women.
+	<<elseif ($activeSlave.attrXX <= 80)>>
+		@@.green;attracted to women.@@
+	<<else>>
+		@@.green;intensely attracted to women.@@
+	<</if>>
+<</if>>
+<</if>>
+
+<<if $HGPiercings>>
+	<<if $activeSlave.devotion >= -20 && $activeSlave.genes == "XY" && $activeSlave.attrXY <= 35 && $arcologies[0].FSBodyPurist == "unset" && ($arcologies[0].FSPaternalist == "unset" || ($arcologies[0].FSPaternalist != "unset" && $modScore < 13))>>
+		<<set _piercingForbidden = 0>>
+		<<for _i = 0; _i < 1; _i++>>
+			<<if $activeSlave.earPiercing == 0 && $activeSlave.earShape !== "none">>
+				<<if $arcologies[0].FSDegradationist != "unset">>
+					<<set $activeSlave.earPiercing = 2>>
+				<<else>>
+					<<set $activeSlave.earPiercing = 1>>
+				<</if>>
+				<<run RulesDeconfliction($activeSlave)>>
+				<<if $activeSlave.earPiercing != $slaveAfterRA.earPiercing>>
+					<<set _piercingForbidden = 1, $activeSlave.earPiercing = 0>>
+				<<else>>
+					<<if $arcologies[0].FSDegradationist != "unset">>
+						$HeadGirl.slaveName knows that $activeSlave.slaveName needs to adjust to life as a slave _girl2, so $he has the slave's ears pierced. This will be a constant reminder that _he2 is simply a sexual object here.
+					<<else>>
+						$HeadGirl.slaveName knows that $activeSlave.slaveName needs help adjusting to life as a slave _girl2, so $he has the slave's ears pierced. A little feminine touch can make a big difference.
+					<</if>>
+					<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+					<<break>>
+				<</if>>
+			<</if>>
+			<<if $activeSlave.nosePiercing == 0>>
+				<<if $arcologies[0].FSDegradationist != "unset">>
+					<<set $activeSlave.nosePiercing = 2>>
+				<<else>>
+					<<set $activeSlave.nosePiercing = 1>>
+				<</if>>
+				<<run RulesDeconfliction($activeSlave)>>
+				<<if $activeSlave.nosePiercing != $slaveAfterRA.nosePiercing>>
+					<<set _piercingForbidden = 1, $activeSlave.nosePiercing = 0>>
+				<<else>>
+					<<if $arcologies[0].FSDegradationist != "unset">>
+						$HeadGirl.slaveName knows that $activeSlave.slaveName needs to adjust to life as a slave _girl2, so $he gives the slave nasal studs and a large septum ring. It should push $activeSlave.slaveName to see _himself2 as a sexual object for others to use.
+					<<else>>
+						$HeadGirl.slaveName knows that $activeSlave.slaveName needs help adjusting to life as a slave _girl2, so $he gives the slave a cute little nose piercing. It should help $activeSlave.slaveName see _himself2 as a bit more feminine.
+					<</if>>
+					<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+					<<break>>
+				<</if>>
+			<</if>>
+			<<if $activeSlave.eyebrowPiercing == 0>>
+				<<if $arcologies[0].FSDegradationist != "unset">>
+					<<set $activeSlave.eyebrowPiercing = 2>>
+				<<else>>
+					<<set $activeSlave.eyebrowPiercing = 1>>
+				<</if>>
+				<<run RulesDeconfliction($activeSlave)>>
+				<<if $activeSlave.eyebrowPiercing != $slaveAfterRA.eyebrowPiercing>>
+					<<set _piercingForbidden = 1, $activeSlave.eyebrowPiercing = 0>>
+				<<else>>
+					<<if $arcologies[0].FSDegradationist != "unset">>
+						$HeadGirl.slaveName knows that $activeSlave.slaveName needs to adjust to life as a slave _girl2, so $he gives the slave multiple eyebrow piercings. A slutty touch for a slave _girl2 should help _him2 feel a little hungrier for cock.
+					<<else>>
+						$HeadGirl.slaveName knows that $activeSlave.slaveName needs help adjusting to life as a slave _girl2, so $he gives the slave a cute little eyebrow piercing. A slutty touch for a slave _girl2 should help _him2 feel a little hungrier for cock.
+					<</if>>
+					<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+					<<break>>
+				<</if>>
+			<</if>>
+			<<if $activeSlave.lipsPiercing == 0>>
+				<<if $arcologies[0].FSDegradationist != "unset">>
+					<<set $activeSlave.lipsPiercing = 2>>
+				<<else>>
+					<<set $activeSlave.lipsPiercing = 1>>
+				<</if>>
+				<<run RulesDeconfliction($activeSlave)>>
+				<<if $activeSlave.lipsPiercing != $slaveAfterRA.lipsPiercing>>
+					<<set _piercingForbidden = 1, $activeSlave.lipsPiercing = 0>>
+				<<else>>
+					<<if $arcologies[0].FSDegradationist != "unset">>
+						$HeadGirl.slaveName knows that $activeSlave.slaveName needs to adjust to life as a slave _girl2, so $he has the slave's lower lip pierced. _His2 mouth is for pleasing penises now, so it'll help _him2 if it looks like it.
+					<<else>>
+						$HeadGirl.slaveName knows that $activeSlave.slaveName needs help adjusting to life as a slave _girl2, so $he has the slave's lower lip pierced. _His2 mouth is for pleasing penises now, so it'll help _him2 if it looks like it.
+					<</if>>
+					<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+					<<break>>
+				<</if>>
+			<</if>>
+			<<if $activeSlave.navelPiercing == 0>>
+				<<if $arcologies[0].FSDegradationist != "unset">>
+					<<set $activeSlave.navelPiercing = 2>>
+				<<else>>
+					<<set $activeSlave.navelPiercing = 1>>
+				<</if>>
+				<<run RulesDeconfliction($activeSlave)>>
+				<<if $activeSlave.navelPiercing != $slaveAfterRA.navelPiercing>>
+					<<set _piercingForbidden = 1, $activeSlave.navelPiercing = 0>>
+				<<else>>
+					<<if $arcologies[0].FSDegradationist != "unset">>
+						$HeadGirl.slaveName knows that $activeSlave.slaveName needs help adjusting to life as a slave _girl2, so $he has the slave's navel pierced with a big ring. Whatever _he2 thinks in _his2 mind, $HeadGirl.slaveName makes clear to _him2 that _his2 body belongs to you.
+					<<else>>
+						$HeadGirl.slaveName knows that $activeSlave.slaveName needs help adjusting to life as a slave _girl2, so $he has the slave's navel pierced. The prettier _his2 lower half looks, the less reluctant _he2 should feel to take it up the butt.
+					<</if>>
+					<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+					<<break>>
+				<</if>>
+			<</if>>
+			<<break>>
+		<</for>>
+		<<if _piercingForbidden>>
+			<<if $arcologies[0].FSDegradationist != "unset">>
+				$HeadGirl.slaveName thinks some piercings might push $activeSlave.slaveName to adjust to life as a slave _girl2, but $he also knows you have rules applied to this slave that forbid it.
+			<<else>>
+				$HeadGirl.slaveName thinks some cute piercings might help $activeSlave.slaveName adjust to life as a slave _girl2, but $he also knows you have rules applied to this slave that forbid it.
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<set $slaves[$slaveIndices[$activeSlave.ID]] = $activeSlave>> /* save changes */

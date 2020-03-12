@@ -1,0 +1,196 @@
+:: propagandaHub [nobr]
+
+<<if $career == "capitalist" || $career == "celebrity" || $career == "wealth">>
+	<<set _HistoryDiscount = .5>>
+<<else>>
+	<<set _HistoryDiscount = 1>>
+<</if>>
+
+<<set $nextButton = "Back">>
+<<if $sideBarOptions.compact > 0>>
+	<<set $nextLink = "Manage Arcology">>
+<<else>>
+	<<set $nextLink = "Main">>
+<</if>>
+
+Propaganda Hub
+<hr>
+
+The propaganda hub is a surprisingly inconspicuous building, dimly lit from the outside. You are well aware however of its role and its importance. You confidently enter its unassuming doorway and calmly review the work being done here.
+
+<<if $Recruiter != 0>>
+	<<setLocalPronouns $Recruiter>>
+	<br><br>
+	<<if $SecExp.buildings.propHub.recuriterOffice == 0>>
+		<<link "Give <span class='slave-name'><<= SlaveFullName($Recruiter)>></span> an office.""propagandaHub">>
+			<<set $SecExp.buildings.propHub.recuriterOffice = 1>>
+		<</link>>
+	<<else>>
+		<<link "Remove <span class='slave-name'><<= SlaveFullName($Recruiter)>></span> from $his office.""propagandaHub">>
+			<<set $SecExp.buildings.propHub.recuriterOffice = 0>>
+		<</link>>
+	<</if>>
+<</if>>
+/* classic propaganda */
+<br><br><<if $SecExp.buildings.propHub.campaign == 0>>
+	<<link "Set up a propaganda campaign" "propagandaHub">>
+		<<set $SecExp.buildings.propHub.campaign += 1>>
+		<<run cashX(forceNeg(5000*$upgradeMultiplierArcology*_HistoryDiscount), "capEx")>>
+		<<set $SecExp.buildings.propHub.focus = "social engineering">>
+	<</link>>
+	<br>Set up a propaganda campaign to align your citizens with your goals.
+	<br>//Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology*_HistoryDiscount))>>. Will provide the focused resource each week, but will cost reputation in upkeep.//
+<<else>>
+	You have set up a team of trained slaves and expert propagandists, ready to spread the message of your choosing to the population.
+	<br>Focus on:
+	<<if $SecExp.buildings.propHub.focus == "social engineering">>
+		social engineering
+	<<else>>
+		<<link "social engineering" "propagandaHub">>
+			<<set $SecExp.buildings.propHub.focus = "social engineering">>
+		<</link>>
+	<</if>>
+	|
+	<<if $SecExp.buildings.propHub.focus == "immigration">>
+	immigration
+	<<else>>
+		<<link "immigration" "propagandaHub">>
+			<<set $SecExp.buildings.propHub.focus = "immigration">>
+		<</link>>
+	<</if>>
+	|
+	<<if $SecExp.buildings.propHub.focus == "enslavement">>
+		 enslavement
+	<<else>>
+		<<link "enslavement" "propagandaHub">>
+			<<set $SecExp.buildings.propHub.focus = "enslavement">>
+		<</link>>
+	<</if>>
+	|
+	<<if $SecExp.buildings.propHub.focus == "recruitment">>
+		recruitment
+	<<else>>
+		<<link "recruitment" "propagandaHub">>
+			<<set $SecExp.buildings.propHub.focus = "recruitment">>
+		<</link>>
+	<</if>>
+	<br>
+	You are concentrating your propaganda efforts towards
+	<<if $SecExp.buildings.propHub.focus == "social engineering">>
+		increasing the acceptance of your chosen future societies.
+	<<elseif $SecExp.buildings.propHub.focus == "immigration">>
+		convincing more people to immigrate to your arcology.
+	<<elseif $SecExp.buildings.propHub.focus == "enslavement">>
+		convincing more people to voluntarily enslave themselves.
+	<<elseif $SecExp.buildings.propHub.focus == "recruitment">>
+		convincing more citizens to enter the militia.
+	<</if>>
+	<br>
+	<<if $SecExp.buildings.propHub.campaign < 5>>
+		<<link "Invest more resources in the propaganda machine" "propagandaHub">>
+			<<run cashX(forceNeg(5000 * $upgradeMultiplierArcology * ($SecExp.buildings.propHub.campaign + 1) * _HistoryDiscount*$HackingSkillMultiplier), "capEx")>>
+			<<set $SecExp.buildings.propHub.campaign += 1>>
+			<<= IncreasePCSkills('hacking', 0.5)>>
+		<</link>>
+		<br>Invest more resources into the project to increase its effectiveness.
+		<br>//Costs <<print cashFormat(Math.trunc(5000 * $upgradeMultiplierArcology * ($SecExp.buildings.propHub.campaign + 1) * _HistoryDiscount*$HackingSkillMultiplier))>>. Will provide more of the focused resource each week but increase reputation upkeep.//
+	<<else>>
+		You upgraded your propaganda machine to its limits.
+	<</if>>
+<</if>>
+
+<br>
+<br>
+
+/* ministry of truth */
+<<if $SecExp.buildings.propHub.miniTruth == 0>>
+	<<link "Set up the authenticity department" "propagandaHub">>
+		<<set $SecExp.buildings.propHub.miniTruth += 1>>
+		<<run cashX(forceNeg(5000*$upgradeMultiplierArcology*_HistoryDiscount), "capEx")>>
+	<</link>>
+	<br>Set up a department tasked with guaranteeing the authenticity of all information available in the arcology. Of course if reality is against what is best for the arcology, then it should be redacted as well.
+	<br>//Costs <<print cashFormat(Math.trunc(5000*$upgradeMultiplierArcology * _HistoryDiscount))>>. Will provide authority and unlock special upgrades, but will increase upkeep.//
+<<else>>
+	<<if $SecExp.buildings.propHub.miniTruth < 5>>
+		<<link "Enlarge the authenticity department" "propagandaHub">>
+			<<run cashX(forceNeg(5000*$upgradeMultiplierArcology * ($SecExp.buildings.propHub.miniTruth + 1) * _HistoryDiscount), "capEx")>>
+			<<set $SecExp.buildings.propHub.miniTruth += 1>>
+		<</link>>
+		<br>Invest more resources into the project to increase its effectiveness.
+		<br>//Costs <<print cashFormat(Math.trunc(5000 * $upgradeMultiplierArcology * ($SecExp.buildings.propHub.miniTruth + 1) * _HistoryDiscount))>>. Will provide more authority each week, but increases upkeep.//
+	<<else>>
+		You have upgraded the authenticity department to its maximum.
+	<</if>>
+	<br>
+	<<if $SecExp.buildings.propHub.fakeNews == 0>>
+		<<link "Install a news generator" "propagandaHub">>
+			<<set $SecExp.buildings.propHub.fakeNews = 1>>
+			<<run cashX(forceNeg(10000*$upgradeMultiplierArcology*_HistoryDiscount), "capEx")>>
+		<</link>>
+		<br>Install an automatic news generator, able to fabricate thousands of plausible sounding news every day.
+		<br>//Costs <<print cashFormat(Math.trunc(10000 * $upgradeMultiplierArcology * _HistoryDiscount))>>. The authenticity dept. now provides a small amount of reputation as well as authority, but increases upkeep.//
+	<<else>>
+		You have installed an automatic news generator. [[Remove news generator|propagandaHub][$SecExp.buildings.propHub.fakeNews = 0]]
+	<</if>>
+	<br>
+	<<if $SecExp.buildings.propHub.controlLeaks == 0>>
+		<<link "Institute controlled leaks protocols" "propagandaHub">>
+			<<set $SecExp.buildings.propHub.controlLeaks = 1>>
+			<<run cashX(forceNeg(10000*$upgradeMultiplierArcology*_HistoryDiscount*$HackingSkillMultiplier), "capEx")>>
+			<<= IncreasePCSkills('hacking', 1)>>
+		<</link>>
+		<br>Institute a system able to release erroneous, but plausible, information about your business, leading your competitors to prepared financial traps.
+		<br>//Costs <<print cashFormat(Math.trunc(10000 * $upgradeMultiplierArcology * _HistoryDiscount*$HackingSkillMultiplier))>>. The authenticity dept. now slightly increases prosperity each week as well as authority, but increases upkeep.//
+	<<else>>
+		You have instituted controlled leaks protocols, able to create fabricated leaks of sensible information. [[Shut down leak protocols|propagandaHub][$SecExp.buildings.propHub.controlLeaks = 0]]
+	<</if>>
+<</if>>
+
+<br>
+<br>
+
+/* secret police */
+<<if $SecExp.buildings.propHub.secretService == 0>>
+	<<link "Set up personal secret service" "propagandaHub">>
+		<<set $SecExp.buildings.propHub.secretService += 1>>
+		<<run cashX(forceNeg(10000*$upgradeMultiplierArcology*_HistoryDiscount), "capEx")>>
+	<</link>>
+	<br>Set up a department tasked with the protection of your person, as well as operations requiring a delicate approach.
+	<br>//Costs <<print cashFormat(Math.trunc(10000*$upgradeMultiplierArcology * _HistoryDiscount))>>. Will provide authority and unlock special upgrades, but will increase upkeep.//
+<<else>>
+	<<if $SecExp.buildings.propHub.secretService < 5 && $rep >= ($SecExp.buildings.propHub.secretService * 1000) + 5000>>
+		<<link "Expand the secret service" "propagandaHub">>
+			<<set $SecExp.buildings.propHub.secretService += 1>>
+			<<run cashX(forceNeg(5000*$upgradeMultiplierArcology * ($SecExp.buildings.propHub.secretService + 1) * _HistoryDiscount), "capEx")>>
+		<</link>>
+		<br>Invest more resources into the project to increase its effectiveness.
+		<br>//Costs <<print cashFormat(Math.trunc(5000 * $upgradeMultiplierArcology * ($SecExp.buildings.propHub.secretService + 1) * _HistoryDiscount))>>. Will provide more authority each week, but increases upkeep.//
+	<<elseif $SecExp.buildings.propHub.secretService < 5>>
+		You lack the reputation to further expand operations.
+	<<else>>
+		You have upgraded the secret service to its maximum.
+	<</if>>
+	<br>
+	<<if $SecExp.buildings.propHub.blackOps == 0>>
+		<<link "Create a black ops team" "propagandaHub">>
+			<<set $SecExp.buildings.propHub.blackOps = 1>>
+			<<run cashX(forceNeg(10000*$upgradeMultiplierArcology*_HistoryDiscount), "capEx")>>
+		<</link>>
+		<br>Create a black ops team, ready to carry out corporate sabotage and sensitive operations to further your goals.
+		<br>//Costs <<print cashFormat(Math.trunc(10000 * $upgradeMultiplierArcology * _HistoryDiscount))>>. The secret services now provides security as well as authority, but increases upkeep.//
+	<<else>>
+		You have created a black ops team.
+	<</if>>
+	<br>
+	<<if $SecExp.buildings.propHub.marketInfiltration == 0>>
+		<<link "Infiltrate" "propagandaHub">>
+			<<set $SecExp.buildings.propHub.marketInfiltration = 1>>
+			<<run cashX(forceNeg(10000*$upgradeMultiplierArcology*_HistoryDiscount), "capEx")>>
+		<</link>>
+		the black market in order to manipulate it.
+
+		<br>//Costs <<print cashFormat(Math.trunc(10000 * $upgradeMultiplierArcology * _HistoryDiscount))>>. The secret services now provides cash as well as authority each week, but will increase crime growth.//
+	<<else>>
+		You have infiltrated the black market and are now in partial control of it. [[Withdraw from the black market|propagandaHub][$SecExp.buildings.propHub.marketInfiltration = 0]]
+	<</if>>
+<</if>>

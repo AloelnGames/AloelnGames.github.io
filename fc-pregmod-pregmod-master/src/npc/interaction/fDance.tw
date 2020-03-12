@@ -1,0 +1,1635 @@
+:: FDance [nobr]
+
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+<<setPlayerPronouns>>
+
+You tell $assistant.name to summon <<= getSlave($AS).slaveName>> and set some erotic music. When your slave arrives, $he finds the lights in your office flashing club colors. You gesture towards the platform in the center of your office and tell $him to dance for you.
+
+<<if (getSlave($AS).skill.entertainment > 99)>>
+	$He slides $his ass gracefully unto the stage, then dramatically raises $his elongated leg<<if hasBothLegs(getSlave($AS))>>s one at a time<</if>> onto the platform. Circling to $his knee<<if hasBothLegs(getSlave($AS))>>s<</if>>, $he raises $his ass in the air <<if (hasAnyArms(getSlave($AS)))>>and glides $his hand<<if (hasBothArms(getSlave($AS)))>>s<</if>> up $his leg<<if hasBothLegs(getSlave($AS))>>s<</if>> <</if>>as $he stands upright.
+<<elseif (getSlave($AS).skill.entertainment > 60)>>
+	$He takes $his rightful place on your stage.
+<<elseif (getSlave($AS).skill.entertainment > 40)>>
+	$He goes to take $his place on your stage and dance for $his <<= WrittenMaster()>>.
+<<elseif (getSlave($AS).skill.entertainment > 20)>>
+	$He ascends to the platform and begins to grind at the pole.
+<<elseif (getSlave($AS).skill.entertainment > 9)>>
+	$He climbs up onto the platform and grabs onto the pole.
+<<elseif (getSlave($AS).skill.entertainment > -10)>>
+	$He climbs up onto the platform and grabs onto the pole.
+<</if>>
+
+<<if getSlave($AS).weight > 190>>
+	$He is so <<print either("enormous", "massive")>> that $he can barely move $his weight around. $His rolls sway and jiggle with every move, creating a ripple canvas of swirling fat.
+<<elseif getSlave($AS).weight > 160>>
+	$He is quite large, and $his weight threatens to pull $him down every time $he sways. $His rolls sway and jiggle with every move, creating a ripple canvas of swirling fat.
+<<elseif getSlave($AS).weight > 130>>
+	$His chubby rolls dance to a beat of their own as your slave sways and moves to the music.
+<<elseif getSlave($AS).weight > 50>>
+	$His chubby body jiggles nicely as $he moves.
+<<elseif getSlave($AS).weight > 20>>
+	$His form sways and moves with the music in a most alluring way.
+<<elseif getSlave($AS).weight > 0>>
+	$His trim body is highlighted by $his dance. Whenever $he rolls $his ass or sways $his hips it highlights the contours of $his waist.
+<<elseif getSlave($AS).weight < 0>>
+	Your slave's trim body glides to the music like a <<print either("belly dancer", "stripper")>>. $He is thin and tight, with no bodyfat to speak of,
+	<<if getSlave($AS).boobs > 400>>
+		making $his tits
+		<<if getSlave($AS).butt > 1>>
+			and ass
+		<</if>>
+		the main focus of $his dance.
+	<<else>>
+		<<if getSlave($AS).butt > 1>>
+			making $his ass the main focus of $his dance.
+		<<else>>
+			totally flat. $His body is flat and girlish, providing a tastefully alluring display.
+		<</if>>
+	<</if>>
+<</if>>
+$His face is
+<<switch getSlave($AS).faceShape>>
+<<case "masculine">>
+	<<if getSlave($AS).face < -95>>
+		hideously manly, distracting you from anything positive that may be going on.
+	<<elseif getSlave($AS).face < -40>>
+		ugly and masculine, and you find it difficult to enjoy looking at $him.
+	<<elseif getSlave($AS).face < -10>>
+		unattractively masculine, distracting you from time to time.
+	<<elseif (getSlave($AS).face <= 10)>>
+		masculine, but not distracting.
+	<<elseif (getSlave($AS).face <= 40)>>
+		attractive masculine, adding an interesting contrast to the feminine dance.
+	<<elseif (getSlave($AS).face <= 95)>>
+		manly and handsome, which adds a flair of intrigue to the dance.
+	<<else>>
+		the height of masculine handsomeness, adding a value to the dance only present in the Free Cities.
+	<</if>>
+<<case "androgynous">>
+	<<if getSlave($AS).face < -95>>
+		disturbingly androgynous and terribly ugly, distracting you from anything positive that may be going on.
+	<<elseif getSlave($AS).face < -40>>
+		neither masculine nor feminine and quite ugly, and you find it difficult to enjoy looking at $him.
+	<<elseif getSlave($AS).face < -10>>
+		strangely androgynous, distracting you from time to time.
+	<<elseif (getSlave($AS).face <= 10)>>
+		strangely androgynous, but not distracting.
+	<<elseif (getSlave($AS).face <= 40)>>
+		androgynous, and attractive enough that it adds an interesting flair to the dance.
+	<<elseif (getSlave($AS).face <= 95)>>
+		gorgeously androgynous which is distracting and perplexing all at once.
+	<<else>>
+		so gorgeously androgynous that you can't be brought to look away.
+	<</if>>
+<<case "cute">>
+	<<if getSlave($AS).face < -95>>
+		pitifully cute. $He's so ugly and cute you can't help but be turned off and drawn in simultaneously.
+	<<elseif getSlave($AS).face < -40>>
+		not attractive, but $his cuteness makes $him pitifully appealing.
+	<<elseif getSlave($AS).face < -10>>
+		not attractive, but is still cute enough to keep you entertained.
+	<<elseif (getSlave($AS).face <= 10)>>
+		appealingly cute.
+	<<elseif (getSlave($AS).face <= 40)>>
+		cute and attractive, adding genuine appeal to $his performance.
+	<<elseif (getSlave($AS).face <= 95)>>
+		so cute as $he dances for you. You appreciate the fullness of $his beauty.
+	<<else>>
+		so perfectly cute, you can't help but smile every time $he looks your way.
+	<</if>>
+<<case "sensual">>
+	<<if getSlave($AS).face < -95>>
+		not attractive; not even a little. But the natural "fuck me" look of $his face helps give you something to look forward to once $he's naked.
+	<<elseif getSlave($AS).face < -40>>
+		not attractive, but the natural "fuck me" look of $his face helps give you something to look forward to once $he's naked.
+	<<elseif getSlave($AS).face < -10>>
+		not great looking, but the natural sexiness make's it easier to enjoy.
+	<<elseif (getSlave($AS).face <= 10)>>
+		sensuality alone. Neither attractive, nor unattractive. Just sex.
+	<<elseif (getSlave($AS).face <= 40)>>
+		begging for sex, being so enticing and sultry.
+	<<elseif (getSlave($AS).face <= 95)>>
+		constantly turning you on, with the sensual structure of $his beautiful face never letting sex leave your mind.
+	<<else>>
+		making you
+		<<if $PC.dick != 0>>
+			rock hard
+			<<if $PC.vagina != -1>>
+				and dripping wet
+			<</if>>
+		<<else>>
+			dripping wet
+		<</if>>
+		as you lust after $his sexual beauty.
+	<</if>>
+<<case "exotic">>
+	<<if getSlave($AS).face < -95>>
+		hideously unusual, distracting you from anything positive that may be going on.
+	<<elseif getSlave($AS).face < -40>>
+		ugly and unusual, and you find it difficult to enjoy looking at $him.
+	<<elseif getSlave($AS).face < -10>>
+		not great to look at, but perplexing and abnormal. You try to focus on $his body instead.
+	<<elseif (getSlave($AS).face <= 10)>>
+		interesting and unusual. It isn't particularly attractive, but none of your slaves have a face quite like $hers.
+	<<elseif (getSlave($AS).face <= 40)>>
+		exotic and alluring, just attractive enough to make $him good office décor, but not so much that it's distracting.
+	<<elseif (getSlave($AS).face <= 95)>>
+		a testament to the benefits of a global slave market. It makes $him a perfect office trophy.
+	<<else>>
+		an exotic masterpiece. Having $him dance in your office is like hanging foreign art on the walls, a perfect trophy of your slaving reach.
+	<</if>>
+<<default>>
+	<<if getSlave($AS).face < -95>>
+		not great to look at. Not even a little. You try to focus on $his body instead, finding yourself immediately turned off when $he catches your gaze.
+	<<elseif getSlave($AS).face < -40>>
+		a bit of a turn off. You try to watch $his body instead.
+	<<elseif getSlave($AS).face < -10>>
+		not a highlight. $He isn't beautiful, and you would rather watch $his body.
+	<<elseif (getSlave($AS).face <= 10)>>
+		quite feminine and pleasing. You aren't captivated by $his face, but you don't avoid it either.
+	<<elseif (getSlave($AS).face <= 40)>>
+		feminine and attractive. You find yourself looking at it from time to time.
+	<<elseif (getSlave($AS).face <= 95)>>
+		beautiful and feminine. You often find your eyes locked on $his face for long periods of time.
+	<<else>>
+		absolutely stunning. Watching $his face is often more pleasing than watching $him dance.
+	<</if>>
+<</switch>>
+
+
+<<if (getSlave($AS).devotion < -20)>>
+	It's clear that $he hates being on display for you. $He resents you for making $him dance for you,
+	<<if (getSlave($AS).trust < -50)>>
+		but $he is to terrified of you to see what happens if $he resists
+	<<else>>
+		and refuses to comply. In order to make $him obey, a leash is attached from
+		<<switch getSlave($AS).collar>>
+		<<case "uncomfortable leather">>
+			the steel ring on $his leather collar
+		<<case "dildo gag">>
+			a ring on $his gag strap
+		<<case "massive dildo gag">>
+			a ring on $his gag strap
+		<<case "preg biometrics">>
+			$his collar
+		<<case "silk ribbon">>
+			$his silk ribbon
+		<<case "tight steel">>
+			$his steel collar
+		<<case "porcelain mask">>
+			<<if getSlave($AS).nosePiercing == 2>>
+				$his nose ring
+			<<elseif getSlave($AS).nipplesPiercing == 2>>
+				$his nipple chain
+			<<else>>
+				a collar that is placed around $his neck
+			<</if>>
+		<<case "shock punishment">>
+			$his shock collar
+		<<case "neck corset">>
+			an O-ring at the from of $his neck corset
+		<<case "stylish leather">>
+			$his collar
+		<<case "satin choker">>
+			$his choker collar
+		<<case "heavy gold">>
+			$He is wearing a heavy gold collar, an outstanding bit of ostentation.
+		<<case "pretty jewelry">>
+			$his ornate collar
+		<<case "bell collar">>
+			the ring attaching $his bell to $his collar, and
+		<<case "leather with cowbell">>
+			the ring attaching $his bell to $his collar, and
+		<<case "bowtie">>
+			$his bowtie collar
+		<<case "ancient Egyptian">>
+			<<if getSlave($AS).nosePiercing == 2>>
+				$his nose ring
+			<<elseif getSlave($AS).nipplesPiercing == 2>>
+				$his nipple chain
+			<<else>>
+				$his wesekh
+			<</if>>.
+		<<case "ball gag">>
+			a ring on the back of $his gag
+		<<case "bit gag">>
+			the ring on the side of $his bit
+		<<case "cruel retirement counter" "nice retirement counter">>
+			$his retirement counter
+		<<case "default">>
+			<<if getSlave($AS).nosePiercing == 2>>
+				$his nose ring
+			<<elseif getSlave($AS).nipplesPiercing == 2>>
+				$his nipple chain
+			<<else>>
+				a collar that is placed on $his neck for the occasion, and
+			<</if>>
+		<</switch>>
+		to the pole in order to keep $him from getting down. Whenever $he stops dancing the chain is tightened a bit more,
+		<<switch getSlave($AS).collar>>
+		<<case "uncomfortable leather">>
+			choking $him and rubbing $his skin raw from the leather;
+		<<case "tight steel">>
+			choking $him without mercy;
+		<<case "shock punishment">>
+			and a shock is sent through $his collar;
+		<<case "neck corset">>
+			making breathing even more difficult;
+		<<case "ancient Egyptian">>
+			<<if getSlave($AS).nosePiercing == 2>>
+				tugging at $his nose ring;
+			<<elseif getSlave($AS).nipplesPiercing == 2>>
+				threatening to tear themselves from $his sensitive flesh;
+			<<else>>
+				tugging at $his throat;
+			<</if>>.
+		<<case "default">>
+			<<if getSlave($AS).nosePiercing == 2>>
+				tugging at $his nose ring;
+			<<elseif getSlave($AS).nipplesPiercing == 2>>
+				threatening to tear themselves from $his sensitive flesh;
+			<<else>>
+				choking $him;
+			<</if>>
+		<</switch>>
+		forcing $him to keep moving or face more pain.
+	<</if>>
+<<elseif (getSlave($AS).devotion <= 20)>>
+	$He hates being forced to dance for you, but tries $his best in spite of this.
+<<elseif (getSlave($AS).devotion <= 50)>>
+	$He wants to do $his best for you, and tries not to hold back.
+<<elseif (getSlave($AS).devotion <= 80)>>
+	$He is so eager to please you, and works hard to push $himself beyond $his skill limit.
+<<elseif (getSlave($AS).devotion <= 100)>>
+	$He is so honored that you want to use $him in this way, and tries eagerly to please you. $His eyes are filled with adoration and every move $he makes is done with the sole intention of pleasuring $his beloved <<= WrittenMaster()>>.
+<</if>>
+
+<<if (getSlave($AS).devotion <= 20)>>
+	<<if (getSlave($AS).sexualFlaw == "judgemental")>>
+		$He thinks to $himself that a real _womanP wouldn't need to compensate this way, and judges you harshly.
+	<<elseif (getSlave($AS).behavioralFlaw == "idealistic")>>
+		$He can't believe $he now lives in a world where $women are expected to perform for their <<= WrittenMaster()>> whether they consent or not.
+	<<elseif (getSlave($AS).behavioralFlaw == "bitchy")>>
+		$He dances, but makes sure that the disgust on $his face shows clearly that $he is not into it.
+	<</if>>
+<</if>>
+The atmosphere of your office is a testament to masculine opulence. Few _womenP in the old world would have the pleasure of completing their work while an attractive $woman flaunts $himself for _hisP pleasure.
+You allow the situation to continue for about an hour, before deciding it's time to escalate.
+You look up once more at your slave and take some time to review $his dancing performance.
+<<if (getSlave($AS).devotion >= -20)>>
+	<<if (getSlave($AS).skill.entertainment >= 100)>>
+		Your slave has a level of skill previously unseen in the old world. Even $his blinks have the seductive pull of a goddess. As you watch $him perform, you think how no _womanP of the old world would ever get to see pure sexuality like this. And not only do you get to watch $him, you OWN $him. $His body moves like water, with hips that ebb and flow as if the tides themselves panged for a rock hard cock to come and take them. You try to get some work done, but can't take your eyes off $him for even a second. You promise to reward your slave for bringing so much sensuality and beauty into your office; transforming your place of work into a shrine of Masculine dominance.
+	<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+		$His skill would have only been matched by the best of the best old world erotic dancers, but in your Free City expectations are high. $He dances with seduction in every move, alternating $his style between everything from belly dancing to club twerking, and each with the skill level of a trained professional. You got some work done while $he danced, but often found yourself pulled back in by the tide of $his rolling hips. You praise your slave for $his enriching performance.
+	<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+		$He has impressive skill and would have been a top-tier dancer in the old world. One of the many benefits of being a leader of a Free City is the ability to work in an atmosphere of pure servitude. You were free to continue your work in an office the old world men could only dream of. You tell your slave that you are pleased with $his show.
+	<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+		Despite being an average entertainer, it is clear that $he is doing $his best. You enjoyed the sexy ambiance while you worked. You tell your slave that $his performance was adequate.
+	<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+		$He is still learning the nuances of seductive dance, but at least able to move with the rhythm. You spent much of the performance distracted, forgetting that $he was even there at times and leaving $him unable to stop until you remembered about $him. You tell $him that $he will have to work harder if $he wishes to please you.
+	<<else>>
+		Or, at least, $his best attempt at dancing. $His arms flail about awkwardly as $he crouches and straightens off-beat to the music. You spent much of the dance ignoring $him and working on your business. You chide your slave for such a pathetic excuse for a performance, and tell $him that $he will have to find a place to please you, or you will be forced to make $him useful, turning $his thoughts to the arcades, dairies, and Fuckdolls common amongst the Free Cities.
+	<</if>>
+<<else>>
+	$He dances poorly on purpose to spite you. Whatever skills $he has, they are not on display here. You threaten to
+	<<switch getSlave($AS).rules.punishment>>
+	<<case "confinement">>
+		lock $him up in the bad-<<= $girl>> box
+	<<case "whipping">>
+		whip $him until $he screams
+	<<case "chastity">>
+		<<if (getSlave($AS).energy > 60)>>
+			keep $him on the edge of orgasm until $he loses $his mind
+		<<else>>
+			fuck $him in the ass until $he's unconscious
+		<</if>>
+	<<case "situational">>
+		<<switch getSlave($AS).collar>>
+		<<case "shock punishment">>
+			activate $his collar, and
+		<</switch>>
+		punish $him
+	<</switch>>
+	if $he doesn't shape up.
+<</if>>
+
+It's not over yet, though. You tell your slave that it's time to incorporate some stripping into $his dance.
+
+<<if (getSlave($AS).sexualFlaw == "shamefast")>>
+	<<if (getSlave($AS).devotion <= 40)>>
+		$He immediately begins to tear up at the thought of being naked. $His shame is obvious to you, and you remind $him that $his comfort is not your concern.
+		<<if (getSlave($AS).skill.entertainment >= 99)>>
+			Even though $he is crippled by shame, your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. With tears still streaming down $his face, $he begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose, even as $he sniffles at the shame of revealing $himself for you. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+		<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+			Even though $he is crippled by shame, your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+		<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+			Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+		<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+			Your slave works hard to keep with the rhythm while removing articles of clothing. $His attempts are inhibited by $his shame, which makes $him shudder and cry whenever it's time for another article of clothing to come off.
+		<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+			Your slave is not a skilled performer, and $his movements are uninspired. $He is too concerned with protecting $his nakedness to be obedient and attractive simultaneously, and you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+		<<else>>
+			Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to reluctantly, but obediently, remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+		<</if>>
+	<<else>>
+		Even though $he is uncomfortable at the thought of being naked, $he is so devoted to you that $he obeys without question.
+		<<if (getSlave($AS).skill.entertainment >= 99)>>
+			Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. Overcoming $his fear of being naked, $he begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose, even as $he sniffles at the shame of revealing $himself for you. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+		<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+			Even though $he is still ashamed, your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+		<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+			Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+		<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+			Your slave works hard to keep with the rhythm while removing articles of clothing. $His attempts would be inhibited by $his shame, but $his devotion to you overrides this and $he is able to dance with added skill.
+		<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+			Your slave is not a skilled performer, and $his movements are uninspired. You find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+		<<else>>
+			Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to shamefully remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+		<</if>>
+	<</if>>
+<<elseif (getSlave($AS).behavioralFlaw == "odd")>>
+	<<if (getSlave($AS).skill.entertainment >= 99)>>
+		Even though $he is extremely odd, your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. With $his ass cheeks straddling the pole $he begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+	<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+		Even though $he is extremely odd, your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+	<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+		Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he shouts wildly before upping the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+	<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+		Your slave works hard to keep with the rhythm while removing articles of clothing. $His attempts are inhibited by $his oddness, which results in $him crouching and squealing at inappropriate times. $He wonders aloud and you instruct $him to be silent the remainder of the dance.
+	<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+		Your slave is not a skilled performer, and $his movements are uninspired. $He is so odd that $his moves more resembles the chicken dance than any form of erotic dancing. You find yourself unable to look away, and for all the wrong reasons. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+	<<else>>
+		Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. Deciding that the rhythm is to blame, $he decides instead to sing $his own song to strip to. $He proceeds to hum string of off beat notes peppered with random words and scats, all punctuated by the sloppy kicking of clothes from $his ankles. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to roughly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+	<</if>>
+<<elseif (getSlave($AS).sexualFlaw == "attention whore")>>
+	As an attention whore, this is what $he lives for.
+	<<if (getSlave($AS).skill.entertainment >= 99)>>
+		Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. Being an attention whore, $he is obsessed with attracting the sexual arousal of others. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose, even though $he is also fulfilled by the event $he knows that your desire is all that matters. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+	<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+		Your slave is a skilled entertainer, well above average. Being an attention whore, $he is obsessed with attracting the sexual arousal of others. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He surely wishes $he were a better entertainer so you would call on $him to strip more often.
+	<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+		Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. The true entertainment comes from $his teasing nature, which makes $him blush cutely anytime $he shows a bit of skin. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+	<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+		Your slave works hard to keep with the rhythm while removing articles of clothing. $His attempts are overshadowed by $his clear desire to be looked at, and you can tell $he is distracted by this.
+	<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+		Your slave is not a skilled performer, and $his movements are uninspired. $He is trying much too hard to get your attention, and is visibly angered whenever $he sees that you are not aroused by $his fumblings. You find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+	<<else>>
+		Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to over-dramatically remove an article of clothing. After each article removed $he stops and looks at you to make sure you're watching. $His clear desire to be looked at makes $him more self-conscious which offsets the rhythm of the dance even more. $He decides to pick up the pace, aiming to be naked as quickly as possible so that you can admire $his body. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+	<</if>>
+<<elseif (getSlave($AS).sexualQuirk == "tease")>>
+	<<if (getSlave($AS).skill.entertainment >= 99)>>
+		Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. Being a tease, $he is able to maintain an attractive blend of shame and arousal at the thought of being naked before you, and this inspires $him to tease you endlessly. With cheeks still flushed and red, $he begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose, even as $he blushes at the shame and arousal of revealing $himself for you. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+	<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+		Your slave is a skilled entertainer, well above average. Being a tease, $he is able to maintain an attractive blend of shame and arousal at the thought of being naked before you, and this inspires $him to tease you endlessly. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+	<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+		Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. The true entertainment comes from $his teasing nature, which makes $him blush cutely anytime $he shows a bit of skin. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+	<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+		Your slave works hard to keep with the rhythm while removing articles of clothing. $His attempts are made more entertaining by $his shame, which makes $him redden and blush whenever it's time for another article of clothing to come off. Even though $his entertainment skill needs improving, you genuinely enjoy the teasing way $he tugs at $his wear and makes you anticipate the removal of each article.
+	<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+		Your slave is not a skilled performer, and $his movements are uninspired. $He is a tease, which adds a bit of value, but you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+	<<else>>
+		Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to gracelessly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+	<</if>>
+<<else>>
+	<<if (getSlave($AS).fetishKnown == 1)>>
+		<<switch getSlave($AS).fetish>>
+		<<case "submissive">>
+			<<if (getSlave($AS).skill.entertainment >= 99)>>
+				Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+			<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+				Your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+			<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+				Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+			<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+				Your slave works hard to keep with the rhythm while removing articles of clothing.
+			<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+				Your slave is not a skilled performer, and $his movements are uninspired. $His movements are still attractive, but you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+			<<else>>
+				Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to gracelessly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+			<</if>>
+		<<case "dom">>
+			<<if (getSlave($AS).skill.entertainment >= 99)>>
+				Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+			<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+				Your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+			<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+				Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+			<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+				Your slave works hard to keep with the rhythm while removing articles of clothing.
+			<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+				Your slave is not a skilled performer, and $his movements are uninspired. $His movements are still attractive, but you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+			<<else>>
+				Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to gracelessly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+			<</if>>
+		<<case "sadist">>
+			<<if (getSlave($AS).skill.entertainment >= 99)>>
+				Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+			<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+				Your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+			<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+				Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+			<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+				Your slave works hard to keep with the rhythm while removing articles of clothing.
+			<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+				Your slave is not a skilled performer, and $his movements are uninspired. $His movements are still attractive, but you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+			<<else>>
+				Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to gracelessly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+			<</if>>
+		<<case "masochist">>
+			<<if (getSlave($AS).skill.entertainment >= 99)>>
+				Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+			<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+				Your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+			<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+				Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+			<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+				Your slave works hard to keep with the rhythm while removing articles of clothing.
+			<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+				Your slave is not a skilled performer, and $his movements are uninspired. $His movements are still attractive, but you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+			<<else>>
+				Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to gracelessly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+			<</if>>
+		<<case "cumslut">>
+			<<if (getSlave($AS).skill.entertainment >= 99)>>
+				Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+			<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+				Your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+			<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+				Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+			<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+				Your slave works hard to keep with the rhythm while removing articles of clothing.
+			<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+				Your slave is not a skilled performer, and $his movements are uninspired. $His movements are still attractive, but you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+			<<else>>
+				Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to gracelessly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+			<</if>>
+		<<case "humiliation">>
+			<<if (getSlave($AS).skill.entertainment >= 99)>>
+				Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+			<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+				Your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+			<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+				Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+			<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+				Your slave works hard to keep with the rhythm while removing articles of clothing.
+			<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+				Your slave is not a skilled performer, and $his movements are uninspired. $His movements are still attractive, but you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+			<<else>>
+				Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to gracelessly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+			<</if>>
+		<<case "buttslut">>
+			<<if (getSlave($AS).skill.entertainment >= 99)>>
+				Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+			<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+				Your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+			<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+				Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+			<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+				Your slave works hard to keep with the rhythm while removing articles of clothing.
+			<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+				Your slave is not a skilled performer, and $his movements are uninspired. $His movements are still attractive, but you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+			<<else>>
+				Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to gracelessly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+			<</if>>
+		<<case "pregnancy">>
+			<<if (getSlave($AS).skill.entertainment >= 99)>>
+				Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+			<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+				Your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+			<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+				Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+			<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+				Your slave works hard to keep with the rhythm while removing articles of clothing.
+			<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+				Your slave is not a skilled performer, and $his movements are uninspired. $His movements are still attractive, but you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+			<<else>>
+				Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to gracelessly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+			<</if>>
+		<<case "boobs">>
+			<<if (getSlave($AS).skill.entertainment >= 99)>>
+				Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+			<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+				Your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+			<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+				Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+			<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+				Your slave works hard to keep with the rhythm while removing articles of clothing.
+			<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+				Your slave is not a skilled performer, and $his movements are uninspired. $His movements are still attractive, but you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+			<<else>>
+				Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to gracelessly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+			<</if>>
+			<<if (getSlave($AS).boobs >= 10000)>>
+				weighty mammaries
+			<<elseif (getSlave($AS).boobs >= 2000)>>
+				cumbersome udders
+			<<elseif (getSlave($AS).boobs >= 1000)>>
+				massive slave tits
+			<<elseif (getSlave($AS).boobs >= 800)>>
+				forward-thrust breasts
+			<<elseif (getSlave($AS).boobs >= 500)>>
+				meager chest
+			<<elseif (getSlave($AS).boobs <= 400)>>
+				pathetic slave boobs
+			<<else>> tits
+			<</if>>
+			across your body as $he goes down.
+		<<default>>
+			<<if (getSlave($AS).skill.entertainment >= 99)>>
+				Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+			<<elseif (getSlave($AS).skill.entertainment >= 80)>>
+				Your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+			<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+				Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+			<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+				Your slave works hard to keep with the rhythm while removing articles of clothing.
+			<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+				Your slave is not a skilled performer, and $his movements are uninspired. $His movements are still attractive, but you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+			<<else>>
+				Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to gracelessly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+			<</if>>
+		<</switch>>
+	<<else>>
+		<<if (getSlave($AS).skill.entertainment >= 99)>>
+			Your slave is a masterful entertainer, able to keep anyone entertained for even the most lengthy of strip teases. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he knows how to fulfill $his purpose. You keep trying to get back to work, but your slave's movements are so enthralling that you cannot seem to break free.
+		<<elseif (getSlave($AS).skill.entertainment >= 60)>>
+			Your slave is a skilled entertainer, well above average. $He begins by writhing $his hips and rolling $his ass. $He knows how to use $his hips and ass to draw and keep your attention while slowly moving up to $his chest. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose.
+		<<elseif (getSlave($AS).skill.entertainment >= 40)>>
+			Your slave is a practiced entertainer, not masterful but still able to give an arousing performance. $He begins by writhing $his hips and rolling $his ass. $He is able to use $his hips and ass to draw your attention before suddenly moving up to $his chest. $He isn't able to fully keep your attention, but whenever $he sees that you are becoming distracted $he ups the ante to draw you back in. $His body is nothing more than an object for your desire, and $he is learning to fulfill $his purpose. $He does $his best to direct your arousal onto $his body.
+		<<elseif (getSlave($AS).skill.entertainment >= 20)>>
+			Your slave works hard to keep with the rhythm while removing articles of clothing.
+		<<elseif (getSlave($AS).skill.entertainment >= 10)>>
+			Your slave is not a skilled performer, and $his movements are uninspired. $His movements are still attractive, but you find yourself becoming distracted, $his dance not enough to keep your attention or draw you back. You take out your tablet and make a note that this slave will need to practice $his seduction if $he is to be allowed to dance for you again. Even without skill you still can admire $his body. You imagine how much more attractive $his tits and ass could be if $he knew how to move them right.
+		<<else>>
+			Your slave has no skills to speak of, and isn't able to keep even the simplest of rhythms. $He fumbles about awkwardly and clumsily, stopping abruptly every so often to gracelessly remove an article of clothing. You decide to find $his lack of skill amusing, and allow $him to continue practicing while you resume your work.
+		<</if>>
+	<</if>>
+
+<</if>>
+
+/* The following is formatting for later inclusion */
+/*
+<<switch getSlave($AS).clothes>>
+			<<case "a Fuckdoll suit">>
+				<<= getSlave($AS).slaveName>>'s Fuckdoll suit
+				<<if getSlave($AS).boobs > 24000>>
+					fits each of $his awe-inspiring masses of breastflesh perfectly.
+				<<elseif getSlave($AS).boobs > 12000>>
+					fits each of $his enormous masses of breastflesh perfectly.
+				<<elseif getSlave($AS).boobs > 2000>>
+					fits each of $his huge breasts individually.
+				<<elseif getSlave($AS).boobs > 800>>
+					fits each of $his heavy breasts individually.
+				<<elseif getSlave($AS).boobs > 300>>
+					fits each of $his breasts individually.
+				<<else>>
+					is flat across $his chest.
+				<</if>>
+			<<case "conservative clothing">>
+				<<if getSlave($AS).boobs > 24000>>
+					<<= getSlave($AS).slaveName>> is wearing a tent-like sweater tailored to cover $his tits.
+				<<elseif getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>> is wearing a massively oversized custom sweater since nothing else comes close to modestly covering $his tits. Even so, it's stretched taut struggling to contain their immense mass.
+				<<elseif getSlave($AS).boobs > 8000>>
+					<<= getSlave($AS).slaveName>> is wearing an oversized sweater, since that's the only top that will come close to covering $his tits. Even so, it's stretched taut just struggling to cover $his nipples.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>> is wearing an oversized sweater, since that's the only top that will cover $his tits. Even so, it's stretched taut over them.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s blouse is professional, but can't conceal the gigantic dimensions of $his tits.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s blouse is professional, but can't conceal how big $his tits are.
+				<<elseif getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>>'s blouse is professional and includes a pleated front over $his flat chest.
+				<<else>>
+					<<= getSlave($AS).slaveName>>'s blouse is professional and includes a pleated front over $his breasts.
+				<</if>>
+			<<case "chains">>
+				<<= getSlave($AS).slaveName>> has a length of chain painfully
+				<<if getSlave($AS).boobs > 800>>
+					tightened around the base of each breast, forcing them out.
+				<<elseif getSlave($AS).boobs < 300>>
+					<<switch getSlave($AS).nipples>>
+					<<case "huge">>
+						wrapped around each of $his huge nipples, since they are the only things protruding from $his chest.
+					<<case "inverted">>
+						wrapped tightly across $his flat chest, through the cleft of $his inverted nipples.
+					<<default>>
+						wrapped tightly across $his flat chest, directly over $his getSlave($AS).nipples nipples.
+					<</switch>>
+				<<else>>
+					looped under $his chest, forcing $his breasts up.
+				<</if>>
+			<<case "Western clothing">>
+				<<= getSlave($AS).slaveName>>'s flannel shirt
+				<<if getSlave($AS).boobs > 2000>>
+					can't begin to contain $his tits, so $he's just tied it under them for support.
+				<<elseif getSlave($AS).boobs > 800>>
+					can't close over $his tits, so $he's just buttoned it up to where they start and let them fill it out above that.
+				<<elseif getSlave($AS).boobs < 300>>
+					tightly hugs $his flat chest.
+				<<else>>
+					rests comfortably over $his breasts.
+				<</if>>
+			<<case "body oil">>
+				<<if getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>>'s flat chest is covered in a sexy sheen of body oil.
+				<<else>>
+					<<= getSlave($AS).slaveName>>'s breasts are covered in a sexy sheen of body oil.
+				<</if>>
+			<<case "a toga">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s breasts are too big to cover with $his toga, so $he leaves them hanging free.
+				<<elseif getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>> is wearing $his toga so as to leave one getSlave($AS).nipples nipple bare.
+				<<else>>
+					<<= getSlave($AS).slaveName>> is wearing $his toga so as to leave one breast bare.
+				<</if>>
+			<<case "a huipil">>
+				<<if getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s breasts are so big that they pull up $his huipil uncomfortably high, so $he needs to fold it between them.
+				<<elseif getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>>'s huipil rests on $his flat chest.
+				<<else>>
+					<<= getSlave($AS).slaveName>> is wearing $his huipil which accentuates $his breasts.
+				<</if>>
+			<<case "a slutty qipao">>
+				<<= getSlave($AS).slaveName>>'s qipao
+				<<if getSlave($AS).boobs > 12000>>
+					can't contain the immense size of $his breasts, so $he wears a modified variant that lets $his tits hang free.
+				<<elseif getSlave($AS).boobs > 4000>>
+					barely covers $his breasts, it strains to contain their absurd size. Breast flesh spills from any gap it can find.
+				<<elseif getSlave($AS).boobs > 2000>>
+					demurely covers $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					demurely hugs $his flat chest.
+				<<else>>
+					demurely covers $his breasts.
+				<</if>>
+			<<case "uncomfortable straps">>
+				<<= getSlave($AS).slaveName>>'s slave
+				<<if getSlave($AS).boobs > 12000>>
+					outfit includes a network of straps to support $his breasts, radiating outwards from the steel rings around $his nipples.
+				<<elseif getSlave($AS).boobs > 2000>>
+					outfit has special straps for $his massive boobs: one strap down the front of each with steel rings to let $his nipples through, and a strap around the base of each, painfully squeezing $his breasts out to make them seem even bigger.
+				<<elseif getSlave($AS).boobs > 800>>
+					outfit's straining straps restrain the flesh of $his tits like a string bikini, with steel rings to let $his nipples through.
+				<<elseif getSlave($AS).boobs < 300>>
+					outfit's straps pass over $his flat chest like a string bikini, with steel rings to let $his getSlave($AS).nipples nipples through.
+				<<else>>
+					outfit's straps pass over $his breasts like a string bikini, with steel rings to let $his nipples through.
+				<</if>>
+			<<case "shibari ropes">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					breasts are restrained by <<if $showInches == 2>>yards and yards<<else>>meters and meters<</if>> of rope.
+				<<elseif getSlave($AS).boobs > 2000>>
+					boobs are tightly bound with rope, soft flesh pushing out from between them.
+				<<elseif getSlave($AS).boobs < 300>>
+					flat chest is tightly bound with rope, drawing attention to $his flat chest.
+				<<else>>
+					chest is tightly bound with rope.
+				<</if>>
+			<<case "restrictive latex">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 2000>>
+					breasts protrude through holes in $his latex suit, which are too small for them, painfully constricting $him and making them seem even bigger.
+				<<elseif getSlave($AS).boobs > 800>>
+					breasts protrude through holes in $his latex suit.
+				<<elseif getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).nipples>> nipples poke through holes in $his latex suit, since $he has nothing else protruding from $his chest.
+				<<else>>
+					latex suit leaves $his chest bare.
+				<</if>>
+			<<case "attractive lingerie">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					lace bra cannot cover the whole breast; its cups are half-moon shaped, and designed to offer what support they can to the bottom of them. They have disappeared completely under the immense quantity of breast flesh.
+				<<elseif getSlave($AS).boobs > 4000>>
+					lace bra cannot cover the whole breast; its cups are half-moon shaped, and designed to offer what support they can to the bottom of them.
+				<<elseif getSlave($AS).boobs > 800>>
+					sturdy lace bra supports $his huge breasts.
+				<<elseif getSlave($AS).boobs < 300>>
+					pretty lace bra hugs $his flat chest.
+				<<else>>
+					pretty lace bra accentuates $his breasts.
+				<</if>>
+			<<case "kitty lingerie">>
+				<<= getSlave($AS).slaveName>>'s lacy bra features a hole shaped liked a cat's head in the center of $his chest;
+				<<if getSlave($AS).boobs > 12000>>
+					$his breasts have stretched $his bra to the point that the hole is unrecognizable as anything feline.
+				<<elseif getSlave($AS).boobs > 4000>>
+					the size of $his breasts severely stretches out the hole's shape.
+				<<elseif getSlave($AS).boobs > 800>>
+					the size of $his breasts stretches out the hole's shape.
+				<<elseif getSlave($AS).boobs < 300>>
+					it lies flat against $his body.
+				<<else>>
+					the hole lies directly over $his cleavage.
+				<</if>>
+			<<case "a succubus outfit">>
+				<<= getSlave($AS).slaveName>>'s corset ends just below $his <<if getSlave($AS).boobs < 300>>non-existent <</if>>breasts, leaving them bare.
+				<<if getSlave($AS).boobs > 2000>>
+					It hugs $his tightly and comes up to right under where they start, forcing them to spill over and hide its upper half.
+				<<elseif getSlave($AS).boobs > 400>>
+					It hugs $his tightly and comes up to right under where they start, presenting them like a push-up bra.
+				<</if>>
+			<<case "a slutty maid outfit">>
+				<<= getSlave($AS).slaveName>>'s maid dress stops below $his <<if getSlave($AS).boobs < 300>>non-existent <</if>>breasts, but the outfit includes a thin white blouse
+				<<if getSlave($AS).boobs > 4000>>
+					that fails to even come close to covering $his immense breasts.
+				<<elseif getSlave($AS).boobs > 2000>>
+					that covers them to just over $his nipples when $he pulls it up over them. It's pulled down by $his huge chest whenever $he moves.
+				<<elseif getSlave($AS).boobs > 800>>
+					that covers them to just over $his nipples, leaving a large area of deliciously unsupported and jiggling cleavage.
+				<<elseif getSlave($AS).boobs < 300>>
+					that hugs $his flat chest and lets $his getSlave($AS).nipples nipples protrude through the fabric.
+				<<else>>
+					to cover them.
+				<</if>>
+			<<case "a nice maid outfit">>
+				<<= getSlave($AS).slaveName>>'s maid dress front is almost conservative, covering $his
+				<<if getSlave($AS).boobs > 12000>>
+					immense breasts with a tent-like billow of white fabric.
+				<<elseif getSlave($AS).boobs > 6000>>
+					immense breasts as best it can; it barely succeeds at its task, straining at the seams and allowing breast flesh to spill out of every available gap.
+				<<elseif getSlave($AS).boobs > 2000>>
+					breasts, though it cannot conceal their enormous mass.
+				<<elseif getSlave($AS).boobs < 300>>
+					flat chest, though it does nothing to hide how flat $he is.
+				<<else>>
+					breasts.
+				<</if>>
+			<<case "a fallen nuns habit">>
+				<<= getSlave($AS).slaveName>>'s latex habit includes a
+				<<if getSlave($AS).boobs > 20000>>
+					half-corset, but it's completely invisible, being hidden under $his inhuman tits.
+				<<elseif getSlave($AS).boobs > 4000>>
+					half-corset, but only the bottom edge is visible: the rest is swallowed up under $his gigantic tits.
+				<<elseif getSlave($AS).boobs > 800>>
+					half-corset to force $his big boobs up and forward, forming a lot of cleavage even though they're bare.
+				<<elseif getSlave($AS).boobs < 300>>
+					half-corset that tightly hugs $his flat chest.
+				<<else>>
+					half-corset to force $his boobs up and forward.
+				<</if>>
+			<<case "a chattel habit">>
+				<<= getSlave($AS).slaveName>>'s chattel habit's scapular covers $his shoulders<<if (hasAnyArms(getSlave($AS)))>> and arm<<if (hasBothArms(getSlave($AS)))>>s<</if>><</if>>, but is open in front, leaving $his
+				<<if getSlave($AS).boobs > 4000>>
+					boobs completely bare. It tucks into a golden belt, though this is buried under $his breasts.
+				<<elseif getSlave($AS).boobs > 300>>
+					boobs completely bare. It tucks into a golden belt, which is cinched up right under $his breasts.
+				<<else>>
+					flat chest completely bare. It tucks into a golden belt cinched around $his middle torso.
+				<</if>>
+			<<case "a penitent nuns habit">>
+				If $he fails to hold $his torso totally still, the coarse cloth of $his top agonizingly scrapes across $his nipples, bare under $his habit.
+			<<case "a string bikini">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s breasts are so large that the little scraps of cloth intended for $his nipples can't really stay centered over them.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s huge breasts constantly pull $his nipples out from under the tiny scrap of cloth that $his string bikini affords them.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s big breasts threaten to break out of $his straining string bikini top.
+				<<elseif getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>>'s string bikini top barely covers anything, affording only a tiny scrap of cloth for each nipple; not that there is much else to cover on $his flat chest.
+				<<else>>
+					<<= getSlave($AS).slaveName>>'s string bikini top barely covers anything, affording only a tiny scrap of cloth for each nipple.
+				<</if>>
+			<<case "a scalemail bikini">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s breasts are so large that it's a testament to $his scalemail top that it hasn't broken yet.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s huge breasts constantly strain $his scalemail top.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s scalemail top contains $his big breasts well.
+				<<elseif getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>>'s scalemail bikini top easily covers everything, as there is not much to cover on $his flat chest.
+				<<else>>
+					<<= getSlave($AS).slaveName>>'s scalemail bikini top covers everything, while still flaunting it.
+				<</if>>
+			<<case "striped panties">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s enormous breasts are completely bare.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s huge breasts are completely bare.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s breasts are completely bare.
+				<<elseif getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>>'s flat breasts are completely bare.
+				<<else>>
+					<<= getSlave($AS).slaveName>>'s breasts are completely bare.
+				<</if>>
+			<<case "clubslut netting">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					immense boobs hang out the holes they tore in $his clubslut netting.
+				<<elseif getSlave($AS).boobs > 4000>>
+					clubslut netting is stretched to the breaking point by $his massive boobs.
+				<<elseif getSlave($AS).boobs > 800>>
+					clubslut netting is stretched by $his big breasts.
+				<<elseif getSlave($AS).boobs < 300>>
+					clubslut netting hugs $his flat chest.
+				<<else>>
+					clubslut netting hugs $his chest tightly.
+				<</if>>
+			<<case "a cheerleader outfit">>
+				<<= getSlave($AS).slaveName>>'s cheerleader top
+				<<if getSlave($AS).boobs > 12000>>
+					can't support $his giant bust and is lost beneath $his immense breasts.
+				<<elseif getSlave($AS).boobs > 4000>>
+					is strongly engineered, but it can barely support $his enormous bust.
+				<<elseif getSlave($AS).boobs > 800>>
+					gives $him an acre of cleavage.
+				<<elseif getSlave($AS).boobs < 300>>
+					tightly clings to $his flat chest, prominently displaying $his getSlave($AS).nipples nipples.
+				<<else>>
+					does its best to make $his boobs look bigger than they are.
+				<</if>>
+			<<case "cutoffs and a t-shirt">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					tits are so huge that $his t-shirt rests pathetically atop their mass.
+				<<elseif getSlave($AS).boobs > 4000>>
+					tits are so big that $his t-shirt barely comes down over $his nipples, leaving a lot of underboob hanging out.
+				<<elseif getSlave($AS).boobs > 1200>>
+					t-shirt is held out and away from $his midriff by $his big breasts.
+				<<elseif getSlave($AS).boobs < 300>>
+					t-shirt is tied across $his flat chest to bare $his midriff.
+				<<else>>
+					t-shirt is tied up to bare $his midriff.
+				<</if>>
+			<<case "spats and a tank top">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 20000>>
+					tank top lies atop $his massive rack.
+				<<elseif getSlave($AS).boobs > 12000>>
+					tank top just barely covers $his nipples despite its fairly large size.
+				<<elseif getSlave($AS).boobs > 4000>>
+					tank top can never completely cover $his tits, giving varying amounts of underboob as $he moves about.
+				<<elseif getSlave($AS).boobs > 1200>>
+					midriff is open to see as $his chest makes $his tank top ride up.
+				<<else>>
+					tank top is tight against $his <<if getSlave($AS).boobs < 300>> flat <</if>> chest.
+				<</if>>
+			<<case "a slutty outfit">>
+				<<= getSlave($AS).slaveName>>
+				<<if getSlave($AS).boobs > 12000>>
+					has given up trying to contain $his immense bust and is now choosing outfits that allow $his breasts to hang free.
+				<<elseif getSlave($AS).boobs > 4000>>
+					has to be careful choosing slutty outfits that can restrain $his massive breasts.
+				<<elseif getSlave($AS).boobs > 800>>
+					has to be careful choosing slutty outfits that can handle $his big breasts.
+				<<elseif getSlave($AS).boobs < 300>>
+					chooses slutty outfits that go well on a $girl with no tits.
+				<<else>>
+					chooses slutty outfits that accentuate $his breasts.
+				<</if>>
+			<<case "a slave gown">>
+				<<= getSlave($AS).slaveName>>'s slave gown
+				<<if getSlave($AS).boobs > 12000>>
+					is no longer able to cover $his immense breasts. Instead, it has been redesigned to draw the eye to them.
+				<<elseif getSlave($AS).boobs > 4000>>
+					is carefully engineered and is somehow able to cover the enormous mass of $his breasts.
+				<<elseif getSlave($AS).boobs > 800>>
+					is carefully tailored, tastefully covering yet enhancing $his big breasts.
+				<<elseif getSlave($AS).boobs < 300>>
+					is carefully tailored to closely hug $his flat chest.
+				<<else>>
+					subtly accentuates $his breasts.
+				<</if>>
+			<<case "a halter top dress">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s immense breasts are far too big for $his dress to contain; instead it has been redesigned to allow them to hang freely.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>>'s enormous breasts are spill out from every available space in $his beautiful halter top dress.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s enormous breasts are bulging inside a beautiful halter top dress.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s is draped inside a beautiful halter top dress, making $his big breasts the center of attention.
+				<<elseif getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>> is wearing a beautiful silky halter top dress, almost as if it was sculpted to hug $his flat chest.
+				<<else>>
+					<<= getSlave($AS).slaveName>> is wearing a beautiful silky halter top dress, almost as if it was sculpted to match $his frame.
+				<</if>>
+			<<case "a ball gown">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>> fabulous silken ball gown is designed to allow $his oversized breasts to hang free.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>> somehow managed to cram the immense mass of $his breasts inside a fabulous silken ball gown. They spill out of every available gap.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>> somehow managed to fit the enormous mass of $his breasts inside a fabulous silken ball gown.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s fabulous silken ball gown is carefully tailored, beautifully covering yet enhancing $his big breasts.
+				<<elseif getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>>'s fabulous silken ball gown is carefully tailored, beautifully caressing $his flat chest.
+				<<else>>
+					<<= getSlave($AS).slaveName>>'s draped inside a fabulous silken ball gown.
+				<</if>>
+			<<case "slutty business attire">>
+				<<= getSlave($AS).slaveName>>'s suit jacket
+				<<if getSlave($AS).boobs > 12000>>
+					and blouse are both open in front, leaving $his boobs bare, since there's no way $he could button $his clothes over $his tits.
+				<<elseif getSlave($AS).boobs > 2000>>
+					is open in front, and $his straining blouse barely restrains $his tits.
+				<<elseif getSlave($AS).boobs < 300>>
+					is open in front, tightly hugging $his flat chest and prominently displaying $his getSlave($AS).nipples nipples.
+				<<else>>
+					is open in front, and $his blouse barely covers $his breasts.
+				<</if>>
+			<<case "nice business attire">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					tits are so immense that $his specially tailored blouse and jacket are incapable of being buttoned up.
+				<<elseif getSlave($AS).boobs > 4000>>
+					tits are so huge that they prevent $his jacket from closing. Every motion $he makes threatens to turn $his blouse buttons into ballistics.
+				<<elseif getSlave($AS).boobs > 2000>>
+					tits are so big that they strain even $his specially tailored blouse and jacket.
+				<<elseif getSlave($AS).boobs > 800>>
+					big tits strain against $his tailored blouse and jacket.
+				<<elseif getSlave($AS).boobs < 300>>
+					suit jacket is fitted tightly to $his flat chest.
+				<<else>>
+					suit jacket conceals a flattering bra that lifts and presents $his bosom.
+				<</if>>
+			<<case "a comfortable bodysuit">>
+				<<if getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>>'s bodysuit is so tightly form-fitting that it clings to $his flat chest and prominently displays $his getSlave($AS).nipples nipples.
+				<<else>>
+					<<= getSlave($AS).slaveName>>'s bodysuit is so tightly form-fitting that $his breasts are individually hugged and supported by the material.
+				<</if>>
+			<<case "a latex catsuit">>
+				<<if getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>>'s latex catsuit fits $him like a second skin, showing off every detail of $his getSlave($AS).nipples nipples and distinct lack of breasts.
+				<<else>>
+					<<= getSlave($AS).slaveName>>'s latex catsuit fits $him like a second skin, showing off every detail of $his nipples and breasts.
+				<</if>>
+			<<case "a military uniform">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s tits are so immense that $his specially tailored shirt and tunic are incapable of being buttoned up.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>>'s tits are so huge that they prevent $his tunic from closing. Every motion threatens to turn $his shirt buttons into shrapnel.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s tits are so big that they strain even $his specially tailored shirt and tunic.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s big tits strain against $his tailored shirt and tunic.
+				<<else>>
+					<<= getSlave($AS).slaveName>> cuts a dashing figure in $his tunic.<<if getSlave($AS).boobs < 300>> $His <<print either("androgynous", "flat")>> breasts are barely there.<</if>>
+				<</if>>
+			<<case "a schutzstaffel uniform">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s tits are so immense that $his specially tailored shirt and tunic are incapable of being buttoned up.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>>'s tits are so huge that they prevent $his tunic from closing. Every motion threatens to turn $his shirt buttons into shrapnel.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s tits are so big that they strain even $his specially tailored shirt and tunic.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s big tits strain against $his tailored shirt and tunic.
+				<<else>>
+					<<= getSlave($AS).slaveName>> cuts a dashing figure in $his tunic.<<if getSlave($AS).boobs < 300>> $His <<print either("androgynous", "flat")>> breasts are barely there.<</if>>
+				<</if>>
+			<<case "a slutty schutzstaffel uniform">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s tits are so immense that $his specially tailored shirt and tunic are incapable of being buttoned up.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>>'s tits are so huge that they prevent $his tunic from closing. Every motion threatens to turn $his shirt buttons into shrapnel.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s tits are so big that they strain even $his specially tailored shirt and tunic.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s big tits strain against $his tailored shirt and tunic.
+				<<else>>
+					<<= getSlave($AS).slaveName>> cuts a dashing figure in $his tunic.<<if getSlave($AS).boobs < 300>> $His <<print either("androgynous", "flat")>> breasts are barely there.<</if>>
+				<</if>>
+			<<case "a long qipao">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s tits are so immense that $his dress is on the verge of bursting open.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>>'s tits are so huge that $his dress is on the verge of bursting open.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s tits are so big that they strain even $his dress greatly.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s big tits strain against $his dress.
+				<<else>>
+					<<= getSlave($AS).slaveName>> cuts a dashing figure in $his dress.<<if getSlave($AS).boobs < 300>> $His <<print either("androgynous", "flat")>> breasts are barely there.<</if>>
+				<</if>>
+			<<case "battlearmor">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s tits are so immense that $his armor is on the verge of bursting open.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>>'s tits are so huge that $his armor is on the verge of bursting open.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s tits are so big that they armor even $his dress greatly.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s big tits strain against $his armor.
+				<<else>>
+					<<= getSlave($AS).slaveName>> cuts a dashing figure in $his armor.<<if getSlave($AS).boobs < 300>> $His <<print either("androgynous", "flat")>> breasts are barely there.<</if>>
+				<</if>>
+			<<case "a mounty outfit">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s tits are so immense that $his specially tailored shirt and tunic are incapable of being buttoned up.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>>'s tits are so huge that they prevent $his tunic from closing. Every motion threatens to turn $his shirt buttons into shrapnel.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s tits are so big that they strain even $his specially tailored shirt and tunic.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s big tits strain against $his tailored shirt and tunic.
+				<<else>>
+					<<= getSlave($AS).slaveName>> cuts a dashing figure in $his tunic.<<if getSlave($AS).boobs < 300>> $His <<print either("androgynous", "flat")>> breasts are barely there.<</if>>
+				<</if>>
+			<<case "a dirndl">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s tits are so immense that $his dress are incapable of being laced up.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>>'s tits are so huge that they prevent $his dress from being laced up.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s tits are so big that they strain $his dress.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s big tits strain against $his dress.
+				<<else>>
+					<<= getSlave($AS).slaveName>> cuts a dashing figure in $his dress.<<if getSlave($AS).boobs < 300>> $His <<print either("androgynous", "flat")>> breasts are barely there.<</if>>
+				<</if>>
+			<<case "lederhosen">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s tits are so immense that $his specially tailored shirt and tunic are incapable of being buttoned up.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>>'s tits are so huge that they prevent $his tunic from closing. Every motion threatens to turn $his shirt buttons into shrapnel.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s tits are so big that they strain even $his specially tailored shirt and tunic.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s big tits strain against $his tailored shirt and tunic.
+				<<else>>
+					<<= getSlave($AS).slaveName>> cuts a dashing figure in $his tunic.<<if getSlave($AS).boobs < 300>> $His <<print either("androgynous", "flat")>> breasts are barely there.<</if>>
+				<</if>>
+			<<case "a biyelgee costume">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s tits are so immense that $his dress are incapable of being buttoned up.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>>'s tits are so huge that they prevent $his dress from being buttoned up.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s tits are so big that they strain $his dress.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s big tits strain against $his dress.
+				<<else>>
+					<<= getSlave($AS).slaveName>> cuts a dashing figure in $his dress.<<if getSlave($AS).boobs < 300>> $His <<print either("androgynous", "flat")>> breasts are barely there.<</if>>
+				<</if>>
+			<<case "a red army uniform" "a police uniform">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s tits are so immense that $his specially tailored shirt and tunic are incapable of being buttoned up.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>>'s tits are so huge that they prevent $his tunic from closing. Every motion threatens to turn $his shirt buttons into shrapnel.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s tits are so big that they strain even $his specially tailored shirt and tunic.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s big tits strain against $his tailored shirt and tunic.
+				<<else>>
+					<<= getSlave($AS).slaveName>> cuts a dashing figure in $his tunic.<<if getSlave($AS).boobs < 300>> $His <<print either("androgynous", "flat")>> breasts are barely there.<</if>>
+				<</if>>
+			<<case "a nice nurse outfit">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					immense tits are too big for $his scrub top, it rests uselessly atop $his bust.
+				<<elseif getSlave($AS).boobs > 4000>>
+					massive tits strain against $his scrub top, it only manages to cover $his nipples.
+				<<elseif getSlave($AS).boobs > 2000>>
+					massive tits strain against $his scrub top, filling it out completely despite its utilitarian cut.
+				<<elseif getSlave($AS).boobs > 800>>
+					sizable tits nicely fill out $his scrub top, despite its utilitarian cut.
+				<<elseif getSlave($AS).boobs < 300>>
+					scrub top tightly hugs $his flat chest.
+				<<else>>
+					tits are hidden beneath $his scrub top.
+				<</if>>
+			<<case "a mini dress">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					mini dress is pulled down to allow $his immense breasts to hang free.
+				<<elseif getSlave($AS).boobs > 4000>>
+					massive breasts stretch $his custom tailored dress to its absolute limit.
+				<<elseif getSlave($AS).boobs > 800>>
+					big breasts stretch taut against $his dress, leaving nothing to the imagination.
+				<<elseif getSlave($AS).boobs < 300>>
+					dress tightly hugs $his flat chest, prominently displaying $his getSlave($AS).nipples nipples though the fabric.
+				<<else>>
+					chest stretches taut against $his dress, leaving little to the imagination.
+				<</if>>
+			<<case "an apron">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					breasts are so immense that $his apron can barely contain them, and $he has to be careful not to expose one or both of $his getSlave($AS).nipples nipples as $he moves.
+				<<elseif getSlave($AS).boobs > 4000>>
+					massive breasts fill out $his strained apron, occasionally leaving the sides of $his getSlave($AS).nipples nipples bare.
+				<<elseif getSlave($AS).boobs > 800>>
+					big breasts fill out $his stretched apron, only just managing to fully cover $his getSlave($AS).nipples nipples.
+				<<elseif getSlave($AS).boobs < 300>>
+					apron lies flatly against $his small chest and getSlave($AS).nipples nipples.
+				<<else>>
+					breasts fill out $his apron, which is strategically worn to cover $his getSlave($AS).nipples nipples.
+				<</if>>
+			<<case "overalls">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					breasts are so immense that $his overalls can barely contain them, and $he has to be careful not to expose one or both of $his getSlave($AS).nipples nipples as $he moves.
+				<<elseif getSlave($AS).boobs > 4000>>
+					giant breasts peek out from the sides of $his strained overalls, often exposing the sides of $his getSlave($AS).nipples nipples.
+				<<elseif getSlave($AS).boobs > 800>>
+					huge breasts fill out $his stretched overalls, only just managing to fully cover $his getSlave($AS).nipples nipples.
+				<<elseif getSlave($AS).boobs < 300>>
+					overalls lie flatly against $his small chest and getSlave($AS).nipples nipples.
+				<<else>>
+					overalls are filled out by $his breasts, offering tantalizing views of their sides.
+				<</if>>
+			<<case "a leotard">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					tits are so big that even $his specially tailored leotard cannot really support them.
+				<<elseif getSlave($AS).boobs > 2000>>
+					big tits stretch the spandex of $his leotard taut across their width.
+				<<elseif getSlave($AS).boobs < 300>>
+					leotard tightly hugs $his flat chest, prominently displaying $his getSlave($AS).nipples nipples though the spandex.
+				<<else>>
+					chest is flattered by $his leotard.
+				<</if>>
+			<<case "a monokini">>
+				The shoulder straps of <<= getSlave($AS).slaveName>>'s monokini cross over in the center of $his chest, leaving the rest of $his
+				<<if getSlave($AS).boobs > 12000>>
+					gigantic breasts totally bare.
+				<<elseif getSlave($AS).boobs > 2000>>
+					large breasts totally bare.
+				<<elseif getSlave($AS).boobs < 300>>
+					flat chest totally bare.
+				<<else>>
+					breasts totally bare.
+				<</if>>
+			<<case "a cybersuit">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					gigantic breasts stretch out the bodysuit so tightly that $his nipples are clearly visible.
+				<<elseif getSlave($AS).boobs > 2000>>
+					large breasts stretch out the bodysuit so tightly that $his nipples are nearly visible.
+				<<elseif getSlave($AS).boobs < 300>>
+					flat chest is hugged tightly by the bodysuit, $his nipples pushing against the material.
+				<<else>>
+					breasts are hugged tightly by the bodysuit, $his nipples pushing against the material.
+				<</if>>
+			<<case "a bunny outfit">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					tits are so immense that $his teddy can't contain them; it's pulled down to allow them to hang free.
+				<<elseif getSlave($AS).boobs > 6000>>
+					tits are so huge that $his teddy conceals special stays to keep them from popping out at the slightest movement. Breast flesh massively overflows $his top.
+				<<elseif getSlave($AS).boobs > 2000>>
+					tits are so big that $his teddy conceals special stays to keep them from popping out at the slightest movement.
+				<<elseif getSlave($AS).boobs > 800>>
+					big tits are perpetually on the verge of spilling out of $his top.
+				<<elseif getSlave($AS).boobs < 300>>
+					teddy tightly clings to $his flat chest somehow making $him look even flatter.
+				<<else>>
+					teddy conceals cunning stays designed to make $his bosom look considerably bigger than it actually is.
+				<</if>>
+			<<case "attractive lingerie for a pregnant woman">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					top has been retailored to fit $his enormous bust. The ample breast flesh almost completely consumes $his silken lingerie. $His silken vest is barely visible behind $his massive tits.
+				<<elseif getSlave($AS).boobs > 4000>>
+					gigantic tits dwarf $his tiny top. It barely manages to cover $his nipples. $His silken vest is parted to either side of $his breasts.
+				<<elseif getSlave($AS).boobs > 800>>
+					large breasts spill out from above and below $his tight top.
+				<<elseif getSlave($AS).boobs < 300>>
+					top tightly clings to $his flat chest.
+				<<else>>
+					top tightly clings to $his chest.
+				<</if>>
+			<<case "a maternity dress">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 12000>>
+					low cut dress can't contain $his enormous breasts, so $he keeps it pulled up just below $his bust.
+				<<elseif getSlave($AS).boobs > 4000>>
+					low cut dress can barely conceal $his giant breasts. They bulge over the top and create a deep valley of cleavage.
+				<<elseif getSlave($AS).boobs > 1000>>
+					dress is low cut and reveals a large amount of cleavage.
+				<<elseif getSlave($AS).boobs < 300>>
+					dress is low cut, tightly hugs $his flat chest and ends just above $his nipples.
+				<<else>>
+					dress is low cut and ends just above $his nipples.
+				<</if>>
+			<<case "stretch pants and a crop-top">>
+				<<if getSlave($AS).boobs > 20000>>
+					<<= getSlave($AS).slaveName>> is wearing a massively oversized custom crop-top designed to handle $his monumental tits. Even so, it's stretched taut just struggling to cover $his nipples, causing acres of breast flesh to spill out from under and above it.
+				<<elseif getSlave($AS).boobs > 10000>>
+					<<= getSlave($AS).slaveName>>'s oversized crop-top struggles to contain even half of $his immense breasts leaving plenty of underboob visible alongside with $his cleavage. Every motion risks a nipple popping free.
+				<<elseif getSlave($AS).boobs > 8000>>
+					<<= getSlave($AS).slaveName>>'s oversized crop-top struggles to contain $his enormous breasts leaving plenty of underboob visible alongside with $his cleavage.
+				<<elseif getSlave($AS).boobs > 4000>>
+					<<= getSlave($AS).slaveName>> has swapped up to the largest crop-top available. Even so, it barely covers them and creates plenty of cleavage.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s crop-top struggles to contain $his huge breasts leaving plenty of underboob visible alongside with $his cleavage.
+				<<elseif getSlave($AS).boobs > 800>>
+					<<= getSlave($AS).slaveName>>'s crop-top tightly hugs $his big breasts creating plenty of cleavage.
+				<<elseif getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>>'s crop-top tightly clings to $his flat chest.
+				<<else>>
+					<<= getSlave($AS).slaveName>>'s crop-top tightly hugs $his breasts.
+				<</if>>
+				<<switch getSlave($AS).sexualFlaw>>
+					<<case "neglectful">>
+						"All For You"
+					<<case "cum addict">>
+						"Cum 'ere Sexy"
+					<<case "anal addict">>
+						"Reach Around Back"
+					<<case "attention whore">>
+						"Will Flash For Attention"
+					<<case "breast growth">>
+						"Could Be Bigger"
+					<<case "abusive">>
+						"Fondlers May Be Slapped"
+					<<case "malicious">>
+						"Careful, I Bite"
+					<<case "self hating">>
+						"Rough 'em Up"
+					<<case "breeder">>
+						"Drink Deep"
+					<<default>>
+						<<if getSlave($AS).fetishKnown == 1>>
+							<<switch getSlave($AS).fetish>>
+								<<case "submissive">>
+									"Take Me"
+								<<case "cumslut">>
+									"Splash Zone"
+								<<case "humiliation">>
+									"Flasher"
+								<<case "buttslut">>
+									"Reach Around"
+								<<case "boobs">>
+									"Your Hands Here"
+								<<case "sadist">>
+									"Taste the Pain"
+								<<case "masochist">>
+									"Be Rough"
+								<<case "dom">>
+									"Queen Bitch"
+								<<case "pregnancy">>
+									"Milk Me"
+								<<case "mindbroken">>
+									"Free Slut"
+								<<default>>
+									<<InscripDesc>>
+							<</switch>>
+						<<else>>
+							<<InscripDesc>>
+						<</if>>
+				<</switch>>
+				is written across $his chest in large, vibrant letters.
+			<<case "harem gauze">>
+				<<= getSlave($AS).slaveName>>'s harem girl outfit
+				<<if getSlave($AS).boobs > 12000>>
+					lets $his inhuman breasts rest beneath
+				<<elseif getSlave($AS).boobs > 800>>
+					lets $his breasts swing free beneath
+				<<elseif getSlave($AS).boobs < 300>>
+					gently covers $his flat chest with
+				<<else>>
+					only covers $his breasts with
+				<</if>>
+				a thin film of gauze.
+			<<case "a slutty nurse outfit">>
+				<<= getSlave($AS).slaveName>>'s jacket
+				<<if getSlave($AS).boobs > 4000>>
+					closes beneath $his tits, leaving almost everything visible.
+				<<elseif getSlave($AS).boobs > 800>>
+					pushes $his tits together to form some great cleavage.
+				<<elseif getSlave($AS).boobs < 300>>
+					tightly hugs $his flat chest, since it has no breasts to form cleavage with.
+				<<else>>
+					pushes $his tits together to form as much cleavage as possible.
+				<</if>>
+			<<case "a schoolgirl outfit">>
+				<<= getSlave($AS).slaveName>>'s
+				<<if getSlave($AS).boobs > 4000>>
+					breasts are too big for $his blouse, so $he's tied it under them; they're so huge that it's buried under them.
+				<<elseif getSlave($AS).boobs > 800>>
+					breasts are too big for $his blouse, so $he's tied it under them and left them totally bare.
+				<<elseif getSlave($AS).boobs < 300>>
+					blouse tightly hugs $his flat chest.
+				<<else>>
+					blouse only barely covers $his breasts.
+				<</if>>
+			<<case "a kimono">>
+				<<= getSlave($AS).slaveName>>'s kimono
+				<<if getSlave($AS).boobs > 12000>>
+					can't cover $his breasts, so $he leaves it hanging loose; allowing them to hang freely.
+				<<elseif getSlave($AS).boobs > 4000>>
+					barely covers $his breasts. It reveals most of $his chest, just covering the outer edges of $his breasts and their nipples.
+				<<elseif getSlave($AS).boobs > 2000>>
+					demurely covers $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					demurely rests over $his flat chest.
+				<<else>>
+					demurely covers $his breasts.
+				<</if>>
+			<<case "battledress">>
+				<<if getSlave($AS).boobs > 12000>>
+					<<= getSlave($AS).slaveName>>'s immense breasts are barely supported by a specially engineered, space-age sports bra.
+				<<elseif getSlave($AS).boobs > 2000>>
+					<<= getSlave($AS).slaveName>>'s huge breasts are supported by a specially engineered, space-age sports bra under $his tank top.
+				<<elseif getSlave($AS).boobs < 300>>
+					<<= getSlave($AS).slaveName>> is flat as an ironing board; $he wears $his tank top without a bra underneath.
+				<<else>>
+					<<= getSlave($AS).slaveName>>'s breasts are supported by a sports bra under $his tank top.
+				<</if>>
+			<<case "slutty jewelry">>
+				<<= getSlave($AS).slaveName>>'s bangles include a
+				<<if getSlave($AS).boobs > 2000>>
+					thin chain that runs under $his breasts, disappearing entirely.
+				<<elseif getSlave($AS).boobs > 800>>
+					thin chain that runs under $his breasts, appearing and disappearing enticingly when $he moves.
+				<<elseif getSlave($AS).boobs < 300>>
+					thin chain that runs across $his flat chest.
+				<<else>>
+					light chain that loops under $his breasts.
+				<</if>>
+			<<case "a burqa">>
+				<<= getSlave($AS).slaveName>>'s burqa
+				<<if getSlave($AS).boobs > 12000>>
+					entirely conceals $his breasts, although the fabric struggles to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 8000>>
+					entirely conceals $his breasts. It has been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 4000>>
+					entirely conceals $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					entirely conceals $his flat chest.
+				<<else>>
+					entirely conceals $his breasts.
+				<</if>>
+			<<case "a tube top and thong" "a tube top" "leather pants and a tube top">>
+				<<= getSlave($AS).slaveName>>'s tube top
+				<<if getSlave($AS).boobs > 12000>>
+					entirely conceals $his breasts, although the fabric struggles to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 8000>>
+					entirely conceals $his breasts. It has been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 4000>>
+					entirely conceals $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					entirely conceals $his flat chest.
+				<<else>>
+					entirely conceals $his breasts.
+				<</if>>
+			<<case "a button-up shirt and panties" "a button-up shirt" "a t-shirt" "a t-shirt and thong" "a t-shirt and panties" "sport shorts and a t-shirt" "a t-shirt and jeans">>
+				<<= getSlave($AS).slaveName>>'s shirt
+				<<if getSlave($AS).boobs > 12000>>
+					entirely conceals $his breasts, although the fabric struggles to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 8000>>
+					entirely conceals $his breasts. It has been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 4000>>
+					entirely conceals $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					entirely conceals $his flat chest.
+				<<else>>
+					entirely conceals $his breasts.
+				<</if>>
+			<<case "an oversized t-shirt and boyshorts" "an oversized t-shirt">>
+				<<= getSlave($AS).slaveName>>'s over-sized shirt
+				<<if getSlave($AS).boobs > 12000>>
+					entirely conceals $his breasts, the fabric easily stretches to cover $his expansive mounds of flesh.
+				<<elseif getSlave($AS).boobs > 8000>>
+					entirely conceals $his breasts, the fabric easily covers $his absurdly-sized breasts.
+				<<elseif getSlave($AS).boobs > 4000>>
+					entirely conceals $his breasts, though it cannot conceal their size.
+				<<elseif getSlave($AS).boobs < 300>>
+					entirely conceals $his flat chest.
+				<<else>>
+					entirely conceals $his breasts.
+				<</if>>
+			<<case "a thong" "a skimpy loincloth" "boyshorts" "cutoffs" "leather pants" "panties" "jeans" "sport shorts">>
+				<<= getSlave($AS).slaveName>>'s breasts
+				<<if getSlave($AS).boobs > 12000>>
+					are completely bare.
+				<<elseif getSlave($AS).boobs > 8000>>
+					are completely bare.
+				<<elseif getSlave($AS).boobs > 4000>>
+					are completely bare.
+				<<elseif getSlave($AS).boobs < 300>>
+					are completely bare.
+				<<else>>
+					are completely bare.
+				<</if>>
+			<<case "a tank-top" "a tank-top and panties">>
+				<<= getSlave($AS).slaveName>>'s tank-top
+				<<if getSlave($AS).boobs > 12000>>
+					entirely conceals $his breasts, although the fabric struggles to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 8000>>
+					entirely conceals $his breasts. It has been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 4000>>
+					entirely conceals $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					entirely conceals $his flat chest.
+				<<else>>
+					entirely conceals $his breasts.
+				<</if>>
+			<<case "a sweater" "a sweater and cutoffs" "a sweater and panties">>
+				<<= getSlave($AS).slaveName>>'s sweater
+				<<if getSlave($AS).boobs > 12000>>
+					entirely conceals $his breasts, although the fabric struggles to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 8000>>
+					entirely conceals $his breasts. It has been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 4000>>
+					entirely conceals $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					entirely conceals $his flat chest.
+				<<else>>
+					entirely conceals $his breasts.
+				<</if>>
+			<<case "leather pants and pasties" "panties and pasties">>
+				<<= getSlave($AS).slaveName>>'s breasts
+				<<if getSlave($AS).boobs > 12000>>
+					are completely bare, except for the pasties covering $his nipples.
+				<<elseif getSlave($AS).boobs > 8000>>
+					are completely bare, except for the pasties covering $his nipples.
+				<<elseif getSlave($AS).boobs > 4000>>
+					are completely bare, except for the pasties covering $his nipples.
+				<<elseif getSlave($AS).boobs < 300>>
+					are completely bare, except for the pasties covering $his nipples.
+				<<else>>
+					are completely bare, except for the pasties covering $his nipples.
+				<</if>>
+			<<case "a bra" "a striped bra" "a sports bra" "sport shorts and a sports bra" "striped underwear">>
+				<<= getSlave($AS).slaveName>>'s bra
+				<<if getSlave($AS).boobs > 12000>>
+					entirely conceals $his breasts, although the fabric struggles to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 8000>>
+					entirely conceals $his breasts. It has been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 4000>>
+					entirely conceals $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					entirely conceals $his flat chest.
+				<<else>>
+					entirely conceals $his breasts.
+				<</if>>
+			<<case "a nice pony outfit" "a slutty pony outfit">>
+				<<= getSlave($AS).slaveName>>'s outfit
+				<<if getSlave($AS).boobs > 12000>>
+					entirely conceals $his breasts, although the fabric struggles to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 8000>>
+					entirely conceals $his breasts. It has been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 4000>>
+					entirely conceals $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					entirely conceals $his flat chest.
+				<<else>>
+					entirely conceals $his breasts.
+				<</if>>
+			<<case "a one-piece swimsuit">>
+				<<= getSlave($AS).slaveName>>'s swimsuit
+				<<if getSlave($AS).boobs > 12000>>
+					entirely conceals $his breasts, although the fabric struggles to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 8000>>
+					entirely conceals $his breasts. It has been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 4000>>
+					entirely conceals $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					entirely conceals $his flat chest.
+				<<else>>
+					entirely conceals $his breasts.
+				<</if>>
+			<<case "a gothic lolita dress" "a hanbok">>
+				<<= getSlave($AS).slaveName>>'s blouse
+				<<if getSlave($AS).boobs > 12000>>
+					entirely conceals $his breasts, although the fabric struggles to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 8000>>
+					entirely conceals $his breasts. It has been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 4000>>
+					entirely conceals $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					entirely conceals $his flat chest.
+				<<else>>
+					entirely conceals $his breasts.
+				<</if>>
+			<<case "a hijab and abaya" "a niqab and abaya">>
+				<<= getSlave($AS).slaveName>>'s abaya
+				<<if getSlave($AS).boobs > 12000>>
+					modestly covers $his breasts, although the fabric struggles to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 4000>>
+					modestly covers $his breasts. It has been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 2000>>
+					modestly covers $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					modestly rests over $his flat chest.
+				<<else>>
+					modestly covers $his breasts.
+				<</if>>
+			<<case "a klan robe" "a slutty klan robe">>
+				<<= getSlave($AS).slaveName>>'s robe
+				<<if getSlave($AS).boobs > 12000>>
+					modestly covers $his breasts, although the fabric struggles to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 4000>>
+					modestly covers $his breasts. It has been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 2000>>
+					modestly covers $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					modestly rests over $his flat chest.
+				<<else>>
+					modestly cover $his breasts.
+				<</if>>
+			<<case "a hijab and blouse">>
+				<<= getSlave($AS).slaveName>>'s two shirts
+				<<if getSlave($AS).boobs > 12000>>
+					modestly cover $his breasts, although the fabrics struggle to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 4000>>
+					modestly cover $his breasts. They have both been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 2000>>
+					modestly cover $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					modestly cover $his flat chest.
+				<<else>>
+					modestly cover $his breasts.
+				<</if>>
+			<<case "a burkini">>
+				<<= getSlave($AS).slaveName>>'s burkini
+				<<if getSlave($AS).boobs > 12000>>
+					modestly covers $his breasts, although it struggles to ensure they are entirely covered.
+				<<elseif getSlave($AS).boobs > 4000>>
+					modestly covers $his breasts. It has been let out a great deal in order to cover the entirety of $his chest.
+				<<elseif getSlave($AS).boobs > 2000>>
+					modestly covers $his breasts, though it cannot conceal their absurd size.
+				<<elseif getSlave($AS).boobs < 300>>
+					modestly covers $his flat chest.
+				<<else>>
+					modestly covers $his breasts.
+				<</if>>
+			<<case "a Santa dress">>
+				<<= getSlave($AS).slaveName>>'s red holiday dress is designed with a dangerously low neckline, which
+				<<if getSlave($AS).boobs > 12000>>
+					$his colossal breasts spill out of completely unheeded.
+				<<elseif getSlave($AS).boobs > 4000>>
+					serves only to prop up $his massive, otherwise naked breasts.
+				<<elseif getSlave($AS).boobs > 2000>>
+					lies at nipple-level on $his big breasts, leaving a decent portion of $his areolae uncovered.
+				<<elseif getSlave($AS).boobs < 300>>
+					hangs lowly on $his flat chest, occasionally revealing one of $his nipples.
+				<<else>>
+					accentuates $his cleavage, especially since it always appears to be slipping down $his body.
+				<</if>>
+			<<default>>
+			<</switch>>
+
+End clothing-specific stripping */
+
+Once the last piece of clothing has hit the floor you let your little slut dance naked a little while longer while you finish your last report. Once you have gotten enough of $his dancing you snap your fingers to call your slave over.
+<<if (getSlave($AS).devotion > 80)>>
+	Your slave hurries to your side and drops to $his knee<<if hasBothLegs(getSlave($AS))>>s<</if>>. $He gladly kneels at your feet, looking up at $his <<= WrittenMaster()>> in adoration.
+<<elseif (getSlave($AS).devotion > 20)>>
+	Your slave hurries to your side and drops to $his knee<<if hasBothLegs(getSlave($AS))>>s<</if>>. $He obediently kneels at your feet.
+<<elseif (getSlave($AS).devotion < -50)>>
+	<<if (getSlave($AS).trust < -50)>>
+		$He hurries frantically to your side, and drops quivering to the floor at your feet hoping $he was quick enough to avoid
+		<<switch getSlave($AS).rules.punishment>>
+		<<case "confinement">>
+			confinement.
+		<<case "whipping">>
+			whipping
+		<<case "chastity">>
+			<<if (getSlave($AS).energy > 60)>>
+				orgasm denial
+			<<else>>
+				punishment.
+			<</if>>
+		<<case "situational">>
+			<<switch getSlave($AS).collar>>
+			<<case "shock punishment">>
+				shock
+			<</switch>>
+			punishment.
+		<</switch>>
+	<<else>>
+		$He looks at you angrily, refusing to obey. You are forced to get up from your chair and retrieve $his leash, dragging $him back by $his
+		<<if getSlave($AS).nosePiercing == 2>>
+			nose ring.
+		<<elseif getSlave($AS).nipplesPiercing == 2>>
+			nipples.
+		<<else>>
+			collar.
+		<</if>>
+		Once seated, you chain $him to your desk and force $him to $his knee<<if hasBothLegs(getSlave($AS))>>s<</if>>. You may have to start punishing $him more severely.
+	<</if>>
+<<else>>
+	Your slave walks slowly to your desk and kneels. $He looks up at you, hoping that $his life gets easier.
+<</if>>
+/* more varied reactions planned. */
+<<if (random(1,100) > (100 + getSlave($AS).devotion))>>
+	<<if (getSlave($AS).fetish != "humiliation") && (getSlave($AS).energy <= 95) && (getSlave($AS).sexualFlaw != "shamefast")>>
+		Being facefucked by force has given $him a @@.red;desire to always be clothed.@@
+		<<set getSlave($AS).sexualFlaw = "shamefast">>
+	<</if>>
+<<elseif (random(1,100) > (110 - getSlave($AS).devotion))>>
+	<<if (getSlave($AS).fetish == "none") && (getSlave($AS).sexualFlaw != "shamefast")>>
+		Being on display for your pleasure has @@.lightcoral;encouraged $him to focus exposing $himself more often.@@
+		<<set getSlave($AS).fetish = "humiliation", getSlave($AS).fetishKnown = 1>>
+	<</if>>
+<</if>>
+
+<<if passage() != "Slave Interact">>
+	<<set _fl = $slaveIndices[getSlave($AS).ID]>>
+	<<if def _fl>>
+		<<set $slaves[_fl] = getSlave($AS)>>
+	<</if>>
+<</if>>

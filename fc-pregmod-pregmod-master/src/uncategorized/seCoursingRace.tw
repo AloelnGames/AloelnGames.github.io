@@ -1,0 +1,348 @@
+:: SE coursing race [nobr]
+
+<<setLocalPronouns $activeLurcher>>
+<<setLocalPronouns $activeSlave 2>>
+
+You place your hand on the leash's quick release and <<if canHear($activeLurcher)>>whisper your direction into $his ear without letting the other competitors or their lurchers hear<<else>>gently point $him towards the target hare without letting the other competitors or their lurchers see<</if>>. Then, you gently push $him down into $his starting crouch. The umpire trips the hares' releases, a few <<if $showInches == 2>>yards<<else>>meters<</if>> in front of you and $activeLurcher.slaveName, and you instantly let your lurcher off $his leash.
+
+<<set _LurcherSpeed = 10>>
+<<if $activeLurcher.devotion > 50>>
+	$He's eager to do well for you, and immediately takes off.
+	<<set _LurcherSpeed += 2>>
+<<elseif $activeLurcher.trust < -20>>
+	$He's frightened of failing you, and immediately takes off.
+	<<set _LurcherSpeed += 1>>
+<<elseif $activeLurcher.devotion < -20>>
+	$He's disgusted by this, and is slow to start.
+	<<set _LurcherSpeed -= 1>>
+<<else>>
+	$He's a bit hesitant about this, but gets off reasonably well.
+<</if>>
+<<if $activeLurcher.health.condition > 60>>
+	$His shining health allows $him to pour it on.
+	<<set _LurcherSpeed += 1>>
+<<elseif $activeLurcher.health.condition < 0>>
+	$His poor health slows $him down.
+	<<set _LurcherSpeed -= 1>>
+<</if>>
+<<if !canSee($activeLurcher)>>
+	$His inability to see causes $him to be cautious of $his footing, making $his first several strides slow and uncertain.
+	<<set _LurcherSpeed -= 1>>
+<</if>>
+<<if $activeLurcher.weight > 190>>
+	$He's so fat that $his run is nothing more than an out of breath waddle.
+	<<set _LurcherSpeed -= 5>>
+<<elseif $activeLurcher.weight > 160>>
+	It takes $him a while to get $his fat ass up to $his (rather pathetic) top speed, such as it is.
+	<<set _LurcherSpeed -= 3>>
+<<elseif $activeLurcher.weight > 95>>
+	It takes $him a while to get $his fat ass up to $his top speed, such as it is.
+	<<set _LurcherSpeed -= 2>>
+<<elseif $activeLurcher.weight > 30>>
+	It takes $him a while to get $his chubby body up to speed.
+	<<set _LurcherSpeed -= 1>>
+<<elseif $activeLurcher.weight < -95>>
+	$He's so thin that $he lacks the vigor to run really well.
+	<<set _LurcherSpeed -= 1>>
+<</if>>
+<<if $activeLurcher.muscles > 30>>
+	$He's muscle-bound, without the range of motion to move freely.
+	<<set _LurcherSpeed -= 1>>
+<<elseif $activeLurcher.muscles <= 5>>
+	$He's soft, and is panting desperately within a few short strides.
+	<<set _LurcherSpeed -= 1>>
+<<elseif $activeLurcher.muscles <= -30>>
+	$He's very weak, and is panting desperately from just walking to the starting line.
+	<<set _LurcherSpeed -= 4>>
+<<elseif $activeLurcher.muscles <= -95>>
+	$He's physically frail, barely capable of walking let alone running.
+	<<set _LurcherSpeed -= 20>>
+<</if>>
+<<if $activeLurcher.height >= 185>>
+	$His steps are long — too long, in fact: $his long legs slow $his gait.
+	<<set _LurcherSpeed -= 1>>
+<<elseif $activeLurcher.height < 150>>
+	$His stride is too short, but it's the best $his little legs can manage.
+	<<set _LurcherSpeed -= 1>>
+<</if>>
+<<if $activeLurcher.boobs >= 2000>>
+	$His naked breasts slosh around wildly, ruining $his attempt at running.
+	<<set _LurcherSpeed -= 2>>
+<<elseif $activeLurcher.boobs >= 800>>
+	$His big tits bounce energetically, looking quite nice but hurting $his speed.
+	<<set _LurcherSpeed -= 1>>
+<</if>>
+<<if $activeLurcher.butt >= 6>>
+	$He does $his best to stay light on $his feet despite $his inconveniently huge buttocks.
+	<<set _LurcherSpeed -= 1>>
+<</if>>
+<<if $activeLurcher.dick >= 5>>
+	$His cock bounces up and down wildly; $he does $his best to ignore it, but it does get in the way.
+	<<set _LurcherSpeed -= 1>>
+<</if>>
+<<if $activeLurcher.balls >= 5>>
+	As you watch $him go, $his testicles smack into $his thigh, and $he gasps with pain.
+	<<set _LurcherSpeed -= 1>>
+<</if>>
+<<if $activeLurcher.preg >= $activeLurcher.pregData.normalBirth>>
+	$He seems terrified that $his water might break if $he tried to move too fast.
+	<<set _LurcherSpeed -= 10>>
+<<elseif $activeLurcher.belly >= 120000>>
+	$He can barely move $himself, let alone consider chasing something with $his titanic <<if $activeLurcher.bellyImplant > 100>>belly implant<<else>>pregnant belly<</if>> in the way.
+	<<set _LurcherSpeed -= 20>>
+<<elseif $activeLurcher.belly >= 60000>>
+	$He can barely waddle with $his <<if $activeLurcher.bellyImplant > 100>>enormous belly implant<<else>>enormously pregnant belly<</if>>.
+	<<set _LurcherSpeed -= 10>>
+<<elseif $activeLurcher.belly >= 10000 && $activeLurcher.bellyFluid < 2000>>
+	$He can barely waddle along with $his huge <<if $activeLurcher.bellyImplant > 100>>belly implant<<else>>pregnant belly<</if>>.
+	<<set _LurcherSpeed -= 5>>
+<<elseif $activeLurcher.bellyPreg >= 5000>>
+	$He seems unwilling to really run while pregnant.
+	<<set _LurcherSpeed -= 3>>
+<<elseif $activeLurcher.bellyImplant >= 5000>>
+	$His big belly implant hinders $his ability to run
+	<<set _LurcherSpeed -= 2>>
+<<elseif $activeLurcher.belly >= 1500>>
+	$He keeps one hand on $his slightly swollen middle as $he runs.
+	<<set _LurcherSpeed -= 1>>
+<</if>>
+<<if $activeLurcher.bellyFluid >= 10000>>
+	$His hugely bloated, <<print $activeLurcher.inflationType>>-filled belly is taut and painful, forcing $him to a slow waddle.
+	<<set _LurcherSpeed -= 5>>
+<<elseif $activeLurcher.bellyFluid >= 5000>>
+	$His bloated, <<print $activeLurcher.inflationType>>-stuffed belly is constantly jiggling and moving, making it extremely difficult to run.
+	<<set _LurcherSpeed -= 4>>
+<<elseif $activeLurcher.bellyFluid >= 2000>>
+	$His distended, <<print $activeLurcher.inflationType>>-belly is uncomfortable and heavy, slowing $him down.
+	<<set _LurcherSpeed -= 2>>
+<</if>>
+
+<<if _LurcherSpeed > 10>>
+	$His turn of speed is impressive.
+<<elseif _LurcherSpeed > 8>>
+	$He runs reasonably fast.
+<<elseif _LurcherSpeed > 6>>
+	In all, $he runs slowly.
+<<elseif _LurcherSpeed > 4>>
+	In all, $he barely manages a quick jog.
+<<else>>
+	In all, $he can barely do more than stumble after the hares.
+<</if>>
+
+<<if $hareSpeed >= _LurcherSpeed>>
+	<<if $origin == "virgin">>
+		The virgin, however,
+	<<elseif $origin == "heavily pregnant">>
+		Despite _his2 pregnancy, the hare
+	<<elseif $origin == "housewife">>
+		Despite _his2 fake boobs, the hare
+	<<elseif $origin == "disobedient young">>
+		The fit young slave, however,
+	<<elseif $origin == "disobedient young dickgirl">>
+		The strong young slave, however,
+	<<elseif $origin == "huge balled">>
+		Despite _his2 ridiculous ballsack, the hare
+	<<else>>
+		Despite _his2 fake boobs and exaggeratedly feminine gait, the hare
+	<</if>>
+	<<if $hareSpeed > _LurcherSpeed>>immediately pulls away<<else>>manages to maintain _his2 narrow head start<</if>>. Realizing that $he stands no chance of catching $his assigned target, $activeLurcher.slaveName <<if canSee($activeLurcher)>>looks around for a slower hare<<else>>listens for a nearby bell<</if>>.
+	<<if $hareSpeed2 < $hareSpeed3>>
+		<<set $activeSlave = $hare2>>
+		<<set $origin = $origin2>>
+		<<set $hareSpeed = $hareSpeed2>>
+	<<else>>
+		<<set $activeSlave = $hare3>>
+		<<set $origin = $origin3>>
+		<<set $hareSpeed = $hareSpeed3>>
+	<</if>>
+	<<setLocalPronouns $activeSlave 2>>
+	<<if canSee($activeLurcher)>>Seeing that the $origin hare is slower<<else>>hearing the $origin hare's bell nearby<</if>>, $he angles after _him2 instead.
+	<<if $hareSpeed >= _LurcherSpeed>>
+		$He does no better with $his new target; $his course is over.
+	<<elseif random(1,2) == 1>>
+		One of $his rival lurchers has the same idea, however, and tries to trip $him up.
+		<<if !canSee($activeLurcher)>>
+			Unable to see it coming, $he goes down with a crash; $his course is over.
+		<<elseif $activeLurcher.skill.combat == 1>>
+			$He parries the attempt with contemptuous ease and catches up to $his new target.
+			<<set _seed = 1>>
+		<<elseif $activeLurcher.muscles > 30>>
+			$He muscles through the attempt and catches up to $his new target.
+			<<set _seed = 1>>
+		<<else>>
+			$He goes down with a crash; $his course is over.
+		<</if>>
+	<<else>>
+		$He manages to overtake $his new target.
+		<<set _seed = 1>>
+	<</if>>
+<<else>>
+	$He rapidly overtakes the $origin hare.
+	<<set _seed = 1>>
+<</if>>
+
+<br><br>
+
+<<if _seed == 1>>
+	<<if $origin == "heavily pregnant">>
+		$His quarry is unwilling to be tackled, probably out of fear for _his2 baby, and flings _himself2 down as soon as $activeLurcher.slaveName gets near.<<if !canSee($activeLurcher)>> _He2 screams as _he2 sees $activeLurcher.slaveName preparing to dive on _him2, alerting the blind lurcher that $his prey has already surrendered.<</if>>
+	<<elseif !canSee($activeLurcher) && random(1,3) == 1>>
+		$His prey takes advantage of $his lack of eyesight, baiting $activeLurcher.slaveName to dive in the wrong direction. As $he rises to $his feet, the slave is too far gone to make another lunge. $activeLurcher.slaveName's course is over.
+		<<set _seed = 0>>
+	<<elseif $activeLurcher.skill.combat == 1>>
+		$His tackle is expert: $he wraps $his quarry up and pulls _him2 down, falling on top of the struggling body.
+	<<elseif $activeLurcher.muscles > 30>>
+		$He's burly enough that $he tackles $his quarry by simple force, an approach no less effective for its inelegance.
+	<<elseif $origin == "virgin">>
+		<<if random(1,3) == 1>>
+			The young slave manages to evade $his inexpert tackle, however, and there is no space for another before $he crosses the plaza. $activeLurcher.slaveName's course is over.
+			<<set _seed = 0>>
+		<<else>>
+			$His tackle is inexpert, but the young slave stumbles and falls anyway.
+		<</if>>
+	<<elseif $origin == "housewife">>
+		<<if random(1,4) == 1>>
+			The spoiled slave shows surprising agility, however, and evades $activeLurcher.slaveName's inexpert attempts to tackle all the way across the plaza. $His course is over.
+			<<set _seed = 0>>
+		<<else>>
+			$His tackle is inexpert, but the top-heavy bimbo goes down anyway.
+		<</if>>
+	<<elseif $origin == "feminized">>
+		<<if random(1,4) == 1>>
+			The sissy bitch shows surprising agility, however, and evades $activeLurcher.slaveName's inexpert attempts to tackle all the way across the plaza. $His course is over.
+			<<set _seed = 0>>
+		<<else>>
+			$His tackle is inexpert, but the sissy bitch goes down with a wail.
+		<</if>>
+	<<elseif $origin == "huge balled">>
+		<<if random(1,4) == 1>>
+			The slave shows surprising agility despite _his2 flopping ballsack, and evades $activeLurcher.slaveName's inexpert attempts to tackle all the way across the plaza. $His course is over.
+			<<set _seed = 0>>
+		<<else>>
+			$His tackle is inexpert, but the slave goes down, screaming with pain when _his2 balls get trapped under their combined weight.
+		<</if>>
+	<<else>>
+		<<if random(1,2) == 1>>
+			The determined young slave evades $his inexpert attempts to tackle all the way across the plaza, however. $activeLurcher.slaveName's course is over.
+			<<set _seed = 0>>
+		<<else>>
+			$His tackle is inexpert, but the determined slave is unlucky, stumbling and going down anyway.
+		<</if>>
+	<</if>>
+<</if>>
+
+<<if _seed == 1>>
+	The hare knows that once _his2 knees touched the field, _his2 chance at freedom was gone. _He2 begins to cry
+	<<if $phallus == "huge dick">>
+		and then scream as $activeLurcher.slaveName
+		<<if $origin == "virgin">>
+			rapes _his2 virgin ass. The lurcher has to fuck the slave to claim _him2 for you, and $he knows that a virgin pussy is more valuable than a virgin rosebud. $He has to be very careful, since $his cock is big enough to seriously hurt an anal virgin, but despite $his care the racket is appallingly loud.
+		<<elseif $origin == "heavily pregnant">>
+			fucks _his2 cunt. As _his2 belly attests, _he2's no virgin, but the lurcher's dick is big enough to reach _his2 cervix. _His2 screams crescendo into shrieks as _he2 experiences this internal torment.
+		<<elseif $origin == "housewife">>
+			fucks _him2 in the ass. A kept _woman2 like _him2 is probably no stranger to giving up _his2 butthole to please a cock, but _he2 apparently isn't used to dick quite this formidable. The lurcher leaves _him2 sobbing disconsolately with a fresh load of cum leaking out of _his2 backdoor.
+		<<elseif $origin == "feminized">>
+			fucks _him2 in the ass. The high-pitched shrieking produces some discussion in the crowd. If the slave didn't want huge cock up _his2 girly anus, why did _he2 feminize _himself2 so thoroughly? A mystery.
+		<<elseif $origin == "huge balled">>
+			fucks _him2 in the ass. The lurcher pounds _him2 doggy style, taking nice long strokes that slide $his formidable shaft almost all the way out of $his victim's poor butthole before shoving it back in again. The slave's balls brush the field with each thrust.
+		<<else>>
+			fucks _him2 in the ass. _He2 never stops struggling, though this isn't much proof of undiminished resistance. After all, the lurcher's dick is so big that _he2'd probably fight to get it out of _his2 butthole even if _he2 weren't in need of breaking.
+		<</if>>
+	<<elseif $phallus == "dick">>
+		as $activeLurcher.slaveName
+		<<if $origin == "virgin">>
+			penetrates _his2 virgin ass. The lurcher has to fuck the slave to claim _him2 for you, and $he knows that a virgin pussy is more valuable than a virgin rosebud. You see $his back stiffen with overstimulation as $he experiences the rare delight of raping an anal virgin.
+		<<elseif $origin == "heavily pregnant">>
+			uses _his2 cunt. The lurcher pulls the slave upright so $he can cradle _his2 pregnant belly while $he fucks _him2. When _he2 climaxes, $he thrusts as deeply as $he can manage, though more cum won't make the slave any more pregnant.
+		<<elseif $origin == "housewife">>
+			fucks _him2 in the ass. _His2 tears seem to come more from disappointment than anal pain; a kept _woman2 like _him2 has probably put up with more than one buttfuck _he2 didn't want.
+		<<elseif $origin == "feminized">>
+			fucks _him2 in the ass. The whining produces some discussion in the crowd. If the slave didn't want cock up _his2 girly anus, why did _he2 feminize _himself2 so thoroughly? A mystery.
+		<<elseif $origin == "huge balled">>
+			uses _his2 anus. With them facing away from you, the coupling takes the usual stacked symmetry of a dickgirl fucking a dickgirl, though the bottom's generous balls sway eye-catchingly back and forth with the rhythm of the assrape.
+		<<else>>
+			fucks _him2 in the ass. _He2 never stops struggling, which is eloquent proof of the slave's undiminished resolve to resist _his2 lot in life. _He2's probably been assraped more than once before today, but _he2 fights this like it's the first time.
+		<</if>>
+	<<elseif $phallus == "clit">>
+		as $activeLurcher.slaveName
+		<<if $origin == "virgin">>
+			grinds $himself against the hare to get $his pseudophallic clit into $his victim's virgin ass. The lurcher has to fuck the slave to claim _him2 for you, and $he knows that a virgin pussy is more valuable than a virgin rosebud. You see $his back stiffen with overstimulation as $his enormous bitch button slips up the slave's asshole.
+		<<elseif $origin == "heavily pregnant">>
+			grinds $himself against the hare to get $his pseudophallic clit inside $his victim's cunt. The lurcher has to force the hare down, legs spread, in order to work $his enormous clit inside the slave, but $he manages it and you see $his back stiffen as $his pseudophallus, small by the standards of penises but much more sensitive, slides inside.
+		<<elseif $origin == "housewife">>
+			grinds $himself against the hare to get $his pseudophallic clit inside $his victim's cunt. The slave doesn't seem to know what to make of this. Being raped by a huge clit is very probably a novel experience for _him2, but it isn't really painful. _He2 closes _his2 eyes and visibly tries to pretend it's a small penis.
+		<<elseif $origin == "feminized">>
+			grinds $himself against the hare to get $his pseudophallic clit inside $his victim's experienced anus. The slave stiffens with shock. _He2's obviously had quite a variety of things pushed up _his2 girly butthole, but apparently this is _his2 first time being fucked by a clit.
+		<<elseif $origin == "huge balled">>
+			grinds $himself against the hare to get $his pseudophallic clit inside $his victim's asshole. The slave stiffens with shock. Though it's huge by the standards of clitorises, the pseudophallus isn't big enough to make assrape painful, but the extreme inversion of gender roles makes up for it, to go by the slave's horror.
+		<<else>>
+			grinds $himself against the hare to get $his pseudophallic clit inside $his victim's asshole. The slave never stops struggling, which is eloquent proof of the slave's undiminished resolve to resist _his2 lot in life. _He2's probably been assraped by much larger phalli, but _he2 fights it anyway.
+		<</if>>
+	<<elseif $phallus == "dildo">>
+		as $activeLurcher.slaveName
+		<<if $origin == "virgin">>
+			inserts $his dildo into the slave's virgin ass. The lurcher has to fuck the slave to claim _him2 for you, and $he knows that a virgin pussy is more valuable than a virgin rosebud. The dildo is reasonably sized and well lubricated, but the poor slave shrieks with anal pain anyway.
+		<<elseif $origin == "heavily pregnant">>
+			pushes $his dildo inside the slave's fertile cunt. Desperate to preserve _his2 baby, the slave complies as best _he2 can. Taking the cue, your lurcher caresses _him2, producing a grotesque parody of loving pregnant sex that holds the crowd's attention.
+		<<elseif $origin == "housewife">>
+			pushes $his dildo up the slave's ass. A kept _woman2 like _him2 is not likely to be any stranger to sex toys, but to go by _his2 reaction, _he2 probably prefers to put them in _his2 cunt.
+		<<elseif $origin == "feminized">>
+			pushes $his dildo up the slave's sissy ass. The whining produces some discussion in the crowd. Why would a _girl2 who feminized _himself2 so thoroughly have any problem with something being shoved inside _his2 rear pussy? A mystery.
+		<<elseif $origin == "huge balled">>
+			pushes $his dildo up the slave's ass. Knowing that $he should do $his best to create a spectacle, $he takes the slave's dangling balls in one hand, squeezing them to force $his bottom to be a good little butthole bitch, and then stimulating them until the slave achieves a shameful anal orgasm.
+		<<else>>
+			pushes $his dildo up the slave's ass. The slave never stops struggling, which is eloquent proof of the slave's undiminished resolve to resist _his2 lot in life. _He2's probably had several dildos pushed up _his2 disobedient asshole, but it seems _he2's determined to learn nothing.
+		<</if>>
+	<<else>>
+		as $activeLurcher.slaveName hesitates over _him2. The lurcher realizes that $he won't be able to get hard. Desperate to avoid failure, $he
+		<<if $origin == "virgin">>
+			shoves a couple of fingers into the slave's virgin ass. $He has to fuck the slave to claim _him2 for you, and $he knows that a virgin pussy is more valuable than a virgin rosebud.
+		<<elseif $origin == "heavily pregnant">>
+			gives up and fingerfucks the pregnant _girl2. Desperate to preserve _his2 baby, the slave complies as best _he2 can, producing a contest between _his2 attempts to go along and the lurcher's attempts to make it unpleasant. This degenerates into a sobbing cunt fisting session.
+		<<elseif $origin == "housewife">>
+			shoves a couple of fingers up the slave's ass. A kept _woman2 like _him2 is not likely to be any stranger to a little anal play, but _he2 doesn't seem to be much of a fan. _He2 does _his2 best to relax, but it's obvious that _he2 doesn't appreciate having _his2 asshole fingered.
+		<<elseif $origin == "feminized">>
+			shoves $his fingers up the slave's sissy ass. It's so loose that this fails to have the desired effect. Afraid that $he has to produce some sort of reaction, the lurcher shoves $his entire fist up there, producing a wail of anal anguish.
+		<<elseif $origin == "huge balled">>
+			shoves a couple of fingers up the slave's ass. Casting about for something to do to distract from $his inadequacy, the lurcher seizes the slave's dangling balls and shoves one of them up _his2 loosened butt. This produces a shriek of pain and surprise, followed by a long fight to get the other one up there.
+		<<else>>
+			shoves a couple of fingers up the slave's ass. The slave never stops struggling, producing nothing more interesting than an extended wrestling match in which one of the parties has some fingers inside the other's butthole.
+		<</if>>
+		The crowd is unimpressed by this disappointing display.
+	<</if>>
+	<<if $activeLurcher.fetishKnown == 1 && $activeLurcher.fetishStrength > 60>>
+		<<if ($activeLurcher.fetish == "sadist")>>
+			@@.hotpink;What is finest in life,@@ in the mind of your sadistic lurcher?
+			<<if $origin == "virgin">>
+				To sodomize a virgin asshole, and to <<if canHear($activeLurcher)>>hear<<else>>feel<</if>> screams of anal pain.
+			<<elseif $origin == "heavily pregnant">>
+				To molest a pregnant slut, and <<if canHear($activeLurcher)>>hear<<else>>see<</if>> _him2 sob with fear.
+			<<elseif $origin == "housewife">>
+				To rape a stuck-up bitch, and <<if canHear($activeLurcher)>>hear<<else>>see<</if>> _him2 cry with anal pain.
+			<<elseif $origin == "feminized">>
+				To rape a sissy's asspussy, and <<if canHear($activeLurcher)>>hear<<else>>see<</if>> _him2 squeal.
+			<<elseif $origin == "huge balled">>
+				To abuse defenseless testicles, and make their owner scream.
+			<<else>>
+				To rape a struggling victim, and <<if canTaste($activeLurcher)>>taste<<else>>drink<</if>> _his2 tears of defeat.
+			<</if>>
+			<<set $slaves[$lurcherIndex].devotion += 5>>
+		<<elseif $activeLurcher.fetish == "pregnancy" && $origin == "heavily pregnant">>
+			You lurcher is @@.hotpink;thrilled@@ to have had the privilege of chasing down and raping a pregnant _woman2.
+			<<set $slaves[$lurcherIndex].devotion += 5>>
+		<</if>>
+	<</if>>
+	<<set $slaves[$lurcherIndex].counter.penetrative += 1, $penetrativeTotal += 1>>
+	<<run newSlave($activeSlave)>> /* skip New Slave Intro */
+<<else>>
+	<<if $activeLurcher.devotion > 50>>
+		$He makes $his way back to you dejectedly, hanging $his head.
+	<<else>>
+		$He makes $his way back to you slowly, doing $his best to look contrite.
+	<</if>>
+	<<setNonlocalPronouns $seeDicks>>
+	On the other side of the plaza, there is a scream of triumph followed by tears of joy as one of the hares successfully wins _hisU freedom. This cheerful noise mixes strangely with screams of a very different sort and the slap of flesh on flesh as a more successful lurcher rapes _hisU capture.
+	<<set $activeSlave = 0>>
+<</if>>
+
+<<unset $origin, $origin1, $origin2, $origin3, $hareSpeed, $hareSpeed1, $hareSpeed2, $hareSpeed3, $hare1, $hare2, $hare3, $lurcherIndex>>

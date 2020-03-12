@@ -1,0 +1,151 @@
+div.building {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+div.building.basement {
+    box-shadow: 0 -1px 0 #333333;
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent 20px, #333333 20px, #333333 30px);
+}
+
+div.building div.row {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+div.building div.outerCell {
+    text-align: center;
+}
+
+div.building div.innerCell {
+    margin: 3px;
+    border: 5px solid;
+    padding: 2px;
+    /* overwriting with the default background color to hide the basement indicator */
+    background-color: #111;
+}
+
+/* penthouse formatting */
+div.building div.gridWrapper {
+    display: grid;
+}
+
+div.building div.gridWrapper.grid1 {
+    grid-template-columns: 100%;
+}
+
+div.building div.gridWrapper.grid2 {
+    grid-template-columns: repeat(2, 50%);
+}
+
+div.building div.gridWrapper.grid3 {
+    grid-template-columns: repeat(3, 33.3%);
+}
+
+div.building div.gridWrapper div {
+    display: inline flow-root;
+    line-height: 1.1;
+    padding-bottom: 0.3em;
+}
+
+div.building div.collapsed {
+    display: inline flow-root;
+    margin: 0 0.2em;
+}
+
+/* border color for each cell */
+div.building div.row div.apartments {
+    border-color: limegreen;
+}
+
+div.building div.row div.arcade {
+    border-color: deeppink;
+}
+
+div.building div.row div.brothel {
+    border-color: violet;
+}
+
+div.building div.row div.barracks {
+    border-color: olivedrab;
+}
+
+div.building div.row div.club {
+    border-color: orchid;
+}
+
+div.building div.row div.corporateMarket {
+    border-color: purple;
+}
+
+div.building div.row div.dairy {
+    border-color: white;
+}
+
+div.building div.row div.denseApartments {
+    border-color: seagreen;
+}
+
+div.building div.row div.empty {
+    border-color: lightgray;
+}
+
+div.building div.row div.farmyard {
+    border-color: brown;
+}
+
+div.building div.row div.fsShops {
+    border-color: mediumpurple;
+}
+
+div.building div.row div.manufacturing {
+    border-color: slategray;
+}
+
+div.building div.row div.markets {
+    border-color: mediumorchid;
+}
+
+div.building div.row div.nursery {
+    border-color: deepskyblue;
+}
+
+div.building div.row div.luxuryApartments {
+    border-color: palegreen;
+}
+
+div.building div.row div.pens {
+    border-color: goldenrod;
+}
+
+div.building div.row div.penthouse {
+    border-color: teal;
+}
+
+div.building div.row div.pit {
+    border-color: orangered;
+}
+
+div.building div.row div.private {
+    border-color: red;
+}
+
+div.building div.row div.shops {
+    border-color: thistle;
+}
+
+div.building div.row div.sweatshops {
+    border-color: gray;
+}
+
+div.building div.row div.transportHub {
+    border-color: magenta;
+}
+
+div.building div.row div.weaponsManufacturing {
+    border-color: springgreen;
+}

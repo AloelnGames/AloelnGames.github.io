@@ -1,0 +1,49 @@
+:: Abort [nobr]
+
+<<set $nextButton = "Back", $nextLink = "Slave Interact">>
+
+The remote surgery makes aborting a pregnancy quick and efficient.
+
+<<if $activeSlave.preg < 4>>
+	It was so early in $his pregnancy that the potential mental effects are diminished.
+<<else>>
+	$activeSlave.slaveName is
+	<<if ($activeSlave.fuckdoll > 0) || ($activeSlave.fetish == "mindbroken")>>
+		completely unmoved by the development.
+	<<elseif $activeSlave.sexualFlaw == "breeder">>
+		@@.red;fundamentally broken.@@ $His entire concept of self and sexuality was wrapped up in the life growing within $him, and now it is gone.
+		<<set $activeSlave.fetish = "mindbroken", $activeSlave.behavioralQuirk = "none", $activeSlave.behavioralFlaw = "none", $activeSlave.sexualQuirk = "none", $activeSlave.sexualFlaw = "none", $activeSlave.devotion = 0, $activeSlave.trust = 0>>
+	<<elseif $activeSlave.devotion < -50>>
+		@@.mediumorchid;filled with violent, consuming hatred.@@ Even though $he knew $his baby was destined for a slave orphanage, it seems $he cared for it and views you as its killer. $He is @@.gold;terrified of your power@@ over $his body.
+		<<set $activeSlave.trust -= 10, $activeSlave.devotion -= 25>>
+	<<elseif $activeSlave.devotion < -20>>
+		@@.mediumorchid;afflicted by desperate, inconsolable sobbing.@@ Even though $he knew $his baby was destined for a slave orphanage, it seems $he cared for it. $He is @@.gold;terrified of your power@@ over $his body.
+		<<set $activeSlave.trust -= 10, $activeSlave.devotion -= 10>>
+	<<elseif $activeSlave.fetish == "pregnancy">>
+		@@.mediumorchid;filled with a deep sorrow.@@ To a pregnancy fetishist, having a pregnancy end like this hurts far worse than birth ever would. $He is @@.gold;terrified of a repeat performance.@@
+		<<set _fetishModifier = $activeSlave.fetishStrength/2>>
+		<<set $activeSlave.devotion -= 1*_fetishModifier, $activeSlave.trust -= 1*_fetishModifier>>
+	<<elseif $activeSlave.devotion <= 20>>
+		@@.mediumorchid;consumed by muted weeping and enduring sorrow.@@ Even though $he knew $his baby was destined for a slave orphanage, it seems $he cared for it. $He is @@.gold;terrified of your power@@ over $his body.
+		<<set $activeSlave.trust -= 10, $activeSlave.devotion -= 5>>
+	<<elseif $activeSlave.devotion <= 50>>
+		dully obedient. $He has been broken to slave life so thoroughly that even this is neither surprising nor affecting. $He is @@.gold;terrified of your power@@ over $his body.
+		<<set $activeSlave.trust -= 10>>
+	<<else>>
+		@@.hotpink;pleased by this stark development,@@ since $he is so attentive to your will. $He also expects $he'll be able to fuck better now.
+		<<set $activeSlave.devotion += 4>>
+	<</if>>
+<</if>>
+
+<<if $activeSlave.abortionTat > -1>>
+	<<set $activeSlave.abortionTat++>>
+	The temporary tattoo of a child has been replaced with $his <<= ordinalSuffix($activeSlave.abortionTat)>> crossed out infant.
+	<<run cashX(forceNeg($modCost), "slaveMod", $activeSlave)>>
+<</if>>
+
+<<if lastPregRule($activeSlave,$defaultRules)>><<set $activeSlave.preg = -1>><<else>><<set $activeSlave.preg = 0>><</if>>
+
+<<set $reservedChildren = FetusGlobalReserveCount("incubator")>>
+<<set $reservedChildrenNursery = FetusGlobalReserveCount("nursery")>>
+
+<<run TerminatePregnancy($activeSlave)>>

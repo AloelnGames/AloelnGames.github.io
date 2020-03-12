@@ -1,0 +1,370 @@
+diff --git a/build.js b/build.js
+index 7a17935..565faa3 100644
+--- a/build.js
++++ b/build.js
+@@ -29,6 +29,7 @@ const CONFIG = {
+ 			'src/lib/jquery-plugins.js',
+ 			'src/lib/util.js',
+ 			'src/lib/simplestore/simplestore.js',
++			'src/lib/simplestore/adapters/FCHost.Storage.js',
+ 			'src/lib/simplestore/adapters/webstorage.js',
+ 			'src/lib/simplestore/adapters/cookie.js',
+ 			'src/lib/debugview.js',
+diff --git a/src/lib/helpers.js b/src/lib/helpers.js
+index 2c0157e..0448427 100644
+--- a/src/lib/helpers.js
++++ b/src/lib/helpers.js
+@@ -248,7 +248,7 @@ var { // eslint-disable-line no-var
+ 	/*
+ 		Appends an error view to the passed DOM element.
+ 	*/
+-	function throwError(place, message, source) {
++	function throwError(place, message, source, stack) {
+ 		const $wrapper = jQuery(document.createElement('div'));
+ 		const $toggle  = jQuery(document.createElement('button'));
+ 		const $source  = jQuery(document.createElement('pre'));
+@@ -286,6 +286,14 @@ var { // eslint-disable-line no-var
+ 				hidden        : 'hidden'
+ 			})
+ 			.appendTo($wrapper);
++		if (stack) {
++			const lines = stack.split('\n');
++			for (const ll of lines) {
++				const div = document.createElement('div');
++				div.append(ll.replace(/file:.*\//, '<path>/'));
++				$source.append(div);
++			}
++		}
+ 		$wrapper
+ 			.addClass('error-view')
+ 			.appendTo(place);
+diff --git a/src/lib/jquery-plugins.js b/src/lib/jquery-plugins.js
+index a5b4050..aae9a47 100644
+--- a/src/lib/jquery-plugins.js
++++ b/src/lib/jquery-plugins.js
+@@ -43,14 +43,9 @@
+ 		return function () {
+ 			const $this = jQuery(this);
+ 
+-			// Exit if the element is disabled.
+-			//
+-			// NOTE: This should only be necessary for elements which are not disableable
+-			// per the HTML specification as disableable elements should be made inert
+-			// automatically.
+-			if ($this.ariaIsDisabled()) {
+-				return;
+-			}
++			const dataPassage = $this.attr('data-passage');
++			const initialDataPassage = window && window.SugarCube && window.SugarCube.State && window.SugarCube.State.passage;
++			const savedYOffset = window.pageYOffset;
+ 
+ 			// Toggle "aria-pressed" status, if the attribute exists.
+ 			if ($this.is('[aria-pressed]')) {
+@@ -59,6 +54,11 @@
+ 
+ 			// Call the true handler.
+ 			fn.apply(this, arguments);
++
++			const doJump = function(){ window.scrollTo(0, savedYOffset); }
++			if ( dataPassage && (window.lastDataPassageLink === dataPassage || initialDataPassage === dataPassage))
++				doJump();
++			window.lastDataPassageLink = dataPassage;
+ 		};
+ 	}
+ 
+diff --git a/src/lib/simplestore/adapters/FCHost.Storage.js b/src/lib/simplestore/adapters/FCHost.Storage.js
+new file mode 100644
+index 0000000..34581b1
+--- /dev/null
++++ b/src/lib/simplestore/adapters/FCHost.Storage.js
+@@ -0,0 +1,171 @@
++/***********************************************************************************************************************
++
++	lib/simplestore/adapters/FCHost.Storage.js
++
++	Copyright Â© 2013â€“2019 Thomas Michael Edwards <thomasmedwards@gmail.com>. All rights reserved.
++	Use of this source code is governed by a BSD 2-clause "Simplified" License, which may be found in the LICENSE file.
++
++***********************************************************************************************************************/
++/* global SimpleStore, Util */
++
++SimpleStore.adapters.push((() => {
++	'use strict';
++
++	// Adapter readiness state.
++	let _ok = false;
++
++
++	/*******************************************************************************************************************
++		_FCHostStorageAdapter Class.
++        Note that FCHost is only intended for a single document, so we ignore both prefixing and storageID
++	*******************************************************************************************************************/
++	class _FCHostStorageAdapter {
++		constructor(persistent) {
++			let engine = null;
++			let name   = null;
++
++			if (persistent) {
++				engine = window.FCHostPersistent;
++				name   = 'FCHostPersistent';
++			}
++			else {
++			    engine = window.FCHostSession;
++				name   = 'FCHostSession';
++			}
++
++			Object.defineProperties(this, {
++				_engine : {
++					value : engine
++				},
++                
++				name : {
++					value : name
++				},
++
++				persistent : {
++					value : !!persistent
++				}
++			});
++		}
++
++		/* legacy */
++		get length() {
++			if (DEBUG) { console.log(`[<SimpleStore:${this.name}>.length : Number]`); }
++
++			return this._engine.size();
++		}
++		/* /legacy */
++
++		size() {
++			if (DEBUG) { console.log(`[<SimpleStore:${this.name}>.size() : Number]`); }
++
++			return this._engine.size();
++		}
++
++		keys() {
++			if (DEBUG) { console.log(`[<SimpleStore:${this.name}>.keys() : String Array]`); }
++
++			return this._engine.keys();
++		}
++
++		has(key) {
++			if (DEBUG) { console.log(`[<SimpleStore:${this.name}>.has(key: "${key}") : Boolean]`); }
++
++			if (typeof key !== 'string' || !key) {
++				return false;
++			}
++
++			return this._engine.has(key);
++		}
++
++		get(key) {
++			if (DEBUG) { console.log(`[<SimpleStore:${this.name}>.get(key: "${key}") : Any]`); }
++
++			if (typeof key !== 'string' || !key) {
++				return null;
++			}
++
++			const value = this._engine.get(key);
++
++			return value == null ? null : _FCHostStorageAdapter._deserialize(value); // lazy equality for null
++		}
++
++		set(key, value) {
++			if (DEBUG) { console.log(`[<SimpleStore:${this.name}>.set(key: "${key}", value: \u2026) : Boolean]`); }
++
++			if (typeof key !== 'string' || !key) {
++				return false;
++			}
++
++			this._engine.set(key, _FCHostStorageAdapter._serialize(value));
++
++			return true;
++		}
++
++		delete(key) {
++			if (DEBUG) { console.log(`[<SimpleStore:${this.name}>.delete(key: "${key}") : Boolean]`); }
++
++			if (typeof key !== 'string' || !key) {
++				return false;
++			}
++
++			this._engine.remove(key);
++
++			return true;
++		}
++
++		clear() {
++			if (DEBUG) { console.log(`[<SimpleStore:${this.name}>.clear() : Boolean]`); }
++
++			this._engine.clear();
++
++			return true;
++		}
++
++		static _serialize(obj) {
++			return JSON.stringify(obj);
++		}
++
++		static _deserialize(str) {
++			return JSON.parse(str);
++		}
++	}
++
++
++	/*******************************************************************************************************************
++		Adapter Utility Functions.
++	*******************************************************************************************************************/
++	function adapterInit() {
++		// FCHost feature test.
++		function hasFCHostStorage() {
++			try {
++			    if (typeof window.FCHostPersistent !== 'undefined')
++			        return true;
++			}
++			catch (ex) { /* no-op */ }
++
++			return false;
++		}
++
++		_ok = hasFCHostStorage();
++		
++		return _ok;
++	}
++
++	function adapterCreate(storageId, persistent) {
++		if (!_ok) {
++			throw new Error('adapter not initialized');
++		}
++
++		return new _FCHostStorageAdapter(persistent);
++	}
++
++
++	/*******************************************************************************************************************
++		Module Exports.
++	*******************************************************************************************************************/
++	return Object.freeze(Object.defineProperties({}, {
++		init   : { value : adapterInit },
++		create : { value : adapterCreate }
++	}));
++})());
+diff --git a/src/lib/simplestore/adapters/webstorage.js b/src/lib/simplestore/adapters/webstorage.js
+index a486bc0..243def3 100644
+--- a/src/lib/simplestore/adapters/webstorage.js
++++ b/src/lib/simplestore/adapters/webstorage.js
+@@ -189,11 +189,11 @@ SimpleStore.adapters.push((() => {
+ 		}
+ 
+ 		static _serialize(obj) {
+-			return LZString.compressToUTF16(JSON.stringify(obj));
++			return JSON.stringify(obj);
+ 		}
+ 
+ 		static _deserialize(str) {
+-			return JSON.parse(LZString.decompressFromUTF16(str));
++			return JSON.parse((!str || str[0] == "{") ? str : LZString.decompressFromUTF16(str));
+ 		}
+ 	}
+ 
+diff --git a/src/macros/macrocontext.js b/src/macros/macrocontext.js
+index d179d9c..265ce5d 100644
+--- a/src/macros/macrocontext.js
++++ b/src/macros/macrocontext.js
+@@ -272,8 +272,8 @@ var MacroContext = (() => { // eslint-disable-line no-unused-vars, no-var
+ 			this._debugViewEnabled = false;
+ 		}
+ 
+-		error(message, source) {
+-			return throwError(this._output, `<<${this.name}>>: ${message}`, source ? source : this.source);
++		error(message, source, stack) {
++			return throwError(this._output, `<<${this.name}>>: ${message}`, source ? source : this.source, stack);
+ 		}
+ 	}
+ 
+diff --git a/src/macros/macrolib.js b/src/macros/macrolib.js
+index e9500f4..6108297 100644
+--- a/src/macros/macrolib.js
++++ b/src/macros/macrolib.js
+@@ -89,7 +89,7 @@
+ 				Scripting.evalJavaScript(this.args.full);
+ 			}
+ 			catch (ex) {
+-				return this.error(`bad evaluation: ${typeof ex === 'object' ? ex.message : ex}`);
++				return this.error(`bad evaluation: ${typeof ex === 'object' ? `${ex.name}: ${ex.message}` : ex}`, null, ex.stack);
+ 			}
+ 
+ 			// Custom debug view setup.
+@@ -350,7 +350,7 @@
+ 				}
+ 			}
+ 			catch (ex) {
+-				return this.error(`bad evaluation: ${typeof ex === 'object' ? ex.message : ex}`);
++				return this.error(`bad evaluation: ${typeof ex === 'object' ? `${ex.name}: ${ex.message}` : ex}`, null, ex.stack);
+ 			}
+ 		}
+ 	});
+@@ -493,7 +493,7 @@
+ 				}
+ 			}
+ 			catch (ex) {
+-				return this.error(`bad conditional expression in <<${i === 0 ? 'if' : 'elseif'}>> clause${i > 0 ? ' (#' + i + ')' : ''}: ${typeof ex === 'object' ? ex.message : ex}`); // eslint-disable-line prefer-template
++				return this.error(`bad conditional expression in <<${i === 0 ? 'if' : 'elseif'}>> clause${i > 0 ? ' (#' + i + ')' : ''}: ${typeof ex === 'object' ? `${ex.name}: ${ex.message}` : ex}`, null, ex.stack); // eslint-disable-line prefer-template
+ 			}
+ 		}
+ 	});
+diff --git a/src/markup/wikifier.js b/src/markup/wikifier.js
+index e206f96..61381f0 100644
+--- a/src/markup/wikifier.js
++++ b/src/markup/wikifier.js
+@@ -212,7 +212,7 @@ var Wikifier = (() => { // eslint-disable-line no-unused-vars, no-var
+ 		}
+ 
+ 		outputText(destination, startPos, endPos) {
+-			jQuery(destination).append(document.createTextNode(this.source.substring(startPos, endPos)));
++			destination.appendChild(document.createTextNode(this.source.substring(startPos, endPos)));
+ 		}
+ 
+ 		/*
+diff --git a/src/passage.js b/src/passage.js
+index 0cb17a4..bdc072d 100644
+--- a/src/passage.js
++++ b/src/passage.js
+@@ -275,8 +275,10 @@ var Passage = (() => { // eslint-disable-line no-unused-vars, no-var
+ 				}
+ 			});
+ 
+-			// Update the excerpt cache to reflect the rendered text.
+-			this._excerpt = Passage.getExcerptFromNode(passageEl);
++			// Update the excerpt cache to reflect the rendered text, if we need it for the passage description
++			if (Config.passages.descriptions == null) {
++				this._excerpt = Passage.getExcerptFromNode(passageEl);
++			}
+ 
+ 			return passageEl;
+ 		}
+diff --git a/src/state.js b/src/state.js
+index 9f18cb2..7564f49 100644
+--- a/src/state.js
++++ b/src/state.js
+@@ -104,7 +104,7 @@ var State = (() => { // eslint-disable-line no-unused-vars, no-var
+ 		}
+ 
+ 		if (_expired.length > 0) {
+-			stateObj.expired = [..._expired];
++			stateObj.expired = [];
+ 		}
+ 
+ 		if (_prng !== null) {
+diff --git a/src/ui.js b/src/ui.js
+index d53ed07..9212415 100644
+--- a/src/ui.js
++++ b/src/ui.js
+@@ -334,6 +334,7 @@ var UI = (() => { // eslint-disable-line no-unused-vars, no-var
+ 				if (saves.slots[i]) {
+ 					// Add the load button.
+ 					$tdLoad.append(
++						createButton('save', 'ui-close', L10n.get('savesLabelSave'), i, Save.slots.save),
+ 						createButton('load', 'ui-close', L10n.get('savesLabelLoad'), i, slot => {
+ 							jQuery(document).one(':dialogclosed', () => Save.slots.load(slot));
+ 						})

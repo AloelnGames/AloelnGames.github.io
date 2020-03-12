@@ -1,0 +1,544 @@
+:: Prosthetics Configuration [nobr]
+
+<<switch $prostheticsConfig>>
+
+<<case "main">>
+	<<set $nextButton = "Confirm changes", $nextLink = "AS Dump", $returnTo = "Slave Interact">>
+	/* get all prosthetics that are ready for this slave */
+	<<if $adjustProstheticsCompleted > 0>>
+		<<set $adjustProsthetics = $adjustProsthetics.filter(function(p) {
+			if (p.workLeft <= 0 && p.slaveID == $activeSlave.ID) {
+				addProsthetic($activeSlave, p.id);
+				$adjustProstheticsCompleted--;
+				return false;
+			}
+			return true;
+		})>>
+	<</if>>
+
+/* base screen START */
+<h1>Prosthetic Configuration</h1>
+
+<p class="scene-intro">
+This room is lined with shelves and cabinets; it could be easily mistaken for a storage room if it were not for the examination table in its center.
+<div>
+<<if hasBothLegs($activeSlave)>>
+	$activeSlave.slaveName is obediently waiting for your instructions.
+<<else>>
+	$activeSlave.slaveName is lying on the table, waiting for your instructions.
+<</if>>
+</div>
+</p>
+
+<<if hasAnyCyberneticEyes($activeSlave)>>
+	<h2>Eyes</h2>
+	<p class="tab"> /* tab works better with links */
+	$He has <<if hasBothCyberneticEyes($activeSlave)>> ocular implants <<else>> an ocular implant <</if>> installed. You can change <<if hasBothCyberneticEyes($activeSlave)>>their<<else>>its<</if>> settings:
+
+	<div class="eyeContainer">
+	<<set _on = 0, _blur = 0, _off = 0>>
+	<<if getLeftEyeType($activeSlave) === 3>>
+		<div>Left:</div>
+		<div>
+		<<if getLeftEyeVision($activeSlave) !== 2>>
+			<<set _on++>>
+			[["[ON]"|Prosthetics Configuration][eyeSurgery($activeSlave, "left", "fix")]]
+		<<else>>
+			<<print "[ON]">>
+		<</if>>
+		</div><div>
+		<<if getLeftEyeVision($activeSlave) !== 1>>
+			<<set _blur++>>
+			[["[BLUR]"|Prosthetics Configuration][eyeSurgery($activeSlave, "left", "blur")]]
+		<<else>>
+			<<print "[BLUR]">>
+		<</if>>
+		</div><div>
+		<<if getLeftEyeVision($activeSlave) !== 0>>
+			<<set _off++>>
+			[["[OFF]"|Prosthetics Configuration][eyeSurgery($activeSlave, "left", "blind")]]
+		<<else>>
+			<<print "[OFF]">>
+		<</if>>
+		</div>
+	<</if>>
+	<<if getRightEyeType($activeSlave) === 3>>
+		<div>Right:</div>
+		<div>
+		<<if getRightEyeVision($activeSlave) !== 2>>
+			<<set _on++>>
+			[["[ON]"|Prosthetics Configuration][eyeSurgery($activeSlave, "right", "fix")]]
+		<<else>>
+			<<print "[ON]">>
+		<</if>>
+		</div><div>
+		<<if getRightEyeVision($activeSlave) !== 1>>
+			<<set _blur++>>
+			[["[BLUR]"|Prosthetics Configuration][eyeSurgery($activeSlave, "right", "blur")]]
+		<<else>>
+			<<print "[BLUR]">>
+		<</if>>
+		</div><div>
+		<<if getRightEyeVision($activeSlave) !== 0>>
+			<<set _off++>>
+			[["[OFF]"|Prosthetics Configuration][eyeSurgery($activeSlave, "right", "blind")]]
+		<<else>>
+			<<print "[OFF]">>
+		<</if>>
+		</div>
+	<</if>>
+	<<if hasBothCyberneticEyes($activeSlave)>>
+		<div>Both:</div>
+		<div>
+		<<if _on > 0>>
+			[["[ON]"|Prosthetics Configuration][eyeSurgery($activeSlave, "both", "fix")]]
+		<<else>>
+			<<print "[ON]">>
+		<</if>>
+		</div><div>
+		<<if _blur > 0>>
+			[["[BLUR]"|Prosthetics Configuration][eyeSurgery($activeSlave, "both", "blur")]]
+		<<else>>
+			<<print "[BLUR]">>
+		<</if>>
+		</div><div>
+		<<if _off > 0>>
+			[["[OFF]"|Prosthetics Configuration][eyeSurgery($activeSlave, "both", "blind")]]
+		<<else>>
+			<<print "[OFF]">>
+		<</if>>
+		</div>
+	<</if>>
+	</div>
+	</p>
+
+	<p class="indent">
+	$He has <<print App.Desc.eyesColor($activeSlave)>>. To change $his eye color visit the [[auto salon|Salon][$degradation = 0, $primaryHairColor = "", $secondaryHairColor = "", $primaryEarColor = "", $secondaryEarColor = "", $primaryTailColor = "", $secondaryTailColor = "", $artificialEyeColor = "", $artificialEyeShape = "",$artificialEyeFill = "", $tattooChoice = "", $piercingLevel = ""]].
+	</p>
+<</if>>
+
+<<if $activeSlave.earImplant == 1>>
+	<h2>Ears</h2>
+	<p class="indent">
+	$He has cochlear implants installed.
+	<<if $activeSlave.hears == 0>>
+		They are operating normally.
+	<<elseif $activeSlave.hears == -1>>
+		They are set to muffle $his hearing.
+	<<else>>
+		They are turned off.
+	<</if>>
+	</p>
+	<p class="indent">
+	<<if $activeSlave.hears != 0>>
+		[[Restore hearing|Prosthetics Configuration][$activeSlave.hears = 0, $prostheticsConfig = "hearing"]] |
+	<</if>>
+	<<if $activeSlave.hears != -1>>
+		[[Muffle|Prosthetics Configuration][$activeSlave.hears = -1, $prostheticsConfig = "hearing"]]
+		<<if $activeSlave.hears != -2>>
+			|
+		<</if>>
+	<</if>>
+	<<if $activeSlave.hears != -2>>
+		[[Disable|Prosthetics Configuration][$activeSlave.hears = -2, $prostheticsConfig = "hearing"]]
+	<</if>>
+	</p>
+<</if>>
+
+<<if $activeSlave.electrolarynx == 1>>
+	<h2>Voice</h2>
+	<p class="indent">
+	$He has an electrolarynx installed.
+	<<if $activeSlave.voice == 0>>
+		It is turned off.
+	<<elseif $activeSlave.voice == 1>>
+		It is set to its "deep voice" setting.
+	<<elseif $activeSlave.voice == 2>>
+		It is set to its "normal voice" setting.
+	<<elseif $activeSlave.voice == 3>>
+		It is set to its "high voice" setting.
+	<</if>>
+	</p>
+	<p class="indent">
+	<<if $activeSlave.voice != 0>>
+		[[Disable|Prosthetics Configuration][$activeSlave.voice = 0, $prostheticsConfig = "voice"]] |
+	<</if>>
+	<<if $activeSlave.voice != 1>>
+		[[Deep voice setting|Prosthetics Configuration][$activeSlave.voice = 1, $prostheticsConfig = "voice"]] |
+	<</if>>
+	<<if $activeSlave.voice != 2>>
+		[[Standard voice setting|Prosthetics Configuration][$activeSlave.voice = 2, $prostheticsConfig = "voice"]]
+		<<if $activeSlave.voice != 3>>
+			|
+		<</if>>
+	<</if>>
+	<<if $activeSlave.voice != 3>>
+		[[High voice setting|Prosthetics Configuration][$activeSlave.voice = 3, $prostheticsConfig = "voice"]]
+	<</if>>
+	</p>
+<</if>>
+
+<h2>Limbs</h2>
+<p class="choices">
+	<<= App.Desc.limbChange().selector($activeSlave, App.Desc.limbChange().currentLimbs($activeSlave))>>
+</p>
+
+<h2>Tail</h2>
+<p class="indent">
+<<if $activeSlave.PTail == 1>>
+	<div>
+	$He has a neural tail interface installed. You can assign and adjust $his tail here.
+	</div>
+	<div class="double-indent">
+	<<if $activeSlave.tail != "none">>
+		$He currently has a tail attached, if you wish to change it you will first need to detach it.
+		<div>
+		[[Detach|Prosthetics Configuration][$prostheticsConfig = "detachTail",$nextButton = "Continue", $nextLink = "Prosthetics Configuration"]]
+		</div>
+	<<else>>
+		<<if isProstheticAvailable($activeSlave, "modT")>>
+			<div>
+			Attach a modular tail designed to look like a:
+			</div>
+			<div>
+			[[Cat's Tail|Prosthetics Configuration][$prostheticsConfig = "attachTail", $activeSlave.tail = "mod", $activeSlave.tailShape = "neko", $activeSlave.tailColor = $activeSlave.hColor]]
+			| [[Dog's Tail|Prosthetics Configuration][$prostheticsConfig = "attachTail", $activeSlave.tail = "mod", $activeSlave.tailShape = "inu", $activeSlave.tailColor = $activeSlave.hColor]]
+			| [[Fox's Tail|Prosthetics Configuration][$prostheticsConfig = "attachTail", $activeSlave.tail = "mod", $activeSlave.tailShape = "kit", $activeSlave.tailColor = $activeSlave.hColor]]
+			| [[Kitsune's Tail|Prosthetics Configuration][$prostheticsConfig = "attachTail", $activeSlave.tail = "mod", $activeSlave.tailShape = "kitsune", $activeSlave.tailColor = $activeSlave.hColor]]
+			| [[Tanuki's Tail|Prosthetics Configuration][$prostheticsConfig = "attachTail", $activeSlave.tail = "mod", $activeSlave.tailShape = "tanuki", $activeSlave.tailColor = $activeSlave.hColor]]
+			| [[Cow's Tail|Prosthetics Configuration][$prostheticsConfig = "attachTail", $activeSlave.tail = "mod", $activeSlave.tailShape = "ushi", $activeSlave.tailColor = $activeSlave.hColor]]
+			</div>
+		<</if>>
+		<div>
+		<<if isProstheticAvailable($activeSlave, "combatT")>>
+			[[Attach Combat Tail|Prosthetics Configuration][$prostheticsConfig = "attachTail", $activeSlave.tail = "combat", $activeSlave.tailColor = "jet black"]]
+			<<if isProstheticAvailable($activeSlave, "sexT")>>
+				|
+			<</if>>
+		<</if>>
+		<<if isProstheticAvailable($activeSlave, "sexT")>>
+			[[Attach Pleasure Tail|Prosthetics Configuration][$prostheticsConfig = "attachTail", $activeSlave.tail = "sex", $activeSlave.tailColor = "pink"]]
+		<</if>>
+		</div>
+	<</if>>
+	</div>
+<<else>>
+	//$He does not have a neural tail interface installed so you cannot attach a tail.//
+<</if>>
+<<if $activeSlave.tail == "mod">>
+	<div>
+	$He currently has a modular tail, styled to look like
+	<<if $activeSlave.tailShape == "neko">>
+		a long, slender cat tail.
+	<<elseif $activeSlave.tailShape == "inu">>
+		a bushy dog tail.
+	<<elseif $activeSlave.tailShape == "kit">>
+		a soft, fluffy fox tail.
+	<<elseif $activeSlave.tailShape == "kitsune">>
+		three incredibly soft, fluffy fox tails.
+	<<elseif $activeSlave.tailShape == "tanuki">>
+		a long, fluffy tanuki tail.
+	<<elseif $activeSlave.tailShape == "ushi">>
+		a long cow tail.
+	<</if>>
+	</div>
+
+	<div class="double-indent">
+	Modify $his tail's appearance:
+	<div>
+	[[Cat|Prosthetics Configuration][$activeSlave.tailShape = "neko", cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	| [[Dog|Prosthetics Configuration][$activeSlave.tailShape = "inu", cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	| [[Fox|Prosthetics Configuration][$activeSlave.tailShape = "kit", cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	| [[Kitsune|Prosthetics Configuration][$activeSlave.tailShape = "kitsune", cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	| [[Tanuki|Prosthetics Configuration][$activeSlave.tailShape = "tanuki", cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	| [[Bovine|Prosthetics Configuration][$activeSlave.tailShape = "ushi", cashX(forceNeg($modCost), "slaveMod", $activeSlave)]]
+	</div>
+	</div>
+<</if>>
+</p>
+
+<h2>Prosthetics</h2>
+<p class="choices">
+//Fit prosthetics to $him://
+
+<div class="buyProsthetics">
+	<div></div>
+	<div>''Buy and fit''</div>
+	<div>
+		<<if $researchLab.level > 0>>
+			<<= App.UI.disabledLink(`''Construct in lab''`, ["Depending on lab speed, it might be faster than fitting an existing prosthetic but should almost always be faster than first building and than fitting it to $him."])>>
+		<<else>>
+			<<= App.UI.disabledLink(`''Construct in lab''`, ["With a lab you could both increase speed and decrease cost."])>>
+		<</if>>
+	</div>
+	<div style="text-align:right">
+		<<if $researchLab.speed >= 300>> /* max speed */
+			<<= App.UI.disabledLink(`''Fast assembly''`, ["Your lab is so fast that fitting prosthetics to your slave can done instantly though you will sacrifice some efficiency."])>>
+		<<elseif $researchLab.level > 0>>
+			<<= App.UI.disabledLink(`''Fast assembly''`, ["Your lab is not fast enough to fit prosthetics instantly."])>>
+		<</if>>
+	</div>
+
+<<for _p range setup.prostheticIDs>>
+	<<if _p != "erectile">> /* exclude erectile implant */
+		<div><<= capFirstChar(setup.prosthetics[_p].name)>></div>
+		<<if $adjustProsthetics.findIndex(function(p) {return p.id == _p && p.slaveID == $activeSlave.ID}) != -1 || $researchLab.tasks.findIndex(function(p) {return p.type == "craftFit" && p.id == _p && p.slaveID == $activeSlave.ID}) != -1>>
+			<div class="full">//Currently being fitted to $him.//</div>
+		<<elseif setup.prosthetics[_p].level > $prostheticsUpgrade>>
+			<div class="full">//Better contracts are needed to buy this.//</div>
+		<<elseif isProstheticAvailable($activeSlave, _p)>>
+			<div class="full">//Completed.//</div>
+		<<else>>
+			<<capture _p>>
+			<div>
+			<<if $prosthetics[_p].amount > 0>>
+				<<link "From storage" "Prosthetics Configuration">>
+					<<set $adjustProsthetics.push({id: _p, workLeft: setup.prosthetics[_p].adjust, slaveID: $activeSlave.ID}), $prosthetics[_p].amount -= 1>>
+				<</link>>
+			<<else>>
+				<<link "<<= cashFormat(setup.prosthetics[_p].costs)>>" "Prosthetics Configuration">>
+					<<set $adjustProsthetics.push({id: _p, workLeft: setup.prosthetics[_p].adjust, slaveID: $activeSlave.ID}), cashX(forceNeg(setup.prosthetics[_p].costs), "slaveMod", $activeSlave)>>
+				<</link>>
+			<</if>>
+			</div>
+			<<if $prosthetics[_p].research > 0>>
+			<div style="text-align:center">
+			<<if $researchLab.level > 0 && $prosthetics[_p].research > 0>>
+				<<link "Construct" "Prosthetics Configuration">>
+					<<set $researchLab.tasks.push({
+						type: "craftFit",
+						id: _p,
+						workLeft: (setup.prosthetics[_p].adjust + setup.prosthetics[_p].craft) / 1.5,
+						slaveID: $activeSlave.ID})>>
+					/* 1.5: longer than adjust, but faster than adjust+craft. */
+				<</link>>
+			<</if>>
+			</div>
+			<div style="text-align:right">
+			<<if $researchLab.speed >= 300 && $prosthetics[_p].research > 0>> /* max speed  */
+			<<if $prosthetics[_p].amount > 0>>
+				<<link "From storage: <<= cashFormat(setup.prosthetics[_p].adjust * 50)>>" "Prosthetics Configuration">>
+					<<set cashX(forceNeg(setup.prosthetics[_p].costs * 1.5), "slaveMod", $activeSlave), addProsthetic($activeSlave, _p)>>
+				<</link>>
+			<<else>>
+				<<link "<<= cashFormat(setup.prosthetics[_p].costs + setup.prosthetics[_p].adjust * 100)>>" "Prosthetics Configuration">>
+					<<set cashX(forceNeg(setup.prosthetics[_p].costs  + setup.prosthetics[_p].adjust * 100), "slaveMod", $activeSlave), addProsthetic($activeSlave, _p)>>
+				<</link>>
+			<</if>>
+			<</if>>
+			</div>
+			<<elseif $researchLab.level > 0>>
+			<div class="research">
+				//Not researched.//
+			</div>
+			<</if>>
+			<</capture>>
+		<</if>>
+	<</if>>
+<</for>>
+</div>
+
+</p>
+
+/* base screen END */
+
+/*
+<<case "eyes">>
+	<<set $prostheticsConfig = "main", $nextButton = "Continue", $nextLink = "Prosthetics Configuration">>
+	<<if $activeSlave.eyes == 1>>
+		$He blinks as $his vision returns.
+	<<elseif $activeSlave.eyes == -1>>
+		$He squints at you as $his vision becomes a blur.
+	<<else>>
+		$He has a panicked expression when $his vision suddenly goes out.
+	<</if>>
+*/
+
+<<case "limbs">>
+	<<set $prostheticsConfig = "main", $nextButton = "Continue", $nextLink = "Prosthetics Configuration">>
+	<<= App.Desc.limbChange().reaction($activeSlave, $oldLimbs)>>
+	<<unset $oldLimbs>>
+
+/*
+<<case "basicPLimbs">>
+	<<set $prostheticsConfig = "main", $nextButton = "Continue", $nextLink = "Prosthetics Configuration">>
+	Attaching $his limbs is a simple procedure, you simply push a connector on each limb into the socket in $his implants until the lock engages.<<if $activeSlave.PLimb == 2>> $He jumps a bit as limbs connect to $his nerves.<</if>>
+	<<if $activeSlave.fetish != "mindbroken" && $activeSlave.fuckdoll == 0>>
+		<<if $activeSlave.devotion > 20>>
+			$He's overwhelmed with gratitude and thanks you profusely the first chance $he gets. $He follows the acclimation program diligently, doing $his best to learn how to be a good slave despite, or sometimes even because of, $his artificial arms and legs.
+		<<elseif $activeSlave.devotion >= -20>>
+			$He's overwhelmed with gratitude in part because $he didn't think you'd do something like this for $him. $He thanks you profusely the first chance $he gets, and follows the acclimation program diligently, trying to deserve the expense you went to.
+		<<else>>
+			Despite $his hatred of you, $he can't help but notice that you clearly have a plan for $him that involves putting a good deal of value into $him. Your goals might not be $hers, but at least $he has an indication that you're not toying with $him.
+		<</if>>
+	<</if>>
+
+<<case "sexPLimbs">>
+	<<set $prostheticsConfig = "main", $nextButton = "Continue", $nextLink = "Prosthetics Configuration">>
+	Attaching $his limbs is a simple procedure, you simply push a connector on each limb into the socket in $his implants until the lock engages.<<if $activeSlave.PLimb == 2>> $He jumps a bit as limbs connect to $his nerves.<</if>>
+	While exiting the prosthetic lab $he is experimenting with $his new arms and legs.
+	<<if $activeSlave.fetish != "mindbroken" && $activeSlave.fuckdoll == 0>>
+		<<if $activeSlave.devotion <= 20>>
+			$He rapidly discovers that $his fingertips are now vibrators, and then makes a mess when $he figures out that $his hands can dispense lube without figuring out how to make them stop dispensing lube. $He's frustrated and frightened, realizing that even $his prosthetics are now customized to suit $his purpose as a human sex toy. $He knew $he was a toy before, but somehow, being a literal vibrator is a bit much for $him.
+		<<elseif $activeSlave.energy > 95>>
+			Since $he's a nympho, $he discovers $his new sexual functions in a hurry. They trigger in part is based on arousal, and $he's never not aroused, so they activate one by one as $he leaves the surgery. The vibration, lube, and other dirty functions surprise $him, and it takes $him a moment to realize what's going on, but $he begins to breathe hard when $he understands.
+		<<else>>
+			$He discovers $his sexy new functions one by one. The vibration, lube, and other dirty functions surprise $him, and it takes $him a moment to realize what's going on, but $he begins to shake with amusement when $he understands. $He heads off to try them out.
+		<</if>>
+	<</if>>
+
+<<case "beautyPLimbs">>
+	<<set $prostheticsConfig = "main", $nextButton = "Continue", $nextLink = "Prosthetics Configuration">>
+	Attaching $his limbs is a simple procedure, you simply push a connector on each limb into the socket in $his implants until the lock engages.<<if $activeSlave.PLimb == 2>> $He jumps a bit as limbs connect to $his nerves.<</if>> $He exits the prosthetic lab <<if canSee($activeSlave)>>marveling at the beautiful, natural appearance of $his new arms and legs<<else>>thanking you for $his new arms and legs, unaware of how natural they look<</if>>.
+	<<if $activeSlave.fetish != "mindbroken" && $activeSlave.fuckdoll == 0>>
+		<<if $activeSlave.devotion <= 20>>
+			If $he doubts that you have some sort of long term plan for $him, all $he has to do is <<if canSee($activeSlave)>>look down and examine<<else>>feel<</if>> $his elegant, natural prosthetics, which are often mistaken for the genuine article. Even $he makes the mistake at times as $he gets used to them.
+		<<elseif $activeSlave.skill.entertainment >= 100>>
+			Since $he's a masterful entertainer, $he knows multiple styles of dance, though $his straightforward modern prosthetics never allowed $him to be anything more than a mechanically competent dancer. $He finds that $he has far better balance now, in addition to looking more natural. Before long, $he goes //en pointe// and holds the position, before collapsing in a heap. It soon becomes apparent that this wasn't due to clumsiness: $he's sobbing so hard $he can barely breathe. $He thanks you profusely the next time $he sees you, eyes still puffy with tears of joy.
+		<<else>>
+			When $he first <<if canSee($activeSlave)>>catches sight of $himself in a mirror<<else>>runs a new finger over $his natural feeling skin<</if>>, $he begins to cry. Terribly complex emotions war across $his face: gratitude, joy, regret, and something undefinable. Blinking, $he uses newly elegant fingertips to trace the scarcely visible seams where $his artificial and natural skin meet. $He thanks you profusely the next time $he sees you, eyes still puffy with tears.
+		<</if>>
+	<</if>>
+
+<<case "combatPLimbs">>
+	<<set $prostheticsConfig = "main", $nextButton = "Continue", $nextLink = "Prosthetics Configuration">>
+	Attaching $his limbs is a simple procedure, you simply push a connector on each limb into the socket in $his implants until the lock engages.<<if $activeSlave.PLimb == 2>> $He jumps a bit as limbs connect to $his nerves.<</if>> While exiting the prosthetic lab $he is wondering over the bulky <<if canSee($activeSlave)>>appearance<<else>>weight<</if>> of $his reinforced arms and legs.
+	<<if $activeSlave.fetish != "mindbroken" && $activeSlave.fuckdoll == 0>>
+		<<if $activeSlave.devotion <= 20>>
+			$He's frightened, once $he discovers what $he can do, and what $he is. $His integral weapons are locked out by the arcology systems, for now, but $he quickly realizes what they are. $He is not, to say the least, thrilled by the revelation that $he is now a living weapon, and is kept awake by thoughts of what you might be planning for $him.
+		<<elseif ($activeSlave.skill.combat == 1) && ($activeSlave.devotion > 75)>>
+			$He leaves the prosthetic lab with a purpose, $his footsteps a bit heavier than before. $He heads down to the armory's range, still naked, and when $he gets there, $he places $his dominant hand over $his thigh on that side. It folds open, revealing a handgun, which $he draws and empties into a <<if canSee($activeSlave)>>target<<else>>beeping target<</if>>; as $he fires the last rounds, $he uses $his off hand to reach down to that thigh, which folds open and reveals spare magazines. $He knows that $his prosthetics are a wash, at best, in terms of actual combat effectiveness; they'll never match the reliability and dexterity of the genuine article. But $he thinks they are //cool.//
+		<<else>>
+			$He has mixed feelings about what $he soon discovers. $He's a living weapon now, and has to live with the constant knowledge that $he can incapacitate or kill with nothing more than what's contained within $his arms and legs. $He's touched, though, by the tremendous trust this shows. $He knows that the arcology would instantly lock out $his weapons if $he were to misbehave, but $he's still affected.
+		<</if>>
+	<</if>>
+
+<<case "cyberPLimbs">>
+	<<set $prostheticsConfig = "main", $nextButton = "Continue", $nextLink = "Prosthetics Configuration">>
+	Attaching $his limbs is a simple procedure, you simply push a connector on each limb into the socket in $his implants until the lock engages.<<if $activeSlave.PLimb == 2>> $He jumps a bit as limbs connect to $his nerves.<</if>> $He exits the prosthetic lab marveling <<if canSee($activeSlave)>>at the shiny artificial skin of $his new arms and legs<<else>>at the feel of the artificial skin of $his new arms and legs under $his new fingers<</if>>.
+	<<if $activeSlave.fetish != "mindbroken" && $activeSlave.fuckdoll == 0>>
+		<<if $activeSlave.devotion <= 20>>
+			$He's frightened, once $he discovers what $he can do, and what $he is. $His cybernetic limbs are restricted by the arcology systems, for now, but $he quickly realizes what they are. $He is not, to say the least, thrilled by the revelation that $he is now a living weapon, and is kept awake by thoughts of what you might be planning for $him.
+		<<elseif ($activeSlave.skill.combat == 1) && ($activeSlave.devotion > 75)>>
+			$He leaves the surgery with a purpose, $his footsteps a bit heavier than before. $He heads down to the armory's range, still naked, and when $he gets there, $he places $his dominant hand over $his thigh on that side. It folds open, revealing a handgun, which $he draws and empties into a <<if canSee($activeSlave)>>target<<else>>beeping target<</if>>; as $he fires the last rounds, $he uses $his off hand to reach down to that thigh, which folds open and reveals spare magazines. $He knows that $his prosthetics will enhance $his combat effectiveness and $he thinks they are //cool.//
+		<<else>>
+			$He has mixed feelings about what $he soon discovers. $He's a living weapon now, and has to live with the constant knowledge that $he can incapacitate or kill with nothing more than $his arms and legs themselves. $He's touched, though, by the tremendous trust this shows. $He knows that the arcology would instantly lock out $his limbs if $he were to misbehave, but $he's still affected.
+		<</if>>
+	<</if>>
+
+<<case "removeLimbs">>
+	<<set $prostheticsConfig = "main", $nextButton = "Continue", $nextLink = "Prosthetics Configuration">>
+	Due to built-in safeties it is necessary to remove each limb separately, first releasing the lock and then waiting for automated seal release.<br>
+	<<if ($activeSlave.devotion > 20)>>
+		You instruct $him to lie down on the table and proceed to remove $his limbs. $He <<if canSee($activeSlave)>>watches<<elseif canHear($activeSlave)>>listens<<else>>waits<</if>> with interest as you work.<<if ($activeSlave.devotion > 50)>> As you remove the last limb $he playfully wiggles $his stumps at you.<</if>>
+	<<else>>
+		You order $him to lie down on the table and proceed to remove $his limbs. $He <<if canSee($activeSlave)>>watches<<elseif canHear($activeSlave)>>listens<<else>>waits<</if>> with a bitter expression as you work.
+	<</if>>
+*/
+
+<<case "hearing">>
+	<<set $prostheticsConfig = "main", $nextButton = "Continue", $nextLink = "Prosthetics Configuration">>
+	<<if $activeSlave.hears == 0>>
+		$He tilts $his head as $his hearing returns.
+	<<elseif $activeSlave.hears == -1>>
+		$He shakes $his head as $his hearing becomes muffled.
+	<<else>>
+		$He has a panicked expression when $his hearing is suddenly silenced.
+	<</if>>
+
+<<case "voice">>
+	<<set $prostheticsConfig = "main", $nextButton = "Continue", $nextLink = "Prosthetics Configuration">>
+	<<if $activeSlave.voice == 0>>
+		$He tries testing out $his new voice, only to discover $he's been made mute.
+	<<elseif $activeSlave.voice == 1>>
+		$He tests out the <<if canHear($activeSlave)>>sound<<else>>feeling<</if>> of $his new, deep voice.
+	<<elseif $activeSlave.voice == 2>>
+		$He tests out the <<if canHear($activeSlave)>>sound<<else>>feeling<</if>> of $his new, normal voice.
+	<<elseif $activeSlave.voice == 3>>
+		$He tests out the <<if canHear($activeSlave)>>sound<<else>>feeling<</if>> of $his new, high voice.
+	<</if>>
+
+<<case "detachTail">>
+	<<set $prostheticsConfig = "main", $nextButton = "Continue", $nextLink = "Prosthetics Configuration">>
+	<<set $activeSlave.tail = "none", $activeSlave.tailShape = "none", $activeSlave.tailColor = "none">>
+	You send the release signal and the mechanical lock disengages allowing the artificial tail to pop right off.
+
+<<case "attachTail">>
+	<<set $prostheticsConfig = "main", $nextButton = "Continue", $nextLink = "Prosthetics Configuration">>
+	Attaching $his tail is a simple procedure, you simply push the connector into a socket, right where $his tailbone ends, until the lock engages.<br>
+	When you are done, $he looks back and
+	<<if $activeSlave.tailShape == "neko">>sways $his tail side to side enigmatically.
+	<<elseif $activeSlave.tailShape == "inu">>wags $his tail side to side energetically.
+	<<elseif $activeSlave.tailShape == "kit">>slowly sways $his tail feeling the soft fur brush against $his skin.
+	<<elseif $activeSlave.tailShape == "kitsune">>slowly sways $his tails luxuriating in the incredibly soft, fluffy fur brushing against $his skin.
+	<<elseif $activeSlave.tailShape == "tanuki">>admires $his long, thick fluffy tail.
+	<<elseif $activeSlave.tailShape == "ushi">>swats $himself playfully.
+	<<elseif $activeSlave.tail == "combat">>experimentally whips the long tail side to side then takes aim at a prepared fruit, lashes out with blinding speed and smiles as it explodes into chunks.
+	<<elseif $activeSlave.tail == "sex">>accidentally engages the vibrating and lube functions, startling $him and making quite a mess.
+	<<else>>admires $his new tail.
+	<</if>>
+
+/*
+<<case "interface">>
+	<span id="attach">
+	<<set _first = 1>>
+	/*TODO save .legsTat and .armsTat / link them to prosthetic*/
+/*	<<if getLeftArmID($activeSlave) !== 2 && isProstheticAvailable($activeSlave, "basicL")) != -1>>
+		<<if _first>>
+			<br><br>Since you already have prepared limbs for $him you might as well attach them while you are working on $him:<br>
+			<<set _first = 0>>
+		<</if>>
+		<<link "Attach <<= addA(setup.prosthetics.basicL.name)>>">>
+			<<set removeLimbs($activeSlave, "all"), attachLimbs($activeSlave, "all", 2), $prostheticsConfig = "basicPLimbs">>
+			<<replace #attach>><br><br><<include "Prosthetics Configuration">><<set $nextLink = "Remote Surgery">><</replace>>
+		<</link>>
+		<br>
+	<</if>>
+	<<if getLeftArmID($activeSlave) !== 3 && isProstheticAvailable($activeSlave, "sexL"))>>
+		<<if _first>>
+			<br><br>Since you already have prepared limbs for $him you might as well attach them while you are working on $him:<br>
+			<<set _first = 0>>
+		<</if>>
+		<<link "Attach <<= addA(setup.prosthetics.sexL.name)>>">>
+			<<set removeLimbs($activeSlave, "all"), attachLimbs($activeSlave, "all", 3), $prostheticsConfig = "sexPLimbs">>
+			<<replace #attach>><br><br><<include "Prosthetics Configuration">><<set $nextLink = "Remote Surgery">><</replace>>
+		<</link>>
+		<br>
+	<</if>>
+	<<if getLeftArmID($activeSlave) !== 4 && isProstheticAvailable($activeSlave, "beautyL")>>
+		<<if _first>>
+			<br><br>Since you already have prepared limbs for $him you might as well attach them while you are working on $him:<br>
+			<<set _first = 0>>
+		<</if>>
+		<<link "Attach <<= addA(setup.prosthetics.beautyL.name)>>">>
+			<<set removeLimbs($activeSlave, "all"), attachLimbs($activeSlave, "all", 4), $prostheticsConfig = "beautyPLimbs">>
+			<<replace #attach>><br><br><<include "Prosthetics Configuration">><<set $nextLink = "Remote Surgery">><</replace>>
+		<</link>>
+		<br>
+	<</if>>
+	<<if getLeftArmID($activeSlave) !== 5 && isProstheticAvailable($activeSlave, "combatL")>>
+		<<if _first>>
+			<br><br>Since you already have prepared limbs for $him you might as well attach them while you are working on $him:<br>
+			<<set _first = 0>>
+		<</if>>
+		<<link "Attach <<= addA(setup.prosthetics.combatL.name)>>">>
+			<<set removeLimbs($activeSlave, "all"), attachLimbs($activeSlave, "all", 5), $prostheticsConfig = "combatPLimbs">>
+			<<replace #attach>><br><br><<include "Prosthetics Configuration">><<set $nextLink = "Remote Surgery">><</replace>>
+		<</link>>
+		<br>
+	<</if>>
+	<<if getLeftArmID($activeSlave) !== 6 && isProstheticAvailable($activeSlave, "cyberneticL")>>
+		<<if $activeSlave.PLimb == 2>>
+			<<if _first>>
+				<br><br>Since you already have prepared limbs for $him you might as well attach them while you are working on $him:<br>
+				<<set _first = 0>>
+			<</if>>
+			<<link "Attach <<= addA(setup.prosthetics.cyberneticL.name)>>" "Prosthetics Configuration">>
+				<<set removeLimbs($activeSlave, "all"), attachLimbs($activeSlave, "all", 6), $prostheticsConfig = "cyberPLimbs">>
+				<<replace #attach>><br><br><<include "Prosthetics Configuration">><<set $nextLink = "Remote Surgery">><</replace>>
+			<</link>>
+		<</if>>
+	<</if>>
+	</span>
+*/
+<</switch>>

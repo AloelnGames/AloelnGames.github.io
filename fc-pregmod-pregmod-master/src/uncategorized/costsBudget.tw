@@ -1,0 +1,433 @@
+:: Costs Budget [nobr]
+
+<<set $nextButton = "Back to Main", $nextLink = "Main", _arcologyCosts = 0>>
+
+<<if def $lastWeeksCashIncome>>
+	<<set $lastWeeksCashIncome.Total = 0>>
+	<<set $lastWeeksCashExpenses.Total = 0>>
+	<<set $lastWeeksCashProfits.Total = 0>>
+<</if>>
+
+<<if ndef $showAllEntries>>
+	<<set $showAllEntries = {costsBudget: 0, repBudget: 0}>>
+<</if>>
+
+<div class="scene-intro">
+	Here you can view many of the financial details of your arcology, <<= properTitle()>>. The detailed list of slaves and their costs (food, hormones) that you may remember can now be found in the "Slave maintenance" link. Other links will allow you to directly control areas of your arcology to adjust spending to suit your tastes.
+</div>
+
+<br style="clear:both"><<if $lineSeparations == 0>><br><<else>><hr style="margin:0"><</if>>
+
+<<if $difficultySwitch == 1>>
+	<div class="scene-intro">
+		The Local Economy score effects some prices in your ecology. The lower the score, the higher the prices. The base score is ''100''.
+	</div>
+	<span id="economy">
+		<span class="yellowgreen">
+			Global Economy
+		</span>
+	| <<print $economy>>
+	</span>
+	<<if ($cheatMode) && ($cheatModeM)>>
+		<<set _Teconomy = $economy>>
+		<<textbox "_Teconomy" _Teconomy>>
+		<<link "Apply">>
+		<<set $economy = Math.trunc(Number(_Teconomy)) || $economy, $cheater = 1>>
+		<<replace "#economy">>
+		<span class="yellowgreen">
+			Global Economy
+		</span>
+		| <<print $economy>>
+		<</replace>>
+		<</link>>
+	<</if>>
+	<br>
+
+	<span id="localEcon">
+		<span class="yellowgreen">
+			Local Economy
+		</span>
+	| <<print $localEcon>>
+	</span>
+	<<if ($cheatMode) && ($cheatModeM)>>
+		<<set _TlocalEcon = $localEcon>>
+		<<textbox "_TlocalEcon" _TlocalEcon>>
+		<<link "Apply">>
+		<<set $localEcon = Math.trunc(Number(_TlocalEcon)) || $localEcon, $cheater = 1>>
+		<<replace "#localEcon">>
+		<span class="yellowgreen">
+			Local Economy
+		</span>
+		| <<print $localEcon>>
+		<</replace>>
+		<</link>>
+	<</if>>
+
+	<br> The current score is
+	<<if $localEcon > 100>>
+		<<set _econPercent = Math.trunc(1000-100000/$localEcon)/10>>
+		reducing prices by <span class="cash inc">''<<print _econPercent>>%.''</span>
+	<<elseif $localEcon == 100>>
+		equal to the base score. There are no price modifications.
+	<<else>>
+		<<set _econPercent = Math.trunc(100000/$localEcon-1000)/10>>
+		increasing prices by <span class="cash dec">''<<print _econPercent>>%.''</span>
+	<</if>>
+	<br style="clear:both"><<if $lineSeparations == 0>><br><br><<else>><hr style="margin:0"><</if>>
+<</if>>
+
+<span class="detail">Your weekly costs are as follows:</span>
+<<options $showAllEntries.costsBudget>>
+	<<option 0 "Normal">>
+	<<option 1 "Show Empty Entries">>
+<</options>>
+
+/* Table of Totals */
+<<if ndef $lastWeeksCashIncome>>
+	Financial data currently unavailable.
+<<else>>
+
+<<script>>
+for (var i = 0; i < State.variables.lastWeeksCashIncome.length; i++){
+	State.variables.lastWeeksCashProfits[i] = (State.variables.lastWeeksCashIncome[i] + State.variables.lastWeeksCashExpenses[i]);
+}
+<</script>>
+
+<style>
+	table.finances {
+		/*table-layout: fixed;*/
+		text-align: right;
+		border-collapse: separate;
+		border-spacing: 5px;
+		border-style: hidden;
+		empty-cells: hide;
+		width: 75%;
+	}
+</style>
+
+
+<table class="finances" border="1">
+	<tr>
+		<th><h2>Penthouse</h2></th>
+		<th>Income</th>
+		<th>Expense</th>
+		<th>Totals</th>
+	</tr>
+
+	<<print budgetLine("whore", "Whores")>>
+
+	<<print budgetLine("rest", "Resting")>>
+
+	<<print budgetLine("houseServant", "House servants")>>
+
+	<<print budgetLine("confined", "Confined")>>
+
+	<<print budgetLine("publicServant", "Public servants")>>
+
+	<<print budgetLine("classes", "Classes")>>
+
+	<<print budgetLine("milked", "Milked")>>
+
+	<<print budgetLine("gloryhole", "Gloryhole")>>
+
+	<tr>
+		<h2>Structures</h2>
+	</tr>
+
+	<<print budgetLine("brothel", "<<if $brothel>>[[$brothelNameCaps|Brothel][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>$brothelNameCaps<</if>> ($BrothiIDs.length slaves)")>>
+
+	<<print budgetLine("whoreBrothel", "Brothel whores")>>
+
+	<<print budgetLine("brothelAds", "<<if $brothel>>[[Brothel ads|Brothel Advertisement][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>Brothel ads<</if>> also increase the income of whoring slaves in \"jobs.\"")>>
+
+	<<if $brothel > 0>>
+		<br>
+	<</if>>
+
+	<<print budgetLine("club", "<<if $club>>[[$clubNameCaps|Club][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>$clubNameCaps<</if>> ($ClubiIDs.length slaves)")>>
+
+	<<print budgetLine("clubAds", "<<if $club>>[[Club ads|Club Advertisement][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>Club ads<</if>>")>>
+
+	<<if $club > 0>>
+		<br>
+	<</if>>
+
+	<<print budgetLine("arcade", "<<if $arcade>>[[$arcadeNameCaps|Arcade][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>$arcadeNameCaps<</if>> ($ArcadeiIDs.length slaves)")>>
+
+	<<print budgetLine("gloryholeArcade", "Arcade slaves")>>
+
+	<<if $arcade > 0>>
+		<br>
+	<</if>>
+
+	<<print budgetLine("dairy", "<<if $dairy>>[[$dairyNameCaps|Dairy][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>$dairyNameCaps<</if>> ($DairyiIDs.length slaves)")>>
+
+	<<print budgetLine("milkedDairy", "Dairy cows")>>
+
+	<<if $dairy > 0>>
+		<br>
+	<</if>>
+
+	<<print budgetLine("servantsQuarters", "<<if $servantsQuarters>>[[Servants' Quarters][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>Servants' Quarters<</if>> ($ServQiIDs.length slaves)")>>
+
+	<<print budgetLine("masterSuite", "<<if $masterSuite>>[[Master Suite][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>Master Suite<</if>> ($MastSiIDs.length slaves)")>>
+
+	<<print budgetLine("school", "<<if $schoolroom>>[[$schoolroomNameCaps|Schoolroom][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>$schoolroomNameCaps<</if>> ($SchlRiIDs.length slaves)")>>
+
+	<<print budgetLine("spa", "<<if $spa>>[[$spaNameCaps|Spa][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>$spaNameCaps<</if>> ($SpaiIDs.length slaves)")>>
+
+	<<print budgetLine("clinic", "<<if $clinic>>[[$clinicNameCaps|Clinic][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>$clinicNameCaps<</if>> ($CliniciIDs.length slaves)")>>
+
+	<<print budgetLine("cellblock", "<<if $cellblock>>[[$cellblockNameCaps|Cellblock][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>$cellblockNameCaps<</if>> ($CellBiIDs.length slaves)")>>
+
+	<<print budgetLine("lab", "<<if $researchLab.level > 0>>[[Prosthetic Lab][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>Prosthetic Lab<</if>> maintenance")>>
+
+	<<print budgetLine("incubator", "<<if $incubator>>[[$incubatorNameCaps|Incubator][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>$incubatorNameCaps<</if>> ($incubatorSlaves slaves)")>>
+
+	<<print budgetLine("nursery", "<<if $nursery>>[[$nurseryNameCaps|Nursery][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>$nurseryNameCaps<</if>> ($NurseryiIDs.length slaves)")>>
+
+	<<print budgetLine("farmyard", "<<if $farmyard>>[[$farmyardNameCaps|Farmyard][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>$farmyardNameCaps<</if>> ($FarmyardiIDs.length slaves)")>>
+
+	<<print budgetLine("pit", "<<if $pit>>[[$pitNameCaps|Pit][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]<<else>>$pitNameCaps<</if>> ($fighterIDs.length slaves)")>>
+
+	<<print budgetLine("environment", "Environment")>>
+
+	<<print budgetLine("weather",
+				"<<if $lastWeeksCashExpenses.weather < 0 && $weatherCladding == 0>>
+					Weather is causing <span class=\"red\">expensive damage.</span> Consider a protective [[upgrade|Manage Arcology][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]].
+				<<else>>
+					Weather
+				<</if>>")>>
+
+	<tr>
+		<h2>Slaves</h2>
+	</tr>
+
+	<<print budgetLine("slaveUpkeep", "[[Slave maintenance|Costs Report Slaves][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] ($slaves.length slaves)")>>
+
+	<<print budgetLine("extraMilk", "Extra milk")>>
+
+	<<print budgetLine("slaveTransfer", "Selling/buying major slaves")>>
+
+	<<print budgetLine("menialTransfer", "Menials: [[Assistant's|Personal assistant options][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] flipping")>>
+
+	<<print budgetLine("fuckdollsTransfer", "Fuckdolls: [[Assistant's|Personal assistant options][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] flipping")>>
+
+	<<print budgetLine("menialBioreactorsTransfer", "Bioreactors: [[Assistant's|Personal assistant options][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] flipping")>>
+
+	<<print budgetLine("babyTransfer", "Selling/buying babies")>>
+
+	<<print budgetLine("menialTrades", "[[Menials|Buy Slaves]]: labor")>>
+
+	<<print budgetLine("fuckdolls", "Fuckdolls")>>
+
+	<<print budgetLine("menialBioreactors", "Menials: bioreactors")>>
+
+	<<print budgetLine("porn", "Porn")>>
+
+	<<print budgetLine("recruiter", "[[Recruiter|Recruiter Select]]")>>
+
+	<<print budgetLine("menialRetirement", "Menials retiring")>>
+
+	<<print budgetLine("slaveMod", "Slave modification")>>
+
+	<<print budgetLine("slaveSurgery", "Slave surgery")>>
+
+	<<print budgetLine("birth", "Slave surgery")>>
+
+	<tr>
+		<h2>Finance</h2>
+	</tr>
+
+	<<print budgetLine("personalBusiness", "Personal business")>>
+
+	<<print budgetLine("personalLivingExpenses",
+		"<<if $PC.rules.living == \"luxurious\">>
+			Since you are accustomed to luxury, your personal living expenses are:
+		<<elseif $PC.rules.living == \"normal\">>
+			Since you are used to living well, your personal living expenses are:
+		<<else>>
+			Since you are used to a fairly normal life, your personal living expenses are:
+		<</if>>
+		")>>
+
+	<<print budgetLine("PCtraining", "
+				Your training expenses
+				<<if ($personalAttention == \"trading\")>>
+					[[Trading trainer|Personal Attention Select][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] fees
+				<<elseif ($personalAttention == \"warfare\")>>
+					[[Warfare trainer|Personal Attention Select][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] fees
+				<<elseif ($personalAttention == \"slaving\")>>
+					[[Slaving trainer|Personal Attention Select][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] fees
+				<<elseif ($personalAttention == \"engineering\")>>
+					[[Engineering trainer|Personal Attention Select][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] fees
+				<<elseif ($personalAttention == \"medicine\")>>
+					[[Medicine trainer|Personal Attention Select][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] fees
+				<<elseif ($personalAttention == \"hacking\")>>
+					[[Hacking trainer|Personal Attention Select][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] fees
+				<</if>>
+			")>>
+
+	<<print budgetLine("PCmedical", "Your medical expenses")>>
+
+	<<print budgetLine("PCskills", "Your skills")>>
+
+	<<print budgetLine("rents",
+			"Your [[rents|Manage Arcology]]
+			<<if $lastWeeksCashExpenses.rents < 0>>
+				and bribes
+			<</if>>
+		")>>
+
+	<<print budgetLine("stocks", "Stock dividends on ($personalShares/<<print ($publicShares + $personalShares)>> shares).")>>
+
+	<<print budgetLine("stocksTraded", "Stock trading")>>
+
+	<<print budgetLine("fines", "Fines")>>
+
+	<<print budgetLine("event", "Events")>>
+
+	<<print budgetLine("war", "Arcology conflict")>>
+
+	<<print budgetLine("capEx", "Capital expenses")>>
+
+	<<print budgetLine("cheating", "CHEATING")>>
+
+	<tr>
+		<h2>Policies</h2>
+	</tr>
+
+	<<print budgetLine("policies", "[[Policies]]")>>
+	<<print budgetLine("edicts", "<<if $secExpEnabled>>[[Edicts|edicts]]<<else>>Edicts<</if>>")>>
+
+	<<print budgetLine("futureSocieties", "[[Society shaping|Future Society][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]")>>
+
+	<<print budgetLine("schoolBacking",
+				"<<if $TSS.subsidize != 0>>[[The Slavegirl School|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus influence
+				<<elseif $GRI.subsidize != 0>>[[Growth Research Institute|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] subsidiary lab influence
+				<<elseif $SCP.subsidize != 0>>[[St. Claver Preparatory|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus influence
+				<<elseif $LDE.subsidize != 0>>[[L'Encole des Enculees|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus influence
+				<<elseif $TGA.subsidize != 0>>[[The Gymnasium-Academy|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus influence
+				<<elseif $TCR.subsidize != 0>>[[The Cattle Ranch|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus influence
+				<<elseif $HA.subsidize != 0>>[[Hippolyta Academy|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus influence
+				<<elseif $NUL.subsidize != 0>>[[Nueva Universidad de Libertad|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus influence
+				<<elseif $TFS.subsidize != 0>>[[The Futanari Sisters|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] community influence
+				<<elseif $TSS.schoolPresent == 1>>[[The Slavegirl School|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus upkeep
+				<<elseif $GRI.schoolPresent == 1>>[[Growth Research Institute|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] subsidiary lab upkeep
+				<<elseif $SCP.schoolPresent == 1>>[[St. Claver Preparatory|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus upkeep
+				<<elseif $LDE.schoolPresent == 1>>[[L'Encole des Enculees|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus upkeep
+				<<elseif $TGA.schoolPresent == 1>>[[The Gymnasium-Academy|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus upkeep
+				<<elseif $TCR.schoolPresent == 1>>[[The Cattle Ranch|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus upkeep
+				<<elseif $HA.schoolPresent == 1>>[[Hippolyta Academy|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus upkeep
+				<<elseif $NUL.schoolPresent == 1>>[[Nueva Universidad de Libertad|Policies][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]] branch campus upkeep
+				<<else>> Unknown school expense
+				<</if>>
+			")>>
+
+	<<print budgetLine("citizenOrphanage", "Education of $citizenOrphanageTotal of your slaves\' children in citizen schools")>>
+
+	<<print budgetLine("privateOrphanage", "Private tutelage of $privateOrphanageTotal of your slaves\' children")>>
+
+	<<print budgetLine("mercenaries",
+			"Security:
+			<<if $barracks>>
+				[[$mercenariesTitle|Barracks][$nextButton = \"Back to Budget\", $nextLink = \"Costs Budget\"]]
+			<<else>>
+				Mercenaries
+				<div class=\"red detail\">
+					Cost increased by the lack of an armory to house them.
+				</div>
+			<</if>>
+			<<if ($PC.skill.warfare >= 100) || ($PC.career == \"arcology owner\")>>
+				<div class=\"detail\">
+					Cost reduced by your <span class=\"springgreen\">mercenary contacts.</span>
+				</div>
+			<</if>>
+		")>>
+
+	<<print budgetLine("securityExpansion", "Security expansion")>>
+
+	<<print budgetLine("specialForces", "Special forces")>>
+
+	<<print budgetLine("peacekeepers", "Peacekeepers<<if State.variables.peacekeepers.undermining !== 0>>, including undermining<</if>>")>>
+
+	<tr>
+		<h2>Budget Report</h2>
+	</tr>
+
+	<tr><td></td></tr>
+	<tr>
+		<td>Tracked totals</td>
+		<td>
+			<<set $lastWeeksCashIncome.Total = hashSum($lastWeeksCashIncome)>>
+			<<print cashFormatColor(Math.trunc($lastWeeksCashIncome.Total))>>
+		</td>
+
+		<td>
+			<<set $lastWeeksCashExpenses.Total = hashSum($lastWeeksCashExpenses)>>
+			<<print cashFormatColor(Math.trunc($lastWeeksCashExpenses.Total))>>
+		</td>
+		<td>
+			<<set $lastWeeksCashProfits.Total = ($lastWeeksCashIncome.Total + $lastWeeksCashExpenses.Total)>>
+			/* each "profit" item is calculated on this sheet, and there's two ways to generate a profit total: the difference of the income and expense totals, and adding all the profit items. If they aren't the same, I probably forgot to properly add an item's profit calculation to this sheet.*/
+			<<if $lastWeeksCashProfits.Total != hashSum($lastWeeksCashProfits) - $lastWeeksCashProfits.Total>>/* Profits includes the total number of profits, so we have to subtract it back out */
+				<<print (cashFormat(Math.trunc(hashSum($lastWeeksCashProfits)-$lastWeeksCashProfits.Total)))>>
+				<div class="red">Fix profit calc</div>
+			<</if>>
+			<div>
+				<<print cashFormatColor(Math.trunc($lastWeeksCashProfits.Total))>>
+			</div>
+		</td>
+	</tr>
+
+
+	<tr><td></td></tr>
+	<tr>
+		<td>Expenses budget for week <<print ($week+1)>></td>
+		<td></td>
+		<td>
+			<<print cashFormatColor($costs)>>
+		</td>
+		<td></td>
+	</tr>
+
+	<tr><td></td></tr>
+	<tr>
+		<td>Last week actuals</td>
+		<td></td>
+		<td></td>
+		<td>
+			<<print cashFormatColor($cash-$cashLastWeek)>>
+		</td>
+	</tr>
+
+	<<if ($cash-$cashLastWeek) == $lastWeeksCashProfits.Total>>
+		<tr>
+			<span class="green">The books are balanced, <<= properTitle()>>!</span>
+		</tr>
+	<<else>>
+		<tr>
+			<td>Transaction tracking off by:</td>
+			<td></td>
+			<td>/*<<print ($lastWeeksCashExpenses.Total + $costs)>>*/</td>
+			<td>
+				<<print cashFormatColor(($cash-$cashLastWeek) - $lastWeeksCashProfits.Total)>>
+			</td>
+		</tr>
+	<</if>>
+</table>
+
+<br>
+
+<</if>>
+
+<<if ndef $lastWeeksCashErrors>>
+	<<set $lastWeeksCashErrors = "Errors: ">>
+<</if>>
+
+<<if $lastWeeksCashErrors !== "Errors: ">>
+	<<link "Reset">>
+		<<set $lastWeeksCashErrors = "Errors: ">>
+	<</link>><br>
+	@@.red;<<print $lastWeeksCashErrors>>@@
+<</if>>

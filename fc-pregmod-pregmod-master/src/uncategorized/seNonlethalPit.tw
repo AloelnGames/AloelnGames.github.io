@@ -1,0 +1,1027 @@
+:: SE nonlethal pit [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Scheduled Event", $returnTo = "Scheduled Event", $pitFought = 1, _fighterOne = 0, _fighterTwo = 0>>
+
+<<if $pitBG == 0>>
+	<<set _fighterOne = $fighterIDs.pluck()>> /* .pluck() removes the element from the array, preventing _fighterTwo from also choosing this ID */
+	<<set _fighterOne = getSlave(_fighterOne)>>
+<<else>>
+	<<set _fighterOne = getSlave($Bodyguard.ID)>>
+<</if>>
+<<setLocalPronouns _fighterOne>>
+<<if $pitAnimal == 0>>
+	<<set _fighterTwo = $fighterIDs.pluck()>>
+	<<set _fighterTwo = getSlave(_fighterTwo)>>
+	<<if ndef _fighterOne || ndef _fighterTwo || (_fighterOne == 0) || (_fighterTwo == 0)>>
+		<<goto "Nonrandom Event">>
+	<</if>>
+	<<setLocalPronouns _fighterTwo 2>>
+	<span id="artFrame">
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<div class="imageColumn">
+			<div class="imageRef medImg">
+				<<= SlaveArt(_fighterOne, 2, 0)>>
+			</div>
+			<div class="imageRef medImg">
+				<<= SlaveArt(_fighterTwo, 2, 0)>>
+			</div>
+		</div>
+	<</if>>
+	/* 000-250-006 */
+	</span>
+<<else>>
+	<<switch $pitAnimalType>>
+	<<case "canine">>
+		<<set _animal = $activeCanine>>
+	<<case "hooved">>
+		<<set _animal = $activeHooved>>
+	<<case "feline">>
+		<<set _animal = $activeFeline>>
+	<</switch>>
+	<span id="artFrame">
+		/* 000-250-006 */
+		<<if $seeImages == 1>>
+			<<if $imageChoice == 1>>
+				<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt(_fighterOne, 2, 0)>></div>
+			<<else>>
+				<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt(_fighterOne, 2, 0)>></div>
+			<</if>>
+		<</if>>
+		/* 000-250-006 */
+	</span>
+<</if>>
+
+<<if $pitAnimal == 0>>
+	This week's pit fight is between _fighterOne.slaveName and _fighterTwo.slaveName.
+<<elseif $pitAnimal == 1>>
+	This week a _animal.species is going to try to use _fighterOne.slaveName.
+<<else>>
+	This week, _fighterOne.slaveName was scheduled to be used by an animal, but is spared because no animal has been chosen.
+	<<set $slaves[$slaveIndices[_fighterOne.ID]] = _fighterOne>>
+	<<set $fighterIDs.push(_fighterOne.ID)>>
+<</if>>
+
+<<if $pitAnimal == 0>>
+	<<if $pitAudience == "none">>You are alone above $pitName, left to watch them square off in private.<<elseif $pitAudience == "free">>Your guests line the rim of $pitName, joking and betting.<<else>>The attendees line the rim of $pitName, betting and arguing.<</if>>
+
+	<<if $arcologies[0].FSRomanRevivalist != "unset">>
+		They @@.green;strongly approve@@ of you hosting combat between slaves; this advances ideas from antiquity about what public events should be.
+		<<run repX(10*$FSSingleSlaveRep*($arcologies[0].FSRomanRevivalist/$FSLockinLevel), "pit")>>
+		<<set $arcologies[0].FSRomanRevivalist += 0.2*$FSSingleSlaveRep>>
+	<</if>>
+
+	You review the rules — the combatants are wearing light gloves, and the fight will be nonlethal, with you as the judge. The winner will have the right to do anything they wish to the loser,
+	<<if $pitVirginities == 0>>
+		even take virginities,
+	<<elseif $pitVirginities == 1>>
+		except take their virginity,
+	<<elseif $pitVirginities == 2>>
+		except take their anal virginity,
+	<<elseif $pitVirginities == 3>>
+		except take virginities,
+	<</if>>
+	and earn two complete days of rest. You take a moment to look over your fighters before giving the word.
+
+	<br><br>
+
+	<<set _fighterOneDeadliness = Deadliness(_fighterOne)>>
+
+	<<if _fighterOneDeadliness > 5>>
+		_fighterOne.slaveName seems very confident, even eager to win a break.
+	<<elseif _fighterOneDeadliness > 3>>
+		_fighterOne.slaveName seems nervous, but steels $himself to fight for time off.
+	<<elseif _fighterOneDeadliness > 1>>
+		_fighterOne.slaveName seems hesitant and unsure.
+	<<else>>
+		_fighterOne.slaveName is obviously terrified, and might flee if there were a way out of the pit.
+	<</if>>
+
+	<<if _fighterOne.skill.combat > 0>>
+		$His stance is obviously well-practiced.
+	<</if>>
+
+	<<if _fighterOne.muscles > 95 && _fighterOne.height >= 185>>
+		$His huge muscles are an intimidating sight and, despite their massive size, $he is tall enough to not be hindered by them.
+	<<elseif _fighterOne.muscles > 95>>
+		$His huge muscles are an intimidating sight, but may hinder $his flexibility.
+	<<elseif _fighterOne.muscles > 30>>
+		$His muscles are a trim and powerful sight.
+	<<elseif _fighterOne.muscles < -95>>
+		$He can barely stand, let alone defend $himself.
+	<<elseif _fighterOne.muscles < -30>>
+		$He is very weak; a single punch will likely floor $him.
+	<<elseif _fighterOne.muscles < -5>>
+		$He is rather unfit; $he will likely be outmatched by near any real opponent.
+	<</if>>
+
+	<<if _fighterOne.height >= 170>>
+		$His height gives $him a reach advantage with $his fists and feet.
+	<</if>>
+
+	<<if _fighterOne.health.condition > 50>>
+		$His shining health makes $him a better fighter.
+	<</if>>
+
+	<<if _fighterOne.weight > 190>>
+		$His extreme weight nearly immobilizes $him. $He is essentially a fleshy punching bag.
+	<<elseif _fighterOne.weight > 160>>
+		$His extreme weight limits $his mobility and range of motion even if $he can take punches like nothing.
+	<<elseif _fighterOne.weight > 130>>
+		$His extreme weight holds $him back as a pit fighter.
+	<<elseif _fighterOne.weight > 30>>
+		$His heavy weight is an impediment as a pit fighter.
+	<<elseif _fighterOne.weight < -10>>
+		$His light weight is an impediment as a pit fighter.
+	<</if>>
+
+	<<if _fighterOne.health.condition < -50>>
+		$His poor health makes $him a weaker combatant.
+	<</if>>
+
+	<<if _fighterOne.health.tired > 90>>
+		$He is exhausted and can barely stay awake; $he won't put up a fight.
+	<<elseif _fighterOne.health.tired > 60>>
+		$He is fatigued, sapping the strength $he'll need in $his strikes.
+	<<elseif _fighterOne.health.tired > 30>>
+		$He is tired and more likely to take a hit then to give one.
+	<</if>>
+
+	<<if _fighterOne.pregKnown == 1 || _fighterOne.bellyPreg >= 1500>>
+		<<if _fighterOne.bellyPreg >= 750000>>
+			$His monolithic pregnancy guarantees $his loss; not only is $he on the verge of splitting open, but it is an unmissable, indefensible target that threatens to drag $him to the ground. $He has no hope of attacking around the straining mass, let alone stopping $his opponent. The fear of what would happen should $his adversary land a hit on $his belly also weighs upon $his mind.
+		<<elseif _fighterOne.bellyPreg >= 600000>>
+			$His titanic pregnancy is practically a guaranteed loss; $he can barely stand let alone fight. The worry of a solid hit striking $his life swollen womb also weighs on $his mind.
+		<<elseif _fighterOne.bellyPreg >= 450000>>
+			$His gigantic pregnancy is nearly a guaranteed loss; it presents an unmissable, indefensible target for $his adversary.
+		<<elseif _fighterOne.bellyPreg >= 300000>>
+			$His massive pregnancy obstructs $his movement and greatly hinders $him. $He struggles to think of how $he could even begin to defend $his bulk.
+		<<elseif _fighterOne.bellyPreg >= 150000>>
+			$His giant pregnancy obstructs $his movement and greatly slows $him down.
+		<<elseif _fighterOne.bellyPreg >= 100000>>
+			$His giant belly gets in $his way and weighs $him down.
+		<<elseif _fighterOne.bellyPreg >= 10000>>
+			$His huge belly is unwieldy and hinders $his efforts.
+		<<elseif _fighterOne.bellyPreg >= 5000>>
+			$His advanced pregnancy makes $him much less effective.
+		<<elseif _fighterOne.bellyPreg >= 1500>>
+			$His growing pregnancy distracts $him from the fight.
+		<<else>>
+			The life just beginning to grow inside $him distracts $him from the fight.
+		<</if>>
+	<<elseif _fighterOne.bellyImplant >= 1500>>
+		<<if _fighterOne.bellyImplant >= 750000>>
+			$His monolithic, <<print _fighterOne.bellyImplant>>cc implant filled belly guarantees $his defeat; not only is $he on the verge of splitting open, but it is an unmissable, indefensible target that threatens to drag $him to the ground. $He has no hope of attacking around the straining mass, let alone stopping $his opponent.
+		<<elseif _fighterOne.bellyImplant >= 600000>>
+			$His titanic, <<print _fighterOne.bellyImplant>>cc implant filled belly is practically a guaranteed defeat; $he can barely stand let alone fight. Not only is it cripplingly heavy, unwieldy and an easy target, but $he can feel it straining to hold the sheer amount of filler forced into it.
+		<<elseif _fighterOne.bellyImplant >= 450000>>
+			$His gigantic, <<print _fighterOne.bellyImplant>>cc implant filled belly is nearly a guaranteed defeat; it presents an unmissable, indefensible target for $his adversary.
+		<<elseif _fighterOne.bellyImplant >= 300000>>
+			$His massive, <<print _fighterOne.bellyImplant>>cc implant filled belly is extremely heavy, unwieldy and an easy target, practically damning $him in combat.
+		<<elseif _fighterOne.bellyImplant >= 150000>>
+			$His giant, <<print _fighterOne.bellyImplant>>cc implant filled belly obstructs $his movement and greatly slows $him down.
+		<<elseif _fighterOne.bellyImplant >= 100000>>
+			$His giant, <<print _fighterOne.bellyImplant>>cc implant filled belly is very heavy and unwieldy, throwing off $his weight and making $him far less effective.
+		<<elseif _fighterOne.bellyImplant >= 10000>>
+			$His huge, <<print _fighterOne.bellyImplant>>cc implant filled belly is very heavy and unwieldy, throwing off $his weight and making $him far less effective.
+		<<elseif _fighterOne.bellyImplant >= 5000>>
+			$His large, <<print _fighterOne.bellyImplant>>cc implant filled belly is heavy and unwieldy, rendering $him less effective.
+		<<elseif _fighterOne.bellyImplant >= 1500>>
+			$His swollen, <<print _fighterOne.bellyImplant>>cc implant filled belly is heavy and makes $him less effective.
+		<</if>>
+	<</if>>
+	<<if _fighterOne.labor == 1>>
+		$He's feeling labor pains. $His child<<if _fighterOne.pregType > 1>>ren are<<else>> is<</if>> ready to be born, oblivious that it will put <<if _fighterOne.pregType > 1>>their<<else>>its<</if>> mother at the mercy of $his opponent.
+	<<elseif _fighterOne.preg >= _fighterOne.pregData.normalBirth && _fighterOne.pregControl != "labor suppressors">>
+		$He'll be going into labor any time now and $he knows it. $He's terrified of the thought of $his water breaking during the fight.
+	<</if>>
+
+	<<if _fighterOne.bellyFluid >= 10000>>
+		$His hugely bloated, <<print _fighterOne.inflationType>>-filled belly is taut and painful, hindering $his ability to fight.
+	<<elseif _fighterOne.bellyFluid >= 5000>>
+		$His bloated, <<print _fighterOne.inflationType>>-stuffed belly is constantly jiggling and moving, distracting $him and throwing off $his weight.
+	<<elseif _fighterOne.bellyFluid >= 2000>>
+		$His distended, <<print _fighterOne.inflationType>>-belly is uncomfortable and heavy, distracting $him.
+	<</if>>
+
+	<<if !canSee(_fighterOne)>>
+		$His lack of eyesight means certain defeat.
+	<<elseif !canSeePerfectly(_fighterOne)>>
+		$His poor eyesight makes $him a weaker fighter.
+	<</if>>
+
+	<<if !canHear(_fighterOne)>>
+		$His lack of hearing is a major detriment.
+	<<elseif ((_fighterOne.hears == -1) && (_fighterOne.earwear != "hearing aids")) || (_fighterOne.hears == 0 && (_fighterOne.earwear == "muffling ear plugs"))>>
+		$His poor hearing is a minor detriment.
+	<</if>>
+
+	<<if hasAnyProstheticLimbs(_fighterOne)>>
+		The pit lights gleam on $his P-Limbs.
+		<<if getLimbCount(_fighterOne, 6) > 0>>
+			$His advanced cybernetic limbs are faster than natural limbs, and their force is amplified, so that they can become potent weapons.
+		<<elseif getLimbCount(_fighterOne, 5) > 0>>
+			Though their integral weapons are disabled, $his upgraded prosthetics are almost as fast as natural limbs, and they can hit much, much harder.
+		<</if>>
+	<</if>>
+
+	<<if _fighterOne.devotion <= 20>>
+		<<if _fighterOne.trust < -20>>
+			$He is unwilling to fight, but $he knows the punishment for refusing to do so will be even worse.
+		<</if>>
+	<</if>>
+
+	<br><br>
+
+	<<set _fighterTwoDeadliness = Deadliness(_fighterTwo)>>
+
+	<<if _fighterTwoDeadliness > 5>>
+		_fighterTwo.slaveName seems very confident, even eager to win a break.
+	<<elseif _fighterTwoDeadliness > 3>>
+		_fighterTwo.slaveName seems nervous, but steels _himself2 to fight for time off.
+	<<elseif _fighterTwoDeadliness > 1>>
+		_fighterTwo.slaveName seems hesitant and unsure.
+	<<else>>
+		_fighterTwo.slaveName is obviously terrified, and might flee if there were a way out of the pit.
+	<</if>>
+
+	<<if _fighterTwo.skill.combat > 0>>
+		_His2 stance is obviously well-practiced.
+	<</if>>
+
+	<<if _fighterTwo.muscles > 95 && _fighterTwo.height >= 185>>
+		_His2 huge muscles are an intimidating sight and, despite their massive size, _he2 is tall enough to not be hindered by them.
+	<<elseif _fighterTwo.muscles > 95>>
+		_His2 huge muscles are an intimidating sight, but may hinder _his2 flexibility.
+	<<elseif _fighterTwo.muscles > 30>>
+		_His2 muscles are a trim and powerful sight.
+	<<elseif _fighterTwo.muscles < -95>>
+		_He2 can barely stand, let alone defend _himself2.
+	<<elseif _fighterTwo.muscles < -30>>
+		_He2 is very weak; a single punch will likely floor _him2.
+	<<elseif _fighterTwo.muscles < -5>>
+		_He2 is rather unfit; _he2 will likely be outmatched by near any real opponent.
+	<</if>>
+
+	<<if _fighterTwo.height >= 170>>
+		_His2 height gives _him2 a reach advantage with _his2 fists and feet.
+	<</if>>
+
+	<<if _fighterTwo.health.condition > 50>>
+		_His2 shining health makes _him2 a better fighter.
+	<</if>>
+
+	<<if _fighterTwo.weight > 190>>
+		_His2 extreme weight nearly immobilizes _him2. _He2 is essentially a fleshy punching bag.
+	<<elseif _fighterTwo.weight > 160>>
+		_His2 extreme weight limits _his2 mobility and range of motion even if _he2 can take punches like nothing.
+	<<elseif _fighterTwo.weight > 130>>
+		_His2 extreme weight holds _him2 back as a pit fighter.
+	<<elseif _fighterTwo.weight > 30>>
+		_His2 heavy weight is an impediment as a pit fighter.
+	<<elseif _fighterTwo.weight < -10>>
+		_His2 light weight is an impediment as a pit fighter.
+	<</if>>
+
+	<<if _fighterTwo.health.condition < -50>>
+		_His2 poor health makes _him2 a weaker combatant.
+	<</if>>
+
+	<<if _fighterTwo.health.tired > 90>>
+		_He2 is exhausted and can barely stay awake; _he2 won't put up a fight.
+	<<elseif _fighterTwo.health.tired > 60>>
+		_He2 is fatigued, sapping the strength _he2'll need in $his strikes.
+	<<elseif _fighterTwo.health.tired > 30>>
+		_He2 is tired and more likely to take a hit then to give one.
+	<</if>>
+
+	<<if _fighterTwo.pregKnown == 1 || _fighterTwo.bellyPreg >= 1500>>
+		<<if _fighterTwo.bellyPreg >= 750000>>
+			_His2 monolithic pregnancy guarantees _his2 loss; not only is _he2 on the verge of splitting open, but it is an unmissable, indefensible target that threatens to drag _him2 to the ground. _He2 has no hope of attacking around the straining mass, let alone stopping _his2 opponent. The fear of what would happen should _his2 adversary land a hit on _his2 belly also weighs upon _his2 mind.
+		<<elseif _fighterTwo.bellyPreg >= 600000>>
+			_His2 titanic pregnancy is practically a guaranteed loss; _he2 can barely stand let alone fight. The worry of a solid hit striking _his2 life swollen womb also weighs on _his2 mind.
+		<<elseif _fighterTwo.bellyPreg >= 450000>>
+			_His2 gigantic pregnancy is nearly a guaranteed loss; it presents an unmissable, indefensible target for _his2 adversary.
+		<<elseif _fighterTwo.bellyPreg >= 300000>>
+			_His2 massive pregnancy obstructs _his2 movement and greatly hinders _him2. _He2 struggles to think of how _he2 could even begin to defend _his2 bulk.
+		<<elseif _fighterTwo.bellyPreg >= 150000>>
+			_His2 giant pregnancy obstructs _his2 movement and greatly slows _him2 down.
+		<<elseif _fighterTwo.bellyPreg >= 100000>>
+			_His2 giant belly gets in _his2 way and weighs _him2 down.
+		<<elseif _fighterTwo.bellyPreg >= 10000>>
+			_His2 huge belly is unwieldy and hinders _his2 efforts.
+		<<elseif _fighterTwo.bellyPreg >= 5000>>
+			_His2 advanced pregnancy makes _him2 much less effective.
+		<<elseif _fighterTwo.bellyPreg >= 1500>>
+			_His2 growing pregnancy distracts _him2 from the fight.
+		<<else>>
+			The life just beginning to grow inside _him2 distracts _him2 from the fight.
+		<</if>>
+	<<elseif _fighterTwo.bellyImplant >= 1500>>
+		<<if _fighterTwo.bellyImplant >= 750000>>
+			_His2 monolithic, <<print _fighterTwo.bellyImplant>>cc implant filled belly guarantees _his2 defeat; not only is _he2 on the verge of splitting open, but it is an unmissable, indefensible target that threatens to drag _him2 to the ground. _He2 has no hope of attacking around the straining mass, let alone stopping _his2 opponent.
+		<<elseif _fighterTwo.bellyImplant >= 600000>>
+			_His2 titanic, <<print _fighterTwo.bellyImplant>>cc implant filled belly is practically a guaranteed defeat; _he2 can barely stand let alone fight. Not only is it cripplingly heavy, unwieldy and an easy target, but _he2 can feel it straining to hold the sheer amount of filler forced into it.
+		<<elseif _fighterTwo.bellyImplant >= 450000>>
+			_His2 gigantic, <<print _fighterTwo.bellyImplant>>cc implant filled belly is nearly a guaranteed defeat; it presents an unmissable, indefensible target for _his2 adversary.
+		<<elseif _fighterTwo.bellyImplant >= 300000>>
+			_His2 massive, <<print _fighterTwo.bellyImplant>>cc implant filled belly is extremely heavy, unwieldy and an easy target, practically damning _him2 in combat.
+		<<elseif _fighterTwo.bellyImplant >= 150000>>
+			_His2 giant, <<print _fighterTwo.bellyImplant>>cc implant filled belly obstructs _his2 movement and greatly slows _him2 down.
+		<<elseif _fighterTwo.bellyImplant >= 100000>>
+			_His2 giant, <<print _fighterTwo.bellyImplant>>cc implant filled belly is very heavy and unwieldy, throwing off _his2 weight and making _him2 far less effective.
+		<<elseif _fighterTwo.bellyImplant >= 10000>>
+			_His2 huge, <<print _fighterTwo.bellyImplant>>cc implant filled belly is very heavy and unwieldy, throwing off _his2 weight and making _him2 far less effective.
+		<<elseif _fighterTwo.bellyImplant >= 5000>>
+			_His2 large, <<print _fighterTwo.bellyImplant>>cc implant filled belly is heavy and unwieldy, rendering _him2 less effective.
+		<<elseif _fighterTwo.bellyImplant >= 1500>>
+			_His2 swollen, <<print _fighterTwo.bellyImplant>>cc implant filled belly is heavy and makes _him2 less effective.
+		<</if>>
+	<</if>>
+	<<if _fighterTwo.labor == 1>>
+		_He2's feeling labor pains. _His2 child<<if _fighterTwo.pregType > 1>>ren are<<else>> is<</if>> ready to be born, oblivious that it will put <<if _fighterTwo.pregType > 1>>their<<else>>its<</if>> mother at the mercy of _his2 opponent.
+	<<elseif _fighterTwo.preg >= _fighterTwo.pregData.normalBirth && _fighterTwo.pregControl != "labor suppressors">>
+		_He2'll be going into labor any time now and _he2 knows it. _He2's terrified of the thought of _his2 water breaking during the fight.
+	<</if>>
+
+	<<if _fighterTwo.bellyFluid >= 10000>>
+		_His2 hugely bloated, <<print _fighterTwo.inflationType>>-filled belly is taut and painful, hindering _his2 ability to fight.
+	<<elseif _fighterTwo.bellyFluid >= 5000>>
+		_His2 bloated, <<print _fighterTwo.inflationType>>-stuffed belly is constantly jiggling and moving, distracting _him2 and throwing off _his2 weight.
+	<<elseif _fighterTwo.bellyFluid >= 2000>>
+		_His2 distended, <<print _fighterTwo.inflationType>>-belly is uncomfortable and heavy, distracting _him2.
+	<</if>>
+
+	<<if !canSee(_fighterTwo)>>
+		_His2 lack of eyesight means certain defeat.
+	<<elseif !canSeePerfectly(_fighterTwo)>>
+		_His2 poor eyesight makes _him2 a weaker fighter.
+	<</if>>
+
+	<<if !canHear(_fighterTwo)>>
+		_His2 lack of hearing is a major detriment.
+	<<elseif ((_fighterTwo.hears == -1) && (_fighterTwo.earwear != "hearing aids")) || (_fighterTwo.hears == 0 && (_fighterTwo.earwear == "muffling ear plugs"))>>
+		_His2 poor hearing is a minor detriment.
+	<</if>>
+
+	<<if hasAnyProstheticLimbs(_fighterTwo)>>
+		The pit lights gleam on $his P-Limbs.
+		<<if getLimbCount(_fighterTwo, 6) > 0>>
+			$His advanced cybernetic limbs are faster than natural limbs, and their force is amplified, so that they can become potent weapons.
+		<<elseif getLimbCount(_fighterTwo, 5) > 0>>
+			Though their integral weapons are disabled, $his upgraded prosthetics are almost as fast as natural limbs, and they can hit much, much harder.
+		<</if>>
+	<</if>>
+
+	<<if _fighterTwo.devotion <= 20>>
+		<<if _fighterTwo.trust < -20>>
+			_He2 is unwilling to fight, but _he2 knows the punishment for refusing to do so will be even worse.
+		<</if>>
+	<</if>>
+
+	<br><br>
+
+	<<if _fighterTwoDeadliness > _fighterOneDeadliness>>
+		<<set _winner = _fighterTwo>>
+		<<set _winnerDeadliness = _fighterTwoDeadliness>>
+		<<set _loser = _fighterOne>>
+		<<set _loserDeadliness = _fighterOneDeadliness>>
+	<<elseif _fighterTwoDeadliness < _fighterOneDeadliness>>
+		<<set _loser = _fighterTwo>>
+		<<set _loserDeadliness = _fighterTwoDeadliness>>
+		<<set _winner = _fighterOne>>
+		<<set _winnerDeadliness = _fighterOneDeadliness>>
+	<<elseif random(1,100) > 50>>
+		<<set _winner = _fighterTwo>>
+		<<set _winnerDeadliness = _fighterTwoDeadliness>>
+		<<set _loser = _fighterOne>>
+		<<set _loserDeadliness = _fighterOneDeadliness>>
+	<<else>>
+		<<set _loser = _fighterTwo>>
+		<<set _loserDeadliness = _fighterTwoDeadliness>>
+		<<set _winner = _fighterOne>>
+		<<set _winnerDeadliness = _fighterOneDeadliness>>
+	<</if>>
+	<<setLocalPronouns _winner>>
+	<<setLocalPronouns _loser 2>>
+
+	<<if !canSee(_winner) && !canSee(_loser)>>
+		_winner.slaveName and _loser.slaveName are both blind, making the fight a staredown. Neither slave wants to make the first move, especially with the drowning cacophony coming from the jeering crowd. Slowly, _winner.slaveName moves forward, waving feeling for $his opponent before $he $himself gets found. _loser.slaveName's hand meets _winner.slaveName's and the two move to grab each other in a headlock. The two slaves violently thrash against each other, suffering more and more strikes as the struggle goes on. Eventually, _loser.slaveName can take no more and releases _his2 grip on _winner.slaveName neck. It takes a moment for _winner.slaveName to stop wrestling the submitting _loser.slaveName and accept $his victory.
+		<<if $pitAudience == "paid">>
+			The audience is surprised by the sudden wrestling match, and your @@.yellowgreen;cut of the betting@@ is modest.
+			<<run cashX(500, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;surprised@@ by the impromptu wrestling match.
+			<<run repX(50, "pit", _winner)>>
+		<</if>>
+	<<elseif (_winnerDeadliness > _loserDeadliness+1) && getArmCount(_winner, 6) > 1>>
+		Upon your word the two combatants approach each other. _winner.slaveName keeps $his advanced cybernetic limbs up in a protective position. _loser.slaveName probes $him with some light blows, puzzled by this ironclad defense. Gradually, _he2 hits harder and harder, _his2 opponent grunting under the impacts but holding steady. Finally, _loser.slaveName tires, gets off balance, and _winner.slaveName manages to grab _his2 forearm. _winner.slaveName's limbs emit an electric shock that temporarily incapacitates $his opponent. _winner.slaveName uses $his grip to pull $his stunned opponent in and grab _his2 neck with the other hand, using it to exert just the right amount of pressure to choke _him2 out harmlessly. Though the fight was short,
+		<<if $pitAudience == "paid">>
+			the audience is quite impressed by the display, and your @@.yellowgreen;cut of the betting@@ is quite good.
+			<<run cashX(2000, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			the audience is @@.green;very impressed@@ by the display.
+			<<run repX(100, "pit", _winner)>>
+		<<else>>
+			it was a good test of the slave's enhancements.
+		<</if>>
+	<<elseif (_winnerDeadliness > _loserDeadliness+1) && getArmCount(_winner, 5) > 1>>
+		Upon your word the two combatants approach each other. _winner.slaveName keeps $his artificial limbs up in a protective position. _loser.slaveName probes $him with some light blows, puzzled by this ironclad defense. Gradually, _he2 hits harder and harder, _his2 opponent grunting under the impacts but holding steady. Finally, _loser.slaveName overcommits to a body blow, and _winner.slaveName grips _his2 forearm. That is the end. The augmented grip is effectively unbreakable, and _winner.slaveName uses it to pull $his opponent in and grab _his2 neck with the other hand, using it to exert just the right amount of pressure to choke _him2 out harmlessly. Though the fight was short,
+		<<if $pitAudience == "paid">>
+			the audience is quite impressed by the display, and your @@.yellowgreen;cut of the betting@@ is quite good.
+			<<run cashX(2000, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			the audience is @@.green;very impressed@@ by the display.
+			<<run repX(100, "pit", _winner)>>
+		<<else>>
+			it was a good test of the slave's enhancements.
+		<</if>>
+	<<elseif !canSee(_winner)>>
+		_winner.slaveName centers $himself and hones in on _loser.slaveName's rapid breath. $He readies $himself, knowing $he has a single chance to win. With heavy steps, _loser.slaveName rushes $him, fully prepared to tackle the helpless combatant. _winner.slaveName gambles everything on a single high punch, a strike that slams _loser.slaveName's undefended neck. _loser.slaveName falls to the ground before the panicking _winner.slaveName, who quickly pins the coughing loser.
+		<<if $pitAudience == "paid">>
+			The audience is awestruck by the blind $girl's triumph, and your @@.yellowgreen;cut of the betting@@ is enormous.
+			<<run cashX(4000, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;awestruck@@ by the blind $girl's triumph.
+			<<run repX(200, "pit", _winner)>>
+		<</if>>
+	<<elseif !canSee(_loser)>>
+		_winner.slaveName grins at _loser.slaveName's random swings and poor form. $He centers in on $his favorite part of _loser.slaveName's body before rushing between _his2 strikes and tackling _him2 to the ground. _loser.slaveName lays there, helpless to stop _winner.slaveName from molesting _him2.
+		<<if $pitAudience == "paid">>
+			The audience found the fight embarrassing, and your @@.yellowgreen;cut of the betting@@ is pitiful.
+			<<run cashX(40, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.red;annoyed@@ by this lack of a fight.
+			<<run repX(-20, "pit", _winner)>>
+		<</if>>
+	<<elseif (_winnerDeadliness > _loserDeadliness+3)>>
+		<<if (_winner.skill.combat > 0)>>
+			_winner.slaveName wants to win, and $he opens the fight with a furious attack. _loser.slaveName manages to get _his2 forearm<<if hasBothArms(_loser)>>s<</if>> up, blocking a few blows, but by doing so leaves _his2 abdomen open and obscures _his2 vision enough that _he2 is unprepared for the following kidney strike, which brings _him2 gasping to one knee. _winner.slaveName lets _him2 rise just a little before delivering a calculated hard right that sends _loser.slaveName to the mat.
+			<<if $pitAudience == "paid">>
+				The audience is not very impressed by this execution, and your @@.yellowgreen;cut of the betting@@ is unimpressive.
+				<<run cashX(500, "pit", _winner)>>
+			<<elseif $pitAudience == "free">>
+				The audience is @@.green;not very impressed@@ by this execution.
+				<<run repX(25, "pit", _winner)>>
+			<</if>>
+		<<else>>
+			_winner.slaveName wants to win and is confident $he will, but $he isn't particularly sure about how to do so. $He fights cautiously, mostly hitting _loser.slaveName from afar. Slowly, the rain of blows begins to tell, opening _loser.slaveName's lip, giving _him2 a bloody nose, and bruising _his2 face. Realizing _he2 has to do something, _loser.slaveName makes a desperate counterattack, @@.red;dripping blood@@ as _he2 goes. As _he2 does _he2 manages to get _his2 face in the way of another of _winner.slaveName's inexpert strikes and goes down hard. _He2 makes to rise, but _winner.slaveName decides the fight by the simple expedient of kicking _him2 in the crotch.
+			<<run healthDamage(_loser, 10)>>
+			<<if $pitAudience == "paid">>
+				The audience is reasonably impressed by the beating, and your @@.yellowgreen;cut of the betting@@ is reasonable.
+				<<run cashX(100, "pit", _winner)>>
+			<<elseif $pitAudience == "free">>
+				The audience is @@.green;reasonably impressed@@ by the beating.
+				<<run repX(50, "pit", _winner)>>
+			<</if>>
+		<</if>>
+	<<elseif (_winner.belly >= 600000) && (_loser.belly >= 600000)>>
+		_winner.slaveName and _loser.slaveName stare each other down and both come to a realization. Neither can reach the other around their massive bellies. Instead, they choose to ram their bulk into each other in hopes of toppling the weaker. After a drawn out struggle, both slaves' middles are @@.red;dark red and shuddering,@@ ready to burst open. Rather than continue, _loser.slaveName lets the next strike down _him2 hoping that the outcome of this fight isn't fatal.
+		<<run healthDamage(_winner, 50)>>
+		<<run healthDamage(_loser, 50)>>
+		<<if $pitAudience == "paid">>
+			The audience is very impressed by the showdown, and your @@.yellowgreen;cut of the betting@@ is good.
+			<<run cashX(1500, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;very impressed@@ by the showdown.
+			<<run repX(75, "pit", _winner)>>
+		<</if>>
+	<<elseif (_winner.belly >= 600000) && (_loser.belly < 300000)>>
+		_loser.slaveName spies an easy win against _his2 massively bloated opponent and rushes in to topple _winner.slaveName. In an effort to defend $himself, _winner.slaveName hoists $his belly and turns suddenly, accidentally impacting _loser.slaveName with $his massive middle and knocking _him2 to the ground. Seeing an opportunity, _winner.slaveName releases $his grip and slams $his weighty womb down on _loser.slaveName, bashing the wind out of _him2. _loser.slaveName struggles to slip out from under the mass, but the weight is too great and _he2 passes out.
+		<<if $pitAudience == "paid">>
+			The audience is impressed by this absurd win, and your @@.yellowgreen;cut of the betting@@ is reasonably.
+			<<run cashX(1000, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;impressed@@ by this absurd win.
+			<<run repX(50, "pit", _winner)>>
+		<</if>>
+	<<elseif (_winner.skill.combat > 0) && (_loser.skill.combat > 0)>>
+		Upon your word the two combatants approach each other warily, both knowing the other is reasonably competent. Before long they are trading expert blows. _winner.slaveName is getting the worst of it, so $he decides to change the nature of the fight. After three tries $he manages to bring _loser.slaveName to the ground, suffering a @@.red;broken nose@@ as $he does. _loser.slaveName tries to break the imperfect hold but only earns _himself2 an elbow to the face. _He2's furious and _winner.slaveName is obliged to wrench _his2 arm @@.red;to the point of damage@@ before _he2 allows _himself2 to go limp.
+		<<run healthDamage(_loser, 10)>>
+		<<run healthDamage(_winner, 10)>>
+		<<if $pitAudience == "paid">>
+			The audience is quite impressed by the expert fight, and your @@.yellowgreen;cut of the betting@@ is quite good.
+			<<run cashX(2000, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;very impressed@@ by the expert fight.
+			<<run repX(100, "pit", _winner)>>
+		<</if>>
+	<<elseif (_winner.height-_loser.height >= 10)>>
+		_winner.slaveName realizes that _loser.slaveName's wingspan gives _him2 a huge reach advantage. $He bores straight in, taking a hit or two but coming on regardless. _loser.slaveName understands _his2 opponent's intention and backs off, but the pit is small and there isn't much room to retreat. When _his2 back hits a padded wall, _winner.slaveName manages to land a light hit to _his2 stomach that leaves _loser.slaveName winded enough that a hard kick to the side of _his2 knee goes undefended. It causes @@.red;considerable damage,@@ dropping _him2 and ending the fight.
+		<<run healthDamage(_loser, 10)>>
+		<<if $pitAudience == "paid">>
+			The audience is reasonably impressed by the takedown, and your @@.yellowgreen;cut of the betting@@ is reasonable.
+			<<run cashX(1000, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;reasonably impressed@@ by the takedown.
+			<<run repX(50, "pit", _winner)>>
+		<</if>>
+	<<elseif (_loser.eyebrowPiercing > 0)>>
+		The fight starts slowly, with the two trading jabs. Just as the spectators are getting bored, _loser.slaveName takes a glancing blow to the eyebrow. _His2 piercing catches on _winner.slaveName's glove and tears out. _loser.slaveName goes after _his2 tormentor in fury, streaming blood, the piercing forgotten on the mat. Any tendency _winner.slaveName might have had to feel badly about this is extinguished by the assault, and soon _winner.slaveName is even willing to follow up on the success by targeting pierced body parts. The fight ends with poor _loser.slaveName writhing in pain on the mat, @@.red;leaking blood@@ from several terribly shredded areas.
+		<<set _loser.eyebrowPiercing = 0>>
+		<<run healthDamage(_loser, 10)>>
+		<<if $pitAudience == "paid">>
+			The audience is reasonably impressed by the gory spectacle, and your @@.yellowgreen;cut of the betting@@ is reasonable.
+			<<run cashX(1000, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;reasonably impressed@@ by the gory spectacle.
+			<<run repX(50, "pit", _winner)>>
+		<</if>>
+	<<elseif (_winner.muscles > 30)>>
+		_winner.slaveName is so massively muscular that $he's actually impeded by $his size. _loser.slaveName is properly afraid of $his strength, though, so _he2 tries to stay away as much as _he2 can. The pit isn't large, however, and eventually _winner.slaveName manages to lay a hand on _him2. $He pulls _him2 down, and then it's all over but the beating. _loser.slaveName rains blows on _his2 huge oppressor, but all _winner.slaveName has to do is hold on with one arm and deliver damage with the other. By the time _he2 gives up and goes limp, _loser.slaveName has collected @@.red;many minor injuries.@@
+		<<run healthDamage(_loser, 10)>>
+		<<if $pitAudience == "paid">>
+			The audience is reasonably impressed by the show of strength, and your @@.yellowgreen;cut of the betting@@ is reasonable.
+			<<run cashX(1000, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;reasonably impressed@@ by the show of strength.
+			<<run repX(50, "pit", _winner)>>
+		<</if>>
+	<<elseif _loser.belly >= 300000>>
+		_winner.slaveName wants to win badly enough that $he takes an extremely brutal shortcut to victory. The instant the fight starts, $he quickly knees _loser.slaveName in the stomach. The massively swollen _loser.slaveName goes down with a loud thud and plenty of jiggling. _winner.slaveName gloats over the struggling _loser.slaveName watching as _he2 is unable to pull _his2 bloated form off the ground.
+		<<if $pitAudience == "paid">>
+			The audience is not very impressed by this easy win, and your @@.yellowgreen;cut of the betting@@ is unimpressive.
+			<<run cashX(500, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;not very impressed@@ by this easy win.
+			<<run repX(50, "pit", _winner)>>
+		<</if>>
+	<<elseif (_loser.boobs > 1200)>>
+		_winner.slaveName wants to win badly enough that $he takes an extremely simple shortcut to victory. The instant the fight starts, $he hits _loser.slaveName right in _his2 huge tits, as hard as $he can. This is a sucker punch of the worst kind; _loser.slaveName's boobs are so big that _he2 has no real chance of defending them. _He2 gasps with pain<<if hasAnyArms(_loser)>> and wraps _his2 arm<<if hasBothArms(_loser)>>s<</if>> around _his2 aching bosom<</if>>, giving _winner.slaveName a clear opening to deliver a free and easy blow to the jaw that sends the poor top-heavy slave to the mat. Any chance of _loser.slaveName rising is extinguished by _his2 breasts; it takes _him2 so long to muster an attempt to get up that _winner.slaveName can rain hits on _him2 while _he2 does.
+		<<if $pitAudience == "paid">>
+			The audience is not very impressed by this easy win, and your @@.yellowgreen;cut of the betting@@ is unimpressive.
+			<<run cashX(500, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;not very impressed@@ by this easy win.
+			<<run repX(25, "pit", _winner)>>
+		<</if>>
+	<<elseif (_loser.dick > 0)>>
+		_winner.slaveName wants to win badly enough that $he takes an extremely brutal shortcut to victory. The instant the fight starts, $he furiously goes for _loser.slaveName's face. _loser.slaveName <<if hasAnyArms(_loser)>>defends _himself2 with _his2 arm<<if hasBothArms(_loser)>>s<</if>><<else>>tries to defend $himself as best $he can<</if>>, at which point _winner.slaveName delivers a mighty <<if hasAnyLegs(_winner)>>kick<<else>>strike<</if>> to the dick. _loser.slaveName goes down like a marionette with cut strings, _his2 mouth soundlessly opening and closing and tears leaking from _his2 closed eyes. _winner.slaveName winds up to <<if hasAnyLegs(_winner)>>kick<<else>>attack<</if>> _him2 again but hesitates, wondering whether it's even necessary.
+		<<if $pitAudience == "paid">>
+			The audience is not very impressed by this easy win, and your @@.yellowgreen;cut of the betting@@ is unimpressive.
+			<<run cashX(500, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;not very impressed@@ by this easy win.
+			<<run repX(25, "pit", _winner)>>
+		<</if>>
+	<<elseif canDoVaginal(_loser)>>
+		_winner.slaveName wants to win badly enough that $he takes an extremely unpleasant shortcut to victory. The instant the fight starts, $he furiously goes for _loser.slaveName's eyes<<if hasBothArms(_winner)>>, hands forming claws<<elseif hasAnyArms(_winner)>>, $his hand forming a claw<</if>>. _loser.slaveName <<if hasAnyArms(_loser)>>defends _himself2 with _his2 arm<<if hasBothArms(_loser)>>s<</if>><<else>>tries to defend $himself as best $he can<</if>>, at which point _winner.slaveName delivers a mighty cunt punt. _loser.slaveName goes straight down, _his2 mouth soundlessly opening and closing and tears leaking from _his2 closed eyes<<if hasAnyArms(_loser)>> while _his2 hand<<if hasBothArms(_loser)>>s<</if>> desperately shield<<if !hasBothArms(_loser)>>s<</if>> _his2 outraged pussy<</if>>. _winner.slaveName follows _him2 down and puts the unresisting _girl2's head in a simple lock.
+		<<if $pitAudience == "paid">>
+			The audience is not very impressed by this easy win, and your @@.yellowgreen;cut of the betting@@ is unimpressive.
+			<<run cashX(500, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;not very impressed@@ by this easy win.
+			<<run repX(25, "pit", _winner)>>
+		<</if>>
+	<<else>>
+		_winner.slaveName wants to win badly enough that $he takes an extremely unpleasant shortcut to victory. The instant the fight starts, $he furiously goes for _loser.slaveName's eyes, hands forming claws. _loser.slaveName defends _himself2 with _his2 arms, at which point _winner.slaveName delivers a clenched fist to _loser.slaveName's throat. _loser.slaveName staggers back, wheezing for breath with tears leaking from _his2 closed eyes. _winner.slaveName takes advantage of _loser.slaveName's vulnerability to quickly trip and pin the coughing loser.
+		<<if $pitAudience == "paid">>
+			The audience is not very impressed by this easy win, and your @@.yellowgreen;cut of the betting@@ is unimpressive.
+			<<run cashX(500, "pit", _winner)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;not very impressed@@ by this easy win.
+			<<run repX(25, "pit", _winner)>>
+		<</if>>
+	<</if>>
+
+	<br><br>
+
+
+	You throw the victor's strap-on down to _winner.slaveName.
+
+	<<if _winner.dick > 0 && canPenetrate(_winner)>>
+		$He has no need of it, only taking a moment to pump $his dick a few times to get it to rock hardness.
+	<<elseif _winner.clit > 4>>
+		$He has no need of it, since $his clit is big enough to use instead.
+	<<elseif _winner.dick > 6 && !canAchieveErection(_winner)>>
+		$He needs it, since $his enormous dick can't get hard any longer (not like it would fit in _loser.slaveName anyway).
+	<<elseif _winner.dick > 0>>
+		$He needs it, since $his soft dick won't be raping anything.
+	<</if>>
+
+	<<set _winner.counter.penetrative += 1, $penetrativeTotal += 1>>
+
+	<<if $pitVirginities == 3>> /* all */
+		<<if (_loser.vagina == 0) && (_loser.anus == 0) && canDoVaginal(_loser) && canDoAnal(_loser)>>
+			$He respects _loser.slaveName's virgin holes, and hauls the loser to _his2 knees for a facefuck.
+			<<set _loser.counter.oral += 1, $oralTotal += 1>>
+		<<elseif (_loser.vagina == 0) && canDoVaginal(_loser) && canDoAnal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>,
+			<<if _winner.fetish == "pregnancy">>
+				and, after <<if canSee(_winner)>>eyeing<<else>>feeling up<</if>> _his2 virgin vagina with desire, penetrates the loser's anus.
+			<<else>>
+				and respects the rules by penetrating the loser's anus.
+			<</if>>
+			<<set _loser.counter.anal += 1, $analTotal += 1>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner) && _loser.mpreg == 1>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile asspussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 1, _winner.ID)>>
+			<</if>>
+		<<elseif (_loser.anus == 0) && canDoVaginal(_loser) && canDoAnal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>,
+			<<if _winner.fetish == "buttslut" || (canImpreg(_loser, _winner) && canPenetrate(_winner) && _loser.mpreg == 1 && _winner.fetish == "pregnancy")>>
+				and, after <<if canSee(_winner)>>eyeing<<else>>feeling up<</if>> _his2 virgin anus with desire, penetrates the loser's cunt.
+			<<else>>
+				and respects the rules by penetrating the loser's cunt.
+			<</if>>
+			<<set _loser.counter.vaginal += 1, $vaginalTotal += 1>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner)>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile pussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 0, _winner.ID)>>
+			<</if>>
+		<<elseif canDoVaginal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>, and penetrates the loser's cunt.
+			<<set _loser.counter.vaginal += 1, $vaginalTotal += 1>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner)>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile pussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 0, _winner.ID)>>
+			<</if>>
+		<<elseif canDoAnal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>, and penetrates the loser's anus.
+			<<set _loser.counter.anal += 1, $analTotal += 1>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner) && _loser.mpreg == 1>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile asspussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 1, _winner.ID)>>
+			<</if>>
+		<<else>>
+			$He considers $his options briefly, then hauls the loser to _his2 knees for a facefuck.
+			<<set _loser.counter.oral += 1, $oralTotal += 1>>
+		<</if>>
+	<<elseif $pitVirginities == 2>> /* anal */
+		<<if (_loser.vagina == 0) && canDoVaginal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>,
+			<<if _winner.fetish == "pregnancy">>
+				and gleefully takes advantage of your rules to @@.lime;take _his2 virginity.@@
+			<<else>>
+				and @@.lime;breaks in _his2 virgin vagina.@@
+			<</if>>
+			<<set _loser.counter.vaginal += 1, $vaginalTotal += 1>>
+			<<set _loser.vagina++>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner)>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile pussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 0, _winner.ID)>>
+			<</if>>
+		<<elseif (_loser.anus == 0) && canDoAnal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>,
+			<<if _winner.fetish == "buttslut" || (canImpreg(_loser, _winner) && canPenetrate(_winner) && _loser.mpreg == 1 && _winner.fetish == "pregnancy")>>
+				<<if canDoVaginal(_loser)>>
+					and hungrily eyes _his2 anal virginity before penetrating the loser's cunt.
+					<<set _loser.counter.vaginal += 1, $vaginalTotal += 1>>
+					<<if canImpreg(_loser, _winner) && canPenetrate(_winner)>>
+						<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile pussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+						<<= knockMeUp(_loser, 50, 0, _winner.ID)>>
+					<</if>>
+				<<else>>
+					and hungrily eyes _his2 anal virginity before hauling the loser onto _his2 knees for a facefuck.
+					<<set _loser.counter.oral += 1, $oralTotal += 1>>
+				<</if>>
+			<<else>>
+				<<if canDoVaginal(_loser)>>
+					and penetrates the loser's cunt.
+					<<set _loser.counter.vaginal += 1, $vaginalTotal += 1>>
+					<<if canImpreg(_loser, _winner) && canPenetrate(_winner)>>
+						<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile pussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+						<<= knockMeUp(_loser, 50, 0, _winner.ID)>>
+					<</if>>
+				<<else>>
+					and finds only a pristine butthole waiting for $him. Respecting _his2 anal virginity, $he hauls the loser onto _his2 knees for a facefuck.
+					<<set _loser.counter.oral += 1, $oralTotal += 1>>
+				<</if>>
+			<</if>>
+		<<elseif canDoVaginal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>, and penetrates the loser's cunt.
+			<<set _loser.counter.vaginal += 1, $vaginalTotal += 1>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner)>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile pussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 0, _winner.ID)>>
+			<</if>>
+		<<elseif canDoAnal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>, and penetrates the loser's anus.
+			<<set _loser.counter.anal += 1, $analTotal += 1>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner) && _loser.mpreg == 1>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile asspussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 1, _winner.ID)>>
+			<</if>>
+		<<else>>
+			$He considers $his options briefly, then hauls the loser to _his2 knees for a facefuck.
+			<<set _loser.counter.oral += 1, $oralTotal += 1>>
+		<</if>>
+	<<elseif $pitVirginities == 1>> /* vagina */
+		<<if (_loser.vagina == 0) && canDoVaginal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>,
+			<<if _winner.fetish == "pregnancy">>
+				<<if canDoAnal(_loser)>>
+					and hungrily eyes _his2 pristine vagina before penetrating the loser's ass.
+					<<set _loser.counter.anal += 1, $analTotal += 1>>
+					<<if canImpreg(_loser, _winner) && canPenetrate(_winner) && _loser.mpreg == 1>>
+						<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile asspussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+						<<= knockMeUp(_loser, 50, 1, _winner.ID)>>
+					<</if>>
+				<<else>>
+					and hungrily eyes _his2 pristine vagina before hauling the loser onto _his2 knees for a facefuck.
+					<<set _loser.counter.oral += 1, $oralTotal += 1>>
+				<</if>>
+			<<else>>
+				<<if canDoAnal(_loser)>>
+					and penetrates the loser's ass.
+					<<set _loser.counter.vaginal += 1, $vaginalTotal += 1>>
+					<<if canImpreg(_loser, _winner) && canPenetrate(_winner)>>
+						<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile asspussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+						<<= knockMeUp(_loser, 50, 1, _winner.ID)>>
+					<</if>>
+				<<else>>
+					and finds only a pristine butthole waiting for $him. Respecting _his2 anal virginity, $he hauls the loser onto _his2 knees for a facefuck.
+					<<set _loser.counter.oral += 1, $oralTotal += 1>>
+				<</if>>
+			<</if>>
+		<<elseif (_loser.anus == 0) && canDoAnal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>,
+			<<if _winner.fetish == "buttslut" || (canImpreg(_loser, _winner) && canPenetrate(_winner) && _loser.mpreg == 1 && _winner.fetish == "pregnancy")>>
+				and gleefully takes advantage of your rules to @@.lime;take _his2 anal virginity.@@
+			<<else>>
+				and @@.lime;breaks in _his2 virgin anus.@@
+			<</if>>
+			<<set _loser.counter.anal += 1, $analTotal += 1>>
+			<<set _loser.anus++>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner) && _loser.mpreg == 1>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile asspussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 1, _winner.ID)>>
+			<</if>>
+		<<elseif canDoVaginal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>, and penetrates the loser's cunt.
+			<<set _loser.counter.vaginal += 1, $vaginalTotal += 1>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner)>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile pussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 0, _winner.ID)>>
+			<</if>>
+		<<elseif canDoAnal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>, and penetrates the loser's anus.
+			<<set _loser.counter.anal += 1, $analTotal += 1>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner) && _loser.mpreg == 1>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile asspussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 1, _winner.ID)>>
+			<</if>>
+		<<else>>
+			$He considers $his options briefly, then hauls the loser to _his2 knees for a facefuck.
+			<<set _loser.counter.oral += 1, $oralTotal += 1>>
+		<</if>>
+	<<else>> /* free game */
+		<<if (_loser.vagina == 0) && canDoVaginal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>,
+			<<if _winner.fetish == "pregnancy">>
+				and gleefully takes advantage of your rules to @@.lime;take _his2 virginity.@@
+			<<else>>
+				and @@.lime;breaks in _his2 virgin vagina.@@
+			<</if>>
+			<<set _loser.counter.vaginal += 1, $vaginalTotal += 1>>
+			<<set _loser.vagina++>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner)>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile pussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 0, _winner.ID)>>
+			<</if>>
+		<<elseif (_loser.anus == 0) && canDoAnal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>,
+			<<if _winner.fetish == "buttslut" || (canImpreg(_loser, _winner) && canPenetrate(_winner) && _loser.mpreg == 1 && _winner.fetish == "pregnancy")>>
+				and gleefully takes advantage of your rules to @@.lime;take _his2 anal virginity.@@
+			<<else>>
+				and @@.lime;breaks in _his2 virgin anus.@@
+			<</if>>
+			<<set _loser.counter.anal += 1, $analTotal += 1>>
+			<<set _loser.anus++>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner) && _loser.mpreg == 1>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile asspussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 1, _winner.ID)>>
+			<</if>>
+		<<elseif canDoVaginal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>, and penetrates the loser's cunt.
+			<<set _loser.counter.vaginal += 1, $vaginalTotal += 1>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner)>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile pussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 0, _winner.ID)>>
+			<</if>>
+		<<elseif canDoAnal(_loser)>>
+			$He pushes _loser.slaveName's back down onto the mat, forces _his2 <<if hasBothLegs(_loser)>>legs apart<<elseif !hasAnyLegs(_loser)>>hips steady<<else>>leg aside<</if>>, and penetrates the loser's anus.
+			<<set _loser.counter.anal += 1, $analTotal += 1>>
+			<<if canImpreg(_loser, _winner) && canPenetrate(_winner) && _loser.mpreg == 1>>
+				<<if !canTalk(_loser)>>_loser.slaveName tries to gesture a protest before _winner.slaveName fills _his2 fertile asspussy with cum, but _winner.slaveName grabs _his2 <<if hasBothArms(_loser)>>hands and pins them<<elseif hasAnyArms(_loser)>>hand and pins it<<else>>neck firmly<</if>> to keep _him2 from complaining<<else>>_loser.slaveName starts to scream a protest to stop _winner.slaveName raping _him2 pregnant, but _winner.slaveName grinds _his2 face into the mat to shut _him2 up<</if>>.
+				<<= knockMeUp(_loser, 50, 1, _winner.ID)>>
+			<</if>>
+		<<else>>
+			$He considers $his options briefly, then hauls the loser to _his2 knees for a facefuck.
+			<<set _loser.counter.oral += 1, $oralTotal += 1>>
+		<</if>>
+	<</if>>
+
+<<if (_winner.sexualFlaw == "malicious")>>
+	_winner.slaveName lives to torment and violate slaves. $He uses _loser.slaveName for $his @@.hotpink;pleasure,@@ slapping _him2 viciously, pinching _him2 until $he draws blood, and showing off for the spectators.
+	<<if $pitAudience != "none">>
+		The audience @@.green;greatly enjoys@@ the depraved spectacle.
+		<<run repX(50, "pit", _winner)>>
+	<</if>>
+	<<set _winner.devotion += 2>>
+<<elseif (_winner.sexualFlaw == "abusive")>>
+	_winner.slaveName lives to abuse and violate slaves. $He uses _loser.slaveName for $his @@.hotpink;pleasure,@@ raping _him2 mercilessly, striking _him2 until _he2 turns a deep reddish-purple, and showing off for the spectators.
+	<<if $pitAudience != "none">>
+		The audience @@.green;greatly enjoys@@ the depraved spectacle.
+		<<run repX(50, "pit", _winner)>>
+	<</if>>
+	<<set _winner.devotion += 2>>
+<<elseif (_winner.energy > 95)>>
+	_winner.slaveName doesn't have to feign willingness to rape a slave _girl2. $He uses _loser.slaveName for $his @@.hotpink;pleasure,@@ groping _him2, kissing _his2 unwilling mouth, and showing off for the spectators.
+	<<if $pitAudience != "none">>
+		The audience @@.green;greatly enjoys@@ the depraved spectacle.
+		<<run repX(50, "pit", _winner)>>
+	<</if>>
+	<<set _winner.devotion += 1>>
+<<elseif (_winner.fetish == "sadist") && (_winner.fetishStrength > 60)>>
+	_winner.slaveName doesn't have to feign willingness abuse and violate a slave _girl2. $He uses _loser.slaveName for $his @@.hotpink;pleasure,@@ slapping _him2 cruelly, pinching _him2 until $he draws blood, and showing off for the spectators.
+	<<if $pitAudience != "none">>
+		The audience @@.green;greatly enjoys@@ the depraved spectacle.
+		<<run repX(50, "pit", _winner)>>
+	<</if>>
+	<<set _winner.devotion += 1>>
+<<elseif (_winner.devotion > 75)>>
+	_winner.slaveName is so broken to slavery that $he @@.hotpink;enjoys@@ winning the fight and raping _loser.slaveName.
+	<<if $pitAudience != "none">>
+		The audience @@.green;greatly enjoys@@ the depraved spectacle.
+		<<run repX(50, "pit", _winner)>>
+	<</if>>
+	<<set _winner.devotion += 1>>
+<<elseif (_winner.devotion > 20)>>
+	_winner.slaveName understands $his role and thoroughly rapes _loser.slaveName.
+	<<if $pitAudience != "none">>
+		The audience @@.green;enjoys@@ the spectacle.
+		<<run repX(25, "pit", _winner)>>
+	<</if>>
+<<else>>
+	_winner.slaveName is unenthusiastic and just thrusts mechanically, to avoid being punished. $He @@.mediumorchid;resents@@ having to fight and fuck.
+	<<if $pitAudience != "none">>
+		The audience barely pays attention.
+	<</if>>
+	<<set _winner.devotion -= 2>>
+<</if>>
+<<if (_winner.rivalry > 0) && (_loser.ID == _winner.rivalryTarget)>>
+	$He @@.hotpink;relishes@@ the chance to abuse _loser.slaveName, whom $he dislikes.
+	<<set _winner.devotion += 5>>
+<<elseif (_winner.relationship >= 0) && (_loser.ID == _winner.relationshipTarget) && (_winner.devotion > 20)>>
+	$He accepts having to abuse _loser.slaveName, and plans to make it up to _him2 later.
+<<elseif (_winner.relationship >= 0) && (_loser.ID == _winner.relationshipTarget)>>
+	$He @@.mediumorchid;hates@@ having to abuse _loser.slaveName.
+	<<set _winner.devotion -= 10>>
+<<elseif areRelated(_winner, _loser) && (_winner.devotion > 20)>>
+	$He accepts having to abuse $his <<print relativeTerm(_winner, _loser)>>, _loser.slaveName, and plans to make it up to _him2 later.
+<<elseif areRelated(_winner, _loser)>>
+	$He @@.mediumorchid;hates@@ having to abuse $his <<print relativeTerm(_winner, _loser)>>, _loser.slaveName.
+	<<set _winner.devotion -= 10>>
+<</if>>
+<<if _winner.fetish == "sadist" && _winner.fetishStrength > 90 && _winner.sexualFlaw != "malicious" && _winner.devotion > 20>>
+	$He noticed something while $he was raping _loser.slaveName; watching the way _he2 writhed in pain was strangely satisfying, as $he was making _him2 suffer. _winner.slaveName cums powerfully at the mere thought; $he has become @@.yellow;sexually addicted to inflicting pain and anguish.@@
+	<<set _winner.sexualFlaw = "malicious">>
+<<elseif _winner.fetish == "masochist" && _winner.fetishStrength > 90 && _winner.sexualFlaw != "self hating" && _winner.devotion <= 20>>
+	$He feels horrible after forcing $himself on _loser.slaveName; $he is the one that should suffer, not _him2. _winner.slaveName has @@.yellow;descended into true self hatred.@@
+	<<set _winner.sexualFlaw = "self hating">>
+<<elseif _winner.fetish == "dom" && _winner.fetishStrength > 90 && _winner.sexualFlaw != "abusive" && _winner.devotion > 20>>
+	$He noticed something while $he was raping _loser.slaveName; watching the way _he2 cowered before <<if hasAnyArms(_winner)>>$his raised palm<<else>>$him<</if>> was strangely satisfying, as were the painful moans that accompanied every forceful thrust. _winner.slaveName cums powerfully at the mere thought; $he has become @@.yellow;sexually abusive, getting off on the thrill of forcing $himself on other slaves.@@
+	<<set _winner.sexualFlaw = "abusive">>
+<<elseif _winner.behavioralFlaw == "none" && random(1,100) <= 5 && _winner.devotion <= 20>>
+	$He begins to act @@.red;oddly@@ after the fight; having to beat down and rape another slave may have affected $him mentally.
+	<<set _winner.behavioralFlaw = "odd">>
+<</if>>
+
+<<if (_loser.sexualFlaw == "self hating")>>
+	_loser.slaveName feels _he2 @@.hotpink;deserved this.@@
+	<<set _loser.devotion += 5>>
+<<elseif (_loser.fetish == "masochist") && (_loser.fetishKnown == 1) && (_loser.fetishStrength > 60)>>
+	_loser.slaveName @@.hotpink;gets off@@ on being beaten and molested.
+	<<set _loser.devotion += 5>>
+<<elseif (_loser.fetish == "humiliation") && (_loser.fetishKnown == 1) && (_loser.fetishStrength > 60)>>
+	_loser.slaveName @@.hotpink;enjoys@@ the humiliation of being openly beaten and raped.
+	<<set _loser.devotion += 5>>
+<<elseif (_loser.devotion <= 50)>>
+	_loser.slaveName @@.mediumorchid;resents@@ being beaten and molested and @@.gold;fears@@ that it will happen again.
+	<<set _loser.devotion -= 10>>
+	<<set _loser.trust -= 10>>
+<</if>>
+<<if (_loser.rivalry > 0) && (_winner.ID == _loser.rivalryTarget)>>
+	_He2 is @@.mediumorchid;embarrassed@@ by losing to and being raped by _winner.slaveName, whom _he2 dislikes, and @@.gold;fears@@ that it will happen again.
+	<<set _loser.devotion -= 10>>
+	<<set _loser.trust -= 10>>
+<<elseif (_loser.relationship >= 0) && (_winner.ID == _loser.relationshipTarget) && (_loser.devotion >= 4)>>
+	_He2 accepts _winner.slaveName having to rape _him2.
+<<elseif (_loser.relationship >= 0) && (_winner.ID == _loser.relationshipTarget)>>
+	_He2 @@.mediumorchid;hates@@ having to accept rape from _winner.slaveName, and @@.gold;fears@@ that it will happen again.
+	<<set _loser.trust -= 10>>
+	<<set _loser.devotion -= 10>>
+<<elseif areRelated(_loser, _winner) && (_loser.devotion > 20)>>
+	_He2 accepts $his <<print relativeTerm(_loser, _winner)>>, _winner.slaveName, having to rape _him2, but _he2 @@.gold;fears@@ that it will happen again.
+	<<set _loser.trust -= 10>>
+<<elseif areRelated(_loser, _winner)>>
+	_He2 @@.mediumorchid;hates@@ having to accept rape from $his <<print relativeTerm(_loser, _winner)>>, _winner.slaveName, and @@.gold;fears@@ that it will happen again.
+	<<set _loser.devotion -= 10>>
+	<<set _loser.trust -= 10>>
+<</if>>
+<<if _loser.fetish == "masochist" && _loser.fetishStrength > 90 && _loser.behavioralFlaw != "self hating">>
+	_He2 feels strangely content after being abused and violated; _he2 is the one that should suffer, after all. _loser.slaveName has @@.yellow;descended into true self hatred.@@
+	<<set _loser.behavioralFlaw = "self hating">>
+<<elseif _loser.behavioralFlaw == "none" && random(1,100) <= 5 && _loser.devotion <= 20>>
+	_He2 begins to act @@.red;oddly@@ after the fight; losing and getting raped may have affected _him2 mentally.
+	<<set _loser.behavioralFlaw = "odd">>
+<</if>>
+
+	<<if (_loser.fetish != "masochist") && (_loser.fetish != "humiliation") && (_loser.sexualFlaw != "self-hating")>>
+		<<if (_loser.relationship != 0)>>
+			<<if (_loser.relationship <= 4)>>
+				<<if (_loser.relationshipTarget == _winner.ID)>>
+					Fighting and rape have @@.lightsalmon;damaged@@ the relationship between the slaves.
+					<<set _loser.relationship -= 1, _winner.relationship -= 1>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<if (_winner.skill.combat == 0)>>
+		<<if random(1,100) < (20+_winner.devotion)>>
+			With experience in $pitName, _winner.slaveName has @@.green;learned basic combat skills.@@
+			<<set _winner.skill.combat += 1>>
+		<</if>>
+	<</if>>
+
+	<<set $slaves[$slaveIndices[_winner.ID]] = _winner>>
+	<<set $slaves[$slaveIndices[_loser.ID]] = _loser>>
+	<<if $pitBG == 0 || ($Bodyguard.ID != _winner.ID)>>
+		<<set $fighterIDs.push(_winner.ID)>>
+	<</if>>
+	<<if $pitBG == 0 || ($Bodyguard.ID != _loser.ID)>>
+		<<set $fighterIDs.push(_loser.ID)>>
+	<</if>>
+<<else>> /*if an animal is using the slave*/
+	<<set $activeSlave = _fighterOne>>
+
+	<<if canDoVaginal($activeSlave)>>
+		<<set _sexAct = "vaginal">>
+		<<set _orifice = either("pussy", "cunt", "slit")>>
+	<<elseif canDoAnal($activeSlave)>>
+		<<set _sexAct = "anal">>
+		<<set _orifice = either("asshole", "rear hole")>>
+	<<else>>
+		<<set _sexAct = "oral">>
+		<<set _orifice = "mouth">>	/*this shouldn't ever actually be used*/
+	<</if>>
+
+	<<if ($activeSlave.muscles > -30) && ($activeSlave.weight <= 95) && ($activeSlave.health.condition >= -50) && ($activeSlave.bellyPreg <= 5000) && ($activeSlave.bellyImplant <= 4000) && ($activeSlave.labor == 0) && ($activeSlave.bellyFluid <= 2000)>>
+		<<set _canRun = 1>>
+	<<else>>
+		<<set _canRun = 0>>
+	<</if>>
+
+	<<if ($activeSlave.devotion > 50) || ($activeSlave.devotion > 20 && ($activeSlave.fetish == "masochist" || $activeSlave.fetish == "humiliation" || $activeSlave.sexualQuirk == "perverted" || $activeSlave.behavioralQuirk == "sinful"))>>
+		<<set _agree = 1>>
+	<<else>>
+		<<set _agree = 0>>
+	<</if>>
+
+	<<if $pitAudience == "none">>You are alone above $pitName, left to watch the animal use your slave in private.<<elseif $pitAudience == "free">>Your guests line the rim of $pitName, joking and laughing.<<else>>The attendees line the rim of $pitName, making bets on how long $he'll last.<</if>>
+
+	<<if $arcologies[0].FSRomanRevivalist != "unset" || $arcologies[0].FSDegradationist != "unset">>
+		They @@.green;strongly approve@@ of you using this method of punishment; this advances ideas from antiquity about what public events should be. /*not sure what the message that usually displays for Degradationism is — that might have to be changed*/
+		<<if $arcologies[0].FSRomanRevivalist != "unset">>
+			<<run repX(10*$FSSingleSlaveRep*($arcologies[0].FSRomanRevivalist/$FSLockinLevel), "pit", $activeSlave)>>
+			<<set $arcologies[0].FSRomanRevivalist += 0.2*$FSSingleSlaveRep>>
+		<<elseif $arcologies[0].FSDegradationist != "unset">>
+			<<run repX(10*$FSSingleSlaveRep*($arcologies[0].FSDegradationist/$FSLockinLevel), "pit", $activeSlave)>>
+			<<set $arcologies[0].FSDegradationist += 0.2*$FSSingleSlaveRep>>
+		<</if>>
+	<</if>>
+
+	<br><br>
+	$activeSlave.slaveName and the _animal.species enter $pitName from opposite sides. $activeSlave.slaveName is naked and $his wrists have been bound, and $he has already been given $his instructions: $he is to try to avoid being caught and <<if _agree == 1>>fucked<<else>>raped<</if>> by the animal for five minutes, and if $he succeeds, $he wins. The _animal.species has been given a large dose of aphrodisiacs, and its lust is apparent — its _animal.dickSize cock is clearly visible, even from where you are seated. It isn't in a hurry, and slowly saunters over to where the <<if _agree == 1>>determined<<else>>terrified<</if>> slave is standing. After what seems to be a moment of deliberation, $he finally makes $his move, and starts <<if _canRun == 1>>running<<else>>moving as quickly as $he can<</if>> in the opposite direction. The _animal.species quickly follows suit, breaking out into a full sprint toward $him.
+	<<if random(1,100) < 30 && _canRun>>
+		$activeSlave.slaveName is quick, though, and $he manages to avoid the animal for the full five minutes, and drops to $his knees in relief and exhaustion once the bell sounds and the _animal.species is leashed and pulled back into its cage.
+		<<if $pitAudience == "paid">>
+			The audience is fairly impressed by this impressive display of sportsmanship, and so is your @@.yellowgreen;cut of the betting.@@
+			<<run cashX(2500, "pit", $activeSlave)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;fairly impressed@@ by this impressive display of sportsmanship.
+			<<run repX(100, "pit", $activeSlave)>>
+		<</if>>
+	<<else>>
+		<<set _minutesLasted = random(1,5)>>
+		<<if _canRun == 1>>
+			$activeSlave.slaveName is quick, but not quick enough. $He manages to last almost <<= num(_minutesLasted)>> full minutes before the _animal.species finally catches $him.
+		<<elseif _canRun == 0>>
+			$activeSlave.slaveName isn't quick enough to avoid the beast, and $he only manages to last a pitiful thirty seconds before the _animal.species catches $him.
+		<</if>>
+		<<if $pitAudience == "paid">>
+			The audience is not very impressed by this mediocre display, and your @@.yellowgreen;cut of the betting@@ is equally unimpressive.
+			<<run cashX(500, "pit", $activeSlave)>>
+		<<elseif $pitAudience == "free">>
+			The audience is @@.green;not very impressed@@ by this mediocre display.
+			<<run repX(25, "pit", $activeSlave)>>
+		<</if>>
+		/* TODO: rewrite this to account for more variables (and to clean this whole mess up) */
+		It <<if _animal.type != "hooved">>swipes at $his <<if hasAnyLegs($activeSlave)>>leg<<if hasBothLegs($activeSlave)>>s<</if>><<else>>lower body<</if>><<else>>headbutts $him<</if>>, causing $him to go down hard. It doesn't waste a moment, and mounts $him quicker than you thought would have been possible for a _animal.species. It takes a few tries, but it finally manages to find $his _orifice, causing <<if $audience != "none">>the crowd to go wild and<</if>> $activeSlave.slaveName to give a long, drawn-out <<if _agree == 1>>moan<<else>>scream<</if>> as its _animal.dickSize cock <<if (_orifice == "pussy" && $activeSlave.vagina == 0) || (_orifice == "asshole" && $activeSlave.anus == 0)>>@@.limegreen;breaks in@@<<else>>fills<</if>> $his _orifice. Without hesitation, it begins to steadily thrust, pounding $him harder and harder as it grows closer and closer to climax. After several minutes, you see the animal finally stop thrusting as the barely-there slave gives a loud <<if _agree == 1>>moan<<else>>groan<</if>>. <<if $audience != "none">>The crowd gives a loud cheer as the<<else>>The<</if>> animal pulls out, leaving the thoroughly fucked-out $activeSlave.slaveName lying there, cum streaming out of $his _orifice.
+		/* TODO: write an ending / post-fight message */
+	<</if>>
+	<<set $slaves[$slaveIndices[_fighterOne.ID]] = _fighterOne>>
+	<<set $fighterIDs.push(_fighterOne.ID)>>
+<</if>>

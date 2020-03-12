@@ -1,0 +1,364 @@
+:: RES Sale [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "RIE Eligibility Check">>
+
+<<set $RESSale = $RESSale.random()>>
+
+/* generate sales slave for images and pronouns */
+<<if $RESSale == "TSS">>
+	<<set $TSS.schoolSale = 1>>
+	<<= generateMarketSlave("TSS")>>
+	<<set $activeSlave.clothes = "a schoolgirl outfit">>
+<<elseif $RESSale == "GRI">>
+	<<set $GRI.schoolSale = 1>>
+	<<= generateMarketSlave("GRI")>>
+	<<set $activeSlave.clothes = "a slave gown">>
+<<elseif $RESSale == "SCP">>
+	<<set $SCP.schoolSale = 1>>
+	<<= generateMarketSlave("SCP")>>
+	<<set $activeSlave.clothes = "a string bikini">>
+<<elseif $RESSale == "LDE">>
+	<<set $LDE.schoolSale = 1>>
+	<<= generateMarketSlave("LDE")>>
+<<elseif $RESSale == "TGA">>
+	<<set $TGA.schoolSale = 1>>
+	<<= generateMarketSlave("TGA")>>
+<<elseif $RESSale == "TCR">>
+	<<set $TCR.schoolSale = 1>>
+	<<= generateMarketSlave("TCR")>>
+<<elseif $RESSale == "HA">>
+	<<set $HA.schoolSale = 1>>
+	<<= generateMarketSlave("HA")>>
+	<<set $activeSlave.clothes = "a nice maid outfit">>
+<<elseif $RESSale == "NUL">>
+	<<set $NUL.schoolSale = 1>>
+	<<= generateMarketSlave("NUL")>>
+<<else>>
+	<<set $TFS.schoolSale = 1>>
+	<<= generateMarketSlave("TFS")>>
+<</if>>
+<<setLocalPronouns $activeSlave>>
+
+<span id="artFrame">
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<<set $activeSlave.trust = 100>>
+		<<set $activeSlave.devotion = 100>>
+		<div class="imageColumn">
+			<<if $imageChoice == 1>>
+				<div class="imageRef lrgVector"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+			<<else>>
+				<div class="imageRef lrgRender"><div class="mask">&nbsp;</div><<= SlaveArt($activeSlave, 2, 0)>></div>
+			<</if>>
+			<<= assistantArt(3)>>
+		</div>
+	<</if>>
+	/* 000-250-006 */
+</span>
+
+You receive a personal call from
+<<if $RESSale == "TSS">>
+	The Slavegirl School, a rising slave training organization known for its reliably unremarkable products, offered at a competitive price.
+<<elseif $RESSale == "GRI">>
+	The Growth Research Institute, a drug development group breaking new ground on human experimentation.
+<<elseif $RESSale == "SCP">>
+	St. Claver Preparatory, an unusual combination of slave school and implant surgery training institution.
+<<elseif $RESSale == "LDE">>
+	L'École des Enculées, an innovative slave school making new and interesting developments in sodomy.
+<<elseif $RESSale == "TGA">>
+	The Gymnasium-Academy, an intense slave school with a reputation for producing fit bitches with combat skills and stiff dicks.
+<<elseif $RESSale == "TCR">>
+	The Cattle Ranch, a pastoralist based slave school built around breeding the perfect cowgirl.
+<<elseif $RESSale == "HA">>
+	The Hippolyta Academy, a famous slave school known to produce highly skilled battle maids.
+<<elseif $RESSale == "NUL">>
+	Nueva Universidad de Libertad, a unique slave school promoting androgyny to the point of surgical modification.
+<<else>>
+	the Futanari Sisters, an enigmatic group of transformation enthusiasts that sells beautiful hermaphrodites.
+<</if>>
+<<if $RESSale == "TCR">>
+	It's from a farmhand, not leadership, and they are offering a cow for sale. Before you can hang up on him and reprimand $assistant.name for allowing this Free Cities version of telemarketing to get through to you, the man hurriedly says, "<<if $PC.title != 0>>Sir<<else>>Ma'am<</if>>, $he's half off!"
+	<br><br>
+	You pause for a moment, and he plunges on: "<<if $PC.title != 0>>Sir<<else>>Ma'am<</if>>, @@.yellow;your first cow purchase from us this week is half price.@@ And, <<if $PC.title != 0>>sir<<else>>ma'am<</if>>, this milky beauty is up for grabs. Keep $him by your desk for fresh squeezed milk, knock on wood and $he'll suck you right off, grab $him by the hips and $he'll take anything in $his rear; $he's plenty of fun! Come on down and get yourself a young, affectionate little cow<<= $girl>>!"
+<<else>>
+It's from a piece of merchandise, not leadership, and $he's offering $himself for sale. Before you can hang up on $him and reprimand $assistant.name for allowing this Free Cities version of telemarketing to get through to you, the slave hurriedly says, "<<if $PC.title != 0>>Sir<<else>>Ma'am<</if>>, I'm half off!"
+
+<br><br>
+
+You pause for a moment, and $he plunges on: "<<if $PC.title != 0>>Sir<<else>>Ma'am<</if>>, @@.yellow;your first slave purchase from us this week is half price.@@ And, <<if $PC.title != 0>>sir<<else>>ma'am<</if>>, I'm one of the slaves for sale.
+<<if $RESSale == "TSS">>
+	I've got the very best skills I could learn as a virgin. I'm healthy, obedient, and educated. And I'm fresh, and willing, and really eager." $He rips $his white school<<= $girl>> blouse open to show off a fresh pair of tits, and shakes them for you. "I would love to be your sex slave, <<if $PC.title != 0>>sir<<else>>ma'am<</if>>," $he says, doing $his very best to sound appealing, like $he's been trained.
+<<elseif $RESSale == "GRI">>
+	I've, uh, been trained to obey." $His eyes flick to one side, like $he's reading $his cues. "And um I have really big boobs." $He's wearing a bathrobe, and $he suddenly jerks it open to reveal a bigger pair of breasts than anyone that age could possibly have grown $himself. "I would love to be your sex slave, <<if $PC.title != 0>>sir<<else>>ma'am<</if>>," $he says, doing $his very best to sound appealing. No doubt $he'd prefer not to be part of any more testing.
+<<elseif $RESSale == "SCP">>
+	I'm ready to be the perfect bimbo slave, and the young surgeon who did my implants was very skilled." $He's wearing a bikini, and $he pulls it down to flash you, revealing that $his tits resist gravity almost perfectly. They're gorgeous, but quite fake. "I would love to be your sex slave, <<if $PC.title != 0>>sir<<else>>ma'am<</if>>," $he says, doing $his very best to sound appealing, like $he's been trained.
+<<elseif $RESSale == "LDE">>
+	I've been trained to need cock up my ass." $He's nude, and spins around to point $his ass at the camera. $He begins to wink $his big butthole, $his tiny, soft cock dangling limply below it. $He cranes $his head around to continue. "I can come from nothing but buttsex," $he says proudly. "I would love to be your anal slut, <<if $PC.title != 0>>sir<<else>>ma'am<</if>>," $he says, sounding very eager to begin.
+<<elseif $RESSale == "TGA">>
+	My tutelage has been long and hard, and I'm very eager to begin my life as a slave." $He's nude, and stands up to reveal $his hard-on. $He spins for the camera, showing $himself off. "I can help protect you, too: I'm proficient in unarmed combat, and I have weapons training. I would love to be your bitch, or your bodyguard, <<if $PC.title != 0>>sir<<else>>ma'am<</if>>," $he says, doing $his very best to sound appealing, like $he's been told.
+<<elseif $RESSale == "HA">>
+	I am ready to serve you in any way you deem fit and do everything I can to protect your life." $He's wearing a delicate maid uniform, beautifully contrasting $his powerful physique and towering stature. "The academy has given me the opportunity to learn many valuable skills and I look forward put them at your service."
+<<elseif $RESSale == "NUL">>
+	My education is complete, and I am ready to unveil the perfection of my form to the world." Naturally, $he's totally nude, yet you still are unable to even guess what sort of equipment $he was born with. "It is my duty and my honor to share myself in eternal servitude, in all manners and mechanisms," $he says in an unnervingly upbeat monotone.
+<<else>>
+	The time has come for me to serve my Sisters by leaving my community and becoming a slave. Our sex skills are unparalleled," $he says proudly. $He's nude, and reclines luxuriantly for the camera, showing $his remarkable body off in all its gorgeous strangeness. $His boobs are huge, $his dick is hard, $his pussy is wet, and $his ass is relaxed. "I love to fuck, <<if $PC.title != 0>>sir<<else>>ma'am<</if>>," $he says, and you believe $him.
+	<<if ($PC.dick != 0) && ($PC.vagina != -1)>>
+		<br><br>
+		<<if ($PC.boobs >= 300)>>
+			"I would also adore serving someone like you," $he adds sincerely, $his emphasis making it quite clear the Sisters have heard rumors about your hermaphroditism. "We can't offer any further discount, but I promise I'd worship you with all my heart." $He bats $his eyes at you. "And my other parts, too!"
+		<<else>>
+			$His eyes flick downward momentarily, and $he looks nervous, swallowing before continuing. "Please let me be your slave," $he almost begs. "Serving another futa would, oh," and $he pauses, shivering a little. Recollecting $himself, $he goes on, "Wonderful. Serving you would be a dream come true."
+		<</if>>
+	<</if>>
+<</if>>
+<</if>> /* closes Cattle Ranch exception */
+
+<br><br>
+
+<<setAssistantPronouns>>
+<<= capFirstChar($assistant.name)>>'s $assistant.appearance avatar appears on the screen next to the video call.
+<<if $assistant.personality == 0>>
+	"I have stored the confirmation code, <<= properMaster()>>," it notes. "If you wish to take advantage of this promotion, use the slave buying menu to navigate to the appropriate school next week. I have appended a note to that school's entry to remind you."
+<<else>>
+	<<if ($RESSale == "TSS") || ($RESSale == "SCP")>>
+		"And I would love to
+		<<switch $assistant.appearance>>
+		<<case "monstergirl">>
+			break both $his virgin holes at once," the monster<<= _girlA>> exclaims, and shakes _hisA dicks for emphasis.
+		<<case "shemale">>
+			wreck $his virgin asshole," the shemale exclaims, and starts to jack off.
+		<<case "amazon">>
+			fist $his virgin cunt," the amazon exclaims, and helpfully raises the fist in question.
+		<<case "businesswoman">>
+			sell $his fresh pussy to the highest bidder," the business<<= _womanA>> exclaims.
+		<<case "fairy">>
+			play with $his clit and lap up those sweet virgin juices!" the fairy exclaims, licking _hisA lips.
+		<<case "pregnant fairy">>
+			play with $his clit and lap up those sweet motherly juices!" the fairy exclaims, licking _hisA lips.
+		<<case "goddess">>
+			teach $him all about being a real $woman," the goddess exclaims, rubbing _hisA belly in anticipation.
+		<<case "hypergoddess">>
+			teach $him all about being a real $woman," the goddess exclaims, rubbing _hisA massive belly in anticipation.
+		<<case "loli">>
+			play with $him!" the little _girlA exclaims happily while jumping up and down.
+		<<case "preggololi">>
+			play with $him!" the little _girlA exclaims happily while caressing _hisA belly.
+		<<case "angel">>
+			keep $him safe and craft the perfect future slavewife for someone," the angel says, crossing _hisA arms under _hisA chest.
+		<<case "cherub">>
+			pretty $him up for $his first love!" the cherub says, clasping _hisA hands together and fluttering back and forth.
+		<<case "incubus">>
+			brutally stretch both those holes until $he is a slave to my dick," the incubus says, stroking _hisA cock to erection.
+		<<case "succubus">>
+			shape $him into the perfect $girl for <<= properMaster()>>," the succubus says, licking _hisA lips with anticipation. "I'll make a real sex demon out of $him!"
+		<<case "imp">>
+			tease $him until $he is begging to have $his virginity taken," the imp says, rubbing _hisA hands together with anticipation.
+		<<case "witch">>
+			play with $his body," the witch says. "Test my spells on someone else for once."
+		<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+			break both $his virgin holes at once," the avatar exclaims, _hisA chest splitting open to reveal countless tentacles, the flesh at their bases writhing with unborn young. "Fill $him with young until $he is a bloated hive."
+		<<case "schoolgirl">>
+			make out with $him. $He's cute!" the school<<= _girlA>> exclaims.
+		<<default>>
+			fuck $his virgin holes," _heA says.
+		<</switch>>
+	<<elseif $RESSale == "GRI" || $RESSale == "TCR">>
+		"And I would love to
+		<<switch $assistant.appearance>>
+		<<case "monstergirl">>
+			get my tentacles on those tits," the monster<<= _girlA>> exclaims.
+		<<case "shemale">>
+			fuck those titties," the shemale exclaims, and starts to jack off.
+		<<case "amazon">>
+			put $him out to pasture," the amazon exclaims, indicating the skin of milk on _hisA belt.
+		<<case "businesswoman">>
+			put that cow in the dairy," the business<<= _womanA>> exclaims.
+		<<case "fairy">>
+			bounce on those nipples until they fill me with milk!" the fairy exclaims, rubbing _hisA belly.
+		<<case "pregnant fairy">>
+			bounce on those nipples until my babies are fed!" the fairy exclaims, rubbing _hisA swollen belly.
+		<<case "goddess" "hypergoddess">>
+			taste those bountiful breasts," the goddess exclaims, licking _hisA lips.
+		<<case "loli">>
+			play with $his tits!" the little _girlA exclaims happily while jumping up and down.
+		<<case "preggololi">>
+			play with $his tits!" the little _girlA exclaims happily while caressing _hisA belly.
+		<<case "angel">>
+			feed all the hungry with those motherly breasts," the angel says, blushing at the thought.
+		<<case "cherub">>
+			have a pair just like them!" the cherub says, clasping _hisA hands to _hisA breasts.
+		<<case "incubus">>
+			wrap them around my shaft and blow a load right into $his face," the incubus says, stroking _hisA cock to erection.
+		<<case "succubus">>
+			teach $him the perfect way to tease <<= properMaster()>> with those boobs," _heA says, swelling _hisA own tits and pressing them against the screen.
+		<<case "imp">>
+			tease $him until $he cums to the slightest touch of $his nipples," the imp says, rubbing _hisA hands together with anticipation.
+		<<case "witch">>
+			play with their breasts," the witch says. "Test my lactation and breast growth spells on someone else for once."
+		<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+			penetrate those nipples," the avatar exclaims, _hisA chest splitting open to reveal countless tentacles, the flesh at their bases writhing with unborn young. "Fill $him with young until they pin $him to the floor. Then $his defenseless holes will be filled too."
+		<<case "schoolgirl">>
+			suck on those titties!" the school<<= _girlA>> exclaims.
+		<<default>>
+			make those breasts bounce," _heA says.
+		<</switch>>
+	<<elseif $RESSale == "LDE" || $RESSale == "NUL">>
+		"And I would love to
+		<<switch $assistant.appearance>>
+		<<case "monstergirl">>
+			shove both my cocks up there," the monster<<= _girlA>> exclaims.
+		<<case "shemale">>
+			fuck that butt even bigger," the shemale exclaims, and starts to jack off.
+		<<case "amazon">>
+			fist that butthole," the amazon exclaims, and helpfully raises the fist in question.
+		<<case "businesswoman">>
+			see how many customers that asshole can bear," the business<<= _womanA>> exclaims.
+		<<case "fairy">>
+			use that butt as a pillow!" the fairy exclaims.
+		<<case "pregnant fairy">>
+			see if I can impregnate $his butt!" the fairy exclaims.
+		<<case "goddess" "hypergoddess">>
+			see just how obedient $he really is," the goddess exclaims, flexing a hand for emphasis.
+		<<case "loli">>
+			play with $his big butt!" the little _girlA exclaims happily while jumping up and down.
+		<<case "preggololi">>
+			play with $his big butt!" the little _girlA exclaims happily while caressing _hisA belly.
+		<<case "angel">>
+			have an ass like that..." the angel trails off, a finger to _hisA lips as _heA fantasizes.
+		<<case "cherub">>
+			take a seat on that ass," the cherub sighs. "Flying all the time gets tiring."
+		<<case "incubus">>
+			wrap that ass around my shaft and blow a load across $his back," the incubus says, stroking _hisA cock to erection.
+		<<case "succubus">>
+			teach $him the perfect way to tease <<= properMaster()>> with that ass," _heA says, swelling _hisA own behind, pressing it against the screen and winking _hisA butthole tantalizingly at you.
+		<<case "imp">>
+			spank that ass till it's big and red then take a nap on it," the imp says, rubbing _hisA hands together with anticipation and yawning.
+		<<case "witch">>
+			play with $his ass," the witch says. "Test my butt growth spells on someone else for once. Last time I was hobbling around with a pair of tits as a rear for a week..."
+		<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+			split $his asshole," the avatar exclaims, _hisA chest splitting open to reveal countless tentacles, the flesh at their bases writhing with unborn young. "Fill $his ass with larva until $his belly reaches the floor, swell $his bottom with aphrodisiacs, and watch $him birth until $he breaks."
+		<<case "schoolgirl">>
+			lick $his big soft behind," the school<<= _girlA>> exclaims, and sticks out _hisA tongue.
+		<<default>>
+			fuck that ass," _heA says.
+		<</switch>>
+	<<elseif $RESSale == "TGA">>
+		"And I would love to
+		<<switch $assistant.appearance>>
+		<<case "monstergirl">>
+			shove both my cocks up $his virgin anus," the monster<<= _girlA>> exclaims.
+		<<case "shemale">>
+			fuck that virgin asshole," the shemale exclaims, and starts to jack off.
+		<<case "amazon">>
+			finger fuck $his virgin ass," the amazon exclaims, and helpfully raises the fingers in question.
+		<<case "businesswoman">>
+			sell $his anal virginity to the highest bidder," the business<<= _womanA>> exclaims.
+		<<case "fairy">>
+			give the dick a great big hug and suckle out all the precum!" the fairy exclaims, rubbing _hisA legs together.
+		<<case "pregnant fairy">>
+			play meet the baby! ...Well, maybe just with you, <<if ($PC.title == 0)>>Big Sis<<else>>Big Bro<</if>>," the fairy exclaims, rubbing _hisA legs together.
+		<<case "goddess" "hypergoddess">>
+			see $him put that dick to work," the goddess exclaims, one sultry finger at _hisA lips.
+		<<case "loli">>
+			play with $his dick!" the little _girlA exclaims happily while jumping up and down.
+		<<case "preggololi">>
+			get that dick in me!" the little _girlA exclaims happily while caressing _hisA belly and licking _hisA lips.
+		<<case "angel">>
+			wrap that penis up in a nice bow for $his wife to untie," the angel says, blushing and swaying side to side.
+		<<case "cherub">>
+			know how long $he could go for," the cherub says. "$He could probably fuck all night long!"
+		<<case "incubus">>
+			plow $his ass and watch $him ejaculate against $his will," the incubus says, stroking _hisA cock to erection.
+		<<case "succubus">>
+			teach $him the perfect way to tease <<= properMaster()>> with that cock," _heA says, _hisA clit steadily enlarging until it's the size of _hisA leg. _HeA hefts it to _hisA mouth and enthusiastically tongues _hisA urethra.
+		<<case "imp">>
+			ride that cock until I'm too heavy to fly," the imp says, rubbing _hisA belly and spreading _hisA legs.
+		<<case "witch">>
+			play with that dick," the witch says. "Test my cock growth and cum amplification spells on someone else for once. Last time I sprouted a cock bigger than me and my belly steadily swelled with cum until I jacked off. I got so tired I couldn't do it anymore and nearly burst like a cum balloon..."
+		<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+			fuck $his cock," the avatar exclaims, _hisA chest splitting open to reveal countless tentacles, the flesh at their bases writhing with unborn young. "Squirm down to $his balls and pump them full of larva and watch $him birth them until $he breaks."
+		<<case "schoolgirl">>
+			suck that dick," the school<<= _girlA>> exclaims, and sticks out _hisA tongue.
+		<<default>>
+			train that body," _heA says.
+		<</switch>>
+	<<elseif $RESSale == "HA">>
+		"And I would love to
+		<<switch $assistant.appearance>>
+		<<case "monstergirl">>
+			break both $his holes at once," the monster<<= _girlA>> exclaims, and shakes _hisA dicks for emphasis.
+		<<case "shemale">>
+			wreck $his amazonian asshole," the shemale exclaims, and starts to jack off.
+		<<case "amazon">>
+			fist $his cunt," the amazon exclaims, and helpfully raises the fist in question.
+		<<case "businesswoman">>
+			sell $his fresh pussy to the highest bidder," the business<<= _womanA>> exclaims.
+		<<case "fairy">>
+			play with $his clit and lap up those sweet juices!" the fairy exclaims, licking _hisA lips.
+		<<case "pregnant fairy">>
+			play with $his clit and lap up those sweet juices!" the fairy exclaims, licking _hisA lips.
+		<<case "goddess">>
+			teach $him all about being a real $woman," the goddess exclaims, rubbing _hisA belly in anticipation.
+		<<case "hypergoddess">>
+			teach $him all about being a real $woman," the goddess exclaims, rubbing _hisA massive belly in anticipation.
+		<<case "loli">>
+			play with $him!" the little _girlA exclaims happily while jumping up and down.
+		<<case "preggololi">>
+			play with $him!" the little _girlA exclaims happily while caressing _hisA belly.
+		<<case "angel">>
+			keep $him safe and craft the perfect future slavewife for someone," the angel says, crossing _hisA arms under _hisA chest.
+		<<case "cherub">>
+			pretty $him up for $his first love!" the cherub says, clasping _hisA hands together and fluttering back and forth.
+		<<case "incubus">>
+			brutally stretch both those holes until $he is a slave to my dick," the incubus says, stroking _hisA cock to erection.
+		<<case "succubus">>
+			shape $him into the perfect $girl for <<= properMaster()>>," the succubus says, licking _hisA lips with anticipation. "I'll make a real sex demon out of $him!"
+		<<case "imp">>
+			tease $him until $he is begging to have $his virginity taken," the imp says, rubbing _hisA hands together with anticipation.
+		<<case "witch">>
+			play with $his body," the witch says. "Test my spells on someone else for once."
+		<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+			break both $his virgin holes at once," the avatar exclaims, _hisA chest splitting open to reveal countless tentacles, the flesh at their bases writhing with unborn young. "Fill $him with young until $he is a bloated hive."
+		<<case "schoolgirl">>
+			make out with $him. $He's cute!" the school<<= _girlA>> exclaims.
+		<<default>>
+			fuck $his amazonian holes," _heA says.
+		<</switch>>
+	<<else>>
+		<<switch $assistant.appearance>>
+		<<case "monstergirl">>
+			"And I love to fuck futas!" _heA shouts, dicks painfully erect.
+		<<case "shemale">>
+			"And I love to fuck futas!" _heA shouts, cock painfully erect.
+		<<case "amazon">>
+			"And I love to fuck futas!" _heA howls, and then adds more quietly, "A-and get fucked by futas."
+		<<case "businesswoman">>
+			"And I love to fuck futas!" _heA exclaims, and then blushes furiously.
+		<<case "fairy" "pregnant fairy">>
+			"And I love to fuck futas!" _heA exclaims, flying circles around you.
+		<<case "goddess" "hypergoddess">>
+			"And I love to fuck futas!" _heA exclaims, awestruck with anticipation.
+		<<case "cherub" "loli">>
+			"And I love to fuck futas!" _heA exclaims, then blushes beet red when _heA realizes what _heA said.
+		<<case "preggololi">>
+			"And I love to fuck futas!" _heA exclaims, rubbing _hisA bulging belly with anticipation.
+		<<case "angel">>
+			"Keep it away from me! It is an aberration!" _heA shouts, before flying off screen in a huff.
+		<<case "incubus">>
+			"And I love to fuck futas!" _heA exclaims, _hisA erect dick throbbing with anticipation.
+		<<case "succubus">>
+			"And I love to get fucked by futas!" _heA exclaims, <<if $PC.dick != 0 && $PC.vagina != -1>>blowing you a kiss<<else>>_hisA pussy already wet with anticipation<</if>>.
+		<<case "imp">>
+			"And I love to get fucked by futas till I'm too heavy to fly," _heA exclaims, rubbing _hisA belly and spreading _hisA legs.
+		<<case "witch">>
+			"And I love to fuck futas!" _heA exclaims, readying a spell to make them last longer.
+		<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+			"And I love to fuck futas!" _heA exclaims, _hisA chest splitting open to reveal countless tentacles, the flesh at their bases writhing with unborn young. "So many holes to force young into! I can't wait to turn $him into a bulging, squirming, bursting nursery!"
+		<<case "schoolgirl">>
+			"And I love to fuck futas!" _heA exclaims, bouncing with excitement.
+		<<default>>
+			"And I love to fuck futas!" _heA exclaims.
+		<</switch>>
+	<</if>>
+	"Ahem. I have stored the confirmation code, <<= properMaster()>>," _heA notes. "If you wish to take advantage of this promotion, use the slave buying menu to navigate to the appropriate school next week. I have appended a note to that school's entry to remind you."
+<</if>>

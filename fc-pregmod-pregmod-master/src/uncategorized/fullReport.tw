@@ -1,0 +1,100 @@
+:: Full Report [nobr]
+
+/* 000-250-006 */
+<<if $seeImages && $seeReportImages>>
+	<div class="imageRef medImg">
+		<<= SlaveArt($slaves[$i], 2, 0)>>
+	</div>
+<</if>>
+/* 000-250-006 */
+
+<<setLocalPronouns $slaves[$i]>>
+
+<<switch $slaves[$i].assignment>>
+<<case "rest">>
+	<<= saRest($slaves[$i])>>
+<<case "whore">>
+	<<= saWhore($slaves[$i])>>
+<<case "serve the public">>
+	<<= saServeThePublic($slaves[$i])>>
+<<case "work a glory hole">>
+	<<= saWorkAGloryHole($slaves[$i])>>
+<<case "get milked">>
+	<<set $servantMilkersMultiplier = 1>>
+	<<= saGetMilked($slaves[$i])>>
+<<case "take classes">>
+	<<= saTakeClasses($slaves[$i])>>
+<<case "please you">>
+	<<include "SA please you">>
+<<case "be a subordinate slave">>
+	<<include "SA serve your other slaves">>
+<<case "be a servant">>
+	<<= saServant($slaves[$i])>>
+<<case "stay confined">>
+	<<= saStayConfined($slaves[$i])>>
+<<case "guard you">>
+	<<include "SA guard you">>
+<<case "be your Head Girl">>
+	<<include "SA be your Head Girl">>
+<<case "recruit girls">>
+	<<include "SA recruit girls">>
+<<default>>
+	<<= removeJob($slaves[$i], $slaves[$i].assignment)>>
+	<<= saRest($slaves[$i])>>
+<</switch>>
+
+<<if $servantMilkers == 1 && $slaves[$i].lactation > 0 && $slaves[$i].assignment != "get milked">>
+	$His assignment
+	<<if setup.servantMilkersJobs.includes($slaves[$i].assignment)>>
+		is not strenuous, so $he <<if $slaves[$i].devotion > 20>><<if $slaves[$i].fetish == "boobs">>eagerly <</if>>uses<<elseif $slaves[$i].devotion >= -20>>is required to use<<else>>is forced to use<</if>> the penthouse milkers frequently,
+		<<set $servantMilkersMultiplier = 0.5>>
+	<<else>>
+		keeps $him busy, but $he <<if $slaves[$i].devotion > 20>><<if $slaves[$i].fetish == "boobs">>eagerly <</if>>uses<<elseif $slaves[$i].devotion >= -20>>is required to use<<else>>is forced to use<</if>> the penthouse milkers whenever $he can,
+		<<set $servantMilkersMultiplier = 0.25>>
+	<</if>>
+	<<run saGetMilked($slaves[$i])>>
+	<<set $servantMilkersMultiplier = 1>>
+	and $he gives $milk liters of milk over the week, which is sold for @@.yellowgreen;<<print cashFormat($milkSale)>>.@@
+<</if>>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;
+<<if $slaves[$i].minorInjury != 0>>
+	$His $slaves[$i].minorInjury will heal by the end of the week.
+<</if>>
+
+<<if $showEWD == 0>>
+	<<silently>>
+	<<include "SA rules">>
+	<<run saChoosesOwnClothes($slaves[$i])>>
+	<<include "SA diet">>
+	<<include "SA long term effects">>
+	<<run saDrugs($slaves[$i])>>
+	<<include "SA relationships">>
+	<<include "SA rivalries">>
+	<</silently>>
+<<else>>
+	<<include "SA rules">>
+	<<= saChoosesOwnClothes($slaves[$i])>>
+	<<include "SA diet">>
+	<<include "SA long term effects">>
+	<<= saDrugs($slaves[$i])>>
+	<<include "SA relationships">>
+	<<include "SA rivalries">>
+	<br>
+<</if>>
+
+<<if Array.isArray($personalAttention) && $personalAttention.findIndex(function(s) { return s.ID == $slaves[$i].ID; }) != -1>>
+	<<set $activeSlave = $slaves[$i]>>
+	<<include "PT Workaround">>
+	<br>
+<</if>>
+
+<<for _hgtsidx = 0; _hgtsidx < $HGTrainSlavesIDs.length; _hgtsidx++>>
+	<<if $slaves[$i].ID == $HGTrainSlavesIDs[_hgtsidx].ID>>
+		<<set $activeSlave = $slaves[$i], $HGtraining = $HGTrainSlavesIDs[_hgtsidx].training>>
+		<<include "HG Application">>
+		<br>
+	<</if>>
+<</for>>
+
+<<include "SA devotion">>

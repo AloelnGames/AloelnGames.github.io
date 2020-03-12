@@ -1,0 +1,13 @@
+:: Costs Report Slaves [nobr]
+
+<<set _arcologyCosts = 0>>
+<<if $PCSlutContacts == 0>><<set $PCSlutContacts = 1>><</if>>
+
+<<set _total = 0>> <<set _SL = $slaves.length>>
+<<for $i = 0; $i < _SL; $i++>>
+	<<capture $i>>
+	<br style="clear:both"><<if $lineSeparations == 0>><br><<else>><hr style="margin:0"><</if>>
+	[[$slaves[$i].slaveName|Slave Interact][$activeSlave = $slaves[$i]]] will $slaves[$i].assignment.
+	<<SlaveExpenses $slaves[$i]>>
+	<</capture>>
+<</for>>

@@ -1,0 +1,70 @@
+:: RE resistant mother daughter [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "RIE Eligibility Check">>
+
+<<set $i = $slaveIndices[$motherSlave]>>
+<<set $j = $slaveIndices[$daughterSlave]>>
+<<setLocalPronouns $slaves[$i]>>
+<<setLocalPronouns $slaves[$j] 2>>
+
+<<set _clothesTemp = $slaves[$i].clothes, $slaves[$i].clothes = "no clothing">>
+<<set _clothesTemp2 = $slaves[$j].clothes, $slaves[$j].clothes = "no clothing">>
+<span id="artFrame">
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<div class="imageColumn">
+		<div class="imageRef medImg">
+			<<= SlaveArt($slaves[$i], 2, 0)>>
+		</div>
+		<div class="imageRef medImg">
+			<<= SlaveArt($slaves[$j], 2, 0)>>
+		</div>
+	</div>
+<</if>>
+/* 000-250-006 */
+</span>
+<<set $slaves[$i].clothes = _clothesTemp>>
+<<set $slaves[$j].clothes = _clothesTemp2>>
+
+$slaves[$i].slaveName and $his _daughter2 are both having trouble getting acclimated to your ownership, with their obedience suffering as a result. Though neither of them have done anything particular egregious lately, their combined list of minor transgressions is reaching a point where rendering punishment on the two would not be seen as unfair. By happenstance they come before you for inspection one after the other. Though they certainly <<if canSee($slaves[$i]) && canSee($slaves[$j])>>see each other naked frequently around<<else>>are frequently naked around each other in<</if>> the penthouse, neither seems particularly comfortable around the other when nudity is involved. While you finish $slaves[$i].slaveName's inspection, $his _daughter2 fidgets uneasily even while trying to mimic the posture and appearance of an obedient slave. It occurs to you that the current situation presents an opportunity to do //something// about this resistant $mother-_daughter2 pair.
+
+<br><br>
+<span id="result">
+<br><<link "Spend the evening gently acclimating them to your ownership">>
+	<<replace "#result">>
+	Though neither of the two vehemently protests your decision to have them both join you in bed, furtive uneasy glances are exchanged between the two. Since they're already naked, they clamber onto your bed before you and reluctantly kneel facing each other, leaving enough space between them for you<<if canSee($slaves[$i]) && canSee($slaves[$j])>> and for them to avert their eyes to avoid the other's nakedness<</if>>. They clearly assume you would start by using one of them, so they're quite taken aback when you remain standing at the edge of the bed and suggest that $slaves[$i].slaveName play with $his _daughter2. $slaves[$j].slaveName awkwardly flounders a little as _his2 $mother's <<if hasBothArms($slaves[$i])>>hands roam<<elseif hasAnyArms($slaves[$i])>>hand roams<</if>> about _his2 body, but does not reel back from the intimate touching. In time you instruct $slaves[$j].slaveName to pleasure _his2 $mother, but still decline to join the incestuous union unfolding on your sheets. You extend the foreplay for hours, bringing both $mother and _daughter2 to such a state of naked arousal that they begin grinding against each other uninhibitedly. They are both so desperate for release that they do not object when you finally decide to join them, instead eagerly moving to include you in their coupling. What started with $slaves[$j].slaveName awkwardly kneeling unmoving while _his2 $mother sucked _his2 nipples ends with $slaves[$j].slaveName <<if hasAllLimbs($slaves[$j])>>on all fours<<else>>bent over<</if>> getting fucked by you while orally pleasuring $slaves[$i].slaveName. You gaze over at $slaves[$i].slaveName and $he moans and licks $his lips enticingly back at you as $slaves[$j].slaveName moans into $his fuckhole.
+	@@.mediumaquamarine;They have both become more trusting of you.@@
+
+	<<set $slaves[$i].trust += 4, $slaves[$j].trust += 4, $slaves[$i].counter.oral += 1, $slaves[$j].counter.oral += 1, $oralTotal += 2>>
+
+	<<if canDoAnal($slaves[$j])>>
+		<<set $slaves[$j].counter.anal += 1>>
+		<<set $analTotal += 1>>
+	<<elseif canDoVaginal($slaves[$j])>>
+		<<set $slaves[$j].counter.vaginal += 1>>
+		<<set $vaginalTotal += 1>>
+	<</if>>
+
+	<<if canDoAnal($slaves[$i])>>
+		<<set $slaves[$i].counter.anal += 1>>
+		<<set $analTotal += 1>>
+	<<elseif canDoVaginal($slaves[$i])>>
+		<<set $slaves[$i].counter.vaginal += 1>>
+		<<set $vaginalTotal += 1>>
+	<</if>>
+
+	<</replace>>
+<</link>>
+<br><<link "Make an example of the $mother">>
+	<<replace "#result">>
+	You give them orders of devastating simplicity: You are going to assrape $slaves[$i].slaveName and if $his _daughter2 offers even the most token of resistance, you'll punish $slaves[$i].slaveName. They're stunned, but you shake them out of their shock by grabbing $slaves[$i].slaveName by the arm<<if $PC.dick == 0>>,donning a strap-on<</if>> and shoving $him over your desk. $slaves[$j].slaveName flinches visibly as you enter _his2 $mother's ass in one brutal stroke, for which you stain _his2 $mother's asscheeks a rosy red with a torrent of harsh spanks. $slaves[$i].slaveName takes the rough anal pounding with only quiet sobbing and the occasional whimper of pain, but $his _daughter2 can't bear to <<if canSee($slaves[$j])>>see<<elseif canHear($slaves[$j])>>hear<<else>>have<</if>> $slaves[$i].slaveName in such duress and breaks _his2 short-lived silence to beg for mercy. When you step away from $slaves[$i].slaveName, $slaves[$j].slaveName lets out a sigh of relief, but _his2 expression soon turns to horror and revulsion when you return to mount _his2 $mother with a lash in hand.
+	<br><br>
+	When you eventually finish your merciless assrape of $slaves[$i].slaveName, $his body is covered in bruises, marks, and handprints. A testament to $slaves[$j].slaveName's inability to keep _his2 silence as you brutalized _his2 $mother. You leave your office wordlessly to attend to other matters, while behind you $slaves[$j].slaveName gazes <<if canSee($slaves[$j])>>forlornly<<else>>blindly<</if>> at the gibbering mess you have reduced _his2 $mother to.
+	Your severe punishment of _his2 $mother has encouraged $slaves[$j].slaveName to @@.gold;fear you.@@ $slaves[$i].slaveName has been fucked into @@.hotpink;submission@@ but your savage treatment has caused $him to @@.red;hate buttsex.@@
+
+	<<set $slaves[$j].trust -= 10>>
+	<<set $slaves[$i].devotion += 4, $slaves[$i].counter.anal += 1, $analTotal += 1, $slaves[$i].sexualFlaw = "hates anal">>
+
+	<</replace>>
+<</link>>
+</span>

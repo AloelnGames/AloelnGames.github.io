@@ -1,0 +1,382 @@
+:: P underground railroad [nobr]
+
+<<set $nextButton = " ", $nextLink = "Random Nonindividual Event">> /* hide button until user makes a selection */
+
+<<set $activeSlave = $slaves.filter(function(s) { return s.fuckdoll == 0 && s.fetish != "mindbroken" && canWalk(s) && s.devotion < 75 && s.trust < 75 && s.indenture == -1 && canWalk(s) && canTalk(s) && canSee(s) && ["serve in the club", "serve the public", "whore", "work in the brothel"].includes(s.assignment); }).random()>>
+<<if (ndef $activeSlave)>> /* search again without assignments limitation */
+	<<set $activeSlave = $slaves.filter(function(s) { return s.fuckdoll == 0 && s.fetish != "mindbroken" && canWalk(s) && s.indenture == -1 && canSee(s) && ["serve in the club", "serve the public", "whore", "work in the brothel"].includes(s.assignment); }).random()>>
+	<<if (ndef $activeSlave)>> /* we will find one */
+		<<set $activeSlave = $slaves.filter(function(s) { return s.fuckdoll == 0 && s.fetish != "mindbroken" && canWalk(s) && s.devotion < 20 && canTalk(s) && canSee(s); }).random()>>
+		<<if (ndef $activeSlave)>> /* we will find one */
+			<<set $activeSlave = $slaves.filter(function(s) { return s.fuckdoll == 0 && s.fetish != "mindbroken" && canWalk(s) && canTalk(s) && canSee(s); }).random()>>
+			<<if (ndef $activeSlave)>> /* anyone out there? */
+				<<set $activeSlave = $slaves.filter(function(s) { return s.fuckdoll == 0 && s.fetish != "mindbroken" && canWalk(s) && canSee(s); }).random()>>
+				<<if (ndef $activeSlave)>> /* still no match */
+					<<set $activeSlave = $slaves.filter(function(s) { return s.fuckdoll == 0 && s.fetish != "mindbroken"; }).random()>>
+					<<if (ndef $activeSlave)>> /* STILL no match */
+						<<set $activeSlave = $slaves.random()>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+<<setAssistantPronouns>>
+<<set $fcnn.push("...you believe a slave has been contacted by the Daughters of Liberty, please call...")>>
+
+<<if $activeSlave.devotion+$activeSlave.trust >= 175>>
+	<<set $traitorType = "agent">>
+<<elseif $activeSlave.trust <= -75>>
+	<<set $traitorType = "horror">>
+<<elseif $activeSlave.devotion <= -20 && $activeSlave.trust >= 20>>
+	<<set $traitorType = "defiant">>
+<<else>>
+	<<set $traitorType = "standard">>
+<</if>>
+
+One fine day, as normal as any day surrounded by your slaves can be, you're sitting at your desk when
+<<if $traitorType == "agent">>
+	$activeSlave.slaveName comes bursting into your office. $He crashes into your desk and
+	<<if !canTalk($activeSlave)>>
+		gestures
+	<<elseif ($activeSlave.lips > 70)>>
+		lisps through $his huge lips
+	<<elseif ($activeSlave.lipsPiercing+$activeSlave.tonguePiercing > 2)>>
+		lisps through $his piercings
+	<<else>>
+		shouts
+	<</if>>
+	that several nondescript citizens $he sees occasionally at work have passed messages to $him this morning. Apparently, they simply asked whether $he wished to be free and the absurdity of it spurred $him to alert you. Even more unusual is the unannounced message waiting in your inbox — a message $assistant.name totally failed to inform you of. When asked,
+<<else>>
+	a message comes in. <<= capFirstChar($assistant.name)>> totally fails to announce it, which is unusual; when you ask _himA why not,
+<</if>>
+
+_heA replies
+<<if $assistant.personality > 0>>
+	flirtatiously, "What message, <<= properTitle()>>?"
+	<<switch $assistant.appearance>>
+	<<case "monstergirl">>
+		_HisA avatar's tentacle hair wiggles with incomprehension.
+	<<case "shemale">>
+		_HisA avatar looks frustrated, _hisA hard-on wilting.
+	<<case "amazon">>
+		_HisA avatar gives a little shriek of frustration.
+	<<case "businesswoman">>
+		_HisA avatar wears an unaccustomed look of frustration.
+	<<case "fairy" "pregnant fairy">>
+		_HisA avatar crosses _hisA arms and ponders while hovering in the air.
+	<<case "goddess">>
+		_HisA avatar looks concerned without _hisA usual sultry overtone.
+	<<case "hypergoddess">>
+		_HisA avatar looks concerned without _hisA usual sultry overtone.
+	<<case "loli">>
+		_HisA avatar seems eager to be out of your sight.
+	<<case "preggololi">>
+		_HisA avatar rubs _hisA belly while looking extremely concerned.
+	<<case "angel">>
+		_HisA avatar's wings droop as a worried look crosses _hisA face.
+	<<case "cherub">>
+		A concerned look forms on _hisA face as _heA hovers nearby.
+	<<case "incubus">>
+		_HisA avatar looks frustrated, _hisA hard-on wilting.
+	<<case "succubus">>
+		_HeA stops teasing you, a concerned look forming on _hisA pretty face.
+	<<case "imp">>
+		A concerned look forms on _hisA face as _heA hovers nearby.
+	<<case "witch">>
+		A look of worry spreads across _hisA face; a lingering dread that _heA did something bad.
+	<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+		_HisA avatar twitches slightly before sprouting multiple eyes facing all directions.
+	<<case "schoolgirl">>
+		_HisA avatar puts on such a hard look of concentration that _hisA eyes cross.
+	<<default>>
+		_HisA symbol avatar spins with frustration.
+	<</switch>>
+<<else>>
+	"You have received no messages in the past thirty seconds, <<= properTitle()>>."
+<</if>>
+This is disturbing, to say the least. After close investigation, it appears someone has managed to plant a simple text message in your mail system without $assistant.name or any of your other security systems taking any notice. Worse, your mysterious correspondent seems willing to show off this ability in this petty display rather than simply sending a message anonymously.
+
+<br><br>
+
+"You will immediately free $activeSlave.slaveName," it reads. "This is the price of your continued survival. Agree and you buy yourself a few more moments at the top of your heap of shit. Refuse, and you shall fall that much sooner." The message is signed "The Daughters of Liberty."
+
+<br><br>
+<<run Enunciate($activeSlave)>>
+<<setLocalPronouns $activeSlave>>
+
+<<if $traitorType == "agent">>
+
+	$activeSlave.slaveName is left aghast at the contents of the message, but quickly composes $himself and
+	<<if !canTalk($activeSlave)>>
+		gestures there may be an opportunity here; they'd likely take $him in if $he were freed and $he could serve you from within the group as a double agent.
+	<<else>>
+		<<say>>s, "I think I have an idea, <<Master>>. They'll likely take me in if you were to 'free' me and, from there, maybe I could feed you information, <<Master>>. I could help e<<x>>po<<s>>e them to you and they'd be none the wi<<s>>er of the mi<<s>>take they've made."
+	<</if>>
+
+	<br><br>
+
+	<span id="result">
+	<<link "Let $him go">> /* do not set $nextLink to AS Dump for this option because we call Remove activeSlave */
+		<<set $nextButton = "Continue">><<UpdateNextButton>> /* unlock Continue button */
+		<<replace "#result">>
+		You inform $him that $he may act as a double agent for you. $He nods and hurries out of the penthouse. $He wanders down through the arcology, attracting little notice. One moment the monitors have $him struggling through a dense-packed crowd, and the next, they don't.
+		<<if $activeSlave.intelligence+$activeSlave.intelligenceImplant < 10>>
+			$He isn't the brightest slave, but $he means well. Hopefully this will not come back to bite you.
+		<<else>>
+			$He is smart enough to likely do some damage to the group shadowing you, at the very least.
+		<</if>>
+		<<if $activeSlave.relationship > 0>>
+			<<set $i = $slaveIndices[$activeSlave.relationshipTarget]>>
+			<<set $activeSlave.relationshipTarget = 0, $activeSlave.relationship = 0>>
+			<<if def $i>><<set $slaves[$i].relationshipTarget = 0, $slaves[$i].relationship = 0>><<else>>@@.red;Error, relationshipTarget not found.@@<</if>>
+		<</if>>
+		<<set $traitorWeeks = 1>>
+		<<set $traitor = clone($activeSlave)>>
+		<<set $traitor.assignment = "rest">>
+		<<set $traitor.pregControl = "none">>
+		<<set $traitor.inflation = 0, $traitor.inflationType = "none", $traitor.inflationMethod = 0, SetBellySize($traitor)>>
+		<<set $traitorStats = {PCpregSource: 0, PCmother: 0, PCfather: 0, traitorMother: [], traitorFather: [], traitorPregSources: [], traitorMotherTank: [], traitorFatherTank: [], traitorBody: 0}>>
+		<<if $familyTesting == 1>>
+			<<if $traitor.ID == $PC.pregSource>>
+				<<set $traitorStats.PCpregSource = $traitor.ID>>
+			<</if>>
+			<<if $PC.mother == $traitor.ID>>
+				<<set $traitorStats.PCmother = $traitor.ID>>
+			<</if>>
+			<<if $PC.father == $traitor.ID>>
+				<<set $traitorStats.PCfather = $traitor.ID>>
+			<</if>>
+			<<for _pur = 0; _pur < $slaves.length; _pur++>>
+				<<if $slaves[_pur].ID != $traitor.ID>>
+					<<if $slaves[_pur].mother == $traitor.ID>>
+						<<set $traitorStats.traitorMother.push($slaves[_pur].ID)>>
+					<</if>>
+					<<if $slaves[_pur].father == $traitor.ID>>
+						<<set $traitorStats.traitorFather.push($slaves[_pur].ID)>>
+					<</if>>
+					<<if $traitor.ID == $slaves[_pur].pregSource>>
+						<<set $traitorStats.traitorPregSources.push($slaves[_pur].ID)>>
+					<</if>>
+				<</if>>
+			<</for>>
+			<<if $incubator > 0>>
+				<<for _z = 0; _z < $tanks.length; _z++>>
+					<<if $traitor.ID == $tanks[_z].mother>>
+						<<set $traitorStats.traitorMotherTank.push($slaves[_z].ID)>>
+					<</if>>
+					<<if $traitor.ID == $tanks[_z].father>>
+						<<set $traitorStats.traitorFatherTank.push($slaves[_z].ID)>>
+					<</if>>
+				<</for>>
+			<</if>>
+			<<if $nursery > 0>>
+				<<for _z = 0; _z < $cribs.length; _z++>>
+					<<if $traitor.ID == $cribs[_z].mother>>
+						<<set $traitorStats.traitorMotherTank.push($slaves[_z].ID)>>
+					<</if>>
+					<<if $traitor.ID == $cribs[_z].father>>
+						<<set $traitorStats.traitorFatherTank.push($slaves[_z].ID)>>
+					<</if>>
+				<</for>>
+			<</if>>
+			<<set $traitor.sisters = 0, $traitor.daughters = 0>>
+		<<else>>
+			<<for _pur = 0; _pur < $slaves.length; _pur++>>
+				<<if $slaves[_pur].ID != $traitor.ID>>
+					<<if $traitor.ID == $slaves[_pur].pregSource>>
+						<<set $traitorStats.traitorPregSources.push($slaves[_pur].ID)>>
+					<</if>>
+				<</if>>
+			<</for>>
+		<</if>>
+		<<if $traitor.bodySwap > 0>>
+			<<set _myBody = $slaves.findIndex(function(s) { return s.origBodyOwnerID == $traitor.ID; })>>
+			<<if _myBody != -1>>
+				<<set $traitorStats.traitorBody = $slaves[_myBody].ID>>
+			<</if>>
+		<</if>>
+		<<= removeActiveSlave()>>
+		<</replace>>
+	<</link>>
+	<br><<link "Tell $him to ignore the Daughters in the future">>
+		<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "Random Nonindividual Event">><<UpdateNextButton>> /* unlock Continue button */
+		<<replace "#result">>
+		$activeSlave.slaveName nods $his head in acceptance. There is too much at stake to take such a risk. All attempts to use your monitoring systems to find the citizens who contacted $him fail; it seems their ability to corrupt your systems is considerable. $He keeps $his lips shut tight in an effort to prevent rumors from spreading, but @@.mediumorchid;whispers of freedom@@ still manage to run through your chattel.
+		<<run $slaves.forEach(function(s) { s.devotion -= 5; })>>
+		<</replace>>
+	<</link>>
+	</span>
+
+<<else>>
+
+	You call $activeSlave.slaveName in and politely inquire as to whether $he knows anything about the matter.
+	<<if $traitorType == "horror">>
+		$He breaks down in tears at the mention of it and barely manages to tell you that several nondescript citizens $he sees occasionally at work have passed a few messages to $him. Apparently, they simply asked whether $he wished to be free. Asked whether $he does in fact wish to be free, $he sobs a yes.
+	<<elseif $traitorType == "defiant">>
+		$He stands $his ground and
+		<<if !canTalk($activeSlave)>>
+			gestures
+		<<elseif ($activeSlave.lips > 70)>>
+			lisps through $his huge lips,
+		<<elseif ($activeSlave.lipsPiercing+$activeSlave.tonguePiercing > 2)>>
+			lisps through $his piercings,
+		<<else>>
+			shouts,
+		<</if>>
+		<<if !canTalk($activeSlave)>>
+			you'll free $him if you know what's good for you.
+		<<else>>
+			"I'm going to walk out of thi<<s>> <<sh>>ithole or you're going to die a <<s>>low, de<<s>>erved death. That enough for you?"
+		<</if>>
+	<<else>>
+		$He nearly flees in terror, but gathers $his courage and
+		<<if !canTalk($activeSlave)>>
+			gestures meekly
+		<<elseif ($activeSlave.lips > 70)>>
+			lisps meekly through $his huge lips
+		<<elseif ($activeSlave.lipsPiercing+$activeSlave.tonguePiercing > 2)>>
+			lisps meekly through $his piercings
+		<<else>>
+			mumbles meekly
+		<</if>>
+		that several nondescript citizens $he sees occasionally at work have passed a few messages to $him. Apparently, they simply asked whether $he wished to be free. Asked whether $he does in fact wish to be free, $he
+		<<if !canTalk($activeSlave)>>
+			shakily gestures an apology, and admits that $he does.
+		<<else>>
+			<<if SlaveStatsChecker.checkForLisp($activeSlave)>>
+				lisps faintly,
+			<<else>>
+				mutters faintly,
+			<</if>>
+			"I'm <<s>>orry, <<Master>>. Ye<<s>>."
+		<</if>>
+	<</if>>
+
+	<br><br>
+
+	<span id="result">
+	<<link "Free $him">> /* do not set $nextLink to AS Dump for this option because we call Remove activeSlave */
+		<<set $nextButton = "Continue">><<UpdateNextButton>> /* unlock Continue button */
+		<<replace "#result">>
+		You calmly inform $him that $he's free to go.
+		<<if $traitorType != "defiant">>
+			$He almost collapses with shock, but turns and hurries out of the penthouse, tears streaming from $his eyes.
+		<<else>>
+			$He lets out a single harsh laugh and hurries out of the penthouse.
+		<</if>>
+		$He wanders down through the arcology, attracting little notice. One moment the monitors have $him struggling through a dense-packed crowd, and the next, they don't.
+		<<if $activeSlave.relationship > 0>>
+			<<set $i = $slaveIndices[$activeSlave.relationshipTarget]>>
+			<<set $activeSlave.relationshipTarget = 0, $activeSlave.relationship = 0>>
+			<<if def $i>><<set $slaves[$i].relationshipTarget = 0, $slaves[$i].relationship = 0>><<else>>@@.red;Error, relationshipTarget not found.@@<</if>>
+		<</if>>
+		<<set $traitorWeeks = 1>>
+		<<set $traitor = clone($activeSlave)>>
+		<<set $traitor.assignment = "rest">>
+		<<set $traitor.pregControl = "none">>
+		<<set $traitor.inflation = 0, $traitor.inflationType = "none", $traitor.inflationMethod = 0, SetBellySize($traitor)>>
+		<<set $traitorStats = {PCpregSource: 0, PCmother: 0, PCfather: 0, traitorMother: [], traitorFather: [], traitorPregSources: [], traitorMotherTank: [], traitorFatherTank: [], traitorBody: 0}>>
+		<<if $familyTesting == 1>>
+			<<if $traitor.ID == $PC.pregSource>>
+				<<set $traitorStats.PCpregSource = $traitor.ID>>
+			<</if>>
+			<<if $PC.mother == $traitor.ID>>
+				<<set $traitorStats.PCmother = $traitor.ID>>
+			<</if>>
+			<<if $PC.father == $traitor.ID>>
+				<<set $traitorStats.PCfather = $traitor.ID>>
+			<</if>>
+			<<for _pur = 0; _pur < $slaves.length; _pur++>>
+				<<if $slaves[_pur].ID != $traitor.ID>>
+					<<if $slaves[_pur].mother == $traitor.ID>>
+						<<set $traitorStats.traitorMother.push($slaves[_pur].ID)>>
+					<</if>>
+					<<if $slaves[_pur].father == $traitor.ID>>
+						<<set $traitorStats.traitorFather.push($slaves[_pur].ID)>>
+					<</if>>
+					<<if $traitor.ID == $slaves[_pur].pregSource>>
+						<<set $traitorStats.traitorPregSources.push($slaves[_pur].ID)>>
+					<</if>>
+				<</if>>
+			<</for>>
+			<<if $incubator > 0>>
+				<<for _z = 0; _z < $tanks.length; _z++>>
+					<<if $traitor.ID == $tanks[_z].mother>>
+						<<set $traitorStats.traitorMotherTank.push($slaves[_z].ID)>>
+					<</if>>
+					<<if $traitor.ID == $tanks[_z].father>>
+						<<set $traitorStats.traitorFatherTank.push($slaves[_z].ID)>>
+					<</if>>
+				<</for>>
+			<</if>>
+			<<if $nursery > 0>>
+				<<for _z = 0; _z < $cribs.length; _z++>>
+					<<if $traitor.ID == $cribs[_z].mother>>
+						<<set $traitorStats.traitorMotherTank.push($slaves[_z].ID)>>
+					<</if>>
+					<<if $traitor.ID == $cribs[_z].father>>
+						<<set $traitorStats.traitorFatherTank.push($slaves[_z].ID)>>
+					<</if>>
+				<</for>>
+			<</if>>
+			<<set $traitor.sisters = 0, $traitor.daughters = 0>>
+		<<else>>
+			<<for _pur = 0; _pur < $slaves.length; _pur++>>
+				<<if $slaves[_pur].ID != $traitor.ID>>
+					<<if $traitor.ID == $slaves[_pur].pregSource>>
+						<<set $traitorStats.traitorPregSources.push($slaves[_pur].ID)>>
+					<</if>>
+				<</if>>
+			<</for>>
+		<</if>>
+		<<if $traitor.bodySwap > 0>>
+			<<set _myBody = $slaves.findIndex(function(s) { return s.origBodyOwnerID == $traitor.ID; })>>
+			<<if _myBody != -1>>
+				<<set $traitorStats.traitorBody = $slaves[_myBody].ID>>
+			<</if>>
+		<</if>>
+		<<= removeActiveSlave() >>
+		<</replace>>
+	<</link>>
+	<br><<link "Tell $him to ignore the Daughters in the future">>
+		<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "Random Nonindividual Event">><<UpdateNextButton>> /* unlock Continue button */
+		<<replace "#result">>
+		<<if $traitorType != "defiant">>
+			$activeSlave.slaveName almost @@.mediumorchid;faints with relief@@ when it becomes apparent you aren't going to punish $him for speaking of freedom.
+		<<else>>
+			$activeSlave.slaveName merely @@.mediumorchid;smirks@@ when it becomes apparent you aren't going to punish $him for $his transgressions.
+		<</if>>
+		All attempts to use your monitoring systems to find the citizens who contacted $him fail; it seems their ability to corrupt your systems is considerable. @@.mediumorchid;Whispers of freedom@@ run like wildfire amongst your slaves.
+		<<run $slaves.forEach(function(s) { s.devotion -= 10; })>>
+		<<set $activeSlave.devotion -= 15>>
+		<</replace>>
+	<</link>>
+	<br><<link "Publicly flog $him for treasonous conversation">>
+		<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "Random Nonindividual Event">><<UpdateNextButton>> /* unlock Continue button */
+		<<replace "#result">>
+		You announce that a treasonous slave will be publicly flogged. Treason is understood in the Free Cities to be activity that tends to undermine slavery, and public interest is considerable when $activeSlave.slaveName is dragged out into a public atrium and secured to a post. You do your duty; the one that passes the sentence should swing the lash. The ordeal is long and bloody. The populace understand the necessity of the punishment, though they are @@.red;disturbed@@ that such a thing could happen in your penthouse of all places. The effect on $activeSlave.slaveName's health @@.red;is serious,@@ and $he is @@.gold;terrified of failing you again.@@
+		<<set $activeSlave.trust -= 15>>
+		<<run repX(-500, "event", $activeSlave), healthDamage($activeSlave, 30)>>
+		<</replace>>
+	<</link>>
+	<br><<link "Chemically lobotomize $him to extirpate any record of the incident">>
+		<<set $nextButton = "Continue", $nextLink = "AS Dump", $returnTo = "Random Nonindividual Event">><<UpdateNextButton>> /* unlock Continue button */
+		<<replace "#result">>
+		You inform $activeSlave.slaveName that $he is to return to $his duties, which $he does, mystified. Later in the day $he finds $himself scheduled for surgery, and meekly goes. As $he feels the cool touch of the injector, loaded with powerful chemical lobotomizing agents, $he looks up at the camera above the autosurgery with a hint of <<if $traitorType != "defiant">>resigned apology<<else>>regret<</if>> in $his eyes. When $he is released from the surgery's care a few hours later, the hint is gone. @@.red;As is everything.@@
+		<<set $activeSlave.fetish = "mindbroken">>
+		<</replace>>
+	<</link>>
+	<<if $arcologies[0].FSPaternalist == "unset" && $seeExtreme == 1>>
+		<br><<link "Publicly execute $him">>
+			<<set $nextButton = "Continue", $returnTo = "Random Nonindividual Event">><<UpdateNextButton>> /* unlock Continue button */
+			<<replace "#result">>
+			You announce that a treasonous slave will be publicly executed. Treason is understood in the Free Cities to be activity that tends to undermine slavery, and public interest is considerable when $activeSlave.slaveName is dragged out into a public atrium and <<if $arcologies[0].FSAztecRevivalist !== "unset">>has $his heart cut out of $his living body<<elseif $arcologies[0].FSEdoRevivalist !== "unset">>is boiled alive<<elseif $arcologies[0].FSRomanRevivalist !== "unset">>is crucified and left hanging until $he perishes<<else>>is summarily hanged<</if>>. The populace understands the necessity of the punishment, though they are @@.red;disturbed@@ that such a thing could happen in your penthouse of all places. The surviving slaves are @@.gold;terrified@@ at the display, but at least you can be sure they will remember the price of failing you.
+			<<run repX(-500, "event", $activeSlave)>>
+			<<run $slaves.forEach(function(s) { s.trust -= 10 + random(10); })>>
+			<<= removeActiveSlave() >>
+			<</replace>>
+		<</link>>
+	<</if>>
+	</span>
+<</if>>

@@ -1,0 +1,133 @@
+:: newSlaveIncestSex [nobr]
+
+<br><br>
+
+
+<<set _clothesTemp = $relative.clothes, $relative.clothes = "no clothing">>
+<<set _clothesTemp2 = $relative2.clothes, $relative2.clothes = "no clothing">>
+<span id="artFrame">
+/* 000-250-006 */
+<<if $seeImages == 1>>
+	<div class="imageColumn">
+		<div class="imageRef medImg">
+			<<= SlaveArt($relative, 2, 0)>>
+		</div>
+		<div class="imageRef medImg">
+			<<= SlaveArt($relative2, 2, 0)>>
+		</div>
+	</div>
+<</if>>
+/* 000-250-006 */
+</span>
+<<set $relative.clothes = _clothesTemp>>
+<<set $relative2.clothes = _clothesTemp2>>
+
+<<setLocalPronouns $relative>>
+<<setLocalPronouns $relative2 2>>
+
+/* setup identifiers */
+<<set _one = relativeTerm($relative2, $relative)>> /* relative is relative2's blank */
+<<set _other = relativeTerm($relative, $relative2)>> /* relative2 is relative's blank */
+
+<<if _one == _other>>
+/* two sisters / brothers: identify by age, in the case of same age twins check their birthWeek */
+	<<if $relative.actualAge == $relative2.actualAge>>
+		<<if $relative.birthWeek >= $relative2.birthWeek>>
+			<<set _onelong = "older "+_one >>
+			<<set _otherlong = "younger "+_other >>
+		<<elseif $relative.birthWeek < $relative2.birthWeek>>
+			<<set _onelong = "younger "+_one >>
+			<<set _otherlong = "older "+_other >>
+		<</if>>
+	<<elseif $relative.actualAge > $relative2.actualAge>>
+		<<set _onelong = "older "+_one >>
+		<<set _otherlong = "younger "+_other >>
+	<<elseif $relative.actualAge < $relative2.actualAge>>
+		<<set _onelong = "younger "+_one >>
+		<<set _otherlong = "older "+_other >>
+	<</if>>
+<<else>>
+	<<set _onelong = _one>>
+	<<set _otherlong = _other>>
+<</if>>
+
+/* prepare some text passages based on options */
+<<set _actions = [] >>
+<<set _secretions = [] >>
+<<set _genitals = [] >>
+<<if ($relative.dick == 0) || ($relative2.dick == 0) >>
+	/* at least one vagina is present */
+	<<run _actions.push("clit-flinging tongue-action") >> /* TODO: check oral skill of slaves */
+	<<run _secretions.push("femcum") >>
+	<<run _genitals.push("licked wet cunt") >>
+<</if>>
+<<if ($relative.dick != 0) || ($relative2.dick != 0) >>
+	/* at least one penis is present */
+	<<run _actions.push("nose-pressed-against-balls deep-throats") >> /* TODO: check oral skill of slaves */
+	<<run _secretions.push("semen") >>
+	<<run _genitals.push("limp dangling cock") >>
+<</if>>
+<<if _genitals.length == 1 >>
+	<<set _genitals = _genitals[0]+"s" >>
+<<else>>
+	<<set _genitals = _genitals.join(" and ") >>
+<</if>>
+
+<<if $debugMode >>
+RELATIVE SLAVE (FIRST): <br>
+_one ($relative.relation) <br>
+$relative.physicalAge <br>
+_oneshe / _oneher <br>
+RELATIVE2 SLAVE (SECOND): <br>
+_other ($relative2.relation) <br>
+$relative2.physicalAge <br>
+_othershe / _otherher <br>
+<</if>>
+
+<span id="result">
+<<link "Order them to demonstrate their love for each other">>
+<<replace "#result">>
+Now that you own them, you want to see proof of their love for each other. You order the <<if _one == "twin">>twins<<elseif _one == _other>><<= $sister>>s<<else>>_one and _other<</if>> to perform mutual oral sex in front of you.
+Hesitantly, they assume the 69 position on your couch. They have either never done this in front of a stranger or have never had sex this way before. You remind them that they are sex slaves now. They need to follow all orders, including sexual ones, so this is a relatively gentle start.
+<br><br>
+<<if _one == "twin">>One _one<<else>>The _onelong<</if>> shows more boldness as $he lowers $his head towards $his _otherlong's privates.
+<<if $relative2.dick == 0 >>
+	Carefully, $he spreads $his _other's labia. Then $he continues to give $his _other's exposed pussy a few experimental licks. At first, $his efforts seem to be futile, but after a while the _otherlong's clit becomes engorged and _his2 juices start flowing.
+<<else>>
+	Uncertain, $he grabs $his <<if _other == "twin">>_other<<else>>_otherlong<</if>>'s penis. Then $he puts $his _other's flaccid member into $his mouth and gives it an experimental suck. At first, $his efforts seem to be futile, but after a while the _otherlong sports a nice, hard erection.
+<</if>>
+As the _other's arousal grows, _he2 becomes more eager to please _his2 _onelong, too. Going down on _his2's lover's genitals, _he2 starts to mimic $his ministrations.
+<<if ($relative.dick == 0) != ($relative2.dick == 0) >>
+	Of course, _he2 has to adapt _his2 actions <<if $relative.dick == 0 >>from the feelings on _his2 dick to the pussy pressed against _his2 lips.<<else>>from the feelings at _his2 pussy to the dick in _his2 mouth.<</if>>
+<</if>>
+<br><br>
+You can tell how uncomfortable they are with you watching them, but as they become increasingly worked up, they lose their inhibitions. Soon, you are watching some fairly enthralling <<print $RecETSevent.replace("incest","") >> incest action at your office<<if _actions.length >>, including some enthusiastic <<print _actions.join(" and ")>><</if>>. Eventually, they bring each other to impressive mutual orgasms. Their lusty moans are muffled only by each others' crotches. Spent, exhausted, and with their faces covered in each others <<print _secretions.join(" and ")>>, they untangle to rest comfortably on your couch.
+<br><br>
+You indicate them to present themselves to you. Still shaking from the aftershocks of their orgasms, they stand side by side in front of you, panting, naked and with their _genitals dripping mixed juices. You simply nod, showing your approval. They are visibly relieved, and not only sexually. They are more confident of having made the right choice in enslaving themselves to you, since you seem @@.mediumaquamarine;trustworthy@@ and @@.hotpink;sympathetic.@@ They hug again, kissing and licking the sexual fluids off each others' stained faces.
+<</replace>>
+<<set $relative.devotion += 4>>
+<<set $relative.trust += 4>>
+<<set $relative.counter.oral += 1>>
+<<set $oralTotal += 1>>
+<<set $relative2.devotion += 4>>
+<<set $relative2.trust += 4>>
+<<set $relative2.counter.oral += 1>>
+<<set $oralTotal += 1>>
+<</link>>
+
+/*
+<<link "Show them how cruel life in your arcology can be">>
+TODO: this needs to be written
+<<replace "#result">>
+<</replace>>
+<<set $relative.devotion -= 4>>
+<<set $relative.trust -= 4>>
+<<set $relative.counter.oral += 1>>
+<<set $oralTotal += 1>>
+<<set $relative2.devotion -= 4>>
+<<set $relative2.trust -= 4>>
+<<set $relative2.counter.oral += 1>>
+<<set $oralTotal += 1>>
+<</link>>
+*/
+</span>

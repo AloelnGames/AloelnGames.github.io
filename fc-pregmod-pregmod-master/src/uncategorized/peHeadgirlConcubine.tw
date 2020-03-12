@@ -1,0 +1,453 @@
+:: PE headgirl concubine [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "RIE Eligibility Check", $returnTo = "RIE Eligibility Check">>
+
+<<set _headGirl = $slaveIndices[$HeadGirl.ID]>>
+<<set _concubine = $slaveIndices[$Concubine.ID]>>
+<<setLocalPronouns $HeadGirl>>
+<<set _belly = bellyAdjective($HeadGirl)>>
+<<setLocalPronouns $Concubine 2>>
+<<set _bellyCon = bellyAdjective($Concubine)>>
+<<setAssistantPronouns>>
+
+<span id="artFrame">
+	/* 000-250-006 */
+	<<if $seeImages == 1>>
+		<div class="imageColumn">
+			<div class="imageRef medImg">
+				<<= SlaveArt($HeadGirl, 2, 0)>>
+			</div>
+			<div class="imageRef medImg">
+				<<= SlaveArt($Concubine, 2, 0)>>
+			</div>
+		</div>
+	<</if>>
+	/* 000-250-006 */
+</span>
+
+You wake up one morning to find $HeadGirl.slaveName and $Concubine.slaveName waiting next to your bed. It's immediately obvious that they both have a minor item of business for you, since nothing was urgent enough to wake you early, and they evidently both came in to catch you at your normal hour of rising. They're kneeling side by side next to the
+<<if $HeadGirl.boobs >= 10000 && $Concubine.boobs >= 10000>>
+	bed (a position that smashes their massive breasts together on one side),
+<<elseif $HeadGirl.belly >= 45000 && $Concubine.belly >= 45000>>
+	bed (a position that forces their swollen middles to compete for space),
+<<elseif $HeadGirl.butt > 5 && $Concubine.butt > 5>>
+	bed (a position that smashes their massive asses together on one side),
+<<else>>
+	bed,
+<</if>>
+and it's also obvious that they've been filling the few minutes they've been waiting for you to wake up by making out. Their lips are moist, $Concubine.slaveName's $Concubine.skin cheeks are a little flushed, and there's even a little unnoticed strand of saliva running from _his2 mouth to $HeadGirl.slaveName's. They both look at you expectantly, wondering whether to speak up or save their questions for after you take a moment to get ready for your day.
+
+<br><br>
+
+<span id="result">
+<<link "Get right to work">>
+	<<replace "#result">>
+	You didn't get to where you are by lying around on the job. You <<if $PC.belly < 5000>>spring<<elseif $PC.belly < 10000>>pull yourself<<else>>slowly slip your gravid bulk<</if>> out of bed and head straight towards your office and its desk to get some work done with your first rush of morning energy before your ablutions. Your Head Girl and Concubine follow along behind you;
+	$HeadGirl.slaveName does $his best to keep up, because the sight of your
+	<<if $HeadGirl.fetish == "pregnancy" && $PC.belly >= 10000>>
+		increasingly large baby bump and motherly waddle
+	<<elseif $HeadGirl.fetish == "cumslut" && $PC.balls >= 20>>
+		over-burdened scrotum in motion as you walk
+	<<elseif $HeadGirl.attrXX > 65 && $HeadGirl.attrXY > 65 && $PC.dick != -1 && ($PC.boobs >= 650 || $PC.title == 0 || $PC.vagina != -1)>>
+		dangling penis
+		<<if $PC.boobs >= 650>>
+			and bouncing boobs
+		<<elseif $PC.vagina != -1>>
+			and a hint of the pussy under it
+		<<else>>
+			on such a feminine body
+		<</if>>
+		in motion as you walk
+	<<elseif $HeadGirl.attrXY > 65>>
+		<<if $PC.dick != 0>>
+			dangling penis
+		<<elseif $PC.title == 1>>
+			masculine body nude
+		<<else>>
+			beloved body nude
+		<</if>>
+		in motion as you walk
+	<<elseif $HeadGirl.attrXX > 65>>
+		<<if $PC.boobs >= 300>>
+			<<if $PC.boobs >= 1400>>
+				huge boobs from behind
+			<<else>>
+				bare boobs
+			<</if>>
+		<<elseif $PC.vagina != -1 && $PC.dick == 0>>
+			bare pussy
+		<<elseif $PC.vagina != -1 && $PC.dick != 0>>
+			bare pussy under your maleness
+		<<elseif $PC.title == 0>>
+			feminine body
+		<<else>>
+			beloved body nude
+		<</if>>
+		in motion as you walk
+	<<else>>
+		beloved body nude in motion as you walk
+	<</if>>
+	is something $he openly enjoys, while $Concubine.slaveName at least tries to be a little more modest. You sit down at your desk, taking in the situation in your domain at a glance as $assistant.name
+	<<switch $assistant.appearance>>
+	<<case "monstergirl">>
+		springs into monstrous life on the glass desktop, eyes flashing and hair writhing.
+	<<case "shemale">>
+		pops up on the glass desktop, helicoptering _hisA dick while _heA waits for instructions.
+	<<case "amazon">>
+		appears to smash through the glass desktop, landing in a crouch to wait for orders.
+	<<case "businesswoman">>
+		appears on the glass desktop, sitting primly in _hisA own chair and waiting for instructions.
+	<<case "fairy">>
+		appears on the glass desktop, pressing _hisA face against the screen.
+	<<case "pregnant fairy">>
+		appears on the glass desktop, gingerly pressing _hisA face and belly against the screen.
+	<<case "goddess">>
+		gleams into existence on the glass desktop, reclining in a glow of maternal glory while _heA waits for direction.
+	<<case "hypergoddess">>
+		gleams into existence on the glass desktop, shifting _hisA gravid bulk so that it rests firmly on your desk.
+	<<case "loli">>
+		appears on the glass desktop, facing away from you. _HeA spins around with a start, a finger up _hisA nose, before quickly brushing _himselfA off and pretending _heA wasn't doing anything.
+	<<case "preggololi">>
+		appears on the glass desktop, idly stroking _hisA pregnancy as _heA awaits your command.
+	<<case "schoolgirl">>
+		appears on the glass desktop, sitting in _hisA own chair and waiting for instructions with _hisA legs spread a little wide for such a short skirt.
+	<<case "angel">>
+		appears on the glass desktop, spreads _hisA wings and stretches before taking a seat and waiting for instructions.
+	<<case "cherub" "imp">>
+		flutters into view on the glass desktop, hovering above the ground while awaiting instructions.
+	<<case "incubus">>
+		appears on the glass desktop, idly stroking _hisA erection and trying to catch your attention.
+	<<case "succubus">>
+		appears on the glass desktop and presses _hisA tits against the screen.
+	<<case "witch">>
+		suddenly appears on the glass desktop; _heA gasps and covers _himselfA when _heA realizes _hisA clothes didn't teleport with _himA.
+	<<case "ERROR_1606_APPEARANCE_FILE_CORRUPT">>
+		slowly coalesces together to form _hisA usual feminine figure and standing their blankly waiting for instruction.
+	<<default>>
+		appears as a glowing icon on the glass desktop, awaiting instructions.
+	<</switch>>
+	<br><br>
+	You look at $HeadGirl.slaveName, standing across the desk from you, and $he takes the cue and goes first. $He asks your permission to make a couple of last-minute changes to slaves' assignments for the day, and you ask about a couple of minor efficiency issues before giving $him the go ahead. Meanwhile, $Concubine.slaveName kneels beside your chair, resting _his2 <<if $Concubine.bald == 0 && $Concubine.hLength > 0>>$Concubine.hColor<<else>>smooth<</if>> head on your knee, _his2
+	<<if $Concubine.dick > 8>>
+		limp, monstrous cock resting softly against one of your ankles.
+	<<elseif $Concubine.boobs > 10000>>
+		titanic udders a nice cushion against your calves.
+	<<elseif $Concubine.weight > 30>>
+		soft body cushioning nicely against your leg.
+	<<elseif $Concubine.belly >= 100000>>
+		_bellyCon belly resting warmly against your leg.
+	<<elseif $Concubine.boobs > 1000>>
+		heavy breast resting against your calf on that side.
+	<<else>>
+		chest warm against your calf on that side.
+	<</if>>
+	_He2 places a <<if $Concubine.muscles > 50>>strong<<else>>soft<</if>> hand on the inside of your shin and hugs your lower leg, sensual, but companionable rather than sexually insistent.
+	<br><br>
+	Your Head Girl exits, performing the proper formalities and then hurrying off to make sure the reassigned slaves get going. As $he withdraws $he
+	<<if $HeadGirl.relationship <= -2>>
+		has eyes only for you; $he
+	<<elseif $HeadGirl.relationship == -1>>
+		gives $Concubine.slaveName a look up and down, which $his slutty nature obliges $him to give everyone; then $he
+	<<elseif $HeadGirl.relationshipTarget == $Concubine.ID>>
+		<<if $HeadGirl.relationship == 1>>
+			gives $his friend $Concubine.slaveName a smile; then $he
+		<<elseif $HeadGirl.relationship == 2>>
+			gives $his best friend $Concubine.slaveName a smile and a little wave; then $he
+		<<elseif $HeadGirl.relationship == 3>>
+			gives $his fuckbuddy $Concubine.slaveName a flirty wink; then $he
+		<<elseif $HeadGirl.relationship == 4>>
+			blows $his lover $Concubine.slaveName a kiss; then $he
+		<<else>>
+			mouths "I love you" at $his _wife2 $Concubine.slaveName; then $he
+		<</if>>
+	<</if>>
+	<<switch $HeadGirl.fetish>>
+	<<case "submissive">>
+		catches $his lower lip behind $his teeth and gives you a blushing, sexually submissive look
+	<<case "cumslut">>
+		<<if $PC.dick != 0>>focuses on your cock<<else>>looks you in the eye<</if>> and licks $his lips lasciviously
+	<<case "humiliation">>
+		flashes you and blushes artfully
+	<<case "buttslut">>
+		<<if canDoAnal($HeadGirl)>>
+			cocks $his hips, pulls one buttock aside, and winks $his asshole in your direction
+		<<else>>
+			looks you in the eye and gives $his booty a slap
+		<</if>>
+	<<case "boobs">>
+		looks you in the eye and gives $his boobs a little bounce
+	<<case "pregnancy">>
+		looks you in the eye and traces a hand across $his _belly belly
+	<<case "dom">>
+		gives you a cheerful, sexually challenging wink
+	<<case "sadist">>
+		gives you a significant glance, as between sadists,
+	<<case "masochist">>
+		looks at you and gives $his own butt a light slap
+	<<default>>
+		looks at you and adds a bit of extra sway to $his hips
+	<</switch>>
+	on $his way out the door. When $he's gone, your Concubine speaks up from _his2 adoring embrace of your leg. _He2 asks a little aesthetic question about one of your other bedslaves, _his2 <<if $Concubine.voice < 2>>deep voice rumbling against your knee<<elseif $Concubine.voice > 2>>high voice humming against your knee<<else>>feminine voice purring against your knee<</if>>. You chat with _him2 about how you'd like the bedslave to look and act, ideally, and do other work while running your fingers
+	<<if $Concubine.bald == 0 && $Concubine.hLength > 0>>
+		through your Concubine's<<if $Concubine.hLength < 10>> short<</if>> hair.
+	<<else>>
+		along your Concubine's <<if $Concubine.bald == 1>>bald<<else>>shaved<</if>> head.
+	<</if>>
+	Your Head Girl's confident assistance managing your chattel and your Concubine's devoted comfort as you work allows you to @@.yellowgreen;be unusually productive@@ all morning.
+	<<run cashX(5000, "event", $HeadGirl)>>
+	<</replace>>
+<</link>>
+<br><<link "Tease them while they meet with you">>
+	<<replace "#result">>
+	<<run Enunciate($HeadGirl)>>
+	You tell them to go ahead, $HeadGirl.slaveName first, but you flip the sheet back and pat the soft mattress on either side of you while you do. They laugh and clamber on up, $HeadGirl.slaveName first, and $he manages to drag a $HeadGirl.nipples nipple across your
+	<<if $PC.boobs >= 300>>
+		own bare breasts
+	<<elseif $PC.title == 0>>
+		flat chest
+	<<else>>
+		chest
+	<</if>>
+	as $he <<if $PC.belly >= 10000 || $HeadGirl.boobs > 10000 || $HeadGirl.belly >= 5000 || $HeadGirl.dick > 20 || $HeadGirl.balls > 20>>struggles to get<<else>>climbs<</if>> over you. Once $he's situated under the crook of your arm,
+	<<if $HeadGirl.boobs > 25000>>
+		the huge weight of $his boobs pressing against your ribcage,
+	<<elseif $HeadGirl.belly >= 10000>>
+		the huge weight of $his _belly middle pressing against your body,
+	<<elseif $HeadGirl.dick > 4 && canAchieveErection($HeadGirl)>>
+		which presses $his absurd erection against your hip,
+	<<elseif $HeadGirl.dick > 5>>
+		which leaves $his absurd dick resting across your lap,
+	<<elseif $HeadGirl.energy > 95>>
+		making the eager heat between the nympho's legs quite noticeable against your hip,
+	<<else>>
+		$his body warm against you,
+	<</if>>
+	$he clears $his throat and asks your permission to make a couple of last-minute changes to slaves' assignments for the day.
+	<br><br>
+	As $he did so, you were encircling your <<if $girl == _girl2>>$girl<<else>>lover<</if>>s in your <<if $arcologies[0].FSPhysicalIdealist != "unset">>powerful arms<<elseif $PC.title == 1>>dominant grip<<else>>loving grip<</if>>. Cupping your Head Girl's butt in your left hand and your Concubine's in your right, you give them a good squeeze as $HeadGirl.slaveName finishes $his question. $His voice rises cutely as your marauding hand moves over the
+	<<if $HeadGirl.butt > 10>>
+		endless expanse of $his backside. $He manages to finish, but trails off into a groan, the <<if Math.floor($HeadGirl.buttImplant/$HeadGirl.butt) > .60>>firm<<else>>soft<</if>> flesh quivering against your palm.
+	<<else>>
+		place between $his <<if $HeadGirl.butt > 6>>huge<<elseif $HeadGirl.butt > 3>>healthy<<else>>cute<</if>> buttocks and you slowly
+		<<if canDoAnal($HeadGirl)>>
+			press a single malicious finger in against $his <<if $HeadGirl.anus > 2>>loose asspussy<<elseif $HeadGirl.butt > 0>>practiced asshole<<else>>virgin pucker<</if>>. $He manages to finish, but trails off into a groan, the warm, crinkled skin spasming against the teasing digit.
+		<<else>>
+			trace the perimeter of $his chastity. $He manages to finish, but trails off into a groan, $his rump tightening around the invading hand.
+		<</if>>
+	<</if>>
+	<br><br>
+	$Concubine.slaveName laughs at $him and asks _his2 own question, a little aesthetic question about one of your other bedslaves, but something you like to exercise artistic control over. _His2 giggling is cut off as _he2 has to concentrate on getting _his2 words out as you use two fingers to massage and tease the sensitive skin between _his2 ass and <<if $Concubine.vagina > -1>>the start of _his2 cunt<<elseif $Concubine.scrotum > 0>>_his2 ballsack<<else>>the base of _his2 dick<</if>>. It's $HeadGirl.slaveName's turn to laugh, which $he does throatily, $his warm breath gusting deliciously across your <<if $PC.boobs >= 300 || $PC.title == 0>>hardening nipples<<else>>pecs<</if>>. "<<S>>ee, it'<<s>> not ea<<s>>y," $he breathes across you at your Concubine.
+	<br><br>
+	They soon get their revenge as you give them their orders, though, moving their expert hands between your legs to give you a handjob. They do it cooperatively as you continue to play with them, letting you enjoy the delightful sensation of
+	<<if $PC.dick != 0>>
+		two hands working your shaft while
+		<<if $PC.vagina != -1>>
+			another massages your petals and a fourth delves two fingers inside you.
+		<<else>>
+			another tickles your frenulum and a fourth massages your balls.
+		<</if>>
+	<<else>>
+		a hand massaging your petals on either side while another delves two fingers inside you and a fourth pleasures your clit.
+	<</if>>
+	They crane their necks to rain kisses on your chin, neck, <<if $PC.boobs >= 300>>breasts, and nipples,<<elseif $PC.title == 0>>and nipples,<<else>>and chest,<</if>> and on each other's mouths. You <<if $PC.belly < 5000>>spring<<elseif $PC.belly < 10000>>pull yourself<<else>>slowly tip your gravid bulk<</if>> out of bed when you're satisfied, pulling your leadership with you towards the shower, and they @@.mediumaquamarine;trustingly bounce up to follow.@@
+	<<set $slaves[_headGirl].trust += 4, $slaves[_concubine].trust += 4>>
+	<<set $slaves[_headGirl].counter.oral++, $slaves[_concubine].counter.oral++>>
+	<<set $oralTotal += 2>>
+	<</replace>>
+<</link>>
+<<if ((canDoAnal($HeadGirl) && $HeadGirl.anus > 0) || (canDoVaginal($HeadGirl) && $HeadGirl.vagina > 0)) && ((canDoAnal($Concubine) && $Concubine.anus > 0) || (canDoVaginal($Concubine) && $Concubine.vagina > 0)) && $PC.belly+$Concubine.belly < 50000 && $PC.belly+$HeadGirl.belly < 50000>>
+	<br><<link "Double penetrate them while they meet with you">>
+		<<replace "#result">>
+		You sit up and order $HeadGirl.slaveName up onto the bed, on $his back, and while $he's <<if $HeadGirl.energy > 95>>eagerly obeying<<else>>obediently getting situated<</if>>, you tell $Concubine.slaveName to ride $him, reverse cowgirl. $He straddles your Head Girl,
+		<<if $Concubine.butt > 6>>
+			using _his2 hands to situate _his2 huge buttocks.
+		<<elseif $Concubine.belly >= 10000>>
+			making sure _his2 _bellyCon belly is comfortably positioned.
+		<<elseif $Concubine.boobs > 4000>>
+			making _his2 heavy boobs sway deliciously.
+		<<else>>
+			carefully situating _his2 legs astride $HeadGirl.slaveName's hips.
+		<</if>>
+		You plant a hard kiss on $Concubine.slaveName's mouth, pressing _him2 backwards <<if $HeadGirl.belly >= 10000>>into $HeadGirl.slaveName's taut belly <</if>>as you maneuver yourself into place<<if $PC.dick == 0>> and don a strap-on, since there isn't enough space for tribbing to work here<</if>>.
+		<<if (canDoVaginal($Concubine) && $Concubine.vagina > 0)>>
+			/* this is up here to give the PC priority on pregnancy */
+			<<if canImpreg($slaves[_concubine], $PC)>>
+				<<= knockMeUp($slaves[_concubine], 10, 0, -1, 1)>>
+			<</if>>
+			<<set $slaves[_concubine].counter.vaginal++, $vaginalTotal++>>
+			_He2 moans into you as _he2 feels you run <<if $PC.dick == 0>>the cool head of the phallus<<else>>your cockhead<</if>> along _his2<<if $Concubine.labia > 0>> generous<</if>> labia before plunging it inside _him2. Getting the idea, $HeadGirl.slaveName
+			<<if (canPenetrate($HeadGirl))>>
+				<<if (canDoAnal($Concubine) && $Concubine.anus > 0)>>
+					<<if $HeadGirl.dick - $Concubine.anus > 2>>
+						gently pushes $his cock up $Concubine.slaveName's ass, since $he knows your Concubine's anus will be a little tight around $his imposing dick.
+					<<elseif $HeadGirl.dick - $Concubine.anus > 0>>
+						pushes $his cock up $Concubine.slaveName's ass, since $he knows your Concubine can take $his dick without too much trouble.
+					<<else>>
+						shoves $his cock up $Concubine.slaveName's ass, since $he knows your Concubine can take $his dick with ease.
+					<</if>>
+					<<if $PC.dick != 0>>You feel the penetration through $Concubine.slaveName's vaginal walls, an incredible sensation.<</if>>
+					<<if canImpreg($slaves[_concubine], $slaves[_headGirl])>>
+						<<= knockMeUp($slaves[_concubine], 10, 1, $slaves[_headGirl].ID, 1)>>
+					<</if>>
+					<<set $slaves[_concubine].counter.anal++, $analTotal++>>
+				<<else>>
+					gently eases $his cock in beside you.<<if $PC.dick != 0>> The added friction against you in $Concubine.slaveName's vagina feels incredible.<</if>>
+					<<set $slaves[_concubine].counter.vaginal++, $vaginalTotal++>>
+					<<if canImpreg($slaves[_concubine], $slaves[_headGirl])>>
+						<<= knockMeUp($slaves[_concubine], 10, 0, $slaves[_headGirl].ID, 1)>>
+					<</if>>
+				<</if>>
+				<<set $slaves[_headGirl].counter.penetrative++, $penetrativeTotal++>>
+			<<else>>
+				slides a hand down and
+				<<if (canDoAnal($Concubine) && $Concubine.anus > 0)>>
+					<<if $Concubine.anus > 3>>
+						fists $Concubine.slaveName's loose ass, since that's what it takes to fill your Concubine's gaping asspussy.
+					<<elseif $Concubine.anus == 3>>
+						starts to fuck $Concubine.slaveName's soft anus with three fingers.
+					<<elseif $Concubine.anus == 2>>
+						starts to fuck $Concubine.slaveName's asspussy with two fingers.
+					<<else>>
+						starts to fuck $Concubine.slaveName's tight little backdoor with a finger.
+					<</if>>
+					<<if $PC.dick != 0>>You feel the penetration through $Concubine.slaveName's vaginal walls, an incredible sensation.<</if>>
+					<<set $slaves[_concubine].counter.anal++, $analTotal++>>
+				<<else>>
+					gently eases a few fingers in beside you.<<if $PC.dick != 0>> The added sensation in $Concubine.slaveName's vagina feels incredible.<</if>>
+					<<set $slaves[_concubine].counter.vaginal++, $vaginalTotal++>>
+				<</if>>
+			<</if>>
+		<<else>>
+			/* this is up here to give the PC priority on pregnancy */
+			<<if canImpreg($slaves[_concubine], $PC)>>
+				<<= knockMeUp($slaves[_concubine], 10, 1, -1, 1)>>
+			<</if>>
+			<<set $slaves[_concubine].counter.anal += 2, $analTotal += 2>>
+			Getting the idea, $HeadGirl.slaveName
+			<<if (canPenetrate($HeadGirl))>>
+				<<if $HeadGirl.dick - $Concubine.anus > 2>>
+					gently pushes $his cock up $Concubine.slaveName's ass, since $he knows your Concubine's anus will be a little tight around $his imposing dick.
+				<<elseif $HeadGirl.dick - $Concubine.anus > 0>>
+					pushes $his cock up $Concubine.slaveName's ass, since $he knows your Concubine can take $his dick without too much trouble.
+				<<else>>
+					shoves $his cock up $Concubine.slaveName's ass, since $he knows your Concubine can take $his dick with ease.
+				<</if>>
+				Then $he grabs $Concubine.slaveName <<if !hasAnyLegs($Concubine)>>by the stumps<<else>>behind the knee<<if hasBothLegs($Concubine)>>s<</if>><</if>> and spreads _his2 <<if hasBothLegs($Concubine)>>legs<<else>>cheeks<</if>> as far as they'll go, rotating _his2 hips to position _him2 for another phallus up the butt.
+				<<set $slaves[_headGirl].counter.penetrative++, $penetrativeTotal++>>
+				<<if canImpreg($slaves[_concubine], $slaves[_headGirl])>>
+					<<= knockMeUp($slaves[_concubine], 10, 1, $slaves[_headGirl].ID, 1)>>
+				<</if>>
+			<<else>>
+				slides a hand down and
+				<<if $Concubine.anus > 3>>
+					fists $Concubine.slaveName's loose ass, since that's what it takes to fill your Concubine's gaping asspussy.
+				<<elseif $Concubine.anus == 3>>
+					starts to fuck $Concubine.slaveName's soft anus with three fingers.
+				<<elseif $Concubine.anus == 2>>
+					starts to fuck $Concubine.slaveName's asspussy with two fingers.
+				<<else>>
+					starts to fuck $Concubine.slaveName's tight little backdoor with a finger.
+				<</if>>
+				Then $he grabs $Concubine.slaveName behind a knee with $his other hand and rotates _his2 hips to position _him2 for additional anal penetration.
+			<</if>>
+			Your Concubine shivers and moans as _his2 sphincter accommodates <<if $PC.dick != 0>>your cock<<else>>the strap-on<</if>>, too.
+		<</if>>
+		<br><br>
+		You start to fuck _him2, and then ask _him2 what _he2 needed from you. The poor _girl2 has to concentrate hard to remember why _he2's here through the waterfall of sensations, but _he2 manages it eventually, gasping out a little aesthetic question about one of your other bedslaves. You give _him2 _his2 answer and make _him2 repeat it back. When you're satisfied, you grab _his2 <<if !hasAnyLegs($Concubine)>>hips<<else>>ankle<<if hasBothLegs($Concubine)>>s<</if>><</if>> and pull them up, sliding _him2 off your <<if $PC.dick != 0>>pole<<else>>strap-on<</if>> and $HeadGirl.slaveName's <<if (canPenetrate($HeadGirl))>>dick<<else>>penetrating fingers<</if>> with a lovely lewd noise. After appreciating the sight of _his2 well-fucked <<if ((canDoAnal($Concubine) && $Concubine.anus > 0) && (canDoVaginal($Concubine) && $Concubine.vagina > 0))>>holes<<else>>hole<</if>>, you swing _his2 ass over and deposit it on the bed, producing a grunt as the drop forces the wind out of _him2. Grabbing your Head Girl in turn, you yank $him towards you, give the giggling slave a kiss, seize $his
+		<<if $HeadGirl.hips > 2>>
+			breeding
+		<<elseif $HeadGirl.weight > 95>>
+			padded
+		<<elseif $HeadGirl.weight > 10>>
+			plush
+		<<elseif $HeadGirl.hips > 1>>
+			broad
+		<<elseif $HeadGirl.hips >= 0>>
+			curvy
+		<<else>>
+			trim
+		<</if>>
+		hips and lift $him onto $Concubine.slaveName's lap. $He takes
+		<<if (canDoVaginal($HeadGirl) && $HeadGirl.vagina > 0)>>
+			<<if (canDoVaginal($Concubine) && $Concubine.vagina > 0)>>
+				<<if (canDoAnal($HeadGirl) && $HeadGirl.anus > 0)>>
+					$his own double pounding, pussy and ass,
+				<<else>>
+					$his own double pounding,
+				<</if>>
+			<<else>>
+				<<if (canDoAnal($HeadGirl) && $HeadGirl.anus > 0)>>
+					double penetration instead, since unlike your Concubine $he has two lower fuckholes,
+				<<else>>
+					$his own double pounding,
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if (canDoVaginal($Concubine) && $Concubine.vagina > 0)>>
+				double anal instead, since unlike your Concubine
+				<<if $HeadGirl.vagina == -1>>
+					$he only has the one lower fuckhole,
+				<<else>>
+					$his pussy is off limits,
+				<</if>>
+			<<else>>
+				$his own double anal pounding,
+			<</if>>
+		<</if>>
+		while taking $his turn getting instructions. $He manages to ask your permission to make a couple of last-minute changes to slaves' assignments for the day. Having thus given your leadership guidance, you jump up for a shower, crooking a finger to indicate that they should follow. They @@.hotpink;trail obediently after you,@@ a bit sore, their holes dripping
+		<<if ($HeadGirl.vagina > -1) || ($HeadGirl.vagina > -1)>>
+			<<if ($PC.balls > 0) || ($HeadGirl.balls > 0) || ($Concubine.balls > 0)>>
+				cum, pussyjuice, and lube.
+			<<else>>
+				pussyjuice and lube.
+			<</if>>
+		<<else>>
+			<<if ($PC.balls > 0) || ($HeadGirl.balls > 0) || ($Concubine.balls > 0)>>
+				cum and lube.
+			<<else>>
+				lube.
+			<</if>>
+		<</if>>
+		<<set $slaves[_headGirl].devotion += 4, $slaves[_concubine].devotion += 4>>
+		/* sex count cleanup for $HeadGirl since the above block is not pretty */
+		<<if (canDoVaginal($HeadGirl) && $HeadGirl.vagina > 0)>>
+			<<if canImpreg($slaves[_headGirl], $PC)>>
+				<<= knockMeUp($slaves[_headGirl], 10, 0, -1, 1)>>
+			<</if>>
+			<<set $slaves[_headGirl].counter.vaginal++, $vaginalTotal++>>
+			<<if (canPenetrate($Concubine))>>
+				<<if (canDoAnal($HeadGirl) && $HeadGirl.anus > 0)>>
+					<<if canImpreg($slaves[_headGirl], $slaves[_concubine])>>
+						<<= knockMeUp($slaves[_headGirl], 10, 1, $slaves[_concubine].ID, 1)>>
+					<</if>>
+					<<set $slaves[_headGirl].counter.anal++, $analTotal++>>
+				<<else>>
+					<<set $slaves[_headGirl].counter.vaginal++, $vaginalTotal++>>
+					<<if canImpreg($slaves[_headGirl], $slaves[_concubine])>>
+						<<= knockMeUp($slaves[_headGirl], 10, 0, $slaves[_concubine].ID, 1)>>
+					<</if>>
+				<</if>>
+				<<set $slaves[_concubine].counter.penetrative++, $penetrativeTotal++>>
+			<<else>>
+				<<if (canDoAnal($HeadGirl) && $HeadGirl.anus > 0)>>
+					<<set $slaves[_headGirl].counter.anal++, $analTotal++>>
+				<<else>>
+					<<set $slaves[_headGirl].counter.vaginal++, $vaginalTotal++>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if canImpreg($slaves[_headGirl], $PC)>>
+				<<= knockMeUp($slaves[_headGirl], 10, 1, -1, 1)>>
+			<</if>>
+			<<set $slaves[_headGirl].counter.anal += 2, $analTotal += 2>>
+			<<if (canPenetrate($Concubine))>>
+				<<set $slaves[_headGirl].counter.penetrative++, $penetrativeTotal++>>
+				<<if canImpreg($slaves[_headGirl], $slaves[_concubine])>>
+					<<= knockMeUp($slaves[_headGirl], 10, 1, $slaves[_concubine].ID, 1)>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</replace>>
+	<</link>>
+<</if>>
+</span>

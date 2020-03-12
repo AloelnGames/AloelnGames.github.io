@@ -1,0 +1,931 @@
+:: rebellionReport [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Scheduled Event", $showEncyclopedia = 1, $encyclopedia = "Battles">>
+<<set _oldRep = $rep>>
+<<set _oldAuth = $SecExp.core.authority>>
+<<set $enemyLosses = Math.trunc($enemyLosses)>>
+<<if $enemyLosses > $attackTroops>>
+	<<set $enemyLosses = $attackTroops>>
+<</if>>
+<<set $totalKills += $enemyLosses>>
+<<set $losses = Math.trunc($losses)>>
+<<set $rebellionsCount++>>
+<<if $battleResult == 3>>
+	<strong>Victory!</strong>
+	<<set $PCrebWon++>>
+<<elseif $battleResult == -3>>
+	<strong>Defeat!</strong>
+	<<set $PCrebLoss++>>
+<<elseif $battleResult == 2>>
+	<strong>Partial victory!</strong>
+	<<set $PCrebWon++>>
+<<elseif $battleResult == -2>>
+	<strong>Partial defeat!</strong>
+	<<set $PCrebLoss++>>
+<<elseif $battleResult == -1>>
+	<strong>We surrendered</strong>
+	<<set $PCrebLoss++>>
+<</if>>
+<hr>
+
+<<if $slaveRebellion == 1>>
+	Today, <<= asDateString($week, random(0,7))>>, our arcology was inflamed by the fires of rebellion. <<print num(Math.trunc($attackTroops))>> rebels from all over the structure dared rise up against their owners and conquer their freedom through blood. Our defense force, <<print num(Math.trunc(App.SecExp.conflict.troopCount()))>> strong, fought with them street by street
+	<<if $enemyLosses != $attackTroops>>
+		inflicting <<print num(Math.trunc($enemyLosses))>> casualties, while sustaining <<if $losses > 1>><<print num(Math.trunc($losses))>> casualties<<elseif $losses > 0>>a casualty<<else>>zero<</if>> themselves.
+	<<else>>
+		completely annihilating their troops, while sustaining <<if $losses > 1>><<print num(Math.trunc($losses))>> casualties<<elseif $losses > 0>>a casualty<<else>>zero casualties<</if>>.
+	<</if>>
+	<<if $SFGear>>
+		More units were able to survive thanks to wearing $SF.Lower's combat armor suits.
+	<</if>>
+	<<set $NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * $enemyLosses),
+	$menials -= Math.trunc(($menials / $ASlaves) * $enemyLosses),
+	$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * $enemyLosses),
+	$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * $enemyLosses)>>
+	<<if $battleResult == 3>>
+		<<if $battleTurns <= 5>>
+			The fight was quick and one sided: our men easily stopped the disorganized revolt in a few well aimed assaults.
+		<<elseif $battleTurns <= 7>>
+			The fight was hard, but in the end our men stopped the disorganized revolt with several well aimed assaults.
+		<<else>>
+			The fight was long and hard, but in the end our men stopped the revolt before it could accumulate momentum.
+		<</if>>
+	<<elseif $battleResult == -3>>
+		<<if $battleTurns <= 5>>
+			The fight was quick and one sided: our men were easily crushed by the furious charge of the rebels.
+		<<elseif $battleTurns <= 7>>
+			The fight was hard and in the end the rebels proved too much to handle for our men.
+		<<else>>
+			The fight was long and hard, but despite their bravery the rebels proved too much for our men.
+		<</if>>
+	<<elseif $battleResult == 2>>
+		The fight was long and hard, but in the end our men managed to stop the revolt, though not without difficulty.
+	<<elseif $battleResult == -2>>
+		The fight was long and hard. In the end, our men had to yield to the rebelling slaves, which were fortunately unable to capitalize on their victory.
+	<<elseif $battleResult == -1>>
+		You gave your troops the order to surrender; they obediently stand down.
+	<</if>>
+
+	/* effects */
+	<<if $battleResult == 3>>
+		Thanks to your victory, your @@.green;reputation@@ and @@.darkviolet;authority@@ increased.
+		<<run repX(random(800,1000), "war")>>
+		<<set $SecExp.core.authority += random(800,1000)>>
+		<br>Many of the rebelling slaves were recaptured and punished. The instigators were executed one after another in a public trial that lasted for almost three days.
+		<<set $NPCSlaves -= random(10,30)>>
+	<<elseif $battleResult == -3>>
+		Due to your defeat, your @@.red;reputation@@ and @@.red;authority@@ decreased.
+		<<run repX(random(-800,-1000), "war")>>
+		<<set $SecExp.core.authority -= random(800,1000)>>
+		<br>After the battle most of the rebelling slaves managed to escape, while others remained in the arcology for days looting and hunting their former masters. The arcology will bear the scars of this day for a long time.
+		<<set $lowerClass -= random(50,100)>>
+		<<set _lostSlaves = Math.trunc(($attackTroops - $enemyLosses) * 0.8),
+		$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+		$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+		$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+		$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+		<<set $rebelDefeatAftermath = 5>>
+	<<elseif $battleResult == -2>>
+		Due to your defeat, your @@.red;reputation@@ and @@.red;authority@@ decreased.
+		<<run repX(random(-600,-800), "war")>>
+		<<set $SecExp.core.authority -= random(600,800)>>
+		<br>After the battle most of the rebelling slaves managed to escape, while others remained in the arcology for days looting and hunting their former masters. The arcology will bear the scars of this day for a long time.
+		<<set $lowerClass -= random(40,80)>>
+		<<set _lostSlaves = Math.trunc(($attackTroops - $enemyLosses) * 0.8),
+		$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+		$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+		$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+		$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+		<<set $rebelDefeatAftermath = 3>>
+	<<elseif $battleResult == 2>>
+		Thanks to your victory, your @@.green;reputation@@ and @@.darkviolet;authority@@ increased.
+		<<run repX(random(600,180), "war")>>
+		<<set $SecExp.core.authority += random(600,800)>>
+		<br>Many of the rebelling slaves were recaptured and punished. The instigators were executed one after another in a public trial that lasted for almost three days.
+		<<set $NPCSlaves -= random(10,30)>>
+	<<elseif $battleResult == -1>>
+		Rather than waste the lives of your men you decided to surrender, hoping the rebels will cause less damage if you indulge them, this is however a big hit to your status. Your @@.red;reputation@@ and @@.red;authority@@ are significantly impacted.
+		<<run repX(random(-1000,-1200), "war")>>
+		<<set $SecExp.core.authority -= random(1000,1200)>>
+		<br>
+		The surrender allows the arcology to survive @@.yellow;mostly intact,@@ however reports of @@.red;mass looting and killing of citizens@@ flood your office for a few days.
+		<<run cashX(-1000, "war")>>
+		<<if $week <= 30>>
+			<<set $lowerClass -= random(100)>>
+			<<set _lostSlaves = random(150),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(5)>>
+		<<elseif $week <= 60>>
+			<<set $lowerClass -= random(120)>>
+			<<set _lostSlaves = random(170),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(10)>>
+		<<elseif $week <= 90>>
+			<<set $lowerClass -= random(140)>>
+			<<set _lostSlaves = random(190),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(15)>>
+		<<elseif $week <= 120>>
+			<<set $lowerClass -= random(160)>>
+			<<set _lostSlaves = random(210),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(20)>>
+		<<else>>
+			<<set $lowerClass -= random(180)>>
+			<<set _lostSlaves = random(230),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(25)>>
+		<</if>>
+		<br>After the battle most of the rebelling slaves managed to escape, while others remained in the arcology for days looting and hunting their former masters. The arcology will bear the scars of this day for a long time.
+		<<set $lowerClass -= random(50,100)>>
+		<<set _lostSlaves = Math.trunc(($attackTroops - $enemyLosses) * 0.8),
+		$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+		$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+		$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+		$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+		<<set $rebelDefeatAftermath = 5>>
+	<</if>>
+<<else>>
+	Today, <<= asDateString($week, random(0,7))>>, our arcology was inflamed by the fires of rebellion. <<print num(Math.trunc($attackTroops))>> rebels from all over the structure dared rise up to dethrone their arcology owner. Our defense force, <<print num(App.SecExp.conflict.troopCount())>> strong, fought with them street by street
+	<<if $enemyLosses != $attackTroops>>
+		inflicting <<print num(Math.trunc($enemyLosses))>> casualties, while sustaining <<if $losses > 1>> <<print num(Math.trunc($losses))>> casualties <<else>> a casualty<</if>> themselves.
+	<<else>>
+		completely annihilating their troops, while sustaining <<if $losses > 1>> <<print num(Math.trunc($losses))>> casualties <<else>> a casualty.<</if>>
+	<</if>>
+	<<if $SFGear>>
+		More units were able to survive thanks to wearing $SF.Lower's combat armor suits.
+	<</if>>
+	<<set $NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * $enemyLosses),
+	$menials -= Math.trunc(($menials / $ASlaves) * $enemyLosses),
+	$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * $enemyLosses),
+	$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * $enemyLosses)>>
+	<<if $battleResult == 3>>
+		<<if $battleTurns <= 5>>
+			The fight was quick and one sided, our men easily stopped the disorganized revolt in a few well aimed assaults.
+		<<elseif $battleTurns <= 7>>
+			The fight was hard, but in the end our men stopped the disorganized revolt with several well aimed assaults.
+		<<else>>
+			The fight was long and hard, but in the end our men stopped the revolt before it could accumulate momentum.
+		<</if>>
+	<<elseif $battleResult == -3>>
+		<<if $battleTurns <= 5>>
+			The fight was quick and one sided, our men were easily crushed by the furious charge of the rebels.
+		<<elseif $battleTurns <= 7>>
+			The fight was hard and in the end the rebels proved too much to handle for our men.
+		<<else>>
+			The fight was long and hard, but despite their bravery the rebels proved too much for our men.
+		<</if>>
+	<<elseif $battleResult == 2>>
+		The fight was long and hard, but in the end our men managed to stop the revolt, though not without difficulty.
+	<<elseif $battleResult == -2>>
+		The fight was long and hard. Our men in the end had to yield to the rebelling slaves, which were fortunately unable to fully capitalize on their victory.
+	<<elseif $battleResult == -1>>
+		You gave your troops the order to surrender, obediently they stand down.
+	<</if>>
+
+	/* effects */
+	<<if $battleResult == 3>>
+		Thanks to your victory, your @@.green;reputation@@ and @@.darkviolet;authority@@ increased.
+		<<run repX(random(800,1000), "war")>>
+		<<set $SecExp.core.authority += random(800,1000)>>
+		<br>Many of the rebelling citizens were captured and punished, many others enslaved. The instigators were executed one after another in a public trial that lasted for almost three days.
+		<<set $lowerClass -= random(10,30)>>
+	<<elseif $battleResult == -3>>
+		Due to your defeat, your @@.red;reputation@@ and @@.red;authority@@ decreased.
+		<<run repX(random(-800,-1000), "war")>>
+		<<set $SecExp.core.authority -= random(800,1000)>>
+		<br>After the battle most of the rebelling citizens remained in the arcology for days looting and hunting their former arcology. We will bear the scars of this day for a long time.
+		<<set $lowerClass -= Math.trunc(($attackTroops - $enemyLosses) * 0.8)>>
+		<<set $rebelDefeatAftermath = 5>>
+	<<elseif $battleResult == -2>>
+		Due to your defeat, your @@.red;reputation@@ and @@.red;authority@@ decreased.
+		<<run repX(random(-600,-800), "war")>>
+		<<set $SecExp.core.authority -= random(600,800)>>
+		<br>After the battle most of the rebelling citizens remained in the arcology for days looting and hunting their former arcology. We will bear the scars of this day for a long time.
+		<<set $lowerClass -= random(40,80)>>
+		<<set _lostSlaves = Math.trunc(($attackTroops - $enemyLosses) * 0.6),
+		$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+		$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+		$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+		$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+		<<set $rebelDefeatAftermath = 3>>
+	<<elseif $battleResult == 2>>
+		Thanks to your victory, your @@.green;reputation@@ and @@.darkviolet;authority@@ increased.
+		<<run repX(random(600,180), "war")>>
+		<<set $SecExp.core.authority += random(600,800)>>
+		<br>Many of the rebelling citizens were captured and punished, many others enslaved. The instigators were executed one after another in a public trial that lasted for almost three days.
+		<<set $NPCSlaves -= random(10,30)>>
+	<<elseif $battleResult == -1>>
+		Rather than waste the lives of your men you decided to surrender, hoping the rebels will cause less damage if you indulge them, this is however a big hit to your status. Your @@.red;reputation@@ and @@.red;authority@@ are significantly impacted.
+		<<run repX(random(-1000,-1200), "war")>>
+		<<set $SecExp.core.authority -= random(1000,1200)>>
+		<br>
+		The surrender allows the arcology to survive @@.yellow;mostly intact,@@ however reports of @@.red;mass looting and killing of citizens@@ flood your office for a few days.
+		<<run cashX(-1000, "war")>>
+		<<if $week <= 30>>
+			<<set $lowerClass -= random(100)>>
+			<<set _lostSlaves = random(150),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(5)>>
+		<<elseif $week <= 60>>
+			<<set $lowerClass -= random(120)>>
+			<<set _lostSlaves = random(170),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(10)>>
+		<<elseif $week <= 90>>
+			<<set $lowerClass -= random(140)>>
+			<<set _lostSlaves = random(190),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(15)>>
+		<<elseif $week <= 120>>
+			<<set $lowerClass -= random(160)>>
+			<<set _lostSlaves = random(210),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(20)>>
+		<<else>>
+			<<set $lowerClass -= random(180)>>
+			<<set _lostSlaves = random(230),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(25)>>
+		<</if>>
+		<br>After the battle most of the rebelling citizens remained in the arcology for days looting and hunting their former arcology. We will bear the scars of this day for a long time.
+		<<set $lowerClass -= random(50,100)>>
+		<<set _lostSlaves = Math.trunc(($attackTroops - $enemyLosses) * 0.8),
+		$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+		$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+		$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+		$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+		<<set $rebelDefeatAftermath = 5>>
+	<</if>>
+<</if>>
+
+/* engage rules */
+<<if $battleResult != -1>>
+	<<if $engageRule == 0>>
+		Since you ordered your troops to limit their weaponry to low caliber or nonlethal, the arcology reported only @@.red;minor damage.@@ Most citizens and non involved slaves remained unharmed, though some casualties between the civilians were inevitable.
+		A few businesses were looted and burned, but the damage was pretty limited.
+		<<set $arcRepairTime += 3, IncreasePCSkills('engineering', 0.1)>>
+		<<if $week <= 30>>
+			<<set $lowerClass -= random(40)>>
+			<<set _lostSlaves = random(65),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(2)>>
+		<<elseif $week <= 60>>
+			<<set $lowerClass -= random(50)>>
+			<<set _lostSlaves = random(75),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(5)>>
+		<<elseif $week <= 90>>
+			<<set $lowerClass -= random(60)>>
+			<<set _lostSlaves = random(85),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(7)>>
+		<<elseif $week <= 120>>
+			<<set $lowerClass -= random(70)>>
+			<<set _lostSlaves = random(95),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(10)>>
+		<<else>>
+			<<set $lowerClass -= random(80)>>
+			<<set _lostSlaves = random(105),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(12)>>
+		<</if>>
+	<<elseif $engageRule == 1>>
+		You ordered your troops to limit their weaponry to non-heavy, non-explosive, because of this the arcology reported @@.red;moderate damage.@@ Most citizens and non involved slaves remained unharmed or only lightly wounded, but many others did not make it. Unfortunately casualties between the civilians were inevitable.
+		A few businesses were looted and burned, but the damage was pretty limited.
+		<<set $arcRepairTime += 5, IncreasePCSkills('engineering', 0.1)>>
+		<<if $week <= 30>>
+			<<set $lowerClass -= random(60)>>
+			<<set _lostSlaves = random(85),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(4)>>
+		<<elseif $week <= 60>>
+			<<set $lowerClass -= random(70)>>
+			<<set _lostSlaves = random(95),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(7)>>
+		<<elseif $week <= 90>>
+			<<set $lowerClass -= random(80)>>
+			<<set _lostSlaves = random(105),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(9)>>
+		<<elseif $week <= 120>>
+			<<set $lowerClass -= random(90)>>
+			<<set _lostSlaves = random(115),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(12)>>
+		<<else>>
+			<<set $lowerClass -= random(100)>>
+			<<set _lostSlaves = random(125),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(14)>>
+		<</if>>
+	<<elseif $engageRule == 2>>
+		Since you did not apply any restriction on the weapons your forces should use, the arcology reported @@.red;heavy damage.@@ Many citizens and uninvolved slaves are reported killed or missing. Casualties between the civilians were inevitable.
+		Many businesses were damaged during the battle either by the fight itself, by fires which spread unchecked for hours or by looters.
+		<<set $arcRepairTime += 7, IncreasePCSkills('engineering', 0.1)>>
+		<<if $week <= 30>>
+			<<set $lowerClass -= random(100)>>
+			<<set _lostSlaves = random(150),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(5)>>
+		<<elseif $week <= 60>>
+			<<set $lowerClass -= random(120)>>
+			<<set _lostSlaves = random(170),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(10)>>
+		<<elseif $week <= 90>>
+			<<set $lowerClass -= random(140)>>
+			<<set _lostSlaves = random(190),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(15)>>
+		<<elseif $week <= 120>>
+			<<set $lowerClass -= random(160)>>
+			<<set _lostSlaves = random(210),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(20)>>
+		<<else>>
+			<<set $lowerClass -= random(180)>>
+			<<set _lostSlaves = random(230),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(25)>>
+		<</if>>
+	<<else>>
+		Thanks to the advance riot control weaponry developed by your experts, the rebels were mostly subdued or killed with @@.yellow;little to no collateral damage to the arcology@@ and its inhabitants.
+		A few businesses were looted, but the damage was very limited.
+		<<set $arcRepairTime += 2, IncreasePCSkills('engineering', 0.1)>>
+		<<run cashX(-1000, "war")>>
+		<<if $week <= 30>>
+			<<set $lowerClass -= random(20)>>
+			<<set _lostSlaves = random(45),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(2)>>
+		<<elseif $week <= 60>>
+			<<set $lowerClass -= random(30)>>
+			<<set _lostSlaves = random(55),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(4)>>
+		<<elseif $week <= 90>>
+			<<set $lowerClass -= random(40)>>
+			<<set _lostSlaves = random(65),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(6)>>
+		<<elseif $week <= 120>>
+			<<set $lowerClass -= random(50)>>
+			<<set _lostSlaves = random(75),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(8)>>
+		<<else>>
+			<<set $lowerClass -= random(60)>>
+			<<set _lostSlaves = random(85),
+			$NPCSlaves -= Math.trunc(($NPCSlaves / $ASlaves) * _lostSlaves),
+			$menials -= Math.trunc(($menials / $ASlaves) * _lostSlaves),
+			$fuckdolls -= Math.trunc(($fuckdolls / $ASlaves) * _lostSlaves),
+			$menialBioreactors -= Math.trunc(($menialBioreactors / $ASlaves) * _lostSlaves)>>
+			<<set $arcologies[0].prosperity -= random(10)>>
+		<</if>>
+	<</if>>
+<</if>>
+<<if $lowerClass < 0>>
+	<<set $lowerClass = 0>>
+<</if>>
+<<if $NPCSlaves < 0>>
+	<<set $NPCSlaves = 0>>
+<</if>>
+
+/* garrisons */
+<<if $garrison.reactor == 0>>
+	<<if random(1,100) <= (75 - ($fort.reactor * 25))>>
+		Unfortunately during the fighting a group of slaves infiltrated the reactor complex and sabotaged it, causing massive power fluctuations and blackouts.
+		It will take @@.red;time and money to repair the damage.@@
+		<<set $garrison.reactorTime = $repairTime + random(1) - $fort.reactor, IncreasePCSkills('engineering', 0.1)>>
+		<<run cashX(-2000, "war")>>
+	<<else>>
+		While the reactor was left defenseless without a garrison, there was no attempt at sabotage. Let's hope we'll always be this lucky.
+	<</if>>
+<<else>>
+	The garrison assigned to the reactor protected it from the multiple sabotage attempts carried out by the rebels.
+<</if>>
+<<if $garrison.waterway == 0>>
+	<<if random(1,100) <= (75 - ($fort.waterway * 25))>>
+		Unfortunately during the fighting a group of slaves infiltrated the water management complex and sabotaged it, causing huge water leaks throughout the arcology and severely limiting the water supply.
+		It will take @@.red;time and money to repair the damage.@@
+		<<set $garrison.waterwayTime = $repairTime + random(1) - $fort.waterway, IncreasePCSkills('engineering', 0.1)>>
+		<<run cashX(-2000, "war")>>
+	<<else>>
+		While the water management complex was left defenseless without a garrison, there was no attempt at sabotage. Let's hope we'll always be this lucky.
+	<</if>>
+<<else>>
+	The garrison assigned to the water management complex protected it from the sabotage attempt of the rebels.
+<</if>>
+<<if $garrison.assistant == 0>>
+	<<if random(1,100) <= (75 - ($fort.assistant * 25))>>
+		Unfortunately during the fighting a group of slaves infiltrated the facility housing $assistant.name's mainframe and sabotaged it. Without its AI, the arcology will be next to impossible to manage.
+		It will take @@.red;time and money to repair the damage.@@
+		<<set $garrison.assistantTime = $repairTime + random(1) - $fort.assistant, IncreasePCSkills('engineering', 0.1)>>
+		<<run cashX(-2000, "war")>>
+	<<else>>
+		While the $assistant.name's mainframe was left defenseless without a garrison, there was no attempt at sabotage. Let's hope we'll always be this lucky.
+	<</if>>
+<<else>>
+	The garrison assigned to the facility housing $assistant.name's mainframe prevented any sabotage attempt.
+<</if>>
+<<if $garrison.penthouse == 1 && $Bodyguard != 0>>
+	<<setLocalPronouns $Bodyguard 2>>
+	The garrison assigned to the penthouse together with your loyal Bodyguard stopped all assaults against your penthouse with ease.
+<<elseif $Bodyguard != 0>>
+	<<if random(1,100) <= 75>>
+		During the fighting a group of slaves assaulted the penthouse. Your Bodyguard, $Bodyguard.slaveName, stood strong against the furious attack.
+		<<set _woundChance = 0>>
+		<<if $PC.career == "mercenary" || $PC.career == "gang">>
+			<<set _woundChance -= 5>>
+		<<elseif $PC.skill.warfare >= 75>>
+			<<set _woundChance -= 3>>
+		<</if>>
+		<<if $personalArms >= 1>>
+			<<set _woundChance -= 5>>
+		<</if>>
+		<<if $PC.physicalAge >= 60>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.belly > 5000>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.boobs >= 1000>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.butt >= 4>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.preg >= 30>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.balls >= 20>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.balls >= 9>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if random(1,100) <= _woundChance>>
+			A lucky shot managed to find its way to you, leaving a painful, but thankfully not lethal, wound.
+			<<run healthDamage($PC, 60)>>
+		<<else>>
+			Fortunately you managed to avoid injury.
+		<</if>>
+		<<if $Concubine != 0>>
+			<<setLocalPronouns $Concubine>>
+			<<set _woundChance = 0>>
+			<<if $Concubine.skill.combat == 1>>
+				<<set _woundChance -= 2>>
+			<</if>>
+			<<set _woundChance -= 0.25 * (getLimbCount($Concubine, 105))>>
+			<<if $Concubine.health.condition >= 50>>
+				<<set _woundChance -= 1>>
+			<</if>>
+			<<if $Concubine.weight > 130>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.muscles < -30>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if getBestVision($Concubine) === 0>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.heels == 1>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.boobs >= 1400>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.butt >= 6>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.belly >= 10000>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.dick >= 8>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.balls >= 8>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.intelligence+$Concubine.intelligenceImplant < -95>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<set _woundChance *= random(2,4)>>
+			<<if random(1,100) <= _woundChance>>
+				Your Concubine was unfortunately caught in the crossfire and
+				<<set $woundType = random(1,10)>>
+				<<if $woundType == 1>>
+					a splinter pierced $his throat, severing $his vocal cords.
+					<<set $Concubine.voice = 0>>
+				<<elseif $woundType == 2>>
+					a splinter hit $his face, severely damaging $his eyes.
+					<<run eyeSurgery($Concubine, "both", "blind")>>
+				<<elseif $woundType == 3>>
+					an explosion near $him caused the loss of all $his limbs.
+					<<run removeLimbs($Concubine, "all")>>
+				<<elseif $woundType >= 4>>
+					a stray shot severely wounded $him.
+					<<if $Concubine.health.health >= -60>>
+						<<run healthDamage($Concubine, 30)>>
+					<<else>>
+						<<run healthDamage($Concubine, -90 - $Concubine.health.health)>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+		<<set _woundChance = 0>>
+		<<if $Bodyguard.skill.combat == 1>>
+			<<set _woundChance -= 2>>
+		<</if>>
+		<<set _woundChance -= 0.25 * (getLimbCount($Bodyguard, 105))>>
+		<<if $Bodyguard.health.condition >= 50>>
+			<<set _woundChance -= 1>>
+		<</if>>
+		<<if $Bodyguard.weight > 130>>
+			<<set _woundChance += 1>>
+		<</if>>
+		<<if $Bodyguard.muscles < -30>>
+			<<set _woundChance += 1>>
+		<</if>>
+		<<if getBestVision($Bodyguard) === 0>>
+			<<set _woundChance += 1>>
+		<</if>>
+		<<if $Bodyguard.heels == 1>>
+			<<set _woundChance += 1>>
+		<</if>>
+		<<if $Bodyguard.boobs >= 1400>>
+			<<set _woundChance += 1>>
+		<</if>>
+		<<if $Bodyguard.butt >= 6>>
+			<<set _woundChance += 1>>
+		<</if>>
+		<<if $Bodyguard.belly >= 10000>>
+			<<set _woundChance += 1>>
+		<</if>>
+		<<if $Bodyguard.dick >= 8>>
+			<<set _woundChance += 1>>
+		<</if>>
+		<<if $Bodyguard.balls >= 8>>
+			<<set _woundChance += 1>>
+		<</if>>
+		<<if $Bodyguard.intelligence+$Bodyguard.intelligenceImplant < -95>>
+			<<set _woundChance += 1>>
+		<</if>>
+		<<set _woundChance *= random(2,4)>>
+		<<if random(1,100) <= _woundChance>>
+			During one of the assaults your Bodyguard was hit.
+			<<set $woundType = random(1,10)>>
+			<<if $woundType == 1>>
+				A splinter pierced _his2 throat, severing _his2 vocal cords.
+				<<set $Bodyguard.voice = 0>>
+			<<elseif $woundType == 2>>
+				A splinter hit _his2 face, severely damaging _his2 eyes.
+				<<run eyeSurgery($Bodyguard, "both", "blind")>>
+			<<elseif $woundType == 3>>
+				An explosion near _him2 caused the loss of all _his2 limbs.
+				<<run removeLimbs($Bodyguard, "all")>>
+			<<elseif $woundType >= 4>>
+				A stray shot severely wounded _him2.
+				<<if $Bodyguard.health.health >= -60>>
+					<<run healthDamage($Bodyguard, 30)>>
+				<<else>>
+					<<run healthDamage($Bodyguard, $Bodyguard.health.health + 90)>>
+				<</if>>
+			<</if>>
+		<</if>>
+		The damage to the structure will be @@.red;costly to repair.@@
+		<<= IncreasePCSkills('engineering', 0.1)>>
+		<<run cashX(-2000, "war")>>
+	<<else>>
+		While the penthouse was left without a sizable garrison, there was no dangerous assault against it. Let's hope we'll always be this lucky.
+	<</if>>
+<<elseif $garrison.penthouse == 1>>
+	<<if random(1,100) <= 75>>
+		During the fighting a group of slaves assaulted the penthouse. The garrison stood strong against the furious attack.
+		<<set _woundChance = 0>>
+		<<if $PC.career == "mercenary" || $PC.career == "gang">>
+			<<set _woundChance -= 5>>
+		<<elseif $PC.skill.warfare >= 75>>
+			<<set _woundChance -= 3>>
+		<</if>>
+		<<if $personalArms >= 1>>
+			<<set _woundChance -= 5>>
+		<</if>>
+		<<if $PC.physicalAge >= 60>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.belly > 5000>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.boobs >= 1000>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.butt >= 4>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.preg >= 30>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.balls >= 20>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.balls >= 9>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<set _woundChance *= random(1,2)>>
+		<<if random(1,100) <= _woundChance>>
+			A lucky shot managed to find its way to you, leaving a painful, but thankfully nonlethal, wound.
+			<<run healthDamage($PC, 60)>>
+		<<else>>
+			Fortunately you managed to avoid injury.
+		<</if>>
+		<<if $Concubine != 0>>
+			<<setLocalPronouns $Concubine>>
+			<<set _woundChance = 0>>
+			<<if $Concubine.skill.combat == 1>>
+				<<set _woundChance -= 2>>
+			<</if>>
+			<<set _woundChance -= 0.25 * (getLimbCount($Concubine, 105))>>
+			<<if $Concubine.health.condition >= 50>>
+				<<set _woundChance -= 1>>
+			<</if>>
+			<<if $Concubine.weight > 130>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.muscles < -30>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if getBestVision($Concubine) === 0>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.heels == 1>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.boobs >= 1400>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.butt >= 6>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.belly >= 10000>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.dick >= 8>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.balls >= 8>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.intelligence+$Concubine.intelligenceImplant < -95>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<set _woundChance *= random(2,4)>>
+			<<if random(1,100) <= _woundChance>>
+				Your Concubine was unfortunately caught in the crossfire and
+				<<set $woundType = random(1,10)>>
+				<<if $woundType == 1>>
+					a splinter pierced $his throat, severing $his vocal cords.
+					<<set $Concubine.voice = 0>>
+				<<elseif $woundType == 2>>
+					a splinter hit $his face, severely damaging $his eyes.
+					<<run eyeSurgery($Concubine, "both", "blind")>>
+				<<elseif $woundType == 3>>
+					an explosion near $him caused the loss of all $his limbs.
+					<<run removeLimbs($Concubine, "all")>>
+				<<elseif $woundType >= 4>>
+					a stray shot severely wounded $him.
+					<<if $Concubine.health.health >= -60>>
+						<<run healthDamage($Concubine, 30)>>
+					<<else>>
+						<<run healthDamage($Concubine, $Concubine.health.health + 90)>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+		The damage to the structure will be @@.red;costly to repair.@@
+		<<= IncreasePCSkills('engineering', 0.1)>>
+		<<run cashX(-2000, "war")>>
+	<<else>>
+		There was no sizable assault against the penthouse. Let's hope we'll always be this lucky.
+	<</if>>
+<<else>>
+	<<if random(1,100) <= 75>>
+		During the fighting a group of slaves assaulted the penthouse. Isolated and alone, you stood strong against the furious attack.
+		<<set _woundChance = 0>>
+		<<if $PC.career == "mercenary" || $PC.career == "gang">>
+			<<set _woundChance -= 5>>
+		<<elseif $PC.skill.warfare >= 75>>
+			<<set _woundChance -= 3>>
+		<</if>>
+		<<if $personalArms >= 1>>
+			<<set _woundChance -= 5>>
+		<</if>>
+		<<if $PC.physicalAge >= 60>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.belly > 5000>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.boobs >= 1000>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.butt >= 4>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.preg >= 30>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.balls >= 20>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<if $PC.balls >= 9>>
+			<<set _woundChance += random(1,5)>>
+		<</if>>
+		<<set _woundChance *= random(1,2)>>
+		<<if random(1,100) <= _woundChance>>
+			A lucky shot managed to find its way to you, leaving a painful, but thankfully nonlethal, wound.
+			<<run healthDamage($PC, 60)>>
+		<<else>>
+			Fortunately you managed to avoid injury.
+		<</if>>
+		<<if $Concubine != 0>>
+			<<setLocalPronouns $Concubine>>
+			<<set _woundChance = 0>>
+			<<if $Concubine.skill.combat == 1>>
+				<<set _woundChance -= 2>>
+			<</if>>
+			<<set _woundChance -= 0.25 * (getLimbCount($Concubine, 105))>>
+			<<if $Concubine.health.condition >= 50>>
+				<<set _woundChance -= 1>>
+			<</if>>
+			<<if $Concubine.weight > 130>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.muscles < -30>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if getBestVision($Concubine) === 0>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.heels == 1>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.boobs >= 1400>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.butt >= 6>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.belly >= 10000>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.dick >= 8>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.balls >= 8>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<if $Concubine.intelligence+$Concubine.intelligenceImplant < -95>>
+				<<set _woundChance += 1>>
+			<</if>>
+			<<set _woundChance *= random(2,4)>>
+			<<if random(1,100) <= _woundChance>>
+				Your Concubine was unfortunately caught in the crossfire and
+				<<set $woundType = random(1,10)>>
+				<<if $woundType == 1>>
+					a splinter pierced $his throat, severing $his vocal cords.
+					<<set $Concubine.voice = 0>>
+				<<elseif $woundType == 2>>
+					a splinter hit $his face, severely damaging $his eyes.
+					<<run eyeSurgery($Concubine, "both", "blind")>>
+				<<elseif $woundType == 3>>
+					an explosion near $him caused the loss of all $his limbs.
+					<<run removeLimbs($Concubine, "all")>>
+				<<elseif $woundType >= 4>>
+					a stray shot severely wounded $him.
+					<<if $Concubine.health.health >= -60>>
+						<<run healthDamage($Concubine, 30)>>
+					<<else>>
+						<<run healthDamage($Concubine, -90 - $Concubine.health.health)>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<else>>
+		There was no sizable assault against the penthouse. Let's hope we'll always be this lucky.
+	<</if>>
+<</if>>
+
+<br>
+<br>
+
+<<include "unitsRebellionReport">>
+
+/* resets variables and flags */
+<<recalcManpower>>
+<<set $attackTroops = 0>>
+<<set $attackEquip = 0>>
+<<set $enemyLosses = 0>>
+<<set $losses = 0>>
+<<set $battleTurns = 0>>
+<<set $irregulars = 0>>
+<<if $slaveRebellion == 1>>
+	<<set $slaveProgress = 0>>
+	<<set $citizenProgress = Math.clamp($citizenProgress - random(50,100), 0, 100)>>
+<<else>>
+	<<set $citizenProgress = 0>>
+	<<set $slaveProgress = Math.clamp($slaveProgress - random(50,100), 0, 100)>>
+<</if>>
+<<set $slaveRebellion = 0>>
+<<set $citizenRebellion = 0>>
+<<set $tension = Math.clamp($tension - random(50,100), 0, 100)>>

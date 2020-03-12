@@ -1,0 +1,17 @@
+:: SE wedding [nobr]
+
+<<set $nextButton = "Continue", $nextLink = "Scheduled Event">>
+<<set _ML = $marrying.length>>
+
+<<if _ML == 1>>
+	<<include "SE wedding single">>
+<<elseif _ML == 2>>
+	<<include "SE wedding double">>
+<<elseif _ML >= 3>>
+	<<include "SE wedding triple">>
+<<else>>
+	@@.red;Error: unknown $marrying length. Please report this.@@
+<</if>>
+
+<<set $weddingPlanned = 0>>
+<<set $marrying = []>>

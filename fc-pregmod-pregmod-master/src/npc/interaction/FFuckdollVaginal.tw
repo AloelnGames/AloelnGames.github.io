@@ -1,0 +1,55 @@
+:: FFuckdollVaginal [nobr]
+
+<<set $AS = $activeSlave.ID>>
+<<setLocalPronouns $activeSlave>>
+
+<<set getSlave($AS).counter.vaginal++, $vaginalTotal++>>
+You decide to use the Fuckdoll's <<if getSlave($AS).vagina > 3>>cavernous<<elseif getSlave($AS).vagina == 3>>soft<<elseif getSlave($AS).vagina == 2>>inviting<<elseif getSlave($AS).vagina == 1>>tight<</if>> front hole.
+<<if getSlave($AS).fuckdoll <= 10>>
+    Since $he is not well adapted to life as a living sex toy yet, $he won't respond to position commands. So, you simply <<if hasAnyLegs(getSlave($AS))>>push $him down to lie on the couch<<else>>set $him on your desk<</if>> and shove <<if $PC.dick != 0>>your cock<<else>>a strap-on<</if>> inside $his vagina.
+<<elseif getSlave($AS).fuckdoll <= 70>>
+    $He can follow intermediate commands, so you order $him into a position for use of $his front hole. $He obediently <<if hasAllLimbs(getSlave($AS))>>gets down on all fours and <<elseif hasAnyLegs(getSlave($AS))>>bends over and <</if>>cocks $his hips, offering $his cunt until you insert <<if $PC.dick != 0>>your cock<<else>>a strap-on<</if>> into $his wet channel.
+<<else>>
+    $He can follow advanced commands, so you bring $him over to your chair <<if hasAnyLegs(getSlave($AS))>>and order $him to squat down onto your <<if $PC.dick != 0>>cock<<else>>strap-on<</if>> and ride.<<else>>and impale $him on <<if $PC.dick != 0>>your cock<<else>>your strap-on<</if>>, ordering $him to do $his feeble best to bounce.<</if>>
+<</if>>
+<<if getSlave($AS).fuckdoll <= 20>>
+    $He's not fully used to being raped without warning, so $he struggles, $his muscles spasming delightfully.
+<<elseif getSlave($AS).fuckdoll <= 40>>
+    Aware that $he is supposed to relax and accept rape, $he does $his best to let you take $him without resistance.
+<<else>>
+    You command $him to milk your <<if $PC.dick != 0>>cock<<else>>strap-on<</if>> with $his vaginal walls, and $he obediently starts to flex $his well-developed cunt muscles, squeezing <<if $PC.dick != 0>>you<<else>>your strap-on<</if>> from base to tip.
+<</if>>
+<<if getSlave($AS).fuckdoll <= 60>>
+    <<if getSlave($AS).energy > 40>>Denied any other outlet for $his healthy sex drive, $he orgasms.<</if>>
+<<else>>
+    $He orgasmed for the first time as you entered $him, and $he continues to do so as you fuck $him. $He's perfectly tuned.
+<</if>>
+<<if getSlave($AS).voice == 0>>
+    Though $he is mute, $his breath hisses loudly <<if getSlave($AS).lips > 95>>past the lips of $his facepussy<<else>>through $his mouth insert<</if>>.
+<<else>>
+    $He moans, <<if getSlave($AS).lips > 95>>and the lips of $his facepussy quiver<<else>>struggling to force the sound past $his mouth insert<</if>>.
+<</if>>
+You climax<<if $PC.dick != 0>>, your cum shooting forward to splash against $his womb,<</if>> and return $him to <<if hasAnyLegs(getSlave($AS))>>a standing position<<else>>where $he was resting<</if>>.
+<<if $PC.dick != 0>>
+    <<if getSlave($AS).vagina > 2>>Your cum flows out of $his gaping front hole and down the material of $his suit.
+    <<elseif getSlave($AS).vagina == 2>>Your cum drips out of $his well-fucked front hole and down the material of $his suit.
+    <<else>>$His tight front hole retains almost every drop of your cum. A few escape and run down the material of $his suit.
+    <</if>>
+    <<if canImpreg(getSlave($AS), $PC)>>
+        <<= knockMeUp(getSlave($AS), 5, 1, -1)>>
+    <</if>>
+    The Fuckdoll will be cleaned by another slave.
+<</if>>
+<<if getSlave($AS).vagina == 0>>
+    <<if getSlave($AS).fetish != "mindbroken">>
+        As you return to your business, $he shakes slightly in place, and a few low moans come out of $his face hole. This is probably a reaction to losing $his virginity.
+    <<else>>
+        $He gives no external indication that $he's aware that $he's just lost $his virginity.
+    <</if>>
+    In any case, @@.lime;$his front hole has been broken in.@@
+    <<set getSlave($AS).vagina = 1>>
+<</if>>
+
+<<if passage() != "Slave Interact">>
+    <<set $slaves[$slaveIndices[getSlave($AS).ID]] = getSlave($AS)>>
+<</if>>

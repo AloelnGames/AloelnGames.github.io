@@ -1,0 +1,83 @@
+:: Food Market [nobr]
+
+<<if $useTabs == 0>>__The Food Market__<</if>>
+<br>
+
+<<set _foodValue = Math.round(($foodStored*$farmyardFoodCost + Number.EPSILON) * 100) / 100>>
+<<set _maxFood = Math.trunc($cash/$farmyardFoodCost)>>
+The food market has @@.chocolate;<<print massFormat($foodStored)>>@@ in storage, valued at a total of @@.yellowgreen;<<print cashFormat(_foodValue)>>.@@
+
+<<if $sideBarOptions.compact > 0>>
+	<<set _link = "Manage Arcology">>
+<<else>>
+	<<set _link = "Main">>
+<</if>>
+
+<br>
+<<link "Buy <<= massFormat(1)>>" _link>><<set cashX(forceNeg($farmyardFoodCost*1), "farmyard"), $foodStored += 1>><</link>>
+| <<link "<<= massFormat(10)>>" _link>><<set cashX(forceNeg($farmyardFoodCost*10), "farmyard"), $foodStored += 10>><</link>>
+| <<link "<<= massFormat(100)>>" _link>><<set cashX(forceNeg($farmyardFoodCost*100), "farmyard"), $foodStored += 100>><</link>>
+| <<link "<<= massFormat(1000)>>" _link>><<set cashX(forceNeg($farmyardFoodCost*1000), "farmyard"), $foodStored += 1000>><</link>>
+| <<link "<<= massFormat(10000)>>" _link>><<set cashX(forceNeg($farmyardFoodCost*10000), "farmyard"), $foodStored += 10000>><</link>>
+| <<link "<<= massFormat(100000)>>" _link>><<set cashX(forceNeg($farmyardFoodCost*100000), "farmyard"), $foodStored += 100000>><</link>>
+| <<link "max" _link>><<set cashX(forceNeg(_maxFood*$farmyardFoodCost), "farmyard"), $foodStored += _maxFood>><</link>>
+<<if $foodStored > 0>>
+	<br>
+	<<link "Sell <<= massFormat(1)>>" _link>><<set cashX(($farmyardFoodCost*1), "farmyard"), $foodStored -= 1>><</link>>
+	<<if $foodStored >= 10>>
+		| <<link "<<= massFormat(10)>>" _link>><<set cashX(($farmyardFoodCost*10), "farmyard"), $foodStored -= 10>><</link>>
+	<</if>>
+	<<if $foodStored >= 100>>
+		| <<link "<<= massFormat(100)>>" _link>><<set cashX(($farmyardFoodCost*100), "farmyard"), $foodStored -= 100>><</link>>
+	<</if>>
+	<<if $foodStored >= 1000>>
+		| <<link "<<= massFormat(1000)>>" _link>><<set cashX(($farmyardFoodCost*1000), "farmyard"), $foodStored -= 1000>><</link>>
+	<</if>>
+	<<if $foodStored >= 10000>>
+		| <<link "<<= massFormat(10000)>>" _link>><<set cashX(($farmyardFoodCost*10000), "farmyard"), $foodStored -= 10000>><</link>>
+	<</if>>
+	<<if $foodStored >= 100000>>
+		| <<link "<<= massFormat(100000)>>" _link>><<set cashX(($farmyardFoodCost*100000), "farmyard"), $foodStored -= 100000>><</link>>
+	<</if>>
+	| <<link "max" _link>><<set cashX(($farmyardFoodCost*$foodStored), "farmyard"), $foodStored = 0>><</link>>
+<</if>>
+<<if $food > 0>>
+	<br>
+	<<link "Store <<= massFormat(1)>>" _link>><<set $foodStored += 1, $food -= 1>><</link>>
+	<<if $food >= 10>>
+		| <<link "<<= massFormat(10)>>" _link>><<set $foodStored += 10, $food -= 10>><</link>>
+	<</if>>
+	<<if $food >= 100>>
+		| <<link "<<= massFormat(100)>>" _link>><<set $foodStored += 100, $food -= 100>><</link>>
+	<</if>>
+	<<if $food >= 1000>>
+		| <<link "<<= massFormat(1000)>>" _link>><<set $foodStored += 1000, $food -= 1000>><</link>>
+	<</if>>
+	<<if $food >= 10000>>
+		| <<link "<<= massFormat(10000)>>" _link>><<set $foodStored += 10000, $food -= 10000>><</link>>
+	<</if>>
+	<<if $food >= 100000>>
+		| <<link "<<= massFormat(100000)>>" _link>><<set $foodStored += 100000, $food -= 10000>><</link>>
+	<</if>>
+	| <<link "max" _link>><<set $foodStored += $food, $food = 0>><</link>>
+<</if>>
+<<if $foodStored > 0>>
+	<br>
+	<<link "Retrieve <<= massFormat(1)>>" _link>><<set $food += 1, $foodStored -= 1>><</link>>
+	<<if $foodStored >= 10>>
+		| <<link "<<= massFormat(10)>>" _link>><<set $food += 10, $foodStored -= 10>><</link>>
+	<</if>>
+	<<if $foodStored >= 100>>
+		| <<link "<<= massFormat(100)>>" _link>><<set $food += 100, $foodStored -= 100>><</link>>
+	<</if>>
+	<<if $foodStored >= 1000>>
+		| <<link "<<= massFormat(1000)>>" _link>><<set $food += 1000, $foodStored -= 1000>><</link>>
+	<</if>>
+	<<if $foodStored >= 10000>>
+		| <<link "<<= massFormat(10000)>>" _link>><<set $food += 10000, $foodStored -= 10000>><</link>>
+	<</if>>
+	<<if $foodStored >= 100000>>
+		| <<link "<<= massFormat(10000)>>" _link>><<set $food += 100000, $foodStored -= 10000>><</link>>
+	<</if>>
+	| <<link "max" _link>><<set $food += $foodStored, $foodStored = 0>><</link>>
+<</if>>
